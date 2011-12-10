@@ -1,0 +1,187 @@
+  <div id="left_side">
+    <div class="intro">
+        <div class="pad">
+            UltraDefrag is a powerful Open Source Defragmentation tool for the Windows Platform.
+            It can defragment any system files including registry hives and paging file.
+            Also one of the main goals of UltraDefrag is doing the job as fast and reliable as possible.<br /> 
+            <a href="http://sourceforge.net/projects/ultradefrag/files/" title="Download the latest build of UltraDefrag">Download</a>&nbsp; | &nbsp;
+            <a href="http://ultradefrag.sourceforge.net/handbook/Introduction.html" title="Read the complete overview of UltraDefrag">Feature List</a>&nbsp; | &nbsp;
+            <a href="index.html?screenshots" title="View UltraDefrag screenshots">Screenshots</a>&nbsp; | &nbsp;
+            <a href="http://sourceforge.net/projects/ultradefrag/forums">Give Us Feedback</a>&nbsp; |
+        </div>
+    </div>
+    <div class="mpart">
+        <!-- pre-release announcement -->
+        <h3>Latest News - UltraDefrag 5.0.0 RC1 released</h3>
+        <h2>&nbsp;</h2> 
+        <p>This release candidate includes all the new features of the initial v5.0.0 release.</p>
+        <p><a href=""><b>GUI:</b></a></p>
+        <ul>
+        <li>The drive list hight can now be adjusted by dragging the bottom border of it.</li>
+        <li>Progress is now displayed in the status column of the drive list.</li>
+        <li>The drive label is now displayed in the drive list. Please check if all localized labels are displayed correctly.</li>
+        <li>There are now more actions available to be executed when UltraDefrag terminates.</li>
+        <li>The cluster map now displays unused map blocks in gray, so they can not be confused with free space.</li>
+        </ul>
+        <p><a href=""><b>Command line interface:</b></a></p>
+        <ul>
+        <li>It is now possible to specify paths as arguments, which has fixed a problem with the Explorer context menu handler on Vista and above.</li>
+        </ul>
+        <p><a href=""><b>Driver:</b></a></p>
+        <ul>
+        <li>Defragmentation of regular files and volume metafiles was improved.</li>
+        <li>Full optimization has been improved, which processes all files despite of fragmentation.</li>
+        <li>Quick optimization has been added, which mainly processes fragmented files.</li>
+        <li>MFT optimization has been added, which only processes the MFT.</li>
+        <li>Creation of a log file by setting an environment variable is now possible, which highly simplifies reporting problems.</li>
+        </ul>
+        <p><a href=""><b>Reports:</b></a></p>
+        <ul>
+        <li>The file size, file status and report creation date and time were added to the fragmentation reports.</li>
+        </ul>
+        <p><a href=""><b>Installer:</b></a></p>
+        <ul>
+        <li>All selections can now be done through command line parameters too.<br/>
+        For further information about the switches see the <a href="../handbook/Installation.html" target="_blank">handbook</a>.</li>
+        </ul>
+        <p>Comments and suggestions about the new design are much appreciated!</p>
+        <p>Please visit <a href="http://ultradefrag.wikispaces.com/">UltraDefrag.WikiSpaces.com</a>
+        and translate the missing pieces of any language you are fluent in.</p>
+        <p>You are welcome! Your help will be much appreciated!</p>
+        <p><a href="http://sourceforge.net/project/screenshots.php?group_id=199532" target="_blank">Screenshots</a> of the new GUI.
+        <a href="http://sourceforge.net/projects/ultradefrag/files/" target="_blank">Download</a> pre-release.</p>
+        <p><a href="../HISTORY.TXT">Change Log</a> contains a full list of changes.</p>
+        <div class="date"><a href="#" title="#">Posted on</a> <!--#echo var="DATE_GMT" --></div> 
+
+        <!-- release announcement -->
+        <h3>News - UltraDefrag 4.4 has been finally released!</h3>
+        <h2>&nbsp;</h2> 
+        <p>We'd like to present you the latest stable release, which has many improvements:</p>
+        
+        <p><a href=""><b>GUI:</b></a></p>
+        <ul>
+        <li>Progress is now added to the GUI window caption, so it is displayed in the tooltip of the taskbar icon.</li>
+        <li>Cryptic single character progress label was replaced by the localized operation names.</li>
+        </ul>
+
+        <p><a href=""><b>Driver:</b></a></p>
+        <ul>
+        <li>Partial defragmentation was added to decrease the number of fragments even when there is no free space on disk to concatenate all fragments of the file.</li>
+        <li>Volume optimization algorithm was improved to prevent useless additional optimization passes.</li>
+        <li>One little bug preventing optimization from being stopped was fixed.</li>
+        <li>Volume optimization algorithm was improved to prevent skipping heavily fragmented parts of the volume.</li>
+        </ul>
+
+        <p><a href=""><b>Boot time interface:</b></a></p>
+        <ul>
+        <li><b>call</b>, <b>man</b>, <b>type</b> commands added to the boot time shell.</li>
+        <li><b>echo</b>, <b>exit</b>, <b>pause</b>, <b>set</b> commands improved.</li>
+        <li>History of commands typed in interactive mode added. Use arrow keys for navigation.</li>
+        <li>Escape key handler added to break boot time script execution and fall into
+        interactive mode immediately.</li>
+        <li>Pending boot-off boot time script command support added, this removes the limitation
+        of boot-on/off not working before reboot/shutdown.</li>
+        <li>Clearing of the failed boot flag added for reboot and shutdown at boot time.</li>
+        <li>10 seconds delay is skipped on boot time scan, if only one keyboard is present.</li>
+        </ul>
+        
+        <p><a href=""><b>Command line interface:</b></a></p>
+        <ul>
+        <li>Corrected cluttered progress display if console output was redirected.</li>
+        </ul>
+        
+        <p><a href=""><b>Translations:</b></a></p>
+        <ul>
+        <li>Added language selector to the GUI package.</li>
+        <li><b>Hindi</b> translation was added.</li>
+        <li>The following translations were updated:
+          <b>Chinese (Traditional)</b>, <b>Croatian</b>, <b>Danish</b>, <b>Dutch</b>, 
+          <b>French</b>, <b>Greek</b>, <b>Polish</b>, <b>Portuguese</b>, <b>Russian</b>,
+          <b>Serbian</b>, <b>Swedish</b>, <b>Turkish</b>.
+        </li>
+        </ul>
+
+        <p><a href="../HISTORY.TXT">Change Log</a> contains a full list of changes.</p>
+        <div class="date"><a href="#" title="#">Posted on</a> 24th Sept 2010</div> 
+        
+        <!-- preview announcement -->
+<!--
+        <h3>Preview - UltraDefrag next release, what you can expect.</h3>
+        <h2>&nbsp;</h2> 
+        <p>The next release will include the following improvements:</p>
+        <ul>
+        <li>The Scheduler will be totally rewritten to make it a true Task Manager with add, modify and remove capabilities.</li>
+        <li>The problem of getting an inaccessible system after an incomplete installation, due to missing boot time files, will be fixed.</li>
+        </ul>
+        <h2>&nbsp;</h2>
+-->        
+        <!-- Overview -->
+        <a name="overview"></a>
+        <p>UltraDefrag is a powerful disk defragmentation tool for Windows. It is the first open source defragmenter with
+        full support of system locked files defragmentation. Actually all files including registry hives and paging file
+        can be processed by UltraDefrag during the Windows boot process.</p>
+        <p>Also one of the primary goals of the UltraDefrag design is doing the job as fast and reliable as possible.</p>
+        <p>UltraDefrag aims to be the most reliable and small disk defragmenter. We're trying to keep a reasonable balance
+        between algorithms complexity and effectiveness.</p>
+        <p>UltraDefrag is fully compatible with Windows NT 4.0, Windows 2000, Windows XP, Windows Server 2003,
+        Windows Vista, Windows Server 2008, Windows 7 and all of the 64-bit editions of Windows.</p>
+        <h2>&nbsp;</h2> 
+        <p>Some UltraDefrag highlights (the complete list of features is <a href="http://ultradefrag.sourceforge.net/handbook/Introduction.html"><b>here</b></a>):</p>
+        <ul>
+          <li><img src="../images/boot_time.jpg" alt="Boot Time Defrag" width="250" height="95" /><strong>Boot Time Defragmentation :</strong></li>
+        </ul>
+        <p>This feature provides an ability to defragment any system files. Including page file, registry hives, hiberfil.sys file and many other files locked by the system or other applications when windows is fully running.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/shutdown_job.jpg" alt="Shutdown after a job" width="250" height="95" /><strong>Computer Shut Down after a job has completed :</strong></li>
+        </ul>
+        <p>We all know how long a defragment or a compact job can take. All of us most of the time leave the PC unattended while it does its job. With this option you can set UD to shutdown the PC after a job has been completed. This saves electricity and avoids many hazards.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/compact_feature.jpg" alt="Compact Option" width="250" height="95" /><strong>Fast Disk Optimization:</strong></li>
+        </ul>
+        <p>The optimizer rearranges all data and places them to the beginning of the drive. In many instances we have found, that the system is more stable and performs a lot better under load, if data is placed at the beginning of the drive.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/folder_file.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Single File and Folder Defragmentation :</strong></li>
+        </ul>
+        <p>After UltraDefrag is installed you have the ability to select any file or folder and defragment it. This option is mostly useful, if you have recently installed an application or a game and would like to have it defragmented immediately for maximum performance.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/extended_gui.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Extended and Customizable G.U.I :</strong></li>
+        </ul>
+        <p>UltraDefrag allows you to customize its graphical user interface, such as Font and its sizes. It adapts to the Windows theme you are using. Unlike Vista and other versions of Windows Defrag, UD shows a graphical representation of the drive like it did on older generations of Windows.</p>
+<!--        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/scheduler.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Defragment Scheduler :</strong></li>
+        </ul>
+        <p>Select precise times when you want UltraDefrag to run using the scheduler and perform defragmentation tasks. </p>
+        <p></p> -->
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h3 class="greybox">Translate UltraDefrag to your native language!</h3>
+        <p><img src="../images/language.gif" alt="" width="60" height="60" /></p>
+        <p>You may participate in UltraDefrag translation by submitting a new translation or modifying an existing one.
+        Visit <a href="http://ultradefrag.wikispaces.com/">UltraDefrag.WikiSpaces.com</a> for details.</p>
+        <p>You are welcome! Your help will be much appreciated!</p>
+        <p>&nbsp;</p>
+
+        <div class="date"><a href="#" title="#">Posted on</a> 30th Mar 2010</div>
+        <h2 class="content"><strong>DOWNLOAD ULTRADEFRAG</strong></h2>
+        <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.i386.exe"><img src="../images/ud_down.png" alt="Download UltraDefrag 32bit" width="147" height="256" /></a></p>
+        <p class="greybox">For 32-bit Windows <br /> NT4.0, 2000, XP, Vista, 7 - Server NT4.0, 2000, 2003, 2008</p>
+        <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.amd64.exe"><img src="../images/ud_64.png" alt="Download UltraDefrag 64bit" width="147" height="256" /></a></p>
+        <p class="greybox">For 64-bit Windows <br /> x64 Editions of XP, Vista, 7 - Server 2003, 2008</p>
+        <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.ia64.exe"><img src="../images/ud_ia64.png" alt="Download UltraDefrag for IA64" width="147" height="256" /></a></p>
+        <p class="greybox">For 64-bit Windows running on Intel Itanium processor.</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div class="date"><a href="#" title="#">Posted on</a> 30th Mar 2010</div> 
+    </div>
