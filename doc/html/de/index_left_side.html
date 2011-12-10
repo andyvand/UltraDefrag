@@ -1,0 +1,187 @@
+  <div id="left_side">
+    <div class="intro">
+        <div class="pad">
+            UltraDefrag ist ein leistungsstarkes Open Source Defragmentierungswerkzeug für Windows.
+            Es kann jegliche Systemdateien defragmentieren, einschließlich Registrierungs- und Auslagerungsdateien.
+            Ein Hauptziel von UltraDefrag ist es, diese Aufgabe so schnell und zuverlässig wie möglich zu erledigen.<br /> 
+            <a href="http://sourceforge.net/projects/ultradefrag/files/" title="Lade die neueste Version von UltraDefrag herunter">Herunterladen</a>&nbsp; | &nbsp;
+            <a href="http://ultradefrag.sourceforge.net/handbook/Introduction.html" title="Lies die komplette Übersicht von UltraDefrag">Funktionsliste</a>&nbsp; | &nbsp;
+            <a href="http://sourceforge.net/projects/ultradefrag/forums">Deine Meinung</a>
+        </div>
+    </div>
+    <div class="mpart">
+        <!-- pre-release announcement -->
+        <h3>Schlagzeile - UltraDefrag 5.0.0 RC1 freigegeben.</h3>
+        <h2>&nbsp;</h2> 
+        <p>Dieser Freigabekandidat enthält alle neuen Funktionen der ersten v5.0.0 Version.</p>
+        <p><a href=""><b>GUI:</b></a></p>
+        <ul>
+        <li>Die Höhe der Laufwerksliste kann nun durch ziehen des unteren Randes angepasst werden.</li>
+        <li>Der Fortschritt wird nun in der Statusspalte der Laufwerksliste angezeigt.</li>
+        <li>Die Laufwerksbezeichnung wird nun in der Laufwerksliste angezeigt. Bitte überprüft ob diese richtig angezeigt werden.</li>
+        <li>Es sind nun mehr Aktionen verfügbar, die beim Abschluss von UltraDefrag ausgeführt werden können.</li>
+        <li>Nicht benutzte Blöcke der Zuordnungseinheitendarstellung sind in Grau gehalten,
+        dadurch können sie nicht mit freiem Speicher verwechselt werden.</li>
+        </ul>
+        <p><a href=""><b>Kommandozeilenoberfläche:</b></a></p>
+        <ul>
+        <li>Es ist nun möglich Pfade als Argumente anzugeben, dies half ein Problem mit dem Explorer Kontextmenü unter Vista und höher zu beheben.</li>
+        </ul>
+        <p><a href=""><b>Treiber:</b></a></p>
+        <ul>
+        <li>Die Defragmentierung von normalen Dateien und Volumen-Metadateien wurde verbessert.</li>
+        <li>Die Komplettoptimierung wurde verbessert, welche alle Dateien ungeachtet ihrer Fragmentierung behandelt.</li>
+        <li>Eine Schnelloptimierung wurde hinzugefügt, welche hauptsächlich fragmentierte Dateien behandelt.</li>
+        <li>Eine Optimierung des MFT wurde hinzugefügt, welche nur den MFT behandelt.</li>
+        <li>Über eine Umgebungsvariable wird die Erstellung der Protokolldatei gesteuert, was das Erstellen von Problemberichten erheblich vereinfacht.</li>
+        </ul>
+        <p><a href=""><b>Berichte:</b></a></p>
+        <ul>
+        <li>Die Dateigröße, Dateistatus und der Zeitpunkt der Berichtserstellung werden nun in den Fragmentierungsberichten aufgelistet.</li>
+        </ul>
+        <p><a href=""><b>Installationsprogramm:</b></a></p>
+        <ul>
+        <li>Alle Optionen können nun über Kommandozeilenparameter angegeben werden.<br/>
+        Weitere Informationen zu diesen Parametern lesen Sie bitte im <a href="../handbook/Installation.html" target="_blank">Handbuch</a> nach.</li>
+        </ul>
+        <p>Wir freuen uns über Kommentare und Vorschläge zum neuen Aussehen!</p>
+        <p>Bitte besuche <a href="http://ultradefrag.wikispaces.com/">UltraDefrag.WikiSpaces.com</a>
+        und übersetze die fehlenden Teile der Sprachen denen Du mächtig bist.</p>
+        <p>Besten Dank im Voraus! Wir schätzen Deine Unterstützung sehr!</p>
+        <p><a href="http://sourceforge.net/project/screenshots.php?group_id=199532" target="_blank">Bilder</a> der neuen Oberfläche.
+        Testversion <a href="http://sourceforge.net/projects/ultradefrag/files/" target="_blank">herunterladen</a>.</p>
+        <p>Das <a href="../HISTORY.TXT">Änderungsprotokoll</a> enthält eine komplette Liste aller Änderungen.</p>
+        <div class="date"><!--#config timefmt="%F" --><a href="#" title="#">Veröffentlicht am</a> <!--#flastmod file="index_left_side.html" --></div> 
+
+        <!-- release announcement -->
+        <h3>Neuigkeiten - UltraDefrag 4.4 wurde endlich freigegeben!</h3>
+        <h2>&nbsp;</h2> 
+        
+        <p>Wir möchten Euch die neueste Version von UltraDefrag vorstellen, sie enthält folgende Verbesserungen:</p>
+        
+        <p><a href=""><b>GUI:</b></a></p>
+        <ul>
+        <li>Die Fortschritsanzeige wurde der Titelleiste hinzugefügt, damit sie auch im Tooltip des Taskbar-Icons sichtbar ist.</li>
+        <li>Der ein Zeichen lange Operationsname der Fortschritsanzeige wurde durch die ausgeschriebene Variante ersetzt.</li>
+        </ul>
+
+        <p><a href=""><b>Treiber:</b></a></p>
+        <ul>
+        <li>Teilweises Defragmentieren wurde hinzugefügt, um die Anzahl der Fragmente zu verringern,
+        falls nicht genügend freier Speicher für das Zusammenhängen der Datei vorhanden ist.</li>
+        <li>Der Festplattenoptimierungsalgorythmus wurde verbessert um unnötige zusätzliche Durchläufe zu verhindern.</li>
+        <li>Ein kleines Problem wurde beseitigt, welches verhinderte die Optimierung zu unterbrechen.</li>
+        <li>Der Festplattenoptimierungsalgorythmus wurde verbessert um zu verhindern,
+        dass stark fragmentierte Bereiche übersprungen werden.</li>
+        </ul>
+        
+        <p><a href=""><b>Startzeitoberfläche:</b></a></p>
+        <ul>
+        <li><b>call</b>, <b>man</b>, <b>type</b> Kommandos wurden zur Startzeitumgebung hinzugefügt.</li>
+        <li><b>echo</b>, <b>exit</b>, <b>pause</b>, <b>set</b> Kommandos wurden verbessert.</li>
+        <li>History der eingegebenen Kommands wurde dem interaktiven Modus hizugefügt.
+        Mit den Pfeiltasten können diese wiederverwendet werden.</li>
+        <li>Drücken der Escape Taste bricht nun die Startzeitskriptausführung ab und
+        wechselt unverzüglich in den interaktiven Modus.</li>
+        <li>Verzögerte Ausführung des boot-off Kommandos hinzugefügt, dies hebt die Einschränkung auf,
+        dass boot-on/off nicht vor reboot/shutdown wirksam werden.</li>
+        <li>reboot/shutdown Kommandos kennzeichnen den Startvorgang nun als erfolgreich.</li>
+        <li>Falls nur eine Tastatur vorhanden ist, wird die 10 Sekunden Pause übersprungen.</li>
+        </ul>
+        
+        <p><a href=""><b>Kommandozeilenoberfläche:</b></a></p>
+        <ul>
+        <li>Die Fortschrittsanzeige wurde für die Ausgabeumleitung bereinigt.</li>
+        </ul>
+        
+        <p><a href=""><b>Übersetzungen:</b></a></p>
+        <ul>
+        <li>Es ist nun möglich die Sprache nachträglich ohne Neuinstallation zu ändern.</li>
+        <li><b>Hindi</b> wurde hinzugefügt.</li>
+        <li>Folgende Übersetzungen wurden aktualisiert:<br/> <b>Chinesisch (Traditionell)</b>, <b>Kroatisch</b>, <b>Dänisch</b>, <b>Niederländisch</b>, 
+        <b>Französisch</b>, <b>Griechisch</b>, <b>Polnisch</b>, <b>Portugiesisch</b>, <b>Russisch</b>, <b>Serbisch</b>, <b>Schwedisch</b>,
+        <b>Türkisch</b>.</li>
+        </ul>
+
+        <p>Das <a href="../HISTORY.TXT">Änderungsprotokoll</a> enthält eine komplette Liste aller Änderungen.</p>
+        <div class="date"><a href="#" title="#">Veröffentlicht am</a> 24 Sept. 2010</div> 
+        
+        <!-- preview announcement -->
+<!--
+        <h3>Vorschau - UltraDefrag nächste Version, was wir erwarten können.</h3>
+        <h2>&nbsp;</h2> 
+        <p>Die nächste Version wird folgende Verbesserungen enthalten:</p>
+        <ul>
+        <li>Der Aufgabenplaner wird komplett neu geschrieben um einen vollwertigen Aufgabenverwalter zu erhalten, welcher das Hinzufügen, Ändern und Löschen von Aufgaben ermöglicht.</li>
+        <li>Das Problem, dass der Rechner nach einer unvollständigen Installation, auf Grund fehlender Boot-Dateien, nicht mehr startet wird behoben.</li>
+        </ul>
+        <h2>&nbsp;</h2> 
+-->
+        <!-- Overview -->
+        <a name="overview"></a>
+        <p>UltraDefrag ist ein leistungsstarkes Festplatten-Defragmentierungswerkzeug für Windows. Es ist der erste Open Source Defragmentierer, der
+        das Defragmentieren von gesperrten Systemdateien unterstützt. Alle Dateien, einschließlich Registrierungs- und Auslagerungsdateien,
+        können von UltraDefrag während des Windows Startvorganges verarbeitet werden.</p>
+        <p>Eines der vorrangigen Ziele der Struktur von UltraDefrag ist es, die Aufgabe so schnell und zuverlässig wie möglich zu erledigen.</p>
+        <p>UltraDefrag ist vollständig kompatibel zu Windows NT 4.0, Windows 2000, Windows XP, Windows Server 2003,
+        Windows Vista, Windows Server 2008, Windows 7 und allen 64-bit Editionen von Windows.</p>
+        <h2>&nbsp;</h2> 
+        <p>Einige UltraDefrag Höhepunkte (die komplette Funktionsliste ist <a href="http://ultradefrag.sourceforge.net/handbook/Introduction.html"><b>hier</b></a>):</p>
+        <ul>
+          <li><img src="../images/boot_time.jpg" alt="Boot Time Defrag" width="250" height="95" /><strong>Startzeit Defragmentierung :</strong></li>
+        </ul>
+        <p>Diese Funktion ermöglicht es jegliche Systemdateien zu defragmentieren. Einschließlich Auslagerungs-, Registrierungs-, Ruhemodus- und viele andere Dateien, welche vom System oder den Anwendungen gesperrt sind, während Windows vollständig läuft.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/shutdown_job.jpg" alt="Shutdown after a job" width="250" height="95" /><strong>Computer herunterfahren, wenn eine Aufgabe beendet ist :</strong></li>
+        </ul>
+        <p>Wir alle wissen, wie lange eine Defragmentierung oder Optimierung läuft. Meist lassen wir während dessen den PC unbeaufsichtigt. Mit dieser Option kann UD den PC herunterfahren, nachdem die Aufgabe erledigt ist. Das spart Strom und vermeidet viele Gefahren.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/compact_feature.jpg" alt="Compact Option" width="250" height="95" /><strong>Schnelle Festplatten Optimierung:</strong></li>
+        </ul>
+        <p>Der Optimierer ordnet alle Daten neu und verschiebt sie an den Anfang der Festplatte. In vielen Fällen haben wir festgestellt, dass das System stabiler und viel besser unter Last läuft, wenn die Daten am Anfang des Laufwerks liegen.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/folder_file.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Defragmentieren einzelner Dateien und Ordner :</strong></li>
+        </ul>
+        <p>Nach der Installation von UltraDefrag besteht die Möglichkeit, einzelne Dateien oder Ordner zu defragmentieren. Diese Option ist äußerst nützlich, wenn Du kürzlich eine Anwendung oder ein Spiel installiert hast und diese sofort defragmentieren möchtest um die maximale Leistung zu erreichen.</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/extended_gui.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Erweiterte und anpassbare Benutzeroberfläche :</strong></li>
+        </ul>
+        <p>UltraDefrag ermöglicht es Dir die Benutzeroberfläche anzupassen, beispielsweise die Schriftart und deren Größe. Das aktuelle Windows Design wird übernommen. Im Gegensatz zu Vista und anderen Versionen von Windows Defrag, zeigt UD eine grafische Darstellung der Festplatte, wie bei älteren Windows Generationen.</p>
+<!--        <p>&nbsp;</p>
+        <ul>
+          <li><img src="../images/scheduler.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Defragmentierungsplaner :</strong></li>
+        </ul>
+        <p>Wähle die Zeiten aus, zu denen UltraDefrag als geplante Aufgabe defragmentieren soll. </p>
+        <p></p> -->
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h3 class="greybox">Übersetze UltraDefrag in Deine Muttersprache!</h3>
+        <p><img src="../images/language.gif" alt="" width="60" height="60" /></p>
+        <p>Du kannst an der Übersetzung von UltraDefrag durch hinzufügen neuer oder ändern bestehender Übersetzungen teilhaben.
+        Besuche <a href="http://ultradefrag.wikispaces.com/">UltraDefrag.WikiSpaces.com</a> für weitere Details.</p>
+        <p>Besten Dank im Voraus! Wir schätzen Deine Unterstützung sehr!</p>
+        <p>&nbsp;</p>
+
+        <div class="date"><a href="#" title="#">Veröffentlicht am</a> 30. März 2010</div>
+        <h2 class="content"><strong>ULTRADEFRAG HERUNTERLADEN</strong></h2>
+        <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.i386.exe"><img src="../images/ud_down.png" alt="Download UltraDefrag 32bit" width="147" height="256" /></a></p>
+        <p class="greybox">Für 32-bit Windows <br /> Windows NT4.0, 2000, XP, Vista, 7 - Server NT4.0, 2000, 2003, 2008</p>
+        <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.amd64.exe"><img src="../images/ud_64.png" alt="Download UltraDefrag 64bit" width="147" height="256" /></a></p>
+        <p class="greybox">Für 64-bit Windows <br /> x64 Editionen von Windows XP, Vista, 7 - Server 2003, 2008</p>
+        <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.ia64.exe"><img src="../images/ud_ia64.png" alt="Download UltraDefrag for IA64" width="147" height="256" /></a></p>
+        <p class="greybox">Für 64-bit Windows <br /> auf Intel Itanium Processoren.</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div class="date"><a href="#" title="#">Veröffentlicht am</a> 30. März 2010</div> 
+    </div>

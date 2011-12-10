@@ -1,0 +1,31 @@
+# custom error page
+ErrorDocument 404 /Error_Pages/404.html
+
+# enable SSI
+Options +IncludesNOEXEC
+AddOutputFilter INCLUDES .html
+
+# enable expirations
+ExpiresActive On
+
+# expire files in the client's cache
+ExpiresByType image/ico A60
+ExpiresByType image/gif A60
+ExpiresByType image/png A60
+ExpiresByType image/jpeg A60
+ExpiresByType application/javascript A60
+ExpiresByType text/javascript A60
+ExpiresByType text/css A60
+
+# redirects
+Options +FollowSymLinks
+RewriteEngine on
+RewriteRule (about|artgallery|logos_web|screenshots|wallpapers)\.html$ http://ultradefrag.sourceforge.net/tmp/new_layout_3/index.html?$1 [R=301,L]
+
+RewriteRule bugs\.html$        http://sourceforge.net/tracker/?group_id=199532               [R=301,L]
+RewriteRule development\.html$ http://ultradefrag.sourceforge.net/doxy-doc/html/index.html   [R=301,L]
+RewriteRule download\.html$    http://sourceforge.net/projects/ultradefrag/files/            [R=301,L]
+RewriteRule faq\.html$         http://ultradefrag.sourceforge.net/handbook/FAQ.html          [R=301,L]
+RewriteRule forum\.html$       http://sourceforge.net/projects/ultradefrag/forums/           [R=301,L]
+RewriteRule manual\.html$      http://ultradefrag.sourceforge.net/handbook/                  [R=301,L]
+RewriteRule overview\.html$    http://ultradefrag.sourceforge.net/handbook/Introduction.html [R=301,L]
