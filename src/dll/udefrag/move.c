@@ -439,6 +439,11 @@ static winx_blockmap *add_new_block(winx_blockmap **head,ULONGLONG vcn,ULONGLONG
 
 /**
  * @brief Reduces number of blocks if possible.
+ * @note As a side effect, for compressed/sparse 
+ * files it joins multiple blocks following
+ * each other to a single block. However, this is
+ * not mandatory since this routine is used in
+ * dry run mode only.
  */
 static void optimize_blockmap(winx_file_info *f)
 {
@@ -670,6 +675,7 @@ int move_file(winx_file_info *f,
     HANDLE hFile;
     int old_color, new_color;
     int was_fragmented, became_fragmented;
+    int was_excluded, became_excluded;
     int dump_result;
     winx_blockmap *block, *first_block;
     ULONGLONG clusters_to_redraw;
@@ -732,6 +738,7 @@ int move_file(winx_file_info *f,
     /* save file properties */
     old_color = get_file_color(jp,f);
     was_fragmented = is_fragmented(f);
+    was_excluded = is_excluded(f);
 
     /* open the file */
     Status = winx_defrag_fopen(f,WINX_OPEN_FOR_MOVE,&hFile);
@@ -892,6 +899,16 @@ int move_file(winx_file_info *f,
     if(became_fragmented && !was_fragmented)
         expand_fragmented_files_list(f,jp);
     
+    /* filter the file by the fragment size threshold */
+    exclude_by_fragment_size(f,jp);
+    became_excluded = is_excluded(f);
+    if(was_fragmented && became_fragmented){
+        if(!became_excluded && was_excluded)
+            expand_fragmented_files_list(f,jp);
+        if(became_excluded && !was_excluded)
+            truncate_fragmented_files_list(f,jp);
+    }
+
     jp->p_counters.moving_time += winx_xtime() - time;
     return (moving_result == DETERMINED_MOVING_PARTIAL_SUCCESS) ? (-1) : 0;
 }

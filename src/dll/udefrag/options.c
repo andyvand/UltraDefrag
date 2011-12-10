@@ -63,6 +63,13 @@ int get_options(udefrag_job_parameters *jp)
         winx_patcomp(&jp->udo.ex_filter,buffer,L";\"",WINX_PAT_ICASE);
     }
 
+    /* set fragment size threshold */
+    if(winx_query_env_variable(L"UD_FRAGMENT_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
+        (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
+        buf[sizeof(buf) - 1] = 0;
+        jp->udo.fragment_size_threshold = winx_hr_to_bytes(buf);
+    }
+
     /* set file size threshold */
     if(winx_query_env_variable(L"UD_SIZELIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
@@ -122,6 +129,7 @@ int get_options(udefrag_job_parameters *jp)
             DebugPrint("  - %ws",jp->udo.ex_filter.array[i]);
     }
     DebugPrint("file size threshold = %I64u",jp->udo.size_limit);
+    DebugPrint("fragment size threshold = %I64u",jp->udo.fragment_size_threshold);
     DebugPrint("file fragments threshold = %I64u",jp->udo.fragments_limit);
     DebugPrint("time limit = %I64u seconds",jp->udo.time_limit);
     DebugPrint("progress refresh interval = %u msec",jp->udo.refresh_interval);

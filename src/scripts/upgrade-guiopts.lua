@@ -67,6 +67,22 @@ in_filter = "$in_filter"
 ex_filter = "$ex_filter"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- The fragment size threshold filter allows to eliminate a little fragments
+-- only, in other words, only fragments affecting the system performance.
+--
+-- Big fragments take no effect on the performance, because Windows needs
+-- more time to read them from disk anyway and this time is over a time needed
+-- to go from one fragment to another.
+--
+-- This filter is intended to avoid unnecessary data moves. It speeds up
+-- the disk processing.
+--
+-- The default value is "20 Mb".
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+fragment_size_threshold = "$fragment_size_threshold"
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- The sizelimit filter allows to exclude big files from the
 -- defragmentation. For example, when you watch a movie, it takes usually
 -- 1-2 hours while time needed to move drive's head from one fragment to
@@ -243,7 +259,7 @@ end
 
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
-current_version = 1
+current_version = 2
 old_version = 0
 upgrade_needed = 1
 
@@ -254,6 +270,7 @@ assert(instdir, "upgrade-guiopts.lua: the first argument is missing")
 -- set defaults
 in_filter = ""
 ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar"
+fragment_size_threshold = "20 Mb"
 sizelimit = ""
 fragments_threshold = 0
 time_limit = ""

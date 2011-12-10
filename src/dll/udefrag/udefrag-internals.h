@@ -117,6 +117,7 @@
 typedef struct _udefrag_options {
     winx_patlist in_filter;     /* patterns for file inclusion */
     winx_patlist ex_filter;     /* patterns for file exclusion */
+    ULONGLONG fragment_size_threshold;  /* fragment size threshold */
     ULONGLONG size_limit;       /* file size threshold */
     ULONGLONG fragments_limit;  /* file fragments threshold */
     ULONGLONG time_limit;       /* processing time limit, in seconds */
@@ -216,7 +217,7 @@ typedef struct _udefrag_job_parameters {
     winx_volume_information v_info;             /* basic volume information */
     file_system_type fs_type;                   /* type of volume file system */
     winx_file_info *filelist;                   /* list of files */
-    udefrag_fragmented_file *fragmented_files;  /* list of fragmented files */
+    udefrag_fragmented_file *fragmented_files;  /* list of fragmented files; does not contain filtered out files */
     winx_volume_region *free_regions;           /* list of free space regions */
     unsigned long free_regions_count;           /* number of free space regions */
     struct _mft_zones mft_zones;                /* coordinates of mft zones; as they are before the volume processing */
@@ -267,6 +268,7 @@ NTSTATUS udefrag_fopen(winx_file_info *f,HANDLE *phFile);
 int is_file_locked(winx_file_info *f,udefrag_job_parameters *jp);
 int is_mft(winx_file_info *f,udefrag_job_parameters *jp);
 
+int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp);
 int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 
