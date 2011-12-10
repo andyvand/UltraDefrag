@@ -63,6 +63,9 @@ int optimize(udefrag_job_parameters *jp)
     ULONGLONG start_lcn = 0, new_start_lcn;
     ULONGLONG remaining_clusters;
 
+    /* 5.1 algorithm is not implemented */
+    return 0;
+    
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */
     if(result < 0) return result;
@@ -156,6 +159,9 @@ int optimize_mft(udefrag_job_parameters *jp)
 {
     int result;
     winx_file_info *file;
+    
+    /* 5.1 algorithm is not implemented */
+    return 0;
     
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */

@@ -1,5 +1,13 @@
 HISTORY
 
+  Version 5.1.0  2012-01-
+  ------------------------------------------------------------------------------
+    beta1:
+    - ability to filter out files by size of their fragments was added
+      (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
+      environment variable in command line tool and boot time interface)
+
+
   Version 5.0.0  2011-12-
   ------------------------------------------------------------------------------
     - the following translations were updated:

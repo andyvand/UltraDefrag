@@ -20,6 +20,15 @@
 /**
  * @file udefrag.c
  * @brief Entry point.
+ * @details Each disk processing algorithm
+ * should comply with the following rules:
+ * - avoid infinite loops
+ * - filter files properly
+ * - produce reports properly
+ * - in case of repeated calls avoid
+ *   processing of already processed data
+ * - use fast searching algorithms
+ *   whenever it makes sense
  * @addtogroup Engine
  * @{
  */

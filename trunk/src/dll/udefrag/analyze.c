@@ -253,9 +253,44 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
 }
 
 /**
- * @brief Defines whether the file
- * must be excluded from the volume
- * processing or not.
+ * @brief Defines whether the file must be
+ * excluded from the volume processing or not
+ * because of its fragments size.
+ * @return Nonzero value indicates
+ * that the file must be excluded.
+ */
+int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    winx_blockmap *block;
+    int fragment_size = 0;
+    
+    for(block = f->disp.blockmap; block; block = block->next){
+        if(block == f->disp.blockmap){
+            fragment_size += block->length;
+        } else if(block->lcn == block->prev->lcn + block->prev->length){
+            fragment_size += block->length;
+        } else {
+            if(fragment_size){
+                if(fragment_size * jp->v_info.bytes_per_cluster < jp->udo.fragment_size_threshold)
+                    return 0; /* file contains little fragments */
+            }
+            fragment_size = block->length;
+        }
+        if(block->next == f->disp.blockmap) break;
+    }
+    
+    if(fragment_size){
+        if(fragment_size * jp->v_info.bytes_per_cluster < jp->udo.fragment_size_threshold)
+            return 0; /* file contains little fragments */
+    }
+
+    return 1;
+}
+
+/**
+ * @brief Defines whether the file must be
+ * excluded from the volume processing or not
+ * because of its path.
  * @return Nonzero value indicates
  * that the file must be excluded.
  */
@@ -279,7 +314,12 @@ int exclude_by_path(winx_file_info *f,udefrag_job_parameters *jp)
 
 /**
  * @brief find_files helper.
- * @note Optimized for speed.
+ * @note 
+ * - Optimized for speed.
+ * - Ability to skip file and its children
+ * is not used, because the new 5.1 algorithms
+ * require full information about all files
+ * on the disk.
  */
 static int filter(winx_file_info *f,void *user_defined_data)
 {
@@ -291,7 +331,10 @@ static int filter(winx_file_info *f,void *user_defined_data)
     if(f->path == NULL) goto skip_file_and_children;
     if(f->path[0] == 0) goto skip_file_and_children;
     
-    /* skip resident streams, but not in context menu handler */
+    /*
+    * Skip resident streams, but not in context menu
+    * handler, where they're needed for statistics.
+    */
     if(f->disp.fragments == 0 && !(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER))
         return 0;
     
@@ -327,17 +370,9 @@ static int filter(winx_file_info *f,void *user_defined_data)
         DebugPrint("attribute list found: %ws",f->path);
     */
 
-    /*
-    * No files can be filtered out when
-    * volume optimization job is requested.
-    */
-    if(jp->job_type == FULL_OPTIMIZATION_JOB \
-      || jp->job_type == QUICK_OPTIMIZATION_JOB \
-      || jp->job_type == MFT_OPTIMIZATION_JOB)
-        return 0;
-
-    /* skip temporary files, as well as their children */
-    if(is_temporary(f)) goto skip_file_and_children;
+    /* skip temporary files */
+    if(is_temporary(f))
+        goto skip_file;
 
     /* filter files by their sizes */
     filesize = f->disp.clusters * jp->v_info.bytes_per_cluster;
@@ -350,6 +385,10 @@ static int filter(winx_file_info *f,void *user_defined_data)
     if(jp->udo.fragments_limit && f->disp.fragments < jp->udo.fragments_limit)
         goto skip_file;
 
+    /* filter files by their fragment sizes */
+    if(exclude_by_fragment_size(f,jp))
+        goto skip_file;
+    
     /* filter files by their paths */
     if(exclude_by_path(f,jp)){
         f->user_defined_flags |= UD_FILE_EXCLUDED;
@@ -464,8 +503,9 @@ static int find_files(udefrag_job_parameters *jp)
         }
     }
 
-    /* speed up the context menu handler */
-    if(jp->fs_type != FS_NTFS && context_menu_handler){
+    /* the new 5.1 algorithms require information about all files on the disk */
+    if(0){//jp->fs_type != FS_NTFS && context_menu_handler){
+        /* speed up the context menu handler */
         /* in case of c:\* or c:\ scan entire disk */
         c = jp->udo.in_filter.array[0][3];
         if(c == 0 || c == '*')
@@ -642,6 +682,9 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
 int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
 {
     udefrag_fragmented_file *ff, *ffprev = NULL;
+    
+    /* don't include filtered out files, for better performance */
+    if(is_excluded(f)) return 0;
 
     for(ff = jp->fragmented_files; ff; ff = ff->next){
         if(ff->f->disp.fragments <= f->disp.fragments){
@@ -692,7 +735,7 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
     winx_file_info *f;
     
     for(f = jp->filelist; f; f = f->next){
-        if(is_fragmented(f) && !is_excluded(f)){
+        if(is_fragmented(f)){
             /* exclude files with empty path */
             if(f->path != NULL){
                 if(f->path[0] != 0)

@@ -148,6 +148,9 @@ int defragment(udefrag_job_parameters *jp)
     disk_processing_routine defrag_routine = NULL;
     int result, overall_result = -1;
     
+    /* 5.1 algorithm is not implemented */
+    return 0;
+    
     /* perform volume analysis */
     if(jp->job_type != MFT_OPTIMIZATION_JOB){
         result = analyze(jp); /* we need to call it once, here */
