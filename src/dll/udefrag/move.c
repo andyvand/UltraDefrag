@@ -894,18 +894,19 @@ int move_file(winx_file_info *f,
         }
     }
 
-    /* update list of fragmented files */
-    if(!became_fragmented && was_fragmented)
-        truncate_fragmented_files_list(f,jp);
-    if(became_fragmented && !was_fragmented)
-        expand_fragmented_files_list(f,jp);
-    
     /* reapply filters to the file */
     r1 = exclude_by_fragment_size(f,jp);
     r2 = exclude_by_fragments(f,jp);
     r3 = exclude_by_size(f,jp);
     if(r1 || r2 || r3)
         f->user_defined_flags |= UD_FILE_EXCLUDED;
+
+    /* update list of fragmented files */
+    if(!became_fragmented && was_fragmented)
+        truncate_fragmented_files_list(f,jp);
+    if(became_fragmented && !was_fragmented)
+        expand_fragmented_files_list(f,jp);
+
     became_excluded = is_excluded(f);
     if(was_fragmented && became_fragmented){
         if(!became_excluded && was_excluded)
