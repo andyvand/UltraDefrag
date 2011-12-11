@@ -59,6 +59,8 @@ config_file_contents = [[
 -- Note that paths must be typed with double back slashes instead of the single
 -- ones. For example, "C:\\MyDocs\\Music\\mp3\\Red_Hot_Chili_Peppers\\*"
 
+-- Empty strings ("") turn off the filters.
+
 -- Note that files marked as temporary by system are always excluded regardless
 -- of filters, since these files usually take no effect on system performance.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,15 +71,16 @@ ex_filter = "$ex_filter"
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- The fragment size threshold filter allows to eliminate a little fragments
 -- only, in other words, only fragments affecting the system performance.
---
+
 -- Big fragments take no effect on the performance, because Windows needs
 -- more time to read them from disk anyway and this time is over a time needed
 -- to go from one fragment to another.
---
+
 -- This filter is intended to avoid unnecessary data moves. It speeds up
 -- the disk processing.
---
--- The default value is "20 Mb".
+
+-- The default value is "20 Mb". Both zero value and empty string ("")
+-- turn off the filter.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 fragment_size_threshold = "$fragment_size_threshold"
@@ -93,6 +96,8 @@ fragment_size_threshold = "$fragment_size_threshold"
 -- To exclude all files greater than 100 Mb, set:
 
 -- sizelimit = "100 Mb"
+
+-- Both zero value and empty string ("") turn off the filter.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 sizelimit = "$sizelimit"
@@ -103,6 +108,8 @@ sizelimit = "$sizelimit"
 -- 5 fragments, set:
 
 -- fragments_threshold = 5
+
+-- Both zero value and empty string ("") turn off the filter.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 fragments_threshold = $fragments_threshold
@@ -117,6 +124,8 @@ fragments_threshold = $fragments_threshold
 -- 30 minutes, set:
 
 -- time_limit = "6h 30m"
+
+-- Both zero value and empty string ("") turn off this option.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 time_limit = "$time_limit"
@@ -142,7 +151,7 @@ dbgprint_level = "$dbgprint_level"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Set log_file_path to the path and file name of the log file to be created,
--- for normal operation set it to an empty string.
+-- for normal operation set it to an empty string ("").
 -- For example:
 -- log_file_path = "C:\\Windows\\UltraDefrag\\Logs\\ultradefrag.log"
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -682,6 +682,7 @@ int move_file(winx_file_info *f,
     ULONGLONG curr_vcn, n;
     winx_file_info new_file_info;
     ud_file_moving_result moving_result;
+    int r1, r2, r3;
     
     time = winx_xtime();
 
@@ -899,8 +900,12 @@ int move_file(winx_file_info *f,
     if(became_fragmented && !was_fragmented)
         expand_fragmented_files_list(f,jp);
     
-    /* filter the file by the fragment size threshold */
-    exclude_by_fragment_size(f,jp);
+    /* reapply filters to the file */
+    r1 = exclude_by_fragment_size(f,jp);
+    r2 = exclude_by_fragments(f,jp);
+    r3 = exclude_by_size(f,jp);
+    if(r1 || r2 || r3)
+        f->user_defined_flags |= UD_FILE_EXCLUDED;
     became_excluded = is_excluded(f);
     if(was_fragmented && became_fragmented){
         if(!became_excluded && was_excluded)

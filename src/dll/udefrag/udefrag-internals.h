@@ -269,6 +269,8 @@ int is_file_locked(winx_file_info *f,udefrag_job_parameters *jp);
 int is_mft(winx_file_info *f,udefrag_job_parameters *jp);
 
 int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp);
+int exclude_by_fragments(winx_file_info *f,udefrag_job_parameters *jp);
+int exclude_by_size(winx_file_info *f,udefrag_job_parameters *jp);
 int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 

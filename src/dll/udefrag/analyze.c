@@ -264,6 +264,8 @@ int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
     winx_blockmap *block;
     int fragment_size = 0;
     
+    if(jp->udo.fragment_size_threshold == 0) return 0;
+    
     for(block = f->disp.blockmap; block; block = block->next){
         if(block == f->disp.blockmap){
             fragment_size += block->length;
@@ -285,6 +287,43 @@ int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
     }
 
     return 1;
+}
+
+/**
+ * @brief Defines whether the file must be
+ * excluded from the volume processing or not
+ * because of its number of fragments.
+ * @return Nonzero value indicates
+ * that the file must be excluded.
+ */
+int exclude_by_fragments(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    if(jp->udo.fragments_limit == 0) return 0;
+    return (f->disp.fragments < jp->udo.fragments_limit) ? 1 : 0;
+}
+
+/**
+ * @brief Defines whether the file must be
+ * excluded from the volume processing or not
+ * because of its size.
+ * @return Nonzero value indicates
+ * that the file must be excluded.
+ */
+int exclude_by_size(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    ULONGLONG filesize;
+    
+    f->user_defined_flags &= ~UD_FILE_OVER_LIMIT;
+    
+    if(jp->udo.size_limit == 0)
+        return 0;
+
+    filesize = f->disp.clusters * jp->v_info.bytes_per_cluster;
+    if(filesize > jp->udo.size_limit){
+        f->user_defined_flags |= UD_FILE_OVER_LIMIT;
+        return 1;
+    }
+    return 0;
 }
 
 /**
@@ -314,18 +353,14 @@ int exclude_by_path(winx_file_info *f,udefrag_job_parameters *jp)
 
 /**
  * @brief find_files helper.
- * @note 
- * - Optimized for speed.
- * - Ability to skip file and its children
- * is not used, because the new 5.1 algorithms
- * require full information about all files
- * on the disk.
+ * @note Optimized for speed.
  */
 static int filter(winx_file_info *f,void *user_defined_data)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)user_defined_data;
     int length;
-    ULONGLONG filesize;
+    
+    /* START OF AUX CODE */
     
     /* skip entries with empty path, as well as their children */
     if(f->path == NULL) goto skip_file_and_children;
@@ -369,20 +404,19 @@ static int filter(winx_file_info *f,void *user_defined_data)
     if(winx_wcsistr(f->path,L"$ATTRIBUTE_LIST"))
         DebugPrint("attribute list found: %ws",f->path);
     */
+    
+    /* START OF FILTERING */
 
     /* skip temporary files */
     if(is_temporary(f))
         goto skip_file;
 
     /* filter files by their sizes */
-    filesize = f->disp.clusters * jp->v_info.bytes_per_cluster;
-    if(jp->udo.size_limit && filesize > jp->udo.size_limit){
-        f->user_defined_flags |= UD_FILE_OVER_LIMIT;
+    if(exclude_by_size(f,jp))
         goto skip_file;
-    }
 
     /* filter files by their number of fragments */
-    if(jp->udo.fragments_limit && f->disp.fragments < jp->udo.fragments_limit)
+    if(exclude_by_fragments(f,jp))
         goto skip_file;
 
     /* filter files by their fragment sizes */
@@ -503,9 +537,8 @@ static int find_files(udefrag_job_parameters *jp)
         }
     }
 
-    /* the new 5.1 algorithms require information about all files on the disk */
-    if(0){//jp->fs_type != FS_NTFS && context_menu_handler){
-        /* speed up the context menu handler */
+    /* speed up the context menu handler */
+    if(jp->fs_type != FS_NTFS && context_menu_handler){
         /* in case of c:\* or c:\ scan entire disk */
         c = jp->udo.in_filter.array[0][3];
         if(c == 0 || c == '*')
