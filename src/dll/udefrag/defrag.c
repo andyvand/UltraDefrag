@@ -31,6 +31,16 @@
 
 #include "udefrag-internals.h"
 
+/* forward declarations */
+static ULONGLONG rough_cc_routine(udefrag_job_parameters *jp);
+static ULONGLONG fine_cc_routine(udefrag_job_parameters *jp);
+static int rough_defrag_routine(udefrag_job_parameters *jp);
+static int fine_defrag_routine(udefrag_job_parameters *jp);
+
+/************************************************************/
+/*                       Test suite                         */
+/************************************************************/
+
 /*
 * Uncomment it to test defragmentation
 * of various special files like reparse
@@ -115,25 +125,9 @@ void test_special_files_defrag(udefrag_job_parameters *jp)
 }
 #endif /* TEST_SPECIAL_FILES_DEFRAG */
 
-/**
- * @brief Calculates total number of fragmented clusters.
- */
-static ULONGLONG fragmented_clusters(udefrag_job_parameters *jp)
-{
-    udefrag_fragmented_file *f;
-    ULONGLONG n = 0;
-    
-    for(f = jp->fragmented_files; f; f = f->next){
-        if(jp->termination_router((void *)jp)) break;
-        /*
-        * Count all fragmented files which can be processed.
-        */
-        if(can_defragment(f->f,jp))
-            n += f->f->disp.clusters;
-        if(f->next == jp->fragmented_files) break;
-    }
-    return n;
-}
+/************************************************************/
+/*                    The entry point                       */
+/************************************************************/
 
 /**
  * @brief Performs a volume defragmentation.
@@ -145,14 +139,13 @@ static ULONGLONG fragmented_clusters(udefrag_job_parameters *jp)
  */
 int defragment(udefrag_job_parameters *jp)
 {
-    disk_processing_routine defrag_routine = NULL;
     int result, overall_result = -1;
-    
-    /* 5.1 algorithm is not implemented */
-    return 0;
+    disk_processing_routine defrag_routine = NULL;
+    clusters_counting_routine cc_routine = NULL;
+    int win_version;
     
     /* perform volume analysis */
-    if(jp->job_type != MFT_OPTIMIZATION_JOB){
+    if(jp->job_type == DEFRAGMENTATION_JOB){
         result = analyze(jp); /* we need to call it once, here */
         if(result < 0) return result;
     }
@@ -163,23 +156,30 @@ int defragment(udefrag_job_parameters *jp)
         return 0;
     }
 #endif
-    
-    /* choose defragmentation strategy */
-    if(jp->pi.fragmented >= jp->free_regions_count || \
-       jp->udo.job_flags & UD_PREVIEW_MATCHING){
-        DebugPrint("defragment: walking fragmented files list");
-        defrag_routine = defragment_small_files_walk_fragmented_files;
+
+    /* set working routines */
+    win_version = winx_get_os_version();
+    if(jp->udo.fragment_size_threshold == 0 \
+      || win_version <= WINDOWS_2K){
+        DebugPrint("defragment: rough routines will be used");
+        if(win_version <= WINDOWS_2K)
+            DebugPrint("defragment: because of nt4/w2k API limitations");
+        else
+            DebugPrint("defragment: because of fragment size threshold filter not set");
+        defrag_routine = rough_defrag_routine;
+        cc_routine = rough_cc_routine;
     } else {
-        DebugPrint("defragment: walking free regions list");
-        defrag_routine = defragment_small_files_walk_free_regions;
+        DebugPrint("defragment: fine routines will be used");
+        defrag_routine = fine_defrag_routine;
+        cc_routine = fine_cc_routine;
     }
-    
+
     /* do the job */
     jp->pi.pass_number = 0;
     while(!jp->termination_router((void *)jp)){
         /* reset counters */
         jp->pi.processed_clusters = 0;
-        jp->pi.clusters_to_process = fragmented_clusters(jp);
+        jp->pi.clusters_to_process = cc_routine(jp);
         
         result = defrag_routine(jp);
         if(result == 0){
@@ -197,22 +197,160 @@ int defragment(udefrag_job_parameters *jp)
         jp->pi.pass_number ++;
     }
     
-    if(jp->termination_router((void *)jp)) return 0;
+    return (jp->termination_router((void *)jp)) ? 0 : overall_result;
+}
+
+/************************************************************/
+/*                  Rough defragmentation                   */
+/*                 -----------------------                  */
+/*   For nt4/w2k or fragment size threshold turned off.     */
+/************************************************************/
+
+/**
+ * @brief Calculates total number of fragmented clusters.
+ */
+static ULONGLONG rough_cc_routine(udefrag_job_parameters *jp)
+{
+    udefrag_fragmented_file *f;
+    ULONGLONG n = 0;
     
-    if(jp->job_type == MFT_OPTIMIZATION_JOB) return overall_result;
-    
-    /* perform partial defragmentation */
-    jp->pi.processed_clusters = 0;
-    jp->pi.clusters_to_process = fragmented_clusters(jp);
-    result = defragment_big_files(jp);
-    if(result == 0){
-        /* at least partial defragmentation succeeded */
-        overall_result = 0;
+    for(f = jp->fragmented_files; f; f = f->next){
+        if(jp->termination_router((void *)jp)) break;
+        /*
+        * Count all fragmented files which can be processed.
+        */
+        if(can_defragment(f->f,jp))
+            n += f->f->disp.clusters;
+        if(f->next == jp->fragmented_files) break;
+    }
+    return n;
+}
+
+/**
+ * @internal
+ * @brief Defragments all fragmented
+ * files entirely whenever possible.
+ * @details This routine is not so much
+ * effective, but when fragment size
+ * threshold optimization is turned off
+ * it does exactly what's requested.
+ * Also, in contrary to the fine_defrag_routine,
+ * it can be used on nt4 and w2k systems
+ * which have lots of crazy limitations
+ * in FSCTL_MOVE_FILE API.
+ */
+static int rough_defrag_routine(udefrag_job_parameters *jp)
+{
+    ULONGLONG time, tm;
+    ULONGLONG defragmented_files;
+    winx_volume_region *rgn;
+    udefrag_fragmented_file *f, *f_largest;
+    ULONGLONG length;
+    char buffer[32];
+    ULONGLONG clusters_to_move;
+    winx_file_info *file;
+    ULONGLONG file_length;
+
+    jp->pi.current_operation = VOLUME_DEFRAGMENTATION;
+    jp->pi.moved_clusters = 0;
+
+    /* free as much temporarily allocated space as possible */
+    release_temp_space_regions(jp);
+
+    /* no files are excluded by this task currently */
+    for(f = jp->fragmented_files; f; f = f->next){
+        f->f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        if(f->next == jp->fragmented_files) break;
     }
 
-    if(jp->termination_router((void *)jp)) return 0;
+    /* open the volume */
+    jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
+    if(jp->fVolume == NULL)
+        return (-1);
+
+    time = start_timing("defragmentation",jp);
+
+    /* find best matching free region for each fragmented file */
+    defragmented_files = 0;
+    while(jp->termination_router((void *)jp) == 0){
+        f_largest = NULL, length = 0; tm = winx_xtime();
+        for(f = jp->fragmented_files; f; f = f->next){
+            file_length = f->f->disp.clusters;
+            if(file_length > length){
+                if(can_defragment(f->f,jp) && !is_mft(f->f,jp)){
+                    f_largest = f;
+                    length = file_length;
+                }
+            }
+            if(f->next == jp->fragmented_files) break;
+        }
+        jp->p_counters.searching_time += winx_xtime() - tm;
+        if(f_largest == NULL) break;
+        file = f_largest->f; /* f_largest may be destroyed by move_file */
+
+        rgn = find_first_free_region(jp,file->disp.clusters);
+        if(jp->termination_router((void *)jp)) break;
+        if(rgn == NULL){
+            /* exclude file from the current task */
+            file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+        } else {
+            /* move the file */
+            clusters_to_move = file->disp.clusters;
+            if(move_file(file,file->disp.blockmap->vcn,
+             clusters_to_move,rgn->lcn,0,jp) >= 0){
+                if(jp->udo.dbgprint_level >= DBG_DETAILED)
+                    DebugPrint("Defrag success for %ws",file->path);
+                defragmented_files ++;
+            } else {
+                DebugPrint("Defrag failure for %ws",file->path);
+                /* exclude file from the current task */
+                file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+            }
+        }
+    }
     
-    return overall_result;
+    /* display amount of moved data and number of defragmented files */
+    DebugPrint("%I64u files defragmented",defragmented_files);
+    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
+    DebugPrint("%s moved",buffer);
+    stop_timing("defragmentation",time,jp);
+    winx_fclose(jp->fVolume);
+    jp->fVolume = NULL;
+    return 0;
+}
+
+/************************************************************/
+/*                   Fine defragmentation                   */
+/*                  ----------------------                  */
+/*   For XP and above, fragment size threshold turned on.   */
+/************************************************************/
+
+/**
+ * @brief Calculates total number of clusters
+ * needed to be moved to complete the defragmentation.
+ */
+static ULONGLONG fine_cc_routine(udefrag_job_parameters *jp)
+{
+    /* TODO */
+    return 0;
+}
+
+/**
+ * @internal
+ * @brief Eliminates little fragments
+ * respect to the fragment size threshold
+ * filter.
+ * @details This routine is much more effective
+ * than the rough_defrag_routine, but requires
+ * the fragment size threshold filter to be set.
+ * Also it cannot be used on nt4 and w2k systems
+ * because of FSCTL_MOVE_FILE API limitations.
+ */
+static int fine_defrag_routine(udefrag_job_parameters *jp)
+{
+    /* TODO */
+    return 0;
 }
 
 /** @} */

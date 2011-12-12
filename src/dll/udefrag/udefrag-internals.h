@@ -336,6 +336,7 @@ enum {
 
 ULONGLONG calculate_starting_point(udefrag_job_parameters *jp, ULONGLONG old_sp);
 typedef int (*disk_processing_routine)(udefrag_job_parameters *jp);
+typedef ULONGLONG (*clusters_counting_routine)(udefrag_job_parameters *jp);
 int move_files_to_front(udefrag_job_parameters *jp, ULONGLONG start_lcn, int flags);
 int move_files_to_back(udefrag_job_parameters *jp, ULONGLONG start_lcn, int flags);
 
