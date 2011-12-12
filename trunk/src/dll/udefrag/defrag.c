@@ -270,7 +270,7 @@ static int rough_defrag_routine(udefrag_job_parameters *jp)
 
     time = start_timing("defragmentation",jp);
 
-    /* find best matching free region for each fragmented file */
+    /* move fragmented files to free regions large enough to hold all fragments */
     defragmented_files = 0;
     while(jp->termination_router((void *)jp) == 0){
         f_largest = NULL, length = 0; tm = winx_xtime();
