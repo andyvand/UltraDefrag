@@ -174,13 +174,13 @@ int defragment(udefrag_job_parameters *jp)
         cc_routine = fine_cc_routine;
     }
 
+    /* reset counters */
+    jp->pi.processed_clusters = 0;
+    jp->pi.clusters_to_process = cc_routine(jp);
+    
     /* do the job */
     jp->pi.pass_number = 0;
     while(!jp->termination_router((void *)jp)){
-        /* reset counters */
-        jp->pi.processed_clusters = 0;
-        jp->pi.clusters_to_process = cc_routine(jp);
-        
         result = defrag_routine(jp);
         if(result == 0){
             /* defragmentation succeeded at least once */
@@ -241,15 +241,12 @@ static ULONGLONG rough_cc_routine(udefrag_job_parameters *jp)
  */
 static int rough_defrag_routine(udefrag_job_parameters *jp)
 {
-    ULONGLONG time, tm;
-    ULONGLONG defragmented_files;
+    udefrag_fragmented_file *f, *head, *next;
     winx_volume_region *rgn;
-    udefrag_fragmented_file *f, *f_largest;
-    ULONGLONG length;
-    char buffer[32];
-    ULONGLONG clusters_to_move;
     winx_file_info *file;
-    ULONGLONG file_length;
+    ULONGLONG defragmented_files;
+    char buffer[32];
+    ULONGLONG time;
 
     jp->pi.current_operation = VOLUME_DEFRAGMENTATION;
     jp->pi.moved_clusters = 0;
@@ -270,43 +267,33 @@ static int rough_defrag_routine(udefrag_job_parameters *jp)
 
     time = start_timing("defragmentation",jp);
 
-    /* move fragmented files to free regions large enough to hold all fragments */
+    /*
+    * Move fragmented files to free regions large enough
+    * to join all fragments together. Defragment the most
+    * fragmented files first of all.
+    */
     defragmented_files = 0;
-    while(jp->termination_router((void *)jp) == 0){
-        f_largest = NULL, length = 0; tm = winx_xtime();
-        for(f = jp->fragmented_files; f; f = f->next){
-            file_length = f->f->disp.clusters;
-            if(file_length > length){
-                if(can_defragment(f->f,jp) && !is_mft(f->f,jp)){
-                    f_largest = f;
-                    length = file_length;
-                }
-            }
-            if(f->next == jp->fragmented_files) break;
-        }
-        jp->p_counters.searching_time += winx_xtime() - tm;
-        if(f_largest == NULL) break;
-        file = f_largest->f; /* f_largest may be destroyed by move_file */
-
-        rgn = find_first_free_region(jp,file->disp.clusters);
+    for(f = jp->fragmented_files; f; f = next){
         if(jp->termination_router((void *)jp)) break;
-        if(rgn == NULL){
-            /* exclude file from the current task */
-            file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-        } else {
-            /* move the file */
-            clusters_to_move = file->disp.clusters;
+        head = jp->fragmented_files;
+        next = f->next;
+        /* defragment the file */
+        file = f->f; /* f will be destroyed by move_file */
+        rgn = find_first_free_region(jp,file->disp.clusters);
+        if(rgn){
             if(move_file(file,file->disp.blockmap->vcn,
-             clusters_to_move,rgn->lcn,0,jp) >= 0){
+             file->disp.clusters,rgn->lcn,0,jp) >= 0){
                 if(jp->udo.dbgprint_level >= DBG_DETAILED)
                     DebugPrint("Defrag success for %ws",file->path);
                 defragmented_files ++;
             } else {
                 DebugPrint("Defrag failure for %ws",file->path);
-                /* exclude file from the current task */
-                file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
             }
         }
+        file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+        /* go to the next file */
+        if(jp->fragmented_files == NULL) break;
+        if(next == head) break;
     }
     
     /* display amount of moved data and number of defragmented files */
