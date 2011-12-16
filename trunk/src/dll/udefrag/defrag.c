@@ -126,6 +126,39 @@ void test_special_files_defrag(udefrag_job_parameters *jp)
 #endif /* TEST_SPECIAL_FILES_DEFRAG */
 
 /************************************************************/
+/*                   Auxiliary routines                     */
+/************************************************************/
+
+/**
+ * @brief Defines whether the file can be defragmented or not.
+ */
+static int can_defragment(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    if(!can_move(f))
+        return 0;
+
+    /* skip files with less than 2 fragments */
+    if(f->disp.blockmap->next == f->disp.blockmap \
+      || f->disp.fragments < 2 || !is_fragmented(f))
+        return 0;
+        
+    /* skip MFT */
+    if(is_mft(f,jp))
+        return 0;
+    
+    /* skip FAT directories */
+    if(jp->is_fat && is_directory(f))
+        return 0;
+        
+    /* in MFT optimization defragment marked files only */
+    if(jp->job_type == MFT_OPTIMIZATION_JOB \
+      && !is_fragmented_by_file_opt(f))
+        return 0;
+    
+    return 1;
+}
+
+/************************************************************/
 /*                    The entry point                       */
 /************************************************************/
 
@@ -277,17 +310,19 @@ static int rough_defrag_routine(udefrag_job_parameters *jp)
         if(jp->termination_router((void *)jp)) break;
         head = jp->fragmented_files;
         next = f->next;
-        /* defragment the file */
         file = f->f; /* f will be destroyed by move_file */
-        rgn = find_first_free_region(jp,file->disp.clusters);
-        if(rgn){
-            if(move_file(file,file->disp.blockmap->vcn,
-             file->disp.clusters,rgn->lcn,0,jp) >= 0){
-                if(jp->udo.dbgprint_level >= DBG_DETAILED)
-                    DebugPrint("Defrag success for %ws",file->path);
-                defragmented_files ++;
-            } else {
-                DebugPrint("Defrag failure for %ws",file->path);
+        if(can_defragment(file,jp)){
+            /* defragment the file */
+            rgn = find_first_free_region(jp,file->disp.clusters);
+            if(rgn){
+                if(move_file(file,file->disp.blockmap->vcn,
+                 file->disp.clusters,rgn->lcn,0,jp) >= 0){
+                    if(jp->udo.dbgprint_level >= DBG_DETAILED)
+                        DebugPrint("Defrag success for %ws",file->path);
+                    defragmented_files ++;
+                } else {
+                    DebugPrint("Defrag failure for %ws",file->path);
+                }
             }
         }
         file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
@@ -319,8 +354,8 @@ static int rough_defrag_routine(udefrag_job_parameters *jp)
  */
 static ULONGLONG fine_cc_routine(udefrag_job_parameters *jp)
 {
-    /* TODO */
-    return 0;
+    /* fine calculation will take too much time */
+    return rough_cc_routine(jp);
 }
 
 /**

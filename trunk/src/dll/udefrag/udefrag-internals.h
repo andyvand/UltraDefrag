@@ -83,7 +83,7 @@
 * This flag is used to mark files
 * fragmented by MFT optimizer.
 */
-#define UD_FILE_FRAGMENTED_BY_MFT_OPT  0x200
+#define UD_FILE_FRAGMENTED_BY_FILE_OPT 0x200
 
 #define UD_FILE_EXCLUDED_BY_PATH       0x400
 
@@ -98,7 +98,7 @@
 #define is_currently_excluded(f) ((f)->user_defined_flags & UD_FILE_CURRENTLY_EXCLUDED)
 #define is_moved_to_front(f)     ((f)->user_defined_flags & UD_FILE_MOVED_TO_FRONT)
 
-#define is_fragmented_by_mft_opt(f) ((f)->user_defined_flags & UD_FILE_FRAGMENTED_BY_MFT_OPT)
+#define is_fragmented_by_file_opt(f) ((f)->user_defined_flags & UD_FILE_FRAGMENTED_BY_FILE_OPT)
 
 #define is_excluded_by_path(f)   ((f)->user_defined_flags & UD_FILE_EXCLUDED_BY_PATH)
 
@@ -152,11 +152,6 @@ typedef enum {
     FS_NTFS,
     FS_UDF
 } file_system_type;
-
-typedef struct _udefrag_allowed_actions {
-    int allow_dir_defrag;      /* on FAT directories aren't movable */
-    int allow_optimize;        /* zero on FAT, because of unmovable directories */
-} udefrag_allowed_actions;
 
 /*
 * More details at http://www.thescripts.com/forum/thread617704.html
@@ -216,13 +211,13 @@ typedef struct _udefrag_job_parameters {
     udefrag_progress_info pi;                   /* progress counters */
     winx_volume_information v_info;             /* basic volume information */
     file_system_type fs_type;                   /* type of volume file system */
+    int is_fat;                                 /* nonzero value indicates that the file system is a kind of FAT */
     winx_file_info *filelist;                   /* list of files */
     udefrag_fragmented_file *fragmented_files;  /* list of fragmented files; does not contain filtered out files */
     winx_volume_region *free_regions;           /* list of free space regions */
     unsigned long free_regions_count;           /* number of free space regions */
     struct _mft_zones mft_zones;                /* coordinates of mft zones; as they are before the volume processing */
     ULONGLONG clusters_per_256k;                /* number of clusters in 256k block */
-    udefrag_allowed_actions actions;            /* actions allowed for selected file system */
     cmap cluster_map;                           /* cluster map internal data */
     WINX_FILE *fVolume;                         /* handle of the volume, used by file moving routines */
     winx_volume_region *temp_space_list;        /* list of regions of space temporarily allocated by system */
@@ -234,8 +229,10 @@ typedef struct _udefrag_job_parameters {
 
 int  get_options(udefrag_job_parameters *jp);
 void release_options(udefrag_job_parameters *jp);
+
 int save_fragmentation_reports(udefrag_job_parameters *jp);
 void remove_fragmentation_reports(udefrag_job_parameters *jp);
+
 void dbg_print_file_counters(udefrag_job_parameters *jp);
 
 /* some volume space states, for internal use only */
@@ -256,7 +253,11 @@ void redraw_all_temporary_system_space_as_free(udefrag_job_parameters *jp);
 int analyze(udefrag_job_parameters *jp);
 int defragment(udefrag_job_parameters *jp);
 int optimize(udefrag_job_parameters *jp);
+int optimize_mft(udefrag_job_parameters *jp);
 void destroy_lists(udefrag_job_parameters *jp);
+
+typedef int (*disk_processing_routine)(udefrag_job_parameters *jp);
+typedef ULONGLONG (*clusters_counting_routine)(udefrag_job_parameters *jp);
 
 ULONGLONG start_timing(char *operation_name,udefrag_job_parameters *jp);
 void stop_timing(char *operation_name,ULONGLONG start_time,udefrag_job_parameters *jp);
@@ -296,6 +297,7 @@ int move_file(winx_file_info *f,
               int flags,
               udefrag_job_parameters *jp
               );
+int can_move(winx_file_info *f);
 
 /* flags for find_matching_free_region */
 enum {
@@ -319,14 +321,6 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
 ULONGLONG get_number_of_movable_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn, int flags);
 ULONGLONG get_number_of_fragmented_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn);
 
-int can_defragment(winx_file_info *f,udefrag_job_parameters *jp);
-int can_move(winx_file_info *f,udefrag_job_parameters *jp);
-int optimize_mft_helper(udefrag_job_parameters *jp);
-int optimize_mft(udefrag_job_parameters *jp);
-int defragment_small_files_walk_free_regions(udefrag_job_parameters *jp);
-int defragment_small_files_walk_fragmented_files(udefrag_job_parameters *jp);
-int defragment_big_files(udefrag_job_parameters *jp);
-
 /* flags used in move_files_to_xxx routines */
 enum {
     MOVE_FRAGMENTED,
@@ -335,8 +329,6 @@ enum {
 };
 
 ULONGLONG calculate_starting_point(udefrag_job_parameters *jp, ULONGLONG old_sp);
-typedef int (*disk_processing_routine)(udefrag_job_parameters *jp);
-typedef ULONGLONG (*clusters_counting_routine)(udefrag_job_parameters *jp);
 int move_files_to_front(udefrag_job_parameters *jp, ULONGLONG start_lcn, int flags);
 int move_files_to_back(udefrag_job_parameters *jp, ULONGLONG start_lcn, int flags);
 

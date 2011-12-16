@@ -398,7 +398,7 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
         }
         while(!jp->termination_router((void *)jp)){
             if(found_file == NULL) break;
-            if(!can_move(found_file,jp)){
+            if(!can_move(found_file)){
             } else if(skip_mft && is_mft(found_file,jp)){
             } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(found_file)){
             } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(found_file)){
@@ -429,7 +429,7 @@ slow_search:
     while(!jp->termination_router((void *)jp)){
         found_file = NULL; first_block = NULL; lcn = jp->v_info.total_clusters;
         for(file = jp->filelist; file; file = file->next){
-            if(can_move(file,jp)){
+            if(can_move(file)){
                 if(skip_mft && is_mft(file,jp)){
                 } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(file)){
                 } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(file)){
@@ -516,7 +516,7 @@ ULONGLONG get_number_of_movable_clusters(udefrag_job_parameters *jp, ULONGLONG f
                 counter ++;
             }
 
-            if(!can_move(file,jp) || is_mft(file,jp)){
+            if(!can_move(file) || is_mft(file,jp)){
             } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(file)){
             } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(file)){
             } else {
@@ -552,7 +552,7 @@ slow_search:
             if(block->next == file->disp.blockmap) break;
         }
         if(n){
-            if(can_move(file,jp) && !is_mft(file,jp)){
+            if(can_move(file) && !is_mft(file,jp)){
                 if((flags == MOVE_FRAGMENTED) && !is_fragmented(file)){
                 } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(file)){
                 } else {
@@ -603,7 +603,7 @@ ULONGLONG get_number_of_fragmented_clusters(udefrag_job_parameters *jp, ULONGLON
             if(block->next == f->f->disp.blockmap) break;
         }
         if(n){
-            if(can_move(f->f,jp) && !is_mft(f->f,jp))
+            if(can_move(f->f) && !is_mft(f->f,jp))
                 if(!is_file_locked(f->f,jp))
                     total += n;
         }

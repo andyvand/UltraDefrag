@@ -29,6 +29,389 @@
 static void calculate_free_rgn_size_threshold(udefrag_job_parameters *jp);
 static int increase_starting_point(udefrag_job_parameters *jp, ULONGLONG *sp);
 
+/************************************************************/
+/*                   Auxiliary routines                     */
+/************************************************************/
+
+/**
+ * @brief Optimizes the file by placing all its
+ * fragments as close as possible after the first
+ * one.
+ * @details Intended to optimize MFT on NTFS-formatted
+ * volumes and to optimize directories on FAT. In both
+ * cases the first clusters are not moveable, therefore
+ * regular defragmentation cannot help.
+ * @note
+ * - As a side effect this routine may increase
+ * number of fragmented files (they become marked
+ * by UD_FILE_FRAGMENTED_BY_FILE_OPT flag). 
+ * - The volume must be opened before this call,
+ * jp->fVolume must contain a proper handle.
+ * @return Zero if the file needs no optimization, 
+ * positive value on success, negative value otherwise.
+ */
+static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    ULONGLONG clusters_to_process; /* the number of file clusters not processed yet */
+    ULONGLONG start_vcn;           /* VCN of the portion of the file not processed yet */
+    
+    ULONGLONG start_lcn;           /* address of space not processed yet */
+    ULONGLONG clusters_to_move;    /* the number of the file clusters intended for the current move */
+    winx_volume_region *rgn, *target_rgn;
+    winx_file_info *first_file;
+    winx_blockmap *block, *first_block;
+    ULONGLONG end_lcn, min_lcn, next_vcn;
+    ULONGLONG current_vcn, remaining_clusters, n, lcn;
+    winx_volume_region region = {0};
+    ULONGLONG clusters_to_cleanup;
+    ULONGLONG target;
+    int block_cleaned_up;
+    ULONGLONG tm;
+    
+    /* check whether the file needs optimization or not */
+    if(!can_move(f) || !is_fragmented(f))
+        return 0;
+    
+    /* check whether the file is locked or not */
+    if(is_file_locked(f,jp))
+        return (-1);
+
+    /* reset counters */
+    jp->pi.total_moves = 0;
+    
+    clusters_to_process = f->disp.clusters - f->disp.blockmap->length;
+    if(clusters_to_process == 0)
+        return 0;
+    
+    start_lcn = f->disp.blockmap->lcn + f->disp.blockmap->length;
+    start_vcn = f->disp.blockmap->next->vcn;
+    while(clusters_to_process > 0){
+        if(jp->termination_router((void *)jp)) break;
+        if(jp->free_regions == NULL) break;
+
+        /* release temporary allocated space */
+        release_temp_space_regions(jp);
+        
+        /* search for the first free region after start_lcn */
+        target_rgn = NULL; tm = winx_xtime();
+        for(rgn = jp->free_regions; rgn; rgn = rgn->next){
+            if(rgn->lcn >= start_lcn && rgn->length){
+                target_rgn = rgn;
+                break;
+            }
+            if(rgn->next == jp->free_regions) break;
+        }
+        jp->p_counters.searching_time += winx_xtime() - tm;
+        
+        /* process file blocks between start_lcn and target_rgn */
+        if(target_rgn) end_lcn = target_rgn->lcn;
+        else end_lcn = jp->v_info.total_clusters;
+        clusters_to_cleanup = clusters_to_process;
+        block_cleaned_up = 0;
+        region.length = 0;
+        while(clusters_to_cleanup > 0){
+            if(jp->termination_router((void *)jp)) goto done;
+            min_lcn = start_lcn;
+            first_block = find_first_block(jp, &min_lcn, MOVE_ALL, 0, &first_file);
+            if(first_block == NULL) break;
+            if(first_block->lcn >= end_lcn) break;
+            
+            /* does the first block follow a previously moved one? */
+            if(block_cleaned_up){
+                if(first_block->lcn != region.lcn + region.length)
+                    break;
+                if(first_file == f)
+                    break;
+            }
+            
+            /* don't move already optimized parts of the file */
+            if(first_file == f && first_block->vcn == start_vcn){
+                if(clusters_to_process <= first_block->length \
+                  || first_block->next == first_file->disp.blockmap){
+                    clusters_to_process = 0;
+                    goto done;
+                } else {
+                    clusters_to_process -= first_block->length;
+                    start_vcn = first_block->next->vcn;
+                    start_lcn = first_block->lcn + first_block->length;
+                    continue;
+                }
+            }
+            
+            /* cleanup space */
+            if(jp->free_regions == NULL) goto done;
+            lcn = first_block->lcn;
+            current_vcn = first_block->vcn;
+            clusters_to_move = remaining_clusters = min(clusters_to_cleanup, first_block->length);
+            for(rgn = jp->free_regions->prev; rgn && remaining_clusters; rgn = jp->free_regions->prev){
+                if(rgn->length > 0){
+                    n = min(rgn->length,remaining_clusters);
+                    target = rgn->lcn + rgn->length - n;
+                    if(first_file != f)
+                        first_file->user_defined_flags |= UD_FILE_FRAGMENTED_BY_FILE_OPT;
+                    if(move_file(first_file,current_vcn,n,target,0,jp) < 0){
+                        if(!block_cleaned_up)
+                            goto done;
+                        else
+                            goto move_the_file;
+                    }
+                    current_vcn += n;
+                    remaining_clusters -= n;
+                } else {
+                    /* infinite loop */
+                }
+                if(jp->free_regions == NULL){
+                    if(remaining_clusters)
+                        goto done;
+                    else
+                        break;
+                }
+            }
+            /* space cleaned up successfully */
+            region.next = region.prev = &region;
+            if(!block_cleaned_up)
+                region.lcn = lcn;
+            region.length += clusters_to_move;
+            target_rgn = &region;
+            start_lcn = region.lcn + region.length;
+            clusters_to_cleanup -= clusters_to_move;
+            block_cleaned_up = 1;
+        }
+    
+move_the_file:        
+        /* release temporary allocated space ! */
+        release_temp_space_regions(jp);
+        
+        /* target_rgn points to the target free region, so let's move the next portion of the file */
+        if(target_rgn == NULL) break;
+        n = clusters_to_move = min(clusters_to_process,target_rgn->length);
+        next_vcn = 0; current_vcn = start_vcn;
+        for(block = f->disp.blockmap; block && n; block = block->next){
+            if(block->vcn + block->length > start_vcn){
+                if(n > block->length - (current_vcn - block->vcn)){
+                    n -= block->length - (current_vcn - block->vcn);
+                    current_vcn = block->next->vcn;
+                } else {
+                    if(n == block->length - (current_vcn - block->vcn)){
+                        if(block->next == f->disp.blockmap)
+                            next_vcn = block->vcn + block->length;
+                        else
+                            next_vcn = block->next->vcn;
+                    } else {
+                        next_vcn = current_vcn + n;
+                    }
+                    break;
+                }
+            }
+            if(block->next == f->disp.blockmap) break;
+        }
+        if(next_vcn == 0){
+            DebugPrint("optimize_file: next_vcn calculation failed for %ws",f->path);
+            break;
+        }
+        target = target_rgn->lcn;
+        if(move_file(f,start_vcn,clusters_to_move,target,0,jp) < 0){
+            /* on failures exit */
+            break;
+        }
+        /* file's part moved successfully */
+        clusters_to_process -= clusters_to_move;
+        start_lcn = target + clusters_to_move;
+        start_vcn = next_vcn;
+        jp->pi.total_moves ++;
+    }
+
+done:
+    if(jp->termination_router((void *)jp)) return 1;
+    return (clusters_to_process > 0) ? (-1) : 1;
+}
+
+/**
+ * @brief Calculates number of clusters
+ * needed to be moved to complete the
+ * optimization of directories.
+ */
+static ULONGLONG opt_dirs_cc_routine(udefrag_job_parameters *jp)
+{
+    udefrag_fragmented_file *f;
+    ULONGLONG n = 0;
+    
+    for(f = jp->fragmented_files; f; f = f->next){
+        if(jp->termination_router((void *)jp)) break;
+        if(is_directory(f->f) && can_move(f->f))
+            n += f->f->disp.clusters * 2;
+        if(f->next == jp->fragmented_files) break;
+    }
+    return n;
+}
+
+/**
+ * @brief Optimizes directories by placing their
+ * fragments after the first ones as close as possible.
+ * @details Intended for use on FAT-formatted volumes.
+ * @return Zero for success, negative value otherwise.
+ */
+static int optimize_directories(udefrag_job_parameters *jp)
+{
+    udefrag_fragmented_file *f, *head, *next;
+    winx_file_info *file;
+    ULONGLONG optimized_dirs;
+    char buffer[32];
+    ULONGLONG time;
+
+    jp->pi.current_operation = VOLUME_OPTIMIZATION;
+    jp->pi.moved_clusters = 0;
+
+    /* free as much temporarily allocated space as possible */
+    release_temp_space_regions(jp);
+
+    /* no files are excluded by this task currently */
+    for(f = jp->fragmented_files; f; f = f->next){
+        f->f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        if(f->next == jp->fragmented_files) break;
+    }
+
+    /* open the volume */
+    jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
+    if(jp->fVolume == NULL)
+        return (-1);
+
+    time = start_timing("directories optimization",jp);
+
+    optimized_dirs = 0;
+    for(f = jp->fragmented_files; f; f = next){
+        if(jp->termination_router((void *)jp)) break;
+        head = jp->fragmented_files;
+        next = f->next;
+        file = f->f; /* f will be destroyed by move_file */
+        if(is_directory(file) && can_move(file)){
+            if(optimize_file(file,jp) > 0)
+                optimized_dirs ++;
+        }
+        file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+        /* go to the next file */
+        if(jp->fragmented_files == NULL) break;
+        if(next == head) break;
+    }
+    
+    /* display amount of moved data and number of optimized directories */
+    DebugPrint("%I64u directories optimized",optimized_dirs);
+    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
+    DebugPrint("%s moved",buffer);
+    stop_timing("directories optimization",time,jp);
+    winx_fclose(jp->fVolume);
+    jp->fVolume = NULL;
+    return 0;
+}
+
+/**
+ * @brief Sends list of $mft blocks to the debugger.
+ */
+static void list_mft_blocks(winx_file_info *mft_file)
+{
+    winx_blockmap *block;
+    ULONGLONG i;
+
+    for(block = mft_file->disp.blockmap, i = 0; block; block = block->next, i++){
+        DebugPrint("mft part #%I64u start: %I64u, length: %I64u",
+            i,block->lcn,block->length);
+        if(block->next == mft_file->disp.blockmap) break;
+    }
+}
+
+/**
+ * @brief Calculates number of clusters
+ * needed to be moved to complete the
+ * MFT optimization.
+ */
+static ULONGLONG opt_mft_cc_routine(udefrag_job_parameters *jp)
+{
+    winx_file_info *f;
+    ULONGLONG n = 0;
+
+    /* search for $mft file */
+    for(f = jp->filelist; f; f = f->next){
+        if(jp->termination_router((void *)jp)) break;
+        if(is_mft(f,jp)){
+            n = f->disp.clusters * 2;
+            break;
+        }
+        if(f->next == jp->filelist) break;
+    }
+    return n;
+}
+
+/**
+ * @brief Optimizes MFT by placing its fragments
+ * as close as possible after the first one.
+ * @details MFT Zone follows MFT automatically. 
+ * @return Zero for success, negative value otherwise.
+ */
+static int optimize_mft_routine(udefrag_job_parameters *jp)
+{
+    winx_file_info *f, *mft_file = NULL;
+    ULONGLONG time;
+    char buffer[32];
+    int result;
+
+    jp->pi.current_operation = VOLUME_OPTIMIZATION;
+    jp->pi.moved_clusters = 0;
+
+    /* free as much temporarily allocated space as possible */
+    release_temp_space_regions(jp);
+
+    /* no files are excluded by this task currently */
+    for(f = jp->filelist; f; f = f->next){
+        f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        if(f->next == jp->filelist) break;
+    }
+
+    /* open the volume */
+    jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
+    if(jp->fVolume == NULL)
+        return (-1);
+
+    time = start_timing("mft optimization",jp);
+
+    DebugPrint("optimize_mft: initial $mft map:");
+    list_mft_blocks(mft_file);
+
+    /* search for $mft file */
+    for(f = jp->filelist; f; f = f->next){
+        if(is_mft(f,jp)){
+            mft_file = f;
+            break;
+        }
+        if(f->next == jp->filelist) break;
+    }
+    
+    /* do the job */
+    if(mft_file == NULL){
+        DebugPrint("optimize_mft_routine: cannot find $mft file");
+        result = -1;
+    } else {
+        result = optimize_file(mft_file,jp);
+        if(result > 0) result = 0;
+    }
+
+    DebugPrint("optimize_mft: final $mft map:");
+    list_mft_blocks(mft_file);
+
+    /* display amount of moved data */
+    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
+    DebugPrint("%s moved",buffer);
+    stop_timing("mft optimization",time,jp);
+    winx_fclose(jp->fVolume);
+    jp->fVolume = NULL;
+    return result;
+}
+
+/************************************************************/
+/*                    The entry point                       */
+/************************************************************/
+
 /**
  * @brief Performs a volume optimization.
  * @details The volume optimization consists of two
@@ -78,7 +461,7 @@ int optimize(udefrag_job_parameters *jp)
         jp->v_info.free_bytes / jp->v_info.bytes_per_cluster) * 2;
     
     /* optimize MFT separately to keep its optimal location */
-    result = optimize_mft_helper(jp);
+    //result = optimize_mft_helper(jp);
     if(result == 0){
         /* at least mft optimization succeeded */
         overall_result = 0;
@@ -153,38 +536,35 @@ int optimize(udefrag_job_parameters *jp)
 }
 
 /**
- * @brief Optimizes MFT.
+ * @brief MFT optimizer entry point.
  */
 int optimize_mft(udefrag_job_parameters *jp)
 {
     int result;
-    winx_file_info *file;
-    
-    /* 5.1 algorithm is not implemented */
-    return 0;
-    
+
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */
     if(result < 0) return result;
-    
+
+    /* mft optimization is NTFS specific task */
+    if(jp->fs_type != FS_NTFS)
+        return 0; /* nothing to do */
+
+    /* mft optimization requires at least windows xp */
+    if(winx_get_os_version() < WINDOWS_XP){
+        DebugPrint("MFT is not movable on NT4 and Windows 2000");
+        return UDEFRAG_UNMOVABLE_MFT;
+    }
+
     /* reset counters */
     jp->pi.processed_clusters = 0;
-    jp->pi.clusters_to_process = 1;
-    for(file = jp->filelist; file; file = file->next){
-        if(is_mft(file,jp)){
-            /* we'll move no more than double size of MFT */
-            jp->pi.clusters_to_process = file->disp.clusters * 2;
-            break;
-        }
-        if(file->next == jp->filelist) break;
-    }
+    jp->pi.clusters_to_process = opt_mft_cc_routine(jp);
     
-    /* optimize MFT */
-    result = optimize_mft_helper(jp);
-    if(result < 0) return result;
+    /* do the job */
+    result = optimize_mft_routine(jp);
     
-    /* defragment files fragmented by MFT optimizer */
-    result = defragment(jp);
+    /* cleanup the disk */
+    defragment(jp);
     return result;
 }
 
@@ -303,7 +683,7 @@ ULONGLONG calculate_starting_point(udefrag_job_parameters *jp, ULONGLONG old_sp)
     for(f = jp->fragmented_files; f; f = f->next){
         for(block = f->f->disp.blockmap; block; block = block->next){
             if(new_sp >= block->lcn && new_sp <= block->lcn + block->length - 1){
-                if(can_move(f->f,jp) && !is_mft(f->f,jp) && !is_file_locked(f->f,jp)){
+                if(can_move(f->f) && !is_mft(f->f,jp) && !is_file_locked(f->f,jp)){
                     /* include block */
                     jp->p_counters.searching_time += winx_xtime() - time;
                     return block->lcn;

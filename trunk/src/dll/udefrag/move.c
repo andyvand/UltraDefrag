@@ -27,6 +27,53 @@
 #include "udefrag-internals.h"
 
 /************************************************************/
+/*                    can_move routine                      */
+/************************************************************/
+
+/**
+ * @brief Defines whether the file can be
+ * moved or not, at least partially.
+ */
+int can_move(winx_file_info *f)
+{
+    /* skip files with empty path */
+    if(f->path == NULL)
+        return 0;
+    if(f->path[0] == 0)
+        return 0;
+    
+    /* skip files already moved to front in optimization */
+    if(is_moved_to_front(f))
+        return 0;
+    
+    /* skip files already excluded by the current task */
+    if(is_currently_excluded(f))
+        return 0;
+    
+    /* skip files with undefined cluster map and locked files */
+    if(f->disp.blockmap == NULL || is_locked(f))
+        return 0;
+    
+    /* skip files of zero length */
+    if(f->disp.clusters == 0 || \
+      (f->disp.blockmap->next == f->disp.blockmap && \
+      f->disp.blockmap->length == 0)){
+        f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
+        return 0;
+    }
+
+    /* skip file in case of improper state detected */
+    if(is_in_improper_state(f))
+        return 0;
+    
+    /* avoid infinite loops */
+    if(is_moving_failed(f))
+        return 0;
+    
+    return 1;
+}
+
+/************************************************************/
 /*                    Internal Routines                     */
 /************************************************************/
 
