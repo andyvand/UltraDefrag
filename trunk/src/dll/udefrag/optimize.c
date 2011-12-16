@@ -374,9 +374,6 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
 
     time = start_timing("mft optimization",jp);
 
-    DebugPrint("optimize_mft: initial $mft map:");
-    list_mft_blocks(mft_file);
-
     /* search for $mft file */
     for(f = jp->filelist; f; f = f->next){
         if(is_mft(f,jp)){
@@ -391,12 +388,15 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
         DebugPrint("optimize_mft_routine: cannot find $mft file");
         result = -1;
     } else {
+        DebugPrint("optimize_mft: initial $mft map:");
+        list_mft_blocks(mft_file);
+
         result = optimize_file(mft_file,jp);
         if(result > 0) result = 0;
-    }
 
-    DebugPrint("optimize_mft: final $mft map:");
-    list_mft_blocks(mft_file);
+        DebugPrint("optimize_mft: final $mft map:");
+        list_mft_blocks(mft_file);
+    }
 
     /* display amount of moved data */
     DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
