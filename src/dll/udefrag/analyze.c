@@ -69,6 +69,7 @@ int get_volume_information(udefrag_job_parameters *jp)
     jp->pi.processed_clusters = 0;
     
     jp->fs_type = FS_UNKNOWN;
+    jp->is_fat = 0;
     
     /* reset file lists */
     destroy_lists(jp);
@@ -98,16 +99,20 @@ int get_volume_information(udefrag_job_parameters *jp)
             jp->fs_type = FS_NTFS;
         } else if(!strcmp(jp->v_info.fs_name,"FAT32")){
             jp->fs_type = FS_FAT32;
+            jp->is_fat = 1;
         } else if(strstr(jp->v_info.fs_name,"FAT")){
             /* no need to distinguish better */
             jp->fs_type = FS_FAT16;
+            jp->is_fat = 1;
         } else if(!strcmp(jp->v_info.fs_name,"UDF")){
             jp->fs_type = FS_UDF;
         } else {
 //        } else if(!strcmp(jp->v_info.fs_name,"FAT12")){
 //            jp->fs_type = FS_FAT12;
+//            jp->is_fat = 1;
 //        } else if(!strcmp(jp->v_info.fs_name,"FAT16")){
 //            jp->fs_type = FS_FAT16;
+//            jp->is_fat = 1;
 //        } else if(!strcmp(jp->v_info.fs_name,"FAT32")){
 //            /* check FAT32 version */
 //            if(jp->v_info.fat32_mj_version > 0 || jp->v_info.fat32_mn_version > 0){
@@ -118,6 +123,7 @@ int get_volume_information(udefrag_job_parameters *jp)
 //            } else {
 //                jp->fs_type = FS_FAT32;
 //            }
+//            jp->is_fat = 1;
 //        } else {
             DebugPrint("file system type is not recognized");
             DebugPrint("type independent routines will be used to defragment it");
@@ -184,14 +190,16 @@ int check_region(udefrag_job_parameters *jp,ULONGLONG lcn,ULONGLONG length)
 
 /**
  * @brief Retrieves mft zones layout.
- * @note MFT zone space becomes excluded from the free space list.
- * Because Windows 2000 disallows to move files there. And because on 
- * other systems this dirty technique may increase MFT fragmentation.
+ * @note Since we have MFT optimization routine, 
+ * let's use MFT zone for files placement, except
+ * of NT4 and W2K systems where Windows disallows
+ * to move files there.
  */
 static void get_mft_zones_layout(udefrag_job_parameters *jp)
 {
     ULONGLONG start,length,mirror_size;
     ULONGLONG mft_length = 0;
+    int win_version = winx_get_os_version();
 
     if(jp->fs_type != FS_NTFS)
         return;
@@ -225,7 +233,8 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
     if(check_region(jp,start,length)){
         /* remark space as reserved */
         colorize_map_region(jp,start,length,MFT_ZONE_SPACE,0);
-        jp->free_regions = winx_sub_volume_region(jp->free_regions,start,length);
+        if(win_version < WINDOWS_XP)
+            jp->free_regions = winx_sub_volume_region(jp->free_regions,start,length);
         jp->mft_zones.mftzone_start = start; jp->mft_zones.mftzone_end = start + length - 1;
     }
 
@@ -782,7 +791,7 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
 /**
  * @brief Define whether some
  * actions are allowed or not.
- * @return Zero indicates that
+ * @return Zero indicates that the
  * requested operation is allowed,
  * negative value indicates contrary.
  */
@@ -818,72 +827,14 @@ static int define_allowed_actions(udefrag_job_parameters *jp)
         DebugPrint("because the file system driver does not support FSCTL_MOVE_FILE.");
         return UDEFRAG_UDF_DEFRAG;
     }
-    
-    /*
-    * FAT volumes cannot be optimized.
-    */
-    if((jp->job_type == FULL_OPTIMIZATION_JOB || jp->job_type == QUICK_OPTIMIZATION_JOB) \
-      && (jp->fs_type == FS_FAT12 \
-      || jp->fs_type == FS_FAT16 \
-      || jp->fs_type == FS_FAT32 \
-      || jp->fs_type == FS_FAT32_UNRECOGNIZED)){
-        DebugPrint("cannot optimize FAT volumes because of unmovable directories");
-        return UDEFRAG_FAT_OPTIMIZATION;
-    }
       
-    /* MFT optimization is impossible in some cases. */
-    if(jp->job_type == MFT_OPTIMIZATION_JOB){
-        if(jp->fs_type != FS_NTFS){
-            DebugPrint("MFT can be optimized on NTFS volumes only");
-            return UDEFRAG_NO_MFT;
-        }
-        if(winx_get_os_version() <= WINDOWS_2K){
-            DebugPrint("MFT is not movable on NT4 and Windows 2000");
-            return UDEFRAG_UNMOVABLE_MFT;
-        }            
+    if(!jp->is_fat) DebugPrint("define_allowed_actions: directories can be moved");
+    else DebugPrint("define_allowed_actions: directories cannot be moved");
+    if(jp->fs_type != FS_NTFS || win_version < WINDOWS_XP){
+        DebugPrint("define_allowed_actions: $mft file cannot be optimized");
+    } else {
+        DebugPrint("define_allowed_actions: $mft file can be optimized");
     }
-
-    switch(jp->fs_type){
-    case FS_FAT12:
-    case FS_FAT16:
-    case FS_FAT32:
-    case FS_FAT32_UNRECOGNIZED:
-        jp->actions.allow_dir_defrag = 0;
-        jp->actions.allow_optimize = 0;
-        break;
-    case FS_NTFS:
-        jp->actions.allow_dir_defrag = 1;
-        jp->actions.allow_optimize = 1;
-        break;
-    default:
-        jp->actions.allow_dir_defrag = 0;
-        jp->actions.allow_optimize = 0;
-        /*jp->actions.allow_dir_defrag = 1;
-        jp->actions.allow_optimize = 1;*/
-        break;
-    }
-    
-    if(jp->actions.allow_dir_defrag)
-        DebugPrint("directory defragmentation is allowed");
-    else
-        DebugPrint("directory defragmentation is denied (because not possible)");
-    
-    if(jp->actions.allow_optimize)
-        DebugPrint("volume optimization is allowed");
-    else
-        DebugPrint("volume optimization is denied (because not possible)");
-    
-    if(jp->fs_type == FS_NTFS){
-        if(win_version < WINDOWS_XP){
-            /*DebugPrint("$mft defragmentation is not possible");*/
-            DebugPrint("$mft optimization is not possible");
-        } else {
-            /*DebugPrint("partial $mft defragmentation is possible");
-            DebugPrint("(the first 16 clusters aren\'t movable)");*/
-            DebugPrint("$mft optimization is possible");
-        }
-    }
-    
     return 0;
 }
 

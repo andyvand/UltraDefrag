@@ -629,9 +629,6 @@ char *udefrag_get_error_description(int error_code)
     case UDEFRAG_UNKNOWN_ERROR:
         return "Some unknown internal bug or some\n"
                "rarely arising error has been encountered.";
-    case UDEFRAG_FAT_OPTIMIZATION:
-        return "FAT disks cannot be optimized\n"
-               "because of unmovable directories.";
     case UDEFRAG_W2K_4KB_CLUSTERS:
         return "NTFS disks with cluster size greater than 4 kb\n"
                "cannot be defragmented on Windows 2000 and Windows NT 4.0";
@@ -651,8 +648,6 @@ char *udefrag_get_error_description(int error_code)
     case UDEFRAG_UDF_DEFRAG:
         return "UDF disks can neither be defragmented nor optimized,\n"
                "because the file system driver does not support FSCTL_MOVE_FILE.";
-    case UDEFRAG_NO_MFT:
-        return "MFT can be optimized on NTFS disks only.";
     case UDEFRAG_UNMOVABLE_MFT:
         return "On NT4 and Windows 2000 MFT is not movable.";
     case UDEFRAG_DIRTY_VOLUME:
