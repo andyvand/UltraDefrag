@@ -44,12 +44,41 @@ extern int progress_trigger;
 static void update_progress_counters(winx_file_info *f,udefrag_job_parameters *jp);
 
 /**
+ * @internal
+ * @brief Auxiliary structure
+ * used by get_volume_information.
+ */
+struct fs {
+    char *name; /* name in uppercase */
+    file_system_type type;
+    /* 
+    * On fat the first clusters 
+    * of directories cannot be moved.
+    */
+    int is_fat;
+};
+
+struct fs fs_types[] = {
+    {"NTFS",  FS_NTFS,  0},
+    {"FAT12", FS_FAT12, 1},
+    {"FAT",   FS_FAT16, 1}, /* no need to distinguish better */
+    {"FAT16", FS_FAT16, 1},
+    {"FAT32", FS_FAT32, 1},
+    {"EXFAT", FS_EXFAT, 1},
+    {"UDF",   FS_UDF,   0},
+    {NULL,    0,        0}
+};
+
+/**
  * @brief Retrieves all information about the volume.
  * @return Zero for success, negative value otherwise.
  * @note Resets statistics and cluster map.
  */
 int get_volume_information(udefrag_job_parameters *jp)
 {
+    char fs_name[MAX_FS_NAME_LENGTH + 1];
+    int i;
+    
     /* reset coordinates of mft zones */
     memset(&jp->mft_zones,0,sizeof(struct _mft_zones));
     
@@ -95,42 +124,31 @@ int get_volume_information(udefrag_job_parameters *jp)
         }
         /* check partition type */
         DebugPrint("%s partition detected",jp->v_info.fs_name);
-        if(!strcmp(jp->v_info.fs_name,"NTFS")){
-            jp->fs_type = FS_NTFS;
-        } else if(!strcmp(jp->v_info.fs_name,"FAT32")){
-            jp->fs_type = FS_FAT32;
-            jp->is_fat = 1;
-        } else if(strstr(jp->v_info.fs_name,"FAT")){
-            /* no need to distinguish better */
-            jp->fs_type = FS_FAT16;
-            jp->is_fat = 1;
-        } else if(!strcmp(jp->v_info.fs_name,"UDF")){
-            jp->fs_type = FS_UDF;
-        } else {
-//        } else if(!strcmp(jp->v_info.fs_name,"FAT12")){
-//            jp->fs_type = FS_FAT12;
-//            jp->is_fat = 1;
-//        } else if(!strcmp(jp->v_info.fs_name,"FAT16")){
-//            jp->fs_type = FS_FAT16;
-//            jp->is_fat = 1;
-//        } else if(!strcmp(jp->v_info.fs_name,"FAT32")){
-//            /* check FAT32 version */
-//            if(jp->v_info.fat32_mj_version > 0 || jp->v_info.fat32_mn_version > 0){
-//                DebugPrint("cannot recognize FAT32 version %u.%u",
-//                    jp->v_info.fat32_mj_version,jp->v_info.fat32_mn_version);
-//                /* for safe low level access in future releases */
-//                jp->fs_type = FS_FAT32_UNRECOGNIZED;
-//            } else {
-//                jp->fs_type = FS_FAT32;
-//            }
-//            jp->is_fat = 1;
-//        } else {
+        strncpy(fs_name,jp->v_info.fs_name,MAX_FS_NAME_LENGTH);
+        fs_name[MAX_FS_NAME_LENGTH] = 0;
+        _strupr(fs_name);
+        for(i = 0; fs_types[i].name; i++){
+            if(!strcmp(fs_name,fs_types[i].name)){
+                jp->fs_type = fs_types[i].type;
+                jp->is_fat = fs_types[i].is_fat;
+                break;
+            }
+        }
+        if(jp->fs_type == FS_FAT32){
+            /* check FAT32 version */
+            if(jp->v_info.fat32_mj_version > 0 || jp->v_info.fat32_mn_version > 0){
+                DebugPrint("cannot recognize FAT32 version %u.%u",
+                    jp->v_info.fat32_mj_version,jp->v_info.fat32_mn_version);
+                /* for safe low level access in future releases */
+                jp->fs_type = FS_FAT32_UNRECOGNIZED;
+            }
+        }
+        if(jp->fs_type == FS_UNKNOWN){
             DebugPrint("file system type is not recognized");
             DebugPrint("type independent routines will be used to defragment it");
-            jp->fs_type = FS_UNKNOWN;
         }
     }
-
+    
     jp->pi.clusters_to_process = jp->v_info.total_clusters;
     jp->pi.processed_clusters = 0;
 
