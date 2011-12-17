@@ -547,8 +547,12 @@ int optimize_mft(udefrag_job_parameters *jp)
     if(result < 0) return result;
 
     /* mft optimization is NTFS specific task */
-    if(jp->fs_type != FS_NTFS)
+    if(jp->fs_type != FS_NTFS){
+        jp->pi.processed_clusters = 0;
+        jp->pi.clusters_to_process = 1;
+        jp->pi.current_operation = VOLUME_OPTIMIZATION;
         return 0; /* nothing to do */
+    }
 
     /* mft optimization requires at least windows xp */
     if(winx_get_os_version() < WINDOWS_XP){
