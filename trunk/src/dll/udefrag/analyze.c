@@ -151,6 +151,13 @@ int get_volume_information(udefrag_job_parameters *jp)
     
     jp->pi.clusters_to_process = jp->v_info.total_clusters;
     jp->pi.processed_clusters = 0;
+    
+    if(jp->udo.fragment_size_threshold){
+        if(jp->udo.fragment_size_threshold <= jp->v_info.bytes_per_cluster){
+            DebugPrint("fragment size threshold is below the cluster size, so it will be ignored");
+            jp->udo.fragment_size_threshold = 0;
+        }
+    }
 
     /* reset cluster map */
     reset_cluster_map(jp);
@@ -292,6 +299,8 @@ int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
     int fragment_size = 0;
     
     if(jp->udo.fragment_size_threshold == 0) return 0;
+    
+    if(f->disp.blockmap == NULL) return 0;
     
     for(block = f->disp.blockmap; block; block = block->next){
         if(block == f->disp.blockmap){

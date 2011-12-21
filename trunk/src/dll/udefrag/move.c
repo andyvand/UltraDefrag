@@ -722,6 +722,7 @@ int move_file(winx_file_info *f,
     HANDLE hFile;
     int old_color, new_color;
     int was_fragmented, became_fragmented;
+    int was_excluded;
     int dump_result;
     winx_blockmap *block, *first_block;
     ULONGLONG clusters_to_redraw;
@@ -785,6 +786,7 @@ int move_file(winx_file_info *f,
     /* save file properties */
     old_color = get_file_color(jp,f);
     was_fragmented = is_fragmented(f);
+    was_excluded = is_excluded(f);
 
     /* open the file */
     Status = winx_defrag_fopen(f,WINX_OPEN_FOR_MOVE,&hFile);
@@ -871,6 +873,17 @@ int move_file(winx_file_info *f,
     if(moving_result == DETERMINED_MOVING_PARTIAL_SUCCESS)
         f->user_defined_flags |= UD_FILE_MOVING_FAILED;
     
+    /* reapply filters to the file */
+    f->user_defined_flags &= ~UD_FILE_EXCLUDED;
+    new_file_info.user_defined_flags &= ~UD_FILE_EXCLUDED;
+    r1 = exclude_by_fragment_size(&new_file_info,jp);
+    r2 = exclude_by_fragments(&new_file_info,jp);
+    r3 = exclude_by_size(&new_file_info,jp);
+    if(r1 || r2 || r3){
+        f->user_defined_flags |= UD_FILE_EXCLUDED;
+        new_file_info.user_defined_flags |= UD_FILE_EXCLUDED;
+    }
+
     /* redraw target space */
     new_color = get_file_color(jp,&new_file_info);
     colorize_map_region(jp,target,length,new_color,FREE_SPACE);
@@ -905,11 +918,20 @@ int move_file(winx_file_info *f,
 
     /* adjust statistics */
     became_fragmented = is_fragmented(&new_file_info);
-    if(became_fragmented && !was_fragmented)
-        jp->pi.fragmented ++;
-    if(!became_fragmented && was_fragmented)
-        jp->pi.fragmented --;
-    jp->pi.fragments -= (f->disp.fragments - new_file_info.disp.fragments);
+    if(became_fragmented && !is_excluded(f)){
+        if(!was_fragmented || was_excluded){
+            jp->pi.fragmented ++;
+            jp->pi.fragments += (new_file_info.disp.fragments - 1);
+        } else {
+            jp->pi.fragments -= (f->disp.fragments - new_file_info.disp.fragments);
+        }
+    }
+    if(!became_fragmented || is_excluded(f)){
+        if(was_fragmented && !was_excluded){
+            jp->pi.fragmented --;
+            jp->pi.fragments -= (f->disp.fragments - 1);
+        }
+    }
     if(jp->progress_router)
         jp->progress_router(jp); /* redraw map and update statistics */
 
@@ -938,13 +960,6 @@ int move_file(winx_file_info *f,
             if(block->next == f->disp.blockmap) break;
         }
     }
-
-    /* reapply filters to the file */
-    r1 = exclude_by_fragment_size(f,jp);
-    r2 = exclude_by_fragments(f,jp);
-    r3 = exclude_by_size(f,jp);
-    if(r1 || r2 || r3)
-        f->user_defined_flags |= UD_FILE_EXCLUDED;
 
     /* update list of fragmented files */
     truncate_fragmented_files_list(f,jp);
