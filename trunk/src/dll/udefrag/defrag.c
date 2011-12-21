@@ -601,18 +601,18 @@ completed:
     
     /* display amount of moved data and number of defragmented files */
     DebugPrint("%I64u files defragmented",defragmented_files);
-    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    DebugPrint("  %I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s moved",buffer);
+    DebugPrint("  %s moved",buffer);
     
     DebugPrint("%I64u files defragmented entirely",defragmented_entirely);
-    DebugPrint("* %I64u clusters moved",moved_entirely);
+    DebugPrint("  %I64u clusters moved",moved_entirely);
     winx_bytes_to_hr(moved_entirely * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("* %s moved",buffer);
+    DebugPrint("  %s moved",buffer);
     DebugPrint("%I64u files defragmented partially",defragmented_partially);
-    DebugPrint("* %I64u clusters moved",moved_partially);
+    DebugPrint("  %I64u clusters moved",moved_partially);
     winx_bytes_to_hr(moved_partially * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("* %s moved",buffer);
+    DebugPrint("  %s moved",buffer);
     
     stop_timing("defragmentation",time,jp);
     winx_fclose(jp->fVolume);
