@@ -41,6 +41,11 @@
 */
 #define GET_NUMBER_OF_MOVABLE_CLUSTERS_MAGIC_CONSTANT 100
 
+/*
+* Fragment size threshold used in partial defragmentation.
+*/
+#define PART_DEFRAG_MAGIC_CONSTANT (20 * 1024 * 1024)
+
 /************************************************************/
 /*                Prototypes, constants etc.                */
 /************************************************************/

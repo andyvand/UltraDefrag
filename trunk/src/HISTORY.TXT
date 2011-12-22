@@ -9,8 +9,6 @@ HISTORY
     - ability to filter out files by size of their fragments was added
       (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
       environment variable in command line tool and boot time interface)
-    - partial defragmentation intended to eliminate little fragments was
-      removed, since the same job does the fragment size threshold filter
     - MFT optimization was forced to do nothing silently on non-NTFS disks
 
 

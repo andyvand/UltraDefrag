@@ -296,6 +296,16 @@ int defragment(udefrag_job_parameters *jp)
         jp->pi.pass_number ++;
     }
     
+    /* defragment remaining files partially */
+    if(win_version > WINDOWS_2K && jp->udo.fragment_size_threshold == 0){
+        jp->udo.fragment_size_threshold = PART_DEFRAG_MAGIC_CONSTANT;
+        if(fine_defrag_routine(jp) == 0){
+            /* at least partial defragmentation succeeded */
+            overall_result = 0;
+        }
+        jp->udo.fragment_size_threshold = 0;
+    }
+    
     return (jp->termination_router((void *)jp)) ? 0 : overall_result;
 }
 
