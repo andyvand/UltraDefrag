@@ -14,6 +14,10 @@ HISTORY
 
   Version 5.0.0  2011-12-
   ------------------------------------------------------------------------------
+    - the following translations were added:
+
+      Kapampangan
+
     - the following translations were updated:
 
       Italian, Polish, Swedish, Burmese (Padauk)
