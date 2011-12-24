@@ -443,11 +443,46 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
 int optimize(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
+    int win_version;
+    
     ULONGLONG start_lcn = 0, new_start_lcn;
     ULONGLONG remaining_clusters;
 
-    /* 5.1 algorithm is not implemented */
-    return 0;
+    /* perform volume analysis */
+    result = analyze(jp); /* we need to call it once, here */
+    if(result < 0) return result;
+
+    /* FAT specific: optimize directories */
+    win_version = winx_get_os_version();
+    if(jp->is_fat && win_version > WINDOWS_2K){
+        jp->pi.processed_clusters = 0;
+        jp->pi.clusters_to_process = opt_dirs_cc_routine(jp);
+        result = optimize_directories(jp);
+        if(result == 0){
+            /* at least something succeeded */
+            overall_result = 0;
+        }
+    }
+    
+    /* NTFS specific: optimize MFT */
+    if(jp->fs_type == FS_NTFS && win_version > WINDOWS_2K){
+        jp->pi.processed_clusters = 0;
+        jp->pi.clusters_to_process = opt_mft_cc_routine(jp);
+        result = optimize_mft_routine(jp);
+        if(result == 0){
+            /* at least something succeeded */
+            overall_result = 0;
+        }
+    }
+    
+    /* get rid of fragmented files */
+    result = defragment(jp);
+    if(result == 0){
+        /* at least something succeeded */
+        overall_result = 0;
+    }
+    
+    return overall_result;
     
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */
