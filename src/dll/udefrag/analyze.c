@@ -299,6 +299,8 @@ int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
     int fragment_size = 0;
     
     if(jp->udo.fragment_size_threshold == 0) return 0;
+    /* don't filter out files if threshold is set by algorithm */
+    if(jp->udo.algorithm_defined_fst) return 0;
     
     if(f->disp.blockmap == NULL) return 0;
     
