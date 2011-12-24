@@ -11,152 +11,56 @@
         </div>
     </div>
     <div class="mpart">
-        <!-- pre-release announcement -->
-        <h3>Latest News - UltraDefrag 5.0.0 RC1 released</h3>
+        <h3 class="greybox">UltraDefrag 5.0.0 RC2 released.</h3>
         <h2>&nbsp;</h2> 
-        <p>This release candidate includes all the new features of the initial v5.0.0 release.</p>
-        <p><a href=""><b>GUI:</b></a></p>
+        <p>This release candidate includes all the features of the final v5.0.0 release,
+        which is scheduled to be released on December 31st, 2011.</p>
+        <h3>Overview of the features.</h3>
+        <p><a href="../handbook/Introduction.html" target="_blank"><b>Driver:</b></a></p>
         <ul>
-        <li>The drive list hight can now be adjusted by dragging the bottom border of it.</li>
-        <li>Progress is now displayed in the status column of the drive list.</li>
-        <li>The drive label is now displayed in the drive list. Please check if all localized labels are displayed correctly.</li>
-        <li>There are now more actions available to be executed when UltraDefrag terminates.</li>
-        <li>The cluster map now displays unused map blocks in gray, so they can not be confused with free space.</li>
+        <li>Defragmentation of files and folders including system files and file system meta files. <b>(enhanced in v5.0.0)</b></li>
+        <li>Full optimization of the drive, which processes all files despite of their fragmentation. <b>(enhanced in v5.0.0)</b></li>
+        <li>Quick optimization of the drive, which mainly processes fragmented files. <b>(new in v5.0.0)</b></li>
+        <li>MFT optimization, which processes the MFT only. <b>(new in v5.0.0)</b></li>
+        <li>Filtering of files to process by name, fragment count and size.</li>
+        <li>User defined log file creation, which highly simplifies reporting bugs. <b>(new in v5.0.0)</b></li>
         </ul>
-        <p><a href=""><b>Command line interface:</b></a></p>
+        <p><a href="../handbook/GUI.html" target="_blank"><b>Graphical User Interface:</b></a></p>
         <ul>
-        <li>It is now possible to specify paths as arguments, which has fixed a problem with the Explorer context menu handler on Vista and above.</li>
+        <li>Graphical display of the drives cluster map. <b>(enhanced in v5.0.0)</b></li>
+        <li>Modern design with menus and tool bar. <b>(new in v5.0.0)</b></li>
+        <li>The hight of the drives list can be adjusted. <b>(new in v5.0.0)</b></li>
+        <li>The current progress and all important information are displayed in the drives list. <b>(enhanced in v5.0.0)</b></li>
+        <li>A final action can be specified to be executed after processing the drives. <b>(new in v5.0.0)</b></li>
+        <li>Color coding of the usage of the cluster map. <b>(enhanced in v5.0.0)</b></li>
+        <li>Localization can be done by the user or by one of the included language packages. <b>(enhanced in v5.0.0)</b></li>
         </ul>
-        <p><a href=""><b>Driver:</b></a></p>
+        <p><a href="../handbook/Console.html" target="_blank"><b>Command Line Tool:</b></a></p>
         <ul>
-        <li>Defragmentation of regular files and volume metafiles was improved.</li>
-        <li>Full optimization has been improved, which processes all files despite of fragmentation.</li>
-        <li>Quick optimization has been added, which mainly processes fragmented files.</li>
-        <li>MFT optimization has been added, which only processes the MFT.</li>
-        <li>Creation of a log file by setting an environment variable is now possible, which highly simplifies reporting problems.</li>
+        <li>Useful for automation through scheduled tasks or batch scripts.</li>
+        <li>Integrated into Explorer's context menu.</li>
+        <li>Specify options through command line arguments or environment variables. <b>(enhanced in v5.0.0)</b></li>
+        <li>On demand, display of the graphical cluster map.</li>
         </ul>
-        <p><a href=""><b>Reports:</b></a></p>
+        <p><a href="../handbook/Boot.html" target="_blank"><b>Boot Time Interface:</b></a></p>
         <ul>
-        <li>The file size, file status and report creation date and time were added to the fragmentation reports.</li>
+        <li>Useful to process locked system files. <b>(enhanced in v5.0.0)</b></li>
+        <li>An interactive mode is available too. <b>(enhanced in v5.0.0)</b></li>
         </ul>
-        <p><a href=""><b>Installer:</b></a></p>
+        <p><a href="../handbook/Reports.html" target="_blank"><b>Reports:</b></a></p>
         <ul>
-        <li>All selections can now be done through command line parameters too.<br/>
-        For further information about the switches see the <a href="../handbook/Installation.html" target="_blank">handbook</a>.</li>
+        <li>Available as plain text and HTML page. <b>(enhanced in v5.0.0)</b></li>
+        <li>Includes all information about the fragmented files. <b>(enhanced in v5.0.0)</b></li>
         </ul>
-        <p>Comments and suggestions about the new design are much appreciated!</p>
-        <p>Please visit <a href="http://ultradefrag.wikispaces.com/">UltraDefrag.WikiSpaces.com</a>
-        and translate the missing pieces of any language you are fluent in.</p>
-        <p>You are welcome! Your help will be much appreciated!</p>
-        <p><a href="http://sourceforge.net/project/screenshots.php?group_id=199532" target="_blank">Screenshots</a> of the new GUI.
-        <a href="http://sourceforge.net/projects/ultradefrag/files/" target="_blank">Download</a> pre-release.</p>
-        <p><a href="../HISTORY.TXT">Change Log</a> contains a full list of changes.</p>
-        <div class="date"><a href="#" title="#">Posted on</a> <!--#echo var="DATE_GMT" --></div> 
+        <p><a href="../handbook/Installation.html" target="_blank"><b>Installer:</b></a></p>
+        <ul>
+        <li>Two configurations are available, full and without GUI. <b>(enhanced in v5.0.0)</b></li>
+        <li>All features can be configured through command line arguments. <b>(new in v5.0.0)</b></li>
+        <li>Selections of previous installations are retained. <b>(new in v5.0.0)</b></li>
+        </ul>
+        <p>The <a href="../HISTORY.TXT">Change Log</a> contains the full list of changes.</p>
+        <div class="date"><!--#config timefmt="%F" --><a href="#" title="#">Posted on</a> <!--#flastmod file="index_left_side.html" --></div> 
 
-        <!-- release announcement -->
-        <h3>News - UltraDefrag 4.4 has been finally released!</h3>
-        <h2>&nbsp;</h2> 
-        <p>We'd like to present you the latest stable release, which has many improvements:</p>
-        
-        <p><a href=""><b>GUI:</b></a></p>
-        <ul>
-        <li>Progress is now added to the GUI window caption, so it is displayed in the tooltip of the taskbar icon.</li>
-        <li>Cryptic single character progress label was replaced by the localized operation names.</li>
-        </ul>
-
-        <p><a href=""><b>Driver:</b></a></p>
-        <ul>
-        <li>Partial defragmentation was added to decrease the number of fragments even when there is no free space on disk to concatenate all fragments of the file.</li>
-        <li>Volume optimization algorithm was improved to prevent useless additional optimization passes.</li>
-        <li>One little bug preventing optimization from being stopped was fixed.</li>
-        <li>Volume optimization algorithm was improved to prevent skipping heavily fragmented parts of the volume.</li>
-        </ul>
-
-        <p><a href=""><b>Boot time interface:</b></a></p>
-        <ul>
-        <li><b>call</b>, <b>man</b>, <b>type</b> commands added to the boot time shell.</li>
-        <li><b>echo</b>, <b>exit</b>, <b>pause</b>, <b>set</b> commands improved.</li>
-        <li>History of commands typed in interactive mode added. Use arrow keys for navigation.</li>
-        <li>Escape key handler added to break boot time script execution and fall into
-        interactive mode immediately.</li>
-        <li>Pending boot-off boot time script command support added, this removes the limitation
-        of boot-on/off not working before reboot/shutdown.</li>
-        <li>Clearing of the failed boot flag added for reboot and shutdown at boot time.</li>
-        <li>10 seconds delay is skipped on boot time scan, if only one keyboard is present.</li>
-        </ul>
-        
-        <p><a href=""><b>Command line interface:</b></a></p>
-        <ul>
-        <li>Corrected cluttered progress display if console output was redirected.</li>
-        </ul>
-        
-        <p><a href=""><b>Translations:</b></a></p>
-        <ul>
-        <li>Added language selector to the GUI package.</li>
-        <li><b>Hindi</b> translation was added.</li>
-        <li>The following translations were updated:
-          <b>Chinese (Traditional)</b>, <b>Croatian</b>, <b>Danish</b>, <b>Dutch</b>, 
-          <b>French</b>, <b>Greek</b>, <b>Polish</b>, <b>Portuguese</b>, <b>Russian</b>,
-          <b>Serbian</b>, <b>Swedish</b>, <b>Turkish</b>.
-        </li>
-        </ul>
-
-        <p><a href="../HISTORY.TXT">Change Log</a> contains a full list of changes.</p>
-        <div class="date"><a href="#" title="#">Posted on</a> 24th Sept 2010</div> 
-        
-        <!-- preview announcement -->
-<!--
-        <h3>Preview - UltraDefrag next release, what you can expect.</h3>
-        <h2>&nbsp;</h2> 
-        <p>The next release will include the following improvements:</p>
-        <ul>
-        <li>The Scheduler will be totally rewritten to make it a true Task Manager with add, modify and remove capabilities.</li>
-        <li>The problem of getting an inaccessible system after an incomplete installation, due to missing boot time files, will be fixed.</li>
-        </ul>
-        <h2>&nbsp;</h2>
--->        
-        <!-- Overview -->
-        <a name="overview"></a>
-        <p>UltraDefrag is a powerful disk defragmentation tool for Windows. It is the first open source defragmenter with
-        full support of system locked files defragmentation. Actually all files including registry hives and paging file
-        can be processed by UltraDefrag during the Windows boot process.</p>
-        <p>Also one of the primary goals of the UltraDefrag design is doing the job as fast and reliable as possible.</p>
-        <p>UltraDefrag aims to be the most reliable and small disk defragmenter. We're trying to keep a reasonable balance
-        between algorithms complexity and effectiveness.</p>
-        <p>UltraDefrag is fully compatible with Windows NT 4.0, Windows 2000, Windows XP, Windows Server 2003,
-        Windows Vista, Windows Server 2008, Windows 7 and all of the 64-bit editions of Windows.</p>
-        <h2>&nbsp;</h2> 
-        <p>Some UltraDefrag highlights (the complete list of features is <a href="http://ultradefrag.sourceforge.net/handbook/Introduction.html"><b>here</b></a>):</p>
-        <ul>
-          <li><img src="../images/boot_time.jpg" alt="Boot Time Defrag" width="250" height="95" /><strong>Boot Time Defragmentation :</strong></li>
-        </ul>
-        <p>This feature provides an ability to defragment any system files. Including page file, registry hives, hiberfil.sys file and many other files locked by the system or other applications when windows is fully running.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/shutdown_job.jpg" alt="Shutdown after a job" width="250" height="95" /><strong>Computer Shut Down after a job has completed :</strong></li>
-        </ul>
-        <p>We all know how long a defragment or a compact job can take. All of us most of the time leave the PC unattended while it does its job. With this option you can set UD to shutdown the PC after a job has been completed. This saves electricity and avoids many hazards.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/compact_feature.jpg" alt="Compact Option" width="250" height="95" /><strong>Fast Disk Optimization:</strong></li>
-        </ul>
-        <p>The optimizer rearranges all data and places them to the beginning of the drive. In many instances we have found, that the system is more stable and performs a lot better under load, if data is placed at the beginning of the drive.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/folder_file.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Single File and Folder Defragmentation :</strong></li>
-        </ul>
-        <p>After UltraDefrag is installed you have the ability to select any file or folder and defragment it. This option is mostly useful, if you have recently installed an application or a game and would like to have it defragmented immediately for maximum performance.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/extended_gui.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Extended and Customizable G.U.I :</strong></li>
-        </ul>
-        <p>UltraDefrag allows you to customize its graphical user interface, such as Font and its sizes. It adapts to the Windows theme you are using. Unlike Vista and other versions of Windows Defrag, UD shows a graphical representation of the drive like it did on older generations of Windows.</p>
-<!--        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/scheduler.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Defragment Scheduler :</strong></li>
-        </ul>
-        <p>Select precise times when you want UltraDefrag to run using the scheduler and perform defragmentation tasks. </p>
-        <p></p> -->
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
@@ -167,7 +71,6 @@
         <p>You are welcome! Your help will be much appreciated!</p>
         <p>&nbsp;</p>
 
-        <div class="date"><a href="#" title="#">Posted on</a> 30th Mar 2010</div>
         <h2 class="content"><strong>DOWNLOAD ULTRADEFRAG</strong></h2>
         <p><a href="http://downloads.sourceforge.net/ultradefrag/ultradefrag-4.4.0.bin.i386.exe"><img src="../images/ud_down.png" alt="Download UltraDefrag 32bit" width="147" height="256" /></a></p>
         <p class="greybox">For 32-bit Windows <br /> NT4.0, 2000, XP, Vista, 7 - Server NT4.0, 2000, 2003, 2008</p>
@@ -183,5 +86,4 @@
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <div class="date"><a href="#" title="#">Posted on</a> 30th Mar 2010</div> 
     </div>
