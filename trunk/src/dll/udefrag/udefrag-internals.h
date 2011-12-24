@@ -131,6 +131,8 @@ typedef struct _udefrag_options {
     int dbgprint_level;         /* controls amount of debugging information */
     int dry_run;                /* set %UD_DRY_RUN% variable to avoid actual data moving in tests */
     int job_flags;              /* flags triggering algorithm features */
+    int algorithm_defined_fst;  /* nonzero value indicates that the fragment size
+                                   threshold is set by algorithm and not by user */
 } udefrag_options;
 
 typedef struct _udefrag_fragmented_file {

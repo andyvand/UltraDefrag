@@ -299,11 +299,15 @@ int defragment(udefrag_job_parameters *jp)
     /* defragment remaining files partially */
     if(win_version > WINDOWS_2K && jp->udo.fragment_size_threshold == 0){
         jp->udo.fragment_size_threshold = PART_DEFRAG_MAGIC_CONSTANT;
+        jp->udo.algorithm_defined_fst = 1;
+        DebugPrint("partial defragmentation: fragment size threshold = %I64u",
+            jp->udo.fragment_size_threshold);
         if(fine_defrag_routine(jp) == 0){
             /* at least partial defragmentation succeeded */
             overall_result = 0;
         }
         jp->udo.fragment_size_threshold = 0;
+        jp->udo.algorithm_defined_fst = 0;
     }
     
     return (jp->termination_router((void *)jp)) ? 0 : overall_result;
