@@ -1,3 +1,0 @@
-Options +FollowSymLinks
-RewriteEngine on
-RewriteRule (.*) https://apps.sourceforge.net/piwik/ultradefrag/$1 [R=301,L] 
