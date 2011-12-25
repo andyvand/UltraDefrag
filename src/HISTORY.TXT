@@ -20,7 +20,7 @@ HISTORY
 
     - the following translations were updated:
 
-      Italian, Polish, Swedish, Burmese (Padauk), Finnish
+      Italian, Polish, Swedish, Burmese (Padauk), Finnish, Japanese
 
     RC2:
     - ability to defragment NTFS attribute lists was added
