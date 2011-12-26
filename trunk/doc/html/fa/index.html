@@ -72,6 +72,7 @@ document.cookie = "language=fa; path=/";
         <li><a id="dev" href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html">توسعه</a></li>
         <li><a id="authors" href="index.html?about">درباره سازندگان</a></li>
         <li><a id="faq" href="http://ultradefrag.sourceforge.net/handbook/FAQ.html" title="Frequently Asked Questions">سوالات معمول</a></li>
+        <li><a id="links" href="index.html?links" title="Links">LINKS</a></li>
      </ul>
  </div>
  <script type="text/javascript">
@@ -87,6 +88,8 @@ document.cookie = "language=fa; path=/";
  <script type="text/javascript">highlight_menu("authors");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
  <script type="text/javascript">highlight_menu("screenshots");</script>
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
+ <script type="text/javascript">highlight_menu("links");</script>
 <!--#else -->
  <script type="text/javascript">highlight_menu("index");</script>
 <!--#endif --> 
@@ -104,33 +107,16 @@ document.cookie = "language=fa; path=/";
          
          <h3><span lang="fa">اولترا دیفراگ</span></h3>
          <ul>
-         <li><a href="index.html?screenshots">
-            <span style="background-position: 0% 0%" lang="fa">عکسها</span></a></li> 
-         <li><a href="http://sourceforge.net/projects/ultradefrag/files/">
-            <span lang="fa">دانلود</span></a></li> 
          <li><a href="http://sourceforge.net/projects/ultradefrag/forums">
             <span lang="fa">فروم</span></a></li>
-         <li><a href="http://ultradefrag.sourceforge.net/handbook/Credits.html">
-            <span lang="fa">اعتبار و جواز</span></a></li>
          <li>
             <a href="http://sourceforge.net/tracker/?atid=969870&group_id=199532&func=browse">
             <span lang="fa">گزارش ایرادات</span></a></li> 
-         <li><a href="http://sourceforge.net/projects/ultradefrag">
-            <span lang="fa">سایت</span></a></li>
-         </ul> 
-         <h3><span lang="fa">مستندات</span></h3>
-         <ul>
-         <li><a href="http://ultradefrag.sourceforge.net/handbook/">
-            <span lang="fa">کتاب دستی</span></a></li>
          <li>
             <a href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html">
             <span lang="fa">توسعه</span></a></li>
          <li><a href="http://ultradefrag.wikispaces.com/"><span lang="fa">ترجمه 
             ها</span></a></li>
-         <li><a href="http://en.wikipedia.org/wiki/Defragmentation">
-            <span lang="fa">مقاله های سایت ویکیپدیا در مورد دیفراگ</span></a></li>
-         <li><a href="http://en.wikipedia.org/wiki/UltraDefrag"><span lang="fa">
-            مقاله های سایت ویکیپدیا در مورد مافوق دیفراگ</span></a></li>
          </ul> 
          <h3><span lang="fa">لینکهای سریع</span></h3>
          <ul>
@@ -220,6 +206,8 @@ document.cookie = "language=fa; path=/";
 <!--#include virtual="logos_web.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "wallpapers"' -->
 <!--#include virtual="wallpapers.html" -->
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
+<!--#include virtual="links.html" -->
 <!--#else -->
 <!--#include virtual="index_left_side.html" -->
 <!--#endif --> 
