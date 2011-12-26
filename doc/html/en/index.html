@@ -71,6 +71,7 @@ document.cookie = "language=en; path=/";
         <li><a id="download" href="http://sourceforge.net/projects/ultradefrag/files/" title="Download UltraDefrag">DOWNLOAD</a> </li>
         <li><a id="authors" href="index.html?about" title="Know more about the authors">ABOUT THE AUTHORS</a> </li>
         <li><a id="faq" href="http://ultradefrag.sourceforge.net/handbook/FAQ.html" title="Frequently Asked Questions">F.A.Q</a></li>
+        <li><a id="links" href="index.html?links" title="Links">LINKS</a></li>
      </ul>
  </div>
  <script type="text/javascript">
@@ -86,6 +87,8 @@ document.cookie = "language=en; path=/";
  <script type="text/javascript">highlight_menu("authors");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
  <script type="text/javascript">highlight_menu("screenshots");</script>
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
+ <script type="text/javascript">highlight_menu("links");</script>
 <!--#else -->
  <script type="text/javascript">highlight_menu("index");</script>
 <!--#endif --> 
@@ -104,16 +107,9 @@ document.cookie = "language=en; path=/";
          <h3>ULTRA DEFRAG</h3>
          <ul>
          <li><a href="http://sourceforge.net/projects/ultradefrag/forums">FORUM</a></li>
-         <li><a href="http://ultradefrag.sourceforge.net/handbook/Credits.html">CREDITS AND LICENSE</a></li>
          <li><a href="http://sourceforge.net/tracker/?atid=969870&amp;group_id=199532&amp;func=browse">REPORT BUGS</a></li> 
-         <li><a href="http://sourceforge.net/projects/ultradefrag">UD SOURCEFORGE</a></li>
-         </ul> 
-         <h3>DOCUMENTATION</h3>
-         <ul>
          <li><a href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html" >DEVELOPMENT</a></li>
          <li><a href="http://ultradefrag.wikispaces.com/">TRANSLATIONS</a></li>
-         <li><a href="http://en.wikipedia.org/wiki/Defragmentation">WIKIPEDIA ARTICLE ON DEFRAGMENTATION</a></li>
-         <li><a href="http://en.wikipedia.org/wiki/UltraDefrag">WIKIPEDIA ARTICLE ON ULTRADEFRAG</a></li>
          </ul> 
          <h3>QUICK LINKS</h3>
          <ul>
@@ -190,6 +186,8 @@ document.cookie = "language=en; path=/";
 <!--#include virtual="logos_web.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "wallpapers"' -->
 <!--#include virtual="wallpapers.html" -->
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
+<!--#include virtual="links.html" -->
 <!--#else -->
 <!--#include virtual="index_left_side.html" -->
 <!--#endif --> 
