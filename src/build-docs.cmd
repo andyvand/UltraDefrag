@@ -36,6 +36,9 @@ call :compile_docs .\dll\wgx            wgx          || goto fail
 call :compile_docs .\dll\zenwinx                     || goto fail
 call :compile_docs ..\doc\html\handbook              || goto fail
 
+:: move .htaccess file to the root of dev docs
+move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
+
 :: clean up the handbook
 pushd ..\doc\html\handbook\doxy-doc\html
 del /Q  header.html, footer.html
