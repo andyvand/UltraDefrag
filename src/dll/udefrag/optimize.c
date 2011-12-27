@@ -408,36 +408,133 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
     return result;
 }
 
+/**
+ * @brief Auxiliary routine to sort files by path in binary tree.
+ */
+static int files_compare(const void *prb_a, const void *prb_b, void *prb_param)
+{
+    winx_file_info *a, *b;
+    
+    a = (winx_file_info *)prb_a;
+    b = (winx_file_info *)prb_b;
+    
+    return _wcsicmp(a->path, b->path);
+}
+
+/**
+ * @brief Calculates number of clusters
+ * needed to be moved to optimize the disk.
+ */
+static ULONGLONG opt_cc_routine(udefrag_job_parameters *jp)
+{
+    winx_file_info *f;
+    ULONGLONG n = 0;
+
+    /* count files below fragment size threshold only */
+    for(f = jp->filelist; f; f = f->next){
+        if(jp->termination_router((void *)jp)) break;
+        if(f->disp.clusters * jp->v_info.bytes_per_cluster \
+          < jp->udo.fragment_size_threshold){
+            if(can_move_entirely(f,jp) && !is_excluded(f))
+                n += f->disp.clusters * 2;
+        }
+        if(f->next == jp->filelist) break;
+    }
+    return n;
+}
+
+/**
+ * @brief Optimizes MFT by placing its fragments
+ * as close as possible after the first one.
+ * @details MFT Zone follows MFT automatically. 
+ * @return Zero for success, negative value otherwise.
+ */
+static int optimize_routine(udefrag_job_parameters *jp)
+{
+    winx_file_info *f;
+    struct prb_table *pt;
+    struct prb_traverser t;
+    ULONGLONG time;
+    char buffer[32];
+
+    jp->pi.current_operation = VOLUME_OPTIMIZATION;
+    jp->pi.moved_clusters = 0;
+
+    /* free as much temporarily allocated space as possible */
+    release_temp_space_regions(jp);
+
+    /* exclude files above fragment size threshold */
+    for(f = jp->filelist; f; f = f->next){
+        if(f->disp.clusters * jp->v_info.bytes_per_cluster \
+          < jp->udo.fragment_size_threshold){
+            f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        } else {
+            f->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+        }
+        if(f->next == jp->filelist) break;
+    }
+
+    /* open the volume */
+    jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
+    if(jp->fVolume == NULL)
+        return (-1);
+
+    time = start_timing("optimization",jp);
+
+    /* build tree of files sorted by path */
+    pt = prb_create(files_compare,NULL,NULL);
+    if(pt == NULL){
+        DebugPrint("optimize_routine: cannot create binary tree");
+        goto done;
+    }
+    for(f = jp->filelist; f; f = f->next){
+        if(can_move_entirely(f,jp) && !is_excluded(f)){
+            if(prb_probe(pt,(void *)f) == NULL){
+                DebugPrint("optimize_routine: cannot add file to the tree");
+                goto done;
+            }
+        }
+        if(f->next == jp->filelist) break;
+    }
+    
+    /* do the job */
+    prb_t_init(&t,pt);
+    f = (winx_file_info *)prb_t_first(&t,pt);
+    while(f){
+        DebugPrint("%ws",f->path);
+        f = (winx_file_info *)prb_t_next(&t);
+    }
+    
+done:
+    /* display amount of moved data */
+    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
+    DebugPrint("%s moved",buffer);
+    stop_timing("optimization",time,jp);
+    winx_fclose(jp->fVolume);
+    jp->fVolume = NULL;
+    if(pt) prb_destroy(pt,NULL);
+    return 0;
+}
+
 /************************************************************/
 /*                    The entry point                       */
 /************************************************************/
 
 /**
  * @brief Performs a volume optimization.
- * @details The volume optimization consists of two
- * phases, repeated in case of multipass processing.
- *
- * First of all, we split disk into two parts - the
- * first one is already optimized while the second one
- * needs to be optimized. So called starting point
- * represents the bound between parts.
- *
- * Then, we move all fragmented files from the beginning
- * of the volume to its terminal part. After that we
- * move everything locating after the starting point in 
- * the same direction (in full optimization only).
- * When all the operations complete, we have two arrays
- * of data (already optimized and moved to the end)
- * separated by a free space region.
- *
- * Then, we begin to move files from the end to the beginning.
- * Before each move we ensure that the file will be not moved back
- * on the next pass.
- *
- * If nothing has been moved, we advance starting point to the next
- * suitable free region and continue the volume processing.
- *
- * This algorithm guarantees that no repeated moves are possible.
+ * @details The disk optimization sorts
+ * little files (below fragment size threshold)
+ * by path on the disk. On FAT it optimizes
+ * directories also. On NTFS it optimizes the MFT.
+ * @note
+ * - The optimizer relies on the fragment size threshold
+ * filter. If it isn't set, the default value of 20 Mb
+ * is used.
+ * - The multi-pass processing is not used here,
+ * because it may easily cause repeated moves of huge
+ * amounts of data on disks being in use during the
+ * optimization.
  * @return Zero for success, negative value otherwise.
  */
 int optimize(udefrag_job_parameters *jp)
@@ -476,12 +573,29 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* get rid of fragmented files */
-    result = defragment(jp);
+    defragment(jp);
+    
+    /* optimize the disk */
+    if(jp->udo.fragment_size_threshold == 0){
+        jp->udo.fragment_size_threshold = OPTIMIZER_MAGIC_CONSTANT;
+        jp->udo.algorithm_defined_fst = 1;
+    }
+    DebugPrint("optimize: fragment size threshold = %I64u",
+        jp->udo.fragment_size_threshold);
+    jp->pi.processed_clusters = 0;
+    jp->pi.clusters_to_process = opt_cc_routine(jp);
+    result = optimize_routine(jp);
     if(result == 0){
-        /* at least something succeeded */
+        /* optimization succeeded */
         overall_result = 0;
     }
+    if(jp->udo.algorithm_defined_fst){
+        jp->udo.fragment_size_threshold = 0;
+        jp->udo.algorithm_defined_fst = 0;
+    }
     
+    /* get rid of fragmented files again */
+    defragment(jp);
     return overall_result;
     
     /* perform volume analysis */

@@ -73,6 +73,26 @@ int can_move(winx_file_info *f)
     return 1;
 }
 
+/**
+ * @brief Defines whether the file
+ * can be moved entirely or not.
+ */
+int can_move_entirely(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    if(!can_move(f))
+        return 0;
+
+    /* the first clusters of MFT cannot be moved */
+    if(is_mft(f,jp))
+        return 0;
+    
+    /* the first clusters of FAT directories cannot be moved */
+    if(jp->is_fat && is_directory(f))
+        return 0;
+        
+    return 1;
+}
+
 /************************************************************/
 /*                    Internal Routines                     */
 /************************************************************/
