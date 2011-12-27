@@ -320,7 +320,7 @@ void ApplyLanguagePack(void)
  */
 static int names_compare(const void *prb_a, const void *prb_b, void *prb_param)
 {
-    return wcscmp((wchar_t *)prb_a,(wchar_t *)prb_b);
+    return _wcsicmp((wchar_t *)prb_a,(wchar_t *)prb_b);
 }
 
 /**

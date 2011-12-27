@@ -46,6 +46,11 @@
 */
 #define PART_DEFRAG_MAGIC_CONSTANT (20 * 1024 * 1024)
 
+/*
+* Fragment size threshold used in disk optimization.
+*/
+#define OPTIMIZER_MAGIC_CONSTANT   (20 * 1024 * 1024)
+
 /************************************************************/
 /*                Prototypes, constants etc.                */
 /************************************************************/
@@ -306,6 +311,7 @@ int move_file(winx_file_info *f,
               udefrag_job_parameters *jp
               );
 int can_move(winx_file_info *f);
+int can_move_entirely(winx_file_info *f,udefrag_job_parameters *jp);
 
 /* flags for find_matching_free_region */
 enum {

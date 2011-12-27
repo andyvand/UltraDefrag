@@ -107,14 +107,14 @@ vollist.c,7318
 main.c,18367
 job.c,3554
 upgrade.c,0
-i18n.c,9482
 main.h,5246
 about.c,2541
 map.c,10090
 resource.h,4776
 toolbar.c,1537
 statbar.c,3889
-settings.c,8097
+settings.c,8086
 ultradefrag.rc,7551
 menu.c,0
-shutdown.c,15261
+shutdown.c,15236
+i18n.c,14350
