@@ -16,39 +16,60 @@
         <p>Das <a href="../HISTORY.TXT">Änderungsprotokoll</a> enthält eine komplette Liste aller Änderungen.</p>
         <div class="date"><!--#config timefmt="%F" --><a href="#" title="#">Veröffentlicht am</a> <!--#flastmod file="index_left_side.html" --></div> 
 
-        <h2 class="content"><strong>ÜBERSICHT</strong></h2>
-        <p>UltraDefrag ist ein leistungsstarkes Festplatten-Defragmentierungswerkzeug für Windows. Es ist der erste Open Source Defragmentierer, der
-        das Defragmentieren von gesperrten Systemdateien unterstützt. Alle Dateien, einschließlich Registrierungs- und Auslagerungsdateien,
-        können von UltraDefrag während des Windows Startvorganges verarbeitet werden.</p>
-        <p>Eines der vorrangigen Ziele der Struktur von UltraDefrag ist es, die Aufgabe so schnell und zuverlässig wie möglich zu erledigen.</p>
-        <p>UltraDefrag ist vollständig kompatibel zu Windows NT 4.0, Windows 2000, Windows XP, Windows Server 2003,
-        Windows Vista, Windows Server 2008, Windows 7 und allen 64-bit Editionen von Windows.</p>
-        <h2>&nbsp;</h2> 
-        <p>Einige UltraDefrag Höhepunkte (die komplette Funktionsliste ist <a href="http://ultradefrag.sourceforge.net/handbook/Introduction.html"><b>hier</b></a>):</p>
+        <h2 class="content"><strong>FUNKTIONEN</strong></h2>
+        <p><a href="../handbook/Introduction.html" target="_blank"><b>Treiber:</b></a></p>
         <ul>
-          <li><img src="../images/boot_time.jpg" alt="Boot Time Defrag" width="250" height="95" /><strong>Startzeit Defragmentierung :</strong></li>
+        <li>Defragmentierung von Dateien und Ordnern inklusive Systemdateien und Dateisystem-Metadateien. <br /><b>(verbessert in v5.0.0)</b></li>
+        <li>Komplettoptimierung des Laufwerks, welche alle Dateien ungeachtet ihrer Fragmentierung behandelt. <br /><b>(verbessert in v5.0.0)</b></li>
+        <li>Schnelloptimierung des Laufwerks, welche hauptsächlich fragmentierte Dateien behandelt. <b>(neu in v5.0.0)</b></li>
+
+        <li>Optimierung des MFT, welche nur den MFT behandelt. <b>(neu in v5.0.0)</b></li>
+        <li>Filterung der zu verarbeitenden Dateien über Größe, Anzahl der Fragmente und Namen.</li>
+        <li>Benutzerdefinierte Erstellung einer Protokolldatei, welche das Erstellen von Problemberichten erheblich vereinfacht. <b>(neu in v5.0.0)</b></li>
         </ul>
-        <p>Diese Funktion ermöglicht es jegliche Systemdateien zu defragmentieren. Einschließlich Auslagerungs-, Registrierungs-, Ruhemodus- und viele andere Dateien, welche vom System oder den Anwendungen gesperrt sind, während Windows vollständig läuft.</p>
+        <p><a href="../handbook/GUI.html" target="_blank"><b>Grafische Benutzeroberfläche:</b></a></p>
+        <ul>
+
+        <li>Grafische Darstellung der Zuordnungseinheiten des Laufwerkes. <b>(verbessert in v5.0.0)</b></li>
+        <li>Modernes Design mit Menüs und Werkzeugleiste. <b>(neu in v5.0.0)</b></li>
+        <li>Die Höhe der Laufwerksliste kann angepasst werden. <b>(neu in v5.0.0)</b></li>
+        <li>Der aktuelle Fortschritt und alle wichtigen Informationen werden in der Laufwerksliste angezeigt. <br /><b>(verbessert in v5.0.0)</b></li>
+        <li>Nach Abschluss der Verarbeitung der Laufwerke können verschiedene Aktionen ausgeführt werden. <br /><b>(neu in v5.0.0)</b></li>
+
+        <li>Farbkodierung der Zuordnungseinheiten je nach Nutzung. <b>(verbessert in v5.0.0)</b></li>
+        <li>Lokalisierung der Texte durch den Benutzer oder die mitgelieferten Sprachpakete. <b>(verbessert in v5.0.0)</b></li>
+        </ul>
+        <p><a href="../handbook/Console.html" target="_blank"><b>Kommandozeilenprogramm:</b></a></p>
+        <ul>
+        <li>Geeignet für die Automatisation über geplante Aufgaben und Befehlsskripts.</li>
+
+        <li>In das Kontextmenü des Explorers integriert.</li>
+        <li>Angabe der Optionen über Kommandozeilenparameter oder Umgebungsvariablen. <b>(verbessert in v5.0.0)</b></li>
+        <li>Wenn gewünscht, grafische Darstellung der Zuordnungseinheiten des Laufwerkes.</li>
+        </ul>
+        <p><a href="../handbook/Boot.html" target="_blank"><b>Oberfläche beim Windows Start:</b></a></p>
+        <ul>
+
+        <li>Geeignet um häufig gesperrte Systemdateien verarbeiten zu können. <b>(verbessert in v5.0.0)</b></li>
+        <li>In einen interaktiven Modus kann gewechselt werden. <b>(verbessert in v5.0.0)</b></li>
+        </ul>
+        <p><a href="../handbook/Reports.html" target="_blank"><b>Berichte:</b></a></p>
+        <ul>
+        <li>Als Textdatei und HTML-Seite vorhanden. <b>(verbessert in v5.0.0)</b></li>
+
+        <li>Enthalten sind alle Informationen über die fragmentierten Dateien. <b>(verbessert in v5.0.0)</b></li>
+        </ul>
+        <p><a href="../handbook/Installation.html" target="_blank"><b>Installationsprogramm:</b></a></p>
+        <ul>
+        <li>Zwei Konfigurationen stehen zur Verfügung, vollständig und ohne grafische Oberfläche. <b>(verbessert in v5.0.0)</b></li>
+        <li>Alle Optionen können über Kommandozeilenparameter konfiguriert werden. <b>(neu in v5.0.0)</b></li>
+
+        <li>Die Auswahl vorheriger Installationen wird übernommen. <b>(neu in v5.0.0)</b></li>
+        </ul>
         <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/shutdown_job.jpg" alt="Shutdown after a job" width="250" height="95" /><strong>Computer herunterfahren, wenn eine Aufgabe beendet ist :</strong></li>
-        </ul>
-        <p>Wir alle wissen, wie lange eine Defragmentierung oder Optimierung läuft. Meist lassen wir während dessen den PC unbeaufsichtigt. Mit dieser Option kann UD den PC herunterfahren, nachdem die Aufgabe erledigt ist. Das spart Strom und vermeidet viele Gefahren.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/compact_feature.jpg" alt="Compact Option" width="250" height="95" /><strong>Schnelle Festplatten Optimierung:</strong></li>
-        </ul>
-        <p>Der Optimierer ordnet alle Daten neu und verschiebt sie an den Anfang der Festplatte. In vielen Fällen haben wir festgestellt, dass das System stabiler und viel besser unter Last läuft, wenn die Daten am Anfang des Laufwerks liegen.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/folder_file.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Defragmentieren einzelner Dateien und Ordner :</strong></li>
-        </ul>
-        <p>Nach der Installation von UltraDefrag besteht die Möglichkeit, einzelne Dateien oder Ordner zu defragmentieren. Diese Option ist äußerst nützlich, wenn Du kürzlich eine Anwendung oder ein Spiel installiert hast und diese sofort defragmentieren möchtest um die maximale Leistung zu erreichen.</p>
-        <p>&nbsp;</p>
-        <ul>
-          <li><img src="../images/extended_gui.jpg" alt="Single File and Folder Defragmentation" width="250" height="95" /><strong>Erweiterte und anpassbare Benutzeroberfläche :</strong></li>
-        </ul>
-        <p>UltraDefrag ermöglicht es Dir die Benutzeroberfläche anzupassen, beispielsweise die Schriftart und deren Größe. Das aktuelle Windows Design wird übernommen. Im Gegensatz zu Vista und anderen Versionen von Windows Defrag, zeigt UD eine grafische Darstellung der Festplatte, wie bei älteren Windows Generationen.</p>
+
+        <h2 class="content"><strong>SYSTEM REQUIREMENTS</strong></h2>
+        <p>Windows NT/2000/XP/Server 2003/Vista/Server 2008/7</p>
         <p>&nbsp;</p>
 
         <h3 class="greybox">Übersetze UltraDefrag in Deine Muttersprache!</h3>
