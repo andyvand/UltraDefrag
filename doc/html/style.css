@@ -5,11 +5,25 @@ p {margin:5px 0}
 h1 {font:bold 1.8em Arial,Sans-Serif;padding:8px 0 4px;margin:0;letter-spacing:-1px}
 h2 {font:bold 1.6em Arial,Sans-Serif;letter-spacing:-1px}
 h3 {padding:4px 0;margin:0}
-ul {margin:0;padding:0;list-style:none}
-img {border:0}
 hr {height:1px;border-style:none;color:#d0d0d0;margin:10px 0;background:#c0c0c0}
+img {border:0}
+input.button {margin:0;font:bold 1em Arial,Sans-serif;background:#FFF url(gradientbg.jpg) repeat-x;padding:2px 3px;color:#333;border:1px solid #DADADA}
+td.cell_1 {background-image:url(../images/back.png); height:30px; width:158px; text-align:center; }
+td.cell_2 {background-image:url(../images/back_blue.gif); height:30px; width:158px; text-align:center; }
+td.cell_3 {height:30px;width:158px;text-align:center;}
+ul {margin:0;padding:0;list-style:none}
 .content {margin:0 auto;width:900px;padding-left:10px;padding-right:10px}
+.date {border-top:1px dotted #ccc;padding:5px 0;margin:10px 0 25px;text-align:right}
 .screenshots img {margin-left:auto;margin-right:auto;}
+.style0 {color:#7a9833;background:inherit;text-decoration:none}
+.style1 {font-family: Arial, Helvetica, sans-serif; font-size: x-large; color: #CCCCCC}
+/* for logos_web.html */
+.style2 {font-size: x-large;color: #CCCCCC;}
+.style3 {color: #CCCCCC}
+/* for about.html */
+.style4 {font-weight: bold}
+.newfeature {font-weight: bold;color: green;font-style:italic;font-size:smaller;}
+.enhancement {font-weight: bold;color: blue;font-style:italic;font-size:smaller;}
 #top {padding-top:0;background:transparent;height:80px}
 #top h1 {font:bold 1.8em Arial,Sans-Serif;padding:20px 0 0;margin:0;letter-spacing:1px;color:#616161}
 #top h2 {font:0.9em Arial,Sans-Serif;letter-spacing:0;color:#868686;margin:0;padding:0}
@@ -38,7 +52,6 @@ hr {height:1px;border-style:none;color:#d0d0d0;margin:10px 0;background:#c0c0c0}
 #left_side p {color:#454545;padding:0;text-align:justify}
 #left_side img {float:left;padding:0 10px 5px 0}
 #left_side blockquote {padding-left:10px;border-left:3px solid #a7cc44;margin:10px 0 10px 25px}
-.date {border-top:1px dotted #ccc;padding:5px 0;margin:10px 0 25px;text-align:right}
 #left_side .rs {float:right;margin:0 10px;border:1px solid #ddd;padding:5px;background:#f5f5f5}
 #left_side ul {list-style-position:inside;margin-left:2px}
 #left_side ul li {list-style-type:square;margin-left:15px}
@@ -47,14 +60,3 @@ hr {height:1px;border-style:none;color:#d0d0d0;margin:10px 0;background:#c0c0c0}
 #footer {clear:both;width:900px;margin:0 0 6em;color:#777;background:#fff url(images/rlline.gif) no-repeat top right}
 #footer .right {float:right;text-align:right;background:inherit;padding-top:10px;width:900px}
 #footer a {text-decoration:none;background:#fff}
-input.button {margin:0;font:bold 1em Arial,Sans-serif;background:#FFF url(gradientbg.jpg) repeat-x;padding:2px 3px;color:#333;border:1px solid #DADADA}
-.style1 {font-family: Arial, Helvetica, sans-serif; font-size: x-large; color: #CCCCCC}
-/* for logos_web.html */
-.style2 {font-size: x-large;color: #CCCCCC;}
-.style3 {color: #CCCCCC}
-/* for about.html */
-.style4 {font-weight: bold}
-.style5 {font-weight: bold}
-td.cell_1 {background-image:url(../images/back.png); height:30px; width:158px; text-align:center; }
-td.cell_2 {background-image:url(../images/back_blue.gif); height:30px; width:158px; text-align:center; }
-td.cell_3 {height:30px;width:158px;text-align:center;}

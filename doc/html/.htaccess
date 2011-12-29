@@ -20,13 +20,13 @@ ExpiresByType text/css A604800
 # redirects
 Redirect permanent /about.html       http://ultradefrag.sourceforge.net/index.html?about
 Redirect permanent /artgallery.html  http://ultradefrag.sourceforge.net/index.html?artgallery
+Redirect permanent /download.html    http://ultradefrag.sourceforge.net/index.html?download
 Redirect permanent /logos_web.html   http://ultradefrag.sourceforge.net/index.html?logos_web
 Redirect permanent /screenshots.html http://ultradefrag.sourceforge.net/index.html?screenshots
 Redirect permanent /wallpapers.html  http://ultradefrag.sourceforge.net/index.html?wallpapers
 
 Redirect permanent /bugs.html        http://sourceforge.net/tracker/?group_id=199532
 Redirect permanent /development.html http://ultradefrag.sourceforge.net/doxy-doc/html/index.html
-Redirect permanent /download.html    http://sourceforge.net/projects/ultradefrag/files/
 Redirect permanent /faq.html         http://ultradefrag.sourceforge.net/handbook/FAQ.html
 Redirect permanent /forum.html       http://sourceforge.net/projects/ultradefrag/forums/
 Redirect permanent /manual.html      http://ultradefrag.sourceforge.net/handbook/

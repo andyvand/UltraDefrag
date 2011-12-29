@@ -48,7 +48,7 @@ document.cookie = "language=ru; path=/";
         <li><a id="index" href="index.html" title="Главная">НА ГЛАВНУЮ</a></li>
         <li><a id="screenshots" href="index.html?screenshots" title="Скриншоты">СКРИНШОТЫ</a></li>
         <li><a id="handbook" href="http://ultradefrag.sourceforge.net/handbook/" title="Мануал">ДОКУМЕНТАЦИЯ</a></li>
-        <li><a id="download" href="http://sourceforge.net/projects/ultradefrag/files/" title="Загрузить UltraDefrag">ЗАГРУЗИТЬ</a> </li>
+        <li><a id="download" href="index.html?download" title="Загрузить UltraDefrag">ЗАГРУЗИТЬ</a> </li>
         <li><a id="authors" href="index.html?about" title="Узнайте больше об авторах">ОБ АВТОРАХ</a> </li>
         <li><a id="faq" href="http://ultradefrag.sourceforge.net/handbook/FAQ.html" title="Часто задаваемые вопросы">F.A.Q</a></li>
         <li><a id="links" href="index.html?links" title="Ссылки">ССЫЛКИ</a></li>
@@ -67,6 +67,8 @@ document.cookie = "language=ru; path=/";
  <script type="text/javascript">highlight_menu("authors");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
  <script type="text/javascript">highlight_menu("screenshots");</script>
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
+ <script type="text/javascript">highlight_menu("download");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
  <script type="text/javascript">highlight_menu("links");</script>
 <!--#else -->
@@ -130,14 +132,10 @@ document.cookie = "language=ru; path=/";
         <p><a href="http://www.lua.org/"><img src="../images/powered_by_lua.gif" alt="powered by lua" width="124" height="31" /></a></p> 
         <p><a href="http://sourceforge.net/projects/ultradefrag"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=199532&amp;type=11" width="120" height="30" alt="Get UltraDefrag at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></p>
         <p><a href="http://ultradefrag.wikispaces.com/" onmousedown="this.href+='t/b/120x40_pb'; this.onmousedown=''; return true;"><img src="http://ultradefrag.wikispaces.com/i/b/120x40_pb.gif" width="120" height="40" alt="Wikispaces" border="0"/></a></p>
-        <!--<p><a href="http://sourceforge.net/projects/ultradefrag/"><img src="../images/udefrag124x31.gif" alt="" width="124" height="31" /></a>
-        <script type="text/javascript" src="http://www.ohloh.net/p/10790/widgets/project_thin_badge.js"></script></p>-->
      
         <hr />
 
         <!-- advertisement -->
-        <!-- winopen.de seems to be dead :-( -->
-        <!-- <p><a href="http://www.winopen.de/"><img src="../images/Winopen_Logo.png" alt="Download the best open source software" width="220" height="80" /></a></p> -->
         <p><a href="http://directory.fsf.org"><img src="http://static.fsf.org/nosvn/directory_button.png" width="88" height="31" alt="Visit the Free Software Directory" /></a></p>
         <p><a href="http://www.utorrent.com/"><img src="../images/torrentbuttonblue6dv.png" alt="Download uTorrent" width="80" height="15" /></a></p>
         <p><a href="http://earth.google.com/download-earth.html"><img src="../images/download_earth.gif" alt="Download Google Earth" width="93" height="25" /></a></p>
@@ -244,6 +242,8 @@ document.cookie = "language=ru; path=/";
 <!--#include virtual="about.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
 <!--#include virtual="screenshots.html" -->
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
+<!--#include virtual="download.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "artgallery"' -->
 <!--#include virtual="artgallery.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "logos_web"' -->

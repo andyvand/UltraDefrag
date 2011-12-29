@@ -48,7 +48,7 @@ document.cookie = "language=de; path=/";
         <li><a id="index" href="index.html" title="Startseite">STARTSEITE</a></li>
         <li><a id="screenshots" href="index.html?screenshots" title="Bildschirmabzüge">BILDSCHIRMABZÜGE</a></li> 
         <li><a id="handbook" href="http://ultradefrag.sourceforge.net/handbook/" title="Benutzerhandbuch/Dokumentation">DOKUMENTATION</a></li>
-        <li><a id="download" href="http://sourceforge.net/projects/ultradefrag/files/" title="UltraDefrag herunterladen">HERUNTERLADEN</a> </li>
+        <li><a id="download" href="index.html?download" title="UltraDefrag herunterladen">HERUNTERLADEN</a> </li>
         <li><a id="authors" href="index.html?about" title="Wissenswertes über die Autoren">ÜBER DIE AUTOREN</a> </li>
         <li><a id="faq" href="http://ultradefrag.sourceforge.net/handbook/FAQ.html" title="Häufig gestellte Fragen">F.A.Q</a></li>
         <li><a id="links" href="index.html?links" title="Links">VERWEISE</a></li>
@@ -67,6 +67,8 @@ document.cookie = "language=de; path=/";
  <script type="text/javascript">highlight_menu("authors");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
  <script type="text/javascript">highlight_menu("screenshots");</script>
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
+ <script type="text/javascript">highlight_menu("download");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
  <script type="text/javascript">highlight_menu("links");</script>
 <!--#else -->
@@ -155,6 +157,8 @@ document.cookie = "language=de; path=/";
 <!--#include virtual="about.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
 <!--#include virtual="screenshots.html" -->
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
+<!--#include virtual="download.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "artgallery"' -->
 <!--#include virtual="artgallery.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "logos_web"' -->
