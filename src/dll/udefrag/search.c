@@ -346,8 +346,8 @@ void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 /************************************************************/
 
 /**
- * @brief Searches for the first file block
- * after a specified cluster on the volume.
+ * @brief Searches for the first moveable file block
+ * after the specified cluster on the volume.
  * @param[in] jp job parameters.
  * @param[in,out] min_lcn pointer to variable containing
  * minimum LCN - file blocks below it will be ignored.
@@ -398,18 +398,20 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
         }
         while(!jp->termination_router((void *)jp)){
             if(found_file == NULL) break;
-            if(!can_move(found_file)){
-            } else if(skip_mft && is_mft(found_file,jp)){
-            } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(found_file)){
-            } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(found_file)){
-            } else if(is_file_locked(found_file,jp)){
-                jp->pi.processed_clusters += first_block->length;
-            } else {
-                /* desired block found */
-                *min_lcn = first_block->lcn + 1; /* the current block will be skipped later anyway in this case */
-                *first_file = found_file;
-                jp->p_counters.searching_time += winx_xtime() - tm;
-                return first_block;
+            if(can_move(found_file)){
+                if(skip_mft && is_mft(found_file,jp)){
+                } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(found_file)){
+                } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(found_file)){
+                } else if(is_file_locked(found_file,jp)){
+                } else if(jp->is_fat && is_directory(found_file) && first_block == found_file->disp.blockmap){
+                    /* skip first fragments of FAT directories */
+                } else {
+                    /* desired block found */
+                    *min_lcn = first_block->lcn + 1; /* the current block will be skipped later anyway in this case */
+                    *first_file = found_file;
+                    jp->p_counters.searching_time += winx_xtime() - tm;
+                    return first_block;
+                }
             }
             
             /* skip current block */
@@ -436,9 +438,12 @@ slow_search:
                 } else {
                     for(block = file->disp.blockmap; block; block = block->next){
                         if(block->lcn >= *min_lcn && block->lcn < lcn && block->length){
-                            found_file = file;
-                            first_block = block;
-                            lcn = block->lcn;
+                            /* skip first fragments of FAT directories */
+                            if(!jp->is_fat || !is_directory(file) || block != file->disp.blockmap){
+                                found_file = file;
+                                first_block = block;
+                                lcn = block->lcn;
+                            }
                         }
                         if(block->next == file->disp.blockmap) break;
                     }
@@ -447,10 +452,8 @@ slow_search:
             if(file->next == jp->filelist) break;
         }
         if(found_file == NULL) break;
-        if(is_file_locked(found_file,jp)){
-            jp->pi.processed_clusters += found_file->disp.clusters;
-            continue;
-        }
+        if(is_file_locked(found_file,jp)) continue;
+        
         /* desired block found */
         *min_lcn = first_block->lcn + 1; /* the current block will be skipped later anyway in this case */
         *first_file = found_file;
