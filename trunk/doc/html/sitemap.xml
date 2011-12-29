@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
          xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -13,14 +13,24 @@
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>http://ultradefrag.sourceforge.net/download.html</loc>
+        <loc>http://ultradefrag.sourceforge.net/index.html?download</loc>
         <priority>0.80</priority>
         <changefreq>never</changefreq>
     </url>
     <url>
-        <loc>http://ultradefrag.sourceforge.net/screenshots.html</loc>
+        <loc>http://ultradefrag.sourceforge.net/index.html?screenshots</loc>
         <priority>0.80</priority>
         <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>http://ultradefrag.sourceforge.net/index.html?about</loc>
+        <priority>0.80</priority>
+        <changefreq>monthly</changefreq>
+    </url>
+    <url>
+        <loc>http://ultradefrag.sourceforge.net/index.html?wallpapers</loc>
+        <priority>0.64</priority>
+        <changefreq>monthly</changefreq>
     </url>
     <url>
         <loc>http://ultradefrag.sourceforge.net/handbook/</loc>
@@ -35,16 +45,6 @@
     <url>
         <loc>http://ultradefrag.sourceforge.net/handbook/Credits.html</loc>
         <priority>0.80</priority>
-        <changefreq>monthly</changefreq>
-    </url>
-    <url>
-        <loc>http://ultradefrag.sourceforge.net/about.html</loc>
-        <priority>0.80</priority>
-        <changefreq>monthly</changefreq>
-    </url>
-    <url>
-        <loc>http://ultradefrag.sourceforge.net/wallpapers.html</loc>
-        <priority>0.64</priority>
         <changefreq>monthly</changefreq>
     </url>
 </urlset>
