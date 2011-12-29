@@ -49,3 +49,12 @@ hr {height:1px;border-style:none;color:#d0d0d0;margin:10px 0;background:#c0c0c0}
 #footer a {text-decoration:none;background:#fff}
 input.button {margin:0;font:bold 1em Arial,Sans-serif;background:#FFF url(gradientbg.jpg) repeat-x;padding:2px 3px;color:#333;border:1px solid #DADADA}
 .style1 {font-family: Arial, Helvetica, sans-serif; font-size: x-large; color: #CCCCCC}
+/* for logos_web.html */
+.style2 {font-size: x-large;color: #CCCCCC;}
+.style3 {color: #CCCCCC}
+/* for about.html */
+.style4 {font-weight: bold}
+.style5 {font-weight: bold}
+td.cell_1 {background-image:url(../images/back.png); height:30px; width:158px; text-align:center; }
+td.cell_2 {background-image:url(../images/back_blue.gif); height:30px; width:158px; text-align:center; }
+td.cell_3 {height:30px;width:158px;text-align:center;}
