@@ -46,12 +46,13 @@ document.cookie = "language=de; path=/";
  <div id="menu">
      <ul>
         <li><a id="index" href="index.html" title="Startseite">STARTSEITE</a></li>
-        <li><a id="screenshots" href="index.html?screenshots" title="Bildschirmabzüge">BILDSCHIRMABZÜGE</a></li> 
+        <li><a id="screenshots" href="index.html?screenshots" title="Bildschirmabzüge">SCHNAPPSCHÜSSE</a></li> 
         <li><a id="handbook" href="http://ultradefrag.sourceforge.net/handbook/" title="Benutzerhandbuch/Dokumentation">DOKUMENTATION</a></li>
-        <li><a id="download" href="index.html?download" title="UltraDefrag herunterladen">HERUNTERLADEN</a> </li>
-        <li><a id="authors" href="index.html?about" title="Wissenswertes über die Autoren">ÜBER DIE AUTOREN</a> </li>
+        <li><a id="comparison" href="index.html?comparison" title="UltraDefrag verglichen mit Microsoft Defrag">VERGLEICH</a></li>
+        <li><a id="download" href="index.html?download" title="UltraDefrag herunterladen">HERUNTERLADEN</a></li>
+        <li><a id="authors" href="index.html?about" title="Wissenswertes über die Autoren">ÜBER DIE AUTOREN</a></li>
         <li><a id="faq" href="http://ultradefrag.sourceforge.net/handbook/FAQ.html" title="Häufig gestellte Fragen">F.A.Q</a></li>
-        <li><a id="links" href="index.html?links" title="Links">VERWEISE</a></li>
+        <li><a id="links" href="index.html?links" title="Verweise">VERWEISE</a></li>
      </ul>
  </div>
  <script type="text/javascript">
@@ -67,6 +68,8 @@ document.cookie = "language=de; path=/";
  <script type="text/javascript">highlight_menu("authors");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
  <script type="text/javascript">highlight_menu("screenshots");</script>
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "comparison"' -->
+ <script type="text/javascript">highlight_menu("comparison");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
  <script type="text/javascript">highlight_menu("download");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
@@ -157,6 +160,8 @@ document.cookie = "language=de; path=/";
 <!--#include virtual="about.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
 <!--#include virtual="screenshots.html" -->
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "comparison"' -->
+<!--#include virtual="comparison.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
 <!--#include virtual="download.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "artgallery"' -->

@@ -48,6 +48,7 @@ document.cookie = "language=fa; path=/";
         <li><a id="index" href="index.html">اصلی</a></li>
         <li><a id="screenshots" href="index.html?screenshots" title="UltraDefrag عکسها">عکسها</a></li>
         <li><a id="handbook" href="http://ultradefrag.sourceforge.net/handbook/">مستندات</a></li>
+        <li><a id="comparison" href="index.html?comparison" title="UltraDefrag compared to Microsoft Defrag">COMPARISON</a> </li>
         <li><a id="download" href="index.html?download">دانلود</a></li>
         <li><a id="authors" href="index.html?about">درباره سازندگان</a></li>
         <li><a id="faq" href="http://ultradefrag.sourceforge.net/handbook/FAQ.html" title="Frequently Asked Questions">سوالات معمول</a></li>
@@ -67,6 +68,8 @@ document.cookie = "language=fa; path=/";
  <script type="text/javascript">highlight_menu("authors");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
  <script type="text/javascript">highlight_menu("screenshots");</script>
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "comparison"' -->
+ <script type="text/javascript">highlight_menu("comparison");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
  <script type="text/javascript">highlight_menu("download");</script>
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "links"' -->
@@ -172,6 +175,8 @@ document.cookie = "language=fa; path=/";
 <!--#include virtual="about.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "screenshots"' -->
 <!--#include virtual="screenshots.html" -->
+<!--#elif expr='"$QUERY_STRING_UNESCAPED" = "comparison"' -->
+<!--#include virtual="comparison.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "download"' -->
 <!--#include virtual="download.html" -->
 <!--#elif expr='"$QUERY_STRING_UNESCAPED" = "artgallery"' -->
