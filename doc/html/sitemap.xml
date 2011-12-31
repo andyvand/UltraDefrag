@@ -18,6 +18,11 @@
         <changefreq>never</changefreq>
     </url>
     <url>
+        <loc>http://ultradefrag.sourceforge.net/index.html?comparison</loc>
+        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
         <loc>http://ultradefrag.sourceforge.net/index.html?screenshots</loc>
         <priority>0.80</priority>
         <changefreq>weekly</changefreq>
