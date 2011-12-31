@@ -95,6 +95,9 @@
  * <dt>/QUICKLAUNCHICON=(0|1)</dt>
  * <dd>Install or remove the quick launch icon. Example: <b>/QUICKLAUNCHICON=1</b> installs the quick launch icon.<br/>
  * Installing the quick launch icon forces the GUI interface it depends on to be installed.</dd>
+ * <dt>/DISABLE_USAGE_TRACKING=(0|1)</dt>
+ * <dd>Enable or disable tracking the usage of UltraDefrag. Example: <b>/DISABLE_USAGE_TRACKING=1</b> disables usage tracking.<br/>
+ * Usage tracking is done by accessing a simple text file on the UltraDefrag home page.</dd>
  * </dl>
  * Example command line to silently install the full edition in "Burmese (Padauk)" with only the start menu icon:
  * @code
