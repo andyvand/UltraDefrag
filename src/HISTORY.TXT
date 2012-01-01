@@ -9,6 +9,8 @@ HISTORY
     - ability to filter out files by size of their fragments was added
       (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
       environment variable in command line tool and boot time interface)
+    - ability to tune the disk optimization by UD_OPTIMIZER_SIZELIMIT
+      environment variable (optimizer_sizelimit parameter in GUI) was added
     - MFT optimization was forced to do nothing silently on non-NTFS disks
 
 

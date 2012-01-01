@@ -103,6 +103,22 @@ fragment_size_threshold = "$fragment_size_threshold"
 sizelimit = "$sizelimit"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- The optimizer_sizelimit parameter is used to tune the disk optimization.
+-- All files bigger than specified will be skipped, while smaller files
+-- will be sorted out on disk by their paths to speedup a sequential access.
+
+-- The default value is "20 Mb". Both zero value and empty string ("")
+-- forces to use the default value, since otherwise the disk optimization
+-- becomes not efficient.
+
+-- It is not recommended to increase this parameter too much. UltraDefrag
+-- uses simple algorithms (to reach highest reliability) and they require
+-- larger continuous free space gaps in order to sort out bigger files.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+optimizer_sizelimit = "$optimizer_sizelimit"
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- The fragments_threshold filter allows to exclude files which have low
 -- number of fragments. For example, to exclude everything with less than
 -- 5 fragments, set:
@@ -268,7 +284,7 @@ end
 
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
-current_version = 2
+current_version = 3
 old_version = 0
 upgrade_needed = 1
 
@@ -281,6 +297,7 @@ in_filter = ""
 ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar"
 fragment_size_threshold = "20 Mb"
 sizelimit = ""
+optimizer_sizelimit = "20 Mb"
 fragments_threshold = 0
 time_limit = ""
 refresh_interval = 100

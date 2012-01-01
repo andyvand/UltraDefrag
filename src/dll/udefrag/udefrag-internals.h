@@ -47,7 +47,7 @@
 #define PART_DEFRAG_MAGIC_CONSTANT (20 * 1024 * 1024)
 
 /*
-* Fragment size threshold used in disk optimization.
+* Default file size threshold used in disk optimization.
 */
 #define OPTIMIZER_MAGIC_CONSTANT   (20 * 1024 * 1024)
 
@@ -129,6 +129,7 @@ typedef struct _udefrag_options {
     winx_patlist ex_filter;     /* patterns for file exclusion */
     ULONGLONG fragment_size_threshold;  /* fragment size threshold */
     ULONGLONG size_limit;       /* file size threshold */
+    ULONGLONG optimizer_size_limit; /* file size threshold used in disk optimization */
     ULONGLONG fragments_limit;  /* file fragments threshold */
     ULONGLONG time_limit;       /* processing time limit, in seconds */
     int refresh_interval;       /* progress refresh interval, in milliseconds */
