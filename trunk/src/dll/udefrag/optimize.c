@@ -430,11 +430,11 @@ static ULONGLONG opt_cc_routine(udefrag_job_parameters *jp)
     winx_file_info *f;
     ULONGLONG n = 0;
 
-    /* count files below fragment size threshold only */
+    /* count files below file size threshold only */
     for(f = jp->filelist; f; f = f->next){
         if(jp->termination_router((void *)jp)) break;
         if(f->disp.clusters * jp->v_info.bytes_per_cluster \
-          < jp->udo.fragment_size_threshold){
+          < jp->udo.optimizer_size_limit){
             if(can_move_entirely(f,jp) && !is_excluded(f))
                 n += f->disp.clusters * 2;
         }
@@ -463,10 +463,10 @@ static int optimize_routine(udefrag_job_parameters *jp)
     /* free as much temporarily allocated space as possible */
     release_temp_space_regions(jp);
 
-    /* exclude files above fragment size threshold */
+    /* exclude files above file size threshold */
     for(f = jp->filelist; f; f = f->next){
         if(f->disp.clusters * jp->v_info.bytes_per_cluster \
-          < jp->udo.fragment_size_threshold){
+          < jp->udo.optimizer_size_limit){
             f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
         } else {
             f->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
@@ -501,7 +501,15 @@ static int optimize_routine(udefrag_job_parameters *jp)
     prb_t_init(&t,pt);
     f = (winx_file_info *)prb_t_first(&t,pt);
     while(f){
-        DebugPrint("%ws",f->path);
+        /* cleanup space before the file by moving
+        little files and fragments to the end */
+        
+        /* try to move the file closer to the previous one */
+        
+        /* mark the file as already optimized */
+        f->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+        
+        /* go to the next file */
         f = (winx_file_info *)prb_t_next(&t);
     }
     
@@ -573,25 +581,21 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* get rid of fragmented files */
-    defragment(jp);
-    
+    //defragment(jp);
+
     /* optimize the disk */
-    if(jp->udo.fragment_size_threshold == 0){
-        jp->udo.fragment_size_threshold = OPTIMIZER_MAGIC_CONSTANT;
-        jp->udo.algorithm_defined_fst = 1;
+    if(jp->udo.optimizer_size_limit == 0){
+        DebugPrint("optimize: file size threshold not set; the default value will be used");
+        jp->udo.optimizer_size_limit = OPTIMIZER_MAGIC_CONSTANT;
     }
-    DebugPrint("optimize: fragment size threshold = %I64u",
-        jp->udo.fragment_size_threshold);
+    DebugPrint("optimize: file size threshold = %I64u",
+        jp->udo.optimizer_size_limit);
     jp->pi.processed_clusters = 0;
     jp->pi.clusters_to_process = opt_cc_routine(jp);
     result = optimize_routine(jp);
     if(result == 0){
         /* optimization succeeded */
         overall_result = 0;
-    }
-    if(jp->udo.algorithm_defined_fst){
-        jp->udo.fragment_size_threshold = 0;
-        jp->udo.algorithm_defined_fst = 0;
     }
     
     /* get rid of fragmented files again */

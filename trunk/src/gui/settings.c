@@ -34,6 +34,7 @@ char in_filter[32767];
 char ex_filter[32767];
 char fragment_size_threshold[128];
 char sizelimit[128];
+char optimizer_sizelimit[128];
 char timelimit[256];
 int fraglimit;
 int refresh_interval;
@@ -86,10 +87,11 @@ WGX_OPTION read_only_options[] = {
     /* type, value buffer size, name, value, default value */
     {WGX_CFG_STRING,  sizeof(in_filter), "in_filter",           in_filter,  ""},
     {WGX_CFG_STRING,  sizeof(ex_filter), "ex_filter",           ex_filter,  ""},
-    {WGX_CFG_STRING,  sizeof(fragment_size_threshold), "fragment_size_threshold", fragment_size_threshold, ""},
     {WGX_CFG_STRING,  sizeof(sizelimit), "sizelimit",           sizelimit,  ""},
     {WGX_CFG_INT,     0,                 "fragments_threshold", &fraglimit, 0},
     {WGX_CFG_STRING,  sizeof(timelimit), "time_limit",          timelimit,  ""},
+    {WGX_CFG_STRING,  sizeof(fragment_size_threshold), "fragment_size_threshold", fragment_size_threshold, ""},
+    {WGX_CFG_STRING,  sizeof(optimizer_sizelimit),     "optimizer_sizelimit",     optimizer_sizelimit,     ""},
     {WGX_CFG_INT,     0, "refresh_interval", &refresh_interval, (void *)DEFAULT_REFRESH_INTERVAL},
     {WGX_CFG_INT,     0, "disable_reports",  &disable_reports,  0},
     {WGX_CFG_STRING,  sizeof(dbgprint_level), "dbgprint_level", dbgprint_level, ""},
@@ -145,6 +147,7 @@ void DeleteEnvironmentVariables(void)
     (void)SetEnvironmentVariable("UD_EX_FILTER",NULL);
     (void)SetEnvironmentVariable("UD_FRAGMENT_SIZE_THRESHOLD",NULL);
     (void)SetEnvironmentVariable("UD_SIZELIMIT",NULL);
+    (void)SetEnvironmentVariable("UD_OPTIMIZER_SIZELIMIT",NULL);
     (void)SetEnvironmentVariable("UD_FRAGMENTS_THRESHOLD",NULL);
     (void)SetEnvironmentVariable("UD_REFRESH_INTERVAL",NULL);
     (void)SetEnvironmentVariable("UD_DISABLE_REPORTS",NULL);
@@ -166,6 +169,8 @@ void SetEnvironmentVariables(void)
         (void)SetEnvironmentVariable("UD_FRAGMENT_SIZE_THRESHOLD",fragment_size_threshold);
     if(sizelimit[0])
         (void)SetEnvironmentVariable("UD_SIZELIMIT",sizelimit);
+    if(optimizer_sizelimit[0])
+        (void)SetEnvironmentVariable("UD_OPTIMIZER_SIZELIMIT",optimizer_sizelimit);
     if(timelimit[0])
         (void)SetEnvironmentVariable("UD_TIME_LIMIT",timelimit);
     if(fraglimit){
