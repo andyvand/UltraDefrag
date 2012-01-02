@@ -166,6 +166,9 @@ void release_temp_space_regions(udefrag_job_parameters *jp)
     winx_volume_region *rgn;
     ULONGLONG time = winx_xtime();
     
+    /* this routine is useful on NTFS only */
+    if(jp->fs_type != FS_NTFS) return;
+    
     /* release space on disk */
     rgn = winx_get_free_volume_regions(jp->volume_letter,
         WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
