@@ -105,10 +105,6 @@ if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
     rem workaround for WDK 6 and above
     if %UD_DDK_VER% NEQ 3790 set IGNORE_LINKLIB_ABUSE=1
 
-    :: disable __ftol2_see error for WDK 6 and above
-    :: TODO cast (float) to (__int64) to (long)
-    :: if %UD_DDK_VER% NEQ 3790 set CL=/QIfist %CL%
-
     if %UD_BLD_FLG_BUILD_X86% neq 0 (
         echo --------- Target is x86 ---------
         set AMD64=
