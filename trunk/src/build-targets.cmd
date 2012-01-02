@@ -303,10 +303,17 @@ exit /B 0
         cd ..\native
         %UD_BUILD_TOOL% defrag_native.build || goto fail
     )
+
+    rem workaround for WDK 6 and above
+    if %UD_DDK_VER% NEQ 3790 set OLD_CL=%CL% & set CL=/QIfist %CL%
+
     cd ..\lua5.1
     %UD_BUILD_TOOL% lua5.1a_dll.build || goto fail
     %UD_BUILD_TOOL% lua5.1a_exe.build || goto fail
     %UD_BUILD_TOOL% lua5.1a_gui.build || goto fail
+
+    rem workaround for WDK 6 and above
+    if %UD_DDK_VER% NEQ 3790 set CL=%OLD_CL% & set OLD_CL=
 
     cd ..\wgx
     %UD_BUILD_TOOL% wgx.build ||  goto fail
