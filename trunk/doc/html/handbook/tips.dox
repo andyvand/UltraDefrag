@@ -44,7 +44,7 @@
  * To prevent the system from a situation where it is not possible to boot into Windows,
  * it is best to turn off boot processing at the top of the boot-time-script.
  * This is done with the <b>boot off</b> command.
- * The boot processing is still excuted, but the next boot will not cause another run
+ * The boot processing is still executed, but the next boot will not cause another run
  * of the boot time interface.
  *
  * <h1>Performance Considerations</h1>

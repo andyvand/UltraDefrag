@@ -19,7 +19,7 @@
  * are scattered around the disk.
  * This usually happens by deleting, truncating or extending files, which
  * is done regularly during a files life. File fragmentation increases
- * time needed for file access, since an additional time is needed to move
+ * time needed for file access, since additional time is needed to move the
  * drive's head from one file fragment to another. So, it decreases an overall
  * system performance.
  *
@@ -27,7 +27,7 @@
  * <a href="http://en.wikipedia.org/wiki/Defragmentation">Defragmentation</a>
  * is the process used to correct disk and file fragmentation by concatenating
  * the files into one contiguous chunk and consolidating free space.
- * Disk defragmentaion eliminates the need to move drive's head from one file
+ * Disk defragmentation eliminates the need to move drive's head from one file
  * fragment to another, so it reduces amount of mechanical work needed to 
  * access files on disk. So, it speeds things up. 
  *
