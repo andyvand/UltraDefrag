@@ -14,6 +14,15 @@ HISTORY
     - MFT optimization was forced to do nothing silently on non-NTFS disks
 
 
+  Version 5.0.1  2012-01-
+  ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Finnish
+
+    - some additions to the tips, FAQ and GUI sections of the documentation
+
+
   Version 5.0.0  2011-12-31
   ------------------------------------------------------------------------------
     - the following translations were added:

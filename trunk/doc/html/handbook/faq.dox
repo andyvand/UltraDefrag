@@ -11,6 +11,12 @@
 
 /**
  * @page FAQ Frequently Asked Questions
+ * <h1>Installer</h1>
+ * <h3>Can I up- or downgrade over an existing installation?</h3>
+ * The installer is written to support up- and downgrading without the need
+ * to remove a previous version.
+ * In addition, usually it is not needed to reboot.
+ *
  * <h1>General Usage</h1>
  * <h3>How frequently to defragment?</h3>
  * Defragment your system disk only when you notice system slowdown -
