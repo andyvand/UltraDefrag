@@ -37,8 +37,8 @@
  * cmd.exe /C "set UD_EX_FILTER="system volume information;temp;recycle;.zip;.7z;.rar" && set UD_SIZELIMIT=100M && udefrag --wait --all-fixed"
  * @endcode
  *
- * This scheme running automatically may save a lot of time eliminating the need 
- * to start defragmenter manually.
+ * This scheme of running automatically may save a lot of time eliminating the need 
+ * to start the defragmenter manually.
  *
  * The variable <b>often_accessed_folders</b> is just a placeholder.
  * It must be created by yourself or replaced by a list of folders.
