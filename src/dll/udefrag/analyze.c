@@ -296,7 +296,7 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
 int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
 {
     winx_blockmap *block;
-    int fragment_size = 0;
+    ULONGLONG fragment_size = 0;
     
     if(jp->udo.fragment_size_threshold == 0) return 0;
     /* don't filter out files if threshold is set by algorithm */
