@@ -127,6 +127,9 @@
  * will process them one after the other. The rules for the selection are the same as
  * in Windows Explorer.
  *
+ * To select all drives you can use Ctrl+A too.
+ * Double-clicking a drive will start its analyzis.
+ *
  * <h1>Cluster Map</h1>
  * It represents the disk clusters by little colored squares.
  * Colors have the following meaning:
