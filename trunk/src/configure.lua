@@ -164,11 +164,6 @@ if ret == 1 then
         f:write("set RELEASE_STAGE=", stage, "\n")
         f:write("set UDVERSION_SUFFIX=", udver, "-", stage, "\n")
     end
-    if string.find(stage, "[Rr][Cc]") then
-        f:write("set RELEASE_CANDIDATE=1\n")
-    else
-        f:write("set RELEASE_CANDIDATE=0\n")
-    end
     f:write("set WINDDKBASE=", ddkbase, "\n")
     f:write("set WINSDKBASE=", winsdkbase, "\n")
     f:write("set MINGWBASE=", mingwbase, "\n")

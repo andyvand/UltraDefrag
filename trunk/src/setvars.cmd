@@ -5,7 +5,6 @@ set VERSION2="5, 1, 0, 0\0"
 set ULTRADFGVER=5.1.0
 set RELEASE_STAGE=beta1
 set UDVERSION_SUFFIX=5.1.0-beta1
-set RELEASE_CANDIDATE=0
 set WINDDKBASE=D:\WINDDK\3790~1.183
 set WINSDKBASE=C:\Program Files\Microsoft SDKs\Windows\v6.1
 set MINGWBASE=D:\Software\MinGWStudio\MinGW
