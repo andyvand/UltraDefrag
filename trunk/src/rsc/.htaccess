@@ -1,2 +1,5 @@
 # disable SSI
 Options -IncludesNOEXEC
+
+# redirects
+Redirect gone /udefrag-kernel
