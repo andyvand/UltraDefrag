@@ -9,18 +9,19 @@ AddOutputFilter INCLUDES .html
 ExpiresActive On
 
 # expire files in the client's cache
-ExpiresByType image/ico A604800
-ExpiresByType image/gif A604800
-ExpiresByType image/png A604800
-ExpiresByType image/jpeg A604800
 ExpiresByType application/javascript A604800
-ExpiresByType text/javascript A604800
-ExpiresByType text/css A604800
+ExpiresByType image/gif              A604800
+ExpiresByType image/ico              A604800
+ExpiresByType image/jpeg             A604800
+ExpiresByType image/png              A604800
+ExpiresByType text/css               A604800
+ExpiresByType text/javascript        A604800
 
 # redirects
 Redirect permanent /about.html       http://ultradefrag.sourceforge.net/index.html?about
 Redirect permanent /artgallery.html  http://ultradefrag.sourceforge.net/index.html?artgallery
 Redirect permanent /download.html    http://ultradefrag.sourceforge.net/index.html?download
+Redirect permanent /links.html       http://ultradefrag.sourceforge.net/index.html?links
 Redirect permanent /logos_web.html   http://ultradefrag.sourceforge.net/index.html?logos_web
 Redirect permanent /screenshots.html http://ultradefrag.sourceforge.net/index.html?screenshots
 Redirect permanent /wallpapers.html  http://ultradefrag.sourceforge.net/index.html?wallpapers
@@ -35,3 +36,5 @@ Redirect permanent /overview.html    http://ultradefrag.sourceforge.net/handbook
 Redirect permanent /bugs             http://sourceforge.net/tracker/?group_id=199532
 Redirect permanent /forum            http://sourceforge.net/projects/ultradefrag/forums/
 Redirect permanent /stats            https://apps.sourceforge.net/piwik/ultradefrag/
+
+Redirect gone /vista_guide.html
