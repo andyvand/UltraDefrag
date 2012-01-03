@@ -106,7 +106,7 @@ rem Sets environment for the build process.
     )
     
     rem remove preview menu for release candidates
-    if "%RELEASE_CANDIDATE%" equ 1 echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.h
+    if "%RELEASE_CANDIDATE%" equ "1" echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.h
     rem remove preview menu for final release
     if "%RELEASE_STAGE%" equ "" echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.h
 
