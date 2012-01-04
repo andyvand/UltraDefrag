@@ -406,8 +406,8 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
         DebugPrint("optimize_mft: initial $mft map:");
         list_mft_blocks(mft_file);
 
-        result = optimize_file(mft_file,jp);
-        if(result > 0) result = 0;
+        (void)optimize_file(mft_file,jp);
+        result = 0;
 
         DebugPrint("optimize_mft: final $mft map:");
         list_mft_blocks(mft_file);
