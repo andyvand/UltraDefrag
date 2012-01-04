@@ -2,8 +2,8 @@
 
 ::
 :: This script generates manifests for Vista UAC for UltraDefrag project.
-:: Copyright (c) 2009-2010 by Dmitri Arkhangelski (dmitriar@gmail.com).
-:: Copyright (c) 2010 by Stefan Pendl (stefanpe@users.sourceforge.net).
+:: Copyright (c) 2009-2012 by Dmitri Arkhangelski (dmitriar@gmail.com).
+:: Copyright (c) 2010-2012 by Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
 :: This program is free software; you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
