@@ -13,8 +13,8 @@ Redirect permanent /handbook/portable.html       http://ultradefrag.sourceforge.
 Redirect permanent /handbook/reports.html        http://ultradefrag.sourceforge.net/handbook/Reports.html
 Redirect permanent /handbook/scheduler.html      http://ultradefrag.sourceforge.net/handbook/Schedule.html
 
-Redirect permanent /handbook/design_notes.html   http://ultradefrag.sourceforge.net/doxy-doc/html/index.html
-Redirect permanent /handbook/development.html    http://ultradefrag.sourceforge.net/doxy-doc/html/index.html
+Redirect permanent /handbook/design_notes.html   http://ultradefrag.sourceforge.net/doxy-doc/html/
+Redirect permanent /handbook/development.html    http://ultradefrag.sourceforge.net/doxy-doc/html/
 Redirect permanent /handbook/i18n.html           http://ultradefrag.wikispaces.com/
-Redirect permanent /handbook/main.html           http://ultradefrag.sourceforge.net/handbook/index.html
+Redirect permanent /handbook/main.html           http://ultradefrag.sourceforge.net/handbook/
 Redirect permanent /handbook/reporting_bugs.html http://ultradefrag.sourceforge.net/handbook/ReportingBugs.html

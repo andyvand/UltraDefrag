@@ -27,7 +27,7 @@ Redirect permanent /screenshots.html http://ultradefrag.sourceforge.net/index.ht
 Redirect permanent /wallpapers.html  http://ultradefrag.sourceforge.net/index.html?wallpapers
 
 Redirect permanent /bugs.html        http://sourceforge.net/tracker/?group_id=199532
-Redirect permanent /development.html http://ultradefrag.sourceforge.net/doxy-doc/html/index.html
+Redirect permanent /development.html http://ultradefrag.sourceforge.net/doxy-doc/html/
 Redirect permanent /faq.html         http://ultradefrag.sourceforge.net/handbook/FAQ.html
 Redirect permanent /forum.html       http://sourceforge.net/projects/ultradefrag/forums/
 Redirect permanent /manual.html      http://ultradefrag.sourceforge.net/handbook/
@@ -37,4 +37,4 @@ Redirect permanent /bugs             http://sourceforge.net/tracker/?group_id=19
 Redirect permanent /forum            http://sourceforge.net/projects/ultradefrag/forums/
 Redirect permanent /stats            https://apps.sourceforge.net/piwik/ultradefrag/
 
-Redirect gone /vista_guide.html
+Redirect seeother  /vista_guide.html http://ultradefrag.sourceforge.net/handbook/
