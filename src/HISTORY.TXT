@@ -19,7 +19,7 @@ HISTORY
     - few bugs in MFT optimizer were fixed
     - the following translations were updated:
 
-      Finnish, Italian
+      Finnish, Indonesian, Italian
 
     - some additions to the tips, FAQ and GUI sections of the documentation
 
