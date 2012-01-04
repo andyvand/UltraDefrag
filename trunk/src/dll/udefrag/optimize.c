@@ -57,7 +57,7 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
     
     ULONGLONG start_lcn;           /* address of space not processed yet */
     ULONGLONG clusters_to_move;    /* the number of the file clusters intended for the current move */
-    winx_volume_region *rgn, *target_rgn;
+    winx_volume_region *rgn, *r, *target_rgn;
     winx_file_info *first_file;
     winx_blockmap *block, *first_block;
     ULONGLONG end_lcn, min_lcn, next_vcn;
@@ -85,6 +85,8 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
     
     start_lcn = f->disp.blockmap->lcn + f->disp.blockmap->length;
     start_vcn = f->disp.blockmap->next->vcn;
+    
+try_again:
     while(clusters_to_process > 0){
         if(jp->termination_router((void *)jp)) break;
         if(jp->free_regions == NULL) break;
@@ -132,6 +134,7 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
                     goto done;
                 } else {
                     clusters_to_process -= first_block->length;
+                    clusters_to_cleanup -= first_block->length;
                     start_vcn = first_block->next->vcn;
                     start_lcn = first_block->lcn + first_block->length;
                     continue;
@@ -143,29 +146,35 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
             lcn = first_block->lcn;
             current_vcn = first_block->vcn;
             clusters_to_move = remaining_clusters = min(clusters_to_cleanup, first_block->length);
-            for(rgn = jp->free_regions->prev; rgn && remaining_clusters; rgn = jp->free_regions->prev){
-                if(rgn->length > 0){
-                    n = min(rgn->length,remaining_clusters);
-                    target = rgn->lcn + rgn->length - n;
-                    if(first_file != f)
-                        first_file->user_defined_flags |= UD_FILE_FRAGMENTED_BY_FILE_OPT;
-                    if(move_file(first_file,current_vcn,n,target,0,jp) < 0){
-                        if(!block_cleaned_up)
-                            goto done;
-                        else
-                            goto move_the_file;
-                    }
-                    current_vcn += n;
-                    remaining_clusters -= n;
-                } else {
-                    /* infinite loop */
-                }
-                if(jp->free_regions == NULL){
-                    if(remaining_clusters)
-                        goto done;
-                    else
+            while(remaining_clusters){
+                /* use last free region */
+                if(jp->free_regions == NULL) goto done;
+                rgn = NULL;
+                for(r = jp->free_regions->prev; r; r = r->prev){
+                    if(r->length > 0 && \
+                      (r->lcn >= first_block->lcn + first_block->length || \
+                      r->lcn < f->disp.blockmap->lcn)){
+                        rgn = r;
                         break;
+                    }
+                    if(r->prev == jp->free_regions->prev) break;
                 }
+                if(rgn == NULL) goto done;
+                
+                n = min(rgn->length,remaining_clusters);
+                target = rgn->lcn + rgn->length - n;
+                if(first_file != f)
+                    first_file->user_defined_flags |= UD_FILE_FRAGMENTED_BY_FILE_OPT;
+                if(move_file(first_file,current_vcn,n,target,0,jp) < 0){
+                    if(!block_cleaned_up){
+                        start_lcn = lcn + clusters_to_move;
+                        goto try_again;
+                    } else {
+                        goto move_the_file;
+                    }
+                }
+                current_vcn += n;
+                remaining_clusters -= n;
             }
             /* space cleaned up successfully */
             region.next = region.prev = &region;
@@ -211,8 +220,14 @@ move_the_file:
         }
         target = target_rgn->lcn;
         if(move_file(f,start_vcn,clusters_to_move,target,0,jp) < 0){
-            /* on failures exit */
-            break;
+            if(jp->last_move_status != STATUS_ALREADY_COMMITTED){
+                /* on unrecoverable failures exit */
+                break;
+            }
+            /* go forward and try to cleanup next blocks */
+            f->user_defined_flags &= ~UD_FILE_MOVING_FAILED;
+            start_lcn = target + clusters_to_move;
+            continue;
         }
         /* file's part moved successfully */
         clusters_to_process -= clusters_to_move;
@@ -435,7 +450,7 @@ static ULONGLONG opt_cc_routine(udefrag_job_parameters *jp)
         if(jp->termination_router((void *)jp)) break;
         if(f->disp.clusters * jp->v_info.bytes_per_cluster \
           < jp->udo.optimizer_size_limit){
-            if(can_move_entirely(f,jp) && !is_excluded(f))
+            if(can_move_entirely(f,jp) && !is_excluded_by_path(f))
                 n += f->disp.clusters * 2;
         }
         if(f->next == jp->filelist) break;
@@ -488,7 +503,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
         goto done;
     }
     for(f = jp->filelist; f; f = f->next){
-        if(can_move_entirely(f,jp) && !is_excluded(f)){
+        if(can_move_entirely(f,jp) && !is_excluded_by_path(f)){
             if(prb_probe(pt,(void *)f) == NULL){
                 DebugPrint("optimize_routine: cannot add file to the tree");
                 goto done;
@@ -505,6 +520,9 @@ static int optimize_routine(udefrag_job_parameters *jp)
         little files and fragments to the end */
         
         /* try to move the file closer to the previous one */
+        
+        /* if the file cannot be moved closer
+        and is fragmented, let's optimize it in place */
         
         /* mark the file as already optimized */
         f->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
@@ -580,9 +598,6 @@ int optimize(udefrag_job_parameters *jp)
         }
     }
     
-    /* get rid of fragmented files */
-    //defragment(jp);
-
     /* optimize the disk */
     if(jp->udo.optimizer_size_limit == 0){
         DebugPrint("optimize: file size threshold not set; the default value will be used");
@@ -598,7 +613,7 @@ int optimize(udefrag_job_parameters *jp)
         overall_result = 0;
     }
     
-    /* get rid of fragmented files again */
+    /* get rid of fragmented files */
     defragment(jp);
     return overall_result;
     
