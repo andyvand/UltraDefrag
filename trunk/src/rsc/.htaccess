@@ -2,4 +2,4 @@
 Options -IncludesNOEXEC
 
 # redirects
-Redirect gone /udefrag-kernel
+Redirect gone /doxy-doc/udefrag-kernel
