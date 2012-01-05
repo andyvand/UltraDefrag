@@ -17,6 +17,8 @@ HISTORY
   Version 5.0.1  2012-01-
   ------------------------------------------------------------------------------
     - few bugs in MFT optimizer were fixed
+    - one bug causing boot time interface freeze 
+      after "Good bye..." message was fixed
     - the following translations were updated:
 
       Finnish, Indonesian, Italian
