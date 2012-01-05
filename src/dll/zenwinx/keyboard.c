@@ -262,9 +262,16 @@ void kb_close(void)
     */
     
     /* stop threads waiting for user input */
-    stop_kb_wait_for_input = 1;
-    while(kb_wait_for_input_threads)
+    stop_kb_wait_for_input = 1; i = 0;
+    /* 3 sec should be enough; otherwise sometimes it hangs */
+    while(kb_wait_for_input_threads && i < 30){
         winx_sleep(STOP_KB_WAIT_INTERVAL);
+        i++;
+    }
+    if(kb_wait_for_input_threads){
+        winx_printf("Keyboards polling terminated forcibly...\n");
+        winx_sleep(2000);
+    }
     
     for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
         if(kb[i].hKbDevice == NULL) break;
