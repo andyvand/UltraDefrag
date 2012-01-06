@@ -821,7 +821,7 @@ int move_file(winx_file_info *f,
         colorize_file_as_system(jp,f);
         /* however, don't reset file information here */
         f->user_defined_flags |= UD_FILE_LOCKED;
-        jp->pi.processed_clusters += length;
+        /*jp->pi.processed_clusters += length;*/
         if(jp->progress_router)
             jp->progress_router(jp); /* redraw progress */
         jp->p_counters.moving_time += winx_xtime() - time;
@@ -831,7 +831,7 @@ int move_file(winx_file_info *f,
     /* move the file */
     move_file_helper(hFile,f,vcn,length,target,jp);
     winx_defrag_fclose(hFile);
-
+    
     /* get file moving result */
     memcpy(&new_file_info,f,sizeof(winx_file_info));
     new_file_info.disp.blockmap = NULL;
@@ -975,7 +975,8 @@ int move_file(winx_file_info *f,
     } else {
         /* new block map is available - use it */
         for(block = f->disp.blockmap; block; block = block->next){
-            if(remove_block_from_file_blocks_tree(jp,block) < 0) break;
+            /* all blocks must be removed! */
+            (void)remove_block_from_file_blocks_tree(jp,block);
             if(block->next == f->disp.blockmap) break;
         }
         winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);

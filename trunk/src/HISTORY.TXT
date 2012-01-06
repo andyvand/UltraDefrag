@@ -16,6 +16,7 @@ HISTORY
 
   Version 5.0.1  2012-01-
   ------------------------------------------------------------------------------
+    - few important bugs in disk processing routines were fixed
     - few bugs in MFT optimizer were fixed
     - one bug causing boot time interface freeze 
       after "Good bye..." message was fixed
