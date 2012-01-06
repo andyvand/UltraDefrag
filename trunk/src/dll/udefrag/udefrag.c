@@ -22,13 +22,34 @@
  * @brief Entry point.
  * @details Each disk processing algorithm
  * should comply with the following rules:
- * - avoid infinite loops
- * - filter files properly
- * - produce reports properly
- * - in case of repeated calls avoid
- *   processing of already processed data
- * - use fast searching algorithms
- *   whenever it makes sense
+ * -# never try to move directories on FAT entirely
+ * -# never try to move MFT on NTFS entirely
+ * -# work either on nt4/w2k or on xp and later systems
+ * -# work on disks with low amount of free space
+ * -# sort primarily small files, because big files sorting is useless
+ * -# save more time than needed to complete the disk processing itself
+ * -# terminate quickly on already processed disks
+ * -# don't sort out all the files when just a few files were changed
+ *    since the last optimization
+ * -# show progress percentage advancing from 0 to 100%
+ * -# cleanup as much space as possible before use of the cleaned up space;
+ *    otherwise NTFS processing will be slow
+ * -# don't optimize any file twice
+ * -# never go into infinite loop
+ * -# handle correctly either normal or compressed/sparse files
+ * -# handle correctly locked files
+ * -# distinguish between file blocks and file fragments
+ * -# handle a case when region assumed to be free becomes "already in use"
+ * -# filter files properly
+ * -# produce reports properly
+ *
+ * How statistical data adjusts in all the volume processing routines:
+ * -# we calculate maximum amount of data which may be moved in process
+ *    and assign this value to jp->pi.clusters_to_process counter
+ * -# when we move something, we adjust jp->pi.processed_clusters
+ *
+ * NOTE: progress over 100% means deeper processing than expected.
+ * This is not a bug, this is an algorithm feature.
  * @addtogroup Engine
  * @{
  */
@@ -330,19 +351,6 @@ static int killer(void *p)
     return 1;
 }
 
-/*
-* How statistical data adjusts in all the volume processing routines:
-* 1. we calculate a maximum amount of data which may be moved in process
-*    and assign this value to jp->pi.clusters_to_process counter
-* 2. when we move something, we adjust jp->pi.processed_clusters
-* 3. when we skip something, we adjust that counter too
-* Therefore, regardless of number of algorithm passes, we'll have
-* always a true progress percentage gradually increasing from 0% to 100%.
-*
-* NOTE: progress over 100% means deeper processing than expected.
-* This is not a bug, this is an algorithm feature causing by iterational
-* nature of multipass processing.
-*/
 static DWORD WINAPI start_job(LPVOID p)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)p;
