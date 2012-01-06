@@ -31,7 +31,7 @@
 
 /*
 * NTFS formatted volumes cannot be safely accessed
-* in NT4, as mentioned in program's handbook.
+* on NT4, as mentioned in program's handbook.
 * On our test machines NTFS access caused blue
 * screens regardless of whether we accessed it
 * from kernel mode or user mode.
@@ -514,17 +514,10 @@ static void update_progress_counters(winx_file_info *f,udefrag_job_parameters *j
 static void progress_callback(winx_file_info *f,void *user_defined_data)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)user_defined_data;
-    winx_blockmap *block;
     
     /* don't count excluded files in context menu handler */
     if(!(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER))
         update_progress_counters(f,jp);
-
-    /* add file blocks to the binary search tree */
-    for(block = f->disp.blockmap; block; block = block->next){
-        if(add_block_to_file_blocks_tree(jp,f,block) < 0) break;
-        if(block->next == f->disp.blockmap) break;
-    }
 }
 
 /**
@@ -566,6 +559,7 @@ static int find_files(udefrag_job_parameters *jp)
     wchar_t c;
     int flags = 0;
     winx_file_info *f;
+    winx_blockmap *block;
     
     /* check for context menu handler */
     if(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER){
@@ -628,6 +622,12 @@ static int find_files(udefrag_job_parameters *jp)
         if(jp->progress_router) /* need speedup? */
             jp->progress_router(jp); /* redraw progress */
         
+        /* add file blocks to the binary search tree - after winx_scan_disk! */
+        for(block = f->disp.blockmap; block; block = block->next){
+            if(add_block_to_file_blocks_tree(jp,f,block) < 0) break;
+            if(block->next == f->disp.blockmap) break;
+        }
+
         if(f->next == jp->filelist) break;
     }
 
