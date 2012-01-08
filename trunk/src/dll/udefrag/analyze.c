@@ -857,6 +857,13 @@ static int define_allowed_actions(udefrag_job_parameters *jp)
         return UDEFRAG_UDF_DEFRAG;
     }
       
+    /* define whether we have weak move file api or not */
+    if(win_version < WINDOWS_XP){
+        DebugPrint("Rough disk processing algorithms will be used");
+        DebugPrint("because of nt4/w2k API limitations.");
+        jp->weak_api = 1;
+    }
+      
     if(!jp->is_fat) DebugPrint("define_allowed_actions: directories can be moved");
     else DebugPrint("define_allowed_actions: directories cannot be moved");
     if(jp->fs_type != FS_NTFS || win_version < WINDOWS_XP){

@@ -241,7 +241,6 @@ int defragment(udefrag_job_parameters *jp)
     int result, overall_result = -1;
     disk_processing_routine defrag_routine = NULL;
     clusters_counting_routine cc_routine = NULL;
-    int win_version;
     
     /* perform volume analysis */
     if(jp->job_type == DEFRAGMENTATION_JOB){
@@ -257,14 +256,11 @@ int defragment(udefrag_job_parameters *jp)
 #endif
 
     /* set working routines */
-    win_version = winx_get_os_version();
-    if(jp->udo.fragment_size_threshold == 0 \
-      || win_version <= WINDOWS_2K){
-        DebugPrint("defragment: rough routines will be used");
-        if(win_version <= WINDOWS_2K)
-            DebugPrint("defragment: because of nt4/w2k API limitations");
-        else
+    if(jp->weak_api || jp->udo.fragment_size_threshold == 0){
+        if(jp->udo.fragment_size_threshold == 0){
+            DebugPrint("defragment: rough routines will be used");
             DebugPrint("defragment: because of fragment size threshold filter not set");
+        }
         defrag_routine = rough_defrag_routine;
         cc_routine = rough_cc_routine;
     } else {
@@ -289,15 +285,12 @@ int defragment(udefrag_job_parameters *jp)
         /* break if nothing moved */
         if(result < 0 || jp->pi.moved_clusters == 0) break;
         
-        /* break if no repeat */
-        if(!(jp->udo.job_flags & UD_JOB_REPEAT)) break;
-        
-        /* go to the next pass */
+        /* defragment a few remaining files on the next pass */
         jp->pi.pass_number ++;
     }
     
     /* defragment remaining files partially */
-    if(win_version > WINDOWS_2K && jp->udo.fragment_size_threshold == 0){
+    if(jp->weak_api == 0 && jp->udo.fragment_size_threshold == 0){
         jp->udo.fragment_size_threshold = PART_DEFRAG_MAGIC_CONSTANT;
         jp->udo.algorithm_defined_fst = 1;
         DebugPrint("partial defragmentation: fragment size threshold = %I64u",
@@ -392,7 +385,7 @@ static int rough_defrag_routine(udefrag_job_parameters *jp)
         file = f->f; /* f will be destroyed by move_file */
         if(can_defragment(file,jp)){
             /* defragment the file */
-            rgn = find_first_free_region(jp,file->disp.clusters);
+            rgn = find_first_free_region(jp,0,file->disp.clusters);
             if(rgn){
                 if(move_file(file,file->disp.blockmap->vcn,
                  file->disp.clusters,rgn->lcn,0,jp) >= 0){
@@ -496,7 +489,7 @@ static int fine_defrag_routine(udefrag_job_parameters *jp)
             if(file->disp.clusters * jp->v_info.bytes_per_cluster \
               < 2 * jp->udo.fragment_size_threshold){
                 /* move entire file */
-                rgn = find_first_free_region(jp,file->disp.clusters);
+                rgn = find_first_free_region(jp,0,file->disp.clusters);
                 if(rgn){
                     x = jp->pi.moved_clusters;
                     if(move_file(file,file->disp.blockmap->vcn,
@@ -583,7 +576,7 @@ static int fine_defrag_routine(udefrag_job_parameters *jp)
                     if(length == 0 || n < 2){
                         min_vcn = max_vcn;
                     } else {
-                        rgn = find_first_free_region(jp,length);
+                        rgn = find_first_free_region(jp,0,length);
                         if(rgn){
                             if(move_file(file,vcn,length,rgn->lcn,0,jp) >= 0){
                                 if(jp->udo.dbgprint_level >= DBG_DETAILED)

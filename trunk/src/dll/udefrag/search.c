@@ -42,17 +42,19 @@
 /**
  * @brief Searches for free space region starting at the beginning of the volume.
  * @param[in] jp job parameters structure.
+ * @param[in] min_lcn minimum LCN of region.
  * @param[in] min_length minimum length of region, in clusters.
  * @note In case of termination request returns NULL immediately.
  */
-winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,ULONGLONG min_length)
+winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,
+        ULONGLONG min_lcn,ULONGLONG min_length)
 {
     winx_volume_region *rgn;
     ULONGLONG time = winx_xtime();
 
     for(rgn = jp->free_regions; rgn; rgn = rgn->next){
         if(jp->termination_router((void *)jp)) break;
-        if(rgn->length >= min_length){
+        if(rgn->lcn >= min_lcn && rgn->length >= min_length){
             jp->p_counters.searching_time += winx_xtime() - time;
             return rgn;
         }
@@ -65,10 +67,12 @@ winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,ULONGLONG 
 /**
  * @brief Searches for free space region starting at the end of the volume.
  * @param[in] jp job parameters structure.
+ * @param[in] min_lcn minimum LCN of region.
  * @param[in] min_length minimum length of region, in clusters.
  * @note In case of termination request returns NULL immediately.
  */
-winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG min_length)
+winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,
+        ULONGLONG min_lcn,ULONGLONG min_length)
 {
     winx_volume_region *rgn;
     ULONGLONG time = winx_xtime();
@@ -76,6 +80,7 @@ winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG m
     if(jp->free_regions){
         for(rgn = jp->free_regions->prev; rgn; rgn = rgn->prev){
             if(jp->termination_router((void *)jp)) break;
+            if(rgn->lcn < min_lcn) break;
             if(rgn->length >= min_length){
                 jp->p_counters.searching_time += winx_xtime() - time;
                 return rgn;
@@ -87,6 +92,7 @@ winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG m
     return NULL;
 }
 
+#if 0
 /**
  * @brief Searches for best matching free space region.
  * @param[in] jp job parameters structure.
@@ -157,35 +163,7 @@ winx_volume_region *find_largest_free_region(udefrag_job_parameters *jp)
     jp->p_counters.searching_time += winx_xtime() - time;
     return rgn_largest;
 }
-
-/**
- * @brief Returns number of free clusters
- * locating inside a specified part of the volume.
- * @note first_lcn is included in search while
- * last_lcn is not included.
- */
-ULONGLONG get_number_of_free_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn)
-{
-    winx_volume_region *rgn;
-    ULONGLONG i, j, total = 0;
-    ULONGLONG time = winx_xtime();
-    
-    if(first_lcn == last_lcn)
-        return 0;
-    
-    for(rgn = jp->free_regions; rgn; rgn = rgn->next){
-        if(rgn->lcn >= last_lcn) break;
-        if(rgn->lcn + rgn->length > first_lcn){
-            if(rgn->lcn > first_lcn) i = rgn->lcn; else i = first_lcn;
-            if(rgn->lcn + rgn->length < last_lcn) j = rgn->lcn + rgn->length; else j = last_lcn;
-            total += (j - i);
-        }
-        if(rgn->next == jp->free_regions) break;
-    }
-    
-    jp->p_counters.searching_time += winx_xtime() - time;
-    return total;
-}
+#endif
 
 /************************************************************/
 /*                    Auxiliary routines                    */
@@ -342,7 +320,7 @@ void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 }
 
 /************************************************************/
-/*              File block searching routines               */
+/*              File block searching routine                */
 /************************************************************/
 
 /**
@@ -351,102 +329,102 @@ void destroy_file_blocks_tree(udefrag_job_parameters *jp)
  * @param[in] jp job parameters.
  * @param[in,out] min_lcn pointer to variable containing
  * minimum LCN - file blocks below it will be ignored.
- * @param[in] flags one of MOVE_xxx flags defined in udefrag.h
- * @param[in] skip_mft boolean flag indicating whether $mft blocks
- * must be skipped or not.
+ * @param[in] flags one of SKIP_xxx flags defined in udefrag.h
  * @param[out] first_file pointer to variable receiving information
  * about the file the first block belongs to.
  * @return Pointer to the first block. NULL indicates failure.
  */
 winx_blockmap *find_first_block(udefrag_job_parameters *jp,
-    ULONGLONG *min_lcn, int flags, int skip_mft, winx_file_info **first_file)
+    ULONGLONG *min_lcn, int flags, winx_file_info **first_file)
 {
     winx_file_info *found_file, *file;
     winx_blockmap *first_block, *block;
     winx_blockmap b;
     struct file_block fb, *item;
     struct prb_traverser t;
+    int movable_file;
     ULONGLONG lcn;
     ULONGLONG tm = winx_xtime();
     
     if(jp == NULL || min_lcn == NULL || first_file == NULL)
         return NULL;
     
-    /* try to use fast binary tree search strategy first */
-    if(jp->file_blocks != NULL){
-        found_file = NULL; first_block = NULL;
-        b.lcn = *min_lcn; fb.block = &b;
-        prb_t_init(&t,jp->file_blocks);
-        item = prb_t_insert(&t,jp->file_blocks,&fb);
-        if(item == NULL){
-            /* insertion failed, let's go to the slow search */
+    /* use fast binary tree search if possible */
+    if(jp->file_blocks == NULL) goto slow_search;
+    found_file = NULL; first_block = NULL;
+    b.lcn = *min_lcn; fb.block = &b;
+    prb_t_init(&t,jp->file_blocks);
+    item = prb_t_insert(&t,jp->file_blocks,&fb);
+    if(item == NULL){
+        /* insertion failed, let's go to the slow search */
+        DebugPrint("find_first_block: slow search will be used");
+        goto slow_search;
+    }
+    if(item == &fb){
+        /* block at min_lcn not found */
+        item = prb_t_next(&t);
+        if(prb_delete(jp->file_blocks,&fb) == NULL){
+            /* removing failed, let's go to the slow search */
             DebugPrint("find_first_block: slow search will be used");
             goto slow_search;
         }
-        if(item == &fb){
-            /* block at min_lcn not found */
-            item = prb_t_next(&t);
-            if(prb_delete(jp->file_blocks,&fb) == NULL){
-                /* removing failed, let's go to the slow search */
-                DebugPrint("find_first_block: slow search will be used");
-                goto slow_search;
-            }
-        }
-        if(item){
-            found_file = item->file;
-            first_block = item->block;
-        }
-        while(!jp->termination_router((void *)jp)){
-            if(found_file == NULL) break;
-            if(can_move(found_file)){
-                if(skip_mft && is_mft(found_file,jp)){
-                } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(found_file)){
-                } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(found_file)){
-                } else if(is_file_locked(found_file,jp)){
-                } else if(jp->is_fat && is_directory(found_file) && first_block == found_file->disp.blockmap){
-                    /* skip first fragments of FAT directories */
-                } else {
-                    /* desired block found */
-                    *min_lcn = first_block->lcn + 1; /* the current block will be skipped later anyway in this case */
-                    *first_file = found_file;
-                    jp->p_counters.searching_time += winx_xtime() - tm;
-                    return first_block;
-                }
-            }
-            
-            /* skip current block */
-            *min_lcn = *min_lcn + 1;
-            /* and go to the next one */
-            item = prb_t_next(&t);
-            if(item == NULL) break;
-            found_file = item->file;
-            first_block = item->block;
-        }
-        *first_file = NULL;
-        jp->p_counters.searching_time += winx_xtime() - tm;
-        return NULL;
     }
+    if(item){
+        found_file = item->file;
+        first_block = item->block;
+    }
+    while(!jp->termination_router((void *)jp)){
+        if(found_file == NULL) break;
+        if(flags & SKIP_PARTIALLY_MOVABLE_FILES){
+            movable_file = can_move_entirely(found_file,jp);
+        } else {
+            movable_file = can_move(found_file);
+        }
+        if(is_file_locked(found_file,jp)) movable_file = 0;
+        if(movable_file){
+            if(jp->is_fat && is_directory(found_file) && first_block == found_file->disp.blockmap){
+                /* skip first fragments of FAT directories */
+            } else {
+                /* desired block found */
+                *min_lcn = first_block->lcn + 1; /* the current block will be skipped later anyway in this case */
+                *first_file = found_file;
+                jp->p_counters.searching_time += winx_xtime() - tm;
+                return first_block;
+            }
+        }
+        
+        /* skip current block */
+        *min_lcn = *min_lcn + 1;
+        /* and go to the next one */
+        item = prb_t_next(&t);
+        if(item == NULL) break;
+        found_file = item->file;
+        first_block = item->block;
+    }
+    *first_file = NULL;
+    jp->p_counters.searching_time += winx_xtime() - tm;
+    return NULL;
 
 slow_search:
     while(!jp->termination_router((void *)jp)){
         found_file = NULL; first_block = NULL; lcn = jp->v_info.total_clusters;
         for(file = jp->filelist; file; file = file->next){
-            if(can_move(file)){
-                if(skip_mft && is_mft(file,jp)){
-                } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(file)){
-                } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(file)){
-                } else {
-                    for(block = file->disp.blockmap; block; block = block->next){
-                        if(block->lcn >= *min_lcn && block->lcn < lcn && block->length){
-                            /* skip first fragments of FAT directories */
-                            if(!jp->is_fat || !is_directory(file) || block != file->disp.blockmap){
-                                found_file = file;
-                                first_block = block;
-                                lcn = block->lcn;
-                            }
+            if(flags & SKIP_PARTIALLY_MOVABLE_FILES){
+                movable_file = can_move_entirely(file,jp);
+            } else {
+                movable_file = can_move(file);
+            }
+            if(movable_file){
+                for(block = file->disp.blockmap; block; block = block->next){
+                    if(block->lcn >= *min_lcn && block->lcn < lcn && block->length){
+                        /* skip first fragments of FAT directories */
+                        if(!jp->is_fat || !is_directory(file) || block != file->disp.blockmap){
+                            found_file = file;
+                            first_block = block;
+                            lcn = block->lcn;
                         }
-                        if(block->next == file->disp.blockmap) break;
                     }
+                    if(block->next == file->disp.blockmap) break;
                 }
             }
             if(file->next == jp->filelist) break;
@@ -463,160 +441,6 @@ slow_search:
     *first_file = NULL;
     jp->p_counters.searching_time += winx_xtime() - tm;
     return NULL;
-}
-
-/**
- * @brief Returns number of movable clusters
- * inside specified part of the volume.
- * @note first_lcn is included in search while
- * last_lcn is not included.
- */
-ULONGLONG get_number_of_movable_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn, int flags)
-{
-    winx_blockmap b;
-    struct file_block fb, *item;
-    struct prb_traverser t;
-    winx_file_info *file;
-    winx_blockmap *block;
-    ULONGLONG i, j, n, total = 0;
-    int counter = 0;
-    int was_currently_excluded;
-    ULONGLONG time = winx_xtime();
-
-    if(jp == NULL || first_lcn == last_lcn)
-        return 0;
-
-    /* try to use fast binary tree search strategy first */
-    if(jp->file_blocks != NULL){
-        b.lcn = first_lcn; fb.block = &b;
-        prb_t_init(&t,jp->file_blocks);
-        item = prb_t_insert(&t,jp->file_blocks,&fb);
-        if(item == NULL){
-            /* insertion failed, let's go to the slow search */
-            DebugPrint("get_number_of_movable_clusters: slow search will be used");
-            goto slow_search;
-        }
-        if(item == &fb){
-            /* block at first_lcn not found */
-            item = prb_t_prev(&t);
-            if(prb_delete(jp->file_blocks,&fb) == NULL){
-                /* removing failed, let's go to the slow search */
-                DebugPrint("get_number_of_movable_clusters: slow search will be used");
-                goto slow_search;
-            }
-            if(item == NULL)
-                item = prb_t_next(&t);
-        }
-        while(!jp->termination_router((void *)jp) && item){
-            file = item->file; block = item->block;
-            if(block->lcn >= last_lcn) break;
-            
-            was_currently_excluded = is_currently_excluded(file);
-            file->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-            
-            if(counter < GET_NUMBER_OF_MOVABLE_CLUSTERS_MAGIC_CONSTANT){
-                (void)is_file_locked(file,jp);
-                counter ++;
-            }
-
-            if(!can_move(file) || is_mft(file,jp)){
-            } else if((flags == MOVE_FRAGMENTED) && !is_fragmented(file)){
-            } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(file)){
-            } else {
-                if((block->lcn + block->length > first_lcn) && block->lcn < last_lcn){
-                    if(block->lcn > first_lcn) i = block->lcn; else i = first_lcn;
-                    if(block->lcn + block->length < last_lcn) j = block->lcn + block->length; else j = last_lcn;
-                    total += (j - i);
-                }
-            }
-            
-            if(was_currently_excluded)
-                file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-            
-            /* go to the next block */
-            item = prb_t_next(&t);
-        }
-        jp->p_counters.searching_time += winx_xtime() - time;
-        return total;
-    }
-    
-slow_search:
-    total = 0;
-    for(file = jp->filelist; file; file = file->next){
-        if(jp->termination_router((void *)jp)) break;
-        was_currently_excluded = is_currently_excluded(file);
-        n = 0; file->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED; /* for can_move call */
-        for(block = file->disp.blockmap; block; block = block->next){
-            if((block->lcn + block->length > first_lcn) && block->lcn < last_lcn){
-                if(block->lcn > first_lcn) i = block->lcn; else i = first_lcn;
-                if(block->lcn + block->length < last_lcn) j = block->lcn + block->length; else j = last_lcn;
-                n += (j - i);
-            }
-            if(block->next == file->disp.blockmap) break;
-        }
-        if(n){
-            if(can_move(file) && !is_mft(file,jp)){
-                if((flags == MOVE_FRAGMENTED) && !is_fragmented(file)){
-                } else if((flags == MOVE_NOT_FRAGMENTED) && is_fragmented(file)){
-                } else {
-                    total += n;
-                    if(counter < GET_NUMBER_OF_MOVABLE_CLUSTERS_MAGIC_CONSTANT){
-                        if(is_file_locked(file,jp))
-                            total -= n;
-                        counter ++;
-                    }
-                }
-            }
-        }
-        if(was_currently_excluded)
-            file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-        if(file->next == jp->filelist) break;
-    }
-    jp->p_counters.searching_time += winx_xtime() - time;
-    return total;
-}
-
-/**
- * @brief Returns number of fragmented clusters
- * locating inside a specified part of the volume.
- * @note first_lcn is included in search while
- * last_lcn is not included.
- */
-ULONGLONG get_number_of_fragmented_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn)
-{
-    udefrag_fragmented_file *f;
-    winx_blockmap *block;
-    ULONGLONG i, j, n, total = 0;
-    int was_currently_excluded;
-    ULONGLONG time = winx_xtime();
-    
-    if(first_lcn == last_lcn)
-        return 0;
-    
-    for(f = jp->fragmented_files; f; f = f->next){
-        if(jp->termination_router((void *)jp)) break;
-        was_currently_excluded = is_currently_excluded(f->f);
-        n = 0; f->f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED; /* for can_move call */
-        for(block = f->f->disp.blockmap; block; block = block->next){
-            if((block->lcn + block->length > first_lcn) && block->lcn < last_lcn){
-                if(block->lcn > first_lcn) i = block->lcn; else i = first_lcn;
-                if(block->lcn + block->length < last_lcn) j = block->lcn + block->length; else j = last_lcn;
-                n += (j - i);
-            }
-            if(block->next == f->f->disp.blockmap) break;
-        }
-        if(n){
-            if(can_move(f->f) && !is_mft(f->f,jp))
-                if(!is_file_locked(f->f,jp))
-                    total += n;
-        }
-        if(was_currently_excluded)
-            f->f->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-        if(f->next == jp->fragmented_files) break;
-    }
-    
-    jp->p_counters.searching_time += winx_xtime() - time;
-    return total;
 }
 
 /** @} */

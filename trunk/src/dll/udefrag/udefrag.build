@@ -6,7 +6,7 @@ nativedll   = 1
 
 src = {
     "analyze.c", "defrag.c", "int64.c", "map.c", "move.c", "optimize.c",
-    "options.c", "reports.c", "search.c", "tasks.c", "udefrag.c", "volume.c"
+    "options.c", "reports.c", "search.c", "udefrag.c", "volume.c"
 }
 
 rc = { "udefrag.rc" }
