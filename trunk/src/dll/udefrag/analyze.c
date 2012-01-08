@@ -444,6 +444,10 @@ static int filter(winx_file_info *f,void *user_defined_data)
     */
     
     /* START OF FILTERING */
+    
+    /* skip files with invalid map */
+    if(f->disp.blockmap == NULL)
+        goto skip_file;
 
     /* skip temporary files */
     if(is_temporary(f))
