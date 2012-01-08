@@ -41,7 +41,6 @@ move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
 
 :: clean up the handbook
 pushd ..\doc\html\handbook\doxy-doc\html
-del /Q  header.html, footer.html
 del /Q  doxygen.png
 del /Q  tabs.css
 del /Q  bc_*.png
@@ -68,6 +67,11 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
     lua "%~dp0\tools\set-doxyfile-project-number.lua" Doxyfile %ULTRADFGVER% || goto compilation_failed
     doxygen || goto compilation_failed
     copy /Y .\rsc\*.* .\doxy-doc\html\
+
+    del /Q  .\doxy-doc\html\header.html >nul 2>&1
+    del /Q  .\doxy-doc\html\footer.html >nul 2>&1
+    del /Q  .\doxy-doc\html\*.dox >nul 2>&1
+
     if "%2" neq "" (
         xcopy /I /Y /Q /S .\doxy-doc\html "%~dp0\doxy-doc\%2\html" || goto compilation_failed
     )
