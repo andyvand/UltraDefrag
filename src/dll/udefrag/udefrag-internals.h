@@ -240,6 +240,7 @@ typedef struct _udefrag_job_parameters {
     struct prb_table *file_blocks;              /* pointer to binary tree of all file blocks found on the volume */
     struct file_counters f_counters;            /* file counters */
     NTSTATUS last_move_status;                  /* status of the last move file operation; zero by default */
+    int weak_api;                               /* true for nt4/w2k where move file api has lots of restrictions */
 } udefrag_job_parameters;
 
 int  get_options(udefrag_job_parameters *jp);
@@ -289,6 +290,8 @@ int exclude_by_fragments(winx_file_info *f,udefrag_job_parameters *jp);
 int exclude_by_size(winx_file_info *f,udefrag_job_parameters *jp);
 int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
+winx_blockmap *build_fragments_list(winx_file_info *f);
+void release_fragments_list(winx_blockmap **fragments);
 
 /*
 * move_file prototype and flags
@@ -321,31 +324,22 @@ enum {
     FIND_MATCHING_RGN_BACKWARD,
     FIND_MATCHING_RGN_ANY
 };
-winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,ULONGLONG min_length);
-winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG min_length);
-winx_volume_region *find_matching_free_region(udefrag_job_parameters *jp,
+winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,ULONGLONG min_lcn,ULONGLONG min_length);
+winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG min_lcn,ULONGLONG min_length);
+/*winx_volume_region *find_matching_free_region(udefrag_job_parameters *jp,
     ULONGLONG start_lcn, ULONGLONG min_length, int preferred_position);
 winx_volume_region *find_largest_free_region(udefrag_job_parameters *jp);
-ULONGLONG get_number_of_free_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn);
-
+*/
 int create_file_blocks_tree(udefrag_job_parameters *jp);
 int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *file, winx_blockmap *block);
 int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap *block);
 void destroy_file_blocks_tree(udefrag_job_parameters *jp);
 winx_blockmap *find_first_block(udefrag_job_parameters *jp,
-    ULONGLONG *min_lcn, int flags, int skip_mft, winx_file_info **first_file);
-ULONGLONG get_number_of_movable_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn, int flags);
-ULONGLONG get_number_of_fragmented_clusters(udefrag_job_parameters *jp, ULONGLONG first_lcn, ULONGLONG last_lcn);
+    ULONGLONG *min_lcn, int flags, winx_file_info **first_file);
 
-/* flags used in move_files_to_xxx routines */
+/* flags for the find_first_block routine */
 enum {
-    MOVE_FRAGMENTED,
-    MOVE_NOT_FRAGMENTED,
-    MOVE_ALL
+    SKIP_PARTIALLY_MOVABLE_FILES = 0x1
 };
-
-ULONGLONG calculate_starting_point(udefrag_job_parameters *jp, ULONGLONG old_sp);
-int move_files_to_front(udefrag_job_parameters *jp, ULONGLONG start_lcn, int flags);
-int move_files_to_back(udefrag_job_parameters *jp, ULONGLONG start_lcn, int flags);
 
 #endif /* _UDEFRAG_INTERNALS_H_ */
