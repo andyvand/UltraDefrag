@@ -293,26 +293,10 @@ void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp
 winx_blockmap *build_fragments_list(winx_file_info *f);
 void release_fragments_list(winx_blockmap **fragments);
 
-/*
-* move_file prototype and flags
-*/
-
-/*
-* If this flag is set, the move_file
-* routine will cut off moved range
-* of clusters from the file's map passed in.
-* Thus, after each move file's map will become
-* shorter and shorter preventing subsequent
-* moves of the same data in a partial
-* defragmentation and in volume optimization.
-*/
-#define UD_MOVE_FILE_CUT_OFF_MOVED_CLUSTERS 0x1
-
 int move_file(winx_file_info *f,
               ULONGLONG vcn,
               ULONGLONG length,
               ULONGLONG target,
-              int flags,
               udefrag_job_parameters *jp
               );
 int can_move(winx_file_info *f);
