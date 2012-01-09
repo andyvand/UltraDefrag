@@ -16,5 +16,5 @@ new release:
 5. update website (+ HISTORY.TXT, version.ini, downloads, left_side_index),
    handbook, dev docs, zenwinx docs
 6. submit news
-7. close bugs and requests, but stull allow posting comments
+7. close bugs and requests, but still allow posting comments
 8. update project info
