@@ -618,7 +618,7 @@ fail:
 /**
  * @brief Cuts off range of clusters from the file map.
  */
-static void subtract_clusters(winx_file_info *f, ULONGLONG vcn,
+/*static */void subtract_clusters(winx_file_info *f, ULONGLONG vcn,
     ULONGLONG length, udefrag_job_parameters *jp)
 {
     winx_blockmap *block, *first_block, *new_block;
@@ -713,8 +713,6 @@ typedef enum {
  * @param[in] vcn the VCN of the first cluster to be moved.
  * @param[in] length the length of the cluster chain to be moved.
  * @param[in] target the LCN of the target free region.
- * @param[in] flags combination of UD_MOVE_FILE_xxx flags
- * defined in udefrag_internals.h file
  * @param[in] jp job parameters.
  * @return Zero for success, negative value otherwise.
  * @note 
@@ -737,7 +735,6 @@ int move_file(winx_file_info *f,
               ULONGLONG vcn,
               ULONGLONG length,
               ULONGLONG target,
-              int flags,
               udefrag_job_parameters *jp
               )
 {
@@ -883,8 +880,6 @@ int move_file(winx_file_info *f,
     if(moving_result == DETERMINED_MOVING_FAILURE){
         winx_list_destroy((list_entry **)(void *)&new_file_info.disp.blockmap);
         f->user_defined_flags |= UD_FILE_MOVING_FAILED;
-        if(flags & UD_MOVE_FILE_CUT_OFF_MOVED_CLUSTERS)
-            subtract_clusters(f,vcn,length,jp);
         /* remove target space from the free space pool */
         jp->free_regions = winx_sub_volume_region(jp->free_regions,target,length);
         jp->p_counters.moving_time += winx_xtime() - time;
@@ -960,31 +955,17 @@ int move_file(winx_file_info *f,
     if(jp->progress_router)
         jp->progress_router(jp); /* redraw map and update statistics */
 
-    if(flags & UD_MOVE_FILE_CUT_OFF_MOVED_CLUSTERS){
-        /* destroy new blockmap, since we use an old one anyway in this case */
-        winx_list_destroy((list_entry **)(void *)&new_file_info.disp.blockmap);
-        /* cut off moved range of clusters from the original blockmap */
-        subtract_clusters(f,vcn,length,jp);
-        /* update statistics though */
-        f->disp.fragments = new_file_info.disp.fragments;
-        f->disp.clusters = new_file_info.disp.clusters;
-        if(became_fragmented)
-            f->disp.flags |= WINX_FILE_DISP_FRAGMENTED;
-        else
-            f->disp.flags &= ~WINX_FILE_DISP_FRAGMENTED;
-    } else {
-        /* new block map is available - use it */
-        for(block = f->disp.blockmap; block; block = block->next){
-            /* all blocks must be removed! */
-            (void)remove_block_from_file_blocks_tree(jp,block);
-            if(block->next == f->disp.blockmap) break;
-        }
-        winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
-        memcpy(&f->disp,&new_file_info.disp,sizeof(winx_file_disposition));
-        for(block = f->disp.blockmap; block; block = block->next){
-            if(add_block_to_file_blocks_tree(jp,f,block) < 0) break;
-            if(block->next == f->disp.blockmap) break;
-        }
+    /* new block map is available - use it */
+    for(block = f->disp.blockmap; block; block = block->next){
+        /* all blocks must be removed! */
+        (void)remove_block_from_file_blocks_tree(jp,block);
+        if(block->next == f->disp.blockmap) break;
+    }
+    winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
+    memcpy(&f->disp,&new_file_info.disp,sizeof(winx_file_disposition));
+    for(block = f->disp.blockmap; block; block = block->next){
+        if(add_block_to_file_blocks_tree(jp,f,block) < 0) break;
+        if(block->next == f->disp.blockmap) break;
     }
 
     /* update list of fragmented files */

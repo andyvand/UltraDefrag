@@ -79,7 +79,7 @@ static int cleanup_space(udefrag_job_parameters *jp, winx_file_info *file,
         
         n = min(rgn->length,clusters_to_cleanup);
         target = rgn->lcn + rgn->length - n;
-        if(move_file(file,current_vcn,n,target,0,jp) < 0)
+        if(move_file(file,current_vcn,n,target,jp) < 0)
             return (-2);
         current_vcn += n;
         clusters_to_cleanup -= n;
@@ -274,7 +274,7 @@ move_the_file:
         clusters_to_move = min(clusters_to_process,target_rgn->length);
         next_vcn = advance_vcn(f,start_vcn,clusters_to_move);
         target = target_rgn->lcn;
-        if(move_file(f,start_vcn,clusters_to_move,target,0,jp) < 0){
+        if(move_file(f,start_vcn,clusters_to_move,target,jp) < 0){
             if(jp->last_move_status != STATUS_ALREADY_COMMITTED){
                 /* on unrecoverable failures exit */
                 break;
@@ -538,7 +538,7 @@ static void move_files_to_front(udefrag_job_parameters *jp,
         if(rgn->lcn >= end_lcn) break;
         lcn = rgn->lcn;
         if(move_file(file,file->disp.blockmap->vcn,
-          file->disp.clusters,rgn->lcn,0,jp) >= 0){
+          file->disp.clusters,rgn->lcn,jp) >= 0){
             *start_lcn = lcn + 1;
             jp->pi.total_moves ++;
         }
@@ -623,7 +623,7 @@ static int weak_cleanup_space(udefrag_job_parameters *jp,
     if(rgn == NULL) return (-1);
     
     if(move_file(file,vcn,length,rgn->lcn \
-      + rgn->length - length,0,jp) < 0){
+      + rgn->length - length,jp) < 0){
         return (-2);
     }
     jp->pi.total_moves ++;

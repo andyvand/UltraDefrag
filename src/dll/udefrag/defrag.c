@@ -63,7 +63,7 @@ void test_move(winx_file_info *f,udefrag_job_parameters *jp)
         DebugPrint("test_move: no free region found on disk");
         return;
     }
-    if(move_file(f,f->disp.blockmap->vcn,1,target_rgn->lcn,0,jp) < 0){
+    if(move_file(f,f->disp.blockmap->vcn,1,target_rgn->lcn,jp) < 0){
         DebugPrint("test_move: move failed for %ws",f->path);
         return;
     } else {
@@ -73,7 +73,7 @@ void test_move(winx_file_info *f,udefrag_job_parameters *jp)
     release_temp_space_regions(jp);
     /* try to move the first cluster back */
     if(can_move(f,jp)){
-        if(move_file(f,f->disp.blockmap->vcn,1,source_lcn,0,jp) < 0){
+        if(move_file(f,f->disp.blockmap->vcn,1,source_lcn,jp) < 0){
             DebugPrint("test_move: move failed for %ws",f->path);
             return;
         } else {
@@ -388,7 +388,7 @@ static int rough_defrag_routine(udefrag_job_parameters *jp)
             rgn = find_first_free_region(jp,0,file->disp.clusters);
             if(rgn){
                 if(move_file(file,file->disp.blockmap->vcn,
-                 file->disp.clusters,rgn->lcn,0,jp) >= 0){
+                 file->disp.clusters,rgn->lcn,jp) >= 0){
                     if(jp->udo.dbgprint_level >= DBG_DETAILED)
                         DebugPrint("Defrag success for %ws",file->path);
                     defragmented_files ++;
@@ -493,7 +493,7 @@ static int fine_defrag_routine(udefrag_job_parameters *jp)
                 if(rgn){
                     x = jp->pi.moved_clusters;
                     if(move_file(file,file->disp.blockmap->vcn,
-                     file->disp.clusters,rgn->lcn,0,jp) >= 0){
+                     file->disp.clusters,rgn->lcn,jp) >= 0){
                         if(jp->udo.dbgprint_level >= DBG_DETAILED)
                             DebugPrint("Defrag success for %ws",file->path);
                         defragmented_files ++;
@@ -578,7 +578,7 @@ static int fine_defrag_routine(udefrag_job_parameters *jp)
                     } else {
                         rgn = find_first_free_region(jp,0,length);
                         if(rgn){
-                            if(move_file(file,vcn,length,rgn->lcn,0,jp) >= 0){
+                            if(move_file(file,vcn,length,rgn->lcn,jp) >= 0){
                                 if(jp->udo.dbgprint_level >= DBG_DETAILED)
                                     DebugPrint("Defrag success for %ws",file->path);
                                 defrag_succeeded = 1;
