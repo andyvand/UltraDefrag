@@ -540,7 +540,9 @@ static void move_files_to_front(udefrag_job_parameters *jp,
         if(move_file(file,file->disp.blockmap->vcn,
           file->disp.clusters,rgn->lcn,0,jp) >= 0){
             *start_lcn = lcn + 1;
+            jp->pi.total_moves ++;
         }
+        file->user_defined_flags |= UD_FILE_MOVED_TO_FRONT;
         file = (winx_file_info *)prb_t_next(t);
     }
     
@@ -677,6 +679,8 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
                 result = weak_cleanup_space(jp, first_file, first_block);
                 first_file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
             }
+            if(result == 0)
+                jp->pi.total_moves ++;
             if(result == -1){
                 /* no more free space beyond exist */
                 *start_lcn = lcn;
@@ -861,12 +865,21 @@ int optimize(udefrag_job_parameters *jp)
         DebugPrint("optimize: file size threshold not set; the default value will be used");
         jp->udo.optimizer_size_limit = OPTIMIZER_MAGIC_CONSTANT;
     }
-    DebugPrint("optimize: file size threshold = %I64u",
-        jp->udo.optimizer_size_limit);
+    if(jp->udo.fragment_size_threshold == 0){
+        DebugPrint("optimize: fragment size threshold not set; the default value will be used");
+        jp->udo.fragment_size_threshold = OPTIMIZER_MAGIC_CONSTANT;
+        jp->udo.algorithm_defined_fst = 1;
+    }
+    DebugPrint("optimize: fragment size threshold = %I64u",jp->udo.fragment_size_threshold);
+    DebugPrint("optimize: file size threshold = %I64u",jp->udo.optimizer_size_limit);
     result = optimize_routine(jp);
     if(result == 0){
         /* optimization succeeded */
         overall_result = 0;
+    }
+    if(jp->udo.algorithm_defined_fst){
+        jp->udo.fragment_size_threshold = 0;
+        jp->udo.algorithm_defined_fst = 0;
     }
     
     /* get rid of fragmented files */
