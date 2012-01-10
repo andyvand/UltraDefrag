@@ -12,6 +12,7 @@ HISTORY
     - ability to tune the disk optimization by UD_OPTIMIZER_SIZELIMIT
       environment variable (optimizer_sizelimit parameter in GUI) was added
     - MFT optimization was forced to do nothing silently on non-NTFS disks
+    - Internals: flags field removed from winx_file_disposition structure
 
 
   Version 5.0.1  2012-01-08
