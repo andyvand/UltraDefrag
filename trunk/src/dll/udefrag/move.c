@@ -537,14 +537,10 @@ repeat_scan:
     
     /* adjust number of fragments and set flags */
     f->disp.fragments = 0;
-    f->disp.flags &= ~WINX_FILE_DISP_FRAGMENTED;
-    if(f->disp.blockmap != NULL)
-        f->disp.fragments ++;
     for(block = f->disp.blockmap; block; block = block->next){
-        if(block != f->disp.blockmap && \
+        if(block == f->disp.blockmap || \
           block->lcn != (block->prev->lcn + block->prev->length)){
             f->disp.fragments ++;
-            f->disp.flags |= WINX_FILE_DISP_FRAGMENTED;
         }
         if(block->next == f->disp.blockmap) break;
     }

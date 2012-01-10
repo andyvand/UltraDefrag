@@ -146,9 +146,7 @@ void winx_release_file_contents(void *contents);
 #define are_valid_flags(f)        ((f)->flags & FILE_ATTRIBUTE_VALID_FLAGS)
 #define are_valid_set_flags(f)    ((f)->flags & FILE_ATTRIBUTE_VALID_SET_FLAGS)
 
-#define WINX_FILE_DISP_FRAGMENTED 0x1
-
-#define is_fragmented(f)          ((f)->disp.flags & WINX_FILE_DISP_FRAGMENTED)
+#define is_fragmented(f)          ((f)->disp.fragments > 1)
 
 typedef struct _winx_blockmap {
     struct _winx_blockmap *next; /* pointer to the next fragment */
@@ -160,9 +158,8 @@ typedef struct _winx_blockmap {
 
 typedef struct _winx_file_disposition {
     ULONGLONG clusters;                /* total number of clusters belonging to the file */
-    ULONGLONG fragments;               /* total number of file fragments */
-    unsigned long flags;               /* combination of WINX_FILE_DISP_xxx flags */
-    winx_blockmap *blockmap;           /* map of blocks <=> list of fragments */
+    ULONGLONG fragments;               /* total number of file fragments, not blocks */
+    winx_blockmap *blockmap;           /* map of blocks */
 } winx_file_disposition;
 
 typedef struct _winx_file_internal_info {

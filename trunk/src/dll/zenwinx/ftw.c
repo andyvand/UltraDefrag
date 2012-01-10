@@ -148,7 +148,6 @@ int winx_ftw_dump_file(winx_file_info *f,
     /* reset disposition related fields */
     f->disp.clusters = 0;
     f->disp.fragments = 0;
-    f->disp.flags = 0;
     winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
     
     /* open the file */
@@ -227,20 +226,16 @@ int winx_ftw_dump_file(winx_file_info *f,
             
             //DebugPrint("VCN = %I64u, LCN = %I64u, LENGTH = %I64u",
             //    block->vcn,block->lcn,block->length);
-
             f->disp.clusters += block->length;
-            if(block == f->disp.blockmap)
-                f->disp.fragments ++;
             
             /*
             * Sometimes files have more than one fragment, 
             * but are not fragmented yet. In case of compressed
             * files this happens quite frequently.
             */
-            if(block != f->disp.blockmap && \
+            if(block == f->disp.blockmap || \
               block->lcn != (block->prev->lcn + block->prev->length)){
                 f->disp.fragments ++;
-                f->disp.flags |= WINX_FILE_DISP_FRAGMENTED;
             }
         }
     } while(status != STATUS_SUCCESS);
@@ -256,7 +251,6 @@ cleanup:
 empty_map_detected:
     f->disp.clusters = 0;
     f->disp.fragments = 0;
-    f->disp.flags = 0;
     winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
     winx_heap_free(filemap);
     winx_defrag_fclose(hFile);
@@ -265,7 +259,6 @@ empty_map_detected:
 dump_failed:
     f->disp.clusters = 0;
     f->disp.fragments = 0;
-    f->disp.flags = 0;
     winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
     winx_heap_free(filemap);
     winx_defrag_fclose(hFile);

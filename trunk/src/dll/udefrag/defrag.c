@@ -139,9 +139,8 @@ static int can_defragment(winx_file_info *f,udefrag_job_parameters *jp)
     if(!can_move(f))
         return 0;
 
-    /* skip files with less than 2 fragments */
-    if(f->disp.blockmap->next == f->disp.blockmap \
-      || f->disp.fragments < 2 || !is_fragmented(f))
+    /* skip not fragmented files */
+    if(!is_fragmented(f))
         return 0;
         
     /* skip MFT */
