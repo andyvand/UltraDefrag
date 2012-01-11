@@ -15,6 +15,13 @@ HISTORY
     - Internals: flags field removed from winx_file_disposition structure
 
 
+  Version 5.0.2  2012-01-
+  ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Dutch
+
+
   Version 5.0.1  2012-01-08
   ------------------------------------------------------------------------------
     - few important bugs in disk processing routines were fixed
