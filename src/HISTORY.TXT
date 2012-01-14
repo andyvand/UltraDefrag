@@ -17,6 +17,7 @@ HISTORY
 
   Version 5.0.2  2012-01-
   ------------------------------------------------------------------------------
+    - Installer: forced default action for .luar files to be "view"
     - the following translations were added:
 
       Bosanski
