@@ -598,8 +598,8 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
         ip = 100; /* fix round off error */
 
     (void)_snprintf(msg,MSG_LENGTH,
-              "Disk information:\n\n"
-              "  Disk size                    = %s\n"
+              "Drive information:\n\n"
+              "  Total space                  = %s\n"
               "  Free space                   = %s\n\n"
               "  Total number of files        = %u\n"
               "  Number of fragmented files   = %u\n"
