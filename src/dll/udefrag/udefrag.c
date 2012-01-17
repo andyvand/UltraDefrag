@@ -24,7 +24,6 @@
  * should comply with the following rules:
  * -# never try to move directories on FAT entirely
  * -# never try to move MFT on NTFS entirely
- * -# work either on nt4/w2k or on xp and later systems
  * -# work on disks with low amount of free space
  * -# sort primarily small files, because big files sorting is useless
  * -# save more time than needed to complete the disk processing itself
@@ -437,8 +436,8 @@ void destroy_lists(udefrag_job_parameters *jp)
  * Nonzero value, returned by terminator, forces the job to be terminated.
  * @param[in] p pointer to user defined data to be passed to both callbacks.
  * @return Zero for success, negative value otherwise.
- * @note [Callback procedures should complete as quickly
- * as possible to avoid slowdown of the volume processing].
+ * @note Callback procedures should complete as quickly
+ * as possible to avoid slowdown of the volume processing.
  */
 int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
         int cluster_map_size,udefrag_progress_callback cb,udefrag_terminator t,void *p)
@@ -637,9 +636,6 @@ char *udefrag_get_error_description(int error_code)
     case UDEFRAG_UNKNOWN_ERROR:
         return "Some unknown internal bug or some\n"
                "rarely arising error has been encountered.";
-    case UDEFRAG_W2K_4KB_CLUSTERS:
-        return "NTFS disks with cluster size greater than 4 kb\n"
-               "cannot be defragmented on Windows 2000 and Windows NT 4.0";
     case UDEFRAG_NO_MEM:
         return "Not enough memory.";
     case UDEFRAG_CDROM:
@@ -656,8 +652,6 @@ char *udefrag_get_error_description(int error_code)
     case UDEFRAG_UDF_DEFRAG:
         return "UDF disks can neither be defragmented nor optimized,\n"
                "because the file system driver does not support FSCTL_MOVE_FILE.";
-    case UDEFRAG_UNMOVABLE_MFT:
-        return "On NT4 and Windows 2000 MFT is not movable.";
     case UDEFRAG_DIRTY_VOLUME:
         return "Disk is dirty, run Check Disk to repair it.";
     }

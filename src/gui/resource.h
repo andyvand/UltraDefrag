@@ -43,17 +43,17 @@
 #define IDI_SHUTDOWN                    140
 #define IDR_MAIN_ACCELERATOR            150
 
-/* for 24/32 bits per pixel (xp etc) */
+/* for 24/32 bits per pixel */
 #define IDB_TOOLBAR                     160
 #define IDB_TOOLBAR_DISABLED            161
 #define IDB_TOOLBAR_HIGHLIGHTED         162
 
-/* for 8 bits per pixel displays (nt4 etc) */
+/* for 8 bits per pixel displays */
 #define IDB_TOOLBAR_8_BIT               163
 #define IDB_TOOLBAR_DISABLED_8_BIT      164
 #define IDB_TOOLBAR_HIGHLIGHTED_8_BIT   165
 
-/* for 16 bits per pixel displays (w2k etc) */
+/* for 16 bits per pixel displays */
 #define IDB_TOOLBAR_16_BIT              166
 #define IDB_TOOLBAR_DISABLED_16_BIT     167
 #define IDB_TOOLBAR_HIGHLIGHTED_16_BIT  168

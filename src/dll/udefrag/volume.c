@@ -129,16 +129,15 @@ int udefrag_get_volume_information(char volume_letter,volume_info *v)
 int udefrag_validate_volume(char volume_letter,int skip_removable)
 {
     volume_info v;
-    int error_code;
+    int result;
 
     /* set error mode to ignore missing removable drives */
     if(winx_set_system_error_mode(INTERNAL_SEM_FAILCRITICALERRORS) < 0)
         return (-1);
-    error_code = internal_validate_volume(volume_letter,skip_removable,&v);
-    if(error_code < 0) return error_code;
+    result = internal_validate_volume(volume_letter,skip_removable,&v);
     /* try to restore error mode to default state */
     winx_set_system_error_mode(1); /* equal to SetErrorMode(0) */
-    return 0;
+    return result;
 }
 
 /**

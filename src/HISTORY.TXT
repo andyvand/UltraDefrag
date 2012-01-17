@@ -1,8 +1,12 @@
 HISTORY
 
-  Version 5.1.0  2012-01-
+  Version 6.0.0  2012-01-
   ------------------------------------------------------------------------------
     beta1:
+    - Windows NT 4.0 and Windows 2000 support was dropped because of
+      weakness of the Windows Defrag API on these systems;
+      for these people who still use old Windows editions
+      we recommend to use the 5.0.x series of UltraDefrag
     - all the disk processing algorithms were reimplemented
       to reach better efficiency and shorter processing times
     - FAT optimization was implemented

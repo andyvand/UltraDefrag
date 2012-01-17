@@ -272,8 +272,9 @@ static int check_cluster_chain_location(winx_file_info *f,ULONGLONG vcn,ULONGLON
  * @return Zero for success,
  * negative value otherwise.
  * @note 
- * - On NT4 this function can move
- * no more than 256 kilobytes once.
+ * - Execution of the FSCTL_MOVE_FILE request
+ * cannot be interrupted, so it's a good idea
+ * to move little portions of data at once.
  * - Volume must be opened before this call,
  * jp->fVolume must contain a proper handle.
  */
@@ -339,73 +340,30 @@ static void move_file_helper(HANDLE hFile, winx_file_info *f,
     ULONGLONG curr_vcn, curr_target, j, n, r;
     ULONGLONG clusters_to_process;
     ULONGLONG clusters_to_move;
-    ULONGLONG extra_clusters;
     int result;
     
     clusters_to_process = length;
     curr_vcn = vcn;
     curr_target = target;
     
-    if(is_compressed(f) || is_sparse(f)){
-        /* move blocks of file */
-        first_block = get_first_block_of_cluster_chain(f,vcn);
-        for(block = first_block; block; block = block->next){
-            /* move the current block or its part */
-            clusters_to_move = min(block->length - (curr_vcn - block->vcn),clusters_to_process);
-            n = clusters_to_move / jp->clusters_per_256k;
-            for(j = 0; j < n; j++){
-                result = move_file_clusters(hFile,curr_vcn,
-                    curr_target,jp->clusters_per_256k,jp);
-                if(result < 0)
-                    goto done;
-                jp->pi.processed_clusters += jp->clusters_per_256k;
-                clusters_to_process -= jp->clusters_per_256k;
-                curr_vcn += jp->clusters_per_256k;
-                curr_target += jp->clusters_per_256k;
-            }
-            /* try to move rest of the block */
-            r = clusters_to_move % jp->clusters_per_256k;
-            extra_clusters = r % 16; /* to comply with nt4/w2k rules */
-            r -= extra_clusters;
-            if(r){
-                result = move_file_clusters(hFile,curr_vcn,curr_target,r,jp);
-                if(result < 0)
-                    goto done;
-                jp->pi.processed_clusters += r;
-                clusters_to_process -= r;
-                curr_vcn += r;
-                curr_target += r;
-            }
-            if(extra_clusters){
-                result = move_file_clusters(hFile,curr_vcn,curr_target,extra_clusters,jp);
-                if(result < 0)
-                    goto done;
-                jp->pi.processed_clusters += extra_clusters;
-                clusters_to_process -= extra_clusters;
-                curr_vcn += extra_clusters;
-                curr_target += extra_clusters;
-            }
-            if(!clusters_to_move || block->next == f->disp.blockmap) break;
-            curr_vcn = block->next->vcn;
-        }
-    } else {
-        /* move file clusters regardless of block boundaries */
-        /* this works much better on w2k/nt4 NTFS volumes */
-        n = clusters_to_process / jp->clusters_per_256k;
+    /* move blocks of the file */
+    first_block = get_first_block_of_cluster_chain(f,vcn);
+    for(block = first_block; block; block = block->next){
+        /* move the current block or its part */
+        clusters_to_move = min(block->length - (curr_vcn - block->vcn),clusters_to_process);
+        n = clusters_to_move / jp->clusters_at_once;
         for(j = 0; j < n; j++){
             result = move_file_clusters(hFile,curr_vcn,
-                curr_target,jp->clusters_per_256k,jp);
+                curr_target,jp->clusters_at_once,jp);
             if(result < 0)
                 goto done;
-            jp->pi.processed_clusters += jp->clusters_per_256k;
-            clusters_to_process -= jp->clusters_per_256k;
-            curr_vcn += jp->clusters_per_256k;
-            curr_target += jp->clusters_per_256k;
+            jp->pi.processed_clusters += jp->clusters_at_once;
+            clusters_to_process -= jp->clusters_at_once;
+            curr_vcn += jp->clusters_at_once;
+            curr_target += jp->clusters_at_once;
         }
-        /* try to move remaining clusters */
-        r = clusters_to_process;
-        extra_clusters = r % 16; /* to comply with nt4/w2k rules */
-        r -= extra_clusters;
+        /* try to move rest of the block */
+        r = clusters_to_move % jp->clusters_at_once;
         if(r){
             result = move_file_clusters(hFile,curr_vcn,curr_target,r,jp);
             if(result < 0)
@@ -415,13 +373,8 @@ static void move_file_helper(HANDLE hFile, winx_file_info *f,
             curr_vcn += r;
             curr_target += r;
         }
-        if(extra_clusters){
-            result = move_file_clusters(hFile,curr_vcn,curr_target,extra_clusters,jp);
-            if(result < 0)
-                goto done;
-            jp->pi.processed_clusters += extra_clusters;
-            clusters_to_process -= extra_clusters;
-        }
+        if(!clusters_to_move || block->next == f->disp.blockmap) break;
+        curr_vcn = block->next->vcn;
     }
 
 done: /* count all unprocessed clusters here */
@@ -611,74 +564,6 @@ fail:
     return NULL;
 }
 
-/**
- * @brief Cuts off range of clusters from the file map.
- */
-/*static */void subtract_clusters(winx_file_info *f, ULONGLONG vcn,
-    ULONGLONG length, udefrag_job_parameters *jp)
-{
-    winx_blockmap *block, *first_block, *new_block;
-    ULONGLONG clusters_to_cut = length;
-    ULONGLONG new_lcn, new_vcn, new_length;
-    
-    first_block = get_first_block_of_cluster_chain(f,vcn);
-    for(block = first_block; block; block = block->next){
-        if(vcn > block->vcn){
-            /* cut off something inside the first block of sequence */
-            if(clusters_to_cut >= (block->length - (vcn - block->vcn))){
-                /* cut off right side entirely */
-                clusters_to_cut -= block->length - (vcn - block->vcn);
-                block->length = vcn - block->vcn;
-            } else {
-                /* remove a central part of the block */
-                new_length = block->length - (vcn - block->vcn) - clusters_to_cut;
-                block->length = vcn - block->vcn;
-                new_vcn = vcn + clusters_to_cut;
-                new_lcn = block->lcn + block->length + clusters_to_cut;
-                /* add a new block to the map */
-                new_block = (winx_blockmap *)winx_list_insert_item((list_entry **)&f->disp.blockmap,
-                    (list_entry *)block,sizeof(winx_blockmap));
-                if(new_block == NULL){
-                    DebugPrint("subtract_clusters: not enough memory");
-                } else {
-                    new_block->lcn = new_lcn;
-                    new_block->vcn = new_vcn;
-                    new_block->length = new_length;
-                }
-                clusters_to_cut = 0;
-            }
-        } else if(clusters_to_cut < block->length){
-            /* cut off left side of the block */
-            block->lcn += clusters_to_cut;
-            block->vcn += clusters_to_cut;
-            block->length -= clusters_to_cut;
-            clusters_to_cut = 0;
-        } else {
-            /* remove entire block */
-            clusters_to_cut -= block->length;
-            block->length = 0;
-        }
-        if(clusters_to_cut == 0 || block->next == f->disp.blockmap) break;
-    }
-
-    /*
-    * Don't remove blocks of zero length -
-    * we'll use them as a markers checked by
-    * is_block_excluded macro.
-    */
-    /* remove blocks of zero length */
-/*repeat_scan:
-    for(block = f->disp.blockmap; block; block = block->next){
-        if(block->length == 0){
-            remove_block_from_file_blocks_tree(jp,block);
-            winx_list_remove_item((list_entry **)(void *)&f->disp.blockmap,(list_entry *)block);
-            goto repeat_scan;
-        }
-        if(block->next == f->disp.blockmap) break;
-    }
-*/
-}
-
 static int dump_terminator(void *user_defined_data)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)user_defined_data;
@@ -704,7 +589,7 @@ typedef enum {
 
 /**
  * @brief Moves a cluster chain of the file.
- * @details Can move any part of any file regardless of its fragmentation.
+ * @details Can move any part of any file.
  * @param[in] f pointer to structure describing the file to be moved.
  * @param[in] vcn the VCN of the first cluster to be moved.
  * @param[in] length the length of the cluster chain to be moved.
@@ -712,20 +597,13 @@ typedef enum {
  * @param[in] jp job parameters.
  * @return Zero for success, negative value otherwise.
  * @note 
+ * - This routine cannot move the first fragment of MFT
+ * on NTFS as well as first clusters of FAT directories.
  * - Volume must be opened before this call,
  * jp->fVolume must contain a proper handle.
  * - If this function returns negative value indicating failure, 
  * one of the flags listed in udefrag_internals.h under "file status flags"
  * becomes set to display a proper message in fragmentation reports.
- * - On Windows NT 4.0 and Windows 2000 NTFS file system driver
- * has a lot of complex limitations covered in 
- * <a href="http://www.decuslib.com/decus/vmslt99a/nt/defrag.txt">Inside 
- * Windows NT Disk Defragmenting</a> article by Mark Russinovich.
- * Follow rules shown there to successfully move file clusters
- * on nt4/w2k systems. The move_file routine itself guaranties
- * the rules compliance only when either an entire file or 
- * an entire block of a compressed/sparse file is requested
- * to be moved.
  */
 int move_file(winx_file_info *f,
               ULONGLONG vcn,

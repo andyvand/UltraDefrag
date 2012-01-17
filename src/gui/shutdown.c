@@ -353,7 +353,6 @@ int ShutdownOrHibernate(void)
     * There is an opinion that SetSuspendState call
     * is more reliable than SetSystemPowerState:
     * http://msdn.microsoft.com/en-us/library/aa373206%28VS.85%29.aspx
-    * On the other hand, it is missing on NT4.
     */
     if(when_done_action == IDM_WHEN_DONE_STANDBY || when_done_action == IDM_WHEN_DONE_HIBERNATE){
         hPowrProfDll = LoadLibrary("powrprof.dll");

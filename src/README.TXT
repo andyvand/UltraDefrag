@@ -1,4 +1,4 @@
-The Ultra Defragmenter Version 5.0.1
+The Ultra Defragmenter Version 6.0.0
 ------------------------------------
 
 UltraDefrag is a powerful disk defragmentation tool for Windows.
@@ -10,9 +10,12 @@ during the Windows boot process.
 Also one of the primary goals of the UltraDefrag design
 is doing the job as fast and reliable as possible.
 
-UltraDefrag is fully compatible with Windows NT 4.0, Windows 2000,
-Windows XP, Windows Server 2003, Windows Vista, Windows Server 2008,
-Windows 7 and all of the 64-bit editions of Windows.
+UltraDefrag is fully compatible with Windows XP, Windows Server 2003,
+Windows Vista, Windows Server 2008, Windows 7 and all of the 64-bit 
+editions of Windows.
+
+The 5.0.x series of UltraDefrag is fully compatible also with Windows NT 4.0 
+and Windows 2000.
 
 You must have administrative rights to install and use UltraDefrag.
 

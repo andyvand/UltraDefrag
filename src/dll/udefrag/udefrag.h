@@ -31,14 +31,12 @@
 
 /* UltraDefrag error codes */
 #define UDEFRAG_UNKNOWN_ERROR     (-1)
-#define UDEFRAG_W2K_4KB_CLUSTERS  (-3)
 #define UDEFRAG_NO_MEM            (-4)
 #define UDEFRAG_CDROM             (-5)
 #define UDEFRAG_REMOTE            (-6)
 #define UDEFRAG_ASSIGNED_BY_SUBST (-7)
 #define UDEFRAG_REMOVABLE         (-8)
 #define UDEFRAG_UDF_DEFRAG        (-9)
-#define UDEFRAG_UNMOVABLE_MFT     (-11)
 #define UDEFRAG_DIRTY_VOLUME      (-12)
 
 #define DEFAULT_REFRESH_INTERVAL 100
@@ -81,8 +79,6 @@ typedef enum {
 /* flags triggering algorithm features */
 #define UD_JOB_REPEAT               0x1
 #define UD_PREVIEW_MATCHING         0x2
-// #define UD_PREVIEW_MOVE_FRONT       0x4
-// #define UD_PREVIEW_SKIP_PARTIAL     0x8
 #define UD_JOB_CONTEXT_MENU_HANDLER 0x10
 
 /*

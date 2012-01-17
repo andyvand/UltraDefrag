@@ -29,19 +29,6 @@
 /************************************************************/
 
 /*
-* Number of files intended to be checked for locked state
-* in get_number_of_movable_clusters routine. Low numbers
-* will result in quicker preparation for volume optimization.
-* Higher numbers result in better performance of file searching
-* routines used in atomic volume optimization tasks.
-* Assuming that each is_file_locked call requires no more than
-* 5 ms (on our XP testing system it requires 2/3 ms), we choose
-* constant equal to 100 in believe that delay of volume optimization
-* start will be no longer than 0.5 seconds.
-*/
-#define GET_NUMBER_OF_MOVABLE_CLUSTERS_MAGIC_CONSTANT 100
-
-/*
 * Fragment size threshold used in partial defragmentation.
 */
 #define PART_DEFRAG_MAGIC_CONSTANT (20 * 1024 * 1024)
@@ -51,6 +38,12 @@
 */
 #define OPTIMIZER_MAGIC_CONSTANT   (20 * 1024 * 1024)
 
+/*
+* Number of bytes to be moved
+* at once by the move_file routine.
+*/
+#define BYTES_AT_ONCE              (256 * 1024)
+
 /************************************************************/
 /*                Prototypes, constants etc.                */
 /************************************************************/
@@ -58,6 +51,9 @@
 #ifndef DebugPrint
 #define DebugPrint winx_dbg_print
 #endif
+
+#define MAX_FILE_SIZE ((ULONGLONG) -1)
+#define DEFAULT_FRAGMENT_SIZE_THRESHOLD (MAX_FILE_SIZE / 2)
 
 /* flags for user_defined_flags member of filelist entries */
 #define UD_FILE_EXCLUDED         0x1
@@ -114,9 +110,6 @@
 
 #define is_block_excluded(b)     ((b)->length == 0)
 
-/* named constant for 256k */
-#define _256K (256 * 1024)
-
 /*
 * MSDN states that environment variables
 * are limited by 32767 characters,
@@ -146,15 +139,6 @@ typedef struct _udefrag_fragmented_file {
     struct _udefrag_fragmented_file *prev;
     winx_file_info *f;
 } udefrag_fragmented_file;
-
-struct _mft_zones {
-    ULONGLONG mft_start;
-    ULONGLONG mft_end;
-    ULONGLONG mftzone_start;
-    ULONGLONG mftzone_end;
-    ULONGLONG mftmirr_start;
-    ULONGLONG mftmirr_end;
-};
 
 typedef enum {
     FS_UNKNOWN = 0, /* ext2 and others */
@@ -230,8 +214,7 @@ typedef struct _udefrag_job_parameters {
     udefrag_fragmented_file *fragmented_files;  /* list of fragmented files; does not contain filtered out files */
     winx_volume_region *free_regions;           /* list of free space regions */
     unsigned long free_regions_count;           /* number of free space regions */
-    struct _mft_zones mft_zones;                /* coordinates of mft zones; as they are before the volume processing */
-    ULONGLONG clusters_per_256k;                /* number of clusters in 256k block */
+    ULONGLONG clusters_at_once;                 /* number of clusters to be moved at once */
     cmap cluster_map;                           /* cluster map internal data */
     WINX_FILE *fVolume;                         /* handle of the volume, used by file moving routines */
     winx_volume_region *temp_space_list;        /* list of regions of space temporarily allocated by system */
@@ -240,7 +223,6 @@ typedef struct _udefrag_job_parameters {
     struct prb_table *file_blocks;              /* pointer to binary tree of all file blocks found on the volume */
     struct file_counters f_counters;            /* file counters */
     NTSTATUS last_move_status;                  /* status of the last move file operation; zero by default */
-    int weak_api;                               /* true for nt4/w2k where move file api has lots of restrictions */
 } udefrag_job_parameters;
 
 int  get_options(udefrag_job_parameters *jp);
