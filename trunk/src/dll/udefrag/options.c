@@ -79,6 +79,8 @@ int get_options(udefrag_job_parameters *jp)
         buf[sizeof(buf) - 1] = 0;
         jp->udo.size_limit = winx_hr_to_bytes(buf);
     }
+    if(jp->udo.size_limit == 0)
+        jp->udo.size_limit = MAX_FILE_SIZE;
     if(winx_query_env_variable(L"UD_OPTIMIZER_SIZELIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
@@ -144,9 +146,8 @@ int get_options(udefrag_job_parameters *jp)
     (void)winx_bytes_to_hr(jp->udo.optimizer_size_limit,1,buf,sizeof(buf));
     DebugPrint("file size threshold (for optimization)    = %s",buf);
     (void)winx_bytes_to_hr(jp->udo.fragment_size_threshold,1,buf,sizeof(buf));
-    DebugPrint("fragment size threshold = %s",buf);
-    (void)winx_bytes_to_hr(jp->udo.fragments_limit,1,buf,sizeof(buf));
-    DebugPrint("file fragments threshold = %s",buf);
+    DebugPrint("fragment size threshold                   = %s",buf);
+    DebugPrint("file fragments threshold = %I64u",jp->udo.fragments_limit);
     DebugPrint("time limit = %I64u seconds",jp->udo.time_limit);
     DebugPrint("progress refresh interval = %u msec",jp->udo.refresh_interval);
     if(jp->udo.disable_reports) DebugPrint("reports disabled");
