@@ -30,20 +30,15 @@ IDI_UNFRAGM             ICON    DISCARDABLE     "res/unfragm.ico"
 IDI_FRAGM               ICON    DISCARDABLE     "res/fragm.ico"
 IDI_CMP                 ICON    DISCARDABLE     "res/cmp.ico"
 IDI_MFT                 ICON    DISCARDABLE     "res/mft.ico"
-
 IDI_FIXED               ICON    DISCARDABLE     "res/fixed.ico"
 IDI_REMOVABLE           ICON    DISCARDABLE     "res/removable.ico"
-
 IDI_SHUTDOWN            ICON    DISCARDABLE     "res/shutdown.ico"
-
-IDB_ABOUTBOX_PICTURE          BITMAP  DISCARDABLE     "res/ship.bmp"
-IDB_ABOUTBOX_PICTURE_8_BIT    BITMAP  DISCARDABLE     "res/ship_8bit.bmp"
+IDB_ABOUTBOX_PICTURE    BITMAP  DISCARDABLE     "res/ship.bmp"
 
 /*
-* All toolbar pictures must be in 24bpp format,
-* but 8bpp versions should use less colors
-* to be nicely rendered on screens with
-* low color depth.
+* All toolbar pictures must be in 24bpp format.
+* To be nicely rendered on 16bpp screens they
+* should use less colors though.
 */
 
 /*
@@ -57,12 +52,6 @@ IDB_ABOUTBOX_PICTURE_8_BIT    BITMAP  DISCARDABLE     "res/ship_8bit.bmp"
 IDB_TOOLBAR                    BITMAP  DISCARDABLE     "res/toolbar24.bmp"
 IDB_TOOLBAR_DISABLED           BITMAP  DISCARDABLE     "res/toolbar24d.bmp"
 IDB_TOOLBAR_HIGHLIGHTED        BITMAP  DISCARDABLE     "res/toolbar24h.bmp"
-IDB_TOOLBAR_8_BIT              BITMAP  DISCARDABLE     "res/toolbar8.bmp"
-IDB_TOOLBAR_DISABLED_8_BIT     BITMAP  DISCARDABLE     "res/toolbar8d.bmp"
-IDB_TOOLBAR_HIGHLIGHTED_8_BIT  BITMAP  DISCARDABLE     "res/toolbar8h.bmp"
-IDB_TOOLBAR_16_BIT             BITMAP  DISCARDABLE     "res/toolbar16.bmp"
-IDB_TOOLBAR_DISABLED_16_BIT    BITMAP  DISCARDABLE     "res/toolbar16d.bmp"
-IDB_TOOLBAR_HIGHLIGHTED_16_BIT BITMAP  DISCARDABLE     "res/toolbar16h.bmp"
 
 IDB_MENU                       BITMAP  DISCARDABLE     "res/menu_monochrome.bmp"
 
@@ -72,21 +61,6 @@ CAPTION "About Ultra Defragmenter"
 FONT 9, "Courier New"
 BEGIN
     CONTROL         IDB_ABOUTBOX_PICTURE,IDC_PIC1,"Static",SS_BITMAP | SS_CENTERIMAGE,5,4,62,78
-    CTEXT           ABOUT_VERSION,IDC_STATIC,72,6,161,12
-    CTEXT           "Copyright (C) 2007-2012",IDC_STATIC,72,22,161,12
-    CTEXT           "UltraDefrag Development Team",IDC_STATIC,72,38,161,12
-    PUSHBUTTON      "&Credits",IDC_CREDITS,72,53,76,10
-    PUSHBUTTON      "&License",IDC_LICENSE,153,53,80,10
-    PUSHBUTTON      "&http://ultradefrag.sourceforge.net",IDC_HOMEPAGE,72,70,
-                    161,12,BS_FLAT
-END
-
-IDD_ABOUT_8_BIT DIALOG DISCARDABLE  0, 0, 239, 93
-STYLE DS_CENTER | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About Ultra Defragmenter"
-FONT 9, "Courier New"
-BEGIN
-    CONTROL         IDB_ABOUTBOX_PICTURE_8_BIT,IDC_PIC1,"Static",SS_BITMAP | SS_CENTERIMAGE,5,4,62,78
     CTEXT           ABOUT_VERSION,IDC_STATIC,72,6,161,12
     CTEXT           "Copyright (C) 2007-2012",IDC_STATIC,72,22,161,12
     CTEXT           "UltraDefrag Development Team",IDC_STATIC,72,38,161,12

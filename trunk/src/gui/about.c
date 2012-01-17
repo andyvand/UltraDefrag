@@ -33,21 +33,7 @@ BOOL CALLBACK AboutDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam);
  */
 void AboutBox(void)
 {
-    HDC hdc;
-    int bpp = 32;
-    int id;
-    
-    hdc = GetDC(hWindow);
-    if(hdc){
-        bpp = GetDeviceCaps(hdc,BITSPIXEL);
-        ReleaseDC(hWindow,hdc);
-    }
-    if(bpp <= 8)
-        id = IDD_ABOUT_8_BIT;
-    else
-        id = IDD_ABOUT;
-
-    if(DialogBoxW(hInstance,MAKEINTRESOURCEW(id),hWindow,(DLGPROC)AboutDlgProc) == (-1))
+    if(DialogBoxW(hInstance,MAKEINTRESOURCEW(IDD_ABOUT),hWindow,(DLGPROC)AboutDlgProc) == (-1))
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot create the About window!");
 }
 

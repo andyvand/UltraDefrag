@@ -3,10 +3,6 @@ HISTORY
   Version 6.0.0  2012-01-
   ------------------------------------------------------------------------------
     beta1:
-    - Windows NT 4.0 and Windows 2000 support was dropped because of
-      weakness of the Windows Defrag API on these systems;
-      for these people who still use old Windows editions
-      we recommend to use the 5.0.x series of UltraDefrag
     - all the disk processing algorithms were reimplemented
       to reach better efficiency and shorter processing times
     - FAT optimization was implemented
@@ -16,6 +12,11 @@ HISTORY
     - ability to tune the disk optimization by UD_OPTIMIZER_SIZELIMIT
       environment variable (optimizer_sizelimit parameter in GUI) was added
     - MFT optimization was forced to do nothing silently on non-NTFS disks
+    - Windows NT 4.0 and Windows 2000 support was dropped because of
+      weakness of the Windows Defrag API on these systems;
+      for these people who still use old Windows editions
+      we recommend to use the 5.0.x series of UltraDefrag
+    - low color depth (8 bits per pixel) support was dropped for GUI toolbar
     - Internals: flags field removed from winx_file_disposition structure
 
 

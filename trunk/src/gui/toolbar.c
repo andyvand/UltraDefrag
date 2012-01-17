@@ -75,9 +75,6 @@ TBBUTTON tb_buttons[N_BUTTONS] = {{0}};
  */
 int CreateToolbar(void)
 {
-    HDC hdc;
-    int bpp = 32;
-    int id, idd, idh;
     int i;
     TOOLINFOW ti;
     RECT rc;
@@ -105,47 +102,25 @@ int CreateToolbar(void)
     SendMessage(hToolbar,TB_ADDBUTTONS,(WPARAM)N_BUTTONS,(LPARAM)&tb_buttons);
     
     /* assign images to buttons */
-    hdc = GetDC(hWindow);
-    if(hdc){
-        bpp = GetDeviceCaps(hdc,BITSPIXEL);
-        ReleaseDC(hWindow,hdc);
-    }
-    switch(bpp){
-    case 1:
-    case 2:
-    case 4:
-    case 8:
-        id = IDB_TOOLBAR_8_BIT;
-        idd = IDB_TOOLBAR_DISABLED_8_BIT;
-        idh = IDB_TOOLBAR_HIGHLIGHTED_8_BIT;
-        break;
-    case 16:
-        id = IDB_TOOLBAR_16_BIT;
-        idd = IDB_TOOLBAR_DISABLED_16_BIT;
-        idh = IDB_TOOLBAR_HIGHLIGHTED_16_BIT;
-        break;
-    default:
-        id = IDB_TOOLBAR;
-        idd = IDB_TOOLBAR_DISABLED;
-        idh = IDB_TOOLBAR_HIGHLIGHTED;
-        break;
-    }
-    hToolbarImgList = ImageList_LoadImage(hInstance,MAKEINTRESOURCE(id),
-        16,0,RGB(255,0,255),IMAGE_BITMAP,LR_CREATEDIBSECTION);
+    hToolbarImgList = ImageList_LoadImage(hInstance,
+        MAKEINTRESOURCE(IDB_TOOLBAR),16,0,RGB(255,0,255),
+        IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgList == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot load main images for the main toolbar!");
         return (-1);
     }
-    hToolbarImgListD = ImageList_LoadImage(hInstance,MAKEINTRESOURCE(idd),
-        16,0,RGB(255,0,255),IMAGE_BITMAP,LR_CREATEDIBSECTION);
+    hToolbarImgListD = ImageList_LoadImage(hInstance,
+        MAKEINTRESOURCE(IDB_TOOLBAR_DISABLED),16,0,RGB(255,0,255),
+        IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgListD == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot load grayed images for the main toolbar!");
         return (-1);
     }
-    hToolbarImgListH = ImageList_LoadImage(hInstance,MAKEINTRESOURCE(idh),
-        16,0,RGB(255,0,255),IMAGE_BITMAP,LR_CREATEDIBSECTION);
+    hToolbarImgListH = ImageList_LoadImage(hInstance,
+        MAKEINTRESOURCE(IDB_TOOLBAR_HIGHLIGHTED),16,0,RGB(255,0,255),
+        IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgListH == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot load highlighted images for the main toolbar!");
