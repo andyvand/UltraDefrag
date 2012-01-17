@@ -23,7 +23,6 @@
 
 #define IDD_MAIN                        101
 #define IDD_ABOUT                       102
-#define IDD_ABOUT_8_BIT                 103
 #define IDD_SHUTDOWN                    104
 #define IDD_CHECK_CONFIRM               105
 #define IDI_APP                         106
@@ -33,7 +32,6 @@
 #define IDI_CMP                         112
 #define IDI_MFT                         113
 #define IDB_ABOUTBOX_PICTURE            127
-#define IDB_ABOUTBOX_PICTURE_8_BIT      128
 
 #define IDI_FIXED                       129
 #define IDI_REMOVABLE                   130
@@ -43,20 +41,9 @@
 #define IDI_SHUTDOWN                    140
 #define IDR_MAIN_ACCELERATOR            150
 
-/* for 24/32 bits per pixel */
 #define IDB_TOOLBAR                     160
 #define IDB_TOOLBAR_DISABLED            161
 #define IDB_TOOLBAR_HIGHLIGHTED         162
-
-/* for 8 bits per pixel displays */
-#define IDB_TOOLBAR_8_BIT               163
-#define IDB_TOOLBAR_DISABLED_8_BIT      164
-#define IDB_TOOLBAR_HIGHLIGHTED_8_BIT   165
-
-/* for 16 bits per pixel displays */
-#define IDB_TOOLBAR_16_BIT              166
-#define IDB_TOOLBAR_DISABLED_16_BIT     167
-#define IDB_TOOLBAR_HIGHLIGHTED_16_BIT  168
 
 /* for menu items for Windows XP and below */
 #define IDB_MENU                        200
