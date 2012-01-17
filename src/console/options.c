@@ -64,7 +64,8 @@ void show_help(void)
         "       --defragment                   Defragment disk\n"
         "  -o,  --optimize                     Optimize disk space\n"
         "  -q,  --quick-optimize               Perform quick optimization\n"
-        "       --optimize-mft                 Concatenate the MFT into one single chunk\n"
+        "       --optimize-mft                 Place MFT fragments as close\n"
+        "                                      to each other as possible\n"
         "  -l,  --list-available-volumes       List disks available\n"
         "                                      for defragmentation,\n"
         "                                      except removable media\n"
@@ -126,7 +127,7 @@ void show_help(void)
         "  udefrag \"C:\\Documents and Settings\" C:\\WINDOWS\\WindowsUpdate.log\n\n"
         "  Paths including spaces must be enclosed in double quotes (\").\n"
         "  Relative and absolute paths are supported.\n"
-        "  Short paths (like C:\\PROGRA~1\\SOMEFI~1.TXT) aren\'t accepted on NT4.\n"
+        "  Short paths (like C:\\PROGRA~1\\SOMEFI~1.TXT) are accepted too.\n"
         "\n"
         "Accepted environment variables:\n"
         "\n"
@@ -478,8 +479,6 @@ void search_for_paths(void)
     int i, j, xargc;
     int length;
     DWORD result;
-    HMODULE hKernel32Dll = NULL;
-    GET_LONG_PATH_NAME_W_PROC pGetLongPathNameW = NULL;
     
     cmdline = GetCommandLineW();
     
@@ -517,15 +516,6 @@ void search_for_paths(void)
         return;
     }
     
-    hKernel32Dll = LoadLibrary("kernel32.dll");
-    if(hKernel32Dll == NULL){
-        WgxDbgPrintLastError("search_for_paths: cannot load kernel32.dll");
-    } else {
-        pGetLongPathNameW = (GET_LONG_PATH_NAME_W_PROC)GetProcAddress(hKernel32Dll,"GetLongPathNameW");
-        if(pGetLongPathNameW == NULL)
-            WgxDbgPrintLastError("search_for_paths: GetLongPathNameW not found in kernel32.dll");
-    }
-    
     for(i = 1; i < xargc; i++){
         if(xargv[i][0] == 0) continue;   /* skip empty strings */
         if(xargv[i][0] == '-') continue; /* skip options */
@@ -534,18 +524,13 @@ void search_for_paths(void)
                 continue;
         }
         //printf("path detected: arg[%i] = %ls\n",i,xargv[i]);
-        /* convert path to the long file name format (on w2k+) */
-        if(pGetLongPathNameW){
-            result = pGetLongPathNameW(xargv[i],long_path,MAX_LONG_PATH + 1);
-            if(result == 0){
-                WgxDbgPrintLastError("search_for_paths: GetLongPathNameW failed");
-                goto use_short_path;
-            } else if(result > MAX_LONG_PATH + 1){
-                printf("search_for_paths: long path of \'%ls\' is too long!",xargv[i]);
-                goto use_short_path;
-            }
-        } else {
-use_short_path:
+        /* convert path to the long file name format */
+        result = GetLongPathNameW(xargv[i],long_path,MAX_LONG_PATH + 1);
+        if(result == 0){
+            WgxDbgPrintLastError("search_for_paths: GetLongPathNameW failed");
+            wcsncpy(long_path,xargv[i],MAX_LONG_PATH);
+        } else if(result > MAX_LONG_PATH + 1){
+            printf("search_for_paths: long path of \'%ls\' is too long!",xargv[i]);
             wcsncpy(long_path,xargv[i],MAX_LONG_PATH);
         }
         long_path[MAX_LONG_PATH] = 0;

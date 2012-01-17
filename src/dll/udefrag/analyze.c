@@ -267,7 +267,7 @@ int exclude_by_fragment_size(winx_file_info *f,udefrag_job_parameters *jp)
     winx_blockmap *block;
     ULONGLONG fragment_size = 0;
     
-    if(jp->udo.fragment_size_threshold == 0) return 0;
+    if(jp->udo.fragment_size_threshold == DEFAULT_FRAGMENT_SIZE_THRESHOLD) return 0;
     /* don't filter out files if threshold is set by algorithm */
     if(jp->udo.algorithm_defined_fst) return 0;
     
@@ -321,10 +321,6 @@ int exclude_by_size(winx_file_info *f,udefrag_job_parameters *jp)
     ULONGLONG filesize;
     
     f->user_defined_flags &= ~UD_FILE_OVER_LIMIT;
-    
-    if(jp->udo.size_limit == 0)
-        return 0;
-
     filesize = f->disp.clusters * jp->v_info.bytes_per_cluster;
     if(filesize > jp->udo.size_limit){
         f->user_defined_flags |= UD_FILE_OVER_LIMIT;

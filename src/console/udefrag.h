@@ -24,6 +24,11 @@
 #ifndef _CMD_UDEFRAG_H_
 #define _CMD_UDEFRAG_H_
 
+#if defined(__GNUC__)
+/* for GetLongPathNameW */
+#define _WIN32_WINNT 0x0500
+#endif
+
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
