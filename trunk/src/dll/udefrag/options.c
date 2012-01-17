@@ -69,6 +69,9 @@ int get_options(udefrag_job_parameters *jp)
         buf[sizeof(buf) - 1] = 0;
         jp->udo.fragment_size_threshold = winx_hr_to_bytes(buf);
     }
+    /* if theshold isn't set, assign maximum value to it */
+    if(jp->udo.fragment_size_threshold == 0)
+        jp->udo.fragment_size_threshold = DEFAULT_FRAGMENT_SIZE_THRESHOLD;
 
     /* set file size threshold */
     if(winx_query_env_variable(L"UD_SIZELIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
@@ -81,6 +84,9 @@ int get_options(udefrag_job_parameters *jp)
         buf[sizeof(buf) - 1] = 0;
         jp->udo.optimizer_size_limit = winx_hr_to_bytes(buf);
     }
+    /* if optimizer's threshold isn't set, assign default value to it */
+    if(jp->udo.optimizer_size_limit == 0)
+        jp->udo.optimizer_size_limit = OPTIMIZER_MAGIC_CONSTANT;
 
     /* set file fragments threshold */
     if(winx_query_env_variable(L"UD_FRAGMENTS_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0)
@@ -133,10 +139,14 @@ int get_options(udefrag_job_parameters *jp)
         for(i = 0; i < jp->udo.ex_filter.count; i++)
             DebugPrint("  - %ws",jp->udo.ex_filter.array[i]);
     }
-    DebugPrint("file size threshold (for defragmentation) = %I64u",jp->udo.size_limit);
-    DebugPrint("file size threshold (for optimization)    = %I64u",jp->udo.optimizer_size_limit);
-    DebugPrint("fragment size threshold = %I64u",jp->udo.fragment_size_threshold);
-    DebugPrint("file fragments threshold = %I64u",jp->udo.fragments_limit);
+    (void)winx_bytes_to_hr(jp->udo.size_limit,1,buf,sizeof(buf));
+    DebugPrint("file size threshold (for defragmentation) = %s",buf);
+    (void)winx_bytes_to_hr(jp->udo.optimizer_size_limit,1,buf,sizeof(buf));
+    DebugPrint("file size threshold (for optimization)    = %s",buf);
+    (void)winx_bytes_to_hr(jp->udo.fragment_size_threshold,1,buf,sizeof(buf));
+    DebugPrint("fragment size threshold = %s",buf);
+    (void)winx_bytes_to_hr(jp->udo.fragments_limit,1,buf,sizeof(buf));
+    DebugPrint("file fragments threshold = %s",buf);
     DebugPrint("time limit = %I64u seconds",jp->udo.time_limit);
     DebugPrint("progress refresh interval = %u msec",jp->udo.refresh_interval);
     if(jp->udo.disable_reports) DebugPrint("reports disabled");

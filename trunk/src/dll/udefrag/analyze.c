@@ -29,14 +29,6 @@
 * and Stefan Pendl <stefanpe@users.sourceforge.net>.
 */
 
-/*
-* NTFS formatted volumes cannot be safely accessed
-* on NT4, as mentioned in program's handbook.
-* On our test machines NTFS access caused blue
-* screens regardless of whether we accessed it
-* from kernel mode or user mode.
-*/
-
 #include "udefrag-internals.h"
 
 extern int progress_trigger;
@@ -79,9 +71,6 @@ int get_volume_information(udefrag_job_parameters *jp)
     char fs_name[MAX_FS_NAME_LENGTH + 1];
     int i;
     
-    /* reset coordinates of mft zones */
-    memset(&jp->mft_zones,0,sizeof(struct _mft_zones));
-    
     /* reset v_info structure */
     memset(&jp->v_info,0,sizeof(winx_volume_information));
     
@@ -109,14 +98,15 @@ int get_volume_information(udefrag_job_parameters *jp)
     } else {
         jp->pi.total_space = jp->v_info.total_bytes;
         jp->pi.free_space = jp->v_info.free_bytes;
-        if(jp->v_info.bytes_per_cluster) jp->clusters_per_256k = _256K / jp->v_info.bytes_per_cluster;
-        else jp->clusters_per_256k = 0;
+        if(jp->v_info.bytes_per_cluster){
+            jp->clusters_at_once = BYTES_AT_ONCE / jp->v_info.bytes_per_cluster;
+        } else {
+            jp->clusters_at_once = 1;
+        }
+        if(jp->clusters_at_once == 0)
+            jp->clusters_at_once ++;
         DebugPrint("total clusters: %I64u",jp->v_info.total_clusters);
         DebugPrint("cluster size: %I64u",jp->v_info.bytes_per_cluster);
-        if(!jp->clusters_per_256k){
-            DebugPrint("clusters are larger than 256 kbytes");
-            jp->clusters_per_256k ++;
-        }
         /* validate geometry */
         if(!jp->v_info.total_clusters || !jp->v_info.bytes_per_cluster){
             DebugPrint("wrong volume geometry detected");
@@ -216,18 +206,13 @@ int check_region(udefrag_job_parameters *jp,ULONGLONG lcn,ULONGLONG length)
 /**
  * @brief Retrieves mft zones layout.
  * @note Since we have MFT optimization routine, 
- * let's use MFT zone for files placement, except
- * of NT4 and W2K systems where Windows disallows
- * to move files there.
+ * let's use MFT zone for files placement.
  */
 static void get_mft_zones_layout(udefrag_job_parameters *jp)
 {
     ULONGLONG start,length,mirror_size;
-    ULONGLONG mft_length = 0;
-    int win_version = winx_get_os_version();
 
-    if(jp->fs_type != FS_NTFS)
-        return;
+    if(jp->fs_type != FS_NTFS) return;
     
     /* 
     * Don't increment progress counters,
@@ -243,24 +228,16 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
     else
         length = 0;
     DebugPrint("%-12s: %-20I64u: %-20I64u", "mft", start, length);
-    if(check_region(jp,start,length)){
-        /* to be honest, this is not MFT zone */
-        /*colorize_map_region(jp,start,length,MFT_ZONE_SPACE,0);
-        jp->free_regions = winx_sub_volume_region(jp->free_regions,start,length);*/
-        jp->mft_zones.mft_start = start; jp->mft_zones.mft_end = start + length - 1;
-        mft_length += length;
-    }
+    jp->pi.mft_size = length * jp->v_info.bytes_per_cluster;
+    DebugPrint("mft size = %I64u bytes", jp->pi.mft_size);
 
     /* MFT Zone */
     start = jp->v_info.ntfs_data.MftZoneStart.QuadPart;
     length = jp->v_info.ntfs_data.MftZoneEnd.QuadPart - jp->v_info.ntfs_data.MftZoneStart.QuadPart + 1;
     DebugPrint("%-12s: %-20I64u: %-20I64u", "mft zone", start, length);
     if(check_region(jp,start,length)){
-        /* remark space as reserved */
+        /* remark space as MFT Zone */
         colorize_map_region(jp,start,length,MFT_ZONE_SPACE,0);
-        if(win_version < WINDOWS_XP)
-            jp->free_regions = winx_sub_volume_region(jp->free_regions,start,length);
-        jp->mft_zones.mftzone_start = start; jp->mft_zones.mftzone_end = start + length - 1;
     }
 
     /* $MFT Mirror */
@@ -273,15 +250,7 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
             length ++;
     }
     DebugPrint("%-12s: %-20I64u: %-20I64u", "mft mirror", start, length);
-    if(check_region(jp,start,length)){
-        /* to be honest, this is not MFT zone */
-        /*colorize_map_region(jp,start,length,MFT_ZONE_SPACE,0);
-        jp->free_regions = winx_sub_volume_region(jp->free_regions,start,length);*/
-        jp->mft_zones.mftmirr_start = start; jp->mft_zones.mftmirr_end = start + length - 1;
-    }
     
-    jp->pi.mft_size = mft_length * jp->v_info.bytes_per_cluster;
-    DebugPrint("mft size = %I64u bytes",jp->pi.mft_size);
     if(jp->progress_router)
         jp->progress_router(jp); /* redraw progress */
 }
@@ -739,7 +708,7 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
         if(f->disp.blockmap && f->path && f->name){ /* otherwise nothing to redraw */
             if(is_well_known_locked_file(f,jp)){
                 if(!is_file_locked(f,jp)){
-                    /* possibility of this case must be reduced */
+                    /* possibility of this case should be reduced */
                     DebugPrint("false detection: %ws",f->path);
                 }
             }
@@ -822,31 +791,16 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
 }
 
 /**
- * @brief Define whether some
- * actions are allowed or not.
+ * @brief Check whether the requested
+ * action is allowed or not.
  * @return Zero indicates that the
  * requested operation is allowed,
  * negative value indicates contrary.
  */
-static int define_allowed_actions(udefrag_job_parameters *jp)
+static int check_requested_action(udefrag_job_parameters *jp)
 {
-    int win_version;
+    /*int win_version = winx_get_os_version();*/
     
-    win_version = winx_get_os_version();
-    
-    /*
-    * NTFS volumes with cluster size greater than 4 kb
-    * cannot be defragmented on Windows 2000.
-    * This is a well known limitation of Windows Defrag API.
-    */
-    if(jp->job_type != ANALYSIS_JOB \
-      && jp->fs_type == FS_NTFS \
-      && jp->v_info.bytes_per_cluster > 4096 \
-      && win_version <= WINDOWS_2K){
-        DebugPrint("cannot defragment NTFS volumes with clusters bigger than 4kb on nt4/w2k");
-        return UDEFRAG_W2K_4KB_CLUSTERS;
-    }
-      
     /*
     * UDF volumes can neither be defragmented nor optimized,
     * because the system driver does not support FSCTL_MOVE_FILE.
@@ -860,21 +814,8 @@ static int define_allowed_actions(udefrag_job_parameters *jp)
         DebugPrint("because the file system driver does not support FSCTL_MOVE_FILE.");
         return UDEFRAG_UDF_DEFRAG;
     }
-      
-    /* define whether we have weak move file api or not */
-    if(win_version < WINDOWS_XP){
-        DebugPrint("Rough disk processing algorithms will be used");
-        DebugPrint("because of nt4/w2k API limitations.");
-        jp->weak_api = 1;
-    }
-      
-    if(!jp->is_fat) DebugPrint("define_allowed_actions: directories can be moved");
-    else DebugPrint("define_allowed_actions: directories cannot be moved");
-    if(jp->fs_type != FS_NTFS || win_version < WINDOWS_XP){
-        DebugPrint("define_allowed_actions: $mft file cannot be optimized");
-    } else {
-        DebugPrint("define_allowed_actions: $mft file can be optimized");
-    }
+
+    if(jp->is_fat) DebugPrint("FAT directories cannot be moved entirely");
     return 0;
 }
 
@@ -931,20 +872,20 @@ int analyze(udefrag_job_parameters *jp)
     if(get_free_space_layout(jp) < 0)
         return (-1);
     
-    /* apply information about mft zones */
+    /* redraw mft zone in light magenta */
     get_mft_zones_layout(jp);
     
     /* search for files */
     if(find_files(jp) < 0)
         return (-1);
     
-    /* we'd like to behold well known locked files in green color */
+    /* redraw well known locked files in green */
     redraw_well_known_locked_files(jp);
 
     /* produce list of fragmented files */
     produce_list_of_fragmented_files(jp);
 
-    result = define_allowed_actions(jp);
+    result = check_requested_action(jp);
     if(result < 0)
         return result;
     

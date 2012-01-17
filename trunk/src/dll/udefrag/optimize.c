@@ -49,8 +49,6 @@
  * indicates that not enough free space
  * exist on the disk. (-2) indicates that
  * the file moving failed.
- * @note This routine will not work reliably
- * on nt4/w2k because of move file api limitations.
  */
 static int cleanup_space(udefrag_job_parameters *jp, winx_file_info *file,
                          winx_blockmap *block, ULONGLONG clusters_to_cleanup,
@@ -138,8 +136,6 @@ static ULONGLONG advance_vcn(winx_file_info *f,ULONGLONG vcn,ULONGLONG n)
  * jp->fVolume must contain a proper handle.
  * @return Zero if the file needs no optimization, 
  * positive value on success, negative value otherwise.
- * @note This routine will not work reliably
- * on nt4/w2k because of move file api limitations.
  */
 static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
 {
@@ -321,8 +317,6 @@ static ULONGLONG opt_dirs_cc_routine(udefrag_job_parameters *jp)
  * fragments after the first ones as close as possible.
  * @details Intended for use on FAT-formatted volumes.
  * @return Zero for success, negative value otherwise.
- * @note This routine will not work reliably
- * on nt4/w2k because of move file api limitations.
  */
 static int optimize_directories(udefrag_job_parameters *jp)
 {
@@ -558,6 +552,7 @@ static void move_files_to_front(udefrag_job_parameters *jp,
  * deserves to be moved to the end
  * of the disk or not in the move_files_to_back
  * routine.
+ * @note Optimized for speed.
  */
 static int is_block_quite_small(udefrag_job_parameters *jp,
     winx_file_info *file,winx_blockmap *block)
@@ -572,13 +567,13 @@ static int is_block_quite_small(udefrag_job_parameters *jp,
     /* move everything which need to be sorted out */
     if(file_size < jp->udo.optimizer_size_limit) return 1;
     
-    /* avoid big files movement on nt4/w2k */
-    if(jp->weak_api && !is_compressed(file) && !is_sparse(file)){
-        file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-        return 0;
-    }
+    /* skip big not fragmented files */
+    if(!is_fragmented(file)) return 0;
     
-    /* skip big fragments needing no defragmentation */
+    /* move everything fragmented if the fragment size threshold isn't set */
+    if(jp->udo.fragment_size_threshold == DEFAULT_FRAGMENT_SIZE_THRESHOLD) return 1;
+    
+    /* skip fragments bigger than the fragment size threshold */
     if(block_size >= jp->udo.fragment_size_threshold) return 0;
 
     /* move small fragments needing defragmentation */
@@ -596,38 +591,6 @@ static int is_block_quite_small(udefrag_job_parameters *jp,
     }
     release_fragments_list(&fragments);
     return 1;
-}
-
-/**
- * @brief cleanup_space analog intended for use on nt4/w2k.
- * @details Moves entire blocks or even entire files because
- * of weak move file api.
- */
-static int weak_cleanup_space(udefrag_job_parameters *jp,
-                winx_file_info *file,winx_blockmap *block)
-{
-    ULONGLONG vcn, length;
-    winx_volume_region *rgn;
-
-    if(is_compressed(file) || is_sparse(file)){
-        /* move entire block */
-        vcn = block->vcn;
-        length = block->length;
-    } else {
-        /* move entire file */
-        vcn = file->disp.blockmap->vcn;
-        length = file->disp.clusters;
-    }
-
-    rgn = find_last_free_region(jp,block->lcn + 1,length);
-    if(rgn == NULL) return (-1);
-    
-    if(move_file(file,vcn,length,rgn->lcn \
-      + rgn->length - length,jp) < 0){
-        return (-2);
-    }
-    jp->pi.total_moves ++;
-    return 0;
 }
 
 /**
@@ -671,14 +634,9 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
         move_block = is_block_quite_small(jp,first_file,first_block);
         if(move_block){
             lcn = first_block->lcn;
-            if(jp->weak_api == 0){
-                result = cleanup_space(jp, first_file,
-                    first_block, first_block->length,
-                    0, first_block->lcn + first_block->length - 1);
-            } else {
-                result = weak_cleanup_space(jp, first_file, first_block);
-                first_file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-            }
+            result = cleanup_space(jp, first_file,
+                first_block, first_block->length,
+                0, first_block->lcn + first_block->length - 1);
             if(result == 0)
                 jp->pi.total_moves ++;
             if(result == -1){
@@ -822,24 +780,18 @@ done:
  * - The optimizer relies on the fragment size threshold
  * filter. If it isn't set, the default value of 20 Mb
  * is used.
- * - The multi-pass processing is not used here,
- * because it may easily cause repeated moves of huge
- * amounts of data on disks being in use during the
- * optimization.
  * @return Zero for success, negative value otherwise.
  */
 int optimize(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
-    int win_version;
     
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */
     if(result < 0) return result;
 
     /* FAT specific: optimize directories */
-    win_version = winx_get_os_version();
-    if(jp->is_fat && win_version > WINDOWS_2K){
+    if(jp->is_fat){
         jp->pi.processed_clusters = 0;
         jp->pi.clusters_to_process = opt_dirs_cc_routine(jp);
         result = optimize_directories(jp);
@@ -850,7 +802,7 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* NTFS specific: optimize MFT */
-    if(jp->fs_type == FS_NTFS && win_version > WINDOWS_2K){
+    if(jp->fs_type == FS_NTFS){
         jp->pi.processed_clusters = 0;
         jp->pi.clusters_to_process = opt_mft_cc_routine(jp);
         result = optimize_mft_routine(jp);
@@ -861,25 +813,10 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* optimize the disk */
-    if(jp->udo.optimizer_size_limit == 0){
-        DebugPrint("optimize: file size threshold not set; the default value will be used");
-        jp->udo.optimizer_size_limit = OPTIMIZER_MAGIC_CONSTANT;
-    }
-    if(jp->udo.fragment_size_threshold == 0){
-        DebugPrint("optimize: fragment size threshold not set; the default value will be used");
-        jp->udo.fragment_size_threshold = OPTIMIZER_MAGIC_CONSTANT;
-        jp->udo.algorithm_defined_fst = 1;
-    }
-    DebugPrint("optimize: fragment size threshold = %I64u",jp->udo.fragment_size_threshold);
-    DebugPrint("optimize: file size threshold = %I64u",jp->udo.optimizer_size_limit);
     result = optimize_routine(jp);
     if(result == 0){
         /* optimization succeeded */
         overall_result = 0;
-    }
-    if(jp->udo.algorithm_defined_fst){
-        jp->udo.fragment_size_threshold = 0;
-        jp->udo.algorithm_defined_fst = 0;
     }
     
     /* get rid of fragmented files */
@@ -904,12 +841,6 @@ int optimize_mft(udefrag_job_parameters *jp)
         jp->pi.clusters_to_process = 1;
         jp->pi.current_operation = VOLUME_OPTIMIZATION;
         return 0; /* nothing to do */
-    }
-
-    /* mft optimization requires at least windows xp */
-    if(winx_get_os_version() < WINDOWS_XP){
-        DebugPrint("MFT is not movable on NT4 and Windows 2000");
-        return UDEFRAG_UNMOVABLE_MFT;
     }
 
     /* reset counters */

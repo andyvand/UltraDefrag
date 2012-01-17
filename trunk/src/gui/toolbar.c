@@ -115,19 +115,16 @@ int CreateToolbar(void)
     case 2:
     case 4:
     case 8:
-        /* nt4 etc */
         id = IDB_TOOLBAR_8_BIT;
         idd = IDB_TOOLBAR_DISABLED_8_BIT;
         idh = IDB_TOOLBAR_HIGHLIGHTED_8_BIT;
         break;
     case 16:
-        /* w2k etc */
         id = IDB_TOOLBAR_16_BIT;
         idd = IDB_TOOLBAR_DISABLED_16_BIT;
         idh = IDB_TOOLBAR_HIGHLIGHTED_16_BIT;
         break;
     default:
-        /* xp etc */
         id = IDB_TOOLBAR;
         idd = IDB_TOOLBAR_DISABLED;
         idh = IDB_TOOLBAR_HIGHLIGHTED;

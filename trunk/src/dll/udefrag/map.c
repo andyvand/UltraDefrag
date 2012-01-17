@@ -266,12 +266,10 @@ void colorize_map_region(udefrag_job_parameters *jp,
         return;
     
     if(jp->cluster_map.opposite_order == FALSE){
-        /* we're using here less obvious code,
-        because _aulldvrm misses on nt4 */
         cell = lcn / jp->cluster_map.clusters_per_cell;
         if(cell >= jp->cluster_map.map_size)
             return;
-        offset = lcn - cell * jp->cluster_map.clusters_per_cell;
+        offset = lcn % jp->cluster_map.clusters_per_cell;
         while(cell < (jp->cluster_map.map_size - 1) && length){
             n = min(length,jp->cluster_map.clusters_per_cell - offset);
             jp->cluster_map.array[cell][new_color] += n;
