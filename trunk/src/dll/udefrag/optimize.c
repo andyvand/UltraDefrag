@@ -59,10 +59,6 @@ static int cleanup_space(udefrag_job_parameters *jp, winx_file_info *file,
     
     if(clusters_to_cleanup == 0) return 0;
     
-    /* don't move not fragmented FAT directories */
-    if(jp->is_fat && is_directory(file) \
-        && !is_fragmented(file)) return (-2);
-    
     current_vcn = block->vcn;
     while(clusters_to_cleanup){
         /* use last free region */
@@ -336,10 +332,12 @@ static int optimize_directories(udefrag_job_parameters *jp)
     /* free as much temporarily allocated space as possible */
     release_temp_space_regions(jp);
 
-    /* no files are excluded by this task currently */
-    for(f = jp->fragmented_files; f; f = f->next){
-        f->f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-        if(f->next == jp->fragmented_files) break;
+    /* exclude not fragmented FAT directories only */
+    for(file = jp->filelist; file; file = file->next){
+        file->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        if(jp->is_fat && is_directory(file) && !is_fragmented(file))
+            file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
+        if(file->next == jp->filelist) break;
     }
 
     /* open the volume */
