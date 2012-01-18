@@ -176,10 +176,12 @@ static winx_blockmap *add_fragment(winx_blockmap **fragments,
 /**
  * @brief Builds list of file fragments.
  */
-winx_blockmap *build_fragments_list(winx_file_info *f)
+winx_blockmap *build_fragments_list(winx_file_info *f,ULONGLONG *n_fragments)
 {
     winx_blockmap *block, *p = NULL, *fragments = NULL;
     ULONGLONG vcn = 0, lcn = 0, length = 0;
+    
+    if(n_fragments) *n_fragments = 0;
     
     for(block = f->disp.blockmap; block; block = block->next){
         if(block == f->disp.blockmap){
@@ -193,6 +195,7 @@ winx_blockmap *build_fragments_list(winx_file_info *f)
                 if(length){
                     if(!add_fragment(&fragments,&p,vcn,lcn,length))
                         break;
+                    if(n_fragments) *n_fragments ++;
                 }
                 vcn = block->vcn;
                 lcn = block->lcn;
@@ -202,7 +205,11 @@ winx_blockmap *build_fragments_list(winx_file_info *f)
         if(block->next == f->disp.blockmap) break;
     }
     
-    if(length) add_fragment(&fragments,&p,vcn,lcn,length);
+    if(length){
+        if(add_fragment(&fragments,&p,vcn,lcn,length)){
+            if(n_fragments) *n_fragments ++;
+        }
+    }
     
     return fragments;
 }
@@ -313,7 +320,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
                 x = jp->pi.moved_clusters;
                 while(min_vcn < max_vcn){
                     /* build list of fragments */
-                    fragments = build_fragments_list(file);
+                    fragments = build_fragments_list(file,NULL);
                     if(fragments == NULL) break;
                     
                     /* cut off already processed fragments and data after max_vcn */

@@ -386,7 +386,8 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     if(first_block == NULL) return;
     
     /* reset new file disposition */
-    memset(&new_file_info->disp,0,sizeof(winx_file_disposition));
+    new_file_info->disp.blockmap = NULL;
+    new_file_info->disp.fragments = 0;
     
     /* add all blocks prior to the first_block to the new disposition */
     for(block = f->disp.blockmap;
@@ -435,21 +436,17 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     }
     
     /* replace list of blocks by list of fragments */
-    fragments = build_fragments_list(new_file_info);
+    fragments = build_fragments_list(new_file_info,&n);
     winx_list_destroy((list_entry **)(void *)&new_file_info->disp.blockmap);
     new_file_info->disp.blockmap = fragments;
-    
-    /* update statistics */
-    for(block = fragments; block; block = block->next){
-        new_file_info->disp.fragments ++;
-        new_file_info->disp.clusters += block->length;
-        if(block->next == fragments) break;
-    }
+    new_file_info->disp.fragments = n;
     return;
     
 fail:
     DebugPrint("calculate_file_disposition: not enough memory");
     winx_list_destroy((list_entry **)(void *)&new_file_info->disp.blockmap);
+    new_file_info->disp.fragments = 0;
+    new_file_info->disp.clusters = 0;
 }
 
 /**
@@ -462,14 +459,15 @@ fail:
 static int compare_file_dispositions(winx_file_info *f1, winx_file_info *f2)
 {
     winx_blockmap *map1, *map2, *b1, *b2;
+    ULONGLONG n1, n2;
 
     /* validate arguments */
     if(f1 == NULL || f2 == NULL)
         return (-1);
     
     /* get lists of fragments */
-    map1 = build_fragments_list(f1);
-    map2 = build_fragments_list(f2);
+    map1 = build_fragments_list(f1,&n1);
+    map2 = build_fragments_list(f2,&n2);
     
     /* empty maps are equal */
     if(map1 == NULL && map2 == NULL){
@@ -478,6 +476,9 @@ equal_maps:
         release_fragments_list(&map2);
         return 0;
     }
+    
+    /* equal maps have equal lengths */
+    if(n1 != n2) goto different_maps;
     
     /* comapare maps */
     for(b1 = map1, b2 = map2; b1 && b2; b1 = b1->next, b2 = b2->next){
@@ -489,6 +490,7 @@ equal_maps:
         if(b1->next == map1 || b2->next == map2) break;
     }
     
+different_maps:
     /* maps are different */
     release_fragments_list(&map1);
     release_fragments_list(&map2);
