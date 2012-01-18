@@ -59,6 +59,10 @@ static int cleanup_space(udefrag_job_parameters *jp, winx_file_info *file,
     
     if(clusters_to_cleanup == 0) return 0;
     
+    /* don't move not fragmented FAT directories */
+    if(jp->is_fat && is_directory(file) \
+        && !is_fragmented(file)) return (-2);
+    
     current_vcn = block->vcn;
     while(clusters_to_cleanup){
         /* use last free region */
