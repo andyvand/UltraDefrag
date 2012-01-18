@@ -13,7 +13,8 @@ rc = { "ultradefrag.rc" }
 
 libs = {
     "kernel32", "user32", "gdi32", "comctl32",
-    "shell32", "msvcrt", "comdlg32", "advapi32"
+    "shell32", "msvcrt", "comdlg32", "advapi32",
+    "powrprof"
 }
 adlibs = { 
     "$(UDEFRAG_LIB_PATH)\\udefrag", 

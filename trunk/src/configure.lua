@@ -46,10 +46,8 @@ mingwbase = ""
 nsisroot = ""
 ziproot = ""
 ddkbase = ""
-vsbinpath = ""
 mingw64base = ""
 winsdkbase = ""
-rosinc = ""
 
 show_obsolete_options = 0
 
@@ -75,8 +73,6 @@ for line in io.lines("./SETVARS.CMD") do
         elseif string.find(k, "MINGWBASE") then mingwbase = v
         elseif string.find(k, "NSISDIR") then nsisroot = v
         elseif string.find(k, "SEVENZIP_PATH") then ziproot = v
-        elseif string.find(k, "MSVSBIN") then vsbinpath = v
-        elseif string.find(k, "ROSINCDIR") then rosinc = v
         elseif string.find(k, "MINGWx64BASE") then mingw64base = v
         elseif string.find(k, "WINSDKBASE") then winsdkbase = v
         end
@@ -109,16 +105,16 @@ function param_action(dialog, param_index)
         }
         dialog.icon = icon
         if show_obsolete_options == 1 then
-            dialog.size = "400x218"
+            dialog.size = "400x188"
         else
-            dialog.size = "370x173"
+            dialog.size = "370x158"
         end
     end
     return 1
 end
 
 if show_obsolete_options == 1 then
-    ret, udver, stage, mingwbase, nsisroot, ziproot, ddkbase, vsbinpath, mingw64base, winsdkbase, rosinc, apply_patch = 
+    ret, udver, stage, mingwbase, nsisroot, ziproot, ddkbase, mingw64base, winsdkbase, apply_patch = 
         iup.GetParam("UltraDefrag build configurator",param_action,
             "UltraDefrag version: %s\n"..
             "Release stage (alpha1, beta2, rc3, final): %s\n".. 
@@ -126,15 +122,13 @@ if show_obsolete_options == 1 then
             "NSIS path: %s\n"..
             "7-Zip path: %s\n"..
             "Windows Server 2003 DDK path: %s\n"..
-            "MS Visual Studio 6.0 /bin path: %s\n"..
             "MinGW x64 base path: %s\n"..
             "Windows SDK base path: %s\n"..
-            "ReactOS include path: %s\n"..
             "Apply patch to MinGW: %b[No,Yes]\n",
-            udver, stage, mingwbase, nsisroot, ziproot, ddkbase, vsbinpath, mingw64base, winsdkbase, rosinc, apply_patch
+            udver, stage, mingwbase, nsisroot, ziproot, ddkbase, mingw64base, winsdkbase, apply_patch
             )
 else
-    ret, udver, stage, mingwbase, nsisroot, ziproot, ddkbase, vsbinpath, apply_patch = 
+    ret, udver, stage, mingwbase, nsisroot, ziproot, ddkbase, apply_patch = 
         iup.GetParam("UltraDefrag build configurator",param_action,
             "UltraDefrag version: %s\n"..
             "Release stage (alpha1, beta2, rc3, final): %s\n".. 
@@ -142,9 +136,8 @@ else
             "NSIS path: %s\n"..
             "7-Zip path: %s\n"..
             "Windows Server 2003 DDK path: %s\n"..
-            "MS Visual Studio 6.0 /bin path: %s\n"..
             "Apply patch to MinGW: %b[No,Yes]\n",
-            udver, stage, mingwbase, nsisroot, ziproot, ddkbase, vsbinpath, apply_patch
+            udver, stage, mingwbase, nsisroot, ziproot, ddkbase, apply_patch
             )
 end
 if ret == 1 then
@@ -170,8 +163,6 @@ if ret == 1 then
     f:write("set MINGWx64BASE=", mingw64base, "\n")
     f:write("set NSISDIR=", nsisroot, "\n")
     f:write("set SEVENZIP_PATH=", ziproot, "\n")
-    f:write("set MSVSBIN=", vsbinpath, "\n")
-    f:write("set ROSINCDIR=", rosinc, "\n")
     f:close()
     print("SETVARS.CMD script was successfully updated.")
     if apply_patch == 1 then

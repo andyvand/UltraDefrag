@@ -39,12 +39,7 @@
 */
 
 /* extracts low 48 bits of File Reference Number */
-/* LL suffix is not supported by MSVC 6.0 ! */
-#ifndef USE_MSVC
 #define GetMftIdFromFRN(n) ((n) & 0xffffffffffffLL)
-#else
-#define GetMftIdFromFRN(n) ((n) & 0xffffffffffff)
-#endif
 
 #ifndef TAG
 #define TAG(A, B, C, D) (ULONG)(((A)<<0) + ((B)<<8) + ((C)<<16) + ((D)<<24))

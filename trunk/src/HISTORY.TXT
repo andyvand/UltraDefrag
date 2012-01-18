@@ -18,6 +18,7 @@ HISTORY
       we recommend to use the 5.0.x series of UltraDefrag
     - low color depth (8 bits per pixel) support was dropped for GUI toolbar
     - Internals: flags field removed from winx_file_disposition structure
+    - MS Visual Studio 6.0 development environment support dropped
 
 
   Version 5.0.2  2012-01-

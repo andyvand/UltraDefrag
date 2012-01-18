@@ -13,12 +13,8 @@ set WINDDKBASE=C:\WinDDK\3790.1830
 set WINSDKBASE=
 set MINGWBASE=
 set MINGWx64BASE=
-set NETRUNTIMEPATH=C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727
 set NSISDIR=C:\Program Files\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
-set MSVSBIN=
-set DDKINCDIR=
-set PELLESC_BASE=
 
 rem comment out next line to enable warnings to find unreachable code
 goto :EOF

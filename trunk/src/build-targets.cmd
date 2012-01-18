@@ -26,7 +26,6 @@ rem     build-targets [<compiler>]
 rem
 rem Available <compiler> values:
 rem     --use-mingw (default)
-rem     --use-msvc
 rem     --use-winddk
 rem     --use-winsdk
 rem     --use-mingw-x64 (experimental)
@@ -85,7 +84,6 @@ if %UD_BLD_FLG_USE_COMPILER% equ 0 (
 )
 
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINDDK%  goto ddk_build
-if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MSVC%    goto msvc_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MINGW%   goto mingw_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MINGW64% goto mingw_x64_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
@@ -216,21 +214,6 @@ exit /B 0
     set path=%OLD_PATH%
     set OLD_PATH=
     
-exit /B 0
-
-
-:msvc_build
-
-    set OLD_PATH=%path%
-
-    call "%MSVSBIN%\vcvars32.bat"
-    set BUILD_ENV=msvc
-    set UDEFRAG_LIB_PATH=..\..\lib
-    call :build_modules X86 || exit /B 1
-
-    set path=%OLD_PATH%
-    set OLD_PATH=
-
 exit /B 0
 
 

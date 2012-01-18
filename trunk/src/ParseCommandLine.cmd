@@ -32,7 +32,6 @@ set UD_BLD_FLG_PARSER_DEBUG=0
 
 :: set compiler constants
 set UD_BLD_FLG_USE_MINGW=1
-set UD_BLD_FLG_USE_MSVC=2
 set UD_BLD_FLG_USE_MINGW64=3
 set UD_BLD_FLG_USE_WINDDK=4
 set UD_BLD_FLG_USE_WINSDK=5
@@ -66,12 +65,6 @@ if "%1" == "--use-winsdk" (
     set UD_BLD_FLG_BUILD_X86=1
     set UD_BLD_FLG_BUILD_AMD64=1
     set UD_BLD_FLG_BUILD_IA64=1
-)
-if "%1" == "--use-msvc" (
-    set UD_BLD_FLG_USE_COMPILER=%UD_BLD_FLG_USE_MSVC%
-    set UD_BLD_FLG_BUILD_X86=1
-    set UD_BLD_FLG_BUILD_AMD64=0
-    set UD_BLD_FLG_BUILD_IA64=0
 )
 if "%1" == "--use-mingw-x64" (
     set UD_BLD_FLG_USE_COMPILER=%UD_BLD_FLG_USE_MINGW64%
