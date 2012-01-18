@@ -463,7 +463,6 @@ void parse_cmdline(int argc, char **argv)
     if(use_entire_window) CalculateClusterMapDimensions();
 }
 
-typedef DWORD (WINAPI *GET_LONG_PATH_NAME_W_PROC)(LPCWSTR,LPWSTR,DWORD);
 wchar_t long_path[MAX_LONG_PATH + 1];
 wchar_t full_path[MAX_LONG_PATH + 1];
 

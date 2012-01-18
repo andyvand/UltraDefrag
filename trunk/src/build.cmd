@@ -123,7 +123,6 @@ rem Example:  call :build_installer .\bin\ia64 ia64
     pushd %1
     copy /Y "%~dp0\installer\UltraDefrag.nsi" .\
     copy /Y "%~dp0\installer\lang.ini" .\
-    copy /Y "%~dp0\installer\lang-classical.ini" .\
     if "%RELEASE_STAGE%" neq "" (
         set NSIS_COMPILER_FLAGS=/DULTRADFGVER=%ULTRADFGVER% /DULTRADFGARCH=%2 /DRELEASE_STAGE=%RELEASE_STAGE% /DUDVERSION_SUFFIX=%UDVERSION_SUFFIX%
     ) else (
@@ -255,7 +254,6 @@ rem Displays usage information.
     echo --use-mingw     (default)
     echo --use-winddk    (we use it for official releases)
     echo --use-winsdk
-    echo --use-msvc      (the fastest compilation)
     echo --use-mingw-x64 (experimental, produces wrong x64 code)
     echo.
     echo Target architecture (must always be after compiler):
@@ -268,7 +266,4 @@ rem Displays usage information.
     echo.
     echo * To use MinGW run mingw_patch.cmd before:
     echo dll\zenwinx\mingw_patch.cmd {path to mingw installation}
-    echo.
-    echo * To use MS Visual Studio 6.0 follow instructions to patch it:
-    echo dll\zenwinx\msvc_patch.cmd
 goto :EOF
