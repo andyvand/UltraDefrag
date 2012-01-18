@@ -49,12 +49,6 @@
 
 #endif /* !USE_WINDDK */
 
-#ifdef USE_MSVC
-#define DWORD_PTR DWORD
-typedef int intptr_t;
-typedef unsigned uintptr_t;
-#endif
-
 #ifndef LR_VGACOLOR
 /* this constant is not defined in winuser.h on mingw */
 #define LR_VGACOLOR         0x0080

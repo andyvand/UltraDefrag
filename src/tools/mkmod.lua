@@ -51,7 +51,7 @@ arch = ""
 static_lib = 0
 
 ddk_cmd = "build.exe"
-msvc_cmd = "nmake.exe /NOLOGO /A /f"
+sdk_cmd = "nmake.exe /NOLOGO /A /f"
 mingw_cmd = "mingw32-make --always-make -f Makefile.mingw"
 mingw_x64_cmd = "gmake --always-make -f Makefile_x64.mingw"
 
@@ -187,35 +187,17 @@ function produce_ddk_makefile()
     f:close()
 end
 
--- MS Visual Studio backend
-function produce_msvc_makefile()
+-- WinSDK backend
+function produce_sdk_makefile()
     local s, upname
     local cl_flags, rsc_flags, link_flags
 
     local f = assert(io.open(".\\" .. name .. ".mak","w"))
 
-    --[[
-    OUTDIR and INTDIR parameters are replaced with current directory
-    f:write("!IF \"\$(OS)\" == \"Windows_NT\"\n")
-    f:write("NULL=\n")
-    f:write("!ELSE\n")
-    f:write("NULL=nul\n")
-    f:write("!ENDIF\n\n")
-    --]]
-
-    if os.getenv("BUILD_ENV") == "winsdk" then
-        cl_flags = "CPP_PROJ=/nologo /W3 /O2 /D \"WIN32\" /D \"NDEBUG\" /D \"_MBCS\" "
-    else
-        cl_flags = "CPP_PROJ=/nologo /W3 /O2 /D \"WIN32\" /D \"NDEBUG\" /D \"_MBCS\" "
-    end
+    cl_flags = "CPP_PROJ=/nologo /W3 /O2 /D \"WIN32\" /D \"NDEBUG\" /D \"_MBCS\" "
+    cl_flags = cl_flags .. "/D \"USE_WINSDK\" /GS- /arch:SSE2 "
     
     upname = string.upper(name) .. "_EXPORTS"
-
-    if os.getenv("BUILD_ENV") == "winsdk" then
-        cl_flags = cl_flags .. "/D \"USE_WINSDK\" /GS- /arch:SSE2 "
-    else
-        cl_flags = cl_flags .. "/D \"USE_MSVC\" "
-    end
 
     if target_type == "console" then
         cl_flags = cl_flags .. "/D \"_CONSOLE\" "
@@ -226,27 +208,11 @@ function produce_msvc_makefile()
     elseif target_type == "dll" then
         cl_flags = cl_flags .. "/D \"_CONSOLE\" /D \"_USRDLL\" /D \"" .. upname .. "\" "
         s = "console"
-    elseif target_type == "driver" then
-        cl_flags = cl_flags .. "/I \"\$(ROSINCDIR)\" /I \"\$(ROSINCDIR)\\ddk\" "
-        s = "native"
     elseif target_type == "native" then
         s = "native"
     else error("Unknown target type: " .. target_type .. "!")
     end
     
-    -- the following check eliminates need of msvcr90.dll when compiles with SDK
-    if nativedll == 0 and os.getenv("BUILD_ENV") ~= "winsdk" then
-        cl_flags = cl_flags .. "/MD "
-    end
-    
-    if arch == "i386" then
-        cl_flags = cl_flags .. " "
-    elseif arch == "amd64" then
-        cl_flags = cl_flags .. " "
-    elseif arch == "ia64" then
-        cl_flags = cl_flags .. " "
-    end
-
     f:write("ALL : \"", name, ".", target_ext, "\"\n\n")
     f:write(cl_flags, " /c \n")
 
@@ -286,9 +252,6 @@ function produce_msvc_makefile()
         link_flags = link_flags .. "/implib:" .. name .. ".lib "
     elseif target_type == "native" then
         link_flags = link_flags .. "/entry:\"NtProcessStartup\" "
-    elseif target_type == "driver" then
-        link_flags = link_flags .. "/base:\"0x10000\" /entry:\"DriverEntry\" "
-        link_flags = link_flags .. "/driver /align:32 "
     end
     f:write(link_flags, " /out:\"", name, ".", target_ext, "\" \n\n")
     
@@ -667,14 +630,14 @@ elseif os.getenv("BUILD_ENV") == "winsdk" then
         print("Driver compilation is not supported by Windows SDK.\n")
     else
         if obsolete(input_filename, name .. ".mak") then
-            produce_msvc_makefile()
+            produce_sdk_makefile()
         end
         print(input_filename .. " windows sdk build performing...\n")
         arch = "i386"
         if os.getenv("AMD64") ~= nil then arch = "amd64" end
         if os.getenv("IA64") ~= nil then arch = "ia64" end
-        msvc_cmd = msvc_cmd .. name .. ".mak"
-        if os.execute(msvc_cmd) ~= 0 then
+        sdk_cmd = sdk_cmd .. name .. ".mak"
+        if os.execute(sdk_cmd) ~= 0 then
             error("Can't build the target!")
         end
         if static_lib == 0 then
@@ -691,21 +654,6 @@ elseif os.getenv("BUILD_ENV") == "winsdk" then
                 copy(name .. ".lib", "..\\..\\lib\\" .. arch .. "\\")
             end
         end
-    end
-elseif os.getenv("BUILD_ENV") == "msvc" then
-    if obsolete(input_filename, name .. ".mak") then
-        produce_msvc_makefile()
-    end
-    print(input_filename .. " msvc build performing...\n")
-    msvc_cmd = msvc_cmd .. name .. ".mak"
-    if os.execute(msvc_cmd) ~= 0 then
-        error("Can't build the target!")
-    end
-    if static_lib == 0 then
-        copy(target_name,"..\\..\\bin\\")
-    end
-    if target_type == "dll" then
-        copy(name .. ".lib","..\\..\\lib\\")
     end
 elseif os.getenv("BUILD_ENV") == "mingw" then
     if obsolete(input_filename, ".\\Makefile.mingw") then

@@ -127,32 +127,6 @@ ULONGLONG __stdcall _alldiv(ULONGLONG n, ULONGLONG d);
 ULONGLONG __stdcall _aullrem(ULONGLONG u, ULONGLONG v);
 #endif
 
-#ifdef USE_MSVC
-typedef enum _POWER_ACTION
-{
-  PowerActionNone = 0, 
-  PowerActionReserved, 
-  PowerActionSleep, 
-  PowerActionHibernate, 
-  PowerActionShutdown, 
-  PowerActionShutdownReset, 
-  PowerActionShutdownOff, 
-  PowerActionWarmEject
-} POWER_ACTION, *PPOWER_ACTION;
-typedef enum _SYSTEM_POWER_STATE
-{
-  PowerSystemUnspecified = 0, 
-  PowerSystemWorking = 1, 
-  PowerSystemSleeping1 = 2, 
-  PowerSystemSleeping2 = 3, 
-  PowerSystemSleeping3 = 4, 
-  PowerSystemHibernate = 5, 
-  PowerSystemShutdown = 6, 
-  PowerSystemMaximum = 7
-} SYSTEM_POWER_STATE, *PSYSTEM_POWER_STATE;
-#define DWORD_PTR DWORD*
-#endif
-
 /* define status codes */
 /* ifndef directives are used to prevent warnings when gcc on mingw is used */
 typedef LONG NTSTATUS;
@@ -220,12 +194,7 @@ typedef LONG NTSTATUS;
 #define STATUS_SHARING_VIOLATION      ((NTSTATUS)0xC0000043)
 #endif
 
-#if defined(__GNUC__)
 #define MAX_WAIT_INTERVAL (-0x7FFFFFFFFFFFFFFFLL)
-#else
-/* c compiler from ms visual studio 6.0 don't supports LL suffix */
-#define MAX_WAIT_INTERVAL (-0x7FFFFFFFFFFFFFFF)
-#endif
 
 /* define base nt structures */
 typedef struct _STRING

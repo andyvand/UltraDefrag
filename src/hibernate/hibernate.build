@@ -5,6 +5,6 @@ target_type = "console"
 src = { "hibernate.c" }
 rc = { "hibernate.rc" }
 
-libs = { "kernel32", "msvcrt", "advapi32" }
+libs = { "kernel32", "msvcrt", "advapi32", "powrprof" }
 
 umentry = "main"

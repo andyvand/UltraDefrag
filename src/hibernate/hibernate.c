@@ -6,9 +6,10 @@
 * License:       Public Domain
 */
 
-/* Revised by Dmitri Arkhangelski, 2011 */
+/* Revised by Dmitri Arkhangelski, 2011, 2012 */
 
 #include <windows.h>
+#include <powrprof.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -81,8 +82,7 @@ int __cdecl main(int argc, char **argv)
             return 1;
         }
         
-        /* the second parameter must be FALSE, dmitriar's windows xp hangs otherwise */
-        if(!SetSystemPowerState(FALSE,FALSE)){ /* hibernate, request permission from apps and drivers */
+        if(!SetSuspendState(TRUE,FALSE,FALSE)){ /* hibernate, request permission from apps and drivers */
             HandleError("Cannot hibernate PC: %s!\n");
             return 1;
         }

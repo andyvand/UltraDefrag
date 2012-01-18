@@ -27,7 +27,7 @@ optimizeLevel=0
 // linker
 libraryPath=..\lib
 outputFilename=../bin/ultradefrag.exe
-libraries=udefrag,lua5.1a,wgx,gdi32,comdlg32,comctl32,msvcrt
+libraries=udefrag,lua5.1a,wgx,gdi32,comdlg32,comctl32,msvcrt,powrprof
 extraLinkerOptions=-mwindows
 ignoreStartupFile=0
 ignoreDefaultLibs=0
@@ -65,7 +65,7 @@ optimizeLevel=2
 // linker
 libraryPath=..\lib
 outputFilename=../bin/ultradefrag.exe
-libraries=udefrag,lua5.1a,wgx,gdi32,comdlg32,comctl32,msvcrt
+libraries=udefrag,lua5.1a,wgx,gdi32,comdlg32,comctl32,msvcrt,powrprof
 extraLinkerOptions=-mwindows -Wl,--strip-all
 ignoreStartupFile=0
 ignoreDefaultLibs=0
@@ -103,18 +103,18 @@ extraResourceOptions=
 1=ultradefrag.rc
 [Other]
 [History]
-vollist.c,7318
-main.c,18367
-job.c,3554
-upgrade.c,0
-main.h,5246
-about.c,2541
-map.c,10090
-resource.h,4776
-toolbar.c,1537
-statbar.c,3889
-settings.c,8086
-ultradefrag.rc,7551
+ultradefrag.rc,1715
+toolbar.c,3277
+upgrade.c,5628
 menu.c,0
-shutdown.c,15236
-i18n.c,14350
+statbar.c,3889
+resource.h,1797
+map.c,10090
+about.c,1140
+main.h,5246
+job.c,3554
+main.c,18367
+vollist.c,8279
+i18n.c,8349
+shutdown.c,12982
+settings.c,967

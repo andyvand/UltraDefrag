@@ -11,5 +11,3 @@ set MINGWBASE=D:\Software\MinGWStudio\MinGW
 set MINGWx64BASE=D:\Software\mingw64
 set NSISDIR=D:\Software\Tools\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
-set MSVSBIN=D:\Software\Microsoft Visual Studio\VC98\Bin
-set ROSINCDIR=D:\MyDocs\ReactOS030\include

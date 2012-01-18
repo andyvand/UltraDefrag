@@ -37,10 +37,6 @@
 #include <conio.h>
 #include <shellapi.h>
 
-#ifdef USE_MSVC
-#define DWORD_PTR DWORD
-#endif
-
 #include "../dll/wgx/wgx.h"
 #include "../dll/udefrag/udefrag.h"
 #include "../include/ultradfgver.h"
