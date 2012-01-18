@@ -217,57 +217,6 @@ winx_blockmap *get_first_block_of_cluster_chain(winx_file_info *f,ULONGLONG vcn)
 }
 
 /**
- * @brief Checks whether the cluster chain 
- * starts on a specified LCN and runs 
- * continuously from there or not.
- */
-static int check_cluster_chain_location(winx_file_info *f,ULONGLONG vcn,ULONGLONG length,ULONGLONG startLcn)
-{
-    winx_blockmap *block, *first_block;
-    ULONGLONG clusters_to_check, curr_vcn, curr_target, n;
-    
-    first_block = get_first_block_of_cluster_chain(f,vcn);
-    if(first_block == NULL){
-        /* is file empty? */
-        if(f->disp.blockmap == NULL)
-            return 1; /* let's assume a successful move in case of empty file */
-        /* is vcn outside of the current file length? */
-        if(vcn >= f->disp.blockmap->prev->vcn + f->disp.blockmap->prev->length)
-            return 1; /* let's assume a successful move of non existing part of the file */
-        /* sparse file changed its contents, so let's assume a partial move */
-        return 0;
-    }
-    
-    if(length == 0){
-        /* let's assume a successful move of zero number of clusters */
-        return 1;
-    }
-    
-    clusters_to_check = length;
-    curr_vcn = vcn;
-    curr_target = startLcn;
-    for(block = first_block; block; block = block->next){
-        if(curr_target != block->lcn + (curr_vcn - block->vcn)){
-            /* current block is not found on target location */
-            return 0;
-        }
-
-        n = min(block->length - (curr_vcn - block->vcn),clusters_to_check);
-        curr_target += n;
-        clusters_to_check -= n;
-        
-        if(!clusters_to_check || block->next == f->disp.blockmap) break;
-        curr_vcn = block->next->vcn;
-    }
-    
-    /*
-    * All clusters passed the check, or blocks
-    * exhausted because of a file truncation.
-    */
-    return 1;
-}
-
-/**
  * @brief Moves file clusters.
  * @return Zero for success,
  * negative value otherwise.
@@ -396,52 +345,6 @@ static void DbgPrintBlocksOfFile(winx_blockmap *blockmap)
 }
 
 /**
- * @brief Compares two block maps.
- * @return Positive value indicates 
- * difference, zero indicates equality.
- * Negative value indicates that 
- * arguments are invalid.
- */
-static int blockmap_compare(winx_file_disposition *disp1, winx_file_disposition *disp2)
-{
-    winx_blockmap *block1, *block2;
-
-    /* validate arguments */
-    if(disp1 == NULL || disp2 == NULL)
-        return (-1);
-    
-    if(disp1->blockmap == disp2->blockmap)
-        return 0;
-    
-    /* empty bitmap is not equal to non-empty one */
-    if(disp1->blockmap == NULL || disp2->blockmap == NULL)
-        return 1;
-
-    /* ensure that both maps have non-negative number of elements */
-    if(disp1->fragments <= 0 || disp2->fragments <= 0)
-        return (-1);
-
-    /* if number of file fragments differs, maps are different */
-    if(disp1->fragments != disp2->fragments)
-        return 1;
-
-    /* comapare maps */    
-    for(block1 = disp1->blockmap, block2 = disp2->blockmap;
-      block1 && block2; block1 = block1->next, block2 = block2->next){
-        if((block1->vcn != block2->vcn) 
-          || (block1->lcn != block2->lcn)
-          || (block1->length != block2->length))
-            return 1;
-        if(block1->next == disp1->blockmap || block2->next == disp2->blockmap) break;
-    }
-      
-    if(block1->next != disp1->blockmap || block2->next != disp2->blockmap)
-        return 1; /* one map is shorter than another */
-    
-    return 0;
-}
-
-/**
  * @brief Adds a new block to the file map.
  */
 static winx_blockmap *add_new_block(winx_blockmap **head,ULONGLONG vcn,ULONGLONG lcn,ULONGLONG length)
@@ -462,91 +365,65 @@ static winx_blockmap *add_new_block(winx_blockmap **head,ULONGLONG vcn,ULONGLONG
 }
 
 /**
- * @brief Reduces number of blocks if possible.
- * @note As a side effect, for compressed/sparse 
- * files it joins multiple blocks following
- * each other to a single block. However, this is
- * not mandatory since this routine is used in
- * dry run mode only.
+ * @brief Calculates new file disposition.
+ * @param[in] f pointer to the file information structure.
+ * @param[in] vcn VCN of the moved cluster chain.
+ * @param[in] length length of the moved cluster chain.
+ * @param[in] target new LCN of the moved cluster chain.
+ * @param[out] new_file_info pointer to structure 
+ * receiving the new file information.
  */
-static void optimize_blockmap(winx_file_info *f)
+static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
+    ULONGLONG length,ULONGLONG target,winx_file_info *new_file_info)
 {
-    winx_blockmap *block;
-
-    /* remove unnecessary blocks */
-repeat_scan:
-    for(block = f->disp.blockmap; block; block = block->next){
-        if(block->next == f->disp.blockmap)
-            break; /* no more pairs to be detected */
-        /* does next block follow the current? */
-        if(block->next->vcn == block->vcn + block->length \
-         && block->next->lcn == block->lcn + block->length){
-            /* adjust the current block and remove the next one */
-            block->length += block->next->length;
-            winx_list_remove_item((list_entry **)(void *)&f->disp.blockmap,(list_entry *)block->next);
-            goto repeat_scan;
-        }
-    }
-    
-    /* adjust number of fragments and set flags */
-    f->disp.fragments = 0;
-    for(block = f->disp.blockmap; block; block = block->next){
-        if(block == f->disp.blockmap || \
-          block->lcn != (block->prev->lcn + block->prev->length)){
-            f->disp.fragments ++;
-        }
-        if(block->next == f->disp.blockmap) break;
-    }
-}
-
-/**
- * @brief Calculates and builds a new file map respect 
- * to a successful move of the cluster chain.
- */
-static winx_blockmap *calculate_new_blockmap(winx_file_info *f,ULONGLONG vcn,ULONGLONG length,ULONGLONG target)
-{
-    winx_blockmap *blockmap = NULL;
-    winx_blockmap *block, *first_block, *new_block;
+    winx_blockmap *block, *first_block, *fragments;
     ULONGLONG clusters_to_check, curr_vcn, curr_target, n;
     
-    first_block = get_first_block_of_cluster_chain(f,vcn);
-    if(first_block == NULL)
-        return NULL;
+    /* duplicate file information */
+    memcpy(new_file_info,f,sizeof(winx_file_info));
     
-    /* copy all blocks prior to the first_block to the new map */
-    for(block = f->disp.blockmap; block && block != first_block; block = block->next){
-        new_block = add_new_block(&blockmap,block->vcn,block->lcn,block->length);
-        if(new_block == NULL) goto fail;
+    first_block = get_first_block_of_cluster_chain(f,vcn);
+    if(first_block == NULL) return;
+    
+    /* reset new file disposition */
+    memset(&new_file_info->disp,0,sizeof(winx_file_disposition));
+    
+    /* add all blocks prior to the first_block to the new disposition */
+    for(block = f->disp.blockmap;
+      block && block != first_block;
+      block = block->next){
+        if(!add_new_block(&new_file_info->disp.blockmap,
+            block->vcn,block->lcn,block->length)) goto fail;
     }
     
-    /* copy all remaining blocks */
+    /* add all remaining blocks */
     clusters_to_check = length;
     curr_vcn = vcn;
     curr_target = target;
     for(block = first_block; block; block = block->next){
         if(!clusters_to_check){
-            new_block = add_new_block(&blockmap,block->vcn,block->lcn,block->length);
-            if(new_block == NULL) goto fail;
+            if(!add_new_block(&new_file_info->disp.blockmap,
+                block->vcn,block->lcn,block->length)) goto fail;
         } else {
             n = min(block->length - (curr_vcn - block->vcn),clusters_to_check);
             
             if(curr_vcn != block->vcn){
                 /* we have the second part of block moved */
-                new_block = add_new_block(&blockmap,block->vcn,block->lcn,block->length - n);
-                if(new_block == NULL) goto fail;
-                new_block = add_new_block(&blockmap,curr_vcn,curr_target,n);
-                if(new_block == NULL) goto fail;
+                if(!add_new_block(&new_file_info->disp.blockmap,
+                    block->vcn,block->lcn,block->length - n)) goto fail;
+                if(!add_new_block(&new_file_info->disp.blockmap,
+                    curr_vcn,curr_target,n)) goto fail;
             } else {
                 if(n != block->length){
                     /* we have the first part of block moved */
-                    new_block = add_new_block(&blockmap,curr_vcn,curr_target,n);
-                    if(new_block == NULL) goto fail;
-                    new_block = add_new_block(&blockmap,block->vcn + n,block->lcn + n,block->length - n);
-                    if(new_block == NULL) goto fail;
+                    if(!add_new_block(&new_file_info->disp.blockmap,
+                        curr_vcn,curr_target,n)) goto fail;
+                    if(!add_new_block(&new_file_info->disp.blockmap,
+                        block->vcn + n,block->lcn + n,block->length - n)) goto fail;
                 } else {
                     /* we have entire block moved */
-                    new_block = add_new_block(&blockmap,block->vcn,curr_target,block->length);
-                    if(new_block == NULL) goto fail;
+                    if(!add_new_block(&new_file_info->disp.blockmap,
+                        block->vcn,curr_target,block->length)) goto fail;
                 }
             }
 
@@ -556,12 +433,66 @@ static winx_blockmap *calculate_new_blockmap(winx_file_info *f,ULONGLONG vcn,ULO
         if(block->next == f->disp.blockmap) break;
         curr_vcn = block->next->vcn;
     }
-    return blockmap;
+    
+    /* replace list of blocks by list of fragments */
+    fragments = build_fragments_list(new_file_info);
+    winx_list_destroy((list_entry **)(void *)&new_file_info->disp.blockmap);
+    new_file_info->disp.blockmap = fragments;
+    
+    /* update statistics */
+    for(block = fragments; block; block = block->next){
+        new_file_info->disp.fragments ++;
+        new_file_info->disp.clusters += block->length;
+        if(block->next == fragments) break;
+    }
+    return;
     
 fail:
-    DebugPrint("calculate_new_blockmap: not enough memory");
-    winx_list_destroy((list_entry **)(void *)&blockmap);
-    return NULL;
+    DebugPrint("calculate_file_disposition: not enough memory");
+    winx_list_destroy((list_entry **)(void *)&new_file_info->disp.blockmap);
+}
+
+/**
+ * @brief Compares two file dispositions.
+ * @return Positive value indicates 
+ * difference, zero indicates equality.
+ * Negative value indicates that 
+ * arguments are invalid.
+ */
+static int compare_file_dispositions(winx_file_info *f1, winx_file_info *f2)
+{
+    winx_blockmap *map1, *map2, *b1, *b2;
+
+    /* validate arguments */
+    if(f1 == NULL || f2 == NULL)
+        return (-1);
+    
+    /* get lists of fragments */
+    map1 = build_fragments_list(f1);
+    map2 = build_fragments_list(f2);
+    
+    /* empty maps are equal */
+    if(map1 == NULL && map2 == NULL){
+equal_maps:
+        release_fragments_list(&map1);
+        release_fragments_list(&map2);
+        return 0;
+    }
+    
+    /* comapare maps */
+    for(b1 = map1, b2 = map2; b1 && b2; b1 = b1->next, b2 = b2->next){
+        if((b1->vcn != b2->vcn) 
+          || (b1->lcn != b2->lcn)
+          || (b1->length != b2->length))
+            break;
+        if(b1->next == map1 && b2->next == map2) goto equal_maps;
+        if(b1->next == map1 || b2->next == map2) break;
+    }
+    
+    /* maps are different */
+    release_fragments_list(&map1);
+    release_fragments_list(&map2);
+    return 1;
 }
 
 static int dump_terminator(void *user_defined_data)
@@ -622,6 +553,7 @@ int move_file(winx_file_info *f,
     winx_blockmap *block, *first_block;
     ULONGLONG clusters_to_redraw;
     ULONGLONG curr_vcn, n;
+    winx_file_info desired_file_info;
     winx_file_info new_file_info;
     ud_file_moving_result moving_result;
     int r1, r2, r3;
@@ -704,11 +636,12 @@ int move_file(winx_file_info *f,
     winx_defrag_fclose(hFile);
     
     /* get file moving result */
-    memcpy(&new_file_info,f,sizeof(winx_file_info));
-    new_file_info.disp.blockmap = NULL;
+    calculate_file_disposition(f,vcn,length,target,&desired_file_info);
     if(jp->udo.dry_run){
         dump_result = -1;
     } else {
+        memcpy(&new_file_info,f,sizeof(winx_file_info));
+        new_file_info.disp.blockmap = NULL;
         dump_result = winx_ftw_dump_file(&new_file_info,dump_terminator,(void *)jp);
         if(dump_result < 0)
             DebugPrint("move_file: cannot redump the file");
@@ -716,10 +649,8 @@ int move_file(winx_file_info *f,
     
     if(dump_result < 0){
         /* let's assume a successful move */
-        /* we have no new map of file blocks, so let's calculate it */
-        memcpy(&new_file_info,f,sizeof(winx_file_info));
-        new_file_info.disp.blockmap = calculate_new_blockmap(f,vcn,length,target);
-        optimize_blockmap(&new_file_info);
+        /* we have no new map of file blocks, so let's use calculated one */
+        memcpy(&new_file_info,&desired_file_info,sizeof(winx_file_info));
         moving_result = CALCULATED_MOVING_SUCCESS;
     } else {
         /*DebugPrint("OLD MAP:");
@@ -734,20 +665,21 @@ int move_file(winx_file_info *f,
                 block->vcn, block->lcn, block->length);
             if(block->next == new_file_info.disp.blockmap) break;
         }*/
-        /* compare old and new block maps */
-        if(blockmap_compare(&new_file_info.disp,&f->disp) == 0){
-            DebugPrint("move_file: nothing has been moved");
-            moving_result = DETERMINED_MOVING_FAILURE;
+        /* compare file dispositions */
+        if(compare_file_dispositions(&new_file_info,&desired_file_info) == 0){
+            moving_result = DETERMINED_MOVING_SUCCESS;
         } else {
-            /* check whether all data has been moved to the target or not */
-            if(check_cluster_chain_location(&new_file_info,vcn,length,target)){
-                moving_result = DETERMINED_MOVING_SUCCESS;
+            if(compare_file_dispositions(&new_file_info,f) == 0){
+                DebugPrint("move_file: nothing has been moved");
+                moving_result = DETERMINED_MOVING_FAILURE;
             } else {
-                DebugPrint("move_file: the file has been moved just partially");
+                DebugPrint("move_file: new file disposition differs from desired one");
                 DbgPrintBlocksOfFile(new_file_info.disp.blockmap);
                 moving_result = DETERMINED_MOVING_PARTIAL_SUCCESS;
             }
         }
+        /* release calculated desired disposition */
+        winx_list_destroy((list_entry **)(void *)&desired_file_info.disp.blockmap);
     }
     
     /* handle a case when nothing has been moved */
