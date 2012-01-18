@@ -195,7 +195,7 @@ winx_blockmap *build_fragments_list(winx_file_info *f,ULONGLONG *n_fragments)
                 if(length){
                     if(!add_fragment(&fragments,&p,vcn,lcn,length))
                         break;
-                    if(n_fragments) *n_fragments ++;
+                    if(n_fragments) (*n_fragments) ++;
                 }
                 vcn = block->vcn;
                 lcn = block->lcn;
@@ -207,10 +207,11 @@ winx_blockmap *build_fragments_list(winx_file_info *f,ULONGLONG *n_fragments)
     
     if(length){
         if(add_fragment(&fragments,&p,vcn,lcn,length)){
-            if(n_fragments) *n_fragments ++;
+            if(n_fragments) (*n_fragments) ++;
         }
     }
     
+    if(fragments == NULL && n_fragments) *n_fragments = 0;
     return fragments;
 }
 
