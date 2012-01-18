@@ -173,8 +173,6 @@ static void dbg_print_performance_counters(udefrag_job_parameters *jp)
  * it will be drawn in light magenta if no files exist there.
  * Otherwise, such a cell will be drawn in different color
  * indicating that something still exists inside the zone.
- * This will help people to realize whether they need to run
- * full optimization or not.
  */
 static void deliver_progress_info(udefrag_job_parameters *jp,int completion_status)
 {
@@ -227,7 +225,7 @@ static void deliver_progress_info(udefrag_job_parameters *jp,int completion_stat
                 for(k = 1; k < jp->cluster_map.n_colors; k++){
                     n = jp->cluster_map.array[i][k];
                     if(n >= maximum){ /* support of colors precedence  */
-                        if(k != MFT_ZONE_SPACE || !mft_zone_detected){
+                        if((k != MFT_ZONE_SPACE && k != FREE_SPACE) || !mft_zone_detected){
                             maximum = n;
                             index = k;
                         }
