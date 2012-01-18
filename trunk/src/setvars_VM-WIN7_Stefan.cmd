@@ -11,7 +11,7 @@ set WINDDKBASE=C:\WinDDK\3790.1830
 :: Windows Driver Kit 7_1_0
 :: set WINDDKBASE=C:\WinDDK\7600.16385.1
 set WINSDKBASE=
-set MINGWBASE=
+set MINGWBASE=C:\PROGRA~1\MinGWStudio\MinGW
 set MINGWx64BASE=
 set NSISDIR=C:\Program Files\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
