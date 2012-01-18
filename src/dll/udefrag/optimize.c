@@ -577,7 +577,7 @@ static int is_block_quite_small(udefrag_job_parameters *jp,
     if(block_size >= jp->udo.fragment_size_threshold) return 0;
 
     /* move small fragments needing defragmentation */
-    fragments = build_fragments_list(file);
+    fragments = build_fragments_list(file,NULL);
     for(fr = fragments; fr; fr = fr->next){
         if(block->lcn >= fr->lcn && block->lcn < fr->lcn + fr->length){
             fragment_size = fr->length * jp->v_info.bytes_per_cluster;
