@@ -122,8 +122,6 @@ void WgxDestroyFont(PWGX_FONT pFont);
 BOOL WgxSaveFont(char *wgx_font_path,PWGX_FONT pFont);
 
 BOOL IncreaseGoogleAnalyticsCounter(char *hostname,char *path,char *account);
-/* NOTE: this routine is not safe, avoid its use */
-void IncreaseGoogleAnalyticsCounterAsynch(char *hostname,char *path,char *account);
 
 void WgxDbgPrint(char *format, ...);
 void WgxDbgPrintLastError(char *format, ...);

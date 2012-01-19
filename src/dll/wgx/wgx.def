@@ -29,7 +29,6 @@ EXPORTS
     WgxSaveFont
 
     IncreaseGoogleAnalyticsCounter
-    IncreaseGoogleAnalyticsCounterAsynch
 
     WgxDbgPrint
     WgxDbgPrintLastError
