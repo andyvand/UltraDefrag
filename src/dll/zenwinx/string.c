@@ -469,6 +469,7 @@ int winx_bytes_to_hr(ULONGLONG bytes, int digits, char *buffer, int length)
     /* Win DDK cannot convert ULONGLONG to double directly, */
     /* but now it's safe to convert both r and m through LONGLONG */
     rd = (double)(LONGLONG)r / (double)(LONGLONG)m;
+    if(rd >= 1) rd = 0.999999999999999;
     rd *= pow(10, digits);
     /* convertion to LONGLONG is needed for MinGW */
     /* it is safe, but may lower a highest possible precision */
@@ -491,7 +492,8 @@ int winx_bytes_to_hr(ULONGLONG bytes, int digits, char *buffer, int length)
  * b, Kb, Mb, Gb, Tb, Pb, Eb, Zb, Yb.
  * @param[in] string string to be converted.
  * @return Number of bytes.
- * @todo Investigate limits.
+ * @note Accepted values are below 16.0 Eb,
+ * all values above will be converted improperly.
  */
 ULONGLONG winx_hr_to_bytes(char *string)
 {
