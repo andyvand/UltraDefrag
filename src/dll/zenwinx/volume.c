@@ -25,14 +25,10 @@
  */
 
 #include "zenwinx.h"
-#include "partition.h"
-
-/* this method is fine, but slow */
-//#define GET_FS_NAME_FROM_THE_FIRST_SECTOR
 
 /**
  * @internal
- * @brief Opens a root directory of the volume.
+ * @brief Opens root directory of the volume.
  * @param[in] volume_letter the volume letter.
  * @return File handle, NULL indicates failure.
  */
@@ -63,7 +59,7 @@ static HANDLE OpenRootDirectory(unsigned char volume_letter)
 /**
  * @brief Win32 GetDriveType() native equivalent.
  * @param[in] letter the volume letter
- * @return A drive type, negative value indicates failure.
+ * @return Drive type, negative value indicates failure.
  */
 int winx_get_drive_type(char letter)
 {
@@ -267,161 +263,16 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
     return 0;
 }
 
-#ifdef GET_FS_NAME_FROM_THE_FIRST_SECTOR
 /**
  * @internal
- * @brief Defines whether bios parameter block
- * belongs to the FAT-formatted partition or not.
- * Updates file system type related information
- * in structure pointed by the second parameter.
- * @return Zero if FAT is detected, negative value
- * otherwise.
- */
-static int IsFatPartition(BPB *bpb,winx_volume_information *v)
-{
-    char signature[9];
-    BOOL fat_found = FALSE;
-    ULONG RootDirSectors; /* USHORT ? */
-    ULONG FatSectors;
-    ULONG TotalSectors;
-    ULONG DataSectors;
-    ULONG CountOfClusters;
-
-    /* search for FAT signatures */
-    signature[8] = 0;
-    memcpy((void *)signature,(void *)bpb->Fat1x.BS_FilSysType,8);
-    if(strstr(signature,"FAT")) fat_found = TRUE;
-    else {
-        memcpy((void *)signature,(void *)bpb->Fat32.BS_FilSysType,8);
-        if(strstr(signature,"FAT")) fat_found = TRUE;
-    }
-    if(!fat_found)
-        return (-1);
-
-    /* determine which type of FAT we have */
-    RootDirSectors = ((bpb->RootDirEnts * 32) + (bpb->BytesPerSec - 1)) / bpb->BytesPerSec;
-
-    if(bpb->FAT16sectors) FatSectors = (ULONG)(bpb->FAT16sectors);
-    else FatSectors = bpb->Fat32.FAT32sectors;
-    
-    if(bpb->FAT16totalsectors) TotalSectors = bpb->FAT16totalsectors;
-    else TotalSectors = bpb->FAT32totalsectors;
-    
-    DataSectors = TotalSectors - (bpb->ReservedSectors + (bpb->NumFATs * FatSectors) + RootDirSectors);
-    CountOfClusters = DataSectors / bpb->SecPerCluster;
-    
-    if(CountOfClusters < 4085) {
-        /* Volume is FAT12 */
-        strcpy(v->fs_name,"FAT12");
-        return 0;
-    } else if(CountOfClusters < 65525) {
-        /* Volume is FAT16 */
-        strcpy(v->fs_name,"FAT16");
-        return 0;
-    } else {
-        /* Volume is FAT32 */
-        strcpy(v->fs_name,"FAT32");
-    }
-    
-    /* save FAT32 version */
-    v->fat32_mj_version = (ULONG)((bpb->Fat32.BPB_FSVer >> 8) & 0xFF);
-    v->fat32_mn_version = (ULONG)(bpb->Fat32.BPB_FSVer & 0xFF);
-    return 0;
-}
-
-/**
- * @internal
- * @brief Defines whether bios parameter block
- * belongs to the NTFS-formatted partition or not.
- * Updates file system type related information
- * in structure pointed by the second parameter.
- * @return Zero if NTFS is detected, negative value
- * otherwise.
- */
-static int IsNtfsPartition(BPB *bpb,winx_volume_information *v)
-{
-    char signature[9];
-
-    /* search for NTFS signature */
-    signature[8] = 0;
-    memcpy((void *)signature,(void *)bpb->OemName,8);
-    if(strcmp(signature,"NTFS    ") == 0){
-        strcpy(v->fs_name,"NTFS");
-        return 0;
-    }
-    
-    return (-1);
-}
-#endif /* GET_FS_NAME_FROM_THE_FIRST_SECTOR */
-
-/**
- * @brief Opens the volume for read access.
- * @param[in] volume_letter the volume letter.
- * @return File descriptor, NULL indicates failure.
- */
-WINX_FILE *winx_vopen(char volume_letter)
-{
-    char path[] = "\\??\\A:";
-    char flags[2];
-    #define FLAG 'r'
-
-    path[4] = winx_toupper(volume_letter);
-#if FLAG != 'r'
-#error Volume must be opened for read access!
-#endif
-    flags[0] = FLAG; flags[1] = 0;
-    return winx_fopen(path,flags);
-}
-
-#ifdef GET_FS_NAME_FROM_THE_FIRST_SECTOR
-/**
- * @internal
- * @brief Reads the first sector
- * of the volume into memory.
- * @param[out] buffer pointer
- * to the output buffer.
- * The size of the buffer must be
- * no less than sector size.
- * @param[in] v pointer to structure
- * containing drive geometry.
- * @return Zero for sucsess, negative
- * value otherwise.
- */
-static int read_first_sector(void *buffer,winx_volume_information *v)
-{
-    WINX_FILE *f;
-    size_t n_read;
-
-    /* open the volume */
-    f = winx_vopen(v->volume_letter);
-    if(f == NULL)
-        return (-1);
-
-    /* read the first sector */
-    n_read = winx_fread(buffer,1,(size_t)v->bytes_per_sector,f);
-    if(n_read == 0 || n_read > (size_t)v->bytes_per_sector){
-        winx_fclose(f);
-        return (-1);
-    }
-    
-    /* cleanup */
-    winx_fclose(f);
-    return 0;
-}
-#endif /* GET_FS_NAME_FROM_THE_FIRST_SECTOR */
-
-/**
- * @internal
- * @brief Retrieves the name of file system.
- * @param[in] hRoot handle to the
- * root directory.
- * @param[out] pointer to the structure
- * receiving the filesystem name and version
- * of FAT32 if an appropriate filesystem
- * is detected.
- * @return Zero for success, negative
- * value otherwise.
- * @note Call it after get_drive_geometry.
+ * @brief Retrieves the name of the file system.
+ * @param[in] hRoot handle to the root directory.
+ * @param[out] pointer to the structure receiving
+ * the filesystem name.
+ * @return Zero for success, negative value otherwise.
+ * @note We could analyze the first sector of the 
+ * partition directly, but this method is not so good
+ * as it accesses the disk physically.
  */
 static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
 {
@@ -432,48 +283,6 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     short fs_name[MAX_FS_NAME_LENGTH + 1];
     int length;
 
-#ifdef GET_FS_NAME_FROM_THE_FIRST_SECTOR
-    void *first_sector;
-    BPB *bpb;
-
-    /*
-    * We're using a low level analysis
-    * of the first sector firstly, because
-    * this method is able to detect exactly
-    * the type of the file system. Also,
-    * it well distinguishes different
-    * editions of FAT.
-    */
-    if(v->bytes_per_sector >= sizeof(BPB)){
-        /* allocate memory */
-        first_sector = winx_heap_alloc(v->bytes_per_sector);
-        if(first_sector == NULL){
-            DebugPrint("winx_get_volume_information: cannot allocate %u bytes of memory",
-                v->bytes_per_sector);
-        } else {
-            if(read_first_sector(first_sector,v) < 0){
-                winx_heap_free(first_sector);
-            } else {
-                bpb = (BPB *)first_sector;
-                if(IsNtfsPartition(bpb,v) >= 0){
-                    winx_heap_free(first_sector);
-                    return 0;
-                }
-                if(IsFatPartition(bpb,v) >= 0){
-                    winx_heap_free(first_sector);
-                    return 0;
-                }
-                winx_heap_free(first_sector);
-            }
-        }
-    }
-#endif /* GET_FS_NAME_FROM_THE_FIRST_SECTOR */
-
-    /*
-    * If direct sector analysis failed,
-    * then get file system name through
-    * FILE_FS_ATTRIBUTE_INFORMATION.
-    */
     fs_attr_info_size = MAX_PATH * sizeof(WCHAR) + sizeof(FILE_FS_ATTRIBUTE_INFORMATION);
     pfa = winx_heap_alloc(fs_attr_info_size);
     if(pfa == NULL){
@@ -609,7 +418,7 @@ static void get_volume_dirty_flag(winx_volume_information *v)
 
 /**
  * @brief Retrieves detailed information
- * about disk volume.
+ * about a disk volume.
  * @param[in] volume_letter the volume letter.
  * @param[in,out] v pointer to structure
  * receiving the volume information.
@@ -668,6 +477,25 @@ int winx_get_volume_information(char volume_letter,winx_volume_information *v)
     
     NtClose(hRoot);
     return 0;
+}
+
+/**
+ * @brief Opens a volume for read access.
+ * @param[in] volume_letter the volume letter.
+ * @return File descriptor, NULL indicates failure.
+ */
+WINX_FILE *winx_vopen(char volume_letter)
+{
+    char path[] = "\\??\\A:";
+    char flags[2];
+    #define FLAG 'r'
+
+    path[4] = winx_toupper(volume_letter);
+#if FLAG != 'r'
+#error Volume must be opened for read access!
+#endif
+    flags[0] = FLAG; flags[1] = 0;
+    return winx_fopen(path,flags);
 }
 
 /**
