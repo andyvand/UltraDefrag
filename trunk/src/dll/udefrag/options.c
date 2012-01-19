@@ -34,7 +34,7 @@
  */
 int get_options(udefrag_job_parameters *jp)
 {
-    short *buffer;
+    wchar_t *buffer;
     char buf[64];
     int i;
 
@@ -46,10 +46,10 @@ int get_options(udefrag_job_parameters *jp)
     jp->udo.refresh_interval = DEFAULT_REFRESH_INTERVAL;
     
     /* allocate memory */
-    buffer = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(short));
+    buffer = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
     if(buffer == NULL){
         DebugPrint("get_options: cannot allocate %u bytes of memory",
-            ENV_BUFFER_SIZE * sizeof(short));
+            ENV_BUFFER_SIZE * sizeof(wchar_t));
         return (-1);
     }
     

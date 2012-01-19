@@ -88,7 +88,7 @@ int winx_get_os_version(void)
  */
 int winx_get_windows_directory(char *buffer, int length)
 {
-    short buf[MAX_PATH + 1];
+    wchar_t buf[MAX_PATH + 1];
 
     DbgCheck2(buffer,(length > 0),"winx_get_windows_directory",-1);
     
@@ -111,7 +111,7 @@ int winx_get_windows_directory(char *buffer, int length)
  * // now the buffer may contain \Device\HarddiskVolume1 or something like that
  * @endcode
  */
-int winx_query_symbolic_link(short *name, short *buffer, int length)
+int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length)
 {
     OBJECT_ATTRIBUTES oa;
     UNICODE_STRING uStr;
@@ -130,7 +130,7 @@ int winx_query_symbolic_link(short *name, short *buffer, int length)
     }
     uStr.Buffer = buffer;
     uStr.Length = 0;
-    uStr.MaximumLength = length * sizeof(short);
+    uStr.MaximumLength = length * sizeof(wchar_t);
     size = 0;
     Status = NtQuerySymbolicLinkObject(hLink,&uStr,&size);
     (void)NtClose(hLink);
@@ -185,10 +185,10 @@ int winx_set_system_error_mode(unsigned int mode)
  * @note When the driver is already loaded this function
  * completes successfully.
  */
-int winx_load_driver(short *driver_name)
+int winx_load_driver(wchar_t *driver_name)
 {
     UNICODE_STRING us;
-    short driver_key[MAX_PATH];
+    wchar_t driver_key[MAX_PATH];
     NTSTATUS Status;
 
     DbgCheck1(driver_name,"winx_load_driver",-1);
@@ -211,10 +211,10 @@ int winx_load_driver(short *driver_name)
  * exactly as written in system registry.
  * @return Zero for success, negative value otherwise.
  */
-int winx_unload_driver(short *driver_name)
+int winx_unload_driver(wchar_t *driver_name)
 {
     UNICODE_STRING us;
-    short driver_key[MAX_PATH];
+    wchar_t driver_key[MAX_PATH];
     NTSTATUS Status;
 
     DbgCheck1(driver_name,"winx_unload_driver",-1);
@@ -238,19 +238,19 @@ int winx_unload_driver(short *driver_name)
  * @note After a use of returned string it should be freed
  * by winx_heap_free() call.
  */
-short *winx_get_windows_boot_options(void)
+wchar_t *winx_get_windows_boot_options(void)
 {
     UNICODE_STRING us;
     OBJECT_ATTRIBUTES oa;
     NTSTATUS status;
     HANDLE hKey;
     KEY_VALUE_PARTIAL_INFORMATION *data;
-    short *data_buffer = NULL;
+    wchar_t *data_buffer = NULL;
     DWORD data_size = 0;
     DWORD data_size2 = 0;
     DWORD data_length;
     BOOLEAN empty_value = FALSE;
-    short *boot_options;
+    wchar_t *boot_options;
     int buffer_size;
     
     /* 1. open HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control registry key */
@@ -273,7 +273,7 @@ short *winx_get_windows_boot_options(void)
         winx_printf("winx_get_windows_boot_options: cannot query SystemStartOptions value size: %x\n\n",(UINT)status);
         return NULL;
     }
-    data_size += sizeof(short);
+    data_size += sizeof(wchar_t);
     data = winx_heap_alloc(data_size);
     if(data == NULL){
         DebugPrint("winx_get_windows_boot_options: cannot allocate %u bytes of memory",data_size);
@@ -290,15 +290,15 @@ short *winx_get_windows_boot_options(void)
         winx_heap_free(data);
         return NULL;
     }
-    data_buffer = (short *)(data->Data);
+    data_buffer = (wchar_t *)(data->Data);
     data_length = data->DataLength >> 1;
     if(data_length == 0) empty_value = TRUE;
     
     if(!empty_value){
         data_buffer[data_length - 1] = 0;
-        buffer_size = data_length * sizeof(short);
+        buffer_size = data_length * sizeof(wchar_t);
     } else {
-        buffer_size = 1 * sizeof(short);
+        buffer_size = 1 * sizeof(wchar_t);
     }
 
     boot_options = winx_heap_alloc(buffer_size);
@@ -329,7 +329,7 @@ short *winx_get_windows_boot_options(void)
  */
 int winx_windows_in_safe_mode(void)
 {
-    short *boot_options;
+    wchar_t *boot_options;
     int safe_boot = 0;
     
     boot_options = winx_get_windows_boot_options();

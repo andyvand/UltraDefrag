@@ -83,7 +83,7 @@ int winx_get_drive_type(char letter)
     }
     
     /* check for the drive existence */
-    link_name[4] = (short)letter;
+    link_name[4] = (wchar_t)letter;
     if(winx_query_symbolic_link(link_name,link_target,MAX_TARGET_LENGTH) < 0)
         return (-1);
     
@@ -229,7 +229,7 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     int fs_attr_info_size;
     IO_STATUS_BLOCK IoStatusBlock;
     NTSTATUS Status;
-    short fs_name[MAX_FS_NAME_LENGTH + 1];
+    wchar_t fs_name[MAX_FS_NAME_LENGTH + 1];
     int length;
 
     fs_attr_info_size = MAX_PATH * sizeof(WCHAR) + sizeof(FILE_FS_ATTRIBUTE_INFORMATION);
@@ -255,7 +255,7 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     * (theoretically), so name extraction is more tricky
     * than it should be.
     */
-    length = min(MAX_FS_NAME_LENGTH,pfa->FileSystemNameLength / sizeof(short));
+    length = min(MAX_FS_NAME_LENGTH,pfa->FileSystemNameLength / sizeof(wchar_t));
     wcsncpy(fs_name,pfa->FileSystemName,length);
     fs_name[length] = 0;
     _snprintf(v->fs_name,MAX_FS_NAME_LENGTH,"%ws",fs_name);

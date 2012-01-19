@@ -37,7 +37,7 @@
  * winx_create_mutex(L"\\BaseNamedObjects\\ultradefrag_mutex",&h);
  * @endcode
  */
-int winx_create_mutex(short *name,HANDLE *phandle)
+int winx_create_mutex(wchar_t *name,HANDLE *phandle)
 {
     UNICODE_STRING us;
     NTSTATUS Status;
@@ -72,7 +72,7 @@ int winx_create_mutex(short *name,HANDLE *phandle)
  * winx_open_mutex(L"\\BaseNamedObjects\\ultradefrag_mutex",&h);
  * @endcode
  */
-int winx_open_mutex(short *name,HANDLE *phandle)
+int winx_open_mutex(wchar_t *name,HANDLE *phandle)
 {
     UNICODE_STRING us;
     NTSTATUS Status;

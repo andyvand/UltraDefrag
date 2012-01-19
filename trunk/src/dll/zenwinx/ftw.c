@@ -271,7 +271,7 @@ dump_failed:
  * @return Address of inserted file list entry,
  * NULL indicates failure.
  */
-static winx_file_info * ftw_add_entry_to_filelist(short *path,
+static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     int flags, ftw_filter_callback fcb, ftw_progress_callback pcb,
     ftw_terminator t, void *user_defined_data,
     winx_file_info **filelist,
@@ -299,14 +299,14 @@ static winx_file_info * ftw_add_entry_to_filelist(short *path,
     }
     
     /* extract filename */
-    f->name = winx_heap_alloc(file_entry->FileNameLength + sizeof(short));
+    f->name = winx_heap_alloc(file_entry->FileNameLength + sizeof(wchar_t));
     if(f->name == NULL){
         DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
-            file_entry->FileNameLength + sizeof(short));
+            file_entry->FileNameLength + sizeof(wchar_t));
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return NULL;
     }
-    memset(f->name,0,file_entry->FileNameLength + sizeof(short));
+    memset(f->name,0,file_entry->FileNameLength + sizeof(wchar_t));
     memcpy(f->name,file_entry->FileName,file_entry->FileNameLength);
     
     /* detect whether we are in root directory or not */
@@ -318,10 +318,10 @@ static winx_file_info * ftw_add_entry_to_filelist(short *path,
     length += wcslen(f->name) + 1;
     if(!is_rootdir)
         length ++;
-    f->path = winx_heap_alloc(length * sizeof(short));
+    f->path = winx_heap_alloc(length * sizeof(wchar_t));
     if(f->path == NULL){
         DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
-            length * sizeof(short));
+            length * sizeof(wchar_t));
         winx_heap_free(f->name);
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return NULL;
@@ -364,7 +364,7 @@ static winx_file_info * ftw_add_entry_to_filelist(short *path,
  * @brief Adds information about
  * root directory to file list.
  */
-static int ftw_add_root_directory(short *path, int flags,
+static int ftw_add_root_directory(wchar_t *path, int flags,
     ftw_filter_callback fcb, ftw_progress_callback pcb, 
     ftw_terminator t, void *user_defined_data,
     winx_file_info **filelist)
@@ -395,20 +395,20 @@ static int ftw_add_root_directory(short *path, int flags,
     
     /* build path */
     length = wcslen(path) + 1;
-    f->path = winx_heap_alloc(length * sizeof(short));
+    f->path = winx_heap_alloc(length * sizeof(wchar_t));
     if(f->path == NULL){
         DebugPrint("ftw_add_root_directory: cannot allocate %u bytes of memory",
-            length * sizeof(short));
+            length * sizeof(wchar_t));
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return (-1);
     }
     wcscpy(f->path,path);
     
     /* save . filename */
-    f->name = winx_heap_alloc(2 * sizeof(short));
+    f->name = winx_heap_alloc(2 * sizeof(wchar_t));
     if(f->name == NULL){
         DebugPrint("ftw_add_root_directory: cannot allocate %u bytes of memory",
-            2 * sizeof(short));
+            2 * sizeof(wchar_t));
         winx_heap_free(f->path);
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return (-1);
@@ -469,7 +469,7 @@ static int ftw_add_root_directory(short *path, int flags,
  * @return Handle to the directory, NULL
  * indicates failure.
  */
-static HANDLE ftw_open_directory(short *path)
+static HANDLE ftw_open_directory(wchar_t *path)
 {
     UNICODE_STRING us;
     OBJECT_ATTRIBUTES oa;
@@ -502,7 +502,7 @@ static HANDLE ftw_open_directory(short *path)
  * failure, -2 indicates termination requested
  * by caller.
  */
-static int ftw_helper(short *path, int flags,
+static int ftw_helper(wchar_t *path, int flags,
         ftw_filter_callback fcb, ftw_progress_callback pcb,
         ftw_terminator t, void *user_defined_data,
         winx_file_info **filelist)
@@ -561,11 +561,11 @@ static int ftw_helper(short *path, int flags,
         }
         
         /* skip . and .. entries */
-        if(file_entry->FileNameLength == sizeof(short)){
+        if(file_entry->FileNameLength == sizeof(wchar_t)){
             if(file_entry->FileName[0] == '.')
                 continue;
         }
-        if(file_entry->FileNameLength == 2 * sizeof(short)){
+        if(file_entry->FileNameLength == 2 * sizeof(wchar_t)){
             if(file_entry->FileName[0] == '.' && file_entry->FileName[1] == '.')
                 continue;
         }
@@ -723,7 +723,7 @@ static void ftw_remove_resident_streams(winx_file_info **filelist)
  * winx_ftw_release(filelist);
  * @endcode
  */
-winx_file_info *winx_ftw(short *path, int flags,
+winx_file_info *winx_ftw(wchar_t *path, int flags,
         ftw_filter_callback fcb, ftw_progress_callback pcb,
         ftw_terminator t, void *user_defined_data)
 {
@@ -796,7 +796,7 @@ winx_file_info *winx_scan_disk(char volume_letter, int flags,
     }
     
     /* collect information about root directory */
-    rootpath[4] = (short)volume_letter;
+    rootpath[4] = (wchar_t)volume_letter;
     if(ftw_add_root_directory(rootpath,flags,fcb,pcb,t,user_defined_data,&filelist) == (-1) && \
       !(flags & WINX_FTW_ALLOW_PARTIAL_SCAN)){
         /* destroy list */

@@ -34,7 +34,7 @@
  * @param[in] length the length of the buffer, in characters.
  * @return Zero for success, negative value otherwise.
  */
-int winx_query_env_variable(short *name, short *buffer, int length)
+int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length)
 {
     UNICODE_STRING n, v;
     NTSTATUS Status;
@@ -44,7 +44,7 @@ int winx_query_env_variable(short *name, short *buffer, int length)
     RtlInitUnicodeString(&n,name);
     v.Buffer = buffer;
     v.Length = 0;
-    v.MaximumLength = length * sizeof(short);
+    v.MaximumLength = length * sizeof(wchar_t);
     Status = RtlQueryEnvironmentVariable_U(NULL,&n,&v);
     if(!NT_SUCCESS(Status)){
         DebugPrintEx(Status,"cannot query %ws environment variable",name);
@@ -64,7 +64,7 @@ int winx_query_env_variable(short *name, short *buffer, int length)
  * because unsigned short data type can hold numbers
  * less than or equal to 32767.
  */
-int winx_set_env_variable(short *name, short *value)
+int winx_set_env_variable(wchar_t *name, wchar_t *value)
 {
     UNICODE_STRING n, v;
     NTSTATUS status;

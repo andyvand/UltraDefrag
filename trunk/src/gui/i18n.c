@@ -226,8 +226,8 @@ void ApplyLanguagePack(void)
     wchar_t path[MAX_PATH];
     udefrag_progress_info pi;
     MENUITEMINFOW mi;
-    short *s = L"";
-    short buffer[256];
+    wchar_t *s = L"";
+    wchar_t buffer[256];
     int i;
     LVCOLUMNW lvc;
     

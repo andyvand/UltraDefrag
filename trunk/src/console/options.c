@@ -488,7 +488,7 @@ void search_for_paths(void)
     * in quoted paths. This dot will be removed by GetFullPathName.
     * http://msdn.microsoft.com/en-us/library/bb776391%28VS.85%29.aspx
     */
-    cmdline_copy = malloc(wcslen(cmdline) * sizeof(short) * 2 + sizeof(short));
+    cmdline_copy = malloc(wcslen(cmdline) * sizeof(wchar_t) * 2 + sizeof(wchar_t));
     if(cmdline_copy == NULL){
         display_error("search_for_paths: not enough memory!");
         return;

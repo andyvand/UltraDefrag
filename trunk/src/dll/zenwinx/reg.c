@@ -34,7 +34,7 @@
 static int open_smss_key(HANDLE *pKey);
 static int read_boot_exec_value(HANDLE hKey,void **data,DWORD *size);
 static int write_boot_exec_value(HANDLE hKey,void *data,DWORD size);
-static int cmd_compare(short *reg_cmd,short *cmd);
+static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd);
 static void flush_smss_key(HANDLE hKey);
 
 /*
@@ -54,18 +54,18 @@ static void flush_smss_key(HANDLE hKey);
  * @note Command's executable must be placed inside 
  * a system32 directory to be executed successfully.
  */
-int winx_register_boot_exec_command(short *command)
+int winx_register_boot_exec_command(wchar_t *command)
 {
     HANDLE hKey;
     KEY_VALUE_PARTIAL_INFORMATION *data;
     DWORD size, value_size;
-    short *value, *pos;
+    wchar_t *value, *pos;
     DWORD length, i, len;
     
     DbgCheck1(command,"winx_register_boot_exec_command",-1);
     
     if(open_smss_key(&hKey) < 0) return (-1);
-    size = (wcslen(command) + 1) * sizeof(short);
+    size = (wcslen(command) + 1) * sizeof(wchar_t);
     if(read_boot_exec_value(hKey,(void **)(void *)&data,&size) < 0){
         NtCloseSafe(hKey);
         return (-1);
@@ -79,7 +79,7 @@ int winx_register_boot_exec_command(short *command)
         return (-1);
     }
     
-    value = (short *)(data->Data);
+    value = (wchar_t *)(data->Data);
     length = (data->DataLength >> 1) - 1;
     for(i = 0; i < length;){
         pos = value + i;
@@ -93,7 +93,7 @@ int winx_register_boot_exec_command(short *command)
     wcscpy(value + i,command);
     value[i + wcslen(command) + 1] = 0;
 
-    value_size = (i + wcslen(command) + 1 + 1) * sizeof(short);
+    value_size = (i + wcslen(command) + 1 + 1) * sizeof(wchar_t);
     if(write_boot_exec_value(hKey,(void *)(data->Data),value_size) < 0){
         winx_heap_free((void *)data);
         NtCloseSafe(hKey);
@@ -114,21 +114,21 @@ done:
  * executable, without an extension.
  * @return Zero for success, negative value otherwise.
  */
-int winx_unregister_boot_exec_command(short *command)
+int winx_unregister_boot_exec_command(wchar_t *command)
 {
     HANDLE hKey;
     KEY_VALUE_PARTIAL_INFORMATION *data;
     DWORD size;
-    short *value, *pos;
+    wchar_t *value, *pos;
     DWORD length, i, len;
-    short *new_value;
+    wchar_t *new_value;
     DWORD new_value_size;
     DWORD new_length;
     
     DbgCheck1(command,"winx_unregister_boot_exec_command",-1);
     
     if(open_smss_key(&hKey) < 0) return (-1);
-    size = (wcslen(command) + 1) * sizeof(short);
+    size = (wcslen(command) + 1) * sizeof(wchar_t);
     if(read_boot_exec_value(hKey,(void **)(void *)&data,&size) < 0){
         NtCloseSafe(hKey);
         return (-1);
@@ -142,7 +142,7 @@ int winx_unregister_boot_exec_command(short *command)
         return (-1);
     }
     
-    value = (short *)(data->Data);
+    value = (wchar_t *)(data->Data);
     length = (data->DataLength >> 1) - 1;
     
     new_value_size = (length + 1) << 1;
@@ -170,7 +170,7 @@ int winx_unregister_boot_exec_command(short *command)
     new_value[new_length] = 0;
     
     if(write_boot_exec_value(hKey,(void *)new_value,
-      (new_length + 1) * sizeof(short)) < 0){
+      (new_length + 1) * sizeof(wchar_t)) < 0){
         winx_heap_free((void *)new_value);
         winx_heap_free((void *)data);
         NtCloseSafe(hKey);
@@ -289,12 +289,12 @@ static int write_boot_exec_value(HANDLE hKey,void *data,DWORD size)
  * zero indicates that they're different, negative value
  * indicates failure of comparison.
  */
-static int cmd_compare(short *reg_cmd,short *cmd)
+static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
 {
-    short *reg_cmd_copy = NULL;
-    short *cmd_copy = NULL;
-    short *long_cmd = NULL;
-    short autocheck[] = L"autocheck ";
+    wchar_t *reg_cmd_copy = NULL;
+    wchar_t *cmd_copy = NULL;
+    wchar_t *long_cmd = NULL;
+    wchar_t autocheck[] = L"autocheck ";
     int length;
     int result = (-1);
     
@@ -306,16 +306,16 @@ static int cmd_compare(short *reg_cmd,short *cmd)
     reg_cmd_copy = winx_wcsdup(reg_cmd);
     if(reg_cmd_copy == NULL){
         DebugPrint("cmd_compare: cannot allocate %u bytes of memory",
-            (wcslen(reg_cmd) + 1) * sizeof(short));
+            (wcslen(reg_cmd) + 1) * sizeof(wchar_t));
         goto done;
     }
     cmd_copy = winx_wcsdup(cmd);
     if(cmd_copy == NULL){
         DebugPrint("cmd_compare: cannot allocate %u bytes of memory",
-            (wcslen(cmd) + 1) * sizeof(short));
+            (wcslen(cmd) + 1) * sizeof(wchar_t));
         goto done;
     }
-    length = (wcslen(cmd) + wcslen(autocheck) + 1) * sizeof(short);
+    length = (wcslen(cmd) + wcslen(autocheck) + 1) * sizeof(wchar_t);
     long_cmd = winx_heap_alloc(length);
     if(long_cmd == NULL){
         DebugPrint("cmd_compare: cannot allocate %u bytes of memory",length);

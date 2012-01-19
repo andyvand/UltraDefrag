@@ -110,7 +110,7 @@ void UpdateStatusBar(udefrag_progress_info *pi)
 {
     char s[32];
     #define BFSIZE 128
-    short bf[BFSIZE];
+    wchar_t bf[BFSIZE];
 
     if(!hStatus) return;
 

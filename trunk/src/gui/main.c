@@ -473,7 +473,7 @@ int CreateMainWindow(int nShowCmd)
  */
 void OpenWebPage(char *page)
 {
-    short path[MAX_PATH];
+    wchar_t path[MAX_PATH];
     HINSTANCE hApp;
     
     (void)_snwprintf(path,MAX_PATH,L".\\handbook\\%hs",page);
@@ -699,11 +699,11 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     MINMAXINFO *mmi;
     BOOL size_changed;
     RECT rc;
-    short path[MAX_PATH];
+    wchar_t path[MAX_PATH];
     CHOOSEFONT cf;
     UINT i, id;
     MENUITEMINFOW mi;
-    short lang_name[MAX_PATH];
+    wchar_t lang_name[MAX_PATH];
     wchar_t *report_opts_path;
     FILE *f;
     int flag;

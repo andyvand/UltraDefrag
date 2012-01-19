@@ -344,12 +344,12 @@ done:
 int parse_cmdline(void)
 {
     int argc;
-    short **argv;
+    wchar_t **argv;
     
     if(wcsstr(_wcslwr(GetCommandLineW()),L"/s"))
         silent = 1;
 
-    argv = (short **)CommandLineToArgvW(_wcslwr(GetCommandLineW()),&argc);
+    argv = (wchar_t **)CommandLineToArgvW(_wcslwr(GetCommandLineW()),&argc);
     if(argv == NULL){
         if(!silent)
             DisplayLastError("CommandLineToArgvW failed!");

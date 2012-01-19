@@ -31,7 +31,7 @@
  */
 static void ShowSingleReport(volume_processing_job *job)
 {
-    short l_path[] = L"C:\\fraglist.luar";
+    wchar_t l_path[] = L"C:\\fraglist.luar";
     char path[] = "C:\\fraglist.luar";
     char cmd[MAX_PATH];
     char buffer[MAX_PATH];
@@ -41,7 +41,7 @@ static void ShowSingleReport(volume_processing_job *job)
 
     if(job == NULL) return;
 
-    l_path[0] = (short)job->volume_letter;
+    l_path[0] = (wchar_t)job->volume_letter;
     path[0] = job->volume_letter;
 
     if(job->job_type == NEVER_EXECUTED_JOB){
