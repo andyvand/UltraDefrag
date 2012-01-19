@@ -37,7 +37,7 @@
 
 char version_ini_path[MAX_PATH + 1];
 char version_number[MAX_VERSION_FILE_LEN + 1];
-short announcement[MAX_ANNOUNCEMENT_LEN];
+wchar_t announcement[MAX_ANNOUNCEMENT_LEN];
 
 typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
     /* LPUNKNOWN */ void *lpUnkcaller,
@@ -125,7 +125,7 @@ static char *GetLatestVersion(void)
  * @return A string containing an announcement. NULL indicates that
  * there is no new version available.
  */
-static short *GetNewVersionAnnouncement(void)
+static wchar_t *GetNewVersionAnnouncement(void)
 {
     char *lv;
     char *cv = VERSIONINTITLE;
@@ -199,7 +199,7 @@ void CheckForTheNewVersion(void)
 
 DWORD WINAPI CheckForTheNewVersionThreadProc(LPVOID lpParameter)
 {
-    short *s;
+    wchar_t *s;
     
     s = GetNewVersionAnnouncement();
     if(s){

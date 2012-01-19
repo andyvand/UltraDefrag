@@ -76,8 +76,8 @@ int winx_putch(int ch)
 {
     UNICODE_STRING us;
     int i;
-    short t[DEFAULT_TAB_WIDTH + 1];
-    short s[2];
+    wchar_t t[DEFAULT_TAB_WIDTH + 1];
+    wchar_t s[2];
 
     /*
     * Use neither memory allocation nor debugging
@@ -89,7 +89,7 @@ int winx_putch(int ch)
         t[DEFAULT_TAB_WIDTH] = 0;
         RtlInitUnicodeString(&us,t);
     } else {
-        s[0] = (short)ch; s[1] = 0;
+        s[0] = (wchar_t)ch; s[1] = 0;
         RtlInitUnicodeString(&us,s);
     }
     NtDisplayString(&us);

@@ -96,12 +96,12 @@ void winx_dbg_print_ex(unsigned long status,char *format, ...);
 void winx_dbg_print_header(char ch, int width, char *format, ...);
 
 /* env.c */
-int winx_query_env_variable(short *name, short *buffer, int length);
-int winx_set_env_variable(short *name, short *value);
+int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length);
+int winx_set_env_variable(wchar_t *name, wchar_t *value);
 
 /* event.c */
-int winx_create_event(short *name,int type,HANDLE *phandle);
-int winx_open_event(short *name,int flags,HANDLE *phandle);
+int winx_create_event(wchar_t *name,int type,HANDLE *phandle);
+int winx_open_event(wchar_t *name,int flags,HANDLE *phandle);
 void winx_destroy_event(HANDLE h);
 
 /* file.c */
@@ -170,8 +170,8 @@ typedef struct _winx_file_internal_info {
 typedef struct _winx_file_info {
     struct _winx_file_info *next;      /* pointer to the next item */
     struct _winx_file_info *prev;      /* pointer to the previous item */
-    short *name;                       /* name of the file */
-    short *path;                       /* full native path */
+    wchar_t *name;                       /* name of the file */
+    wchar_t *path;                       /* full native path */
     unsigned long flags;               /* combination of FILE_ATTRIBUTE_xxx flags defined in winnt.h */
     winx_file_disposition disp;        /* information about file fragments and their disposition */
     unsigned long user_defined_flags;  /* combination of flags defined by the caller */
@@ -182,7 +182,7 @@ typedef int  (*ftw_filter_callback)(winx_file_info *f,void *user_defined_data);
 typedef void (*ftw_progress_callback)(winx_file_info *f,void *user_defined_data);
 typedef int  (*ftw_terminator)(void *user_defined_data);
 
-winx_file_info *winx_ftw(short *path, int flags,
+winx_file_info *winx_ftw(wchar_t *path, int flags,
         ftw_filter_callback fcb, ftw_progress_callback pcb, ftw_terminator t,void *user_defined_data);
 
 winx_file_info *winx_scan_disk(char volume_letter, int flags,
@@ -207,7 +207,7 @@ int winx_kb_init(void);
 
 /* keytrans.c */
 /* ldr.c */
-int winx_get_proc_address(short *libname,char *funcname,PVOID *proc_addr);
+int winx_get_proc_address(wchar_t *libname,char *funcname,PVOID *proc_addr);
 
 /* list.c */
 /**
@@ -252,21 +252,21 @@ void winx_sleep(int msec);
 int winx_get_os_version(void);
 
 int winx_get_windows_directory(char *buffer, int length);
-int winx_query_symbolic_link(short *name, short *buffer, int length);
+int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length);
 
 /* process mode constants */
 #define INTERNAL_SEM_FAILCRITICALERRORS 0
 int winx_set_system_error_mode(unsigned int mode);
 
-int winx_load_driver(short *driver_name);
-int winx_unload_driver(short *driver_name);
+int winx_load_driver(wchar_t *driver_name);
+int winx_unload_driver(wchar_t *driver_name);
 
-short *winx_get_windows_boot_options(void);
+wchar_t *winx_get_windows_boot_options(void);
 int winx_windows_in_safe_mode(void);
 
 /* mutex.c */
-int winx_create_mutex(short *name,HANDLE *phandle);
-int winx_open_mutex(short *name,HANDLE *phandle);
+int winx_create_mutex(wchar_t *name,HANDLE *phandle);
+int winx_open_mutex(wchar_t *name,HANDLE *phandle);
 int winx_release_mutex(HANDLE h);
 void winx_destroy_mutex(HANDLE h);
 
@@ -281,8 +281,8 @@ int winx_create_path(char *path);
 int winx_enable_privilege(unsigned long luid);
 
 /* reg.c */
-int winx_register_boot_exec_command(short *command);
-int winx_unregister_boot_exec_command(short *command);
+int winx_register_boot_exec_command(wchar_t *command);
+int winx_unregister_boot_exec_command(wchar_t *command);
 
 /* stdio.c */
 int winx_putch(int ch);

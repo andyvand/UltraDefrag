@@ -45,8 +45,8 @@ static int save_text_report(udefrag_job_parameters *jp)
 {
     char path[] = "\\??\\A:\\fraglist.txt";
     WINX_FILE *f;
-    short buffer[256];
-    const int size = sizeof(buffer) / sizeof(short);
+    wchar_t buffer[256];
+    const int size = sizeof(buffer) / sizeof(wchar_t);
     udefrag_fragmented_file *file;
     char *comment;
     char *status;
@@ -67,29 +67,29 @@ static int save_text_report(udefrag_job_parameters *jp)
     
     /* write 0xFEFF to be able to view report in boot time shell */
     buffer[0] = 0xFEFF;
-    (void)winx_fwrite(buffer,sizeof(short),1,f);
+    (void)winx_fwrite(buffer,sizeof(wchar_t),1,f);
 
     /* print header */
     wcscpy(buffer,L";---------------------------------------------------------------------------------------------\r\n");
-    (void)winx_fwrite(buffer,sizeof(short),wcslen(buffer),f);
+    (void)winx_fwrite(buffer,sizeof(wchar_t),wcslen(buffer),f);
 
     (void)_snwprintf(buffer,size,L"; Fragmented files on %c: ",jp->volume_letter);
     buffer[size - 1] = 0;
-    (void)winx_fwrite(buffer,sizeof(short),wcslen(buffer),f);
+    (void)winx_fwrite(buffer,sizeof(wchar_t),wcslen(buffer),f);
 
     memset(&t,0,sizeof(winx_time));
     (void)winx_get_local_time(&t);
     (void)_snwprintf(buffer,size,L"[%02i.%02i.%04i at %02i:%02i]\r\n;\r\n",
         (int)t.day,(int)t.month,(int)t.year,(int)t.hour,(int)t.minute);
     buffer[size - 1] = 0;
-    (void)winx_fwrite(buffer,sizeof(short),wcslen(buffer),f);
+    (void)winx_fwrite(buffer,sizeof(wchar_t),wcslen(buffer),f);
 
     (void)_snwprintf(buffer,size,L"; Fragments%12hs%9hs%12hs    Filename\r\n","Filesize","Comment","Status");
     buffer[size - 1] = 0;
-    (void)winx_fwrite(buffer,sizeof(short),wcslen(buffer),f);
+    (void)winx_fwrite(buffer,sizeof(wchar_t),wcslen(buffer),f);
 
     wcscpy(buffer,L";---------------------------------------------------------------------------------------------\r\n");
-    (void)winx_fwrite(buffer,sizeof(short),wcslen(buffer),f);
+    (void)winx_fwrite(buffer,sizeof(wchar_t),wcslen(buffer),f);
 
     /* print body */
     for(file = jp->fragmented_files; file; file = file->next){
@@ -125,13 +125,13 @@ static int save_text_report(udefrag_job_parameters *jp)
             (void)_snwprintf(buffer,size,L"\r\n%11u%12hs%9hs%12hs    ",
                 (UINT)file->f->disp.fragments,human_readable_size,comment,status);
             buffer[size - 1] = 0;
-            (void)winx_fwrite(buffer,sizeof(short),wcslen(buffer),f);
+            (void)winx_fwrite(buffer,sizeof(wchar_t),wcslen(buffer),f);
             
             if(file->f->path){
                 /* skip \??\ sequence in the beginning of the path */
                 length = wcslen(file->f->path);
                 if(length > 4) offset = 4; else offset = 0;
-                (void)winx_fwrite(file->f->path + offset,sizeof(short),length - offset,f);
+                (void)winx_fwrite(file->f->path + offset,sizeof(wchar_t),length - offset,f);
             }
         }
         if(file->next == jp->fragmented_files) break;

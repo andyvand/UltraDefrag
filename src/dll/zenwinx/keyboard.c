@@ -187,7 +187,7 @@ done:
  */
 int winx_kb_init(void)
 {
-    short event_name[64];
+    wchar_t event_name[64];
     int i, j;
     
     /* create synchronization event for safe access to kids array */
@@ -359,8 +359,8 @@ int kb_read(PKEYBOARD_INPUT_DATA pKID,int msec_timeout)
  */
 static int kb_open_internal(int device_number)
 {
-    short device_name[32];
-    short event_name[32];
+    wchar_t device_name[32];
+    wchar_t event_name[32];
     UNICODE_STRING uStr;
     OBJECT_ATTRIBUTES ObjectAttributes;
     IO_STATUS_BLOCK IoStatusBlock;

@@ -101,7 +101,7 @@ wchar_t *winx_wcsdup(const wchar_t *s)
         return NULL;
     
     length = wcslen(s);
-    cp = winx_heap_alloc((length + 1) * sizeof(short));
+    cp = winx_heap_alloc((length + 1) * sizeof(wchar_t));
     if(cp) wcscpy(cp,s);
     return cp;
 }

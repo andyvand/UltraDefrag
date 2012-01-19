@@ -83,7 +83,7 @@ typedef struct {
 
 typedef struct {
     ATTRIBUTE_TYPE AttributeType; /* The type of the attribute. */
-    short *AttributeName;  /* The default name of the attribute. */
+    wchar_t *AttributeName;  /* The default name of the attribute. */
 } attribute_name;
 
 typedef void (*attribute_handler)(PATTRIBUTE pattr,mft_scan_parameters *sp);
@@ -91,7 +91,7 @@ typedef void (*attribute_handler)(PATTRIBUTE pattr,mft_scan_parameters *sp);
 /* forward declarations */
 static void analyze_resident_stream(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_parameters *sp);
 static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan_parameters *sp);
-static winx_file_info * find_filelist_entry(short *attr_name,mft_scan_parameters *sp);
+static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_parameters *sp);
 
 void validate_blockmap(winx_file_info *f);
 
@@ -294,7 +294,7 @@ attribute_name default_attribute_names[] = {
     {0,                            NULL                      }
 };
 
-static short * get_default_attribute_name(ATTRIBUTE_TYPE attr_type)
+static wchar_t * get_default_attribute_name(ATTRIBUTE_TYPE attr_type)
 {
     int i;
     
@@ -305,11 +305,11 @@ static short * get_default_attribute_name(ATTRIBUTE_TYPE attr_type)
     return default_attribute_names[i].AttributeName;
 }
 
-static short * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
+static wchar_t * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
 {
     ATTRIBUTE_TYPE attr_type;
-    WCHAR *default_attr_name = NULL;
-    short *attr_name;
+    wchar_t *default_attr_name = NULL;
+    wchar_t *attr_name;
 
     /* get default name of the attribute */
     attr_type = attr->AttributeType;
@@ -329,10 +329,10 @@ static short * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
     }
     
     /* allocate memory */
-    attr_name = winx_heap_alloc((MAX_PATH + 1) * sizeof(short));
+    attr_name = winx_heap_alloc((MAX_PATH + 1) * sizeof(wchar_t));
     if(attr_name == NULL){
         DebugPrint("get_attribute_name: cannot allocate %u bytes of memory",
-            (MAX_PATH + 1) * sizeof(short));
+            (MAX_PATH + 1) * sizeof(wchar_t));
         sp->errors ++;
         return NULL;
     }
@@ -340,7 +340,7 @@ static short * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
     attr_name[0] = 0;
     if(attr->NameLength){
         /* NameLength is always less than MAX_PATH! */
-        (void)wcsncpy(attr_name,(short *)((char *)attr + attr->NameOffset),
+        (void)wcsncpy(attr_name,(wchar_t *)((char *)attr + attr->NameOffset),
             attr->NameLength);
         attr_name[attr->NameLength] = 0;
     }
@@ -536,14 +536,14 @@ static int get_mft_layout(mft_scan_parameters *sp)
 */
 
 static void analyze_single_attribute(ULONGLONG mft_id,FILE_RECORD_HEADER *frh,
-                ATTRIBUTE_TYPE attr_type,short *attr_name,USHORT attr_number,mft_scan_parameters *sp)
+                ATTRIBUTE_TYPE attr_type,wchar_t *attr_name,USHORT attr_number,mft_scan_parameters *sp)
 {
     ATTRIBUTE *attr;
     USHORT attr_offset;
 
     int name_length;
     ULONG attr_length;
-    short *name = NULL;
+    wchar_t *name = NULL;
     BOOLEAN attribute_found = FALSE;
     char *resident_status = "";
 
@@ -580,7 +580,7 @@ static void analyze_single_attribute(ULONGLONG mft_id,FILE_RECORD_HEADER *frh,
         /* do we have found the specified attribute? */
         if(attr->AttributeType == attr_type){
             if(attr->NameOffset && attr->NameLength){
-                name = (short *)((char *)attr + attr->NameOffset);
+                name = (wchar_t *)((char *)attr + attr->NameOffset);
                 if(name[0] == 0) name = NULL;
             }
             if(attr_name == NULL){
@@ -590,7 +590,7 @@ static void analyze_single_attribute(ULONGLONG mft_id,FILE_RECORD_HEADER *frh,
                 if(name != NULL){
                     name_length = wcslen(attr_name);
                     if(name_length == attr->NameLength){
-                        if(memcmp((void *)attr_name,(void *)name,name_length * sizeof(short)) == 0){
+                        if(memcmp((void *)attr_name,(void *)name,name_length * sizeof(wchar_t)) == 0){
                             if(attr->AttributeNumber == attr_number)
                                 attribute_found = TRUE;
                         }
@@ -620,7 +620,7 @@ static void analyze_single_attribute(ULONGLONG mft_id,FILE_RECORD_HEADER *frh,
 }
 
 static void analyze_attribute_from_mft_record(ULONGLONG mft_id,ATTRIBUTE_TYPE attr_type,
-                short *attr_name,USHORT attr_number,mft_scan_parameters *sp)
+                wchar_t *attr_name,USHORT attr_number,mft_scan_parameters *sp)
 {
     NTFS_FILE_RECORD_OUTPUT_BUFFER *nfrob = NULL;
     FILE_RECORD_HEADER *frh;
@@ -692,8 +692,8 @@ static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entr
     ULONGLONG child_record_mft_id;
     ATTRIBUTE_TYPE attr_type;
     USHORT attr_number;
-    short *attr_name = NULL;
-    short *name_src;
+    wchar_t *attr_name = NULL;
+    wchar_t *name_src;
     int length;
     int empty_name = 0;
 
@@ -706,7 +706,7 @@ static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entr
 
     /* 1. save the name of the attribute */
     length = attr_list_entry->NameLength;
-    name_src = (short *)((char *)attr_list_entry + attr_list_entry->NameOffset);
+    name_src = (wchar_t *)((char *)attr_list_entry + attr_list_entry->NameOffset);
     
     if(length == 0)
         empty_name = 1; /* name has zero length */
@@ -716,10 +716,10 @@ static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entr
         empty_name = 1; /* name is empty */
     
     if(!empty_name){
-        attr_name = winx_heap_alloc((length + 1) * sizeof(short));
+        attr_name = winx_heap_alloc((length + 1) * sizeof(wchar_t));
         if(attr_name == NULL){
             DebugPrint("analyze_attribute_from_attribute_list: cannot allocate %u bytes of memory",
-                (length + 1) * sizeof(short));
+                (length + 1) * sizeof(wchar_t));
             sp->errors ++;
             return;
         }
@@ -871,7 +871,7 @@ static void get_volume_information(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_paramete
 
 static void analyze_resident_stream(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_parameters *sp)
 {
-    short *attr_name;
+    wchar_t *attr_name;
     
     /* add resident streams to sp->filelist */
     attr_name = get_attribute_name(&pr_attr->Attribute,sp);
@@ -1013,7 +1013,7 @@ scan_done:
 **************************************************
 */
 
-static winx_file_info * find_filelist_entry(short *attr_name,mft_scan_parameters *sp)
+static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_parameters *sp)
 {
     winx_file_info *f;
     
@@ -1046,7 +1046,7 @@ static winx_file_info * find_filelist_entry(short *attr_name,mft_scan_parameters
     f->name = winx_wcsdup(attr_name);
     if(f->name == NULL){
         DebugPrint("find_filelist_entry: cannot allocate %u bytes of memory",
-            (wcslen(attr_name) + 1) * sizeof(short));
+            (wcslen(attr_name) + 1) * sizeof(wchar_t));
         winx_list_remove_item((list_entry **)(void *)sp->filelist,(list_entry *)f);
         sp->errors ++;
         return NULL;
@@ -1134,7 +1134,7 @@ static ULONGLONG RunCount(PUCHAR run)
     return count;
 }
 
-static void process_run_list(short *attr_name,PNONRESIDENT_ATTRIBUTE pnr_attr,
+static void process_run_list(wchar_t *attr_name,PNONRESIDENT_ATTRIBUTE pnr_attr,
                 mft_scan_parameters *sp,BOOLEAN is_attr_list)
 {
     ULONGLONG lcn, vcn, length;
@@ -1196,7 +1196,7 @@ static void process_run_list(short *attr_name,PNONRESIDENT_ATTRIBUTE pnr_attr,
 static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan_parameters *sp)
 {
     ATTRIBUTE_TYPE attr_type;
-    short *attr_name;
+    wchar_t *attr_name;
     BOOLEAN NonResidentAttrListFound = FALSE;
     
     /* handle the type of the attribute */
@@ -1230,14 +1230,14 @@ static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan
 
 static int update_stream_name(winx_file_info *f,mft_scan_parameters *sp)
 {
-    short *new_name;
+    wchar_t *new_name;
     int length;
     
     length = wcslen(f->name) + wcslen(sp->mfi.Name) + 1;
-    new_name = winx_heap_alloc((length + 1) * sizeof(short));
+    new_name = winx_heap_alloc((length + 1) * sizeof(wchar_t));
     if(new_name == NULL){
         DebugPrint("update_stream_name: cannot allocate %u bytes of memory",
-            (length + 1) * sizeof(short));
+            (length + 1) * sizeof(wchar_t));
         sp->errors ++;
         return (-1);
     }
@@ -1439,7 +1439,7 @@ static winx_file_info * find_directory_by_mft_id(ULONGLONG mft_id,
  * @return Nonzero value indicates that path contains full
  * native path, otherwise it contains directory name only.
  */
-static int get_directory_information(ULONGLONG mft_id,short *path,ULONGLONG *parent_mft_id,
+static int get_directory_information(ULONGLONG mft_id,wchar_t *path,ULONGLONG *parent_mft_id,
     file_entry *f_array,unsigned long n_entries,mft_scan_parameters *sp)
 {
     winx_file_info *f;
@@ -1471,9 +1471,9 @@ static int get_directory_information(ULONGLONG mft_id,short *path,ULONGLONG *par
 
 /* ancillary structure used by build_file_path routine */
 typedef struct _path_parts {
-    short parent[MAX_PATH];  /* path of the parent directory */
-    short child[MAX_PATH];   /* already gathered part of the path */
-    short buffer[MAX_PATH];  /* ancillary buffer */
+    wchar_t parent[MAX_PATH];  /* path of the parent directory */
+    wchar_t child[MAX_PATH];   /* already gathered part of the path */
+    wchar_t buffer[MAX_PATH];  /* ancillary buffer */
 } path_parts;
 
 static void build_file_path(winx_file_info *f,file_entry *f_array,
@@ -1481,7 +1481,7 @@ static void build_file_path(winx_file_info *f,file_entry *f_array,
 {
     ULONGLONG mft_id,parent_mft_id;
     int full_path_retrieved = 0;
-    short *src;
+    wchar_t *src;
     
     /* initialize p->child by filename */
     wcsncpy(p->child,f->name,MAX_PATH - 1);
@@ -1513,7 +1513,7 @@ static void build_file_path(winx_file_info *f,file_entry *f_array,
     f->path = winx_wcsdup(src);
     if(f->path == NULL){
         DebugPrint("build_file_path: cannot allocate %u bytes of memory",
-            (wcslen(src) + 1) * sizeof(short));
+            (wcslen(src) + 1) * sizeof(wchar_t));
         sp->errors ++;
         return;
     }

@@ -37,7 +37,7 @@
  * @note The specified dynamic-link library 
  * must be loaded before this call.
  */
-int winx_get_proc_address(short *libname,char *funcname,PVOID *proc_addr)
+int winx_get_proc_address(wchar_t *libname,char *funcname,PVOID *proc_addr)
 {
     UNICODE_STRING uStr;
     ANSI_STRING aStr;

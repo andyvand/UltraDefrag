@@ -39,7 +39,7 @@
  * - If an event already exists this function returns
  *   STATUS_OBJECT_NAME_COLLISION defined in ntndk.h file.
  */
-int winx_create_event(short *name,int type,HANDLE *phandle)
+int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
 {
     UNICODE_STRING us;
     NTSTATUS Status;
@@ -74,7 +74,7 @@ int winx_create_event(short *name,int type,HANDLE *phandle)
  * @param[out] phandle pointer to the handle of the event.
  * @return Zero for success, negative value otherwise.
  */
-int winx_open_event(short *name,int flags,HANDLE *phandle)
+int winx_open_event(wchar_t *name,int flags,HANDLE *phandle)
 {
     UNICODE_STRING us;
     NTSTATUS Status;
