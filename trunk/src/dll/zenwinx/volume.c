@@ -65,9 +65,9 @@ int winx_get_drive_type(char letter)
 {
     wchar_t link_name[] = L"\\??\\A:";
     #define MAX_TARGET_LENGTH 256
-    short link_target[MAX_TARGET_LENGTH];
-    PROCESS_DEVICEMAP_INFORMATION *ppdi;
-    FILE_FS_DEVICE_INFORMATION *pffdi;
+    wchar_t link_target[MAX_TARGET_LENGTH];
+    PROCESS_DEVICEMAP_INFORMATION pdi;
+    FILE_FS_DEVICE_INFORMATION ffdi;
     IO_STATUS_BLOCK iosb;
     NTSTATUS Status;
     int drive_type;
@@ -95,29 +95,14 @@ int winx_get_drive_type(char letter)
     if(wcsstr(link_target,L"Floppy"))
         return DRIVE_REMOVABLE;
     
-    /* allocate memory */
-    ppdi = winx_heap_alloc(sizeof(PROCESS_DEVICEMAP_INFORMATION));
-    if(!ppdi){
-        DebugPrint("winx_get_drive_type: cannot allocate %u bytes of memory",
-            sizeof(PROCESS_DEVICEMAP_INFORMATION));
-        return (-1);
-    }
-    pffdi = winx_heap_alloc(sizeof(FILE_FS_DEVICE_INFORMATION));
-    if(!pffdi){
-        winx_heap_free(ppdi);
-        DebugPrint("winx_get_drive_type: cannot allocate %u bytes of memory",
-            sizeof(FILE_FS_DEVICE_INFORMATION));
-        return (-1);
-    }
-    
     /* try to define exactly which type has a specified drive (w2k+) */
-    RtlZeroMemory(ppdi,sizeof(PROCESS_DEVICEMAP_INFORMATION));
+    RtlZeroMemory(&pdi,sizeof(PROCESS_DEVICEMAP_INFORMATION));
     Status = NtQueryInformationProcess(NtCurrentProcess(),
-                    ProcessDeviceMap,ppdi,
+                    ProcessDeviceMap,&pdi,
                     sizeof(PROCESS_DEVICEMAP_INFORMATION),
                     NULL);
     if(NT_SUCCESS(Status)){
-        drive_type = (int)ppdi->Query.DriveType[letter - 'A'];
+        drive_type = (int)pdi.Query.DriveType[letter - 'A'];
         /*
         * Type DRIVE_NO_ROOT_DIR have the following drives:
         * 1. assigned by subst command
@@ -126,16 +111,11 @@ int winx_get_drive_type(char letter)
         * 4. DFS shares
         * We need additional checks to know exactly.
         */
-        if(drive_type != DRIVE_NO_ROOT_DIR){
-            winx_heap_free(ppdi);
-            winx_heap_free(pffdi);
+        if(drive_type != DRIVE_NO_ROOT_DIR)
             return drive_type;
-        }
     } else {
         if(Status != STATUS_INVALID_INFO_CLASS){ /* on NT4 this is always false */
             DebugPrintEx(Status,"winx_get_drive_type: cannot get device map");
-            winx_heap_free(ppdi);
-            winx_heap_free(pffdi);
             return (-1);
         }
     }
@@ -143,35 +123,25 @@ int winx_get_drive_type(char letter)
     /* try to define exactly again which type has a specified drive (nt4+) */
     /* note that the drive motor can be powered on during this check */
     hRoot = OpenRootDirectory(letter);
-    if(hRoot == NULL){
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
+    if(hRoot == NULL)
         return (-1);
-    }
-    RtlZeroMemory(pffdi,sizeof(FILE_FS_DEVICE_INFORMATION));
+    RtlZeroMemory(&ffdi,sizeof(FILE_FS_DEVICE_INFORMATION));
     Status = NtQueryVolumeInformationFile(hRoot,&iosb,
-                    pffdi,sizeof(FILE_FS_DEVICE_INFORMATION),
+                    &ffdi,sizeof(FILE_FS_DEVICE_INFORMATION),
                     FileFsDeviceInformation);
     NtClose(hRoot);
     if(!NT_SUCCESS(Status)){
         DebugPrintEx(Status,"winx_get_drive_type: cannot get volume type for \'%c\'",letter);
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
         return (-1);
     }
 
     /* detect remote/cd/dvd/unknown drives */
-    if(pffdi->Characteristics & FILE_REMOTE_DEVICE){
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
+    if(ffdi.Characteristics & FILE_REMOTE_DEVICE)
         return DRIVE_REMOTE;
-    }
-    switch(pffdi->DeviceType){
+    switch(ffdi.DeviceType){
     case FILE_DEVICE_CD_ROM:
     case FILE_DEVICE_CD_ROM_FILE_SYSTEM:
-    case FILE_DEVICE_DVD: /* ? */
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
+    case FILE_DEVICE_DVD:
         return DRIVE_CDROM;
     case FILE_DEVICE_NETWORK_FILE_SYSTEM:
     case FILE_DEVICE_NETWORK: /* ? */
@@ -179,37 +149,28 @@ int winx_get_drive_type(char letter)
     case FILE_DEVICE_DFS_FILE_SYSTEM:
     case FILE_DEVICE_DFS_VOLUME:
     case FILE_DEVICE_DFS:
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
         return DRIVE_REMOTE;
     case FILE_DEVICE_UNKNOWN:
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
         return DRIVE_UNKNOWN;
     }
 
     /* detect removable disks */
-    if(pffdi->Characteristics & FILE_REMOVABLE_MEDIA){
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
+    if(ffdi.Characteristics & FILE_REMOVABLE_MEDIA)
         return DRIVE_REMOVABLE;
-    }
 
     /* detect fixed disks */
-    switch(pffdi->DeviceType){
+    switch(ffdi.DeviceType){
     case FILE_DEVICE_DISK:
     case FILE_DEVICE_FILE_SYSTEM: /* ? */
     /*case FILE_DEVICE_VIRTUAL_DISK:*/
     /*case FILE_DEVICE_MASS_STORAGE:*/
     case FILE_DEVICE_DISK_FILE_SYSTEM:
-        winx_heap_free(ppdi);
-        winx_heap_free(pffdi);
         return DRIVE_FIXED;
+    default:
+        break;
     }
     
     /* nothing detected => drive type is unknown */
-    winx_heap_free(ppdi);
-    winx_heap_free(pffdi);
     return DRIVE_UNKNOWN;
 }
 
@@ -225,41 +186,29 @@ int winx_get_drive_type(char letter)
  */
 static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
 {
-    FILE_FS_SIZE_INFORMATION *pffs;
+    FILE_FS_SIZE_INFORMATION ffs;
     IO_STATUS_BLOCK IoStatusBlock;
     NTSTATUS Status;
     
-    /* allocate memory */
-    pffs = winx_heap_alloc(sizeof(FILE_FS_SIZE_INFORMATION));
-    if(pffs == NULL){
-        DebugPrint("winx_get_volume_information: cannot allocate %u bytes of memory",
-            sizeof(FILE_FS_SIZE_INFORMATION));
-        return (-1);
-    }
-    RtlZeroMemory(pffs,sizeof(FILE_FS_SIZE_INFORMATION));
-
     /* get drive geometry */
-    Status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,pffs,
+    RtlZeroMemory(&ffs,sizeof(FILE_FS_SIZE_INFORMATION));
+    Status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,&ffs,
                 sizeof(FILE_FS_SIZE_INFORMATION),FileFsSizeInformation);
     if(!NT_SUCCESS(Status)){
         DebugPrintEx(Status,"winx_get_volume_information: cannot get geometry of drive %c:",
             v->volume_letter);
-        winx_heap_free(pffs);
         return (-1);
     }
     
     /* fill all geometry related fields of the output structure */
-    v->total_bytes = (ULONGLONG)pffs->TotalAllocationUnits.QuadPart * \
-        pffs->SectorsPerAllocationUnit * pffs->BytesPerSector;
-    v->free_bytes = (ULONGLONG)pffs->AvailableAllocationUnits.QuadPart * \
-        pffs->SectorsPerAllocationUnit * pffs->BytesPerSector;
-    v->total_clusters = (ULONGLONG)pffs->TotalAllocationUnits.QuadPart;
-    v->bytes_per_cluster = pffs->SectorsPerAllocationUnit * pffs->BytesPerSector;
-    v->sectors_per_cluster = pffs->SectorsPerAllocationUnit;
-    v->bytes_per_sector = pffs->BytesPerSector;
-
-    /* cleanup */
-    winx_heap_free(pffs);
+    v->total_bytes = (ULONGLONG)ffs.TotalAllocationUnits.QuadPart * \
+        ffs.SectorsPerAllocationUnit * ffs.BytesPerSector;
+    v->free_bytes = (ULONGLONG)ffs.AvailableAllocationUnits.QuadPart * \
+        ffs.SectorsPerAllocationUnit * ffs.BytesPerSector;
+    v->total_clusters = (ULONGLONG)ffs.TotalAllocationUnits.QuadPart;
+    v->bytes_per_cluster = ffs.SectorsPerAllocationUnit * ffs.BytesPerSector;
+    v->sectors_per_cluster = ffs.SectorsPerAllocationUnit;
+    v->bytes_per_sector = ffs.BytesPerSector;
     return 0;
 }
 
@@ -327,6 +276,7 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
 static int get_ntfs_data(winx_volume_information *v)
 {
     WINX_FILE *f;
+    int result;
     
     /* open the volume */
     f = winx_vopen(v->volume_letter);
@@ -334,16 +284,11 @@ static int get_ntfs_data(winx_volume_information *v)
         return (-1);
     
     /* get ntfs data */
-    if(winx_ioctl(f,FSCTL_GET_NTFS_VOLUME_DATA,
-      "get_ntfs_data: ntfs data request",
-      NULL,0,&v->ntfs_data,sizeof(NTFS_DATA),NULL) < 0){
-        winx_fclose(f);
-        return (-1);
-    }
-    
-    /* cleanup */
+    result = winx_ioctl(f,FSCTL_GET_NTFS_VOLUME_DATA,
+      "get_ntfs_data: ntfs data request",NULL,0,
+      &v->ntfs_data,sizeof(NTFS_DATA),NULL);
     winx_fclose(f);
-    return 0;
+    return result;
 }
 
 /**
