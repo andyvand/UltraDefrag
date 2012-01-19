@@ -70,20 +70,14 @@ Var AtLeastXP
         StrCpy $AtLeastXP 0
     ${EndIf}
 
-    ${Unless} ${IsNT}
-    ${OrUnless} ${AtLeastWinNT4}
+    /* release 6.0.0 and above is not compatible with Windows 2000 and below,
+       even worse, enabling boot time processing results in an unbootable system */
+    ${If} ${AtMostWin2000}
         MessageBox MB_OK|MB_ICONEXCLAMATION \
-        "On Windows 9x and NT 3.x this program is absolutely useless!$\nIf you are running another system then something is corrupt inside it.$\nTherefore we will try to continue." \
+        "This program is not supported on Windows 2000 and below!$\nIf you are running Windows XP and higher, then something is wrong.$\nPlease report this problem to the developers." \
         /SD IDOK
-        ;Abort
-        /*
-        * Sometimes on modern versions of Windows it fails.
-        * This problem has been encountered on XP SP3 and Vista.
-        * Therefore let's assume that we have at least XP system.
-        * A dirty hack, but should work.
-        */
-        StrCpy $AtLeastXP 1
-    ${EndUnless}
+        Abort
+    ${EndIf}
 
     /* this idea was suggested by bender647 at users.sourceforge.net */
     Push $R0
