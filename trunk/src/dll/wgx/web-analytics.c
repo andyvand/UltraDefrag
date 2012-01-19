@@ -194,6 +194,10 @@ static char *build_ga_request(char *hostname,char *path,char *account)
  *     IncreaseGoogleAnalyticsCounter("ultradefrag.sourceforge.net","/appstat/errors/winver.html","UA-15890458-1");
  * }
  * @endcode
+ *
+ * Note that the program should wait for the request
+ * completion. If the calling process will terminate
+ * before it, it will crash.
  */
 BOOL IncreaseGoogleAnalyticsCounter(char *hostname,char *path,char *account)
 {
@@ -204,36 +208,6 @@ BOOL IncreaseGoogleAnalyticsCounter(char *hostname,char *path,char *account)
         return FALSE;
     
     return SendWebAnalyticsRequest(url);
-}
-
-/**
- * @internal
- * @brief An asynchronous equivalent 
- * of IncreaseGoogleAnalyticsCounter.
- * @note Runs in a separate thread.
- * @bug This routine is not safe.
- * If the calling process terminates before
- * the request completion, the program
- * crashes.
- */
-void IncreaseGoogleAnalyticsCounterAsynch(char *hostname,char *path,char *account)
-{
-    char *url;
-    HANDLE h;
-    DWORD id;
-    
-    url = build_ga_request(hostname,path,account);
-    if(url == NULL)
-        return;
-    
-    h = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)SendWebAnalyticsRequestThreadProc,(void *)url,0,&id);
-    if(h == NULL){
-        WgxDbgPrintLastError("SendWebAnalyticsRequestAsynch: cannot create thread");
-        free(url);
-        return;
-    }
-    
-    CloseHandle(h);
 }
 
 /** @} */

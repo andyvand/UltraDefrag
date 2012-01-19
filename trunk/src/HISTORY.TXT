@@ -20,6 +20,8 @@ HISTORY
     - Internals: flags field removed from winx_file_disposition structure
     - MS Visual Studio 6.0 development environment support dropped
     - many zenwinx prototypes changed by replacing short keyword by wchar_t
+    - unsafe IncreaseGoogleAnalyticsCounterAsynch routine
+      removed from wgx library
 
 
   Version 5.0.2  2012-01-
