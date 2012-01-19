@@ -689,7 +689,7 @@ static ULONGLONG count_clusters(udefrag_job_parameters *jp,ULONGLONG start_lcn)
  * @return Zero for success,
  * negative value otherwise.
  */
-static int optimize_routine(udefrag_job_parameters *jp)
+static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
 {
     winx_file_info *f;
     struct prb_table *pt;
@@ -699,10 +699,10 @@ static int optimize_routine(udefrag_job_parameters *jp)
     char buffer[32];
 
     jp->pi.current_operation = VOLUME_OPTIMIZATION;
-    jp->pi.processed_clusters = 0;
+    jp->pi.processed_clusters = extra_clusters;
     /* we have a chance to move everything to the end and then back */
     /* more precise calculation is difficult */
-    jp->pi.clusters_to_process = count_clusters(jp,0) * 2;
+    jp->pi.clusters_to_process = count_clusters(jp,0) * 2 + extra_clusters;
 
     /* open the volume */
     jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
@@ -787,15 +787,20 @@ done:
 int optimize(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
+    ULONGLONG extra_clusters = 0;
     
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */
     if(result < 0) return result;
+    
+    /* reset counters */
+    jp->pi.processed_clusters = 0;
+    if(jp->is_fat) extra_clusters += opt_dirs_cc_routine(jp);
+    if(jp->fs_type == FS_NTFS) extra_clusters += opt_mft_cc_routine(jp);
+    jp->pi.clusters_to_process = count_clusters(jp,0) * 2 + extra_clusters;
 
     /* FAT specific: optimize directories */
     if(jp->is_fat){
-        jp->pi.processed_clusters = 0;
-        jp->pi.clusters_to_process = opt_dirs_cc_routine(jp);
         result = optimize_directories(jp);
         if(result == 0){
             /* at least something succeeded */
@@ -805,8 +810,6 @@ int optimize(udefrag_job_parameters *jp)
     
     /* NTFS specific: optimize MFT */
     if(jp->fs_type == FS_NTFS){
-        jp->pi.processed_clusters = 0;
-        jp->pi.clusters_to_process = opt_mft_cc_routine(jp);
         result = optimize_mft_routine(jp);
         if(result == 0){
             /* at least something succeeded */
@@ -815,7 +818,7 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* optimize the disk */
-    result = optimize_routine(jp);
+    result = optimize_routine(jp,extra_clusters);
     if(result == 0){
         /* optimization succeeded */
         overall_result = 0;
