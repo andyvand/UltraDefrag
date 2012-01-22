@@ -73,7 +73,11 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
     rd /s /q doxy-doc
     lua "%~dp0\tools\set-doxyfile-project-number.lua" Doxyfile %ULTRADFGVER% || goto compilation_failed
     doxygen || goto compilation_failed
-    copy /Y .\rsc\*.* .\doxy-doc\html\
+    if not "%~n1" == "handbook" copy /Y .\rsc\*.* .\doxy-doc\html\
+    if "%~n1" == "handbook" (
+        copy /Y .\rsc\sflogo.gif .\doxy-doc\html\
+        copy /Y .\rsc\.htaccess .\doxy-doc\html\
+    )
 
     del /Q  .\doxy-doc\html\header.html >nul 2>&1
     del /Q  .\doxy-doc\html\footer.html >nul 2>&1
