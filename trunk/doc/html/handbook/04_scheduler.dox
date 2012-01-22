@@ -47,11 +47,13 @@
  * Visit <a href="http://ultradefrag.wikispaces.com/">ultradefrag.wikispaces.com</a> 
  * for tutorials and more examples.
  *
+ * @htmlonly
  * <HR>
- *  <TABLE BORDER="0" STYLE="width: 97%; margin:auto;">
+ *  <TABLE STYLE="border: none; width: 97%; margin:auto;">
  *    <TR>
- *      <TD STYLE="text-align: left; width: 50%;">Previous: @ref Console</TD>
- *      <TD STYLE="text-align: right; width: 50%;">Next: @ref GUI</TD>
+ *      <TD STYLE="text-align: left; width: 50%;">Previous: <a href="Console.html">Console Interface</a></TD>
+ *      <TD STYLE="text-align: right; width: 50%;">Next: <a href="GUI.html">Graphical Interface</a></TD>
  *    </TR>
  *  </TABLE>
+ * @endhtmlonly
  */

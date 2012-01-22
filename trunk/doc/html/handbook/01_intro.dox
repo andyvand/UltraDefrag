@@ -67,10 +67,6 @@
  * However, the 5.0.x series of UltraDefrag is fully compatible
  * with Windows NT 4.0 and Windows 2000.
  *
- * NT 4.0 Alpha is currently not supported. ReactOS and Wine
- * aren't supported yet, because they have no defragmentation
- * API implemented at this moment.
- *
  * UltraDefrag cannot be used on DOS, Windows 9x, Windows NT 3.51 and Mac OS
  * since these operating systems provide no defragmentation API.
  * However, <a href="http://b.andre.pagesperso-orange.fr/advanced-ntfs-3g.html">Linux port of UltraDefrag</a> exists.
@@ -109,9 +105,7 @@
  *
  * <h1>Processing algorithms</h1>
  *
- * <span style="color: darkred">
- * Both optimization algorithms ignore any size, name and fragment count filters.
- * </span>
+ * @note Both optimization algorithms ignore any size, name and fragment count filters.
  *
  * <h2>Defragmentation algorithm</h2>
  * <ol>
@@ -200,11 +194,13 @@
  * in your browser to view the latest version of
  * the documentation.
  *
+ * @htmlonly
  * <HR>
- *  <TABLE BORDER="0" STYLE="width: 97%; margin:auto;">
+ *  <TABLE STYLE="border: none; width: 97%; margin:auto;">
  *    <TR>
- *      <TD STYLE="text-align: left; width: 50%;">Previous: @ref index</TD>
- *      <TD STYLE="text-align: right; width: 50%;">Next: @ref Installation</TD>
+ *      <TD STYLE="text-align: left; width: 50%;">Previous: <a href="index.html">The UltraDefrag Handbook</a></TD>
+ *      <TD STYLE="text-align: right; width: 50%;">Next: <a href="Installation.html">Installation</a></TD>
  *    </TR>
  *  </TABLE>
+ * @endhtmlonly
  */
