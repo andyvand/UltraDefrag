@@ -36,6 +36,13 @@ call :compile_docs .\dll\wgx            wgx          || goto fail
 call :compile_docs .\dll\zenwinx                     || goto fail
 call :compile_docs ..\doc\html\handbook              || goto fail
 
+:: compile PDF documentation if MiKTeX is installed
+pdflatex --version >nul 2>&1
+if not errorlevel 1 (
+    call :compile_pdf ..\doc\html\handbook a4     UltraDefrag_Handbook || goto fail
+    call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook || goto fail
+)
+
 :: move .htaccess file to the root of dev docs
 move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
 
@@ -79,6 +86,65 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
     popd
     exit /B 0
     :compilation_failed
+    popd
+    exit /B 1
+goto :EOF
+
+rem Synopsis: call :compile_pdf {path} {paper size} {PDF name}
+rem Example:  call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook
+:compile_pdf
+    pushd %1
+    rd /s /q doxy-doc\latex_%2
+    lua "%~dp0\tools\set-doxyfile-project-number.lua" Doxyfile %ULTRADFGVER% || goto compilation_failed
+
+    copy /v /y Doxyfile Doxyfile_%2
+    (
+        echo GENERATE_HTML          = NO
+        echo GENERATE_LATEX         = YES
+        echo LATEX_OUTPUT           = latex_%2
+        echo PAPER_TYPE             = %2
+    ) >>Doxyfile_%2
+    
+    doxygen Doxyfile_%2 || goto compilation_failed
+
+    :compilation_succeeded
+    pushd doxy-doc\latex_%2
+
+    echo.
+    pdflatex  refman
+    echo ----
+    echo.
+    makeindex refman.tex
+    echo ----
+    echo.
+    pdflatex  refman
+
+    setlocal enabledelayedexpansion
+    set count=5
+    :repeat
+        set content=X
+        for /F "tokens=*" %%T in ( 'findstr /C:"Rerun LaTeX" refman.log' ) do set content="%%~T"
+        if !content! == X for /F "tokens=*" %%T in ( 'findstr /C:"Rerun to get cross-references right" refman.log' ) do set content="%%~T"
+        if !content! == X goto :skip
+        set /a count-=1
+        if !count! EQU 0 goto :skip
+
+        echo ----
+        echo.
+        pdflatex  refman
+    goto :repeat
+    :skip
+    endlocal
+
+    if "%3" neq "" rename refman.pdf %3_%ULTRADFGVER%_%2.pdf || goto compilation_failed
+
+    popd
+    del /f /q Doxyfile_%2
+    popd
+    exit /B 0
+    :compilation_failed
+    popd
+    del /f /q Doxyfile_%2
     popd
     exit /B 1
 goto :EOF
