@@ -101,6 +101,7 @@ goto finished
 
 :7
 title Build Docs
+call build.cmd --clean
 call build-docs.cmd
 goto finished
 
