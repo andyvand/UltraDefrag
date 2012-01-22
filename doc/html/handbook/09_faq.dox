@@ -134,11 +134,13 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\BootExecute
  * change this, because it is part of the filesystem drivers (ntfs.sys, fastfat.sys),
  * which are too complex and not open source to modify or replace them.
  *
+ * @htmlonly
  * <HR>
- *  <TABLE BORDER="0" STYLE="width: 97%; margin:auto;">
+ *  <TABLE STYLE="border: none; width: 97%; margin:auto;">
  *    <TR>
- *      <TD STYLE="text-align: left; width: 50%;">Previous: @ref Tips</TD>
- *      <TD STYLE="text-align: right; width: 50%;">Next: @ref ReportingBugs</TD>
+ *      <TD STYLE="text-align: left; width: 50%;">Previous: <a href="Tips.html">Tips and Tricks</a></TD>
+ *      <TD STYLE="text-align: right; width: 50%;">Next: <a href="ReportingBugs.html">Reporting Bugs</a></TD>
  *    </TR>
  *  </TABLE>
+ * @endhtmlonly
  */

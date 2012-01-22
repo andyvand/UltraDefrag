@@ -50,6 +50,9 @@ rem Example:  call :make_default .\dll\zenwinx
     echo.
     if exist doxy-defaults rd /s /q doxy-defaults
     doxygen -w html default_header.html default_footer.html default_styles.css DoxyFile || goto compilation_failed
+    if "%~n1" == "handbook" (
+        doxygen -w latex default_header.tex default_footer.tex default_styles.sty DoxyFile || goto compilation_failed
+    )
     md doxy-defaults
     move /Y default_*.* doxy-defaults
     
