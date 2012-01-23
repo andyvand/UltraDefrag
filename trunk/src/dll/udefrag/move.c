@@ -427,6 +427,9 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
                         block->vcn,curr_target,block->length)) goto fail;
                 }
             }
+            /* XXX: when middle part of the block moved, behaviour is 
+               unexpected; however, this never happens in current algorithms
+            */
 
             curr_target += n;
             clusters_to_check -= n;

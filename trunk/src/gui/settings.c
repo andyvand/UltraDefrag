@@ -68,7 +68,6 @@ extern int grid_line_width;
 extern int grid_color_r;
 extern int grid_color_g;
 extern int grid_color_b;
-extern double pix_per_dialog_unit;
 extern int last_block_size;
 extern int last_grid_width;
 extern int last_x;

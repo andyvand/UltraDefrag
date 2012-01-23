@@ -43,9 +43,6 @@ typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
     /*IBindStatusCallback*/ void *pBSC
 );
 
-/* forward declaration */
-DWORD WINAPI SendWebAnalyticsRequestThreadProc(LPVOID lpParameter);
-
 /**
  * @internal
  * @brief Sends web analytics request.
@@ -100,15 +97,6 @@ static BOOL SendWebAnalyticsRequest(char *url)
 fail:
     free(url);
     return FALSE;
-}
-
-/**
- * @internal
- */
-DWORD WINAPI SendWebAnalyticsRequestThreadProc(LPVOID lpParameter)
-{
-    (void)SendWebAnalyticsRequest((char *)lpParameter);
-    return 0;
 }
 
 /**
