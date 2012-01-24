@@ -30,14 +30,10 @@
  * It is intended to be used from the console only.
  * 
  * @note
- * You must have a 64-bit version of Windows to run the 64-bit versions of the program.\n\n
- * 
- * @note
- * The IA-64 version was never tested by the authors. 
- * It requires the Intel Itanium processor and an appropriate 64-bit edition of Windows.\n\n
- * 
- * @note
- * You must be an administrator to install and run UltraDefrag.
+ * <ul><li>You must have a 64-bit version of Windows to run the 64-bit versions of the program.<br/><br/></li>
+ * <li>The IA-64 version was never tested by the authors. 
+ * It requires the Intel Itanium processor and an appropriate 64-bit edition of Windows.<br/><br/></li>
+ * <li>You must be an administrator to install and run UltraDefrag.</li></ul>
  *
  * Note that UltraDefrag installs into the Windows directory. This is by design,
  * because it highly simplifies the program development.
