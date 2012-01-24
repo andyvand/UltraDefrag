@@ -111,6 +111,50 @@
  * Highly fragmented disks will have to be defragmented several
  * times until you will see an improvement.
  *
+ * Sometimes a fragmented USN journal can prevent UltraDefrag from consolidating
+ * free space.
+ * In such a case you can remove the USN journal by executing the
+ * <a href="http://technet.microsoft.com/en-us/library/cc788042%28WS.10%29.aspx">fsutil</a>
+ * command as shown below from an administrative command prompt.
+ * It is recommended to recreate the USN journal after the drive has been processed.
+ *
+ * @par Query USN journal
+ * Use the command line below to get the current settings of the USN journal of drive C:.
+ * Write them down to use them for recreating the USN journal.
+ * @code
+ * fsutil usn queryjournal C:
+ * @endcode
+ *
+ * @par Delete USN journal
+ * Use the command line below to delete the USN journal of drive C:.
+ * @code
+ * fsutil usn deletejournal /n C:
+ * @endcode
+ *
+ * @par Create USN journal
+ * Use the command line below to create the USN journal of drive C:.
+ * A reasonable size of the USN journal is 85Mb for each 100Gb, the delta should be
+ * between
+ * @htmlonly
+ * <sup>1</sup>/<sub>8</sub>
+ * @endhtmlonly
+ * @latexonly
+ * \begin{math}^1/_8\end{math}
+ * @endlatexonly
+ * and
+ * @htmlonly
+ * <sup>1</sup>/<sub>4</sub>
+ * @endhtmlonly
+ * @latexonly
+ * \begin{math}^1/_4\end{math}
+ * @endlatexonly
+ * of the maximum size.
+ * The default values are usually 32Mb maximum size and 4Mb delta.
+ * The example creates an USN journal of default size.
+ * @code
+ * fsutil usn createjournal m=33554432 a=4194304 C:
+ * @endcode
+ *
  * @htmlonly
  * <HR>
  *  <TABLE STYLE="border: none; width: 97%; margin:auto;">

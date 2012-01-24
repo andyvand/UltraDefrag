@@ -534,7 +534,10 @@
  *
  * <h1>Cluster Map</h1>
  * It represents the disk clusters by little colored squares.
- * Colors have the following meaning:
+ * The first cluster on disk is the one in the top-left corner of the map.
+ * The last cluster on disk is the one in the bottom-right corner of the map.
+ * The clusters in between are organized by rows.<br/>
+ * The colors have the following meaning:
  *
  * @htmlonly
  * <table style="border: none; margin:auto;"><tr><td>
