@@ -43,6 +43,10 @@
 #define DebugPrint winx_dbg_print
 #define DebugPrintEx winx_dbg_print_ex
 
+#define TraceEnter  { DebugPrint("Inside function '%s'...",__FUNCTION__); }
+#define TraceExit   { DebugPrint("Leaving function '%s'...",__FUNCTION__); }
+#define TraceSource { DebugPrint("Source file '%s' at line %d ...",__FILE__,__LINE__); }
+
 /*
 * DbgCheckN macro definitions are used
 * to simplify debugging of a situation 
