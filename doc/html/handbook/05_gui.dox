@@ -25,12 +25,11 @@
  * \hline
  * @endlatexonly
  * @image html "Analysis.png"
- * @image latex "Analysis.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Analysis.png}} &
  * @endlatexonly
  * @par Analyze (F5; Enter)
  * This analyzes the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -43,12 +42,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Defragment.png"
- * @image latex "Defragment.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Defragment.png}} &
  * @endlatexonly
  * @par Defragment (F6)
  * This defragments the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -61,12 +59,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "QuickOptimize.png"
- * @image latex "QuickOptimize.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{QuickOptimize.png}} &
  * @endlatexonly
  * @par Quick optimization (F7)
  * This optimizes the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -79,12 +76,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "FullOptimize.png"
- * @image latex "FullOptimize.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{FullOptimize.png}} &
  * @endlatexonly
  * @par Full optimization (Ctrl+F7)
  * This optimizes the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -98,12 +94,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "OptimizeMFT.png"
- * @image latex "OptimizeMFT.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{OptimizeMFT.png}} &
  * @endlatexonly
  * @par Optimize MFT (Shift+F7)
  * This concatenates the MFT into one single chunk.
@@ -115,12 +110,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Stop.png"
- * @image latex "Stop.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Stop.png}} &
  * @endlatexonly
  * @par Stop (Ctrl+C)
  * This aborts the currently running process at any stage, currently pending move operations will be completed to avoid corruption.
@@ -132,12 +126,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Repeat.png"
- * @image latex "Repeat.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Repeat.png}} &
  * @endlatexonly
  * @par Repeat action (Shift+R)
  * If this is set, the current operation will be repeated multiple times in a row. This allows processing as many files as possible.
@@ -149,7 +142,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -166,7 +159,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -184,7 +177,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -202,7 +195,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -229,12 +222,11 @@
  * \hline
  * @endlatexonly
  * @image html "Report.png"
- * @image latex "Report.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Report.png}} &
  * @endlatexonly
  * @par Show report (F8)
  * This displays the report generated for the selected disk(s) in a browser window.
@@ -256,7 +248,7 @@
  * \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -274,7 +266,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -291,12 +283,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Options.png"
- * @image latex "Options.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Options.png}} &
  * @endlatexonly
  * @par Graphical interface &mdash;&gt; Options (F10)
  * This will open a text editor window with the script loaded mentioned in the section <b>Configuring</b> below,
@@ -309,12 +300,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "BootTimeScan.png"
- * @image latex "BootTimeScan.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{BootTimeScan.png}} &
  * @endlatexonly
  * @par Boot time scan &mdash;&gt; Enable (F11)
  * This enables or disables the boot time processing.<br/>
@@ -327,12 +317,11 @@
  * \\ \hline
  * @endlatexonly
  * @image html "BootTimeScript.png"
- * @image latex "BootTimeScript.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{BootTimeScript.png}} &
  * @endlatexonly
  * @par Boot time scan &mdash;&gt; Script (F12)
  * This opens a text editor window with the script loaded mentioned in the chapter @ref Boot,
@@ -346,7 +335,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -373,12 +362,11 @@
  * \hline
  * @endlatexonly
  * @image html "Help.png"
- * @image latex "Help.eps"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * &
+ * \raisebox{-1.5\height}{\includegraphics{Help.png}} &
  * @endlatexonly
  * @par Contents (F1)
  * This launches the handbook you are currently reading.
@@ -390,7 +378,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -407,7 +395,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -424,7 +412,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -452,7 +440,7 @@
  * \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -469,7 +457,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -486,7 +474,7 @@
  * \\ \hline
  * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
+ * @image latex "Blank.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
@@ -516,40 +504,24 @@
  * on the disk.
  *
  * @htmlonly
- * <table style="border: none;"><tr><td>
+ * <table style="border: none;">
+ * <tr><td>Fixed drives are marked by</td><td>
  * @endhtmlonly
- * @latexonly
- * \par\begin{tabular}{lclc}
- * @endlatexonly
- * Fixed drives are marked by
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "fixed.png"
- * @image latex "fixed.eps"
  * @htmlonly
- * </td><td>
+ * </td><td>, removable drives - by</td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * , removable drives - by
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html removable.png"
- * @image latex removable.eps"
  * @htmlonly
  * </td></tr></table>
  * @endhtmlonly
+ *
  * @latexonly
- * \\
+ * \par\begin{tabular}{lclc}
+ * Fixed drives are marked by &
+ * \raisebox{-0.3\height}{\includegraphics{fixed.png}} &
+ * , removable drives - by &
+ * \raisebox{-0.3\height}{\includegraphics{removable.png}} \\
  * \end{tabular}\par
  * @endlatexonly
  *
@@ -567,186 +539,59 @@
  * @htmlonly
  * <table style="border: none; margin:auto;"><tr><td>
  * @endhtmlonly
- * @latexonly
- * \par\begin{center}\begin{tabular}{clcclccl}
- * @endlatexonly
  * @image html "Fragmented.png"
- * @image latex "Fragmented.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> Fragmented </td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * Fragmented
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
  * @htmlonly
  * </td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "NotFragmented.png"
- * @image latex "NotFragmented.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> Not Fragmented </td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * Not Fragmented
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "Blank.png"
- * @image latex "Blank.eps"
  * @htmlonly
  * </td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "Compressed.png"
- * @image latex "Compressed.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> Compressed </td></tr><tr><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * Compressed
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\
- * @endlatexonly
  * @image html "Directory.png"
- * @image latex "Directory.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> Directory </td><td></td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * Directory
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * &nbsp;
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "System.png"
- * @image latex "System.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> System (Locked) </td><td></td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * System (Locked)
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * &nbsp;
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "MFT.png"
- * @image latex "MFT.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> MFT </td></tr><tr><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * MFT
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\
- * @endlatexonly
  * @image html "Temporary.png"
- * @image latex "Temporary.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> Temporary </td><td></td><td></td><td></td><td></td><td>
  * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * Temporary
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * &nbsp;
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * &nbsp;
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * &nbsp;
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * &nbsp;
- * @htmlonly
- * </td><td>
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @image html "FreeSpace.png"
- * @image latex "FreeSpace.eps"
  * @htmlonly
- * </td><td>
+ * </td><td> Free Space </td></tr></table>
  * @endhtmlonly
+ *
  * @latexonly
- * &
- * @endlatexonly
- * Free Space
- * @htmlonly
- * </td></tr></table>
- * @endhtmlonly
- * @latexonly
- * \\
+ * \begin{center}\begin{tabular}{clcclccl}
+ * \includegraphics{Fragmented.png} & Fragmented & &
+ * \includegraphics{NotFragmented.png} & Not Fragmented & &
+ * \includegraphics{Compressed.png} & Compressed \\
+ * \includegraphics{Directory.png} & Directory &
+ * \raisebox{-0.3\height}{\includegraphics{Blank.png}} &
+ * \includegraphics{System.png} & System (Locked) &
+ * \raisebox{-0.3\height}{\includegraphics{Blank.png}} &
+ * \includegraphics{MFT.png} & MFT \\
+ * \includegraphics{Temporary.png} & Temporary & & & & &
+ * \includegraphics{FreeSpace.png} & Free Space \\
  * \end{tabular}\end{center}\par
  * @endlatexonly
  *

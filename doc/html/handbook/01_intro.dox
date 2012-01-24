@@ -170,6 +170,9 @@
  *
  * <h1>Web resources</h1>
  * The Ultra Defragmenter's home page is at:
+ * @latexonly
+ * \\
+ * @endlatexonly
  * http://ultradefrag.sourceforge.net
  *
  * Please be sure to visit this site for information,
@@ -177,13 +180,19 @@
  * related things are available there.
  *
  * For help requests visit our forum:
+ * @latexonly
+ * \\
+ * @endlatexonly
  * http://ultradefrag.sourceforge.net/forum
  *
  * Please report all problems and bugs via our bug tracker:
+ * @latexonly
+ * \\
+ * @endlatexonly
  * http://ultradefrag.sourceforge.net/bugs
  *
  * To participate in UltraDefrag translation
- * visit please <a href="http://ultradefrag.wikispaces.com/">WikiSpaces.com</a>.
+ * please visit <a href="http://ultradefrag.wikispaces.com/">WikiSpaces.com</a>.
  *
  * The most recent version of this handbook can be obtained
  * from the program's <a href="http://ultradefrag.svn.sourceforge.net/viewvc/ultradefrag/trunk/doc/html/handbook.tar.gz?view=tar">SVN repository</a>. 
