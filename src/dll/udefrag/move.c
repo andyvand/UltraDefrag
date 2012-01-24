@@ -382,12 +382,16 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     /* duplicate file information */
     memcpy(new_file_info,f,sizeof(winx_file_info));
     
-    first_block = get_first_block_of_cluster_chain(f,vcn);
-    if(first_block == NULL) return;
-    
     /* reset new file disposition */
     new_file_info->disp.blockmap = NULL;
     new_file_info->disp.fragments = 0;
+    
+    first_block = get_first_block_of_cluster_chain(f,vcn);
+    if(first_block == NULL){
+        DebugPrint("calculate_file_disposition: get_first_block_of_cluster_chain failed");
+        new_file_info->disp.clusters = 0;
+        return;
+    }
     
     /* add all blocks prior to the first_block to the new disposition */
     for(block = f->disp.blockmap;
