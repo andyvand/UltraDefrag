@@ -775,13 +775,9 @@ done:
 /**
  * @brief Performs a volume optimization.
  * @details The disk optimization sorts
- * little files (below fragment size threshold)
+ * small files (below fragment size threshold)
  * by path on the disk. On FAT it optimizes
  * directories also. On NTFS it optimizes the MFT.
- * @note
- * - The optimizer relies on the fragment size threshold
- * filter. If it isn't set, the default value of 20 Mb
- * is used.
  * @return Zero for success, negative value otherwise.
  */
 int optimize(udefrag_job_parameters *jp)
