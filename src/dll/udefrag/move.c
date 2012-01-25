@@ -35,10 +35,12 @@ void release_temp_space_regions(udefrag_job_parameters *jp)
 {
     ULONGLONG time = winx_xtime();
     
-    winx_release_free_volume_regions(jp->free_regions);
-    jp->free_regions = winx_get_free_volume_regions(jp->volume_letter,
-        WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
-    jp->p_counters.temp_space_releasing_time += winx_xtime() - time;
+    if(!jp->udo.dry_run){
+        winx_release_free_volume_regions(jp->free_regions);
+        jp->free_regions = winx_get_free_volume_regions(jp->volume_letter,
+            WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
+        jp->p_counters.temp_space_releasing_time += winx_xtime() - time;
+    }
 }
 
 /************************************************************/
@@ -659,7 +661,7 @@ int move_file(winx_file_info *f,
             n = min(block->length - (curr_vcn - block->vcn),clusters_to_redraw);
             colorize_map_region(jp,lcn,n,FREE_SPACE,new_color);
             clusters_to_redraw -= n;
-            if(jp->fs_type != FS_NTFS){
+            if(jp->fs_type != FS_NTFS || jp->udo.dry_run){
                 /* on NTFS we cannot use freed space until
                    release_temp_space_regions call because
                    Windows marks clusters as temporarily
