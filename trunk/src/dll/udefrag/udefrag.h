@@ -99,8 +99,7 @@ enum {
     COMPRESSED_SPACE,
     COMPRESSED_OVER_LIMIT_SPACE,
     MFT_ZONE_SPACE,
-    MFT_SPACE,
-    TEMPORARY_SYSTEM_SPACE,      /* has highest precedence */
+    MFT_SPACE,                   /* has highest precedence */
     NUM_OF_SPACE_STATES          /* this must always be the last */
 };
 

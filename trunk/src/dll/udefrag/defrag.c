@@ -61,8 +61,6 @@ void test_move(winx_file_info *f,udefrag_job_parameters *jp)
     } else {
         DebugPrint("test_move: move succeeded for %ws",f->path);
     }
-    /* release temporary allocated clusters */
-    release_temp_space_regions(jp);
     /* try to move the first cluster back */
     if(can_move(f,jp)){
         if(move_file(f,f->disp.blockmap->vcn,1,source_lcn,jp) < 0){
@@ -74,6 +72,8 @@ void test_move(winx_file_info *f,udefrag_job_parameters *jp)
     } else {
         DebugPrint("test_move: file became unmovable %ws",f->path);
     }
+    /* release temporarily allocated space */
+    release_temp_space_regions(jp);
 }
 
 /*
@@ -268,7 +268,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
     jp->pi.current_operation = VOLUME_DEFRAGMENTATION;
     jp->pi.moved_clusters = 0;
 
-    /* free as much temporarily allocated space as possible */
+    /* release temporarily allocated space */
     release_temp_space_regions(jp);
 
     /* no files are excluded by this task currently */

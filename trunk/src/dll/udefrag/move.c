@@ -26,6 +26,21 @@
 
 #include "udefrag-internals.h"
 
+/**
+ * @brief Actualizes the free space regions list.
+ * @details All NTFS regions temporarily allocated
+ * by system become freed after this call.
+ */
+void release_temp_space_regions(udefrag_job_parameters *jp)
+{
+    ULONGLONG time = winx_xtime();
+    
+    winx_release_free_volume_regions(jp->free_regions);
+    jp->free_regions = winx_get_free_volume_regions(jp->volume_letter,
+        WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
+    jp->p_counters.temp_space_releasing_time += winx_xtime() - time;
+}
+
 /************************************************************/
 /*                    can_move routine                      */
 /************************************************************/
@@ -98,48 +113,10 @@ int can_move_entirely(winx_file_info *f,udefrag_job_parameters *jp)
 /************************************************************/
 
 /**
- * @brief Actualizes the free space regions list.
- * @details All regions temporarily allocated
- * by system become freed after this call.
- */
-void release_temp_space_regions(udefrag_job_parameters *jp)
-{
-    ULONGLONG time = winx_xtime();
-    
-    winx_release_free_volume_regions(jp->free_regions);
-    jp->free_regions = winx_get_free_volume_regions(jp->volume_letter,
-        WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
-    jp->p_counters.temp_space_releasing_time += winx_xtime() - time;
-    
-    /* redraw map */
-    redraw_all_temporary_system_space_as_free(jp);
-}
-
-/**
- * @brief Redraws freed space.
- */
-static void redraw_freed_space(udefrag_job_parameters *jp,
-        ULONGLONG lcn, ULONGLONG length, int old_color)
-{
-    /*
-    * On FAT partitions after file moving filesystem driver marks
-    * previously allocated clusters as free immediately.
-    * But on NTFS they are always still allocated by system.
-    * Only release_temp_space_regions routine can free them.
-    */
-    if(jp->fs_type == FS_NTFS){
-        colorize_map_region(jp,lcn,length,TEMPORARY_SYSTEM_SPACE,old_color);
-    } else {
-        colorize_map_region(jp,lcn,length,FREE_SPACE,old_color);
-        jp->free_regions = winx_add_volume_region(jp->free_regions,lcn,length);
-    }
-}
-
-/**
  * @brief Returns the first file block
  * belonging to the cluster chain.
  */
-winx_blockmap *get_first_block_of_cluster_chain(winx_file_info *f,ULONGLONG vcn)
+static winx_blockmap *get_first_block_of_cluster_chain(winx_file_info *f,ULONGLONG vcn)
 {
     winx_blockmap *block;
     
@@ -496,7 +473,7 @@ int move_file(winx_file_info *f,
     int dump_result;
     winx_blockmap *block, *first_block;
     ULONGLONG clusters_to_redraw;
-    ULONGLONG curr_vcn, n;
+    ULONGLONG curr_vcn, lcn, n;
     winx_file_info desired_file_info;
     winx_file_info new_file_info;
     ud_file_moving_result moving_result;
@@ -678,9 +655,18 @@ int move_file(winx_file_info *f,
         first_block = get_first_block_of_cluster_chain(f,vcn);
         for(block = first_block; block; block = block->next){
             /* redraw the current block or its part */
+            lcn = block->lcn + (curr_vcn - block->vcn);
             n = min(block->length - (curr_vcn - block->vcn),clusters_to_redraw);
-            redraw_freed_space(jp,block->lcn + (curr_vcn - block->vcn),n,new_color);
+            colorize_map_region(jp,lcn,n,FREE_SPACE,new_color);
             clusters_to_redraw -= n;
+            if(jp->fs_type != FS_NTFS){
+                /* on NTFS we cannot use freed space until
+                   release_temp_space_regions call because
+                   Windows marks clusters as temporarily
+                   allocated immediately after the move
+                */
+                jp->free_regions = winx_add_volume_region(jp->free_regions,lcn,n);
+            }
             if(!clusters_to_redraw || block->next == f->disp.blockmap) break;
             curr_vcn = block->next->vcn;
         }
