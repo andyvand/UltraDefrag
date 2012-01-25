@@ -97,85 +97,22 @@ int can_move_entirely(winx_file_info *f,udefrag_job_parameters *jp)
 /*                    Internal Routines                     */
 /************************************************************/
 
-/*
-* The following routines are used to track
-* space temporarily allocated by system
-* and to release this space before the file
-* moving.
-*/
-
 /**
- * @brief Adds region to the list of space
- * temporarily allocated by system.
- * @return Zero for success, negative value otherwise.
- * @note Use release_temp_space_regions to free 
- * memory allocated by add_temp_space_region calls.
- */
-static int add_temp_space_region(udefrag_job_parameters *jp,ULONGLONG lcn,ULONGLONG length)
-{
-    winx_volume_region *rgn;
-    
-    rgn = (winx_volume_region *)winx_list_insert_item(
-        (list_entry **)(void *)&jp->temp_space_list,NULL,
-        sizeof(winx_volume_region));
-    if(rgn == NULL){
-        DebugPrint("add_temp_space_region: cannot allocate %u bytes of memory",
-            sizeof(winx_volume_region));
-        return (-1);
-    } else {
-        rgn->lcn = lcn;
-        rgn->length = length;
-    }
-    
-    return 0;
-}
-
-/**
- * @brief This auxiliary routine intended for use in
- * calculate_starting_point just to speed things up.
- */
-void release_temp_space_regions_internal(udefrag_job_parameters *jp)
-{
-    winx_volume_region *rgn;
-
-    /* update free space pool */
-    for(rgn = jp->temp_space_list; rgn; rgn = rgn->next){
-        jp->free_regions = winx_add_volume_region(jp->free_regions,rgn->lcn,rgn->length);
-        if(rgn->next == jp->temp_space_list) break;
-    }
-    
-    /* redraw map */
-    redraw_all_temporary_system_space_as_free(jp);
-    
-    /* free memory */
-    winx_list_destroy((list_entry **)(void *)&jp->temp_space_list);
-    jp->temp_space_list = NULL;
-}
-
-/**
- * @brief Releases all space regions
- * added by add_temp_space_region calls.
- * @details This routine forces Windows
- * to mark space regions as free. Also
- * it colorizes cluster map to reflect
- * changes and frees memory allocated by
- * add_temp_space_region calls.
+ * @brief Actualizes the free space regions list.
+ * @details All regions temporarily allocated
+ * by system become freed after this call.
  */
 void release_temp_space_regions(udefrag_job_parameters *jp)
 {
-    winx_volume_region *rgn;
     ULONGLONG time = winx_xtime();
     
-    /* this routine is useful on NTFS only */
-    if(jp->fs_type != FS_NTFS) return;
-    
-    /* release space on disk */
-    rgn = winx_get_free_volume_regions(jp->volume_letter,
+    winx_release_free_volume_regions(jp->free_regions);
+    jp->free_regions = winx_get_free_volume_regions(jp->volume_letter,
         WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
-    winx_release_free_volume_regions(rgn);
     jp->p_counters.temp_space_releasing_time += winx_xtime() - time;
     
-    release_temp_space_regions_internal(jp);
+    /* redraw map */
+    redraw_all_temporary_system_space_as_free(jp);
 }
 
 /**
@@ -188,12 +125,10 @@ static void redraw_freed_space(udefrag_job_parameters *jp,
     * On FAT partitions after file moving filesystem driver marks
     * previously allocated clusters as free immediately.
     * But on NTFS they are always still allocated by system.
-    * Only the next volume analysis frees them.
+    * Only release_temp_space_regions routine can free them.
     */
     if(jp->fs_type == FS_NTFS){
-        /* mark clusters as temporarily allocated by system  */
         colorize_map_region(jp,lcn,length,TEMPORARY_SYSTEM_SPACE,old_color);
-        add_temp_space_region(jp,lcn,length);
     } else {
         colorize_map_region(jp,lcn,length,FREE_SPACE,old_color);
         jp->free_regions = winx_add_volume_region(jp->free_regions,lcn,length);

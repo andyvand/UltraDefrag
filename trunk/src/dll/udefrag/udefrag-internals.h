@@ -217,7 +217,6 @@ typedef struct _udefrag_job_parameters {
     ULONGLONG clusters_at_once;                 /* number of clusters to be moved at once */
     cmap cluster_map;                           /* cluster map internal data */
     WINX_FILE *fVolume;                         /* handle of the volume, used by file moving routines */
-    winx_volume_region *temp_space_list;        /* list of regions of space temporarily allocated by system */
     ULONGLONG free_rgn_size_threshold;          /* free region size threshold used in volume optimization */
     struct performance_counters p_counters;     /* performance counters */
     struct prb_table *file_blocks;              /* pointer to binary tree of all file blocks found on the volume */
@@ -244,7 +243,6 @@ void colorize_map_region(udefrag_job_parameters *jp,
 void colorize_file(udefrag_job_parameters *jp, winx_file_info *f, int old_color);
 void colorize_file_as_system(udefrag_job_parameters *jp, winx_file_info *f);
 int get_file_color(udefrag_job_parameters *jp, winx_file_info *f);
-void release_temp_space_regions_internal(udefrag_job_parameters *jp);
 void release_temp_space_regions(udefrag_job_parameters *jp);
 void redraw_all_temporary_system_space_as_free(udefrag_job_parameters *jp);
 
