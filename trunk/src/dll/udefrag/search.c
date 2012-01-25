@@ -406,6 +406,7 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
     return NULL;
 
 slow_search:
+    if(jp->file_blocks) destroy_file_blocks_tree(jp);
     while(!jp->termination_router((void *)jp)){
         found_file = NULL; first_block = NULL; lcn = jp->v_info.total_clusters;
         for(file = jp->filelist; file; file = file->next){
