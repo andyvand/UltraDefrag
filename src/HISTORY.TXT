@@ -17,6 +17,7 @@ HISTORY
       for these people who still use old Windows editions
       we recommend to use the 5.0.x series of UltraDefrag
     - low color depth (8 bits per pixel) support was dropped for GUI toolbar
+    - quite useless cyan color removed from the cluster map
     - Internals: flags field removed from winx_file_disposition structure
     - MS Visual Studio 6.0 development environment support dropped
     - many zenwinx prototypes changed by replacing short keyword by wchar_t

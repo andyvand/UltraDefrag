@@ -177,10 +177,10 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
 try_again:
     while(clusters_to_process > 0){
         if(jp->termination_router((void *)jp)) break;
-        if(jp->free_regions == NULL) break;
 
-        /* release temporary allocated space */
+        /* release temporarily allocated space */
         release_temp_space_regions(jp);
+        if(jp->free_regions == NULL) break;
         
         /* search for the first free region after start_lcn */
         target_rgn = NULL; tm = winx_xtime();
@@ -262,9 +262,6 @@ try_again:
         }
     
 move_the_file:        
-        /* release temporary allocated space ! */
-        release_temp_space_regions(jp);
-        
         /* target_rgn points to the target free region, so let's move the next portion of the file */
         if(target_rgn == NULL) break;
         clusters_to_move = min(clusters_to_process,target_rgn->length);
@@ -328,9 +325,6 @@ static int optimize_directories(udefrag_job_parameters *jp)
 
     jp->pi.current_operation = VOLUME_OPTIMIZATION;
     jp->pi.moved_clusters = 0;
-
-    /* free as much temporarily allocated space as possible */
-    release_temp_space_regions(jp);
 
     /* exclude not fragmented FAT directories only */
     for(file = jp->filelist; file; file = file->next){
@@ -427,9 +421,6 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
     jp->pi.current_operation = VOLUME_OPTIMIZATION;
     jp->pi.moved_clusters = 0;
 
-    /* free as much temporarily allocated space as possible */
-    release_temp_space_regions(jp);
-
     /* no files are excluded by this task currently */
     for(f = jp->filelist; f; f = f->next){
         f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
@@ -515,7 +506,7 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     jp->pi.moved_clusters = 0;
     jp->pi.total_moves = 0;
     
-    /* free as much temporarily allocated space as possible */
+    /* release temporarily allocated space */
     release_temp_space_regions(jp);
 
     /* no files are excluded by this task currently */
@@ -616,7 +607,7 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
     jp->pi.moved_clusters = 0;
     jp->pi.total_moves = 0;
     
-    /* free as much temporarily allocated space as possible */
+    /* release temporarily allocated space */
     release_temp_space_regions(jp);
     
     /* no files are excluded by this task currently */
