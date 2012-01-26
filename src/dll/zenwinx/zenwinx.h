@@ -395,8 +395,6 @@ typedef struct _winx_volume_information {
     char volume_letter;                    /* must be set by caller! */
     char fs_name[MAX_FS_NAME_LENGTH + 1];  /* the name of the file system */
     wchar_t label[MAX_PATH + 1];           /* volume label */
-    ULONG fat32_mj_version;                /* major number of FAT32 version */
-    ULONG fat32_mn_version;                /* minor number of FAT32 version */
     ULONGLONG total_bytes;                 /* total volume size, in bytes */
     ULONGLONG free_bytes;                  /* amount of free space, in bytes */
     ULONGLONG total_clusters;              /* total number of clusters */

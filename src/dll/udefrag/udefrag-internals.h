@@ -145,7 +145,6 @@ typedef enum {
     FS_FAT12,
     FS_FAT16,
     FS_FAT32,
-    FS_FAT32_UNRECOGNIZED,
     FS_EXFAT,
     FS_NTFS,
     FS_UDF

@@ -23,6 +23,7 @@ HISTORY
     - many zenwinx prototypes changed by replacing short keyword by wchar_t
     - unsafe IncreaseGoogleAnalyticsCounterAsynch routine
       removed from wgx library
+    - useless fat32_xxx fields removed from winx_volume_information structure
 
 
   Version 5.0.2  2012-01-
