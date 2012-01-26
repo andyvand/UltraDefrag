@@ -124,15 +124,6 @@ int get_volume_information(udefrag_job_parameters *jp)
                 break;
             }
         }
-        if(jp->fs_type == FS_FAT32){
-            /* check FAT32 version */
-            if(jp->v_info.fat32_mj_version > 0 || jp->v_info.fat32_mn_version > 0){
-                DebugPrint("cannot recognize FAT32 version %u.%u",
-                    jp->v_info.fat32_mj_version,jp->v_info.fat32_mn_version);
-                /* for safe low level access in future releases */
-                jp->fs_type = FS_FAT32_UNRECOGNIZED;
-            }
-        }
         if(jp->fs_type == FS_UNKNOWN){
             DebugPrint("file system type is not recognized");
             DebugPrint("type independent routines will be used to defragment it");
