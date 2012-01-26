@@ -31,6 +31,8 @@
 
 #include "udefrag-internals.h"
 
+#define DEFAULT_COLOR SYSTEM_SPACE
+
 /*
 * Because of huge number of clusters
 * on contemporary hard drives, we cannot
@@ -74,6 +76,12 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     if(map_size == 0)
         return 0;
     
+    /* get volume information */
+    if(winx_get_volume_information(jp->volume_letter,&jp->v_info) < 0)
+        return (-1);
+    if(jp->v_info.total_clusters == 0)
+        return (-1);
+
     /* allocate memory */
     jp->pi.cluster_map = winx_heap_alloc(map_size);
     if(jp->pi.cluster_map == NULL){
@@ -91,24 +99,10 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
         return (-1);
     }
     
-    /* get volume information */
-    if(winx_get_volume_information(jp->volume_letter,&jp->v_info) < 0){
-fail:
-        winx_heap_free(jp->pi.cluster_map);
-        jp->pi.cluster_map = NULL;
-        winx_heap_free(jp->cluster_map.array);
-        jp->cluster_map.array = NULL;
-        return (-1);
-    }
-
-    if(jp->v_info.total_clusters == 0)
-        goto fail;
-
     /* set internal data */
     jp->pi.cluster_map_size = map_size;
     jp->cluster_map.map_size = map_size;
     jp->cluster_map.n_colors = NUM_OF_SPACE_STATES;
-    jp->cluster_map.default_color = SYSTEM_SPACE;
     jp->cluster_map.field_size = jp->v_info.total_clusters;
     
     jp->cluster_map.clusters_per_cell = jp->cluster_map.field_size / jp->cluster_map.map_size;
@@ -148,12 +142,12 @@ void reset_cluster_map(udefrag_job_parameters *jp)
     memset(jp->cluster_map.array,0,jp->cluster_map.map_size * jp->cluster_map.n_colors * sizeof(ULONGLONG));
     if(jp->cluster_map.opposite_order == 0){
         for(i = 0; i < jp->cluster_map.map_size - 1; i++)
-            jp->cluster_map.array[i][jp->cluster_map.default_color] = jp->cluster_map.clusters_per_cell;
-        jp->cluster_map.array[i][jp->cluster_map.default_color] = jp->cluster_map.clusters_per_last_cell;
+            jp->cluster_map.array[i][DEFAULT_COLOR] = jp->cluster_map.clusters_per_cell;
+        jp->cluster_map.array[i][DEFAULT_COLOR] = jp->cluster_map.clusters_per_last_cell;
     } else {
         for(i = 0; i < jp->cluster_map.map_size - 1; i++)
-            jp->cluster_map.array[i][jp->cluster_map.default_color] = 1;
-        jp->cluster_map.array[i][jp->cluster_map.default_color] = 1;
+            jp->cluster_map.array[i][DEFAULT_COLOR] = 1;
+        jp->cluster_map.array[i][DEFAULT_COLOR] = 1;
     }
 }
 
