@@ -151,8 +151,6 @@ int get_volume_information(udefrag_job_parameters *jp)
 
     /* reset cluster map */
     reset_cluster_map(jp);
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw progress */
     return 0;
 }
 
@@ -168,8 +166,6 @@ static int process_free_region(winx_volume_region *rgn,void *user_defined_data)
     colorize_map_region(jp,rgn->lcn,rgn->length,FREE_SPACE,SYSTEM_SPACE);
     jp->pi.processed_clusters += rgn->length;
     jp->free_regions_count ++;
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw progress */
     return 0; /* continue scan */
 }
 
@@ -250,9 +246,6 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
             length ++;
     }
     DebugPrint("%-12s: %-20I64u: %-20I64u", "mft mirror", start, length);
-    
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw progress */
 }
 
 /**
@@ -472,9 +465,6 @@ static void update_progress_counters(winx_file_info *f,udefrag_job_parameters *j
         jp->f_counters.small_files ++;
     else
         jp->f_counters.tiny_files ++;
-
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw progress */
 }
 
 /**
@@ -586,10 +576,7 @@ static int find_files(udefrag_job_parameters *jp)
     
         /* redraw cluster map */
         colorize_file(jp,f,SYSTEM_SPACE);
-
         //DebugPrint("%ws",f->path);
-        if(jp->progress_router) /* need speedup? */
-            jp->progress_router(jp); /* redraw progress */
         
         /* add file blocks to the binary search tree - after winx_scan_disk! */
         for(block = f->disp.blockmap; block; block = block->next){
@@ -660,6 +647,7 @@ int is_file_locked(winx_file_info *f,udefrag_job_parameters *jp)
 {
     NTSTATUS status;
     HANDLE hFile;
+    int old_color;
     
     /* check whether the file has been passed the check already */
     if(f->user_defined_flags & UD_FILE_NOT_LOCKED)
@@ -677,12 +665,9 @@ int is_file_locked(winx_file_info *f,udefrag_job_parameters *jp)
 
     /*DebugPrintEx(status,"cannot open %ws",f->path);*/
     /* redraw space */
-    colorize_file_as_system(jp,f);
-    /* file is locked by other application, so its state is unknown */
-    /* however, don't reset file information here */
+    old_color = get_file_color(jp,f);
     f->user_defined_flags |= UD_FILE_LOCKED;
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw progress */
+    colorize_file(jp,f,old_color);
     return 1;
 }
 

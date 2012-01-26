@@ -192,7 +192,6 @@ struct file_counters {
     unsigned long giant_files;
 };
 
-typedef void (*udefrag_progress_router)(void /*udefrag_job_parameters*/ *p);
 typedef int  (*udefrag_termination_router)(void /*udefrag_job_parameters*/ *p);
 
 typedef struct _udefrag_job_parameters {
@@ -201,7 +200,6 @@ typedef struct _udefrag_job_parameters {
     udefrag_progress_callback cb;               /* progress update callback */
     udefrag_terminator t;                       /* termination callback */
     void *p;                                    /* pointer to user defined data to be passed to both callbacks */
-    udefrag_progress_router progress_router;        /* address of procedure delivering progress info to the caller */
     udefrag_termination_router termination_router;  /* address of procedure triggering job termination */
     ULONGLONG start_time;                       /* time of the job launch */
     ULONGLONG progress_refresh_time;            /* time of the last progress refresh */
@@ -232,16 +230,12 @@ void remove_fragmentation_reports(udefrag_job_parameters *jp);
 
 void dbg_print_file_counters(udefrag_job_parameters *jp);
 
-/* some volume space states, for internal use only */
-#define SYSTEM_OR_FREE_SPACE          100
-
 int allocate_map(int map_size,udefrag_job_parameters *jp);
 void free_map(udefrag_job_parameters *jp);
 void reset_cluster_map(udefrag_job_parameters *jp);
 void colorize_map_region(udefrag_job_parameters *jp,
         ULONGLONG lcn, ULONGLONG length, int new_color, int old_color);
 void colorize_file(udefrag_job_parameters *jp, winx_file_info *f, int old_color);
-void colorize_file_as_system(udefrag_job_parameters *jp, winx_file_info *f);
 int get_file_color(udefrag_job_parameters *jp, winx_file_info *f);
 void release_temp_space_regions(udefrag_job_parameters *jp);
 void redraw_all_temporary_system_space_as_free(udefrag_job_parameters *jp);

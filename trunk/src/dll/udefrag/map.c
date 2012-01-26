@@ -61,7 +61,6 @@
 int allocate_map(int map_size,udefrag_job_parameters *jp)
 {
     int array_size;
-    ULONGLONG i;
     
     if(jp == NULL)
         return (-1);
@@ -112,30 +111,24 @@ fail:
     jp->cluster_map.default_color = SYSTEM_SPACE;
     jp->cluster_map.field_size = jp->v_info.total_clusters;
     
-    /* reset map */
-    memset(jp->cluster_map.array,0,array_size);
     jp->cluster_map.clusters_per_cell = jp->cluster_map.field_size / jp->cluster_map.map_size;
     if(jp->cluster_map.clusters_per_cell){
-        jp->cluster_map.opposite_order = FALSE;
+        jp->cluster_map.opposite_order = 0;
         jp->cluster_map.clusters_per_last_cell = jp->cluster_map.clusters_per_cell + \
             (jp->cluster_map.field_size - jp->cluster_map.clusters_per_cell * jp->cluster_map.map_size);
         DebugPrint("allocate_map: normal order %I64u : %I64u : %I64u", \
             jp->cluster_map.field_size,jp->cluster_map.clusters_per_cell,jp->cluster_map.clusters_per_last_cell);
-        for(i = 0; i < jp->cluster_map.map_size - 1; i++)
-            jp->cluster_map.array[i][jp->cluster_map.default_color] = jp->cluster_map.clusters_per_cell;
-        jp->cluster_map.array[i][jp->cluster_map.default_color] = jp->cluster_map.clusters_per_last_cell;
     } else {
-        jp->cluster_map.opposite_order = TRUE;
+        jp->cluster_map.opposite_order = 1;
         jp->cluster_map.cells_per_cluster = jp->cluster_map.map_size / jp->cluster_map.field_size;
         jp->cluster_map.cells_per_last_cluster = jp->cluster_map.cells_per_cluster + \
             (jp->cluster_map.map_size - jp->cluster_map.cells_per_cluster * jp->cluster_map.field_size);
         DebugPrint("allocate_map: opposite order %I64u : %I64u : %I64u", \
             jp->cluster_map.field_size,jp->cluster_map.cells_per_cluster,jp->cluster_map.cells_per_last_cluster);
-        for(i = 0; i < jp->cluster_map.map_size - 1; i++)
-            jp->cluster_map.array[i][jp->cluster_map.default_color] = 1;
-        jp->cluster_map.array[i][jp->cluster_map.default_color] = 1;
     }
 
+    /* reset map */
+    reset_cluster_map(jp);
     return 0;
 }
 
@@ -153,7 +146,7 @@ void reset_cluster_map(udefrag_job_parameters *jp)
         return;
 
     memset(jp->cluster_map.array,0,jp->cluster_map.map_size * jp->cluster_map.n_colors * sizeof(ULONGLONG));
-    if(jp->cluster_map.opposite_order == FALSE){
+    if(jp->cluster_map.opposite_order == 0){
         for(i = 0; i < jp->cluster_map.map_size - 1; i++)
             jp->cluster_map.array[i][jp->cluster_map.default_color] = jp->cluster_map.clusters_per_cell;
         jp->cluster_map.array[i][jp->cluster_map.default_color] = jp->cluster_map.clusters_per_last_cell;
@@ -161,42 +154,6 @@ void reset_cluster_map(udefrag_job_parameters *jp)
         for(i = 0; i < jp->cluster_map.map_size - 1; i++)
             jp->cluster_map.array[i][jp->cluster_map.default_color] = 1;
         jp->cluster_map.array[i][jp->cluster_map.default_color] = 1;
-    }
-}
-
-/**
- * @brief colorize_map_region helper.
- */
-static void colorize_system_or_free_region(udefrag_job_parameters *jp,
-                        ULONGLONG lcn, ULONGLONG length, int new_color)
-{
-    winx_volume_region *r;
-    ULONGLONG n, current_cluster, clusters_to_process;
-    
-    current_cluster = lcn;
-    clusters_to_process = length;
-    for(r = jp->free_regions; r; r = r->next){
-        /* break if current region follows specified range */
-        if(r->lcn >= lcn + length){
-            if(clusters_to_process)
-                colorize_map_region(jp,current_cluster,clusters_to_process,new_color,SYSTEM_SPACE);
-            break;
-        }
-        /* skip preceding regions */
-        if(r->lcn >= current_cluster){
-            if(r->lcn > current_cluster){
-                n = r->lcn - current_cluster;
-                colorize_map_region(jp,current_cluster,n,new_color,SYSTEM_SPACE);
-                current_cluster += n;
-                clusters_to_process -= n;
-            }
-            /* now r->lcn is equal to current_cluster always */
-            n = min(r->length,clusters_to_process);
-            colorize_map_region(jp,current_cluster,n,new_color,FREE_SPACE);
-            current_cluster += n;
-            clusters_to_process -= n;
-        }
-        if(r->next == jp->free_regions) break;
     }
 }
 
@@ -221,12 +178,6 @@ void colorize_map_region(udefrag_job_parameters *jp,
     if(length == 0)
         return;
     
-    /* handle special cases */
-    if(old_color == SYSTEM_OR_FREE_SPACE){
-        colorize_system_or_free_region(jp,lcn,length,new_color);
-        return;
-    }
-    
     /* validate colors */
     if(new_color < 0 || new_color >= jp->cluster_map.n_colors)
         return;
@@ -238,7 +189,7 @@ void colorize_map_region(udefrag_job_parameters *jp,
     if(new_color == old_color)
         return;
     
-    if(jp->cluster_map.opposite_order == FALSE){
+    if(jp->cluster_map.opposite_order == 0){
         cell = lcn / jp->cluster_map.clusters_per_cell;
         if(cell >= jp->cluster_map.map_size)
             return;
@@ -323,6 +274,9 @@ int get_file_color(udefrag_job_parameters *jp, winx_file_info *f)
     /* show $MFT file in dark magenta color */
     if(is_mft(f,jp))
         return MFT_SPACE;
+    
+    if(is_locked(f))
+        return is_over_limit(f) ? SYSTEM_OVER_LIMIT_SPACE : SYSTEM_SPACE;
 
     /* show excluded files as not fragmented */
     if(is_fragmented(f) && !is_excluded(f))
@@ -359,28 +313,6 @@ void colorize_file(udefrag_job_parameters *jp, winx_file_info *f, int old_color)
         return;
     
     new_color = get_file_color(jp,f);
-    for(block = f->disp.blockmap; block; block = block->next){
-        colorize_map_region(jp,block->lcn,block->length,new_color,old_color);
-        if(block->next == f->disp.blockmap) break;
-    }
-}
-
-/**
- * @brief Colorizes space belonging to the file as system space.
- */
-void colorize_file_as_system(udefrag_job_parameters *jp, winx_file_info *f)
-{
-    winx_blockmap *block;
-    int new_color, old_color;
-    
-    if(jp == NULL || f == NULL)
-        return;
-    
-    /* never draw MFT in green */
-    if(is_mft(f,jp)) return;
-    
-    new_color = is_over_limit(f) ? SYSTEM_OVER_LIMIT_SPACE : SYSTEM_SPACE;
-    old_color = get_file_color(jp,f);
     for(block = f->disp.blockmap; block; block = block->next){
         colorize_map_region(jp,block->lcn,block->length,new_color,old_color);
         if(block->next == f->disp.blockmap) break;
