@@ -543,13 +543,10 @@ int move_file(winx_file_info *f,
     Status = winx_defrag_fopen(f,WINX_OPEN_FOR_MOVE,&hFile);
     if(Status != STATUS_SUCCESS){
         DebugPrintEx(Status,"move_file: cannot open %ws",f->path);
-        /* redraw space */
-        colorize_file_as_system(jp,f);
-        /* however, don't reset file information here */
         f->user_defined_flags |= UD_FILE_LOCKED;
+        /* redraw space */
+        colorize_file(jp,f,old_color);
         /*jp->pi.processed_clusters += length;*/
-        if(jp->progress_router)
-            jp->progress_router(jp); /* redraw progress */
         jp->p_counters.moving_time += winx_xtime() - time;
         return (-1);
     }
@@ -636,8 +633,6 @@ int move_file(winx_file_info *f,
     /* redraw target space */
     new_color = get_file_color(jp,&new_file_info);
     colorize_map_region(jp,target,length,new_color,FREE_SPACE);
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw map */
             
     /* remove target space from the free space pool - before the following map redraw */
     jp->free_regions = winx_sub_volume_region(jp->free_regions,target,length);
@@ -690,8 +685,6 @@ int move_file(winx_file_info *f,
             jp->pi.fragments -= (f->disp.fragments - 1);
         }
     }
-    if(jp->progress_router)
-        jp->progress_router(jp); /* redraw map and update statistics */
 
     /* new block map is available - use it */
     for(block = f->disp.blockmap; block; block = block->next){

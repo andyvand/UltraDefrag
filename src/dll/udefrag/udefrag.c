@@ -257,69 +257,8 @@ static void deliver_progress_info(udefrag_job_parameters *jp,int completion_stat
     }
 }
 
-/*
-* This technique forces to refresh progress
-* indication not so smoothly as desired.
-*/
 /**
- * @internal
- * @brief Delivers progress information to the caller,
- * no more frequently than specified in UD_REFRESH_INTERVAL
- * environment variable.
  */
-void progress_router(void *p)
-{
-    udefrag_job_parameters *jp = (udefrag_job_parameters *)p;
-
-    if(jp->cb){
-        /* ensure that jp->udo.refresh_interval exceeded */
-        if((winx_xtime() - jp->progress_refresh_time) > jp->udo.refresh_interval){
-            deliver_progress_info(jp,jp->pi.completion_status);
-        } else if(jp->pi.completion_status){
-            /* deliver completed job information anyway */
-            deliver_progress_info(jp,jp->pi.completion_status);
-        }
-    }
-}
-
-/**
- * @internal
- * @brief Calls terminator registered by caller.
- * When time interval specified in UD_TIME_LIMIT
- * environment variable elapses, it terminates
- * the job immediately.
- */
-int termination_router(void *p)
-{
-    udefrag_job_parameters *jp = (udefrag_job_parameters *)p;
-    int result;
-
-    /* check for time limit */
-    if(jp->udo.time_limit){
-        if((winx_xtime() - jp->start_time) / 1000 > jp->udo.time_limit){
-            winx_dbg_print_header(0,0,"@ time limit exceeded @");
-            return 1;
-        }
-    }
-
-    /* ask caller */
-    if(jp->t){
-        result = jp->t(jp->p);
-        if(result){
-            winx_dbg_print_header(0,0,"*");
-            winx_dbg_print_header(0x20,0,"termination requested by caller");
-            winx_dbg_print_header(0,0,"*");
-        }
-        return result;
-    }
-
-    /* continue */
-    return 0;
-}
-
-/*
-* Another multithreaded technique delivers progress info more smoothly.
-*/
 static int terminator(void *p)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)p;
@@ -340,6 +279,8 @@ static int terminator(void *p)
     return 0;
 }
 
+/**
+ */
 static int killer(void *p)
 {
     winx_dbg_print_header(0,0,"*");
@@ -348,6 +289,8 @@ static int killer(void *p)
     return 1;
 }
 
+/**
+ */
 static DWORD WINAPI start_job(LPVOID p)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)p;
@@ -464,11 +407,12 @@ int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
     jp.t = t;
     jp.p = p;
 
-    /*jp.progress_router = progress_router;
-    jp.termination_router = termination_router;*/
-    /* we'll deliver progress info from the current thread */
-    jp.progress_router = NULL;
-    /* we'll decide whether to kill or not from the current thread */
+    /*
+    * We deliver the progress information from
+    * the current thread as well as decide whether
+    * to terminate the job or not here. This 
+    * multi-threaded technique works quite smoothly.
+    */
     jp.termination_router = terminator;
 
     jp.start_time = jp.p_counters.overall_time = winx_xtime();
@@ -537,8 +481,6 @@ int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
 
     /* cleanup */
     deliver_progress_info(&jp,jp.pi.completion_status);
-    /*if(jp.progress_router)
-        jp.progress_router(&jp);*/ /* redraw progress */
     destroy_lists(&jp);
     free_map(&jp);
     release_options(&jp);
