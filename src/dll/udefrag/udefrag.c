@@ -232,7 +232,7 @@ static void deliver_progress_info(udefrag_job_parameters *jp,int completion_stat
                     }
                 }
                 if(maximum == 0)
-                    jp->pi.cluster_map[i] = SYSTEM_SPACE;
+                    jp->pi.cluster_map[i] = DEFAULT_COLOR;
                 else
                     jp->pi.cluster_map[i] = (char)index;
             }
