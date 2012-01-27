@@ -208,7 +208,7 @@ static void deliver_progress_info(udefrag_job_parameters *jp,int completion_stat
             mft_zone_detected = free_cell_detected = 0;
             maximum = 1; /* for jp->cluster_map.opposite_order */
             if(!jp->cluster_map.opposite_order){
-                if(i == jp->cluster_map.map_size - 1)
+                if(i == jp->cluster_map.map_size - jp->cluster_map.unused_cells - 1)
                     maximum = jp->cluster_map.clusters_per_last_cell;
                 else
                     maximum = jp->cluster_map.clusters_per_cell;

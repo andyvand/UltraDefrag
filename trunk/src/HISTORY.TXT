@@ -28,6 +28,7 @@ HISTORY
 
   Version 5.0.2  2012-01-
   ------------------------------------------------------------------------------
+    - representation of disk clusters on the cluster map was improved
     - one little bug in MFT Zone redraw was fixed
     - Installer: forced default action for .luar files to be "view"
     - the following translations were added:

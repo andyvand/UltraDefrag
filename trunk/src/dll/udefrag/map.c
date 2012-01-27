@@ -61,6 +61,7 @@
 int allocate_map(int map_size,udefrag_job_parameters *jp)
 {
     int array_size;
+    ULONGLONG used_cells;
     
     if(jp == NULL)
         return (-1);
@@ -106,10 +107,16 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     jp->cluster_map.clusters_per_cell = jp->cluster_map.field_size / jp->cluster_map.map_size;
     if(jp->cluster_map.clusters_per_cell){
         jp->cluster_map.opposite_order = 0;
-        jp->cluster_map.clusters_per_last_cell = jp->cluster_map.clusters_per_cell + \
-            (jp->cluster_map.field_size - jp->cluster_map.clusters_per_cell * jp->cluster_map.map_size);
-        DebugPrint("allocate_map: normal order %I64u : %I64u : %I64u", \
-            jp->cluster_map.field_size,jp->cluster_map.clusters_per_cell,jp->cluster_map.clusters_per_last_cell);
+        if(jp->cluster_map.clusters_per_cell * jp->cluster_map.map_size != jp->cluster_map.field_size)
+            jp->cluster_map.clusters_per_cell ++; /* ensure that the map will cover entire disk */
+        used_cells = jp->cluster_map.field_size / jp->cluster_map.clusters_per_cell;
+        if(jp->cluster_map.clusters_per_cell * used_cells != jp->cluster_map.field_size) used_cells ++;
+        jp->cluster_map.unused_cells = jp->cluster_map.map_size - used_cells;
+        jp->cluster_map.clusters_per_last_cell = jp->cluster_map.field_size - \
+           jp->cluster_map.clusters_per_cell * (used_cells - 1);
+        DebugPrint("allocate_map: normal order %I64u : %I64u : %I64u: %I64u", \
+            jp->cluster_map.field_size,jp->cluster_map.clusters_per_cell,
+            jp->cluster_map.clusters_per_last_cell,jp->cluster_map.unused_cells);
     } else {
         jp->cluster_map.opposite_order = 1;
         jp->cluster_map.cells_per_cluster = jp->cluster_map.map_size / jp->cluster_map.field_size;
@@ -139,9 +146,11 @@ void reset_cluster_map(udefrag_job_parameters *jp)
 
     memset(jp->cluster_map.array,0,jp->cluster_map.map_size * jp->cluster_map.n_colors * sizeof(ULONGLONG));
     if(jp->cluster_map.opposite_order == 0){
-        for(i = 0; i < jp->cluster_map.map_size - 1; i++)
+        for(i = 0; i < jp->cluster_map.map_size - jp->cluster_map.unused_cells - 1; i++)
             jp->cluster_map.array[i][DEFAULT_COLOR] = jp->cluster_map.clusters_per_cell;
         jp->cluster_map.array[i][DEFAULT_COLOR] = jp->cluster_map.clusters_per_last_cell;
+        for(j = 0, i++; j < jp->cluster_map.unused_cells; j++)
+            jp->cluster_map.array[i+j][UNUSED_MAP_SPACE] = jp->cluster_map.clusters_per_cell;
     } else {
         for(i = 0; i < jp->cluster_map.map_size - jp->cluster_map.unused_cells; i++)
             jp->cluster_map.array[i][DEFAULT_COLOR] = 1;
