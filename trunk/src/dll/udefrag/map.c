@@ -31,8 +31,6 @@
 
 #include "udefrag-internals.h"
 
-#define DEFAULT_COLOR SYSTEM_SPACE
-
 /*
 * Because of huge number of clusters
 * on contemporary hard drives, we cannot
@@ -115,10 +113,10 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     } else {
         jp->cluster_map.opposite_order = 1;
         jp->cluster_map.cells_per_cluster = jp->cluster_map.map_size / jp->cluster_map.field_size;
-        jp->cluster_map.cells_per_last_cluster = jp->cluster_map.cells_per_cluster + \
-            (jp->cluster_map.map_size - jp->cluster_map.cells_per_cluster * jp->cluster_map.field_size);
+        jp->cluster_map.unused_cells = jp->cluster_map.map_size - \
+            jp->cluster_map.cells_per_cluster * jp->cluster_map.field_size;
         DebugPrint("allocate_map: opposite order %I64u : %I64u : %I64u", \
-            jp->cluster_map.field_size,jp->cluster_map.cells_per_cluster,jp->cluster_map.cells_per_last_cluster);
+            jp->cluster_map.field_size,jp->cluster_map.cells_per_cluster,jp->cluster_map.unused_cells);
     }
 
     /* reset map */
@@ -131,7 +129,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
  */
 void reset_cluster_map(udefrag_job_parameters *jp)
 {
-    ULONGLONG i;
+    ULONGLONG i, j;
     
     if(jp == NULL)
         return;
@@ -145,9 +143,10 @@ void reset_cluster_map(udefrag_job_parameters *jp)
             jp->cluster_map.array[i][DEFAULT_COLOR] = jp->cluster_map.clusters_per_cell;
         jp->cluster_map.array[i][DEFAULT_COLOR] = jp->cluster_map.clusters_per_last_cell;
     } else {
-        for(i = 0; i < jp->cluster_map.map_size - 1; i++)
+        for(i = 0; i < jp->cluster_map.map_size - jp->cluster_map.unused_cells; i++)
             jp->cluster_map.array[i][DEFAULT_COLOR] = 1;
-        jp->cluster_map.array[i][DEFAULT_COLOR] = 1;
+        for(j = 0; j < jp->cluster_map.unused_cells; j++)
+            jp->cluster_map.array[i+j][UNUSED_MAP_SPACE] = 1;
     }
 }
 
@@ -217,17 +216,6 @@ void colorize_map_region(udefrag_job_parameters *jp,
                     jp->cluster_map.array[cell + i][j] = 0;
             }
             jp->cluster_map.array[cell + i][new_color] = 1;
-        }
-        /* colorize remaining cells as unused */
-        if(lcn + length == jp->v_info.total_clusters){
-            cell += ncells;
-            ncells = (jp->cluster_map.cells_per_last_cluster - jp->cluster_map.cells_per_cluster);
-            
-            for(i = 0; i < ncells; i++){
-                for(j = 0; j < jp->cluster_map.n_colors; j++)
-                    jp->cluster_map.array[cell + i][j] = 0;
-                jp->cluster_map.array[cell + i][UNUSED_MAP_SPACE] = 1;
-            }
         }
     }
 }
