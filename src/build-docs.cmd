@@ -51,11 +51,7 @@ move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
 
 :: clean up the handbook
 pushd ..\doc\html\handbook\doxy-doc\html
-del /Q  tabs.css
-del /Q  bc_*.png
-del /Q  nav_*.png
-del /Q  open.png
-del /Q  closed.png
+del /Q tabs.css bc_*.png nav_*.png open.png closed.png
 popd
 
 echo.
