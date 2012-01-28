@@ -324,7 +324,7 @@ void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 /************************************************************/
 
 /**
- * @brief Searches for the first moveable file block
+ * @brief Searches for the first movable file block
  * after the specified cluster on the volume.
  * @param[in] jp job parameters.
  * @param[in,out] min_lcn pointer to variable containing
