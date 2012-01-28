@@ -31,7 +31,8 @@
 
 #include "main.h"
 
-#define VERSION_URL "http://ultradefrag.sourceforge.net/version.ini"
+#define VERSION_URL    "http://ultradefrag.sourceforge.net/version.ini"
+#define VERSION_URL_XP "http://ultradefrag.sourceforge.net/version_xp.ini"
 #define MAX_VERSION_FILE_LEN 32
 #define MAX_ANNOUNCEMENT_LEN 128
 
@@ -62,6 +63,8 @@ static char *GetLatestVersion(void)
     HMODULE hUrlmonDLL = NULL;
     HRESULT result;
     FILE *f;
+    OSVERSIONINFO osvi;
+    BOOL bIsWindowsXPorLater;
     int res;
     int i;
     
@@ -79,8 +82,21 @@ static char *GetLatestVersion(void)
         return NULL;
     }
     
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+
+    GetVersionEx(&osvi);
+
+    bIsWindowsXPorLater = 
+       ( (osvi.dwMajorVersion > 5) ||
+       ( (osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion >= 1) ));
+
     /* download a file */
-    result = pURLDownloadToCacheFile(NULL,VERSION_URL,version_ini_path,MAX_PATH,0,NULL);
+    if(bIsWindowsXPorLater)
+        result = pURLDownloadToCacheFile(NULL,VERSION_URL_XP,version_ini_path,MAX_PATH,0,NULL);
+    else
+        result = pURLDownloadToCacheFile(NULL,VERSION_URL,version_ini_path,MAX_PATH,0,NULL);
+
     version_ini_path[MAX_PATH] = 0;
     if(result != S_OK){
         if(result == E_OUTOFMEMORY)
