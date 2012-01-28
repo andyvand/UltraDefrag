@@ -583,52 +583,6 @@ static int find_files(udefrag_job_parameters *jp)
 }
 
 /**
- * @brief Defines whether the file is from
- * well known locked files list or not.
- * @note Skips $Mft file, because it is
- * intended to be drawn in magenta color.
- */
-static int is_well_known_locked_file(winx_file_info *f,udefrag_job_parameters *jp)
-{
-    int length;
-    wchar_t mft_name[] = L"$Mft";
-    wchar_t config_sign[] = L"\\system32\\config\\";
-    
-    length = wcslen(f->path);
-
-    /* search for NTFS internal files */
-    if(length >= 9){ /* to ensure that we have at least \??\X:\$x */
-        if(f->path[7] == '$'){
-            if(length == 11){
-                if(winx_wcsistr(f->name,mft_name))
-                    return 0; /* skip $mft */
-            }
-            return 1;
-        }
-    }
-    
-    if(winx_wcsistr(f->name,L"pagefile.sys"))
-        return 1;
-    if(winx_wcsistr(f->name,L"hiberfil.sys"))
-        return 1;
-    if(winx_wcsistr(f->name,L"ntuser.dat"))
-        return 1;
-
-    if(winx_wcsistr(f->path,config_sign)){
-        if(winx_wcsistr(f->name,L"sam"))
-            return 1;
-        if(winx_wcsistr(f->name,L"system"))
-            return 1;
-        if(winx_wcsistr(f->name,L"software"))
-            return 1;
-        if(winx_wcsistr(f->name,L"security"))
-            return 1;
-    }
-    
-    return 0;
-}
-
-/**
  * @brief Defines whether the file
  * is locked by system or not.
  * @return Nonzero value indicates
@@ -663,6 +617,43 @@ int is_file_locked(winx_file_info *f,udefrag_job_parameters *jp)
 }
 
 /**
+ * @brief Defines whether the file is from
+ * well known locked files list or not.
+ * @note Optimized for speed.
+ */
+static int is_well_known_locked_file(winx_file_info *f,udefrag_job_parameters *jp)
+{
+    /* these files are usually locked on Windows XP */
+    wchar_t *locked_files[] = {
+        L"$Bitmap",
+        L"$Extend\\$ObjId",
+        L"$Extend\\$UsnJrnl",
+        L"$LogFile",
+        L"$MFT::$BITMAP",
+        L"$Secure",
+        NULL
+    };
+    int i, length = wcslen(f->path);
+    
+    /* search for well known locked NTFS meta files */
+    if(length >= 9){ /* ensure that we have at least \??\X:\$x */
+        if(f->path[7] == '$'){
+            for(i = 0; locked_files[i]; i++){
+                if(winx_wcsistr(f->path,locked_files[i]))
+                    return 1;
+            }
+        }
+    }
+
+    /* check for paging and hibernation files */
+    if(winx_wcsistr(f->name,L"pagefile.sys"))
+        return 1;
+    if(winx_wcsistr(f->name,L"hiberfil.sys"))
+        return 1;
+    return 0;
+}
+
+/**
  * @brief Searches for well known locked files
  * and applies their dispositions to the map.
  * @details Resets f->disp structure of locked files.
@@ -672,6 +663,7 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
 {
     winx_file_info *f;
     ULONGLONG time;
+    ULONGLONG n = 0;
 
     winx_dbg_print_header(0,0,"search for well known locked files...");
     time = winx_xtime();
@@ -682,12 +674,16 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
                 if(!is_file_locked(f,jp)){
                     /* possibility of this case should be reduced */
                     DebugPrint("false detection: %ws",f->path);
+                } else {
+                    DebugPrint("true detection:  %ws",f->path);
+                    n ++;
                 }
             }
         }
         if(f->next == jp->filelist) break;
     }
 
+    DebugPrint("%I64u locked files found",n);
     winx_dbg_print_header(0,0,"well known locked files search completed in %I64u ms",
         winx_xtime() - time);
 }
