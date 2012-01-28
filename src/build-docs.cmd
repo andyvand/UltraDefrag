@@ -30,6 +30,8 @@ if "%ULTRADFGVER%" equ "" (
     if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 )
 
+doxygen --version >nul 2>&1 || goto fail
+
 call :compile_docs .                                 || goto fail
 call :compile_docs .\dll\udefrag        udefrag.dll  || goto fail
 call :compile_docs .\dll\wgx            wgx          || goto fail
