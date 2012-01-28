@@ -51,7 +51,6 @@ move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
 
 :: clean up the handbook
 pushd ..\doc\html\handbook\doxy-doc\html
-del /Q  doxygen.png
 del /Q  tabs.css
 del /Q  bc_*.png
 del /Q  nav_*.png
@@ -76,15 +75,11 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
     rd /s /q doxy-doc
     lua "%~dp0\tools\set-doxyfile-project-number.lua" Doxyfile %ULTRADFGVER% || goto compilation_failed
     doxygen || goto compilation_failed
-    if not "%~n1" == "handbook" copy /Y .\rsc\*.* .\doxy-doc\html\
-    if "%~n1" == "handbook" (
-        copy /Y .\rsc\sflogo.gif .\doxy-doc\html\
-        copy /Y .\rsc\.htaccess .\doxy-doc\html\
-    )
 
-    del /Q  .\doxy-doc\html\header.html >nul 2>&1
-    del /Q  .\doxy-doc\html\footer.html >nul 2>&1
-    del /Q  .\doxy-doc\html\*.dox >nul 2>&1
+    if exist .\rsc\sflogo.gif copy /Y .\rsc\sflogo.gif .\doxy-doc\html\
+    if exist .\rsc\.htaccess  copy /Y .\rsc\.htaccess  .\doxy-doc\html\
+
+    del /Q .\doxy-doc\html\doxygen.png
 
     if "%2" neq "" (
         xcopy /I /Y /Q /S .\doxy-doc\html "%~dp0\doxy-doc\%2\html" || goto compilation_failed
