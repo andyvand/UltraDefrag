@@ -518,7 +518,7 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     time = start_timing("file moving to front",jp);
 
     /* do the job */
-    file = prb_t_cur(t);
+    file = (winx_file_info *)prb_t_cur(t);
     while(file){
         rgn = find_first_free_region(jp,*start_lcn,file->disp.clusters);
         if(rgn == NULL) break;
