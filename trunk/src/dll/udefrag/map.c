@@ -244,11 +244,7 @@ int is_mft(winx_file_info *f,udefrag_job_parameters *jp)
     if(jp->fs_type != FS_NTFS)
         return 0;
     
-    if(f->path == NULL || f->name == NULL)
-        return 0;
-    
     length = wcslen(f->path);
-
     if(length == 11){
         if(winx_wcsistr(f->name,mft_name))
             return 1;

@@ -669,7 +669,7 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
     time = winx_xtime();
     
     for(f = jp->filelist; f; f = f->next){
-        if(f->disp.blockmap && f->path && f->name){ /* otherwise nothing to redraw */
+        if(f->disp.blockmap){ /* otherwise nothing to redraw */
             if(is_well_known_locked_file(f,jp)){
                 if(!is_file_locked(f,jp)){
                     /* possibility of this case should be reduced */
@@ -747,13 +747,8 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
     winx_file_info *f;
     
     for(f = jp->filelist; f; f = f->next){
-        if(is_fragmented(f)){
-            /* exclude files with empty path */
-            if(f->path != NULL){
-                if(f->path[0] != 0)
-                    expand_fragmented_files_list(f,jp);
-            }
-        }
+        if(is_fragmented(f))
+            expand_fragmented_files_list(f,jp);
         if(f->next == jp->filelist) break;
     }
 }

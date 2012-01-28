@@ -644,6 +644,35 @@ static void ftw_remove_resident_streams(winx_file_info **filelist)
 }
 
 /**
+ * @internal
+ * @brief Removes invalid streams from the file list.
+ */
+static void ftw_remove_invalid_streams(winx_file_info **filelist)
+{
+    winx_file_info *f, *head, *next = NULL;
+    int invalid_entry;
+
+    for(f = *filelist; f; f = next){
+        head = *filelist;
+        next = f->next;
+        invalid_entry = 0;
+        if(f->path == NULL){
+            invalid_entry = 1;
+        } else if(f->path[0] == 0){
+            invalid_entry = 1;
+        }
+        if(invalid_entry){
+            winx_heap_free(f->name);
+            winx_heap_free(f->path);
+            winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
+            winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+        }
+        if(*filelist == NULL) break;
+        if(next == head) break;
+    }
+}
+
+/**
  * @brief Returns list of files contained
  * in directory, and all its subdirectories
  * if WINX_FTW_RECURSIVE flag is passed.
@@ -689,6 +718,8 @@ static void ftw_remove_resident_streams(winx_file_info **filelist)
  *   all the file disposition structure fields to zero.
  * - WINX_FTW_DUMP_FILES flag must be set to accept
  *   WINX_FTW_SKIP_RESIDENT_STREAMS.
+ * - Files with empty paths become excluded from the list,
+ *   but may pass through the filter callback.
  * @par Example:
  * @code
  * int filter(winx_file_info *f, void *user_defined_data)
@@ -748,7 +779,9 @@ winx_file_info *winx_ftw(wchar_t *path, int flags,
       
     if(flags & WINX_FTW_SKIP_RESIDENT_STREAMS)
         ftw_remove_resident_streams(&filelist);
-        
+    
+    /* get rid of invalid entries */
+    ftw_remove_invalid_streams(&filelist);
     return filelist;
 }
 
@@ -818,6 +851,8 @@ winx_file_info *winx_scan_disk(char volume_letter, int flags,
 cleanup:
     if(flags & WINX_FTW_SKIP_RESIDENT_STREAMS)
         ftw_remove_resident_streams(&filelist);
+    /* get rid of invalid entries */
+    ftw_remove_invalid_streams(&filelist);
         
 done:
     winx_dbg_print_header(0,0,"winx_scan_disk completed in %I64u ms",

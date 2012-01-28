@@ -53,12 +53,6 @@ void release_temp_space_regions(udefrag_job_parameters *jp)
  */
 int can_move(winx_file_info *f)
 {
-    /* skip files with empty path */
-    if(f->path == NULL)
-        return 0;
-    if(f->path[0] == 0)
-        return 0;
-    
     /* skip files already moved to front in optimization */
     if(is_moved_to_front(f))
         return 0;
@@ -493,8 +487,7 @@ int move_file(winx_file_info *f,
     }
     
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
-        if(f->path) DebugPrint("%ws",f->path);
-        else DebugPrint("empty filename");
+        DebugPrint("%ws",f->path);
         DebugPrint("vcn = %I64u, length = %I64u, target = %I64u",vcn,length,target);
     }
     
