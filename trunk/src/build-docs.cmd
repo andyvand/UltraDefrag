@@ -39,6 +39,7 @@ call :compile_docs ..\doc\html\handbook              || goto fail
 :: compile PDF documentation if MiKTeX is installed
 pdflatex --version >nul 2>&1
 if not errorlevel 1 (
+    mkdir .\release
     call :compile_pdf ..\doc\html\handbook a4     UltraDefrag_Handbook || goto fail
     call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook || goto fail
 )
@@ -142,7 +143,7 @@ rem Example:  call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook
     :skip
     endlocal
 
-    if "%3" neq "" rename refman.pdf %3_%ULTRADFGVER%_%2.pdf || goto compilation_failed
+    if "%3" neq "" copy /Y refman.pdf "%~dp0\release\%3_%ULTRADFGVER%_%2.pdf" || goto compilation_failed
 
     popd
     del /f /q Doxyfile_%2

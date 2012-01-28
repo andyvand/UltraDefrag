@@ -50,18 +50,26 @@ mkdir bin\amd64
 mkdir bin\ia64
 
 :: copy source files to obj directory
-xcopy /I /Y /Q .\bootexctrl  .\obj\bootexctrl
-xcopy /I /Y /Q .\hibernate   .\obj\hibernate
-xcopy /I /Y /Q .\console     .\obj\console
-xcopy /I /Y /Q .\native      .\obj\native
-xcopy /I /Y /Q .\include     .\obj\include
-xcopy /I /Y /Q .\share       .\obj\share
-xcopy /I /Y /Q .\dll\udefrag .\obj\udefrag
-xcopy /I /Y /Q .\dll\zenwinx .\obj\zenwinx
-xcopy /I /Y /Q .\gui         .\obj\gui
-xcopy /I /Y /Q .\gui\res     .\obj\gui\res
-xcopy /I /Y /Q .\lua5.1      .\obj\lua5.1
-xcopy /I /Y /Q .\dll\wgx     .\obj\wgx
+(
+    echo doxyfile
+    echo .dox
+    echo .html
+) >"%~n0_exclude.txt"
+
+xcopy .\bootexctrl  .\obj\bootexctrl /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\console     .\obj\console    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\dll\udefrag .\obj\udefrag    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\dll\wgx     .\obj\wgx        /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\dll\zenwinx .\obj\zenwinx    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\gui         .\obj\gui        /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\gui\res     .\obj\gui\res    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\hibernate   .\obj\hibernate  /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\include     .\obj\include    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\lua5.1      .\obj\lua5.1     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\native      .\obj\native     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\share       .\obj\share      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+
+del /f /q "%~n0_exclude.txt"
 
 :: copy external files on which udefrag.exe command line tool depends
 copy /Y .\obj\share\*.* .\obj\console\
