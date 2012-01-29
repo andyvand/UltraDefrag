@@ -34,6 +34,7 @@
  *
  * @htmlonly
  * <table style="border:none; margin-left:20px;">
+ * <tr><td>• Arabic                       </td><td>-</td><td> Ahmed Arbaoui</td></tr>
  * <tr><td>• Belarusian                   </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Bosanski                     </td><td>-</td><td> Timur Ljubunčić</td></tr>
  * <tr><td>• Bulgarian                    </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
@@ -131,6 +132,7 @@
  *
  * @latexonly
  * \par\begin{Indent}\begin{xtabular}{p{0.4\linewidth}cl}
+ * • Arabic                        & - & Ahmed Arbaoui \\
  * • Belarusian                    & - & Dmitri Arkhangelski \\
  * • Bosanski                      & - & Timur Ljubuncic \\
  * • Bulgarian                     & - & Dmitri Arkhangelski \\
