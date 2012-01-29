@@ -503,22 +503,14 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     ULONGLONG time;
     char buffer[32];
     
+    time = start_timing("file moving to front",jp);
     jp->pi.moved_clusters = 0;
     jp->pi.total_moves = 0;
-    
     /* release temporarily allocated space */
     release_temp_space_regions(jp);
 
-    /* no files are excluded by this task currently */
-    for(file = jp->filelist; file; file = file->next){
-        file->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-        if(file->next == jp->filelist) break;
-    }
-
-    time = start_timing("file moving to front",jp);
-
     /* do the job */
-    file = (winx_file_info *)prb_t_cur(t);
+    file = prb_t_cur(t);
     while(file){
         rgn = find_first_free_region(jp,*start_lcn,file->disp.clusters);
         if(rgn == NULL) break;
@@ -530,7 +522,7 @@ static void move_files_to_front(udefrag_job_parameters *jp,
             jp->pi.total_moves ++;
         }
         file->user_defined_flags |= UD_FILE_MOVED_TO_FRONT;
-        file = (winx_file_info *)prb_t_next(t);
+        file = prb_t_next(t);
     }
     
     /* display amount of moved data */
@@ -596,7 +588,7 @@ static int is_block_quite_small(udefrag_job_parameters *jp,
  */
 static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
 {
-    winx_file_info *file, *first_file;
+    winx_file_info *first_file;
     winx_blockmap *first_block;
     ULONGLONG lcn, min_lcn;
     int move_block = 0;
@@ -604,19 +596,11 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
     ULONGLONG time;
     char buffer[32];
     
+    time = start_timing("file moving to end",jp);
     jp->pi.moved_clusters = 0;
     jp->pi.total_moves = 0;
-    
     /* release temporarily allocated space */
     release_temp_space_regions(jp);
-    
-    /* no files are excluded by this task currently */
-    for(file = jp->filelist; file; file = file->next){
-        file->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-        if(file->next == jp->filelist) break;
-    }
-
-    time = start_timing("file moving to end",jp);
 
     /* do the job */
     min_lcn = *start_lcn;
@@ -701,6 +685,12 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
         return (-1);
 
     time = start_timing("optimization",jp);
+
+    /* no files are excluded by this task currently */
+    for(f = jp->filelist; f; f = f->next){
+        f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        if(f->next == jp->filelist) break;
+    }
 
     /* build tree of files sorted by path */
     pt = prb_create(files_compare,NULL,NULL);
