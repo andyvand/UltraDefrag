@@ -1,6 +1,6 @@
 /*
 * This script redirects English (US) page to the translated one when it is reasonable.
-* Copyright (C) 2011-2012 by Dmitri Arkhangelski (dmitriar@gmail.com).
+* Copyright (C) 2011-2012 Dmitri Arkhangelski (dmitriar@gmail.com).
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
