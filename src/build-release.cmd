@@ -3,8 +3,8 @@
 :: This script was made for myself (Dmitri Arkhangelski)
 :: to simplify binary packages uploading.
 ::
-:: Copyright (c) 2007-2012 by Dmitri Arkhangelski (dmitriar@gmail.com).
-:: Copyright (c) 2011-2012 by Stefan Pendl (stefanpe@users.sourceforge.net).
+:: Copyright (c) 2007-2012 Dmitri Arkhangelski (dmitriar@gmail.com).
+:: Copyright (c) 2011-2012 Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
 :: This program is free software; you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
