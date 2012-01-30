@@ -57,7 +57,7 @@
  * Select the language to be installed. For example, 
  * use <b>/LANG="German"</b> to install the German language pack.<br/>
  * Valid language names can be found at the 
- * <a href="http://ultradefrag.wikispaces.com/Translations+v5.0.0">Translation Wiki</a>
+ * <a href="http://ultradefrag.wikispaces.com/Translation+Report">Translation Wiki</a>
  *
  * @par /FULL=1
  * Install the full edition, which includes all components and icons.
