@@ -234,6 +234,8 @@ rem by removing all intermediate files.
     rd /s /q dll\udefrag\doxy-defaults
     rd /s /q dll\zenwinx\doxy-defaults
     rd /s /q ..\doc\html\handbook\doxy-defaults
+    rd /s /q ..\doc\html\handbook\doxy-defaults_a4
+    rd /s /q ..\doc\html\handbook\doxy-defaults_letter
     rd /s /q src_package
     rd /s /q ..\src_package
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 rd /s /q release
