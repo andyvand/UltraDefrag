@@ -28,6 +28,9 @@ call :make_default .\dll\wgx            || goto fail
 call :make_default .\dll\zenwinx        || goto fail
 call :make_default ..\doc\html\handbook || goto fail
 
+call :make_pdf_default ..\doc\html\handbook a4     || goto fail
+call :make_pdf_default ..\doc\html\handbook letter || goto fail
+
 echo.
 echo Created default files successfully!
 goto :END
@@ -50,9 +53,6 @@ rem Example:  call :make_default .\dll\zenwinx
     echo.
     if exist doxy-defaults rd /s /q doxy-defaults
     doxygen -w html default_header.html default_footer.html default_styles.css DoxyFile || goto compilation_failed
-    if "%~n1" == "handbook" (
-        doxygen -w latex default_header.tex default_footer.tex default_styles.sty DoxyFile || goto compilation_failed
-    )
     md doxy-defaults
     move /Y default_*.* doxy-defaults
     
@@ -60,6 +60,37 @@ rem Example:  call :make_default .\dll\zenwinx
     popd
     exit /B 0
     :compilation_failed
+    popd
+    exit /B 1
+goto :EOF
+
+rem Synopsis: call :make_pdf_default {path} {paper size}
+rem Example:  call :make_pdf_default ..\doc\html\handbook letter
+:make_pdf_default
+    pushd %1
+    echo ====
+    echo %CD%
+    echo.
+    if exist doxy-defaults_%2 rd /s /q doxy-defaults_%2
+
+    copy /v /y Doxyfile Doxyfile_%2
+    (
+        echo GENERATE_HTML          = NO
+        echo GENERATE_LATEX         = YES
+        echo LATEX_OUTPUT           = latex_%2
+        echo PAPER_TYPE             = %2
+    ) >>Doxyfile_%2
+
+    doxygen -w latex default_header.tex default_footer.tex default_styles.sty DoxyFile_%2 || goto compilation_failed
+    md doxy-defaults_%2
+    move /Y default_*.* doxy-defaults_%2
+    
+    :compilation_succeeded
+    del /f /q Doxyfile_%2
+    popd
+    exit /B 0
+    :compilation_failed
+    del /f /q Doxyfile_%2
     popd
     exit /B 1
 goto :EOF
