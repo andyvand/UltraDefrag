@@ -49,11 +49,6 @@ if not errorlevel 1 (
 :: move .htaccess file to the root of dev docs
 move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
 
-:: clean up the handbook
-pushd ..\doc\html\handbook\doxy-doc\html
-del /Q tabs.css bc_*.png nav_*.png open.png closed.png
-popd
-
 echo.
 echo Docs compiled successfully!
 exit /B 0
@@ -74,6 +69,7 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
 
     if exist .\rsc\sflogo.gif copy /Y .\rsc\sflogo.gif .\doxy-doc\html\
     if exist .\rsc\.htaccess  copy /Y .\rsc\.htaccess  .\doxy-doc\html\
+    if exist .\rsc\custom-doxygen.css  copy /Y .\rsc\custom-doxygen.css  .\doxy-doc\html\
 
     del /Q .\doxy-doc\html\doxygen.png
 
