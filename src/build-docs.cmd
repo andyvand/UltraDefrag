@@ -67,10 +67,6 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
     lua "%~dp0\tools\set-doxyfile-project-number.lua" Doxyfile %ULTRADFGVER% || goto compilation_failed
     doxygen || goto compilation_failed
 
-    if exist .\rsc\sflogo.gif copy /Y .\rsc\sflogo.gif .\doxy-doc\html\
-    if exist .\rsc\.htaccess  copy /Y .\rsc\.htaccess  .\doxy-doc\html\
-    if exist .\rsc\custom-doxygen.css  copy /Y .\rsc\custom-doxygen.css  .\doxy-doc\html\
-
     del /Q .\doxy-doc\html\doxygen.png
 
     if "%2" neq "" (
