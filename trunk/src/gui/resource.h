@@ -24,7 +24,6 @@
 #define IDD_MAIN                        101
 #define IDD_ABOUT                       102
 #define IDD_SHUTDOWN                    104
-#define IDD_CHECK_CONFIRM               105
 #define IDI_APP                         106
 #define IDI_DIR                         107
 #define IDI_UNFRAGM                     110
