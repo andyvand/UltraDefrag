@@ -361,6 +361,22 @@
  * a <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-No Derivative Works 3.0</a>.</li>
  * </ul>
  *
+ * Lua and Lua Report icons are based on <a href="http://lua-users.org/wiki/LuaLogo">artwork by Alexandre Nakonechnyj</a>.
+ *
+ * Copyright © 1998 Lua.org. Graphic design by Alexandre Nakonechnyj.
+ *
+ * Permission is hereby granted, without written agreement and without 
+ * license or royalty fees, to use, copy, and distribute this logo 
+ * for any purpose, including commercial applications, subject to the 
+ * following conditions:
+ *
+ * - The origin of this logo must not be misrepresented; you must
+ *   not claim that you drew the original logo.
+ * - The only modification you can make is to adapt the orbiting
+ *   text to your product name.
+ * - The logo can be used in any scale as long as the relative
+ *   proportions of its elements are maintained. 
+ *
  * <center>***</center>
  *
  * <b>Chief Architect</b>

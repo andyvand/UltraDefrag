@@ -515,7 +515,7 @@ Var AtLeastXP
     ${DisableX64FSRedirection}
 
     DetailPrint "Installing the context menu handler..."
-    SetOutPath "$INSTDIR"
+    SetOutPath "$INSTDIR\icons"
         File "${ROOTDIR}\src\installer\shellex.ico"
         File "${ROOTDIR}\src\installer\shellex-folder.ico"
 
@@ -529,11 +529,11 @@ Var AtLeastXP
     Push $7
 
     StrCpy $0 "$\"$SYSDIR\udefrag.exe$\" --shellex $\"%1$\""
-    StrCpy $1 "$INSTDIR\shellex.ico"
+    StrCpy $1 "$INSTDIR\icons\shellex.ico"
     StrCpy $2 "[--- &Ultra Defragmenter ---]"
     StrCpy $3 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder $\"%1$\""
     StrCpy $4 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder-itself $\"%1$\""
-    StrCpy $5 "$INSTDIR\shellex-folder.ico"
+    StrCpy $5 "$INSTDIR\icons\shellex-folder.ico"
     StrCpy $6 "[--- &Defragment folder itself ---]"
     StrCpy $7 "[--- &Defragment root folder itself ---]"
 
@@ -580,7 +580,9 @@ Var AtLeastXP
 
     ${DisableX64FSRedirection}
 
-    Delete "$INSTDIR\shellex.ico"
+    Delete "$INSTDIR\icons\shellex.ico"
+    Delete "$INSTDIR\icons\shellex-folder.ico"
+    RmDir "$INSTDIR\icons"
 
     DetailPrint "Removing the context menu handler..."
     DeleteRegKey HKCR "Drive\shell\udefrag"
@@ -793,6 +795,9 @@ Var AtLeastXP
     Delete "$INSTDIR\*.lng"
     Delete "$INSTDIR\udefrag-gui-config.exe"
     Delete "$INSTDIR\LanguageSelector.exe"
+
+    Delete "$INSTDIR\shellex.ico"
+    Delete "$INSTDIR\shellex-folder.ico"
 
     ; remove shortcuts of any previous version of the program
     SetShellVarContext all

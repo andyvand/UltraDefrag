@@ -37,4 +37,21 @@ PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
 OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Lua icons are based on artwork by Alexandre Nakonechnyj:
+http://lua-users.org/wiki/LuaLogo
+
+Copyright © 1998 Lua.org. Graphic design by Alexandre Nakonechnyj.
+
+Permission is hereby granted, without written agreement and without 
+license or royalty fees, to use, copy, and distribute this logo 
+for any purpose, including commercial applications, subject to the 
+following conditions:
+
+ * The origin of this logo must not be misrepresented; you must
+   not claim that you drew the original logo.
+ * The only modification you can make is to adapt the orbiting
+   text to your product name.
+ * The logo can be used in any scale as long as the relative
+   proportions of its elements are maintained. 
