@@ -234,11 +234,8 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
 
     fs_attr_info_size = MAX_PATH * sizeof(WCHAR) + sizeof(FILE_FS_ATTRIBUTE_INFORMATION);
     pfa = winx_heap_alloc(fs_attr_info_size);
-    if(pfa == NULL){
-        DebugPrint("winx_get_volume_information: cannot allocate %u bytes of memory",
-            fs_attr_info_size);
+    if(pfa == NULL)
         return(-1);
-    }
     
     RtlZeroMemory(pfa,fs_attr_info_size);
     Status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,pfa,
@@ -312,11 +309,8 @@ static void get_volume_label(HANDLE hRoot,winx_volume_information *v)
     /* allocate memory */
     buffer_size = (sizeof(FILE_FS_VOLUME_INFORMATION) - sizeof(wchar_t)) + (MAX_PATH + 1) * sizeof(wchar_t);
     ffvi = winx_heap_alloc(buffer_size);
-    if(ffvi == NULL){
-        DebugPrint("get_volume_label: cannot allocate %u bytes of memory",
-            buffer_size);
+    if(ffvi == NULL)
         return;
-    }
     
     /* try to get actual label */
     RtlZeroMemory(ffvi,buffer_size);
@@ -501,11 +495,8 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
     
     /* allocate memory */
     bitmap = winx_heap_alloc(BITMAPSIZE);
-    if(bitmap == NULL){
-        DebugPrint("winx_get_free_volume_regions: cannot allocate %u bytes of memory",
-            BITMAPSIZE);
+    if(bitmap == NULL)
         return NULL;
-    }
     
     /* open volume */
     f = winx_vopen(volume_letter);
@@ -552,8 +543,6 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
                     rgn = (winx_volume_region *)winx_list_insert_item((list_entry **)(void *)&rlist,
                         (list_entry *)rgn,sizeof(winx_volume_region));
                     if(rgn == NULL){
-                        DebugPrint("winx_get_free_volume_regions: cannot allocate %u bytes of memory",
-                            sizeof(winx_volume_region));
                         /* return if partial results aren't allowed */
                         if(!(flags & WINX_GVR_ALLOW_PARTIAL_SCAN))
                             goto fail;
@@ -579,8 +568,6 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
         rgn = (winx_volume_region *)winx_list_insert_item((list_entry **)(void *)&rlist,
             (list_entry *)rgn,sizeof(winx_volume_region));
         if(rgn == NULL){
-            DebugPrint("winx_get_free_volume_regions: cannot allocate %u bytes of memory",
-                sizeof(winx_volume_region));
             /* return if partial results aren't allowed */
             if(!(flags & WINX_GVR_ALLOW_PARTIAL_SCAN))
                 goto fail;

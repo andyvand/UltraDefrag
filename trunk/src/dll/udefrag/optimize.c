@@ -672,6 +672,7 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     ULONGLONG start_lcn, end_lcn;
     ULONGLONG time;
     char buffer[32];
+    int result = 0;
 
     jp->pi.current_operation = VOLUME_OPTIMIZATION;
     jp->pi.processed_clusters = extra_clusters;
@@ -696,6 +697,7 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     pt = prb_create(files_compare,NULL,NULL);
     if(pt == NULL){
         DebugPrint("optimize_routine: cannot create binary tree");
+        result = UDEFRAG_NO_MEM;
         goto done;
     }
     for(f = jp->filelist; f; f = f->next){
@@ -704,6 +706,7 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
             if(can_move_entirely(f,jp) && !is_excluded_by_path(f)){
                 if(prb_probe(pt,(void *)f) == NULL){
                     DebugPrint("optimize_routine: cannot add file to the tree");
+                    result = UDEFRAG_NO_MEM;
                     goto done;
                 }
             }
@@ -746,7 +749,7 @@ done:
     winx_fclose(jp->fVolume);
     jp->fVolume = NULL;
     if(pt) prb_destroy(pt,NULL);
-    return 0;
+    return result;
 }
 
 /************************************************************/

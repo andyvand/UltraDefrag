@@ -112,8 +112,7 @@ static char *build_ga_request(char *hostname,char *path,char *account)
     
     ga_request = malloc(MAX_GA_REQUEST_LENGTH);
     if(ga_request == NULL){
-        WgxDbgPrint("build_ga_request: cannot allocate %u bytes of memory\n",
-            MAX_GA_REQUEST_LENGTH);
+        OutputDebugString("build_ga_request: cannot allocate memory\n");
         return NULL;
     }
     

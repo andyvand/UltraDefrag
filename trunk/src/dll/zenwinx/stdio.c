@@ -288,11 +288,8 @@ static void winx_add_history_entry(winx_history *h,char *string)
     if(h->head) last_entry = h->head->prev;
     entry = (winx_history_entry *)winx_list_insert_item((list_entry **)(void *)&h->head,
         (list_entry *)last_entry,sizeof(winx_history_entry));
-    if(entry == NULL){
-        DebugPrint("winx_add_winx_history_entry: cannot allocate %u bytes of memory",sizeof(winx_history_entry));
-        winx_printf("\nNot enough memory for winx_add_winx_history_entry()!\n");
+    if(entry == NULL)
         return;
-    }
     
     entry->string = winx_strdup(string);
     if(entry->string == NULL){

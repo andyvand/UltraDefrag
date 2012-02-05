@@ -86,7 +86,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     if(jp->pi.cluster_map == NULL){
         DebugPrint("allocate_map: cannot allocate %u bytes of memory",
             map_size);
-        return (-1);
+        return UDEFRAG_NO_MEM;
     }
     array_size = map_size * NUM_OF_SPACE_STATES * sizeof(ULONGLONG);
     jp->cluster_map.array = winx_heap_alloc(array_size);
@@ -95,7 +95,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
             array_size);
         winx_heap_free(jp->pi.cluster_map);
         jp->pi.cluster_map = NULL;
-        return (-1);
+        return UDEFRAG_NO_MEM;
     }
     
     /* set internal data */

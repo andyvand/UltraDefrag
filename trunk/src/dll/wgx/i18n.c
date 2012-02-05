@@ -115,8 +115,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,wchar_t *lng_file_path
 
     line_buffer = malloc(8192 * sizeof(wchar_t));
     if(line_buffer == NULL){
-        WgxDbgPrint("WgxBuildResourceTable: cannot allocate %u bytes of memory\n",
-            8192 * sizeof(wchar_t));
+        OutputDebugString("WgxBuildResourceTable: cannot allocate memory\n");
         return FALSE;
     }
     

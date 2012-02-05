@@ -47,11 +47,8 @@ int get_options(udefrag_job_parameters *jp)
     
     /* allocate memory */
     buffer = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
-    if(buffer == NULL){
-        DebugPrint("get_options: cannot allocate %u bytes of memory",
-            ENV_BUFFER_SIZE * sizeof(wchar_t));
-        return (-1);
-    }
+    if(buffer == NULL)
+        return UDEFRAG_NO_MEM;
     
     /* set filters */
     if(winx_query_env_variable(L"UD_IN_FILTER",buffer,ENV_BUFFER_SIZE) >= 0){

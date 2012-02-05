@@ -160,8 +160,6 @@ int winx_ftw_dump_file(winx_file_info *f,
     /* allocate memory */
     filemap = winx_heap_alloc(FILE_MAP_SIZE);
     if(filemap == NULL){
-        DebugPrint("winx_ftw_dump_file: cannot allocate %u bytes of memory",
-            FILE_MAP_SIZE);
         winx_defrag_fclose(hFile);
         return (-1);
     }
@@ -215,11 +213,8 @@ int winx_ftw_dump_file(winx_file_info *f,
             
             block = (winx_blockmap *)winx_list_insert_item((list_entry **)&f->disp.blockmap,
                 (list_entry *)block,sizeof(winx_blockmap));
-            if(block == NULL){
-                DebugPrint("winx_ftw_dump_file: cannot allocate %u bytes of memory",
-                    sizeof(winx_blockmap));
+            if(block == NULL)
                 goto dump_failed;
-            }
             block->lcn = filemap->Pair[i].Lcn;
             block->length = filemap->Pair[i].Vcn - startVcn;
             block->vcn = startVcn;
@@ -292,11 +287,8 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     /* insert new item to the file list */
     f = (winx_file_info *)winx_list_insert_item((list_entry **)(void *)filelist,
         NULL,sizeof(winx_file_info));
-    if(f == NULL){
-        DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
-            sizeof(winx_file_info));
-        return NULL;
-    }
+    if(f == NULL)
+        return f;
     
     /* extract filename */
     f->name = winx_heap_alloc(file_entry->FileNameLength + sizeof(wchar_t));
@@ -387,11 +379,8 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     /* insert new item to the file list */
     f = (winx_file_info *)winx_list_insert_item((list_entry **)(void *)filelist,
         NULL,sizeof(winx_file_info));
-    if(f == NULL){
-        DebugPrint("ftw_add_root_directory: cannot allocate %u bytes of memory",
-            sizeof(winx_file_info));
+    if(f == NULL)
         return (-1);
-    }
     
     /* build path */
     length = wcslen(path) + 1;
@@ -407,8 +396,6 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     /* save . filename */
     f->name = winx_heap_alloc(2 * sizeof(wchar_t));
     if(f->name == NULL){
-        DebugPrint("ftw_add_root_directory: cannot allocate %u bytes of memory",
-            2 * sizeof(wchar_t));
         winx_heap_free(f->path);
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return (-1);
@@ -522,8 +509,6 @@ static int ftw_helper(wchar_t *path, int flags,
     /* allocate memory */
     file_listing = winx_heap_alloc(FILE_LISTING_SIZE);
     if(file_listing == NULL){
-        DebugPrint("ftw_helper: cannot allocate %u bytes of memory",
-            FILE_LISTING_SIZE);
         NtClose(hDir);
         return (-1);
     }

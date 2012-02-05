@@ -712,14 +712,10 @@ int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
     
     ff = (udefrag_fragmented_file *)winx_list_insert_item((list_entry **)(void *)&jp->fragmented_files,
             (list_entry *)ffprev,sizeof(udefrag_fragmented_file));
-    if(ff == NULL){
-        DebugPrint("expand_fragmented_files_list: cannot allocate %u bytes of memory",
-            sizeof(udefrag_fragmented_file));
-        return (-1);
-    } else {
-        ff->f = f;
-    }
-    
+    if(ff == NULL)
+        return UDEFRAG_NO_MEM;
+
+    ff->f = f;
     return 0;
 }
 
@@ -762,23 +758,13 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
  */
 static int check_requested_action(udefrag_job_parameters *jp)
 {
-    /*int win_version = winx_get_os_version();*/
-    
-    /*
-    * UDF volumes can neither be defragmented nor optimized,
-    * because the system driver does not support FSCTL_MOVE_FILE.
-    *
-    * Windows 7 needs more testing, since it seems to allow defrag
-    */
-    if(jp->job_type != ANALYSIS_JOB \
-      && jp->fs_type == FS_UDF \
-      /* && win_version <= WINDOWS_VISTA */){
+    if(jp->job_type != ANALYSIS_JOB && jp->fs_type == FS_UDF){
         DebugPrint("cannot defragment/optimize UDF volumes,");
-        DebugPrint("because the file system driver does not support FSCTL_MOVE_FILE.");
+        DebugPrint("because the file system driver does not support FSCTL_MOVE_FILE");
         return UDEFRAG_UDF_DEFRAG;
     }
 
-    if(jp->is_fat) DebugPrint("FAT directories cannot be moved entirely");
+    if(jp->is_fat) DebugPrint("check_requested_action: FAT directories cannot be moved entirely");
     return 0;
 }
 
