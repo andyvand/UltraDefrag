@@ -28,6 +28,11 @@ HISTORY
     - useless fat32_xxx fields removed from winx_volume_information structure
 
 
+  Version 5.0.3  2012-02-
+  ------------------------------------------------------------------------------
+    - one bug preventing language selection saving on installation was fixed
+
+
   Version 5.0.2  2012-01-31
   ------------------------------------------------------------------------------
     - representation of disk clusters on the cluster map was improved

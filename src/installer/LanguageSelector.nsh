@@ -148,6 +148,7 @@ Function LangLeave
 
     ; save selected language to $INSTDIR\lang.ini file before exit
     ReadINIStr $LanguagePack "$PLUGINSDIR\lang.ini" "Field 2" "State"
+    CreateDirectory "$INSTDIR"
     WriteINIStr "$INSTDIR\lang.ini" "Language" "Selected" $LanguagePack
     Pop $R0
 
