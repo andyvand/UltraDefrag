@@ -331,8 +331,6 @@ static wchar_t * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
     /* allocate memory */
     attr_name = winx_heap_alloc((MAX_PATH + 1) * sizeof(wchar_t));
     if(attr_name == NULL){
-        DebugPrint("get_attribute_name: cannot allocate %u bytes of memory",
-            (MAX_PATH + 1) * sizeof(wchar_t));
         sp->errors ++;
         return NULL;
     }
@@ -467,11 +465,8 @@ static int get_mft_layout(mft_scan_parameters *sp)
 
     /* allocate memory */
     ntfs_data = winx_heap_alloc(sizeof(NTFS_DATA));
-    if(ntfs_data == NULL){
-        DebugPrint("get_mft_layout: cannot allocate %u bytes of memory",
-            sizeof(NTFS_DATA));
+    if(ntfs_data == NULL)
         return (-1);
-    }
 
     /* get ntfs data */
     if(winx_ioctl(sp->f_volume,FSCTL_GET_NTFS_VOLUME_DATA,
@@ -1036,8 +1031,6 @@ static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_paramete
     
     f = (winx_file_info *)winx_list_insert_item((list_entry **)(void *)sp->filelist,NULL,sizeof(winx_file_info));
     if(f == NULL){
-        DebugPrint("find_filelist_entry: cannot allocate %u bytes of memory",
-            sizeof(winx_file_info));
         sp->errors ++;
         return NULL;
     }
@@ -1070,7 +1063,6 @@ static void process_run(winx_file_info *f,ULONGLONG vcn,ULONGLONG lcn,ULONGLONG 
     block = (winx_blockmap *)winx_list_insert_item((list_entry **)&f->disp.blockmap,
         (list_entry *)prev_block,sizeof(winx_blockmap));
     if(block == NULL){
-        DebugPrint("process_run: cannot allocate %u bytes of memory",sizeof(winx_blockmap));
         sp->errors ++;
         return;
     }
@@ -1540,11 +1532,8 @@ static int build_full_paths(mft_scan_parameters *sp)
     
     /* allocate memory */
     p = winx_heap_alloc(sizeof(path_parts));
-    if(p == NULL){
-        DebugPrint("build_full_paths: cannot allocate %u bytes of memory",
-            sizeof(path_parts));
+    if(p == NULL)
         return (-1);
-    }
 
     /* prepare data for fast binary search */
     for(f = *sp->filelist; f != NULL; f = f->next){

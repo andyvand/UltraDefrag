@@ -61,11 +61,8 @@ volume_info *udefrag_get_vollist(int skip_removable)
     
     /* allocate memory */
     v = winx_heap_alloc((MAX_DOS_DRIVES + 1) * sizeof(volume_info));
-    if(v == NULL){
-        DebugPrint("udefrag_get_vollist: cannot allocate %u bytes of memory",
-            (MAX_DOS_DRIVES + 1) * sizeof(volume_info));
-        return NULL;
-    }
+    if(v == NULL)
+        return v;
 
     /* set error mode to ignore missing removable drives */
     if(winx_set_system_error_mode(INTERNAL_SEM_FAILCRITICALERRORS) < 0){

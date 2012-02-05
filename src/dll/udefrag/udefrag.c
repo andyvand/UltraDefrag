@@ -515,13 +515,8 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
     
     /* allocate memory */
     msg = winx_heap_alloc(MSG_LENGTH + 1);
-    if(msg == NULL){
-        DebugPrint("udefrag_get_default_formatted_results: cannot allocate %u bytes of memory",
-            MSG_LENGTH + 1);
-        winx_printf("\nCannot allocate %u bytes of memory!\n\n",
-            MSG_LENGTH + 1);
-        return NULL;
-    }
+    if(msg == NULL)
+        return msg;
 
     (void)winx_bytes_to_hr(pi->total_space,2,total_space,sizeof(total_space));
     (void)winx_bytes_to_hr(pi->free_space,2,free_space,sizeof(free_space));
@@ -615,11 +610,8 @@ int udefrag_set_log_file_path(void)
     int result;
     
     path = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
-    if(path == NULL){
-        DebugPrint("set_log_file_path: cannot allocate %u bytes of memory",
-            ENV_BUFFER_SIZE * sizeof(wchar_t));
-        return (-1);
-    }
+    if(path == NULL)
+        return UDEFRAG_NO_MEM;
     
     result = winx_query_env_variable(L"UD_LOG_FILE_PATH",path,ENV_BUFFER_SIZE);
     if(result < 0 || path[0] == 0){

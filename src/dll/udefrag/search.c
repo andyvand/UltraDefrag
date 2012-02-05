@@ -252,7 +252,7 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     fb = winx_heap_alloc(sizeof *fb);
     if(fb == NULL){
         destroy_file_blocks_tree(jp);
-        return (-1);
+        return UDEFRAG_NO_MEM;
     }
     
     fb->file = file;
@@ -261,7 +261,7 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     if(p == NULL){
         winx_heap_free(fb);
         destroy_file_blocks_tree(jp);
-        return (-1);
+        return UDEFRAG_NO_MEM;
     }
     /* if a duplicate item exists... */
     if(*p != fb){
