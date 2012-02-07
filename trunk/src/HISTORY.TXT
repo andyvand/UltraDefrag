@@ -31,6 +31,8 @@ HISTORY
   Version 5.0.3  2012-02-
   ------------------------------------------------------------------------------
     - one bug preventing language selection saving on installation was fixed
+    - menu icons were added for Vista and more recent Windows editions;
+      they can be enabled/disabled through the show_menu_icons GUI option
 
 
   Version 5.0.2  2012-01-31

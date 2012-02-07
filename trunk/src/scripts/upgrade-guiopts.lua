@@ -211,6 +211,16 @@ scale_by_dpi = $scale_by_dpi
 restore_default_window_size = $restore_default_window_size
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Set show_menu_icons parameter to 1 to show menu icons
+-- on Vista and more recent Windows editions.
+-- Note: screen DPI below or equal to 125% must be set
+-- currently in order to display icons.
+-- Note: restart the program after this parameter adjustment.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+show_menu_icons = $show_menu_icons
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- III. Cluster map options
 
 -- map_block_size controls the size of the block, in pixels; default value is 4.
@@ -284,7 +294,8 @@ end
 
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
-current_version = 3
+-- version numbers 0-99 are reserved for 5.0.x series of the program
+current_version = 100
 old_version = 0
 upgrade_needed = 1
 
@@ -309,6 +320,7 @@ seconds_for_shutdown_rejection = 60
 disable_latest_version_check = 0
 scale_by_dpi = 1
 restore_default_window_size = 0
+show_menu_icons = 1
 map_block_size = 4
 grid_line_width = 1
 grid_color_r = 0
