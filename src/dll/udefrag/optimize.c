@@ -58,6 +58,7 @@ static int cleanup_space(udefrag_job_parameters *jp, winx_file_info *file,
     winx_volume_region *r, *rgn;
     
     if(clusters_to_cleanup == 0) return 0;
+    if(file == NULL || block == NULL) return 0;
     
     current_vcn = block->vcn;
     while(clusters_to_cleanup){
@@ -141,7 +142,7 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
 {
     ULONGLONG clusters_to_process; /* the number of file clusters not processed yet */
     ULONGLONG start_vcn;           /* VCN of the portion of the file not processed yet */
-    
+    ULONGLONG first_cluster;       /* LCN of the first cluster of the file */
     ULONGLONG start_lcn;           /* address of space not processed yet */
     ULONGLONG clusters_to_move;    /* the number of the file clusters intended for the current move */
     winx_volume_region *rgn, *target_rgn;
@@ -171,6 +172,7 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
     if(clusters_to_process == 0)
         return 0;
     
+    first_cluster = f->disp.blockmap->lcn;
     start_lcn = f->disp.blockmap->lcn + f->disp.blockmap->length;
     start_vcn = f->disp.blockmap->next->vcn;
     
@@ -233,7 +235,7 @@ try_again:
             lcn = first_block->lcn;
             clusters_to_move = min(clusters_to_cleanup, first_block->length);
             result = cleanup_space(jp,first_file,first_block,
-                clusters_to_move,f->disp.blockmap->lcn,
+                clusters_to_move,first_cluster,
                 first_block->lcn + first_block->length - 1);
             if(result == -1) goto done;
           
@@ -512,16 +514,18 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     /* do the job */
     file = prb_t_cur(t);
     while(file){
-        rgn = find_first_free_region(jp,*start_lcn,file->disp.clusters);
-        if(rgn == NULL) break;
-        if(rgn->lcn >= end_lcn) break;
-        lcn = rgn->lcn;
-        if(move_file(file,file->disp.blockmap->vcn,
-          file->disp.clusters,rgn->lcn,jp) >= 0){
-            *start_lcn = lcn + 1;
-            jp->pi.total_moves ++;
+        if(can_move_entirely(file,jp)){
+            rgn = find_first_free_region(jp,*start_lcn,file->disp.clusters);
+            if(rgn == NULL) break;
+            if(rgn->lcn >= end_lcn) break;
+            lcn = rgn->lcn;
+            if(move_file(file,file->disp.blockmap->vcn,
+              file->disp.clusters,rgn->lcn,jp) >= 0){
+                *start_lcn = lcn + 1;
+                jp->pi.total_moves ++;
+            }
+            file->user_defined_flags |= UD_FILE_MOVED_TO_FRONT;
         }
-        file->user_defined_flags |= UD_FILE_MOVED_TO_FRONT;
         file = prb_t_next(t);
     }
     
