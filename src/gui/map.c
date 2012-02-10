@@ -114,6 +114,11 @@ void ResizeMap(int x, int y, int width, int height)
     int border_width, border_height;
     long dx, dy, threshold;
     
+    if(WaitForSingleObject(hMapEvent,INFINITE) != WAIT_OBJECT_0){
+        WgxDbgPrintLastError("ResizeMap: wait on hMapEvent failed");
+        return;
+    }
+    
     /* get coordinates of the map field, without borders */
     border_width = GetSystemMetrics(SM_CXEDGE);
     border_height = GetSystemMetrics(SM_CYEDGE);
@@ -150,6 +155,7 @@ void ResizeMap(int x, int y, int width, int height)
         map_width + 2 * border_width,
         map_height + 2 * border_height,
         SWP_NOZORDER);
+    SetEvent(hMapEvent);
 }
 
 /**
