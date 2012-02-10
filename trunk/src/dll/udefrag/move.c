@@ -156,6 +156,7 @@ static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
     }
 
     /* setup movefile descriptor and make the call */
+    memset(&mfd,0,sizeof(MOVEFILE_DESCRIPTOR));
     mfd.FileHandle = hFile;
     mfd.StartVcn.QuadPart = startVcn;
     mfd.TargetLcn.QuadPart = targetLcn;
