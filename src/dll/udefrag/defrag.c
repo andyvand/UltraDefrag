@@ -319,7 +319,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
                     file->disp.blockmap->prev->length;
                 defrag_succeeded = 0;
                 x = jp->pi.moved_clusters;
-                while(min_vcn < max_vcn){
+                while(min_vcn < max_vcn && can_defragment(file,jp)){
                     /* build list of fragments */
                     fragments = build_fragments_list(file,NULL);
                     if(fragments == NULL) break;
