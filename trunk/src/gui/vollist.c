@@ -408,10 +408,6 @@ static DWORD WINAPI RescanDrivesThreadProc(LPVOID lpParameter)
     LV_ITEM lvi;
     int i;
     
-/*  WgxDisableWindows(hWindow,IDC_RESCAN,IDC_ANALYSE,
-        IDC_DEFRAGM,IDC_OPTIMIZE,IDC_SHOWFRAGMENTED,0);
-    HideProgress();
-*/
     /* refill the volume list control */
     (void)SendMessage(hList,LVM_DELETEALLITEMS,0,0);
     v = udefrag_get_vollist(skip_removable);
@@ -435,9 +431,7 @@ static DWORD WINAPI RescanDrivesThreadProc(LPVOID lpParameter)
     RedrawMap(job,0);
     if(job) UpdateStatusBar(&job->pi);
     
-/*  WgxEnableWindows(hWindow,IDC_RESCAN,IDC_ANALYSE,
-        IDC_DEFRAGM,IDC_OPTIMIZE,IDC_SHOWFRAGMENTED,0);
-*/  return 0;
+    return 0;
 }
 
 /**
