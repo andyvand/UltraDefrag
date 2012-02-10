@@ -21,7 +21,12 @@
  * is a single choice when you need to compile binaries for all of the
  * supported processor architectures.
  *
- * MinGW needs to be patched to be able to compile UltraDefrag.
+ * Windows Server 2003 DDK needs to be patched in order to accept
+ * high resolution icons included in UltraDefrag. To patch DDK
+ * replace bin\\x86\\rc.exe and bin\\x86\\rcdll.dll files by
+ * more recent versions extracted from Windows 7 WDK/SDK.
+ *
+ * MinGW also needs to be patched to be able to compile UltraDefrag.
  * Type <b>build --help</b> (see below) for details.
  *
  * You can download the <a href="http://koti.mbnet.fi/vaultec/mingwstudio.php">MinGW Developer Studio</a>,
