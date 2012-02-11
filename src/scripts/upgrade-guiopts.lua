@@ -86,26 +86,26 @@ ex_filter = "$ex_filter"
 fragment_size_threshold = "$fragment_size_threshold"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- The sizelimit filter allows to exclude big files from the
--- defragmentation. For example, when you watch a movie, it takes usually
--- 1-2 hours while time needed to move drive's head from one fragment to
--- another is about a few seconds. Therefore, you'll see no difference between 
--- fragmented and not fragmented movie file. By setting sizelimit filter, 
--- overall disk defragmentation time can be highly decreased.
+-- The file_size_threshold filter allows to exclude big files from
+-- the defragmentation. For example, when you watch a movie, it takes
+-- usually 1-2 hours while time needed to move drive's head from one 
+-- fragment to another is about a few seconds. Therefore, you'll see
+-- no difference between fragmented and not fragmented movie file.
+-- By setting the file_size_threshold filter, overall disk 
+-- defragmentation time can be highly decreased.
 
 -- To exclude all files greater than 100 Mb, set:
 
--- sizelimit = "100 Mb"
-
--- Both zero value and empty string ("") turn off the filter.
+-- file_size_threshold = "100 Mb"
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-sizelimit = "$sizelimit"
+file_size_threshold = "$file_size_threshold"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- The optimizer_sizelimit parameter is used to tune the disk optimization.
--- All files bigger than specified will be skipped, while smaller files
--- will be sorted out on disk by their paths to speedup a sequential access.
+-- The optimizer_file_size_threshold parameter is used to tune the disk
+-- optimization. All files bigger than specified will be skipped, while
+-- smaller files will be sorted out on disk by their paths to speedup
+-- sequential access.
 
 -- The default value is "20 Mb". Both zero value and empty string ("")
 -- forces to use the default value, since otherwise the disk optimization
@@ -116,7 +116,7 @@ sizelimit = "$sizelimit"
 -- larger continuous free space gaps in order to sort out bigger files.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-optimizer_sizelimit = "$optimizer_sizelimit"
+optimizer_file_size_threshold = "$optimizer_file_size_threshold"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- The fragments_threshold filter allows to exclude files which have low
@@ -295,7 +295,7 @@ end
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 100
+current_version = 101
 old_version = 0
 upgrade_needed = 1
 
@@ -363,6 +363,14 @@ if upgrade_needed ~= 0 then
         -- this is a main reason for upgrade to the version 1
         in_filter = ""
         ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar"
+    end
+    if file_size_threshold == nil then
+        -- sizelimit has been superseded by file_size_threshold
+        file_size_threshold = sizelimit
+    end
+    if optimizer_file_size_threshold == nil then
+        -- optimizer_sizelimit has been superseded by optimizer_file_size_threshold
+        optimizer_file_size_threshold = optimizer_sizelimit
     end
     
     -- save the upgraded configuration

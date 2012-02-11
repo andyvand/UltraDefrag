@@ -16,7 +16,7 @@ VARIABLES
         UD_EX_FILTER
                 semicolon separated list of excluded paths
         
-        UD_SIZELIMIT
+        UD_FILE_SIZE_THRESHOLD
                 exclude files which exceed this size limit
                 size suffix list: Kb, Mb, Gb, Tb, Pb, Eb
         
@@ -49,7 +49,7 @@ EXAMPLES
         set UD_IN_FILTER=*windows*;*winnt*;*ntuser*;*pagefile*
                 include only paths, which include one of these words
         
-        set UD_SIZELIMIT=50Mb
+        set UD_FILE_SIZE_THRESHOLD=50Mb
                 process only files below 50 MB in size
         
         set UD_FRAGMENTS_THRESHOLD=6

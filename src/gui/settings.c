@@ -33,10 +33,10 @@
 char in_filter[32767];
 char ex_filter[32767];
 char fragment_size_threshold[128];
-char sizelimit[128];
-char optimizer_sizelimit[128];
+char file_size_threshold[128];
+char optimizer_file_size_threshold[128];
 char timelimit[256];
-int fraglimit;
+int fragments_threshold;
 int refresh_interval;
 int disable_reports;
 char dbgprint_level[32] = {0};
@@ -85,15 +85,15 @@ extern int boot_time_defrag_enabled;
 /* options read from guiopts.lua */
 WGX_OPTION read_only_options[] = {
     /* type, value buffer size, name, value, default value */
-    {WGX_CFG_STRING,  sizeof(in_filter), "in_filter",           in_filter,  ""},
-    {WGX_CFG_STRING,  sizeof(ex_filter), "ex_filter",           ex_filter,  ""},
-    {WGX_CFG_STRING,  sizeof(sizelimit), "sizelimit",           sizelimit,  ""},
-    {WGX_CFG_INT,     0,                 "fragments_threshold", &fraglimit, 0},
-    {WGX_CFG_STRING,  sizeof(timelimit), "time_limit",          timelimit,  ""},
+    {WGX_CFG_STRING,  sizeof(in_filter), "in_filter", in_filter, ""},
+    {WGX_CFG_STRING,  sizeof(ex_filter), "ex_filter", ex_filter, ""},
+    {WGX_CFG_STRING,  sizeof(file_size_threshold), "file_size_threshold", file_size_threshold, ""},
     {WGX_CFG_STRING,  sizeof(fragment_size_threshold), "fragment_size_threshold", fragment_size_threshold, ""},
-    {WGX_CFG_STRING,  sizeof(optimizer_sizelimit),     "optimizer_sizelimit",     optimizer_sizelimit,     ""},
+    {WGX_CFG_STRING,  sizeof(optimizer_file_size_threshold), "optimizer_file_size_threshold", optimizer_file_size_threshold, ""},
+    {WGX_CFG_INT,     0, "fragments_threshold", &fragments_threshold, 0},
+    {WGX_CFG_STRING,  sizeof(timelimit), "time_limit", timelimit, ""},
     {WGX_CFG_INT,     0, "refresh_interval", &refresh_interval, (void *)DEFAULT_REFRESH_INTERVAL},
-    {WGX_CFG_INT,     0, "disable_reports",  &disable_reports,  0},
+    {WGX_CFG_INT,     0, "disable_reports", &disable_reports, 0},
     {WGX_CFG_STRING,  sizeof(dbgprint_level), "dbgprint_level", dbgprint_level, ""},
     {WGX_CFG_STRING,  sizeof(log_file_path), "log_file_path", log_file_path, ""},
     {WGX_CFG_INT,     0, "dry_run", &dry_run, 0},
@@ -147,8 +147,8 @@ void DeleteEnvironmentVariables(void)
     (void)SetEnvironmentVariable("UD_IN_FILTER",NULL);
     (void)SetEnvironmentVariable("UD_EX_FILTER",NULL);
     (void)SetEnvironmentVariable("UD_FRAGMENT_SIZE_THRESHOLD",NULL);
-    (void)SetEnvironmentVariable("UD_SIZELIMIT",NULL);
-    (void)SetEnvironmentVariable("UD_OPTIMIZER_SIZELIMIT",NULL);
+    (void)SetEnvironmentVariable("UD_FILE_SIZE_THRESHOLD",NULL);
+    (void)SetEnvironmentVariable("UD_OPTIMIZER_FILE_SIZE_THRESHOLD",NULL);
     (void)SetEnvironmentVariable("UD_FRAGMENTS_THRESHOLD",NULL);
     (void)SetEnvironmentVariable("UD_REFRESH_INTERVAL",NULL);
     (void)SetEnvironmentVariable("UD_DISABLE_REPORTS",NULL);
@@ -168,14 +168,14 @@ void SetEnvironmentVariables(void)
         (void)SetEnvironmentVariable("UD_EX_FILTER",ex_filter);
     if(fragment_size_threshold[0])
         (void)SetEnvironmentVariable("UD_FRAGMENT_SIZE_THRESHOLD",fragment_size_threshold);
-    if(sizelimit[0])
-        (void)SetEnvironmentVariable("UD_SIZELIMIT",sizelimit);
-    if(optimizer_sizelimit[0])
-        (void)SetEnvironmentVariable("UD_OPTIMIZER_SIZELIMIT",optimizer_sizelimit);
+    if(file_size_threshold[0])
+        (void)SetEnvironmentVariable("UD_FILE_SIZE_THRESHOLD",file_size_threshold);
+    if(optimizer_file_size_threshold[0])
+        (void)SetEnvironmentVariable("UD_OPTIMIZER_FILE_SIZE_THRESHOLD",optimizer_file_size_threshold);
     if(timelimit[0])
         (void)SetEnvironmentVariable("UD_TIME_LIMIT",timelimit);
-    if(fraglimit){
-        (void)sprintf(buffer,"%i",fraglimit);
+    if(fragments_threshold){
+        (void)sprintf(buffer,"%i",fragments_threshold);
         (void)SetEnvironmentVariable("UD_FRAGMENTS_THRESHOLD",buffer);
     }
     if(refresh_interval){

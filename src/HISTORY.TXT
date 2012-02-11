@@ -9,8 +9,8 @@ HISTORY
     - ability to filter out files by size of their fragments was added
       (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
       environment variable in command line tool and boot time interface)
-    - ability to tune the disk optimization by UD_OPTIMIZER_SIZELIMIT
-      environment variable (optimizer_sizelimit parameter in GUI) was added
+    - ability to tune the disk optimization by UD_OPTIMIZER_FILE_SIZE_THRESHOLD
+      environment variable (optimizer_file_size_threshold GUI option) was added
     - MFT optimization was forced to do nothing silently on non-NTFS disks
     - Windows NT 4.0 and Windows 2000 support was dropped because of
       weakness of the Windows Defrag API on these systems;
@@ -37,6 +37,8 @@ HISTORY
       they can be enabled/disabled through the show_menu_icons GUI option
     - one bug in GUI cluster map draw was fixed
     - two bugs in disk optimization algorithm were fixed
+    - UD_SIZELIMIT environment variable superseded by UD_FILE_SIZE_THRESHOLD,
+      sizelimit GUI option superseded by file_size_threshold option
 
 
   Version 5.0.2  2012-01-31

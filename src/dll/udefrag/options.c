@@ -71,14 +71,14 @@ int get_options(udefrag_job_parameters *jp)
         jp->udo.fragment_size_threshold = DEFAULT_FRAGMENT_SIZE_THRESHOLD;
 
     /* set file size threshold */
-    if(winx_query_env_variable(L"UD_SIZELIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
+    if(winx_query_env_variable(L"UD_FILE_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
         jp->udo.size_limit = winx_hr_to_bytes(buf);
     }
     if(jp->udo.size_limit == 0)
         jp->udo.size_limit = MAX_FILE_SIZE;
-    if(winx_query_env_variable(L"UD_OPTIMIZER_SIZELIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
+    if(winx_query_env_variable(L"UD_OPTIMIZER_FILE_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
         jp->udo.optimizer_size_limit = winx_hr_to_bytes(buf);
