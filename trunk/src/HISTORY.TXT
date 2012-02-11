@@ -39,6 +39,7 @@ HISTORY
     - two bugs in disk optimization algorithm were fixed
     - UD_SIZELIMIT environment variable superseded by UD_FILE_SIZE_THRESHOLD,
       sizelimit GUI option superseded by file_size_threshold option
+    - environment variables expansion support was added to the boot time shell
 
 
   Version 5.0.2  2012-01-31
