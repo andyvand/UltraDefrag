@@ -491,9 +491,18 @@ int defragment(udefrag_job_parameters *jp)
         jp->udo.algorithm_defined_fst = 1;
         DebugPrint("partial defragmentation: fragment size threshold = %I64u",
             jp->udo.fragment_size_threshold);
-        if(defrag_routine(jp) == 0){
-            /* at least partial defragmentation succeeded */
-            overall_result = 0;
+        while(!jp->termination_router((void *)jp)){
+            result = defrag_routine(jp);
+            if(result == 0){
+                /* defragmentation succeeded at least once */
+                overall_result = 0;
+            }
+            
+            /* break if nothing moved */
+            if(result < 0 || jp->pi.moved_clusters == 0) break;
+            
+            /* defragment a few remaining files on the next pass */
+            jp->pi.pass_number ++;
         }
         jp->udo.fragment_size_threshold = DEFAULT_FRAGMENT_SIZE_THRESHOLD;
         jp->udo.algorithm_defined_fst = 0;
