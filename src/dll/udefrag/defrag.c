@@ -128,7 +128,7 @@ void test_special_files_defrag(udefrag_job_parameters *jp)
  */
 static int can_defragment(winx_file_info *f,udefrag_job_parameters *jp)
 {
-    if(!can_move(f))
+    if(!can_move(f,jp))
         return 0;
 
     /* skip not fragmented files */
