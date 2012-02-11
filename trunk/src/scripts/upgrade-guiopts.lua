@@ -305,7 +305,7 @@ assert(instdir, "upgrade-guiopts.lua: the first argument is missing")
 
 -- set defaults
 in_filter = ""
-ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar"
+ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar;*dllcache*;*ServicePackFiles*"
 fragment_size_threshold = "20 Mb"
 sizelimit = ""
 optimizer_sizelimit = "20 Mb"
