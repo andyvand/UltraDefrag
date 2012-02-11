@@ -158,7 +158,7 @@ static int optimize_file(winx_file_info *f,udefrag_job_parameters *jp)
     ULONGLONG tm;
     
     /* check whether the file needs optimization or not */
-    if(!can_move(f) || !is_fragmented(f))
+    if(!can_move(f,jp) || !is_fragmented(f))
         return 0;
     
     /* check whether the file is locked or not */
@@ -304,7 +304,7 @@ static ULONGLONG opt_dirs_cc_routine(udefrag_job_parameters *jp)
     
     for(f = jp->fragmented_files; f; f = f->next){
         if(jp->termination_router((void *)jp)) break;
-        if(is_directory(f->f) && can_move(f->f))
+        if(is_directory(f->f) && can_move(f->f,jp))
             n += f->f->disp.clusters * 2;
         if(f->next == jp->fragmented_files) break;
     }
@@ -349,7 +349,7 @@ static int optimize_directories(udefrag_job_parameters *jp)
         head = jp->fragmented_files;
         next = f->next;
         file = f->f; /* f will be destroyed by move_file */
-        if(is_directory(file) && can_move(file)){
+        if(is_directory(file) && can_move(file,jp)){
             if(optimize_file(file,jp) > 0)
                 optimized_dirs ++;
         }

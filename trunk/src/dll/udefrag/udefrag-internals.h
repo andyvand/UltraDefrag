@@ -95,20 +95,24 @@
 
 #define UD_FILE_EXCLUDED_BY_PATH       0x400
 
+/*
+* Some essential DOS files need to be
+* at fixed locations on disk, so we're
+* skipping them to keep DOS bootable.
+*/
+#define UD_FILE_ESSENTIAL_DOS_FILE     0x800
+
 #define is_excluded(f)           ((f)->user_defined_flags & UD_FILE_EXCLUDED)
 #define is_over_limit(f)         ((f)->user_defined_flags & UD_FILE_OVER_LIMIT)
-
 #define is_locked(f)             ((f)->user_defined_flags & UD_FILE_LOCKED)
 #define is_too_large(f)          ((f)->user_defined_flags & UD_FILE_TOO_LARGE)
 #define is_moving_failed(f)      ((f)->user_defined_flags & UD_FILE_MOVING_FAILED)
 #define is_in_improper_state(f)  ((f)->user_defined_flags & UD_FILE_IMPROPER_STATE)
-
 #define is_currently_excluded(f) ((f)->user_defined_flags & UD_FILE_CURRENTLY_EXCLUDED)
 #define is_moved_to_front(f)     ((f)->user_defined_flags & UD_FILE_MOVED_TO_FRONT)
-
 #define is_fragmented_by_file_opt(f) ((f)->user_defined_flags & UD_FILE_FRAGMENTED_BY_FILE_OPT)
-
 #define is_excluded_by_path(f)   ((f)->user_defined_flags & UD_FILE_EXCLUDED_BY_PATH)
+#define is_essential_dos_file(f) ((f)->user_defined_flags & UD_FILE_ESSENTIAL_DOS_FILE)
 
 #define is_block_excluded(b)     ((b)->length == 0)
 
@@ -272,7 +276,7 @@ int move_file(winx_file_info *f,
               ULONGLONG target,
               udefrag_job_parameters *jp
               );
-int can_move(winx_file_info *f);
+int can_move(winx_file_info *f,udefrag_job_parameters *jp);
 int can_move_entirely(winx_file_info *f,udefrag_job_parameters *jp);
 
 /* flags for find_matching_free_region */

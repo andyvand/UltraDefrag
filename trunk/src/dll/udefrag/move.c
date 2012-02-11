@@ -51,8 +51,18 @@ void release_temp_space_regions(udefrag_job_parameters *jp)
  * @brief Defines whether the file can be
  * moved or not, at least partially.
  */
-int can_move(winx_file_info *f)
+int can_move(winx_file_info *f,udefrag_job_parameters *jp)
 {
+    wchar_t *dos_files[] = {
+        L"*:\\io.sys",
+        L"*:\\msdos.sys",
+        L"*:\\ibmbio.com",
+        L"*:\\ibmdos.com",
+        L"*:\\drbios.sys",
+        NULL
+    };
+    int i;
+
     /* skip files already moved to front in optimization */
     if(is_moved_to_front(f))
         return 0;
@@ -81,6 +91,18 @@ int can_move(winx_file_info *f)
     if(is_moving_failed(f))
         return 0;
     
+    /* keep DOS bootable */
+    if(is_essential_dos_file(f)) return 0;
+    if(jp->is_fat && !is_fragmented(f)){
+        for(i = 0; dos_files[i]; i++){
+            if(winx_wcsmatch(f->path,dos_files[i],WINX_PAT_ICASE)){
+                DebugPrint("can_move: essential dos file detected: %ws",f->path);
+                f->user_defined_flags |= UD_FILE_ESSENTIAL_DOS_FILE;
+                return 0;
+            }
+        }
+    }
+    
     return 1;
 }
 
@@ -90,7 +112,7 @@ int can_move(winx_file_info *f)
  */
 int can_move_entirely(winx_file_info *f,udefrag_job_parameters *jp)
 {
-    if(!can_move(f))
+    if(!can_move(f,jp))
         return 0;
 
     /* the first clusters of MFT cannot be moved */

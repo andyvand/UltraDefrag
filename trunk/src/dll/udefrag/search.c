@@ -378,7 +378,7 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
         if(flags & SKIP_PARTIALLY_MOVABLE_FILES){
             movable_file = can_move_entirely(found_file,jp);
         } else {
-            movable_file = can_move(found_file);
+            movable_file = can_move(found_file,jp);
         }
         if(is_file_locked(found_file,jp)) movable_file = 0;
         if(movable_file){
@@ -413,7 +413,7 @@ slow_search:
             if(flags & SKIP_PARTIALLY_MOVABLE_FILES){
                 movable_file = can_move_entirely(file,jp);
             } else {
-                movable_file = can_move(file);
+                movable_file = can_move(file,jp);
             }
             if(movable_file){
                 for(block = file->disp.blockmap; block; block = block->next){
