@@ -964,7 +964,7 @@ static void expand_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
         length = (number_of_bytes + sizeof(wchar_t)) / sizeof(wchar_t);
         if(expanded_string){
             RtlInitUnicodeString(&in,argv[i]);
-            out.Length = out.MaximumLength = number_of_bytes;
+            out.Length = out.MaximumLength = (USHORT)number_of_bytes;
             out.Buffer = expanded_string;
             status = RtlExpandEnvironmentStrings_U(NULL,
                 &in,&out,&number_of_bytes);
