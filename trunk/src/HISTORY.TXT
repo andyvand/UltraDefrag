@@ -36,7 +36,7 @@ HISTORY
     - menu icons were added for Vista and more recent Windows editions;
       they can be enabled/disabled through the show_menu_icons GUI option
     - one bug in GUI cluster map draw was fixed
-    - two bugs in disk optimization algorithm were fixed
+    - few bugs in disk optimization algorithm were fixed
     - UD_SIZELIMIT environment variable superseded by UD_FILE_SIZE_THRESHOLD,
       sizelimit GUI option superseded by file_size_threshold option
     - environment variables expansion support was added to the boot time shell
