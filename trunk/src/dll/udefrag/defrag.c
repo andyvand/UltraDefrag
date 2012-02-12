@@ -436,41 +436,14 @@ completed:
     return 0;
 }
 
-/************************************************************/
-/*                    The entry point                       */
-/************************************************************/
-
 /**
- * @brief Performs a volume defragmentation.
- * @details To avoid infinite data moves in multipass
- * processing, we exclude files for which moving failed.
- * On the other hand, number of fragmented files instantly
- * decreases, so we'll never have infinite loops here.
- * @return Zero for success, negative value otherwise.
+ * @brief Performes a sequence of operations
+ * needed for the complete disk defragmentation.
  */
-int defragment(udefrag_job_parameters *jp)
+static int defrag_sequence(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
     
-    /* perform volume analysis */
-    if(jp->job_type == DEFRAGMENTATION_JOB){
-        result = analyze(jp); /* we need to call it once, here */
-        if(result < 0) return result;
-    }
-    
-#ifdef TEST_SPECIAL_FILES_DEFRAG
-    if(jp->job_type == DEFRAGMENTATION_JOB){
-        test_special_files_defrag(jp);
-        return 0;
-    }
-#endif
-
-    /* reset counters */
-    jp->pi.processed_clusters = 0;
-    jp->pi.clusters_to_process = cc_routine(jp);
-    
-    /* do the job */
-    jp->pi.pass_number = 0;
     while(!jp->termination_router((void *)jp)){
         result = defrag_routine(jp);
         if(result == 0){
@@ -506,6 +479,65 @@ int defragment(udefrag_job_parameters *jp)
         }
         jp->udo.fragment_size_threshold = DEFAULT_FRAGMENT_SIZE_THRESHOLD;
         jp->udo.algorithm_defined_fst = 0;
+    }
+    return overall_result;
+}
+
+/************************************************************/
+/*                    The entry point                       */
+/************************************************************/
+
+/**
+ * @brief Performs a volume defragmentation.
+ * @details To avoid infinite data moves in multipass
+ * processing, we exclude files for which moving failed.
+ * On the other hand, number of fragmented files instantly
+ * decreases, so we'll never have infinite loops here.
+ * @return Zero for success, negative value otherwise.
+ */
+int defragment(udefrag_job_parameters *jp)
+{
+    int result, overall_result = -1;
+    udefrag_fragmented_file *f;
+    
+    /* perform volume analysis */
+    if(jp->job_type == DEFRAGMENTATION_JOB){
+        result = analyze(jp); /* we need to call it once, here */
+        if(result < 0) return result;
+    }
+    
+#ifdef TEST_SPECIAL_FILES_DEFRAG
+    if(jp->job_type == DEFRAGMENTATION_JOB){
+        test_special_files_defrag(jp);
+        return 0;
+    }
+#endif
+
+    /* reset counters */
+    jp->pi.processed_clusters = 0;
+    jp->pi.clusters_to_process = cc_routine(jp);
+    
+    /* do the job */
+    jp->pi.pass_number = 0;
+    result = defrag_sequence(jp);
+    if(result == 0){
+        /* defragmentation succeeded at least once */
+        overall_result = 0;
+    }
+    
+    /*
+    * Some file moves failed because the disk space
+    * was already in use at the moment of the move.
+    * So, let's give them another chance.
+    */
+    for(f = jp->fragmented_files; f; f = f->next){
+        f->f->user_defined_flags &= ~UD_FILE_MOVING_FAILED;
+        if(f->next == jp->fragmented_files) break;
+    }
+    result = defrag_sequence(jp);
+    if(result == 0){
+        /* defragmentation succeeded at least once */
+        overall_result = 0;
     }
     
     return (jp->termination_router((void *)jp)) ? 0 : overall_result;
