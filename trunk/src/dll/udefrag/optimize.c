@@ -723,7 +723,7 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     if(prb_t_first(&t,pt) == NULL) goto done;
     jp->pi.pass_number = 0; start_lcn = end_lcn = 0;
     while(!jp->termination_router((void *)jp)){
-        DebugPrint("volume optimization pass #%u",jp->pi.pass_number);
+        winx_dbg_print_header(0,0,"volume optimization pass #%u",jp->pi.pass_number);
         jp->pi.processed_clusters = \
             jp->pi.clusters_to_process - count_clusters(jp,start_lcn) * 2;
         
@@ -743,7 +743,7 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
         /* continue file sorting on the next pass */
         jp->pi.pass_number ++;
     }
-
+    
 done:
     /* display amount of moved data */
     DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
