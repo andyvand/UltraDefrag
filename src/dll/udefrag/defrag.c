@@ -445,6 +445,7 @@ static int defrag_sequence(udefrag_job_parameters *jp)
     int result, overall_result = -1;
     
     while(!jp->termination_router((void *)jp)){
+        winx_dbg_print_header(0,0,"defragmentation pass #%u",jp->pi.pass_number);
         result = defrag_routine(jp);
         if(result == 0){
             /* defragmentation succeeded at least once */
@@ -464,7 +465,9 @@ static int defrag_sequence(udefrag_job_parameters *jp)
         jp->udo.algorithm_defined_fst = 1;
         DebugPrint("partial defragmentation: fragment size threshold = %I64u",
             jp->udo.fragment_size_threshold);
+        jp->pi.pass_number ++;
         while(!jp->termination_router((void *)jp)){
+            winx_dbg_print_header(0,0,"defragmentation pass #%u",jp->pi.pass_number);
             result = defrag_routine(jp);
             if(result == 0){
                 /* defragmentation succeeded at least once */
