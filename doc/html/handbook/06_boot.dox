@@ -164,6 +164,34 @@ Type 'help' for list of supported commands.
  * When UltraDefrag encounters the wrong syntax it shows an appropriate
  * message on the screen and continues the script execution.
  *
+ * <h1>Environment variable expansion</h1>
+ * The boot time script and the interactive mode support environment variable expansion.
+ * This allows a more flexible script to be written by using <b>\%SystemDrive\%</b> instead of <b>C:</b>.
+ * In addition to the regular variables there are two variables, <b>DATE</b> and <b>TIME</b>,
+ * that will be set dynamically.
+ * Both are formated to be easily used as part of a file name, so a timestamped log
+ * file name can be created.
+ *
+ * @par DATE
+ * This will be expanded to the current date in the format <b>YYYY-MM-DD</b>
+ * @code
+ * echo DATE ... %DATE%
+ * @endcode
+ * Results in the display of:
+@verbatim
+DATE ... 2012-02-14
+@endverbatim
+ *
+ * @par TIME
+ * This will be expanded to the current time in the format <b>HH-MM</b>
+ * @code
+ * echo TIME ... %TIME%
+ * @endcode
+ * Results in the display of:
+@verbatim
+TIME ... 12-04
+@endverbatim
+ *
  * <h1>Boot time script example</h1>
  * The following script is used by default:
  * @code
