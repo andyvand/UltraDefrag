@@ -131,44 +131,12 @@ function write_unicode_name(f,name)
     end
 end
 
-function get_javascript()
-    local js = "", f
-    if(enable_sorting == 1) then
-        -- read udsorting.js file contents
-        f = assert(io.open(instdir .. "\\scripts\\udsorting.js", "r"))
-        js = f:read("*all")
-        f:close()
+function display_report(path)
+    if os.shellexec ~= nil then
+        os.shellexec(path,"open")
+    else
+        os.execute("cmd.exe /C " .. path)
     end
-    if js == nil or js == "" then
-        js = "function init_sorting_engine(){}\nfunction sort_items(criteria){}\n"
-    end
-    return js
-end
-
-function get_css()
-    local css = ""
-    local custom_css = ""
-    local f
-
-    -- read udreport.css file contents
-    f = assert(io.open(instdir .. "\\scripts\\udreport.css", "r"))
-    css = f:read("*all")
-    f:close()
-    if css == nil then
-        css = ""
-    end
-
-    -- read udreport-custom.css file contents
-    f = io.open(instdir .. "\\scripts\\udreport-custom.css", "r")
-    if f ~= nil then
-        custom_css = f:read("*all")
-        f:close()
-        if custom_css == nil then
-            custom_css = ""
-        end
-    end
-
-    return (css .. custom_css)
 end
 
 -------------------------------------------------------------------------------
@@ -264,6 +232,52 @@ table_header = [[
 </tr>
 ]]
 
+-- these markups must be identical, except of representation
+table_head        = [[<table id="main_table" border="1" cellspacing="0" width="100%">]]
+table_head_for_js = [[<table id=\"main_table\" border=\"1\" cellspacing=\"0\" width=\"100%%\">]]
+
+function get_javascript()
+    local js = "", f
+    if(enable_sorting == 1) then
+        -- read udsorting.js file contents
+        f = assert(io.open(instdir .. "\\scripts\\udsorting.js", "r"))
+        js = f:read("*all")
+        f:close()
+    end
+    if js == nil or js == "" then
+        js = "function init_sorting_engine(){}\nfunction sort_items(criteria){}\n"
+    end
+
+    -- replace $TABLE_HEAD by actual markup
+    return string.gsub(js,"$TABLE_HEAD",table_head_for_js)
+end
+
+function get_css()
+    local css = ""
+    local custom_css = ""
+    local f
+
+    -- read udreport.css file contents
+    f = assert(io.open(instdir .. "\\scripts\\udreport.css", "r"))
+    css = f:read("*all")
+    f:close()
+    if css == nil then
+        css = ""
+    end
+
+    -- read udreport-custom.css file contents
+    f = io.open(instdir .. "\\scripts\\udreport-custom.css", "r")
+    if f ~= nil then
+        custom_css = f:read("*all")
+        f:close()
+        if custom_css == nil then
+            custom_css = ""
+        end
+    end
+
+    return (css .. custom_css)
+end
+
 function write_web_page_header(f,js,css)
     local links_toolbar = links_x1 .. instdir .. links_x2
     local formatted_time = ""
@@ -284,7 +298,7 @@ function write_web_page_header(f,js,css)
             "<h3 class=\"title\">Fragmented files on ", volume_letter, ": (", formatted_time, ")</h3>\n",
             links_toolbar,
             "<div id=\"for_msie\">\n",
-                "<table id=\"main_table\" border=\"1\" cellspacing=\"0\" width=\"100%\">\n"
+                table_head, "\n"
     )
 end
 
@@ -340,14 +354,6 @@ function build_html_report()
 
     f:close()
     return filename
-end
-
-function display_report(path)
-    if os.shellexec ~= nil then
-        os.shellexec(path,"open")
-    else
-        os.execute("cmd.exe /C " .. path)
-    end
 end
 
 -------------------------------------------------------------------------------

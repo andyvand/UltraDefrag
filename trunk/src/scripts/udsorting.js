@@ -40,9 +40,8 @@ var
  comment_order = 1,
  status_order = 1,
  msie_browser = false, // true for ms internet explorer
- // TODO: get this from html page
- table_head =
- "<table id=\"main_table\" border=\"1\" color=\"#FFAA55\" cellspacing=\"0\" width=\"100%\">";
+ // $xxx constant becomes replaced by actual markup by the report converter
+ table_head = "$TABLE_HEAD";
 
 function init_sorting_engine()
 {
