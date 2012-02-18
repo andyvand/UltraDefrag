@@ -307,7 +307,7 @@ static DWORD WINAPI start_job(LPVOID p)
     else if(jp->job_type == QUICK_OPTIMIZATION_JOB) action = "quick optimizing";
     else if(jp->job_type == MFT_OPTIMIZATION_JOB) action = "optimizing $mft on";
     winx_dbg_print_header(0,0,"Start %s disk %c:",action,jp->volume_letter);
-    remove_fragmentation_reports(jp);
+    remove_fragmentation_report(jp);
     (void)winx_vflush(jp->volume_letter); /* flush all file buffers */
     
     /* speedup file searching in optimization */
@@ -338,7 +338,7 @@ static DWORD WINAPI start_job(LPVOID p)
     destroy_file_blocks_tree(jp);
     if(jp->job_type != ANALYSIS_JOB)
         release_temp_space_regions(jp);
-    (void)save_fragmentation_reports(jp);
+    (void)save_fragmentation_report(jp);
     
     /* now it is safe to adjust the completion status */
     jp->pi.completion_status = result;

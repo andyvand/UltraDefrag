@@ -229,8 +229,8 @@ typedef struct _udefrag_job_parameters {
 int  get_options(udefrag_job_parameters *jp);
 void release_options(udefrag_job_parameters *jp);
 
-int save_fragmentation_reports(udefrag_job_parameters *jp);
-void remove_fragmentation_reports(udefrag_job_parameters *jp);
+int save_fragmentation_report(udefrag_job_parameters *jp);
+void remove_fragmentation_report(udefrag_job_parameters *jp);
 
 void dbg_print_file_counters(udefrag_job_parameters *jp);
 
