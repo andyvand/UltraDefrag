@@ -136,6 +136,7 @@ winx_volume_region *find_matching_free_region(udefrag_job_parameters *jp,
     jp->p_counters.searching_time += winx_xtime() - time;
     return rgn_matching;
 }
+#endif
 
 /**
  * @brief Searches for largest free space region.
@@ -163,7 +164,6 @@ winx_volume_region *find_largest_free_region(udefrag_job_parameters *jp)
     jp->p_counters.searching_time += winx_xtime() - time;
     return rgn_largest;
 }
-#endif
 
 /************************************************************/
 /*                    Auxiliary routines                    */
