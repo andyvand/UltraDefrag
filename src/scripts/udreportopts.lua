@@ -5,8 +5,18 @@
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
--- All these options were primarily designed to achieve better compatibility
--- with old web browsers.
+-- Set this parameter to zero to disable HTML reports generation.
+-------------------------------------------------------------------------------
+produce_html_report = 1
+
+-------------------------------------------------------------------------------
+-- Set this parameter to 1 to enable generation of plain text reports.
+-------------------------------------------------------------------------------
+produce_plain_text_report = 0
+
+-------------------------------------------------------------------------------
+-- All the following options were primarily designed to achieve better
+-- compatibility with old web browsers.
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------

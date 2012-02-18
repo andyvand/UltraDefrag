@@ -29,7 +29,8 @@ instdir     = arg[2]
 assert(report_path, usage)
 assert(instdir, usage)
 
-webpage_name = ""
+html_report_path = ""
+text_report_path = ""
 
 -------------------------------------------------------------------------------
 -- Ancillary Procedures
@@ -171,6 +172,68 @@ function get_css()
 end
 
 -------------------------------------------------------------------------------
+-- Plain Text Output Procedures
+-------------------------------------------------------------------------------
+
+function write_text_header(f)
+    local formatted_time = ""
+    
+    -- format time appropriate for locale
+    if current_time ~= nil then
+        formatted_time = os.date("%c",os.time(current_time))
+    end
+    
+    -- write byte order mark
+    f:write(string.char(0xEF))
+    f:write(string.char(0xBB))
+    f:write(string.char(0xBF))
+
+    f:write(";---------------------------------------------------------------------------------------------\r\n")
+    f:write("; Fragmented files on ", volume_letter, ": [", formatted_time, "]\r\n;\r\n")
+    f:write("; Fragments    Filesize  Comment      Status    Filename\r\n")
+    f:write(";---------------------------------------------------------------------------------------------\r\n")
+    f:write("\r\n")
+end
+
+function write_main_table(f)
+    for i, file in ipairs(files) do
+        if file.filtered == 0 then
+            f:write(string.format("%11u%12s%9s%12s    ", file.fragments, 
+                string.gsub(file.hrsize,"&nbsp;"," "), file.comment,
+                file.status)
+            )
+            for j, b in ipairs(file.uname) do
+                write_unicode_character(f,b)
+            end
+            f:write("\r\n")
+        end
+    end
+end
+
+function build_text_report()
+    local filename
+    local pos = 0
+
+    repeat
+        pos = string.find(report_path,"\\",pos + 1,true)
+        if pos == nil then filename = "fraglist.txt" ; break end
+    until string.find(report_path,"\\",pos + 1,true) == nil
+    filename = string.sub(report_path,1,pos) .. "fraglist.txt"
+
+    -- note that 'b' flag is needed for utf-16 files
+    local f = assert(io.open(filename,"wb"))
+
+    -- write the header
+    write_text_header(f)
+    
+    -- write the main table
+    write_main_table(f)
+
+    f:close()
+    return filename
+end
+
+-------------------------------------------------------------------------------
 -- HTML Output Procedures
 -------------------------------------------------------------------------------
 
@@ -247,7 +310,7 @@ function write_main_table_body(f)
     end
 end
 
-function build_web_page()
+function build_html_report()
     local filename
     local pos = 0
     local js, css
@@ -265,25 +328,25 @@ function build_web_page()
     js = get_javascript()
     css = get_css()
     
-    -- write a web page header
+    -- write the web page header
     write_web_page_header(f,js,css)
     
-    -- write a main table
+    -- write the main table
     f:write(table_header)
     write_main_table_body(f)
     
-    -- write a web page footer
+    -- write the web page footer
     write_web_page_footer(f)
 
     f:close()
     return filename
 end
 
-function display_web_page(name)
+function display_report(path)
     if os.shellexec ~= nil then
-        os.shellexec(name,"open")
+        os.shellexec(path,"open")
     else
-        os.execute("cmd.exe /C " .. name)
+        os.execute("cmd.exe /C " .. path)
     end
 end
 
@@ -305,14 +368,23 @@ end
 dofile(report_path)
 
 -- check the report format version
-if format_version == nil or format_version < 4 then
-    error("Reports produced by old versions of UltraDefrag are no more supported.\nUpdate the program at least to the 5.0.0 alpha3 version.")
+if format_version == nil or format_version < 5 then
+    error("Reports produced by old versions of UltraDefrag are no more supported.\nUpdate the program at least to the 5.0.3 version.")
 end
 
--- build a web page containing a file fragmentation report
-webpage_name = build_web_page()
+-- build file fragmentation reports
+if produce_html_report == 1 then
+    html_report_path = build_html_report()
+end
+if produce_plain_text_report == 1 then
+    text_report_path = build_text_report()
+end
 
--- display a web page if requested
+-- display report if requested
 if arg[3] == "-v" then
-    display_web_page(webpage_name)
+    if produce_html_report == 1 then
+        display_report(html_report_path)
+    elseif produce_plain_text_report == 1 then
+        display_report(text_report_path)
+    end
 end
