@@ -252,7 +252,7 @@ static ULONGLONG cc_routine(udefrag_job_parameters *jp)
 static int defrag_routine(udefrag_job_parameters *jp)
 {
     udefrag_fragmented_file *f, *head, *next;
-    winx_volume_region *rgn;
+    winx_volume_region *rgn, *largest_rgn;
     winx_file_info *file;
     ULONGLONG defragmented_files;
     ULONGLONG defragmented_entirely = 0, defragmented_partially = 0;
@@ -334,11 +334,16 @@ static int defrag_routine(udefrag_job_parameters *jp)
                         if(next_fr == head_fr) break;
                     }
                     
+                    /* how much clusters can we join together? */
+                    largest_rgn = find_largest_free_region(jp);
+                    if(largest_rgn == NULL) break;
+                    
                     /* find clusters needing optimization */
                     vcn = length = n = new_min_vcn = 0;
                     for(fr = fragments; fr; fr = fr->next){
                         /* find the first little fragment */
                         if(fr->length * jp->v_info.bytes_per_cluster < jp->udo.fragment_size_threshold){
+                            if(fr->length >= largest_rgn->length) break;
                             vcn = fr->vcn;
                             length = fr->length, n++;
                             new_min_vcn = fr->vcn + fr->length;
@@ -346,9 +351,11 @@ static int defrag_routine(udefrag_job_parameters *jp)
                             for(fr2 = fr->next; fr2 != fragments; fr2 = fr2->next){
                                 if(fr2->length * jp->v_info.bytes_per_cluster >= jp->udo.fragment_size_threshold)
                                     break;
+                                if(length + fr2->length > largest_rgn->length) goto move_clusters;
                                 length += fr2->length, n++;
                                 new_min_vcn = fr2->vcn + fr2->length;
                             }
+                            if(largest_rgn->length * jp->v_info.bytes_per_cluster < jp->udo.fragment_size_threshold) break;
                             if(length * jp->v_info.bytes_per_cluster < jp->udo.fragment_size_threshold){
                                 cut_length = jp->udo.fragment_size_threshold / jp->v_info.bytes_per_cluster;
                                 if(cut_length * jp->v_info.bytes_per_cluster != jp->udo.fragment_size_threshold)
@@ -381,6 +388,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
                         if(fr->next == fragments) break;
                     }
                     
+move_clusters:                    
                     /* move clusters */
                     if(length == 0 || n < 2){
                         min_vcn = max_vcn;

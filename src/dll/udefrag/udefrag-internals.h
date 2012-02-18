@@ -287,10 +287,11 @@ enum {
 };
 winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,ULONGLONG min_lcn,ULONGLONG min_length);
 winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG min_lcn,ULONGLONG min_length);
+winx_volume_region *find_largest_free_region(udefrag_job_parameters *jp);
 /*winx_volume_region *find_matching_free_region(udefrag_job_parameters *jp,
     ULONGLONG start_lcn, ULONGLONG min_length, int preferred_position);
-winx_volume_region *find_largest_free_region(udefrag_job_parameters *jp);
 */
+
 int create_file_blocks_tree(udefrag_job_parameters *jp);
 int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *file, winx_blockmap *block);
 int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap *block);
