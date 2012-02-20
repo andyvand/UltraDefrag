@@ -60,8 +60,8 @@
  *
  * @par Status
  * This is the reason the file is still fragmented. The following states are displayed:<br/>
- * <b>locked, move failed</b> (file moving failed), <b>too big</b> (block of free space too small),<br/>
- * <b>improper state</b> (the file system needs to be checked - run <i>CHKDSK {Driveletter} /F /R</i>)
+ * <b>locked, move failed, invalid</b> (the file system needs to be checked - run <i>CHKDSK {Driveletter} /F /R</i>).
+ * If no reason is specified the file simply requires more continuous free space in order to be processed.
  *
  * @par Filename
  * This is the full path of the file.
