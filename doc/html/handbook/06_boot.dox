@@ -12,13 +12,12 @@
 /**
  * @page Boot Boot Time Defragmentation
  *
- * UltraDefrag also includes a new mode that allows you to run it
- * at boot time in a manner similar to chkdsk. This is known as a
- * native application. It provides the ability to defragment any
- * system file. Including page file, registry hives, hiberfil.sys
- * file and any other files locked by the system or applications. Native
- * UltraDefrag runs before any file locking, therefore it can
- * process them as ordinary files.
+ * UltraDefrag also includes a new mode that allows to run it
+ * at boot time in a manner similar to chkdsk. This is known as a 
+ * native application. The primary goal of it is defragmentation
+ * of locked files. UltraDefrag runs at Windows boot before any 
+ * file locking, so it can defragment almost everything,
+ * including page and hibernation files.
  * <a href="http://ultradefrag.sourceforge.net/screenshots.html">View screenshots...</a>
  *
  * If the boot time defragmenter is enabled, it will run
@@ -59,7 +58,7 @@
  * computer. It will be shut down automatically after the job is completed.
  * <br/><br/>
  * To abort the script execution and enter the interactive mode immediately
- * hit <b>ESC</b> at any time during boot time script processing.
+ * hit <b>ESC</b> at any time during the boot time script processing.
  *
  * @par Interactive mode
  * When the exit command is missing in the boot time script UltraDefrag

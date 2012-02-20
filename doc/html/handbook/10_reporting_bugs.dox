@@ -78,8 +78,7 @@
  * Check one of the <b>Log to file</b> items of the <b>File</b> menu to create a log file you can send us.
  *
  * Note that DbgView cannot capture information from the user mode driver during the Windows boot process.
- * This is a well known DbgView limitation. The latest version of DbgView cannot be used on NT 4.0 either,
- * check <a href="http://doc.sch130.nsc.ru/www.sysinternals.com/ntw2k/freeware/debugview.shtml">this page</a> for an earlier version.
+ * This is a well known DbgView limitation.
  * <br/><br/>
  *
  * <h2>Disable debugging</h2>
