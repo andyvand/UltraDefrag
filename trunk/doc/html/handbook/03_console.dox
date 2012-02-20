@@ -38,7 +38,7 @@
  * Optimize the disk space by moving not fragmented files to the beginning of the disk.
  *
  * @par --optimize-mft
- * Concatenate the MFT into one single chunk.
+ * Optimize the MFT by placing its fragments as close to each other as possible.
  *
  * @par -l, --list-available-volumes
  * List all disks available for defragmentation, except removable. Each line of the
@@ -123,7 +123,6 @@
  * @code
  * udefrag "%USERPROFILE%" ..\Test "My Documents" C:\WINDOWS\WindowsUpdate.log
  * @endcode
- * - Short paths (like C:\\PROGRA~1\\SOMEFI~1.TXT) aren't accepted on NT4.
  *
  * <h1>Environment variables</h1>
  * <h2>Filter variables</h2>

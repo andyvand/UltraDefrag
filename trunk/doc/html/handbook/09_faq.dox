@@ -123,7 +123,7 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\BootExecute
  * in different ways. While MyDefrag tends to give more control over a
  * files placement, UltraDefrag is designed to be as simple and fast as possible.
  * So, UltraDefrag never uses a complex disk optimization strategies, because their use
- * often noticeable increases the processing time.
+ * often noticeably increases the processing time.
  *
  * The biggest advantages of UltraDefrag are an ability to defragment system files at
  * boot time, nice graphical interface, handy reports and instant availability of sources

@@ -101,7 +101,7 @@
  * \raisebox{-1.5\height}{\includegraphics{OptimizeMFT.png}} &
  * @endlatexonly
  * @par Optimize MFT (Shift+F7)
- * This concatenates the MFT into one single chunk.
+ * This optimizes the MFT by placing its fragments as close to each other as possible.
  *
  * @htmlonly
  * </td></tr><tr><td>
@@ -606,7 +606,7 @@
  * is set.
  *
  * @par MFT
- * Dark magenta represents the master file table (MFT), light magenta the space reserved for the
+ * Dark magenta represents the master file table (MFT), light magenta - the space reserved for the
  * <a href="http://support.microsoft.com/kb/174619">MFT expansion</a>.
  *
  * @par Unused map blocks
