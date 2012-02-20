@@ -920,7 +920,7 @@ static int test_handler(int argc,wchar_t **argv,wchar_t **envp)
  * %TIME% will be replaced by Hour-Minute,
  * 12-57 for example.
  */
-static void expand_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
+static wchar_t *expand_environment_variables(wchar_t *command)
 {
     winx_time t;
     wchar_t buffer[16];
@@ -928,10 +928,10 @@ static void expand_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
     wchar_t *expanded_string;
     ULONG number_of_bytes;
     NTSTATUS status;
-    int i, length;
+    int length;
     
-    if(argc < 1)
-        return;
+    if(command == NULL)
+        return NULL;
     
     /* set %DATE% and %TIME% */
     memset(&t,0,sizeof(winx_time));
@@ -940,53 +940,51 @@ static void expand_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
         L"%04i-%02i-%02i",(int)t.year,(int)t.month,(int)t.day);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
     if(winx_set_env_variable(L"DATE",buffer) < 0){
-        DebugPrint("%ws: cannot set %DATE% environment variable",argv[0]);
-        winx_printf("\n%ws: cannot set %DATE% environment variable\n\n",argv[0]);
+        DebugPrint("expand_environment_variables: cannot set %DATE% environment variable");
+        winx_printf("\ncannot set %DATE% environment variable\n\n");
     }
     _snwprintf(buffer,sizeof(buffer)/sizeof(wchar_t),
         L"%02i-%02i",(int)t.hour,(int)t.minute);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
     if(winx_set_env_variable(L"TIME",buffer) < 0){
-        DebugPrint("%ws: cannot set %TIME% environment variable",argv[0]);
-        winx_printf("\n%ws: cannot set %TIME% environment variable\n\n",argv[0]);
+        DebugPrint("expand_environment_variables: cannot set %TIME% environment variable");
+        winx_printf("\ncannot set %TIME% environment variable\n\n");
     }
 
-    for(i = 0; i < argc; i++){
-        if(!wcschr(argv[i],'%')) continue;
-        /* expand environment variables */
-        RtlInitUnicodeString(&in,argv[i]);
-        out.Length = out.MaximumLength = 0;
-        out.Buffer = NULL;
-        number_of_bytes = 0;
+    /* expand environment variables */
+    RtlInitUnicodeString(&in,command);
+    out.Length = out.MaximumLength = 0;
+    out.Buffer = NULL;
+    number_of_bytes = 0;
+    status = RtlExpandEnvironmentStrings_U(NULL,
+        &in,&out,&number_of_bytes);
+    expanded_string = winx_heap_alloc(number_of_bytes + sizeof(wchar_t));
+    length = (number_of_bytes + sizeof(wchar_t)) / sizeof(wchar_t);
+    if(expanded_string){
+        RtlInitUnicodeString(&in,command);
+        out.Length = out.MaximumLength = (USHORT)number_of_bytes;
+        out.Buffer = expanded_string;
         status = RtlExpandEnvironmentStrings_U(NULL,
             &in,&out,&number_of_bytes);
-        expanded_string = winx_heap_alloc(number_of_bytes + sizeof(wchar_t));
-        length = (number_of_bytes + sizeof(wchar_t)) / sizeof(wchar_t);
-        if(expanded_string){
-            RtlInitUnicodeString(&in,argv[i]);
-            out.Length = out.MaximumLength = (USHORT)number_of_bytes;
-            out.Buffer = expanded_string;
-            status = RtlExpandEnvironmentStrings_U(NULL,
-                &in,&out,&number_of_bytes);
-            if(NT_SUCCESS(status)){
-                expanded_string[length - 1] = 0;
-                winx_heap_free(argv[i]);
-                argv[i] = expanded_string;
-            } else {
-                winx_dbg_print_ex(status,"%ws: cannot expand environment variables",argv[0]);
-                winx_printf("\n%ws: cannot expand environment variables\n\n",argv[0]);
-            }
+        if(NT_SUCCESS(status)){
+            expanded_string[length - 1] = 0;
         } else {
-            DebugPrint("%ws: cannot allocate %u bytes of memory",
-                argv[0],number_of_bytes + sizeof(wchar_t));
-            winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-                argv[0],number_of_bytes + sizeof(wchar_t));
+            winx_dbg_print_ex(status,"expand_environment_variables failed");
+            winx_printf("\ncannot expand environment variables\n\n");
+            winx_heap_free(expanded_string);
+            expanded_string = NULL;
         }
+    } else {
+        DebugPrint("expand_environment_variables: cannot allocate %u bytes of memory",
+            number_of_bytes + sizeof(wchar_t));
+        winx_printf("\ncannot allocate %u bytes of memory\n\n",
+            number_of_bytes + sizeof(wchar_t));
     }
     
     /* clear %DATE% and %TIME% */
     (void)winx_set_env_variable(L"DATE",NULL);
     (void)winx_set_env_variable(L"TIME",NULL);
+    return expanded_string;
 }
 
 /**
@@ -1075,16 +1073,12 @@ int parse_command(wchar_t *cmdline)
     * Prepare argc, argv, envp variables.
     * Return immediately if argc == 0.
     */
-    /* a. make a copy of command line */
-    n = wcslen(cmdline);
-    cmdline_copy = winx_heap_alloc((n + 1) * sizeof(wchar_t));
-    if(cmdline_copy == NULL){
-        winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-            cmdline,(n + 1) * sizeof(wchar_t));
+    /* a. expand environment variables */
+    cmdline_copy = expand_environment_variables(cmdline);
+    if(cmdline_copy == NULL)
         return (-1);
-    }
-    wcscpy(cmdline_copy,cmdline);
     /* b. replace all spaces by zeros */
+    n = wcslen(cmdline_copy);
     argc = 1;
     for(i = 0; i < n; i++){
         if(cmdline_copy[i] == 0x20 || cmdline_copy[i] == '\t'){
@@ -1106,16 +1100,9 @@ int parse_command(wchar_t *cmdline)
     for(i = 0; i < n; i++){
         if(cmdline_copy[i]){
             if(!arg_detected){
-                argv[j] = winx_wcsdup(cmdline_copy + i);
+                argv[j] = cmdline_copy + i;
                 j ++;
                 arg_detected = 1;
-                if(argv[j-1] == NULL){
-                    winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-                        (wcslen(cmdline_copy + i) + 1) * sizeof(wchar_t));
-                    argc = j - 1;
-                    result = -1;
-                    goto done;
-                }
             }
         } else {
             arg_detected = 0;
@@ -1177,23 +1164,16 @@ int parse_command(wchar_t *cmdline)
     */
     if(cmd_table[i].cmd_handler == NULL){
         winx_printf("\nUnknown command %ws!\n\n",argv[0]);
-        result = 0;
-        goto done;
+        winx_heap_free(argv);
+        if(envp) winx_heap_free(envp);
+        winx_heap_free(cmdline_copy);
+        return 0;
     }
-    
-    /*
-    * Expand environment variables.
-    */
-    expand_environment_variables(argc,argv,envp);
     
     /*
     * Handle the command.
     */
     result = cmd_table[i].cmd_handler(argc,argv,envp);
-    
-done:
-    for(i = 0; i < argc; i++)
-        winx_heap_free(argv[i]);
     winx_heap_free(argv);
     if(envp) winx_heap_free(envp);
     winx_heap_free(cmdline_copy);
