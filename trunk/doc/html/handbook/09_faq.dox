@@ -27,21 +27,6 @@
  * In addition, usually it is not needed to reboot.
  *
  * <h1>General Usage</h1>
- * <h3>How frequently to defragment?</h3>
- * Defragment your system disk only when you notice system slowdown -
- * approximately on a monthly basis, not frequently. Data drives have even less
- * need to be defragmented, especially if they contain primarily music, 
- * pictures and videos.
- *
- * Optimization is reasonable when you have free space heavily fragmented
- * on your system disk. To determine whether to run optimizer or not execute
- * the analysis and look at the cluster map. If you see white space
- * heavily scattered around the disk - it's time for an optimization.
- *
- * And, once again, don't crave to defragment/optimize data files -
- * music/video has no need to be continues on disk, other files have
- * tendency for temporary living on the disk.
- *
  * <h3>After defragmentation I see my restore points disappeared, what happens?</h3>
  * This is a normal situation when restore points disappear after an
  * intensive disk processing. Windows limits amount of disk space
