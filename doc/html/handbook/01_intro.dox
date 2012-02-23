@@ -104,13 +104,12 @@
  * <li>The analysis phase is the same as for defragmentation.</li>
  * <li>The next phase moves all small files and fragments to the end of the
  * disk to free space at the beginning of it.</li>
- * <li>The third phase moves small significant files back, sorted by path
+ * <li>The third phase moves small files back, sorted by path
  * in ascending order. This speeds up access to groups of files.</li>
- * <li>The next phase moves remaining small files to the beginning
- * of the disk, without any particular order, to reduce fragmentation
- * of free space.</li>
- * <li>The last phase defragments files.</li>
+ * <li>The last phase defragments all files.</li>
  * </ol>
+ *
+ * @note Optimization algorithm ignores any size, name and fragment count filters.
  *
  * Sometimes even the disk optimization fails to make a large 
  * continuous free space gap. This happens when unmovable (locked)

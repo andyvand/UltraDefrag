@@ -707,7 +707,7 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     for(f = jp->filelist; f; f = f->next){
         if(f->disp.clusters * jp->v_info.bytes_per_cluster \
           < jp->udo.optimizer_size_limit){
-            if(can_move_entirely(f,jp) && !is_excluded_by_path(f)){
+            if(can_move_entirely(f,jp)){
                 if(prb_probe(pt,(void *)f) == NULL){
                     DebugPrint("optimize_routine: cannot add file to the tree");
                     result = UDEFRAG_NO_MEM;
@@ -772,6 +772,11 @@ int optimize(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
     ULONGLONG extra_clusters = 0;
+    
+    /* reset filters */
+    release_options(jp);
+    jp->udo.size_limit = 0;
+    jp->udo.fragments_limit = 0;
     
     /* perform volume analysis */
     result = analyze(jp); /* we need to call it once, here */
