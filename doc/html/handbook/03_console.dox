@@ -137,9 +137,17 @@
  * List of files to be excluded from defragmentation process. File names 
  * must be separated by semicolons.
  *
+ * @par UD_FRAGMENT_SIZE_THRESHOLD
+ * Eliminate only fragments smaller than specified.<br/>The following 
+ * size suffixes are accepted: Kb, Mb, Gb, Tb, Pb, Eb.
+ *
  * @par UD_FILE_SIZE_THRESHOLD
  * Exclude all files larger than the specified size.<br/>The following 
  * size suffixes are accepted: Kb, Mb, Gb, Tb, Pb, Eb.
+ *
+ * @par UD_OPTIMIZER_FILE_SIZE_THRESHOLD
+ * In optimization sort out files smaller than specified only.<br/>The following 
+ * size suffixes are accepted: Kb, Mb, Gb, Tb, Pb, Eb.<br/>The default value is 20Mb.
  *
  * @par UD_FRAGMENTS_THRESHOLD
  * Exclude all files which have less fragments than the specified number.
@@ -208,6 +216,11 @@
  * set UD_IN_FILTER=*windows*;*winnt*
  * @endcode
  *
+ * @par eliminate only fragments below 20 MB in size
+ * @code
+ * set UD_FRAGMENT_SIZE_THRESHOLD=20Mb
+ * @endcode
+ *
  * @par process only files below 50 MB in size
  * @code
  * set UD_FILE_SIZE_THRESHOLD=50Mb
@@ -266,6 +279,7 @@
  * @echo off
  *
  * set UD_EX_FILTER=*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar
+ * set UD_FRAGMENT_SIZE_THRESHOLD=20Mb
  * set UD_FILE_SIZE_THRESHOLD=50Mb
  * udefrag c: > c:\ud.log
  *
