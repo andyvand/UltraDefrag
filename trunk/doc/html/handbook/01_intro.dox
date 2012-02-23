@@ -40,7 +40,7 @@
  * - NTFS metafiles defragmentation
  * - ultra fast NTFS analysis
  * - fast defragmentation algorithm
- * - effective disk optimization algorithm (two strategies available)
+ * - effective disk optimization algorithm
  * - safety, it can never damage processed files
  * - simplicity, it can be used without reading the documentation
  * - ability to defragment single files/directories from the context menu of Explorer
@@ -62,7 +62,7 @@
  * UltraDefrag runs on Windows XP, Windows Server 2003, Windows Vista,
  * Windows Server 2008 and Windows 7, including all 64 bit versions of Windows.
  *
- * Both Windows NT 4.0 and Windows 2000 have a very restricted Defrag API,
+ * Both Windows NT 4.0 and Windows 2000 have very restricted Defrag API,
  * so the most recent versions of UltraDefrag doesn't support them.
  * However, the 5.0.x series of UltraDefrag is fully compatible
  * with Windows NT 4.0 and Windows 2000.
@@ -91,50 +91,31 @@
  *
  * <h1>Processing algorithms</h1>
  *
- * @note Both optimization algorithms ignore any size, name and fragment count filters.
- *
  * <h2>Defragmentation algorithm</h2>
  * <ol>
  * <li>The analysis phase scans the whole disk to collect
  * information about all files and free space.</li>
- * <li>The defragmentation phase concatenates all fragmented files
- * into one chunk. Files that can't be moved or are locked are skipped.</li>
- * <li>The partial defragmentation phase tries to concatenate the
- * remaining fragmented files into as less pieces as possible.</li>
+ * <li>The defragmentation phase eliminates little fragments
+ * by joining them together. This speeds up access to individual files.</li>
  * </ol>
  *
- * <h2>Quick optimization algorithm</h2>
+ * <h2>Optimization algorithm</h2>
  * <ol>
  * <li>The analysis phase is the same as for defragmentation.</li>
- * <li>The next phase moves only fragmented files to the end of the
+ * <li>The next phase moves all small files and fragments to the end of the
  * disk to free space at the beginning of it.</li>
- * <li>The defragmentation phase is the same as for defragmentation.</li>
- * <li>The last phase tries to move as much not fragmented files 
- * to the beginning of the disk to create a big free space at the end.</li>
+ * <li>The third phase moves small significant files back, sorted by path
+ * in ascending order. This speeds up access to groups of files.</li>
+ * <li>The next phase moves remaining small files to the beginning
+ * of the disk, without any particular order, to reduce fragmentation
+ * of free space.</li>
+ * <li>The last phase defragments files.</li>
  * </ol>
  *
- * <h2>Full optimization algorithm</h2>
- * <ol>
- * <li>The analysis phase is the same as for defragmentation.</li>
- * <li>The next phase moves all files, fragmented or not, to the end of the
- * disk to free space at the beginning of it.</li>
- * <li>The defragmentation phase is the same as for defragmentation.</li>
- * <li>The last phase is the same as for quick optimization.</li>
- * </ol>
- *
- * Another advantage of the described optimization algorithms
- * over more complicated algorithms is their relatively small
- * processing time.
- *
- * Unfortunately the disk optimization algorithm works only
- * on NTFS disks, because FAT directories are not movable.
- *
- * On the other hand, NTFS disks are often logically split
- * into several parts by files which cannot be moved ($Bitmap and others).
- * Therefore it may be sometimes impossible to get a very large
- * continuous free space area for, for instance, pagefile
- * defragmentation. For such cases there are two workarounds
- * available:
+ * Sometimes even the disk optimization fails to make a large 
+ * continuous free space gap. This happens when unmovable (locked)
+ * files are scattered around the disk. In order to defragment big
+ * files (pagefile etc.) in such cases they are two workarounds available:
  * - Move all files to another disk, reformat the disk and move
  * all back. This causes the perfect disk optimization.
  * - Run <a href="http://gparted.sourceforge.net/">GParted</a> or
