@@ -814,6 +814,7 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* get rid of fragmented files */
+    jp->pi.clusters_to_process += defrag_cc_routine(jp);
     defragment(jp);
     return overall_result;
 }
@@ -845,6 +846,7 @@ int optimize_mft(udefrag_job_parameters *jp)
     result = optimize_mft_routine(jp);
     
     /* cleanup the disk */
+    jp->pi.clusters_to_process += defrag_cc_routine(jp);
     defragment(jp);
     return result;
 }
