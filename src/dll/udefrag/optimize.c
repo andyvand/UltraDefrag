@@ -775,7 +775,7 @@ int optimize(udefrag_job_parameters *jp)
     
     /* reset filters */
     release_options(jp);
-    jp->udo.size_limit = 0;
+    jp->udo.size_limit = MAX_FILE_SIZE;
     jp->udo.fragments_limit = 0;
     
     /* perform volume analysis */
