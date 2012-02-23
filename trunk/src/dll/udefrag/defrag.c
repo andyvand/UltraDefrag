@@ -227,7 +227,7 @@ void release_fragments_list(winx_blockmap **fragments)
  * @brief Calculates total number of clusters
  * needed to be moved to complete the defragmentation.
  */
-static ULONGLONG cc_routine(udefrag_job_parameters *jp)
+ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp)
 {
     udefrag_fragmented_file *f;
     ULONGLONG n = 0;
@@ -511,22 +511,18 @@ int defragment(udefrag_job_parameters *jp)
     int result, overall_result = -1;
     udefrag_fragmented_file *f;
     
-    /* perform volume analysis */
     if(jp->job_type == DEFRAGMENTATION_JOB){
+        /* perform volume analysis */
         result = analyze(jp); /* we need to call it once, here */
         if(result < 0) return result;
-    }
-    
-#ifdef TEST_SPECIAL_FILES_DEFRAG
-    if(jp->job_type == DEFRAGMENTATION_JOB){
+    #ifdef TEST_SPECIAL_FILES_DEFRAG
         test_special_files_defrag(jp);
         return 0;
+    #endif
+        /* reset counters */
+        jp->pi.processed_clusters = 0;
+        jp->pi.clusters_to_process = defrag_cc_routine(jp);
     }
-#endif
-
-    /* reset counters */
-    jp->pi.processed_clusters = 0;
-    jp->pi.clusters_to_process = cc_routine(jp);
     
     /* do the job */
     jp->pi.pass_number = 0;

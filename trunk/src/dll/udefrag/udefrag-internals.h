@@ -248,9 +248,6 @@ int optimize(udefrag_job_parameters *jp);
 int optimize_mft(udefrag_job_parameters *jp);
 void destroy_lists(udefrag_job_parameters *jp);
 
-typedef int (*disk_processing_routine)(udefrag_job_parameters *jp);
-typedef ULONGLONG (*clusters_counting_routine)(udefrag_job_parameters *jp);
-
 ULONGLONG start_timing(char *operation_name,udefrag_job_parameters *jp);
 void stop_timing(char *operation_name,ULONGLONG start_time,udefrag_job_parameters *jp);
 
@@ -267,6 +264,7 @@ int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 winx_blockmap *build_fragments_list(winx_file_info *f,ULONGLONG *n_fragments);
 void release_fragments_list(winx_blockmap **fragments);
+ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp);
 
 int move_file(winx_file_info *f,
               ULONGLONG vcn,
