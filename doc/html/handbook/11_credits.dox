@@ -126,6 +126,7 @@
  * <tr><td>                               </td><td>-</td><td> Şahin Salincakli</td></tr>
  * <tr><td>• Ukrainian                    </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Vietnamese (VI)              </td><td>-</td><td> Vietnamize Team</td></tr>
+ * <tr><td>• Wáray-Wáray                  </td><td>-</td><td> Harvey Fiji</td></tr>
  * <tr><td>• Yiddish                      </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * </table>
  * @endhtmlonly
@@ -224,6 +225,7 @@
  *                                 & - & Sahin Salincakli \\
  * • Ukrainian                     & - & Dmitri Arkhangelski \\
  * • Vietnamese (VI)               & - & Vietnamize Team \\
+ * • Wáray-Wáray                   & - & Harvey Fiji \\
  * • Yiddish                       & - & Dmitri Arkhangelski \\
  * \end{xtabular}\end{Indent}\par
  * @endlatexonly
