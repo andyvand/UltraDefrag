@@ -22,7 +22,7 @@
  * additional RAM modules always gives the best result.
  *
  * Then, if you'd like to keep some files close to the beginning
- * of the disk because of its highest speed, don't ask the disk defragmenter
+ * of the disk because of the highest speed of this area, don't ask the disk defragmenter
  * for this job: just <a href="http://gparted.sourceforge.net/">repartition</a>
  * the disk and use the first partition to keep the most
  * frequently accessed files while the second partition - for backups,
