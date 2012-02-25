@@ -1,4 +1,4 @@
-HISTORY
+ï»¿HISTORY
 
   Version 6.0.0  2012-01-
   ------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ HISTORY
     - environment variables expansion support was added to the boot time shell
     - the following translations were added:
 
-      Wáray-Wáray
+      WÃ¡ray-WÃ¡ray
 
     - the following translations were updated:
 
