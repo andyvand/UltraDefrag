@@ -10,17 +10,21 @@
         </div>
     </div>
     <div class="mpart">
+        <h2 class="content"><strong>DEDICATION</strong></h2>
+        <p>This release is dedicated to Stefan's sister who died on February 19th, 2012 due to cancer.</p>
         <h2 class="content"><strong>НОВОСТИ</strong></h2>
-        <a href="http://sourceforge.net/news/?group_id=199532"><strong><span style="font-size: large;">UltraDefrag 5.0.2 released</span></strong> <small>[2012-01-31]</small></a>
+        <a href="http://sourceforge.net/news/?group_id=199532"><strong><span style="font-size: large;">UltraDefrag 5.0.3 released</span></strong> <small>[2012-02-26]</small></a>
         <!-- brief description of key improvements here -->
         <ul>
-            <li>Улучшено представление кластеров на карте диска.</li>
-            <li>Исправлена небольшая проблема перерисовки MFT зоны.</li>
-            <li>Исправлена проблема определения числа клавиатур при загрузке.</li>
-            <li>Исправлена небольшая проблема регистрации .luar файлов при установке программы.</li>
-            <li>Добавлен перевод на боснийский и арабский языки. Спасибо за поддержку, друзья!</li>
-            <li>Добавлена PDF версия документации.</li>
-            <li>Обновлена документация: intro и GUI разделы.</li>
+            <li>The GUI report options <b>produce_html_report</b> and <b>produce_plain_text_report</b> were added to the <i>udreportopts.lua</i> file;
+            now the program generates text reports only when they are enabled explicitly.</li>
+            <li>A problem preventing language selection saving on installation was fixed.</li>
+            <li>Optional menu icons were added for Vista and more recent Windows editions;
+            they can be enabled/disabled through the <b>show_menu_icons</b> GUI option.</li>
+            <li>A problem with the GUI cluster map drawing routine was fixed.</li>
+            <li>Some problems with the disk optimization algorithm were fixed.</li>
+            <li>Environment variables expansion support was added to the boot time shell.</li>
+            <li>The translation Wáray-Wáray has been added. Thanks to the translator.</li>
         </ul>
         <p><a href="../HISTORY.TXT">Change Log</a> содержит полный список изменений.</p>
         <div class="date"><!--#config timefmt="%F" --><span class="style0">Отправлено</span> <!--#flastmod file="index_left_side.html" --></div> 
@@ -54,8 +58,8 @@
         <ul>
         <li>Поддержка FAT, exFAT и NTFS. <span class="enhancement">(улучшено в 5.0.0)</span></li>
         <li>Дефрагментация всех файлов, включая системные и мета-файлы NTFS. <span class="enhancement">(улучшено в 5.0.0)</span></li>
-        <li>Полная оптимизация диска, которая обрабатывает все файлы. <span class="enhancement">(улучшено в 5.0.0)</span></li>
-        <li>Быстрая оптимизация диска - обрабатывает в основном фрагментированные файлы. <span class="newfeature">(только в 5.0.0)</span></li>
+        <li>Полная оптимизация диска, которая обрабатывает все файлы. <span class="enhancement">(улучшено в 5.0.3)</span></li>
+        <li>Быстрая оптимизация диска - обрабатывает в основном фрагментированные файлы. <span class="enhancement">(улучшено в 5.0.3)</span></li>
         <li>Оптимизация MFT. <span class="enhancement">(улучшено в 5.0.1)</span></li>
         <li>Исключение файлов по имени, числу фрагментов и размеру.</li>
         <li>Ограничение времени обработки диска.</li>
@@ -65,12 +69,12 @@
         </ul>
         <p><span class="style0">Графический интерфейс:</span></p>
         <ul>
-        <li>Графическое отображение карты кластеров. <span class="enhancement">(улучшено в 5.0.2)</span></li>
-        <li>Современный эргономичный дизайн. <span class="newfeature">(только в 5.0.0)</span></li>
+        <li>Графическое отображение карты кластеров. <span class="enhancement">(улучшено в 5.0.3)</span></li>
+        <li>Современный эргономичный дизайн. <span class="enhancement">(улучшено в 5.0.3)</span></li>
         <li>Высота списка дисков может настраиваться. <span class="newfeature">(только в 5.0.0)</span></li>
         <li>Индикация прогресса компактно встроена в список дисков. <span class="enhancement">(улучшено в 5.0.0)</span></li>
         <li>Можно задавать выключение компьютера (и другие полезные действия) после завершения дефрагментации. <span class="enhancement">(улучшено в 5.0.2)</span></li>
-        <li>Есть перевод более чем на 57 языков мира. Легко добавить новый перевод. <span class="enhancement">(улучшено в 5.0.2)</span></li>
+        <li>Есть перевод более чем на 58 языков мира. Легко добавить новый перевод. <span class="enhancement">(улучшено в 5.0.3)</span></li>
         <li><a href="../handbook/GUI.html">Ещё...</a></li>
         </ul>
         <p><span class="style0">Утилита командной строки:</span></p>
@@ -88,14 +92,14 @@
         </ul>
         <p><span class="style0">Отчеты:</span></p>
         <ul>
-        <li>Генерируются как в удобном HTML, так и в простом текстовом формате. <span class="enhancement">(улучшено в 5.0.0)</span></li>
+        <li>Генерируются как в удобном HTML, так и в простом текстовом формате. <span class="enhancement">(улучшено в 5.0.3)</span></li>
         <li>Включают полезную информацию о фрагментированных файлах. <span class="enhancement">(улучшено в 5.0.0)</span></li>
         <li><a href="../handbook/Reports.html">Ещё...</a></li>
         </ul>
         <p><span class="style0">Установка:</span></p>
         <ul>
         <li>Процесс установки очень удобен и прост. <span class="enhancement">(улучшено в 5.0.0)</span></li>
-        <li>Возможна конфигурируемая автоматическая установка. <span class="newfeature">(только в 5.0.0)</span></li>
+        <li>Возможна конфигурируемая автоматическая установка. <span class="enhancement">(улучшено в 5.0.3)</span></li>
         <li><a href="../handbook/Installation.html">Ещё...</a></li>
         </ul>
         <p>&nbsp;</p>
