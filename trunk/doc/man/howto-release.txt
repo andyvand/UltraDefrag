@@ -13,7 +13,7 @@ new release:
 2. add date to history.txt file
 3. run build-release.cmd
 4. upload files through file manager
-5. update website (+ HISTORY.TXT, version.ini, downloads, left_side_index),
+5. update website (+ HISTORY.TXT, version.ini, version_xp.ini, downloads, left_side_index),
    handbook, dev docs, zenwinx docs
 6. submit news
 7. close bugs and requests, but still allow posting comments
