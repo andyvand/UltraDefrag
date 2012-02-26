@@ -30,7 +30,7 @@
       the program; look at rsc/compilation.dox for details
 
 
-  Version 5.0.3  2012-02-
+  Version 5.0.3  2012-02-26
   ------------------------------------------------------------------------------
     - produce_html_report and produce_plain_text_report options were added
       to the udreportopts.lua file; now the program generates text reports

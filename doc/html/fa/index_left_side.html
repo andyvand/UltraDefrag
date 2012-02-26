@@ -12,17 +12,21 @@
         </div>
     </div>
     <div class="mpart">
+        <h2 class="content"><strong>DEDICATION</strong></h2>
+        <p>This release is dedicated to Stefan's sister who died on February 19th, 2012 due to cancer.</p>
         <h2 class="content"><strong>NEWS</strong></h2>
-        <a href="http://sourceforge.net/news/?group_id=199532"><strong><span style="font-size: large;">UltraDefrag 5.0.2 released</span></strong> <small>[2012-01-31]</small></a>
+        <a href="http://sourceforge.net/news/?group_id=199532"><strong><span style="font-size: large;">UltraDefrag 5.0.3 released</span></strong> <small>[2012-02-26]</small></a>
         <!-- brief description of key improvements here -->
         <ul>
-            <li>The representation of disk clusters on the cluster map was improved.</li>
-            <li>A problem with the MFT Zone redraw was fixed.</li>
-            <li>A problem with checking the correct number of keyboards at boot time was fixed.</li>
-            <li>The installer now forces the default action for .luar files to be "view".</li>
-            <li>The translations Bosanski and Arabic have been added. Thanks to the translators.</li>
-            <li>A PDF version of the documentation is now available as separate download.</li>
-            <li>Additional information was added to the intro and GUI sections of the documentation.</li>
+            <li>The GUI report options <b>produce_html_report</b> and <b>produce_plain_text_report</b> were added to the <i>udreportopts.lua</i> file;
+            now the program generates text reports only when they are enabled explicitly.</li>
+            <li>A problem preventing language selection saving on installation was fixed.</li>
+            <li>Optional menu icons were added for Vista and more recent Windows editions;
+            they can be enabled/disabled through the <b>show_menu_icons</b> GUI option.</li>
+            <li>A problem with the GUI cluster map drawing routine was fixed.</li>
+            <li>Some problems with the disk optimization algorithm were fixed.</li>
+            <li>Environment variables expansion support was added to the boot time shell.</li>
+            <li>The translation Wáray-Wáray has been added. Thanks to the translator.</li>
         </ul>
         <p>The <a href="../HISTORY.TXT">Change Log</a> contains the full list of changes.</p>
         <div class="date"><!--#config timefmt="%F" --><span class="style0">Posted on</span> <!--#flastmod file="index_left_side.html" --></div> 
@@ -56,8 +60,8 @@
         <ul>
         <li>Currently FAT, exFAT and NTFS are supported. <span class="enhancement">(enhanced in 5.0.0)</span></li>
         <li>Defragmentation of files and folders including system files and file system meta files. <span class="enhancement">(enhanced in 5.0.0)</span></li>
-        <li>Full optimization of the drive, which processes all files despite of their fragmentation. <span class="enhancement">(enhanced in 5.0.0)</span></li>
-        <li>Quick optimization of the drive, which mainly processes fragmented files. <span class="newfeature">(new in 5.0.0)</span></li>
+        <li>Full optimization of the drive, which processes all files despite of their fragmentation. <span class="enhancement">(enhanced in 5.0.3)</span></li>
+        <li>Quick optimization of the drive, which mainly processes fragmented files. <span class="enhancement">(enhanced in 5.0.3)</span></li>
         <li>MFT optimization, which processes the MFT only. <span class="enhancement">(enhanced in 5.0.1)</span></li>
         <li>Filtering of files to process by name, fragment count and size.</li>
         <li>Drive processing can be interrupted automatically after a defined amount of time.</li>
@@ -67,13 +71,13 @@
         </ul>
         <p><span class="style0">Graphical User Interface:</span></p>
         <ul>
-        <li>Graphical display of the drives cluster map. <span class="enhancement">(enhanced in 5.0.2)</span></li>
-        <li>Modern design with menus and tool bar. <span class="newfeature">(new in 5.0.0)</span></li>
+        <li>Graphical display of the drives cluster map. <span class="enhancement">(enhanced in 5.0.3)</span></li>
+        <li>Modern design with menus and tool bar. <span class="enhancement">(enhanced in 5.0.3)</span></li>
         <li>The hight of the drives list can be adjusted. <span class="newfeature">(new in 5.0.0)</span></li>
         <li>The current progress and all important information are displayed in the drives list. <span class="enhancement">(enhanced in 5.0.0)</span></li>
         <li>A final action can be specified to be executed after processing the drives. <span class="newfeature">(new in 5.0.0)</span></li>
         <li>Color coding of the usage of the cluster map. <span class="enhancement">(enhanced in 5.0.2)</span></li>
-        <li>Localization can be done by the user or by one of the 57 included language packages. <span class="enhancement">(enhanced in 5.0.2)</span></li>
+        <li>Localization can be done by the user or by one of the 58 included language packages. <span class="enhancement">(enhanced in 5.0.3)</span></li>
         <li><a href="../handbook/GUI.html">Read more...</a></li>
         </ul>
         <p><span class="style0">Command Line Tool:</span></p>
@@ -92,7 +96,7 @@
         </ul>
         <p><span class="style0">Reports:</span></p>
         <ul>
-        <li>Available as plain text and HTML page. <span class="enhancement">(enhanced in 5.0.0)</span></li>
+        <li>Available as plain text and HTML page. <span class="enhancement">(enhanced in 5.0.3)</span></li>
         <li>Includes all information about the fragmented files. <span class="enhancement">(enhanced in 5.0.0)</span></li>
         <li><a href="../handbook/Reports.html">Read more...</a></li>
         </ul>
@@ -100,7 +104,7 @@
         <ul>
         <li>Two configurations are available, full and without GUI. <span class="enhancement">(enhanced in 5.0.0)</span></li>
         <li>All features can be configured through command line arguments. <span class="newfeature">(new in 5.0.0)</span></li>
-        <li>Selections of previous installations are retained. <span class="newfeature">(new in 5.0.0)</span></li>
+        <li>Selections of previous installations are retained. <span class="enhancement">(enhanced in 5.0.3)</span></li>
         <li><a href="../handbook/Installation.html">Read more...</a></li>
         </ul>
         <p>&nbsp;</p>
