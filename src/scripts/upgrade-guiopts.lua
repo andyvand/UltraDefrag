@@ -359,8 +359,7 @@ if upgrade_needed ~= 0 then
     
     -- RULES OF UPGRADE TO THE CURRENT VERSION
     if old_version == 0 then
-        -- revert in_filter and ex_filter to their defaults
-        -- this is a main reason for upgrade to the version 1
+        -- upgrade filters, now they should include wildcards
         in_filter = ""
         ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar"
     end
