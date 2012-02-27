@@ -1,5 +1,8 @@
 GUI Design Guideline links from Microsoft:
 
+    Windows User Experience Interaction Guidelines:
+        http://msdn.microsoft.com/en-us/library/aa511258.aspx
+
     Layout:
         http://msdn.microsoft.com/en-us/library/aa511279.aspx
 
