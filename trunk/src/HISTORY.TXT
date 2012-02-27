@@ -30,6 +30,13 @@
       the program; look at rsc/compilation.dox for details
 
 
+  Version 5.0.4  2012-03-
+  ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Korean
+
+
   Version 5.0.3  2012-02-26
   ------------------------------------------------------------------------------
     - produce_html_report and produce_plain_text_report options were added
