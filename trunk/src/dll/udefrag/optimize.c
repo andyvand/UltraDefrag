@@ -675,7 +675,6 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     struct prb_traverser t;
     ULONGLONG start_lcn, end_lcn;
     ULONGLONG time;
-    char buffer[32];
     int result = 0;
 
     jp->pi.current_operation = VOLUME_OPTIMIZATION;
@@ -745,10 +744,6 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     }
     
 done:
-    /* display amount of moved data */
-    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
-    winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s moved",buffer);
     stop_timing("optimization",time,jp);
     winx_fclose(jp->fVolume);
     jp->fVolume = NULL;

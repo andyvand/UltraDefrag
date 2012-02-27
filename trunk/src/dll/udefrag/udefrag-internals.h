@@ -217,7 +217,6 @@ typedef struct _udefrag_job_parameters {
     ULONGLONG clusters_at_once;                 /* number of clusters to be moved at once */
     cmap cluster_map;                           /* cluster map internal data */
     WINX_FILE *fVolume;                         /* handle of the volume, used by file moving routines */
-    ULONGLONG free_rgn_size_threshold;          /* free region size threshold used in volume optimization */
     struct performance_counters p_counters;     /* performance counters */
     struct prb_table *file_blocks;              /* pointer to binary tree of all file blocks found on the volume */
     struct file_counters f_counters;            /* file counters */
