@@ -206,6 +206,13 @@ int ShutdownOrHibernate(void);
 
 void OpenWebPage(char *page);
 
+extern HANDLE hTaskbarIconEvent;
+extern int job_is_running;
+void CreateTaskbarIconSynchObjects(void);
+void DestroyTaskbarIconSynchObjects(void);
+void SetTaskbarIconOverlay(int resource_id, wchar_t *description_key);
+void RemoveTaskbarIconOverlay(void);
+
 /* common global variables */
 extern HINSTANCE hInstance;
 extern HWND hWindow;
@@ -246,6 +253,7 @@ extern int dry_run;
 extern int job_flags;
 extern int repeat_action;
 extern int show_menu_icons;
+extern int show_taskbar_icon_overlay;
 
 /*
 * Note:

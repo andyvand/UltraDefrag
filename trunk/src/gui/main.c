@@ -41,6 +41,7 @@ WGX_FONT wgxFont = {{0},0};
 RECT win_rc; /* coordinates of main window */
 RECT r_rc;   /* coordinates of restored window */
 double pix_per_dialog_unit = PIX_PER_DIALOG_UNIT_96DPI;
+UINT TaskbarButtonCreatedMsg = 0;
 
 int when_done_action = IDM_WHEN_DONE_NONE;
 int shutdown_requested = 0;
@@ -354,6 +355,10 @@ int CreateMainWindow(int nShowCmd)
     /* register class */
     if(RegisterMainWindowClass() < 0)
         return (-1);
+    
+    TaskbarButtonCreatedMsg = RegisterWindowMessage("TaskbarButtonCreated");
+    if(TaskbarButtonCreatedMsg == 0)
+        WgxDbgPrintLastError("CreateMainWindow: cannot register TaskbarButtonCreated message");
 
     if(dry_run == 0){
         if(portable_mode) caption = VERSIONINTITLE_PORTABLE;
@@ -707,6 +712,20 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     wchar_t *report_opts_path;
     FILE *f;
     int flag;
+    
+    if(uMsg == TaskbarButtonCreatedMsg){
+        /* set taskbar icon overlay */
+        if(show_taskbar_icon_overlay && hTaskbarIconEvent){
+            if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+                WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+            } else {
+                if(job_is_running)
+                    SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+                SetEvent(hTaskbarIconEvent);
+            }
+        }
+        return 0;
+    }
 
     switch(uMsg){
     case WM_CREATE:
@@ -1123,6 +1142,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     StartBootExecChangesTracking();
     StartLangIniChangesTracking();
     StartI18nFolderChangesTracking();
+    
+    CreateTaskbarIconSynchObjects();
 
     if(CreateMainWindow(nShowCmd) < 0){
         StopPrefsChangesTracking();
@@ -1131,6 +1152,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         StopI18nFolderChangesTracking();
         release_jobs();
         Destroy_I18N_Events();
+        DestroyTaskbarIconSynchObjects();
         WgxDestroyResourceTable(i18n_table);
         DeleteEnvironmentVariables();
         stop_web_statistics();
@@ -1155,12 +1177,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         result = ShutdownOrHibernate();
         WgxDestroyFont(&wgxFont);
         Destroy_I18N_Events();
+        DestroyTaskbarIconSynchObjects();
         WgxDestroyResourceTable(i18n_table);
         return result;
     }
     
     WgxDestroyFont(&wgxFont);
     Destroy_I18N_Events();
+    DestroyTaskbarIconSynchObjects();
     WgxDestroyResourceTable(i18n_table);
     return 0;
 }

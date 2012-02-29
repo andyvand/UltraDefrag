@@ -221,6 +221,14 @@ restore_default_window_size = $restore_default_window_size
 show_menu_icons = $show_menu_icons
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Set show_taskbar_icon_overlay parameter to 1 to show the taskbar icon
+-- overlay indicating that the job is running on Windows 7 and more recent
+-- Windows editions.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+show_taskbar_icon_overlay = $show_taskbar_icon_overlay
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- III. Cluster map options
 
 -- map_block_size controls the size of the block, in pixels; default value is 4.
@@ -295,7 +303,7 @@ end
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 101
+current_version = 102
 old_version = 0
 upgrade_needed = 1
 
@@ -321,6 +329,7 @@ disable_latest_version_check = 0
 scale_by_dpi = 1
 restore_default_window_size = 0
 show_menu_icons = 1
+show_taskbar_icon_overlay = 1
 map_block_size = 4
 grid_line_width = 1
 grid_color_r = 0

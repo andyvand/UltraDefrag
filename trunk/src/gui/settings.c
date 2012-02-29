@@ -57,6 +57,7 @@ int user_defined_column_widths[] = {0,0,0,0,0};
 int list_height = VLIST_HEIGHT;
 int repeat_action = FALSE;
 int show_menu_icons = 1;
+int show_taskbar_icon_overlay = 1;
 
 int rx = UNDEFINED_COORD;
 int ry = UNDEFINED_COORD;
@@ -107,6 +108,7 @@ WGX_OPTION read_only_options[] = {
     {WGX_CFG_INT,     0, "scale_by_dpi", &scale_by_dpi, (void *)1},
     {WGX_CFG_INT,     0, "restore_default_window_size", &restore_default_window_size, 0},
     {WGX_CFG_INT,     0, "show_menu_icons", &show_menu_icons, 0},
+    {WGX_CFG_INT,     0, "show_taskbar_icon_overlay", &show_taskbar_icon_overlay, 0},
     
     {0,               0, NULL, NULL, NULL}
 };

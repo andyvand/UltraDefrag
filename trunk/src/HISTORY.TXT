@@ -32,9 +32,15 @@
 
   Version 5.0.4  2012-03-
   ------------------------------------------------------------------------------
+    - taskbar icon overlay indicating that a job is running was added
+      for Windows 7 and more recent Windows editions; it can be turned
+      on/off by show_taskbar_icon_overlay GUI option
     - the following translations were updated:
 
       Korean
+      
+    - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay
+      routines added to wgx library
 
 
   Version 5.0.3  2012-02-26

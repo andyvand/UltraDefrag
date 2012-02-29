@@ -124,6 +124,9 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     {0,                 L"SECONDS_TILL_REBOOT",        L"seconds until reboot",       NULL},
     {IDC_YES_BUTTON,    L"YES",                        L"&Yes",                       NULL},
     {IDC_NO_BUTTON,     L"NO",                         L"&No",                        NULL},
+    
+    /* taskbar icon overlay message */
+    {0,                 L"JOB_IS_RUNNING",             L"A job is running",           NULL},
 
     /* end of the table */
     {0,                 NULL,                          NULL,                          NULL}
