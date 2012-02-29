@@ -5,7 +5,8 @@ target_type = "dll"
 
 src = {
     "accel.c", "config.c", "dbg.c", "font.c", "i18n.c",
-    "menu.c", "misc.c", "shell.c", "web-analytics.c", "wgx.c" 
+    "menu.c", "misc.c", "shell.c", "taskbar.c",
+    "web-analytics.c", "wgx.c" 
 }
 
 rc = { "wgx.rc" }
@@ -17,6 +18,6 @@ baseaddr = "0x01700000"
 
 libs = {
     "kernel32", "user32", "gdi32", "comctl32",
-    "shell32", "msvcrt", "comdlg32"
+    "shell32", "msvcrt", "comdlg32", "ole32"
 }
 adlibs = { "$(UDEFRAG_LIB_PATH)\\lua5.1a" }
