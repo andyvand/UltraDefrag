@@ -51,6 +51,9 @@ int stop_pressed;
 /* nonzero value indicates that the main window has been closed */
 int exit_pressed = 0;
 
+/* this flag is used for taskbar icon redraw synchonization */
+int job_is_running = 0;
+
 extern int map_blocks_per_line;
 extern int map_lines;
 
@@ -323,6 +326,17 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     tbi.iImage = 2; /* grayed repeat icon */
     SendMessage(hToolbar,TB_SETBUTTONINFO,IDM_REPEAT_ACTION,(LRESULT)&tbi);
     SendMessage(hToolbar,TB_ENABLEBUTTON,IDM_SHOW_REPORT,MAKELONG(FALSE,0));
+    
+    /* set taskbar icon overlay */
+    if(job_type != ANALYSIS_JOB && show_taskbar_icon_overlay && hTaskbarIconEvent){
+        if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+            WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+        } else {
+            SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+            job_is_running = 1;
+            SetEvent(hTaskbarIconEvent);
+        }
+    }
 
     /* process all selected volumes */
     index = -1;
@@ -373,6 +387,17 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     SendMessage(hToolbar,TB_SETBUTTONINFO,IDM_REPEAT_ACTION,(LRESULT)&tbi);
     SendMessage(hToolbar,TB_ENABLEBUTTON,IDM_SHOW_REPORT,MAKELONG(TRUE,0));
     
+    /* remove taskbar icon overlay */
+    if(job_type != ANALYSIS_JOB && hTaskbarIconEvent){
+        if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+            WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+        } else {
+            job_is_running = 0;
+            RemoveTaskbarIconOverlay();
+            SetEvent(hTaskbarIconEvent);
+        }
+    }
+
     /* check the when done action state */
     if(!exit_pressed && !stop_pressed){
         if(when_done_action != IDM_WHEN_DONE_NONE){

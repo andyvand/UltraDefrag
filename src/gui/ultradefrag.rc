@@ -36,6 +36,13 @@ IDI_SHUTDOWN            ICON    DISCARDABLE     "res/shutdown.ico"
 IDB_ABOUTBOX_PICTURE    BITMAP  DISCARDABLE     "res/ship.bmp"
 
 /*
+* This icon is copied from Fugue icon set:
+* http://p.yusukekamiyamane.com/
+* It is licensed under a Creative Commons Attribution 3.0 License.
+*/
+IDI_BUSY                ICON    DISCARDABLE     "res/hourglass_arrow.ico"
+
+/*
 * All toolbar pictures must be in 24bpp format.
 * To be nicely rendered on 16bpp screens they
 * should use less colors though.
