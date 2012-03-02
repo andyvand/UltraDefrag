@@ -75,6 +75,7 @@ BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, 
     ITaskbarList3 *iTBL;
     HRESULT hr;
     HICON hIcon;
+    UINT icon_size;
     BOOL result = FALSE;
 
     /* Windows 7 is required for icon overlays */
@@ -86,8 +87,13 @@ BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, 
         (void **)(void *)&iTBL);
     if(SUCCEEDED(hr) && iTBL != NULL){
         /* set icon */
-        hIcon = (resource_id == -1) ? NULL : LoadIcon(hInstance,MAKEINTRESOURCE(resource_id));
-        description = (resource_id == -1) ? NULL : description;
+        if(resource_id == -1){
+            hIcon = NULL, description = NULL;
+        } else {
+            icon_size = GetSystemMetrics(SM_CXICON);
+            icon_size = icon_size ? icon_size / 2 : 16;
+            (void)WgxLoadIcon(hInstance,resource_id,icon_size,&hIcon);
+        }
         hr = ITaskbarList3_SetOverlayIcon(iTBL,hWindow,hIcon,description);
         if(SUCCEEDED(hr)){
             result = TRUE;
