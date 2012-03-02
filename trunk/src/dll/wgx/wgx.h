@@ -107,6 +107,7 @@ void WgxDestroyResourceTable(PWGX_I18N_RESOURCE_ENTRY table);
 
 void WgxEnableWindows(HANDLE hMainWindow, ...);
 void WgxDisableWindows(HANDLE hMainWindow, ...);
+BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon);
 void WgxSetIcon(HINSTANCE hInstance,HWND hWindow,UINT IconID);
 void WgxCheckWindowCoordinates(LPRECT lprc,int min_width,int min_height);
 void WgxCenterWindow(HWND hwnd);
