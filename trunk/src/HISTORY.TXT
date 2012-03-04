@@ -37,7 +37,7 @@
       on/off by show_taskbar_icon_overlay GUI option
     - the following translations were updated:
 
-      Korean
+      Korean, French (FR)
       
     - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay
       routines added to wgx library
