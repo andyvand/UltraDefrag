@@ -35,6 +35,7 @@
     - taskbar icon overlay indicating that a job is running was added
       for Windows 7 and more recent Windows editions; it can be turned
       on/off by show_taskbar_icon_overlay GUI option
+    - menu item to manually check for updates added
     - the following translations were updated:
 
       Korean, French (FR), Spanish (AR)
