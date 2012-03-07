@@ -82,6 +82,7 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     {0, L"CONTENTS",                 L"&Contents",                NULL},
     {0, L"BEST_PRACTICE",            L"Best &practice",           NULL},
     {0, L"FAQ",                      L"&FAQ",                     NULL},
+    {0, L"CHECK_UPDATE",             L"Check for &update",        NULL},
     {0, L"ABOUT",                    L"&About",                   NULL},
 
     /* toolbar tooltips */
@@ -170,6 +171,7 @@ struct menu_item menu_items[] = {
     {IDM_CONTENTS,                L"CONTENTS",                 "F1"    },
     {IDM_BEST_PRACTICE,           L"BEST_PRACTICE",            "F2"    },
     {IDM_FAQ,                     L"FAQ",                      "F3"    },
+    {IDM_CHECK_UPDATE,            L"CHECK_UPDATE",             NULL    },
     {IDM_ABOUT,                   L"ABOUT",                    "F4"    },
     /* submenus */
     {IDM_WHEN_DONE,               L"WHEN_DONE",                NULL},

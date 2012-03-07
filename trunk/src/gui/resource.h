@@ -108,6 +108,7 @@
 #define IDM_CONTENTS                    2710
 #define IDM_BEST_PRACTICE               2720
 #define IDM_FAQ                         2730
+#define IDM_CHECK_UPDATE                2735
 #define IDM_ABOUT                       2740
 
 #define IDM_SELECT_ALL                  2750
