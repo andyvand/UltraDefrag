@@ -38,7 +38,7 @@
     - menu item to manually check for updates added
     - the following translations were updated:
 
-      Korean, French (FR), Spanish (AR)
+      Korean, French (FR), Spanish (AR), Croatian
       
     - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay
       routines added to wgx library
