@@ -128,6 +128,10 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     
     /* taskbar icon overlay message */
     {0,                 L"JOB_IS_RUNNING",             L"A job is running",           NULL},
+    
+    /* tray icon context menu */
+    {0,                 L"SHOW",                       L"Show",                       NULL},
+    {0,                 L"HIDE",                       L"Hide",                       NULL},
 
     /* end of the table */
     {0,                 NULL,                          NULL,                          NULL}
@@ -308,6 +312,18 @@ void ApplyLanguagePack(void)
     } else {
         memset(&pi,0,sizeof(udefrag_progress_info));
         UpdateStatusBar(&pi);
+    }
+    
+    /* update taskbar icon overlay */
+    if(show_taskbar_icon_overlay && hTaskbarIconEvent){
+        if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+            WgxDbgPrintLastError("ApplyLanguagePack: wait on hTaskbarIconEvent failed");
+        } else {
+            RemoveTaskbarIconOverlay();
+            if(job_is_running)
+                SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+            SetEvent(hTaskbarIconEvent);
+        }
     }
     
     /* define whether to use custom font for dialog boxes */

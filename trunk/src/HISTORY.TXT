@@ -11,6 +11,9 @@
       environment variable in command line tool and boot time interface)
     - ability to tune the disk optimization by UD_OPTIMIZER_FILE_SIZE_THRESHOLD
       environment variable (optimizer_file_size_threshold GUI option) was added
+    - ability to minimize the program to the taskbar notification
+      area (system tray) was added; it can be turned on/off by
+      minimize_to_system_tray GUI option
     - MFT optimization was forced to do nothing silently on non-NTFS disks
     - Windows NT 4.0 and Windows 2000 support was dropped because of
       weakness of the Windows Defrag API on these systems;
@@ -40,8 +43,8 @@
 
       Korean, French (FR), Spanish (AR), Croatian
       
-    - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay
-      routines added to wgx library
+    - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay,
+      WgxLoadIcon routines added to wgx library
 
 
   Version 5.0.3  2012-02-26

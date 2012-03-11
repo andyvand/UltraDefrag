@@ -42,6 +42,7 @@ RECT win_rc; /* coordinates of main window */
 RECT r_rc;   /* coordinates of restored window */
 double pix_per_dialog_unit = PIX_PER_DIALOG_UNIT_96DPI;
 UINT TaskbarButtonCreatedMsg = 0;
+UINT TaskbarCreatedMsg = 0;
 
 int when_done_action = IDM_WHEN_DONE_NONE;
 int shutdown_requested = 0;
@@ -359,6 +360,13 @@ int CreateMainWindow(int nShowCmd)
     TaskbarButtonCreatedMsg = RegisterWindowMessage("TaskbarButtonCreated");
     if(TaskbarButtonCreatedMsg == 0)
         WgxDbgPrintLastError("CreateMainWindow: cannot register TaskbarButtonCreated message");
+    TaskbarCreatedMsg = RegisterWindowMessage("TaskbarCreated");
+    if(TaskbarCreatedMsg == 0){
+        WgxDbgPrintLastError("CreateMainWindow: cannot register TaskbarCreated message");
+        /* turn off minimize to tray option */
+        minimize_to_system_tray = 0;
+        WgxDbgPrint("CreateMainWindow: minimize_to_system_tray option turned off");
+    }
 
     if(dry_run == 0){
         if(portable_mode) caption = VERSIONINTITLE_PORTABLE;
@@ -713,14 +721,27 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     FILE *f;
     int flag, disable_latest_version_check_old;
     
+    /* handle shell restart */
     if(uMsg == TaskbarButtonCreatedMsg){
         /* set taskbar icon overlay */
         if(show_taskbar_icon_overlay && hTaskbarIconEvent){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
                 if(job_is_running)
                     SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+                SetEvent(hTaskbarIconEvent);
+            }
+        }
+        return 0;
+    }
+    if(uMsg == TaskbarCreatedMsg){
+        /* set notification area icon */
+        if(minimize_to_system_tray && hTaskbarIconEvent){
+            if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+            } else {
+                ShowSystemTrayIcon(NIM_ADD);
                 SetEvent(hTaskbarIconEvent);
             }
         }
@@ -730,6 +751,15 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     switch(uMsg){
     case WM_CREATE:
         /* initialize main window */
+        hWindow = hWnd;
+        if(minimize_to_system_tray && hTaskbarIconEvent){
+            if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+            } else {
+                ShowSystemTrayIcon(NIM_ADD);
+                SetEvent(hTaskbarIconEvent);
+            }
+        }
         return 0;
     case WM_NOTIFY:
         VolListNotifyHandler(lParam);
@@ -902,6 +932,14 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             if(!busy_flag)
                 SelectAllDrives();
             return 0;
+        case IDM_SHOWHIDE:
+            if(IsWindowVisible(hWindow)){
+                ShowWindow(hWindow,SW_HIDE);
+            } else {
+                ShowWindow(hWindow,maximized_window ? SW_MAXIMIZE : SW_RESTORE);
+                SetForegroundWindow(hWindow);
+            }
+            return 0;
         default:
             id = LOWORD(wParam);
             /* handle language menu */
@@ -996,6 +1034,16 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         } else {
             WgxDbgPrint("Wrong window dimensions on WM_SIZE message!\n");
         }
+        /* hide window on minimization when minimize_to_system_tray is turned on */
+        if(wParam == SIZE_MINIMIZED && minimize_to_system_tray && hTaskbarIconEvent){
+            if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+            } else {
+                if(minimize_to_system_tray)
+                    ShowWindow(hWindow,SW_HIDE);
+                SetEvent(hTaskbarIconEvent);
+            }
+        }
         return 0;
     case WM_GETMINMAXINFO:
         /* set min size to avoid overlaying controls */
@@ -1021,6 +1069,28 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         /* maximize window */
         ShowWindow(hWnd,SW_MAXIMIZE);
         return 0;
+    case WM_TRAYMESSAGE:
+        switch(lParam){
+        case WM_LBUTTONDBLCLK:
+            /* single clicks are more handy... */
+            break;
+        case WM_LBUTTONUP:
+            /* show / hide window */
+            if(IsWindowVisible(hWindow)){
+                ShowWindow(hWindow,SW_HIDE);
+            } else {
+                ShowWindow(hWindow,maximized_window ? SW_MAXIMIZE : SW_RESTORE);
+                SetForegroundWindow(hWindow);
+            }
+            break;
+        case WM_RBUTTONUP:
+            /* show context menu */
+            ShowSystemTrayIconContextMenu();
+            break;
+        default:
+            break;
+        }
+        return 0;
     case WM_DESTROY:
         goto done;
     }
@@ -1031,6 +1101,15 @@ done:
     if(!maximized_window)
         memcpy((void *)&r_rc,(void *)&win_rc,sizeof(RECT));
     VolListGetColumnWidths();
+    /* remove notification area icon */
+    if(hTaskbarIconEvent){
+        if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+            WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+        } else {
+            HideSystemTrayIcon();
+            SetEvent(hTaskbarIconEvent);
+        }
+    }
     exit_pressed = 1;
     stop_all_jobs();
     PostQuitMessage(0);
