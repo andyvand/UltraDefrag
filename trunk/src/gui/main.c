@@ -75,6 +75,57 @@ int job_flags = UD_PREVIEW_MATCHING;
 
 /* forward declarations */
 LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
+static void DestroySynchObjects(void);
+
+/**
+ * @brief Initializes all objects
+ * synchronizing access to essential data.
+ * @return Zero for success,
+ * negative value otherwise.
+ */
+static int InitSynchObjects(void)
+{
+    hLangMenuEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
+    if(hLangMenuEvent == NULL){
+        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
+            "Cannot create language menu synchronization event!");
+        WgxDbgPrintLastError("InitSynchObjects: language menu event creation failed");
+        return (-1);
+    }
+    hTaskbarIconEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
+    if(hTaskbarIconEvent == NULL){
+        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
+            "Cannot create taskbar icon synchronization event!");
+        WgxDbgPrintLastError("InitSynchObjects: taskbar icon event creation failed");
+        WgxDbgPrint("no taskbar icon overlays will be shown");
+        WgxDbgPrint("and no system tray icon will be shown");
+        DestroySynchObjects();
+        return (-1);
+    }
+    hMapEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
+    if(hMapEvent == NULL){
+        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
+            "Cannot create cluster map synchronization event!");
+        WgxDbgPrintLastError("InitSynchObjects: map event creation failed");
+        DestroySynchObjects();
+        return (-1);
+    }
+    return 0;
+}
+
+/**
+ * @brief Destroys all objects
+ * synchronizing access to essential data.
+ */
+static void DestroySynchObjects(void)
+{
+    if(hLangMenuEvent)
+        CloseHandle(hLangMenuEvent);
+    if(hTaskbarIconEvent)
+        CloseHandle(hTaskbarIconEvent);
+    if(hMapEvent)
+        CloseHandle(hMapEvent);
+}
 
 /**
  * @brief Defines whether GUI is a part of
@@ -724,7 +775,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     /* handle shell restart */
     if(uMsg == TaskbarButtonCreatedMsg){
         /* set taskbar icon overlay */
-        if(show_taskbar_icon_overlay && hTaskbarIconEvent){
+        if(show_taskbar_icon_overlay){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
@@ -737,7 +788,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     }
     if(uMsg == TaskbarCreatedMsg){
         /* set notification area icon */
-        if(minimize_to_system_tray && hTaskbarIconEvent){
+        if(minimize_to_system_tray){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
@@ -752,7 +803,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     case WM_CREATE:
         /* initialize main window */
         hWindow = hWnd;
-        if(minimize_to_system_tray && hTaskbarIconEvent){
+        if(minimize_to_system_tray){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
@@ -1035,7 +1086,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             WgxDbgPrint("Wrong window dimensions on WM_SIZE message!\n");
         }
         /* hide window on minimization when minimize_to_system_tray is turned on */
-        if(wParam == SIZE_MINIMIZED && minimize_to_system_tray && hTaskbarIconEvent){
+        if(wParam == SIZE_MINIMIZED && minimize_to_system_tray){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
@@ -1102,13 +1153,11 @@ done:
         memcpy((void *)&r_rc,(void *)&win_rc,sizeof(RECT));
     VolListGetColumnWidths();
     /* remove notification area icon */
-    if(hTaskbarIconEvent){
-        if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
-        } else {
-            HideSystemTrayIcon();
-            SetEvent(hTaskbarIconEvent);
-        }
+    if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+        WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+    } else {
+        HideSystemTrayIcon();
+        SetEvent(hTaskbarIconEvent);
     }
     exit_pressed = 1;
     stop_all_jobs();
@@ -1200,7 +1249,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     /* save preferences to update the config file to the recent format */
     SavePrefs();
     
-    if(Init_I18N_Events() < 0){
+    if(InitSynchObjects() < 0){
         DeleteEnvironmentVariables();
         return 1;
     }
@@ -1215,12 +1264,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     */
     InitCommonControls();
     
-    if(init_jobs() < 0){
-        Destroy_I18N_Events();
-        DeleteEnvironmentVariables();
-        stop_web_statistics();
-        return 2;
-    }
+    init_jobs();
     
     /* track changes in guiopts.lua file; synchronized with map redraw */
     StartPrefsChangesTracking();
@@ -1228,19 +1272,16 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     StartLangIniChangesTracking();
     StartI18nFolderChangesTracking();
     
-    CreateTaskbarIconSynchObjects();
-
     if(CreateMainWindow(nShowCmd) < 0){
         StopPrefsChangesTracking();
         StopBootExecChangesTracking();
         StopLangIniChangesTracking();
         StopI18nFolderChangesTracking();
         release_jobs();
-        Destroy_I18N_Events();
-        DestroyTaskbarIconSynchObjects();
         WgxDestroyResourceTable(i18n_table);
-        DeleteEnvironmentVariables();
         stop_web_statistics();
+        DeleteEnvironmentVariables();
+        DestroySynchObjects();
         return 3;
     }
 
@@ -1261,15 +1302,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     if(shutdown_requested){
         result = ShutdownOrHibernate();
         WgxDestroyFont(&wgxFont);
-        Destroy_I18N_Events();
-        DestroyTaskbarIconSynchObjects();
         WgxDestroyResourceTable(i18n_table);
+        DestroySynchObjects();
         return result;
     }
     
     WgxDestroyFont(&wgxFont);
-    Destroy_I18N_Events();
-    DestroyTaskbarIconSynchObjects();
+    DestroySynchObjects();
     WgxDestroyResourceTable(i18n_table);
     return 0;
 }

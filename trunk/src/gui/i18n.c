@@ -191,7 +191,7 @@ struct menu_item menu_items[] = {
 
 /**
  * @internal
- * @brief Synchronization events.
+ * @brief Synchronization event.
  */
 HANDLE hLangMenuEvent = NULL;
 
@@ -199,23 +199,6 @@ int lang_ini_tracking_stopped = 0;
 int stop_track_lang_ini = 0;
 int i18n_folder_tracking_stopped = 0;
 int stop_track_i18n_folder = 0;
-
-/**
- * @brief Initializes events needed 
- * for i18n mechanisms synchronization.
- * @return Zero for success, negative value otherwise.
- */
-int Init_I18N_Events(void)
-{
-    hLangMenuEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
-    if(hLangMenuEvent == NULL){
-        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create language menu synchronization event!");
-        return (-1);
-    }
-    
-    return 0;
-}
 
 /**
  * @brief Applies selected language pack to all GUI controls.
@@ -315,7 +298,7 @@ void ApplyLanguagePack(void)
     }
     
     /* update taskbar icon overlay */
-    if(show_taskbar_icon_overlay && hTaskbarIconEvent){
+    if(show_taskbar_icon_overlay){
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
             WgxDbgPrintLastError("ApplyLanguagePack: wait on hTaskbarIconEvent failed");
         } else {
@@ -668,16 +651,6 @@ void StopI18nFolderChangesTracking()
     stop_track_i18n_folder = 1;
     while(!i18n_folder_tracking_stopped)
         Sleep(100);
-}
-
-/**
- * @brief Destroys events needed 
- * for i18n mechanisms synchronization.
- */
-void Destroy_I18N_Events(void)
-{
-    if(hLangMenuEvent)
-        CloseHandle(hLangMenuEvent);
 }
 
 /** @} */
