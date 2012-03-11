@@ -66,13 +66,13 @@ void DestroyTaskbarIconSynchObjects(void)
  */
 void SetTaskbarIconOverlay(int resource_id, wchar_t *description_key)
 {
+    wchar_t *text;
+    
     if(show_taskbar_icon_overlay){
-        if(WaitForSingleObject(hLangPackEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("SetTaskbarIconOverlay: wait on hLangPackEvent failed");
-        } else {
-            (void)WgxSetTaskbarIconOverlay(hWindow,hInstance,resource_id,
-                WgxGetResourceString(i18n_table,description_key));
-            SetEvent(hLangPackEvent);
+        text = WgxGetResourceString(i18n_table,description_key);
+        if(text){
+            (void)WgxSetTaskbarIconOverlay(hWindow,hInstance,resource_id,text);
+            free(text);
         }
     }
 }

@@ -52,7 +52,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     int button_width = 75;
     int button_height = 23;
     HDC hdc;
-    wchar_t *text1, *text2;
+    wchar_t *text1 = NULL, *text2 = NULL;
     wchar_t buffer[256];
     SIZE size;
     int text_block_width;
@@ -64,12 +64,6 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     RECT rc;
     HFONT hFont, hOldFont;
     
-    /* synchronize access to localized strings with other threads */
-    if(WaitForSingleObject(hLangPackEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("ResizeShutdownConfirmDialog: wait on hLangPackEvent failed");
-        return;
-    }
-
     /* get dimensions of texts */
     hdc = GetDC(hwnd);
     if(hdc == NULL){
@@ -103,8 +97,15 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
         text1 = WgxGetResourceString(i18n_table,L"REALLY_SHUTDOWN_WHEN_DONE");
         break;
     default:
-        text1 = L"";
+        text1 = _wcsdup(L"");
         break;
+    }
+    
+    if(text1 == NULL){
+        WgxDbgPrint("ResizeShutdownConfirmDialog: cannot allocate memory for text 1");
+        SelectObject(hdc,hOldFont);
+        ReleaseDC(hwnd,hdc);
+        goto done;
     }
     
     if(!GetTextExtentPoint32W(hdc,text1,wcslen(text1),&size)){
@@ -209,8 +210,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     WgxCenterWindow(hwnd);
 
 done:
-    /* end of synchronization */
-    SetEvent(hLangPackEvent);
+    if(text1) free(text1);
 }
 
 /**
@@ -225,34 +225,35 @@ BOOL CALLBACK ShutdownConfirmDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lPa
     #define MAX_TEXT_LENGTH 127
     static wchar_t buffer[MAX_TEXT_LENGTH + 1];
     static wchar_t counter_msg[MAX_TEXT_LENGTH + 1];
+    wchar_t *text = NULL;
 
     switch(msg){
     case WM_INITDIALOG:
         if(use_custom_font_in_dialogs)
             WgxSetFont(hWnd,&wgxFont);
-        if(WaitForSingleObject(hLangPackEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("ShutdownConfirmDlgProc: wait on hLangPackEvent failed");
-            counter_msg[0] = 0;
-        } else {
-            WgxSetText(hWnd,i18n_table,L"PLEASE_CONFIRM");
-            WgxSetText(GetDlgItem(hWnd,IDC_YES_BUTTON),i18n_table,L"YES");
-            WgxSetText(GetDlgItem(hWnd,IDC_NO_BUTTON),i18n_table,L"NO");
-            switch(when_done_action){
-            case IDM_WHEN_DONE_HIBERNATE:
-                wcsncpy(counter_msg,WgxGetResourceString(i18n_table,L"SECONDS_TILL_HIBERNATION"),MAX_TEXT_LENGTH);
-                break;
-            case IDM_WHEN_DONE_LOGOFF:
-                wcsncpy(counter_msg,WgxGetResourceString(i18n_table,L"SECONDS_TILL_LOGOFF"),MAX_TEXT_LENGTH);
-                break;
-            case IDM_WHEN_DONE_REBOOT:
-                wcsncpy(counter_msg,WgxGetResourceString(i18n_table,L"SECONDS_TILL_REBOOT"),MAX_TEXT_LENGTH);
-                break;
-            case IDM_WHEN_DONE_SHUTDOWN:
-                wcsncpy(counter_msg,WgxGetResourceString(i18n_table,L"SECONDS_TILL_SHUTDOWN"),MAX_TEXT_LENGTH);
-                break;
-            }
+        WgxSetText(hWnd,i18n_table,L"PLEASE_CONFIRM");
+        WgxSetText(GetDlgItem(hWnd,IDC_YES_BUTTON),i18n_table,L"YES");
+        WgxSetText(GetDlgItem(hWnd,IDC_NO_BUTTON),i18n_table,L"NO");
+        switch(when_done_action){
+        case IDM_WHEN_DONE_HIBERNATE:
+            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_HIBERNATION");
+            break;
+        case IDM_WHEN_DONE_LOGOFF:
+            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_LOGOFF");
+            break;
+        case IDM_WHEN_DONE_REBOOT:
+            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_REBOOT");
+            break;
+        case IDM_WHEN_DONE_SHUTDOWN:
+            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_SHUTDOWN");
+            break;
+        }
+        if(text){
+            wcsncpy(counter_msg,text,MAX_TEXT_LENGTH);
             counter_msg[MAX_TEXT_LENGTH] = 0;
-            SetEvent(hLangPackEvent);
+            free(text);
+        } else {
+            counter_msg[0] = 0;
         }
 
         /* set timer */

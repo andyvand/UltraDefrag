@@ -45,14 +45,9 @@ BOOL CALLBACK AboutDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
             WgxCenterWindow(hWnd);
             if(use_custom_font_in_dialogs)
                 WgxSetFont(hWnd,&wgxFont);
-            if(WaitForSingleObject(hLangPackEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("AboutDlgProc: wait on hLangPackEvent failed");
-            } else {
-                WgxSetText(hWnd,i18n_table,L"ABOUT_WIN_TITLE");
-                WgxSetText(GetDlgItem(hWnd,IDC_CREDITS),i18n_table,L"CREDITS");
-                WgxSetText(GetDlgItem(hWnd,IDC_LICENSE),i18n_table,L"LICENSE");
-                SetEvent(hLangPackEvent);
-            }
+            WgxSetText(hWnd,i18n_table,L"ABOUT_WIN_TITLE");
+            WgxSetText(GetDlgItem(hWnd,IDC_CREDITS),i18n_table,L"CREDITS");
+            WgxSetText(GetDlgItem(hWnd,IDC_LICENSE),i18n_table,L"LICENSE");
             (void)WgxAddAccelerators(hInstance,hWnd,IDR_ACCELERATOR2);
             (void)SetFocus(GetDlgItem(hWnd,IDC_HOMEPAGE));
             return FALSE;
