@@ -119,7 +119,7 @@ void update_status_of_all_jobs(void)
 static void update_progress(udefrag_progress_info *pi, void *p)
 {
     volume_processing_job *job;
-    char WindowCaption[256];
+    wchar_t WindowCaption[256];
     char current_operation;
 
     job = current_job;
@@ -145,13 +145,17 @@ static void update_progress(udefrag_progress_info *pi, void *p)
     }
     
     if(dry_run){
-        (void)sprintf(WindowCaption, "%c:  %c %6.2lf %% (dry run)", 
+        (void)swprintf(WindowCaption, L"%c:  %c %6.2lf %% (dry run)", 
             udefrag_toupper(job->volume_letter), current_operation, pi->percentage);
     } else {
-        (void)sprintf(WindowCaption, "%c:  %c %6.2lf %%",
+        (void)swprintf(WindowCaption, L"%c:  %c %6.2lf %%",
             udefrag_toupper(job->volume_letter), current_operation, pi->percentage);
     }
-    (void)SetWindowText(hWindow, WindowCaption);
+    (void)SetWindowTextW(hWindow, WindowCaption);
+    
+    /* update tray icon tooltip */
+    if(minimize_to_system_tray && hTaskbarIconEvent)
+        SetSystemTrayIconTooltip(WindowCaption);
 
     if(WaitForSingleObject(hMapEvent,INFINITE) != WAIT_OBJECT_0){
         WgxDbgPrintLastError("update_progress: wait on hMapEvent failed");
@@ -327,13 +331,14 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     SendMessage(hToolbar,TB_SETBUTTONINFO,IDM_REPEAT_ACTION,(LRESULT)&tbi);
     SendMessage(hToolbar,TB_ENABLEBUTTON,IDM_SHOW_REPORT,MAKELONG(FALSE,0));
     
-    /* set taskbar icon overlay */
-    if(job_type != ANALYSIS_JOB && show_taskbar_icon_overlay && hTaskbarIconEvent){
+    /* set taskbar icon overlay and notification area icon */
+    if((show_taskbar_icon_overlay || minimize_to_system_tray) && hTaskbarIconEvent){
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
             WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
         } else {
             SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
             job_is_running = 1;
+            ShowSystemTrayIcon(NIM_MODIFY);
             SetEvent(hTaskbarIconEvent);
         }
     }
@@ -387,13 +392,14 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     SendMessage(hToolbar,TB_SETBUTTONINFO,IDM_REPEAT_ACTION,(LRESULT)&tbi);
     SendMessage(hToolbar,TB_ENABLEBUTTON,IDM_SHOW_REPORT,MAKELONG(TRUE,0));
     
-    /* remove taskbar icon overlay */
-    if(job_type != ANALYSIS_JOB && hTaskbarIconEvent){
+    /* remove taskbar icon overlay; change notification area icon */
+    if(hTaskbarIconEvent){
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
             WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
         } else {
             job_is_running = 0;
             RemoveTaskbarIconOverlay();
+            ShowSystemTrayIcon(NIM_MODIFY);
             SetEvent(hTaskbarIconEvent);
         }
     }

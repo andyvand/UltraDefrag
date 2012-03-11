@@ -39,6 +39,8 @@
 
 #define IDI_SHUTDOWN                    140
 #define IDI_BUSY                        145
+#define IDI_TRAY_ICON                   146
+#define IDI_TRAY_ICON_BUSY              147
 #define IDR_MAIN_ACCELERATOR            150
 
 #define IDB_TOOLBAR                     160
@@ -112,6 +114,9 @@
 #define IDM_ABOUT                       2740
 
 #define IDM_SELECT_ALL                  2750
+
+/* tray icon context menu constants */
+#define IDM_SHOWHIDE                    2760
 
 /* preview menu items */
 enum {

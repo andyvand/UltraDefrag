@@ -36,11 +36,13 @@ IDI_SHUTDOWN            ICON    DISCARDABLE     "res/shutdown.ico"
 IDB_ABOUTBOX_PICTURE    BITMAP  DISCARDABLE     "res/ship.bmp"
 
 /*
-* This icon is based on Fugue icon set:
+* These icons are based on Fugue icon set:
 * http://p.yusukekamiyamane.com/
 * It is licensed under a Creative Commons Attribution 3.0 License.
 */
 IDI_BUSY                ICON    DISCARDABLE     "res/overlay.ico"
+IDI_TRAY_ICON           ICON    DISCARDABLE     "res/tray.ico"
+IDI_TRAY_ICON_BUSY      ICON    DISCARDABLE     "res/tray_busy.ico"
 
 /*
 * All toolbar pictures must be in 24bpp format.

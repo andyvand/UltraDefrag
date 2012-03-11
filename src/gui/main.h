@@ -213,6 +213,13 @@ void DestroyTaskbarIconSynchObjects(void);
 void SetTaskbarIconOverlay(int resource_id, wchar_t *description_key);
 void RemoveTaskbarIconOverlay(void);
 
+#define WM_TRAYMESSAGE (WM_APP+1)
+
+BOOL ShowSystemTrayIcon(DWORD dwMessage);
+BOOL HideSystemTrayIcon(void);
+void ShowSystemTrayIconContextMenu(void);
+void SetSystemTrayIconTooltip(wchar_t *text);
+
 /* common global variables */
 extern HINSTANCE hInstance;
 extern HWND hWindow;
@@ -254,6 +261,7 @@ extern int job_flags;
 extern int repeat_action;
 extern int show_menu_icons;
 extern int show_taskbar_icon_overlay;
+extern int minimize_to_system_tray;
 
 /*
 * Note:

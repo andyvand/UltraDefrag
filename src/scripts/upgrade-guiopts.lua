@@ -235,6 +235,13 @@ show_menu_icons = $show_menu_icons
 show_taskbar_icon_overlay = $show_taskbar_icon_overlay
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Set minimize_to_system_tray parameter to 1 to minimize the application's
+-- window to the taskbar notification area (system tray).
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+minimize_to_system_tray = $minimize_to_system_tray
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- III. Cluster map options
 
 -- map_block_size controls the size of the block, in pixels; default value is 4.
@@ -309,7 +316,7 @@ end
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 102
+current_version = 103
 old_version = 0
 upgrade_needed = 1
 
@@ -336,6 +343,7 @@ scale_by_dpi = 1
 restore_default_window_size = 0
 show_menu_icons = 1
 show_taskbar_icon_overlay = 1
+minimize_to_system_tray = 0
 map_block_size = 4
 grid_line_width = 1
 grid_color_r = 0
