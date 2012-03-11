@@ -110,6 +110,14 @@ static int InitSynchObjects(void)
         DestroySynchObjects();
         return (-1);
     }
+    hListEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
+    if(hListEvent == NULL){
+        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
+            "Cannot create drives list synchronization event!");
+        WgxDbgPrintLastError("InitSynchObjects: list event creation failed");
+        DestroySynchObjects();
+        return (-1);
+    }
     return 0;
 }
 
@@ -125,6 +133,8 @@ static void DestroySynchObjects(void)
         CloseHandle(hTaskbarIconEvent);
     if(hMapEvent)
         CloseHandle(hMapEvent);
+    if(hListEvent)
+        CloseHandle(hListEvent);
 }
 
 /**
