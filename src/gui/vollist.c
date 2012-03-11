@@ -42,6 +42,8 @@ static void DestroyImageList(void);
 
 int column_widths_adjusted = 0;
 
+HANDLE hListEvent = NULL;
+
 /**
  * @brief Initializes the list of volumes.
  */
@@ -429,6 +431,12 @@ static DWORD WINAPI RescanDrivesThreadProc(LPVOID lpParameter)
     LV_ITEM lvi;
     int i;
     
+    /* synchronize with other theads */
+    if(WaitForSingleObject(hListEvent,INFINITE) != WAIT_OBJECT_0){
+        WgxDbgPrintLastError("RescanDrivesThreadProc: wait on hListEvent failed");
+        return 0;
+    }
+    
     /* refill the volume list control */
     (void)SendMessage(hList,LVM_DELETEALLITEMS,0,0);
     v = udefrag_get_vollist(skip_removable);
@@ -452,6 +460,8 @@ static DWORD WINAPI RescanDrivesThreadProc(LPVOID lpParameter)
     RedrawMap(job,0);
     if(job) UpdateStatusBar(&job->pi);
     
+    /* end of synchronization */
+    SetEvent(hListEvent);
     return 0;
 }
 

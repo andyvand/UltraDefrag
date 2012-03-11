@@ -162,6 +162,7 @@ void ShowReports(void);
 
 void InitFont(void);
 
+extern HANDLE hListEvent;
 void InitVolList(void);
 void VolListNotifyHandler(LPARAM lParam);
 void VolListGetColumnWidths(void);
