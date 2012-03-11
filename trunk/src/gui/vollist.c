@@ -49,33 +49,59 @@ void InitVolList(void)
 {
     LV_COLUMNW lvc;
     LV_ITEM lvi;
-    
-    if(WaitForSingleObject(hLangPackEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("InitVolList: wait on hLangPackEvent failed");
-        return;
-    }
+    wchar_t *text;
     
     (void)SendMessage(hList,LVM_SETEXTENDEDLISTVIEWSTYLE,0,
         (LRESULT)(LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT));
 
     /* create header */
     lvc.mask = LVCF_TEXT;
-    lvc.pszText = WgxGetResourceString(i18n_table,L"VOLUME");
-    (void)SendMessage(hList,LVM_INSERTCOLUMNW,0,(LRESULT)&lvc);
+    lvc.pszText = text = WgxGetResourceString(i18n_table,L"VOLUME");
+    if(text){
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,0,(LRESULT)&lvc);
+        free(text);
+    } else {
+        lvc.pszText = L"Volume";
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,0,(LRESULT)&lvc);
+    }
 
-    lvc.pszText = WgxGetResourceString(i18n_table,L"STATUS");
-    (void)SendMessage(hList,LVM_INSERTCOLUMNW,1,(LRESULT)&lvc);
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"STATUS");
+    if(text){
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,1,(LRESULT)&lvc);
+        free(text);
+    } else {
+        lvc.pszText = L"Status";
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,1,(LRESULT)&lvc);
+    }
 
     lvc.mask |= LVCF_FMT;
     lvc.fmt = LVCFMT_RIGHT;
-    lvc.pszText = WgxGetResourceString(i18n_table,L"TOTAL");
-    (void)SendMessage(hList,LVM_INSERTCOLUMNW,2,(LRESULT)&lvc);
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"TOTAL");
+    if(text){
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,2,(LRESULT)&lvc);
+        free(text);
+    } else {
+        lvc.pszText = L"Total";
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,2,(LRESULT)&lvc);
+    }
 
-    lvc.pszText = WgxGetResourceString(i18n_table,L"FREE");
-    (void)SendMessage(hList,LVM_INSERTCOLUMNW,3,(LRESULT)&lvc);
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"FREE");
+    if(text){
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,3,(LRESULT)&lvc);
+        free(text);
+    } else {
+        lvc.pszText = L"Free";
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,3,(LRESULT)&lvc);
+    }
 
-    lvc.pszText = WgxGetResourceString(i18n_table,L"PERCENT");
-    (void)SendMessage(hList,LVM_INSERTCOLUMNW,4,(LRESULT)&lvc);
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"PERCENT");
+    if(text){
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,4,(LRESULT)&lvc);
+        free(text);
+    } else {
+        lvc.pszText = L"% free";
+        (void)SendMessage(hList,LVM_INSERTCOLUMNW,4,(LRESULT)&lvc);
+    }
 
     OldListWndProc = WgxSafeSubclassWindow(hList,ListWndProc);
     (void)SendMessage(hList,LVM_SETBKCOLOR,0,RGB(255,255,255));
@@ -88,7 +114,6 @@ void InitVolList(void)
     lvi.pszText = "hi";
     lvi.iImage = 0;
     (void)SendMessage(hList,LVM_INSERTITEM,0,(LRESULT)&lvi);
-    SetEvent(hLangPackEvent);
 }
 
 /**
@@ -310,14 +335,9 @@ static void AddCapacityInformation(int index, volume_info *v)
 static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *job)
 {
     LV_ITEMW lviw;
-    wchar_t *ProcessCaption = L"";
+    wchar_t *ProcessCaption = NULL;
     wchar_t buffer[128], PassString[32] = L"", MoveString[32] = L"", PercentString[32] = L"";
 
-    if(WaitForSingleObject(hLangPackEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("VolListUpdateStatusFieldInternal: wait on hLangPackEvent failed");
-        return;
-    }
-    
     lviw.mask = LVIF_TEXT;
     lviw.iItem = index;
     lviw.iSubItem = 1;
@@ -341,7 +361,7 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
         }
     }
     
-    if(job->pi.completion_status < 0){
+    if(job->pi.completion_status < 0 || ProcessCaption == NULL){
         lviw.pszText = L"";
     } else {
         if(job->pi.completion_status == 0 || stop_pressed){
@@ -369,7 +389,8 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
     }
 
     (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
-    SetEvent(hLangPackEvent);
+    if(ProcessCaption)
+        free(ProcessCaption);
 }
 
 /**

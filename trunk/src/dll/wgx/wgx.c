@@ -28,8 +28,21 @@
 
 #include "wgx.h"
 
+void WgxInitSynchObjects(void);
+void WgxDestroySynchObjects(void);
+
 BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
 {
+    switch(dwReason){
+    case DLL_PROCESS_ATTACH:
+        WgxInitSynchObjects();
+        break;
+    case DLL_PROCESS_DETACH:
+        WgxDestroySynchObjects();
+        break;
+    default:
+        break;
+    }
     return 1;
 }
 
