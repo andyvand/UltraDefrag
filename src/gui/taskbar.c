@@ -29,32 +29,6 @@
 HANDLE hTaskbarIconEvent = NULL;
 
 /**
- * @brief Creates objects needed
- * for synchronization of taskbar
- * icon manipulations.
- */
-void CreateTaskbarIconSynchObjects(void)
-{
-    hTaskbarIconEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
-    if(hTaskbarIconEvent == NULL){
-        WgxDbgPrintLastError("CreateTaskbarIconSynchObjects: event creation failed");
-        WgxDbgPrint("no taskbar icon overlays will be shown");
-        WgxDbgPrint("and no system tray icon will be shown");
-    }
-}
-
-/**
- * @brief Destroys objects needed
- * for synchronization of taskbar
- * icon manipulations.
- */
-void DestroyTaskbarIconSynchObjects(void)
-{
-    if(hTaskbarIconEvent)
-        CloseHandle(hTaskbarIconEvent);
-}
-
-/**
  * @brief Sets an overlay icon for
  * the application's taskbar icon.
  * @param[in] resource_id identifier

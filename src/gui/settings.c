@@ -330,21 +330,19 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                 }
                 
                 /* handle minimize_to_system_tray option adjustment */
-                if(hTaskbarIconEvent){
-                    if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                        WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
-                    } else {
-                        if(minimize_to_system_tray != s_minimize_to_system_tray){
-                            if(IsIconic(hWindow))
-                                ShowWindow(hWindow,minimize_to_system_tray ? SW_HIDE : SW_SHOW);
-                            /* set/remove notification area icon */
-                            if(minimize_to_system_tray)
-                                ShowSystemTrayIcon(NIM_ADD);
-                            else
-                                HideSystemTrayIcon();
-                        }
-                        SetEvent(hTaskbarIconEvent);
+                if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+                    WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
+                } else {
+                    if(minimize_to_system_tray != s_minimize_to_system_tray){
+                        if(IsIconic(hWindow))
+                            ShowWindow(hWindow,minimize_to_system_tray ? SW_HIDE : SW_SHOW);
+                        /* set/remove notification area icon */
+                        if(minimize_to_system_tray)
+                            ShowSystemTrayIcon(NIM_ADD);
+                        else
+                            HideSystemTrayIcon();
                     }
+                    SetEvent(hTaskbarIconEvent);
                 }
             }
             /* wait for the next notification */

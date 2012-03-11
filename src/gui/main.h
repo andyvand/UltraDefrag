@@ -137,7 +137,7 @@ typedef struct _volume_processing_job {
 #define NEVER_EXECUTED_JOB 0x100
 
 /* prototypes */
-int init_jobs(void);
+void init_jobs(void);
 volume_processing_job *get_job(char volume_letter);
 int get_job_index(volume_processing_job *job);
 void update_status_of_all_jobs(void);
@@ -149,10 +149,8 @@ int CreateMainMenu(void);
 int CreateToolbar(void);
 void UpdateToolbarTooltips(void);
 
-int Init_I18N_Events(void);
 void ApplyLanguagePack(void);
 void BuildLanguageMenu(void);
-void Destroy_I18N_Events(void);
 
 /*void InitProgress(void);
 void ShowProgress(void);
@@ -208,8 +206,6 @@ void OpenWebPage(char *page);
 
 extern HANDLE hTaskbarIconEvent;
 extern int job_is_running;
-void CreateTaskbarIconSynchObjects(void);
-void DestroyTaskbarIconSynchObjects(void);
 void SetTaskbarIconOverlay(int resource_id, wchar_t *description_key);
 void RemoveTaskbarIconOverlay(void);
 
