@@ -39,6 +39,7 @@
       for Windows 7 and more recent Windows editions; it can be turned
       on/off by show_taskbar_icon_overlay GUI option
     - menu item to manually check for updates added
+    - i18n support was added to file fragmentation reports
     - the following translations were updated:
 
       Korean, French (FR), Spanish (AR), Croatian
@@ -46,6 +47,7 @@
     - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay,
       WgxLoadIcon routines added to wgx library
     - WgxGetResourceString behavior changed
+    - math.lshift function added to Lua library
 
 
   Version 5.0.3  2012-02-26
