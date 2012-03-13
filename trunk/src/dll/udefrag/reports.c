@@ -96,6 +96,11 @@ static int save_lua_report(udefrag_job_parameters *jp)
             else
                 comment = " - ";
             
+            /*
+            * On change of status strings don't forget
+            * also to adjust write_file_status routine
+            * in udreportcnv.lua file.
+            */
             if(is_locked(file->f))
                 status = "locked";
             else if(is_moving_failed(file->f))
