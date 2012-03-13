@@ -273,6 +273,9 @@ BOOL CALLBACK ShutdownConfirmDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lPa
 
         /* shutdown will be rejected by pressing the space key */
         (void)SetFocus(GetDlgItem(hWnd,IDC_NO_BUTTON));
+        
+        /* bring dialog to foreground */
+        SetForegroundWindow(hWnd);
         return FALSE;
     case WM_TIMER:
         counter --;
