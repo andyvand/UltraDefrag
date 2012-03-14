@@ -189,6 +189,9 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
     FILE_FS_SIZE_INFORMATION ffs;
     IO_STATUS_BLOCK IoStatusBlock;
     NTSTATUS Status;
+    WINX_FILE *f;
+    DISK_GEOMETRY dg;
+    char buffer[32];
     
     /* get drive geometry */
     RtlZeroMemory(&ffs,sizeof(FILE_FS_SIZE_INFORMATION));
@@ -209,6 +212,21 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
     v->bytes_per_cluster = ffs.SectorsPerAllocationUnit * ffs.BytesPerSector;
     v->sectors_per_cluster = ffs.SectorsPerAllocationUnit;
     v->bytes_per_sector = ffs.BytesPerSector;
+    
+    /* optional: get device capacity */
+    v->device_capacity = 0;
+    f = winx_vopen(v->volume_letter);
+    if(f != NULL){
+        if(winx_ioctl(f,IOCTL_DISK_GET_DRIVE_GEOMETRY,
+          "get_drive_geometry: device geometry request",NULL,0,
+          &dg,sizeof(dg),NULL) >= 0){
+            v->device_capacity = dg.Cylinders.QuadPart * \
+                dg.TracksPerCylinder * dg.SectorsPerTrack * dg.BytesPerSector;
+            winx_bytes_to_hr(v->device_capacity,1,buffer,sizeof(buffer));
+            DebugPrint("get_drive_geometry: device capacity = %s",buffer);
+        }
+        winx_fclose(f);
+    }
     return 0;
 }
 
