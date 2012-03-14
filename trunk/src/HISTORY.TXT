@@ -31,6 +31,7 @@
     - useless fat32_xxx fields removed from winx_volume_information structure
     - Windows Server 2003 DDK needs to be patched in order to compile
       the program; look at rsc/compilation.dox for details
+    - device_capacity field added to winx_volume_information structure
 
 
   Version 5.0.4  2012-03-
