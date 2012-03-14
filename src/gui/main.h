@@ -260,38 +260,39 @@ extern int show_taskbar_icon_overlay;
 extern int minimize_to_system_tray;
 
 /*
-* Note:
-* 
-* + You should not wait for one SendMessage handler completion
-*   from another SendMessage handler. Because it will be a deadlock cause.
+* NOTE: the following code causes a deadlock
+* because the sending thread is blocked until
+* the receiving thread processes the message.
 *
-* + Example:
-*
+* HWND hWindow;
+* int stop;
 * int done;
 *
-* window_proc()
+* DWORD WINAPI ThreadProc(LPVOID lpParameter)
 * {
-*   if(stop button was pressed)
-*   {
-*     stop_the_driver();
-*     wait for done flag;
-*   }
+*     done = 0;
+*     while(!stop){
+*         Sleep(100);
+*     }
+*     SendMessage(hWindow, ...); // waits for WM_DESTROY
+*                                // handling completion
+*     done = 1;
+*     return 0;
 * }
 *
-* analyse_thread_proc()
+* window_proc(HWND hWnd, UINT uMsg, ...)
 * {
-*   done = 0;
-*   analyse();
-*   RedrawMap();
-*   done = 1;
+*     if(uMsg == WM_CREATE){
+*         hWindow = hWnd;
+*         stop = 0;
+*         create_thread(ThreadProc,NULL,NULL);
+*     } else if(uMsg == WM_DESTROY){ // waits for done flag
+*         stop = 1;
+*         while(!done){
+*             Sleep(100);
+*         }
+*     }
 * }
-*
-* + How it works:
-* 
-* RedrawMap() will send message to the map control 
-* that can not be handled by system before window_proc() returns.
-* But window_proc() is waiting for done flag, that can be set
-* after(!) RedrawMap() call. Therefore we have a deadlock.
 */
 
 #define create_thread(func,param,ph) \
