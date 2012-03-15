@@ -241,7 +241,7 @@ static void move_file_helper(HANDLE hFile, winx_file_info *f,
             if(block->next == f->disp.blockmap) break;
             if(block->next->vcn != block->vcn + block->length) break;
             block = block->next;
-            clusters_to_move += min(block->length,length);
+            clusters_to_move += min(block->length,length - clusters_to_move);
         }
         result = move_file_clusters(hFile,vcn,target,clusters_to_move,jp);
         if(result < 0) break;
