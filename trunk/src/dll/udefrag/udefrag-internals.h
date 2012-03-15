@@ -40,12 +40,6 @@
 */
 #define OPTIMIZER_MAGIC_CONSTANT   (20 * 1024 * 1024)
 
-/*
-* Number of bytes to be moved
-* at once by the move_file routine.
-*/
-#define BYTES_AT_ONCE              (256 * 1024)
-
 /************************************************************/
 /*                Prototypes, constants etc.                */
 /************************************************************/
