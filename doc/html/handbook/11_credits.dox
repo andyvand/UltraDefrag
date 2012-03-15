@@ -440,6 +440,7 @@
  * <tr><td>• Dario Raparelli         </td><td>-</td><td> NT 4.0 support.</td></tr>
  * <tr><td>• Jan Loncik              </td><td>-</td><td> x64 native support. Better default values for filters.</td></tr>
  * <tr><td>• Jim Laski               </td><td>-</td><td> System fonts and visual styles for graphical interface.</td></tr>
+ * <tr><td>• Joachim Otahal          </td><td>-</td><td> Disk processing algorithms optimization.</td></tr>
  * <tr><td>• Justin Dearing          </td><td>-</td><td> Boot time defragmentation.</td></tr>
  * <tr><td>• Kalle Koseck            </td><td>-</td><td> Disk analysis speedup. GUI improvements.</td></tr>
  * <tr><td>• Kerem Gümrükcü          </td><td>-</td><td> Manifests for Vista User Account Control (UAC).</td></tr>
@@ -469,6 +470,7 @@
  * • Dario Raparelli          & - & NT 4.0 support. \\
  * • Jan Loncik               & - & x64 native support. Better default values for filters. \\
  * • Jim Laski                & - & System fonts and visual styles for graphical interface. \\
+ * • Joachim Otahal           & - & Disk processing algorithms optimization. \\
  * • Justin Dearing           & - & Boot time defragmentation. \\
  * • Kalle Koseck             & - & Disk analysis speedup. GUI improvements. \\
  * • Kerem Gümrükcü           & - & Manifests for Vista User Account Control (UAC). \\

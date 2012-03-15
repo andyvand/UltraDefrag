@@ -151,9 +151,6 @@ static winx_blockmap *get_first_block_of_cluster_chain(winx_file_info *f,ULONGLO
  * @return Zero for success,
  * negative value otherwise.
  * @note 
- * - Execution of the FSCTL_MOVE_FILE request
- * cannot be interrupted, so it's a good idea
- * to move little portions of data at once.
  * - Volume must be opened before this call,
  * jp->fVolume must contain a proper handle.
  */
@@ -163,6 +160,7 @@ static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
     NTSTATUS Status;
     IO_STATUS_BLOCK iosb;
     MOVEFILE_DESCRIPTOR mfd;
+    ULONGLONG clusters_to_move;
 
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
         DebugPrint("sVcn: %I64u,tLcn: %I64u,n: %u",
@@ -177,35 +175,48 @@ static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
         return 0;
     }
 
-    /* setup movefile descriptor and make the call */
-    memset(&mfd,0,sizeof(MOVEFILE_DESCRIPTOR));
-    mfd.FileHandle = hFile;
-    mfd.StartVcn.QuadPart = startVcn;
-    mfd.TargetLcn.QuadPart = targetLcn;
+    /*
+    * Execution of FSCTL_MOVE_FILE request
+    * cannot be interrupted, so let's move
+    * little portions of data at once.
+    */
+    while(n_clusters){
+        clusters_to_move = min(jp->clusters_at_once,n_clusters);
+        /* setup movefile descriptor and make the call */
+        memset(&mfd,0,sizeof(MOVEFILE_DESCRIPTOR));
+        mfd.FileHandle = hFile;
+        mfd.StartVcn.QuadPart = startVcn;
+        mfd.TargetLcn.QuadPart = targetLcn;
 #ifdef _WIN64
-    mfd.NumVcns = n_clusters;
+        mfd.NumVcns = clusters_to_move;
 #else
-    mfd.NumVcns = (ULONG)n_clusters;
+        mfd.NumVcns = (ULONG)clusters_to_move;
 #endif
-    Status = NtFsControlFile(winx_fileno(jp->fVolume),NULL,NULL,0,&iosb,
-                        FSCTL_MOVE_FILE,&mfd,sizeof(MOVEFILE_DESCRIPTOR),
-                        NULL,0);
-    if(NT_SUCCESS(Status)){
-        NtWaitForSingleObject(winx_fileno(jp->fVolume),FALSE,NULL);
-        Status = iosb.Status;
-    }
-    jp->last_move_status = Status;
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"cannot move file clusters");
-        return (-1);
+        Status = NtFsControlFile(winx_fileno(jp->fVolume),NULL,NULL,0,&iosb,
+                            FSCTL_MOVE_FILE,&mfd,sizeof(MOVEFILE_DESCRIPTOR),
+                            NULL,0);
+        if(NT_SUCCESS(Status)){
+            NtWaitForSingleObject(winx_fileno(jp->fVolume),FALSE,NULL);
+            Status = iosb.Status;
+        }
+        jp->last_move_status = Status;
+        if(!NT_SUCCESS(Status)){
+            DebugPrintEx(Status,"cannot move file clusters");
+            jp->pi.processed_clusters += n_clusters;
+            return (-1);
+        }
+        jp->pi.moved_clusters += clusters_to_move;
+        jp->pi.processed_clusters += clusters_to_move;
+        startVcn += clusters_to_move;
+        targetLcn += clusters_to_move;
+        n_clusters -= clusters_to_move;
     }
 
     /*
-    * Actually moving result is unknown here,
-    * because API may return success, while
-    * actually clusters may be moved partially.
+    * Actually file moving result is unknown here,
+    * because API may return success in case of
+    * partially moved data.
     */
-    jp->pi.moved_clusters += n_clusters;
     return 0;
 }
 
@@ -217,48 +228,31 @@ static void move_file_helper(HANDLE hFile, winx_file_info *f,
     udefrag_job_parameters *jp)
 {
     winx_blockmap *block, *first_block;
-    ULONGLONG curr_vcn, curr_target, j, n, r;
-    ULONGLONG clusters_to_process;
     ULONGLONG clusters_to_move;
     int result;
     
-    clusters_to_process = length;
-    curr_vcn = vcn;
-    curr_target = target;
-    
     /* move blocks of the file */
     first_block = get_first_block_of_cluster_chain(f,vcn);
-    for(block = first_block; block; block = block->next){
+    for(block = first_block; block && length; block = block->next){
         /* move the current block or its part */
-        clusters_to_move = min(block->length - (curr_vcn - block->vcn),clusters_to_process);
-        n = clusters_to_move / jp->clusters_at_once;
-        for(j = 0; j < n; j++){
-            result = move_file_clusters(hFile,curr_vcn,
-                curr_target,jp->clusters_at_once,jp);
-            if(result < 0)
-                goto done;
-            jp->pi.processed_clusters += jp->clusters_at_once;
-            clusters_to_process -= jp->clusters_at_once;
-            curr_vcn += jp->clusters_at_once;
-            curr_target += jp->clusters_at_once;
+        clusters_to_move = min(block->length - (vcn - block->vcn),length);
+        /* move as much data as possible at once */
+        while(clusters_to_move < length){
+            if(block->next == f->disp.blockmap) break;
+            if(block->next->vcn != block->vcn + block->length) break;
+            block = block->next;
+            clusters_to_move += min(block->length,length);
         }
-        /* try to move rest of the block */
-        r = clusters_to_move % jp->clusters_at_once;
-        if(r){
-            result = move_file_clusters(hFile,curr_vcn,curr_target,r,jp);
-            if(result < 0)
-                goto done;
-            jp->pi.processed_clusters += r;
-            clusters_to_process -= r;
-            curr_vcn += r;
-            curr_target += r;
-        }
-        if(!clusters_to_move || block->next == f->disp.blockmap) break;
-        curr_vcn = block->next->vcn;
+        result = move_file_clusters(hFile,vcn,target,clusters_to_move,jp);
+        if(result < 0) break;
+        target += clusters_to_move;
+        length -= clusters_to_move;
+        if(block->next == f->disp.blockmap) break;
+        vcn = block->next->vcn;
     }
 
-done: /* count all unprocessed clusters here */
-    jp->pi.processed_clusters += clusters_to_process;
+    /* count all unprocessed clusters here */
+    jp->pi.processed_clusters += length;
 }
 
 /**

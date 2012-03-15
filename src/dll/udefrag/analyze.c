@@ -62,6 +62,56 @@ struct fs fs_types[] = {
 };
 
 /**
+ * @internal
+ * @brief Constant definitions for
+ * adjust_move_at_once_parameter
+ * routine.
+ */
+#define _256K                           (256LL * 1024LL)
+#define _4M                      (4LL * 1024LL * 1024LL)
+#define _8M                      (8LL * 1024LL * 1024LL)
+#define _16M                    (16LL * 1024LL * 1024LL)
+#define _32M                    (32LL * 1024LL * 1024LL)
+#define _64M                    (64LL * 1024LL * 1024LL)
+#define _20G           (20LL * 1024LL * 1024LL * 1024LL)
+#define _100G         (100LL * 1024LL * 1024LL * 1024LL)
+#define _250G         (250LL * 1024LL * 1024LL * 1024LL)
+#define _1T          (1024LL * 1024LL * 1024LL * 1024LL)
+#define _2T    (2LL * 1024LL * 1024LL * 1024LL * 1024LL)
+
+/**
+ * @brief Defines how many clusters to move at once in the move_file routine.
+ * @details This algorithm has been suggested by Joachim Otahal:
+ * http://sourceforge.net/projects/ultradefrag/forums/forum/709672/topic/4779581
+ */
+void adjust_move_at_once_parameter(udefrag_job_parameters *jp)
+{
+    ULONGLONG bytes_at_once;
+    char buffer[32];
+    
+    /* comply with "one half second to stop defragmentation" rule */
+    if(jp->v_info.device_capacity < _20G){
+        bytes_at_once = _256K;
+    } else if(jp->v_info.device_capacity < _100G){
+        bytes_at_once = _4M;
+    } else if(jp->v_info.device_capacity < _250G){
+        bytes_at_once = _8M;
+    } else if(jp->v_info.device_capacity < _1T){
+        bytes_at_once = _16M;
+    } else if(jp->v_info.device_capacity < _2T){
+        bytes_at_once = _32M;
+    } else {
+        bytes_at_once = _64M;
+    }
+    jp->clusters_at_once = bytes_at_once / jp->v_info.bytes_per_cluster;
+    if(jp->clusters_at_once == 0)
+        jp->clusters_at_once ++;
+    winx_bytes_to_hr(bytes_at_once,0,buffer,sizeof(buffer));
+    DebugPrint("the program will move %s (%I64u clusters) at once",
+        buffer, jp->clusters_at_once);
+}
+
+/**
  * @brief Retrieves all information about the volume.
  * @return Zero for success, negative value otherwise.
  * @note Resets statistics and cluster map.
@@ -93,41 +143,34 @@ int get_volume_information(udefrag_job_parameters *jp)
     destroy_lists(jp);
     
     /* update global variables holding drive geometry */
-    if(winx_get_volume_information(jp->volume_letter,&jp->v_info) < 0){
+    if(winx_get_volume_information(jp->volume_letter,&jp->v_info) < 0)
         return (-1);
-    } else {
-        jp->pi.total_space = jp->v_info.total_bytes;
-        jp->pi.free_space = jp->v_info.free_bytes;
-        if(jp->v_info.bytes_per_cluster){
-            jp->clusters_at_once = BYTES_AT_ONCE / jp->v_info.bytes_per_cluster;
-        } else {
-            jp->clusters_at_once = 1;
+
+    jp->pi.total_space = jp->v_info.total_bytes;
+    jp->pi.free_space = jp->v_info.free_bytes;
+    DebugPrint("total clusters: %I64u",jp->v_info.total_clusters);
+    DebugPrint("cluster size: %I64u",jp->v_info.bytes_per_cluster);
+    /* validate geometry */
+    if(!jp->v_info.total_clusters || !jp->v_info.bytes_per_cluster){
+        DebugPrint("wrong volume geometry detected");
+        return (-1);
+    }
+    adjust_move_at_once_parameter(jp);
+    /* check partition type */
+    DebugPrint("%s partition detected",jp->v_info.fs_name);
+    strncpy(fs_name,jp->v_info.fs_name,MAX_FS_NAME_LENGTH);
+    fs_name[MAX_FS_NAME_LENGTH] = 0;
+    _strupr(fs_name);
+    for(i = 0; fs_types[i].name; i++){
+        if(!strcmp(fs_name,fs_types[i].name)){
+            jp->fs_type = fs_types[i].type;
+            jp->is_fat = fs_types[i].is_fat;
+            break;
         }
-        if(jp->clusters_at_once == 0)
-            jp->clusters_at_once ++;
-        DebugPrint("total clusters: %I64u",jp->v_info.total_clusters);
-        DebugPrint("cluster size: %I64u",jp->v_info.bytes_per_cluster);
-        /* validate geometry */
-        if(!jp->v_info.total_clusters || !jp->v_info.bytes_per_cluster){
-            DebugPrint("wrong volume geometry detected");
-            return (-1);
-        }
-        /* check partition type */
-        DebugPrint("%s partition detected",jp->v_info.fs_name);
-        strncpy(fs_name,jp->v_info.fs_name,MAX_FS_NAME_LENGTH);
-        fs_name[MAX_FS_NAME_LENGTH] = 0;
-        _strupr(fs_name);
-        for(i = 0; fs_types[i].name; i++){
-            if(!strcmp(fs_name,fs_types[i].name)){
-                jp->fs_type = fs_types[i].type;
-                jp->is_fat = fs_types[i].is_fat;
-                break;
-            }
-        }
-        if(jp->fs_type == FS_UNKNOWN){
-            DebugPrint("file system type is not recognized");
-            DebugPrint("type independent routines will be used to defragment it");
-        }
+    }
+    if(jp->fs_type == FS_UNKNOWN){
+        DebugPrint("file system type is not recognized");
+        DebugPrint("type independent routines will be used to defragment it");
     }
     
     jp->pi.clusters_to_process = jp->v_info.total_clusters;
