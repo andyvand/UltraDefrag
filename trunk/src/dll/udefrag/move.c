@@ -182,6 +182,7 @@ static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
     * little portions of data at once.
     */
     while(n_clusters){
+        if(jp->termination_router((void *)jp)) return (-1);
         clusters_to_move = min(jp->clusters_at_once,n_clusters);
         /* setup movefile descriptor and make the call */
         memset(&mfd,0,sizeof(MOVEFILE_DESCRIPTOR));
