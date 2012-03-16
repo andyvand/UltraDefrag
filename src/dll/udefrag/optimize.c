@@ -501,6 +501,8 @@ static void move_files_to_front(udefrag_job_parameters *jp,
 {
     winx_file_info *file;
     winx_volume_region *rgn;
+    int region_not_found;
+    ULONGLONG skipped_files = 0;
     ULONGLONG lcn;
     ULONGLONG time;
     char buffer[32];
@@ -515,14 +517,39 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     file = prb_t_cur(t);
     while(file){
         if(can_move_entirely(file,jp)){
+            region_not_found = 1;
             rgn = find_first_free_region(jp,*start_lcn,file->disp.clusters);
-            if(rgn == NULL) break;
-            if(rgn->lcn >= end_lcn) break;
+            if(rgn){
+                if(rgn->lcn < end_lcn)
+                    region_not_found = 0;
+            }
+            if(region_not_found){
+                if(file->user_defined_flags & UD_FILE_REGION_NOT_FOUND){
+                    /* if region is not found twice, skip the file */
+                    file = prb_t_next(t);
+                    skipped_files ++;
+                    continue;
+                } else {
+                    if(skipped_files && !jp->pi.moved_clusters){
+                        /* skip all subsequent big files too */
+                        file = prb_t_next(t);
+                        skipped_files ++;
+                        continue;
+                    } else {
+                        file->user_defined_flags |= UD_FILE_REGION_NOT_FOUND;
+                        break;
+                    }
+                }
+            }
+            /* move the file */
             lcn = rgn->lcn;
             if(move_file(file,file->disp.blockmap->vcn,
               file->disp.clusters,rgn->lcn,jp) >= 0){
-                *start_lcn = lcn + 1;
                 jp->pi.total_moves ++;
+                if(file->disp.clusters * jp->v_info.bytes_per_cluster \
+                  < OPTIMIZER_MAGIC_CONSTANT){
+                    *start_lcn = lcn + 1;
+                }
             }
             file->user_defined_flags |= UD_FILE_MOVED_TO_FRONT;
         }
@@ -735,9 +762,6 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
         
         /* break if no more files need optimization */
         if(prb_t_cur(&t) == NULL) break;
-        
-        /* break if nothing moved */
-        if(jp->pi.moved_clusters == 0) break;
         
         /* continue file sorting on the next pass */
         jp->pi.pass_number ++;
