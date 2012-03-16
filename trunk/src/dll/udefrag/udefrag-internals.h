@@ -95,6 +95,11 @@
 */
 #define UD_FILE_ESSENTIAL_DOS_FILE     0x800
 
+/*
+* Auxiliary flag for move_files_to_front routine.
+*/
+#define UD_FILE_REGION_NOT_FOUND       0x1000
+
 #define is_excluded(f)           ((f)->user_defined_flags & UD_FILE_EXCLUDED)
 #define is_over_limit(f)         ((f)->user_defined_flags & UD_FILE_OVER_LIMIT)
 #define is_locked(f)             ((f)->user_defined_flags & UD_FILE_LOCKED)
