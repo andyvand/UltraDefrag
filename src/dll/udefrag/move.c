@@ -172,6 +172,7 @@ static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
     
     if(jp->udo.dry_run){
         jp->pi.moved_clusters += n_clusters;
+        jp->pi.processed_clusters += n_clusters;
         return 0;
     }
 
