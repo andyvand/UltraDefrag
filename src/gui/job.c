@@ -320,15 +320,13 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     SendMessage(hToolbar,TB_ENABLEBUTTON,IDM_SHOW_REPORT,MAKELONG(FALSE,0));
     
     /* set taskbar icon overlay and notification area icon */
-    if(show_taskbar_icon_overlay || minimize_to_system_tray){
-        if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
-        } else {
-            SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
-            job_is_running = 1;
-            ShowSystemTrayIcon(NIM_MODIFY);
-            SetEvent(hTaskbarIconEvent);
-        }
+    if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+        WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+    } else {
+        SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+        job_is_running = 1;
+        ShowSystemTrayIcon(NIM_MODIFY);
+        SetEvent(hTaskbarIconEvent);
     }
 
     /* process all selected volumes */
