@@ -268,6 +268,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     int s_job_flags;
     int cw[sizeof(user_defined_column_widths) / sizeof(int)];
     int s_list_height;
+    int s_show_taskbar_icon_overlay;
     int s_minimize_to_system_tray;
     
     h = FindFirstChangeNotification(".\\options",
@@ -294,6 +295,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                 memcpy(&cw,&user_defined_column_widths,sizeof(user_defined_column_widths));
                 s_list_height = list_height;
                 s_job_flags = job_flags;
+                s_show_taskbar_icon_overlay = show_taskbar_icon_overlay;
                 s_minimize_to_system_tray = minimize_to_system_tray;
                 
                 /* reload preferences */
@@ -329,10 +331,16 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                     RedrawMap(current_job,0);
                 }
                 
-                /* handle minimize_to_system_tray option adjustment */
+                /* handle show_taskbar_icon_overlay and minimize_to_system_tray options adjustment */
                 if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                     WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
                 } else {
+                    if(show_taskbar_icon_overlay != s_show_taskbar_icon_overlay){
+                        if(show_taskbar_icon_overlay && job_is_running)
+                            SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+                        else
+                            RemoveTaskbarIconOverlay();
+                    }
                     if(minimize_to_system_tray != s_minimize_to_system_tray){
                         if(IsIconic(hWindow))
                             ShowWindow(hWindow,minimize_to_system_tray ? SW_HIDE : SW_SHOW);
