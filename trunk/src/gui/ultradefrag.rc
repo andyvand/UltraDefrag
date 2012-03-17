@@ -56,12 +56,22 @@ IDI_TRAY_ICON_BUSY      ICON    DISCARDABLE     "res/tray_busy.ico"
 * stop, config, terminal, mft optimization icons - from Silk icon set 1.3 http://www.famfamfam.com/lab/icons/silk/
 * report, script icons - from http://brandspankingnew.net/download.php?file=doc_types_v2.zip
 * repeat icon - by Interactivemania http://www.iconfinder.com/icondetails/49846/16/alt_media_repeat_icon
+* help icon in large sizes - from Fugue icon set http://p.yusukekamiyamane.com/
 * All icons are licensed under terms permitting the use for non commercial purposes.
 */
-IDB_TOOLBAR                    BITMAP  DISCARDABLE     "res/toolbar.bmp"
-IDB_TOOLBAR_DISABLED           BITMAP  DISCARDABLE     "res/toolbar_d.bmp"
-IDB_TOOLBAR_HIGHLIGHTED        BITMAP  DISCARDABLE     "res/toolbar_h.bmp"
-
+IDB_TOOLBAR_16                    BITMAP  DISCARDABLE     "res/toolbar16.bmp"
+IDB_TOOLBAR_DISABLED_16           BITMAP  DISCARDABLE     "res/toolbar16_d.bmp"
+IDB_TOOLBAR_HIGHLIGHTED_16        BITMAP  DISCARDABLE     "res/toolbar16_h.bmp"
+IDB_TOOLBAR_20                    BITMAP  DISCARDABLE     "res/toolbar20.bmp"
+IDB_TOOLBAR_DISABLED_20           BITMAP  DISCARDABLE     "res/toolbar20_d.bmp"
+IDB_TOOLBAR_HIGHLIGHTED_20        BITMAP  DISCARDABLE     "res/toolbar20_h.bmp"
+/*IDB_TOOLBAR_24                    BITMAP  DISCARDABLE     "res/toolbar24.bmp"
+IDB_TOOLBAR_DISABLED_24           BITMAP  DISCARDABLE     "res/toolbar24_d.bmp"
+IDB_TOOLBAR_HIGHLIGHTED_24        BITMAP  DISCARDABLE     "res/toolbar24_h.bmp"
+IDB_TOOLBAR_32                    BITMAP  DISCARDABLE     "res/toolbar32.bmp"
+IDB_TOOLBAR_DISABLED_32           BITMAP  DISCARDABLE     "res/toolbar32_d.bmp"
+IDB_TOOLBAR_HIGHLIGHTED_32        BITMAP  DISCARDABLE     "res/toolbar32_h.bmp"
+*/
 /*
 * All menu icons must be in 24bpp format.
 * To be nicely rendered on 16bpp screens they

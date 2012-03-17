@@ -23,6 +23,7 @@
     - quite useless cyan color removed from the cluster map
     - icons were redesigned to reach better appearance
       on Windows Vista and above
+    - high DPI screens support was improved
     - Internals: flags field removed from winx_file_disposition structure
     - MS Visual Studio 6.0 development environment support dropped
     - many zenwinx prototypes changed by replacing short keyword by wchar_t

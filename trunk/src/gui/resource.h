@@ -43,14 +43,23 @@
 #define IDI_TRAY_ICON_BUSY              147
 #define IDR_MAIN_ACCELERATOR            150
 
-#define IDB_TOOLBAR                     160
-#define IDB_TOOLBAR_DISABLED            161
-#define IDB_TOOLBAR_HIGHLIGHTED         162
+#define IDB_TOOLBAR_16                  160
+#define IDB_TOOLBAR_DISABLED_16         161
+#define IDB_TOOLBAR_HIGHLIGHTED_16      162
+#define IDB_TOOLBAR_20                  163
+#define IDB_TOOLBAR_DISABLED_20         164
+#define IDB_TOOLBAR_HIGHLIGHTED_20      165
+#define IDB_TOOLBAR_24                  166
+#define IDB_TOOLBAR_DISABLED_24         167
+#define IDB_TOOLBAR_HIGHLIGHTED_24      168
+#define IDB_TOOLBAR_32                  169
+#define IDB_TOOLBAR_DISABLED_32         170
+#define IDB_TOOLBAR_HIGHLIGHTED_32      171
 
-#define IDB_MENU_ICONS_15               170
-#define IDB_MENU_ICONS_19               171
-#define IDB_MENU_ICONS_25               172
-#define IDB_MENU_ICONS_31               173
+#define IDB_MENU_ICONS_15               172
+#define IDB_MENU_ICONS_19               173
+#define IDB_MENU_ICONS_25               174
+#define IDB_MENU_ICONS_31               175
 
 #define IDM_STATUSBAR                   500
 

@@ -75,7 +75,7 @@ TBBUTTON tb_buttons[N_BUTTONS] = {{0}};
  */
 int CreateToolbar(void)
 {
-    int i;
+    int i, size, id, id_d, id_h;
     TOOLINFOW ti;
     RECT rc;
     
@@ -92,6 +92,30 @@ int CreateToolbar(void)
     }
     
     /* set buttons */
+    size = GetSystemMetrics(SM_CXSMICON);
+    if(size < 20){
+        size = 16;
+        id = IDB_TOOLBAR_16;
+        id_d = IDB_TOOLBAR_DISABLED_16;
+        id_h = IDB_TOOLBAR_HIGHLIGHTED_16;
+    } else if(size < 24){
+        size = 20;
+        id = IDB_TOOLBAR_20;
+        id_d = IDB_TOOLBAR_DISABLED_20;
+        id_h = IDB_TOOLBAR_HIGHLIGHTED_20;
+    } else if(size < 32){
+        size = 24;
+        id = IDB_TOOLBAR_24;
+        id_d = IDB_TOOLBAR_DISABLED_24;
+        id_h = IDB_TOOLBAR_HIGHLIGHTED_24;
+    } else {
+        size = 32;
+        id = IDB_TOOLBAR_32;
+        id_d = IDB_TOOLBAR_DISABLED_32;
+        id_h = IDB_TOOLBAR_HIGHLIGHTED_32;
+    }
+    SendMessage(hToolbar,TB_SETBITMAPSIZE,0,(LPARAM)MAKELONG(size,size));
+    SendMessage(hToolbar,TB_AUTOSIZE,0,0);
     for(i = 0; i < N_BUTTONS; i++){
         tb_buttons[i].iBitmap = buttons[i].bitmap;
         tb_buttons[i].idCommand = buttons[i].command;
@@ -103,7 +127,7 @@ int CreateToolbar(void)
     
     /* assign images to buttons */
     hToolbarImgList = ImageList_LoadImage(hInstance,
-        MAKEINTRESOURCE(IDB_TOOLBAR),16,0,RGB(255,0,255),
+        MAKEINTRESOURCE(id),size,0,RGB(255,0,255),
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgList == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
@@ -111,7 +135,7 @@ int CreateToolbar(void)
         return (-1);
     }
     hToolbarImgListD = ImageList_LoadImage(hInstance,
-        MAKEINTRESOURCE(IDB_TOOLBAR_DISABLED),16,0,RGB(255,0,255),
+        MAKEINTRESOURCE(id_d),size,0,RGB(255,0,255),
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgListD == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
@@ -119,7 +143,7 @@ int CreateToolbar(void)
         return (-1);
     }
     hToolbarImgListH = ImageList_LoadImage(hInstance,
-        MAKEINTRESOURCE(IDB_TOOLBAR_HIGHLIGHTED),16,0,RGB(255,0,255),
+        MAKEINTRESOURCE(id_h),size,0,RGB(255,0,255),
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgListH == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
