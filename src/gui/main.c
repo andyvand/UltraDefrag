@@ -1291,6 +1291,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         WgxDestroyResourceTable(i18n_table);
         stop_web_statistics();
         DeleteEnvironmentVariables();
+        if(hWindow){
+            /* remove taskbar notification area icon */
+            SendMessage(hWindow,WM_DESTROY,0,0);
+        }
         DestroySynchObjects();
         return 3;
     }
