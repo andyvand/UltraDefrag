@@ -995,6 +995,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_SHOWHIDE:
             if(IsWindowVisible(hWindow)){
+                ShowWindow(hWindow,SW_SHOW);
                 ShowWindow(hWindow,SW_HIDE);
             } else {
                 ShowWindow(hWindow,maximized_window ? SW_MAXIMIZE : SW_RESTORE);
@@ -1100,8 +1101,10 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
-                if(minimize_to_system_tray)
+                if(minimize_to_system_tray){
+                    ShowWindow(hWindow,SW_SHOW);
                     ShowWindow(hWindow,SW_HIDE);
+                }
                 SetEvent(hTaskbarIconEvent);
             }
         }
@@ -1138,6 +1141,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         case WM_LBUTTONUP:
             /* show / hide window */
             if(IsWindowVisible(hWindow)){
+                ShowWindow(hWindow,SW_SHOW);
                 ShowWindow(hWindow,SW_HIDE);
             } else {
                 ShowWindow(hWindow,maximized_window ? SW_MAXIMIZE : SW_RESTORE);

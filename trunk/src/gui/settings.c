@@ -342,8 +342,10 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                             RemoveTaskbarIconOverlay();
                     }
                     if(minimize_to_system_tray != s_minimize_to_system_tray){
-                        if(IsIconic(hWindow))
+                        if(IsIconic(hWindow)){
+                            ShowWindow(hWindow,SW_SHOW);
                             ShowWindow(hWindow,minimize_to_system_tray ? SW_HIDE : SW_SHOW);
+                        }
                         /* set/remove notification area icon */
                         if(minimize_to_system_tray)
                             ShowSystemTrayIcon(NIM_ADD);
