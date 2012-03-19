@@ -32,11 +32,22 @@ HWND hStatus;
 
 static void SetIcon(int part,int id)
 {
-    HANDLE hImg;
+    int size;
+    HANDLE hIcon;
 
-    hImg = LoadImage(hInstance,(LPCSTR)(size_t)id,IMAGE_ICON,16,16,LR_VGACOLOR|LR_SHARED);
-    (void)SendMessage(hStatus,SB_SETICON,part,(LPARAM)hImg);
-    (void)DestroyIcon(hImg);
+    size = GetSystemMetrics(SM_CXSMICON);
+    if(size < 20){
+        size = 16;
+    } else if(size < 24){
+        size = 20;
+    } else if(size < 32){
+        size = 24;
+    } else {
+        size = 32;
+    }
+    hIcon = LoadImage(hInstance,(LPCSTR)(size_t)id,IMAGE_ICON,size,size,LR_VGACOLOR|LR_SHARED);
+    (void)SendMessage(hStatus,SB_SETICON,part,(LPARAM)hIcon);
+    (void)DestroyIcon(hIcon);
 }
 
 /**
