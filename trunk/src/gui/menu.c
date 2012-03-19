@@ -145,16 +145,21 @@ int CreateMainMenu(void)
     ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&osvi);
-    /* for DPI > 125% better icons are needed: in 24x24 and 32x32 sizes */
-    cx = GetSystemMetrics(SM_CXMENUCHECK);
-    if(osvi.dwMajorVersion > 5 && cx < 20 && show_menu_icons){
-        /* menu icons look nicely on Vista and above */
-        if(cx < 19){
+    /* menu icons look nicely on Vista and above */
+    if(osvi.dwMajorVersion > 5 && show_menu_icons){
+        cx = GetSystemMetrics(SM_CXMENUCHECK);
+        if(cx < 16){
             /* 100% DPI */
             id = IDB_MENU_ICONS_15;
-        } else {
+        } else if(cx < 20){
             /* 125% DPI */
             id = IDB_MENU_ICONS_19;
+        } else if(cx < 26){
+            /* 150% DPI */
+            id = IDB_MENU_ICONS_25;
+        } else {
+            /* 200% DPI */
+            id = IDB_MENU_ICONS_31;
         }
         hBitmap = LoadBitmap(hInstance, MAKEINTRESOURCE(id));
         hBitmapMasked = WgxCreateMenuBitmapMasked(hBitmap, (COLORREF)-1);
