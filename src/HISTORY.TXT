@@ -44,7 +44,7 @@
     - i18n support was added to file fragmentation reports
     - the following translations were updated:
 
-      Korean, French (FR), Spanish (AR), Croatian, Spanish (MEX)
+      Korean, French (FR), Spanish (AR), Croatian, Spanish (MEX), Wáray-Wáray
       
     - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay,
       WgxLoadIcon routines added to wgx library
