@@ -54,7 +54,7 @@ int init_maximized_window = 0;
 int skip_removable = TRUE;
 int disable_latest_version_check = 0;
 int user_defined_column_widths[] = {0,0,0,0,0};
-int list_height = VLIST_HEIGHT;
+int list_height = 0;
 int repeat_action = FALSE;
 int show_menu_icons = 1;
 int show_taskbar_icon_overlay = 1;
@@ -137,7 +137,7 @@ WGX_OPTION internal_options[] = {
     {WGX_CFG_INT,     0, "column3_width", &user_defined_column_widths[2], 0},
     {WGX_CFG_INT,     0, "column4_width", &user_defined_column_widths[3], 0},
     {WGX_CFG_INT,     0, "column5_width", &user_defined_column_widths[4], 0},
-    {WGX_CFG_INT,     0, "list_height", &list_height, (void *)VLIST_HEIGHT},
+    {WGX_CFG_INT,     0, "list_height", &list_height, (void *)0},
     {WGX_CFG_EMPTY,   0, "", NULL, ""},
 
     {WGX_CFG_INT,     0, "job_flags", &job_flags, (void *)UD_PREVIEW_MATCHING},
