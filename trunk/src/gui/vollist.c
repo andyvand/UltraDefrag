@@ -599,13 +599,33 @@ void SelectAllDrives(void)
  */
 static void InitImageList(void)
 {
-    hImgList = ImageList_Create(16,16,ILC_COLOR8,2,0);
+    int size;
+    HICON hFixed = NULL;
+    HICON hRemovable = NULL;
+
+    size = GetSystemMetrics(SM_CXSMICON);
+    if(size < 20){
+        size = 16;
+    } else if(size < 24){
+        size = 20;
+    } else if(size < 32){
+        size = 24;
+    } else {
+        size = 32;
+    }
+    hImgList = ImageList_Create(size,size,ILC_COLOR8,2,0);
     if(hImgList == NULL){
         WgxDbgPrintLastError("InitImageList: ImageList_Create failed");
     } else {
-        ImageList_AddIcon(hImgList,LoadIcon(hInstance,MAKEINTRESOURCE(IDI_FIXED)));
-        ImageList_AddIcon(hImgList,LoadIcon(hInstance,MAKEINTRESOURCE(IDI_REMOVABLE)));
-        SendMessage(hList,LVM_SETIMAGELIST,LVSIL_SMALL,(LRESULT)hImgList);
+        if(WgxLoadIcon(hInstance,IDI_FIXED,size,&hFixed)){
+            if(WgxLoadIcon(hInstance,IDI_REMOVABLE,size,&hRemovable)){
+                ImageList_AddIcon(hImgList,hFixed);
+                ImageList_AddIcon(hImgList,hRemovable);
+                SendMessage(hList,LVM_SETIMAGELIST,LVSIL_SMALL,(LRESULT)hImgList);
+            } else {
+                DestroyIcon(hFixed);
+            }
+        }
     }
 }
 
