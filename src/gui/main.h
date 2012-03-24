@@ -90,8 +90,6 @@
 #define MIN_WIDTH             500 /* minimal window width */
 #define MIN_HEIGHT            400 /* minimal window height */
 #define SPACING               7   /* spacing between controls */
-#define PADDING_X             14  /* horizontal padding between borders and controls */
-#define PADDING_Y             14  /* vertical padding between top border and controls */
 #define VLIST_HEIGHT          130 /* volume list height */
 #define MIN_LIST_HEIGHT       40  /* minimal list height */
 
@@ -302,5 +300,18 @@ extern int minimize_to_system_tray;
 
 /* this macro converts pixels from 96 DPI to the current one */
 #define DPI(x) ((int)((double)x * fScale))
+
+/* window layout constants, used in shutdown confirmation and about dialogs */
+/* based on layout guidelines: http://msdn.microsoft.com/en-us/library/aa511279.aspx */
+#define ICON_SIZE      32      /* size of the shutdown icon */
+#define SHIP_WIDTH     109
+#define SHIP_HEIGHT    147
+#define SMALL_SPACING  DPI(7)  /* spacing between related controls */
+#define LARGE_SPACING  DPI(11) /* spacing between unrelated controls */
+#define MARGIN         DPI(11) /* dialog box margins */
+#define MIN_BTN_WIDTH  DPI(75) /* recommended button width */
+#define MIN_BTN_HEIGHT DPI(23) /* recommended button height */
+#define BTN_H_SPACING  DPI(9)  /* minimal space between text and button right/left sides */
+#define BTN_V_SPACING  DPI(4)  /* minimal space between text and button top/bottom sides */
 
 #endif /* _UDEFRAG_GUI_MAIN_H_ */

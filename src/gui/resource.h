@@ -63,6 +63,9 @@
 
 #define IDM_STATUSBAR                   500
 
+#define IDC_TEXT1                       1010
+#define IDC_TEXT2                       1011
+#define IDC_TEXT3                       1012
 #define IDC_CREDITS                     1020
 #define IDC_LICENSE                     1021
 #define IDC_HOMEPAGE                    1035
@@ -73,7 +76,7 @@
 #define IDC_NO_BUTTON                   1042
 #define IDC_DELAY_MSG                   1043
 #define IDC_SHUTDOWN_ICON               1044
-#define IDC_PIC1                        1059
+#define IDC_SHIP                        1059
 #define IDC_SHUTDOWN                    1060
 
 /* menu item constants */
