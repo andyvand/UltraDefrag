@@ -48,7 +48,7 @@
       
     - menu icons for high DPI screens were added
     - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay,
-      WgxLoadIcon routines added to wgx library
+      WgxLoadIcon and WgxGetTextDimensions routines added to wgx library
     - WgxGetResourceString behavior changed
     - math.lshift function added to Lua library
 

@@ -19,6 +19,7 @@ EXPORTS
     WgxSetIcon
     WgxCheckWindowCoordinates
     WgxCenterWindow
+    WgxGetTextDimensions
     WgxSafeSubclassWindow
     WgxSafeCallWndProc
 
