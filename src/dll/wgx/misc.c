@@ -276,6 +276,63 @@ void WgxCenterWindow(HWND hwnd)
 }
 
 /**
+ * @brief Retrieves dimensions of text.
+ * @param[in] text the text.
+ * @param[in] hFont handle to the font
+ * to be used to draw the text, NULL
+ * forces to use default font.
+ * @param[in] hWnd handle to the window
+ * to be used to draw the text on.
+ * @param[out] pWidth pointer to variable
+ * receiving width of the text.
+ * @param[out] pHeight pointer to variable
+ * receiving height of the text.
+ * @return Boolean value. TRUE indicates
+ * success.
+ */
+BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *pHeight)
+{
+    HDC hdc;
+    HFONT hOldFont;
+    SIZE size;
+    BOOL result;
+    
+    /* validate parameters */
+    if(pWidth == NULL || pHeight == NULL) return FALSE;
+    *pWidth = *pHeight = 0;
+    
+    if(text == NULL)
+        return TRUE;
+    
+    /* get default font if requested */
+    if(hFont == NULL){
+        hFont = (HFONT)SendMessage(hWnd,WM_GETFONT,0,0);
+        if(hFont == NULL){
+            WgxDbgPrintLastError("WgxGetTextDimensions: cannot get default font");
+            return FALSE;
+        }
+    }
+    
+    /* get dimensions of text */
+    hdc = GetDC(hWnd);
+    if(hdc == NULL){
+        WgxDbgPrintLastError("WgxGetTextDimensions: cannot get device context of the window");
+        return FALSE;
+    }
+    hOldFont = SelectObject(hdc,hFont);
+    result = GetTextExtentPoint32W(hdc,text,wcslen(text),&size);
+    if(result == FALSE){
+        WgxDbgPrintLastError("WgxGetTextDimensions: cannot get text dimensions");
+    } else {
+        *pWidth = size.cx;
+        *pHeight = size.cy;
+    }
+    SelectObject(hdc,hOldFont);
+    ReleaseDC(hWnd,hdc);
+    return result;
+}
+
+/**
  * @brief Safe equivalent of SetWindowLongPtr(GWLP_WNDPROC).
  * @details Works safe regardless of whether the window
  * is unicode or not.

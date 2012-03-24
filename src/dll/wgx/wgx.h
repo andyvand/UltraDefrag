@@ -111,6 +111,7 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon);
 void WgxSetIcon(HINSTANCE hInstance,HWND hWindow,UINT IconID);
 void WgxCheckWindowCoordinates(LPRECT lprc,int min_width,int min_height);
 void WgxCenterWindow(HWND hwnd);
+BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *pHeight);
 WNDPROC WgxSafeSubclassWindow(HWND hwnd,WNDPROC NewProc);
 LRESULT WgxSafeCallWndProc(WNDPROC OldProc,HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
 
