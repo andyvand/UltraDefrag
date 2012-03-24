@@ -343,8 +343,10 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                     }
                     if(minimize_to_system_tray != s_minimize_to_system_tray){
                         if(IsIconic(hWindow)){
-                            ShowWindow(hWindow,SW_SHOW);
-                            ShowWindow(hWindow,minimize_to_system_tray ? SW_HIDE : SW_SHOW);
+                            if(minimize_to_system_tray)
+                                WgxHideWindow(hWindow);
+                            else
+                                WgxShowWindow(hWindow);
                         }
                         /* set/remove notification area icon */
                         if(minimize_to_system_tray)

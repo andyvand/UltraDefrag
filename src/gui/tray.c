@@ -80,7 +80,7 @@ BOOL ShowSystemTrayIcon(DWORD dwMessage)
 fail:
     if(dwMessage == NIM_ADD){
         /* show main window again */
-        ShowWindow(hWindow,SW_SHOW);
+        WgxShowWindow(hWindow);
         /* turn off minimize to tray option */
         minimize_to_system_tray = 0;
         WgxDbgPrint("ShowSystemTrayIcon: minimize_to_system_tray option turned off");
