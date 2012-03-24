@@ -137,4 +137,18 @@ BOOL WgxSaveOptions(char *config_file_path,WGX_OPTION *opts_table,WGX_SAVE_OPTIO
 BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, wchar_t *description);
 BOOL WgxRemoveTaskbarIconOverlay(HWND hWindow);
 
+/* wgx macro definitions */
+
+/*
+* The following two definitions are intended
+* for use instead of ShowWindow freakishly
+* depending on STARTUPINFO structure.
+*/
+#define WgxShowWindow(hWindow) SetWindowPos((hWindow), \
+    NULL,0,0,0,0,SWP_SHOWWINDOW | SWP_NOACTIVATE | \
+    SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE | SWP_NOZORDER)
+#define WgxHideWindow(hWindow) SetWindowPos((hWindow), \
+    NULL,0,0,0,0,SWP_HIDEWINDOW | SWP_NOACTIVATE | \
+    SWP_NOMOVE | SWP_NOREPOSITION | SWP_NOSIZE | SWP_NOZORDER)
+
 #endif /* _WGX_H_ */

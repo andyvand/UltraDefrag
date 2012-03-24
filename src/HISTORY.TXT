@@ -33,6 +33,7 @@
     - Windows Server 2003 DDK needs to be patched in order to compile
       the program; look at rsc/compilation.dox for details
     - device_capacity field added to winx_volume_information structure
+    - WgxShowWindow and WgxHideWindow definitions added to wgx.h file
 
 
   Version 5.0.4  2012-03-
