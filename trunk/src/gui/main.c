@@ -522,7 +522,18 @@ int CreateMainWindow(int nShowCmd)
     ApplyLanguagePack();
     BuildLanguageMenu();
     
-    /* show main window on the screen */
+    /*
+    * Show main window on the screen.
+    *
+    * The following sequence does the job fine,
+    * but causes a flicker, so we're using a dirty
+    * code here and trying then to avoid ShowWindow
+    * calls whenever possible instead.
+    *
+    * ShowWindow(hWindow,nShowCmd);
+    * if(init_maximized_window)
+    *     ShowWindow(hWindow,SW_MAXIMIZE);
+    */
     ShowWindow(hWindow,init_maximized_window ? SW_MAXIMIZE : nShowCmd);
     UpdateWindow(hWindow);
 
@@ -999,8 +1010,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_SHOWHIDE:
             if(IsWindowVisible(hWindow)){
-                ShowWindow(hWindow,SW_SHOW);
-                ShowWindow(hWindow,SW_HIDE);
+                WgxHideWindow(hWindow);
             } else {
                 ShowWindow(hWindow,maximized_window ? SW_MAXIMIZE : SW_RESTORE);
                 SetForegroundWindow(hWindow);
@@ -1105,10 +1115,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
-                if(minimize_to_system_tray){
-                    ShowWindow(hWindow,SW_SHOW);
-                    ShowWindow(hWindow,SW_HIDE);
-                }
+                if(minimize_to_system_tray)
+                    WgxHideWindow(hWindow);
                 SetEvent(hTaskbarIconEvent);
             }
         }
@@ -1145,8 +1153,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         case WM_LBUTTONUP:
             /* show / hide window */
             if(IsWindowVisible(hWindow)){
-                ShowWindow(hWindow,SW_SHOW);
-                ShowWindow(hWindow,SW_HIDE);
+                WgxHideWindow(hWindow);
             } else {
                 ShowWindow(hWindow,maximized_window ? SW_MAXIMIZE : SW_RESTORE);
                 SetForegroundWindow(hWindow);
