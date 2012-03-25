@@ -33,12 +33,17 @@
 /*
 * Fragment size threshold used in partial defragmentation.
 */
-#define PART_DEFRAG_MAGIC_CONSTANT (20 * 1024 * 1024)
+#define PART_DEFRAG_MAGIC_CONSTANT  (20 * 1024 * 1024)
 
 /*
 * Default file size threshold used in disk optimization.
 */
-#define OPTIMIZER_MAGIC_CONSTANT   (20 * 1024 * 1024)
+#define OPTIMIZER_MAGIC_CONSTANT    (20 * 1024 * 1024)
+
+/*
+* A magic constant for cut_off_group_of_files routine.
+*/
+#define OPTIMIZER_MAGIC_CONSTANT_2  10
 
 /************************************************************/
 /*                Prototypes, constants etc.                */
@@ -220,6 +225,7 @@ typedef struct _udefrag_job_parameters {
     struct prb_table *file_blocks;              /* pointer to binary tree of all file blocks found on the volume */
     struct file_counters f_counters;            /* file counters */
     NTSTATUS last_move_status;                  /* status of the last move file operation; zero by default */
+    ULONGLONG already_optimized_clusters;       /* number of clusters needing no sorting in optimization */
 } udefrag_job_parameters;
 
 int  get_options(udefrag_job_parameters *jp);
