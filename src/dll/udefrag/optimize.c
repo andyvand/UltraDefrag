@@ -24,6 +24,11 @@
  * @{
  */
 
+/*
+* Ideas by Dmitri Arkhangelski <dmitriar@gmail.com>
+* and Stefan Pendl <stefanpe@users.sourceforge.net>.
+*/
+
 #include "udefrag-internals.h"
 
 /************************************************************/
@@ -665,6 +670,148 @@ done:
 }
 
 /**
+ * @brief Marks group of files
+ * as already optimized.
+ */
+static void cut_off_group_of_files(udefrag_job_parameters *jp,
+    struct prb_table *pt,winx_file_info *first_file,ULONGLONG n,
+    ULONGLONG length)
+{
+    struct prb_traverser t;
+    winx_file_info *file;
+    
+    /* group should be larger than 20 Mb or should contain at least 10 files */
+    if(length * jp->v_info.bytes_per_cluster < OPTIMIZER_MAGIC_CONSTANT){
+        if(n < OPTIMIZER_MAGIC_CONSTANT_2)
+            return;
+    }
+    
+    prb_t_init(&t,pt);
+    file = prb_t_find(&t,pt,first_file);
+    while(file && n){
+        file->user_defined_flags |= UD_FILE_MOVED_TO_FRONT;
+        n --;
+        jp->already_optimized_clusters += file->disp.clusters;
+        file = prb_t_next(&t);
+    }
+    if(n > 0){
+        DebugPrint("cut_off_group_of_files: cannot find file in tree (case 1)");
+    }
+}
+
+/**
+ * @brief Marks all sorted out groups of
+ * files in the tree as already optimized.
+ */
+static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table *pt)
+{
+    struct prb_traverser t;
+    winx_file_info *file;
+    winx_file_info *first_file; /* first file of the group */
+    ULONGLONG n;                /* number of files in group */
+    ULONGLONG length;           /* length of the group, in clusters */
+    ULONGLONG pplcn;            /* LCN of (i - 2)-th file */
+    ULONGLONG plcn;             /* LCN of (i - 1)-th file */
+    ULONGLONG lcn;
+    ULONGLONG distance;
+    ULONGLONG file_length;
+    winx_file_info *prev_file;
+    #define INVALID_LCN ((ULONGLONG) -1)
+    int belongs_to_group;
+    ULONGLONG time;
+    char buffer[32];
+    
+    time = start_timing("cutting off sorted out files",jp);
+    jp->already_optimized_clusters = 0;
+    
+    /* select first not fragmented file */
+    prb_t_init(&t,pt);
+    file = prb_t_first(&t,pt);
+    while(file){
+        if(!is_fragmented(file)) break;
+        file = prb_t_next(&t);
+    }
+    if(file == NULL) goto done;
+
+    /* initialize group */
+    first_file = file;
+    n = 1;
+    length = file->disp.clusters;
+    pplcn = INVALID_LCN;
+    plcn = file->disp.blockmap->lcn;
+    prev_file = file;
+    
+    /* analyze subsequent files */
+    file = prb_t_next(&t);
+    while(file){
+        /* check whether the file is in group or not */
+        belongs_to_group = 1;
+        /* 1. the file must be not fragmented */
+        if(is_fragmented(file))
+            belongs_to_group = 0;
+        /* 2. the file must be beyond one of the preceding two files */
+        if(belongs_to_group){
+            if(pplcn != INVALID_LCN && plcn != INVALID_LCN){
+                lcn = file->disp.blockmap->lcn;
+                if(lcn < pplcn && lcn < plcn)
+                    belongs_to_group = 0;
+            }
+        }
+        /* 3. the file must be close to the preceding one */
+        if(belongs_to_group && plcn != INVALID_LCN){
+            lcn = file->disp.blockmap->lcn;
+            if(lcn < plcn){
+                distance = (plcn - lcn) * jp->v_info.bytes_per_cluster;
+                file_length = file->disp.clusters * jp->v_info.bytes_per_cluster;
+                if(distance > max(OPTIMIZER_MAGIC_CONSTANT,file_length))
+                    belongs_to_group = 0;
+            } else {
+                distance = (lcn - plcn) * jp->v_info.bytes_per_cluster;
+                file_length = prev_file->disp.clusters * jp->v_info.bytes_per_cluster;
+                if(distance > max(OPTIMIZER_MAGIC_CONSTANT,file_length))
+                    belongs_to_group = 0;
+            }
+        }
+        if(belongs_to_group){
+            n ++;
+            length += file->disp.clusters;
+            pplcn = plcn;
+            plcn = file->disp.blockmap->lcn;
+            prev_file = file;
+        } else {
+            if(n > 1){
+                /* remark all files in previous group */
+                cut_off_group_of_files(jp,pt,first_file,n,length);
+            }
+            /* reset group */
+            while(file){
+                if(!is_fragmented(file)) break;
+                file = prb_t_next(&t);
+            }
+            if(file == NULL) goto done;
+            first_file = file;
+            n = 1;
+            length = file->disp.clusters;
+            pplcn = INVALID_LCN;
+            plcn = file->disp.blockmap->lcn;
+            prev_file = file;
+        }
+        file = prb_t_next(&t);
+    }
+    
+    if(n > 1){
+        /* remark all files in group */
+        cut_off_group_of_files(jp,pt,first_file,n,length);
+    }
+
+done:
+    DebugPrint("%I64u clusters skipped",jp->already_optimized_clusters);
+    winx_bytes_to_hr(jp->already_optimized_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
+    DebugPrint("%s skipped",buffer);
+    stop_timing("cutting off sorted out files",time,jp);
+}
+
+/**
  * @brief Calculates number of allocated clusters
  * between start_lcn and the end of the disk.
  */
@@ -742,6 +889,11 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
             }
         }
         if(f->next == jp->filelist) break;
+    }
+    
+    if(jp->job_type == QUICK_OPTIMIZATION_JOB){
+        /* cut off already sorted out groups of files */
+        cut_off_sorted_out_files(jp,pt);
     }
     
     /* do the job */
