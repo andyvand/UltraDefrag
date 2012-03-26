@@ -695,7 +695,7 @@ static void cut_off_group_of_files(udefrag_job_parameters *jp,
         file = prb_t_next(&t);
     }
     if(n > 0){
-        DebugPrint("cut_off_group_of_files: cannot find file in tree (case 1)");
+        DebugPrint("cut_off_group_of_files: cannot find file in tree");
     }
 }
 
