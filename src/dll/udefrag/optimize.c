@@ -679,9 +679,11 @@ static void cut_off_group_of_files(udefrag_job_parameters *jp,
 {
     struct prb_traverser t;
     winx_file_info *file;
+    ULONGLONG magic_length;
     
     /* group should be larger than 20 Mb or should contain at least 10 files */
-    if(length * jp->v_info.bytes_per_cluster < OPTIMIZER_MAGIC_CONSTANT){
+    magic_length = min(OPTIMIZER_MAGIC_CONSTANT,jp->udo.optimizer_size_limit);
+    if(length * jp->v_info.bytes_per_cluster < magic_length){
         if(n < OPTIMIZER_MAGIC_CONSTANT_2)
             return;
     }
@@ -718,11 +720,13 @@ static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table
     winx_file_info *prev_file;
     #define INVALID_LCN ((ULONGLONG) -1)
     int belongs_to_group;
+    ULONGLONG magic_length;
     ULONGLONG time;
     char buffer[32];
     
     time = start_timing("cutting off sorted out files",jp);
     jp->already_optimized_clusters = 0;
+    magic_length = min(OPTIMIZER_MAGIC_CONSTANT,jp->udo.optimizer_size_limit);
     
     /* select first not fragmented file */
     prb_t_init(&t,pt);
@@ -763,14 +767,12 @@ static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table
             if(lcn < plcn){
                 distance = (plcn - lcn) * jp->v_info.bytes_per_cluster;
                 file_length = file->disp.clusters * jp->v_info.bytes_per_cluster;
-                if(distance > max(OPTIMIZER_MAGIC_CONSTANT,file_length))
-                    belongs_to_group = 0;
             } else {
                 distance = (lcn - plcn) * jp->v_info.bytes_per_cluster;
                 file_length = prev_file->disp.clusters * jp->v_info.bytes_per_cluster;
-                if(distance > max(OPTIMIZER_MAGIC_CONSTANT,file_length))
-                    belongs_to_group = 0;
             }
+            if(distance > max(magic_length,file_length))
+                belongs_to_group = 0;
         }
         if(belongs_to_group){
             n ++;
