@@ -588,7 +588,7 @@ char *udefrag_get_error_description(int error_code)
         return "UDF disks can neither be defragmented nor optimized,\n"
                "because the file system driver does not support FSCTL_MOVE_FILE.";
     case UDEFRAG_DIRTY_VOLUME:
-        return "Disk is dirty, run Check Disk to repair it.";
+        return "Disk is dirty, run CHKDSK to repair it.";
     }
     return "";
 }
