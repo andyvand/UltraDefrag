@@ -29,3 +29,8 @@ GUI Design Guideline links from Microsoft:
 
 Implementing a splitter bar
     http://www.catch22.net/tuts/splitter
+
+                                 ***
+
+All layers in multi-dimensional icons must have the same color depth
+to avoid scaling when icon of requested dimension already exists.
