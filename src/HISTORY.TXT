@@ -46,7 +46,7 @@
     - the following translations were updated:
 
       Korean, French (FR), Spanish (AR), Croatian, Spanish (MEX), Wáray-Wáray
-      
+
     - menu icons for high DPI screens were added
     - Internals: WgxSetTaskbarIconOverlay, WgxRemoveTaskbarIconOverlay,
       WgxLoadIcon and WgxGetTextDimensions routines added to wgx library
