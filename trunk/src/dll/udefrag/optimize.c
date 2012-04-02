@@ -684,7 +684,7 @@ static void cut_off_group_of_files(udefrag_job_parameters *jp,
     /* group should be larger than 20 Mb or should contain at least 10 files */
     magic_length = min(OPTIMIZER_MAGIC_CONSTANT,jp->udo.optimizer_size_limit);
     if(length * jp->v_info.bytes_per_cluster < magic_length){
-        if(n < OPTIMIZER_MAGIC_CONSTANT_2)
+        if(n < OPTIMIZER_MAGIC_CONSTANT_N)
             return;
     }
     
@@ -721,6 +721,7 @@ static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table
     #define INVALID_LCN ((ULONGLONG) -1)
     int belongs_to_group;
     ULONGLONG magic_length;
+    ULONGLONG second_magic_length;
     ULONGLONG time;
     char buffer[32];
     
@@ -771,7 +772,12 @@ static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table
                 distance = (lcn - plcn) * jp->v_info.bytes_per_cluster;
                 file_length = prev_file->disp.clusters * jp->v_info.bytes_per_cluster;
             }
-            if(distance > max(magic_length,file_length))
+            second_magic_length = file_length * OPTIMIZER_MAGIC_CONSTANT_M;
+            if(second_magic_length / OPTIMIZER_MAGIC_CONSTANT_M != file_length){
+                /* overflow occured */
+                second_magic_length = MAX_FILE_SIZE;
+            }
+            if(distance > max(magic_length,second_magic_length))
                 belongs_to_group = 0;
         }
         if(belongs_to_group){
