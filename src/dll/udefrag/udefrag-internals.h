@@ -31,19 +31,25 @@
 /************************************************************/
 
 /*
-* Fragment size threshold used in partial defragmentation.
+* Fragment size threshold for partial defragmentation.
 */
 #define PART_DEFRAG_MAGIC_CONSTANT  (20 * 1024 * 1024)
 
 /*
-* Default file size threshold used in disk optimization.
+* Default file size threshold for disk optimization.
 */
 #define OPTIMIZER_MAGIC_CONSTANT    (20 * 1024 * 1024)
 
 /*
 * A magic constant for cut_off_group_of_files routine.
 */
-#define OPTIMIZER_MAGIC_CONSTANT_2  10
+#define OPTIMIZER_MAGIC_CONSTANT_N  10
+
+/*
+* Another magic constant for
+* cut_off_sorted_out_files routine.
+*/
+#define OPTIMIZER_MAGIC_CONSTANT_M  1
 
 /************************************************************/
 /*                Prototypes, constants etc.                */
