@@ -628,7 +628,7 @@ static void InitImageList(void)
     } else {
         size = 32;
     }
-    hImgList = ImageList_Create(size,size,ILC_COLOR8,2,0);
+    hImgList = ImageList_Create(size,size,ILC_MASK,2,0);
     if(hImgList == NULL){
         WgxDbgPrintLastError("InitImageList: ImageList_Create failed");
     } else {
