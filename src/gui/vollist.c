@@ -396,6 +396,20 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
 }
 
 /**
+ * @brief Marks a volume as dirty.
+ */
+void MarkVolumeAsDirty(int index)
+{
+    LV_ITEMW lviw;
+
+    lviw.mask = LVIF_TEXT;
+    lviw.iItem = index;
+    lviw.iSubItem = 1;
+    lviw.pszText = L"Disk is dirty, run CHKDSK to repair it";
+    (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
+}
+
+/**
  * @brief Adds a single volume to the list.
  */
 static void VolListAddItem(int index, volume_info *v)
@@ -418,6 +432,7 @@ static void VolListAddItem(int index, volume_info *v)
 
     job = get_job(v->letter);
     VolListUpdateStatusFieldInternal(index,job);
+    if(v->is_dirty) MarkVolumeAsDirty(index);
     AddCapacityInformation(index,v);
 }
 

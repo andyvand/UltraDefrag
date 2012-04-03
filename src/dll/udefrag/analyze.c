@@ -145,6 +145,10 @@ int get_volume_information(udefrag_job_parameters *jp)
     /* update global variables holding drive geometry */
     if(winx_get_volume_information(jp->volume_letter,&jp->v_info) < 0)
         return (-1);
+    
+    /* don't touch dirty volumes */
+    if(jp->v_info.is_dirty)
+        return UDEFRAG_DIRTY_VOLUME;
 
     jp->pi.total_space = jp->v_info.total_bytes;
     jp->pi.free_space = jp->v_info.free_bytes;
@@ -857,8 +861,9 @@ int analyze(udefrag_job_parameters *jp)
     jp->pi.current_operation = VOLUME_ANALYSIS;
     
     /* update volume information */
-    if(get_volume_information(jp) < 0)
-        return (-1);
+    result = get_volume_information(jp);
+    if(result < 0)
+        return result;
     
     /* scan volume for free space areas */
     if(get_free_space_layout(jp) < 0)

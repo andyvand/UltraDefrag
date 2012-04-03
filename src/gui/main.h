@@ -169,6 +169,7 @@ void VolListUpdateStatusField(volume_processing_job *job);
 void VolListRefreshItem(volume_processing_job *job);
 void ReleaseVolList(void);
 void SelectAllDrives(void);
+void MarkVolumeAsDirty(int index);
 
 void InitMap(void);
 void RedrawMap(volume_processing_job *job, int map_refill_required);

@@ -201,7 +201,7 @@ static int internal_validate_volume(char volume_letter,int skip_removable,volume
     wcsncpy(v->label,volume_info.label,MAX_PATH);
     v->label[MAX_PATH] = 0;
     v->is_dirty = volume_info.is_dirty;
-    return v->is_dirty ? UDEFRAG_DIRTY_VOLUME : 0;
+    return 0;
 }
 
 /** @} */
