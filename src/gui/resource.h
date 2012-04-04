@@ -34,8 +34,10 @@
 
 #define IDI_FIXED                       129
 #define IDI_REMOVABLE                   130
+#define IDI_FIXED_DIRTY                 131
+#define IDI_REMOVABLE_DIRTY             132
 
-#define IDR_ACCELERATOR2                131
+#define IDR_ACCELERATOR2                135
 
 #define IDI_SHUTDOWN                    140
 #define IDI_BUSY                        145

@@ -275,9 +275,8 @@ static void ProcessSingleVolume(volume_processing_job *job)
         /* update dirty volume mark */
         index = get_job_index(job);
         if(index != -1){
-            if(udefrag_get_volume_information(job->volume_letter,&v) >= 0){
-                if(v.is_dirty) MarkVolumeAsDirty(index);
-            }
+            if(udefrag_get_volume_information(job->volume_letter,&v) >= 0)
+                SetVolumeDirtyStatus(index,&v);
         }
     }
 }
