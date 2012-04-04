@@ -529,6 +529,16 @@
  * @image html removable.png"
  * @htmlonly
  * </td></tr></table>
+ * <table style="border: none;">
+ * <tr><td>Dirty drives are marked by</td><td>
+ * @endhtmlonly
+ * @image html "fixed-dirty.png"
+ * @htmlonly
+ * </td><td>and</td><td>
+ * @endhtmlonly
+ * @image html removable-dirty.png"
+ * @htmlonly
+ * </td><td>, run CHKDSK to correct the problem.</td></tr></table>
  * @endhtmlonly
  *
  * @latexonly
@@ -537,6 +547,13 @@
  * \raisebox{-0.3\height}{\includegraphics{fixed.png}} &
  * , removable drives - by &
  * \raisebox{-0.3\height}{\includegraphics{removable.png}} \\
+ * \end{tabular}\par
+ * \par\begin{tabular}{lclcl}
+ * Dirty drives are marked by &
+ * \raisebox{-0.3\height}{\includegraphics{fixed-dirty.png}} &
+ * and &
+ * \raisebox{-0.3\height}{\includegraphics{removable-dirty.png}} &
+ * , run CHKDSK to correct the problem. \\
  * \end{tabular}\par
  * @endlatexonly
  *
