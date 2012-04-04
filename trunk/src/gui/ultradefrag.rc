@@ -32,6 +32,8 @@ IDI_CMP                 ICON    DISCARDABLE     "res/cmp.ico"
 IDI_MFT                 ICON    DISCARDABLE     "res/mft.ico"
 IDI_FIXED               ICON    DISCARDABLE     "res/fixed.ico"
 IDI_REMOVABLE           ICON    DISCARDABLE     "res/removable.ico"
+IDI_FIXED_DIRTY         ICON    DISCARDABLE     "res/fixed-dirty.ico"
+IDI_REMOVABLE_DIRTY     ICON    DISCARDABLE     "res/removable-dirty.ico"
 IDI_SHUTDOWN            ICON    DISCARDABLE     "res/shutdown.ico"
 IDB_ABOUTBOX_PICTURE    BITMAP  DISCARDABLE     "res/ship.bmp"
 

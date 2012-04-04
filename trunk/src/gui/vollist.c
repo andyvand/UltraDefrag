@@ -396,17 +396,24 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
 }
 
 /**
- * @brief Marks a volume as dirty.
+ * @brief Marks a volume as dirty or as clean.
  */
-void MarkVolumeAsDirty(int index)
+void SetVolumeDirtyStatus(int index, volume_info *v)
 {
     LV_ITEMW lviw;
 
-    lviw.mask = LVIF_TEXT;
     lviw.iItem = index;
     lviw.iSubItem = 1;
-    lviw.pszText = L"Disk is dirty, run CHKDSK to repair it";
-    (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
+    if(v->is_dirty){
+        lviw.mask = LVIF_TEXT | LVIF_IMAGE;
+        lviw.pszText = L"Disk is dirty, run CHKDSK to repair it";
+        lviw.iImage = v->is_removable ? 3 : 2;
+        (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
+    } else {
+        lviw.mask = LVIF_IMAGE;
+        lviw.iImage = v->is_removable ? 1 : 0;
+        (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
+    }
 }
 
 /**
@@ -427,12 +434,16 @@ static void VolListAddItem(int index, volume_info *v)
     lvi.iItem = index;
     lvi.iSubItem = 0;
     lvi.pszText = vname;
-    lvi.iImage = v->is_removable ? 1 : 0;
+    if(v->is_dirty == 0){
+        lvi.iImage = v->is_removable ? 1 : 0;
+    } else {
+        lvi.iImage = v->is_removable ? 3 : 2;
+    }
     (void)SendMessage(hList,LVM_INSERTITEMW,0,(LRESULT)&lvi);
 
     job = get_job(v->letter);
     VolListUpdateStatusFieldInternal(index,job);
-    if(v->is_dirty) MarkVolumeAsDirty(index);
+    SetVolumeDirtyStatus(index,v);
     AddCapacityInformation(index,v);
 }
 
@@ -617,6 +628,8 @@ static void InitImageList(void)
     int size;
     HICON hFixed = NULL;
     HICON hRemovable = NULL;
+    HICON hFixedDirty = NULL;
+    HICON hRemovableDirty = NULL;
 
     size = GetSystemMetrics(SM_CXSMICON);
     if(size < 20){
@@ -628,18 +641,25 @@ static void InitImageList(void)
     } else {
         size = 32;
     }
-    hImgList = ImageList_Create(size,size,ILC_MASK,2,0);
+    hImgList = ImageList_Create(size,size,ILC_MASK,4,0);
     if(hImgList == NULL){
         WgxDbgPrintLastError("InitImageList: ImageList_Create failed");
     } else {
-        if(WgxLoadIcon(hInstance,IDI_FIXED,size,&hFixed)){
-            if(WgxLoadIcon(hInstance,IDI_REMOVABLE,size,&hRemovable)){
-                ImageList_AddIcon(hImgList,hFixed);
-                ImageList_AddIcon(hImgList,hRemovable);
-                SendMessage(hList,LVM_SETIMAGELIST,LVSIL_SMALL,(LRESULT)hImgList);
-            } else {
-                DestroyIcon(hFixed);
-            }
+        WgxLoadIcon(hInstance,IDI_FIXED,size,&hFixed);
+        WgxLoadIcon(hInstance,IDI_REMOVABLE,size,&hRemovable);
+        WgxLoadIcon(hInstance,IDI_FIXED_DIRTY,size,&hFixedDirty);
+        WgxLoadIcon(hInstance,IDI_REMOVABLE_DIRTY,size,&hRemovableDirty);
+        if(hFixed && hRemovable && hFixedDirty && hRemovableDirty){
+            ImageList_AddIcon(hImgList,hFixed);
+            ImageList_AddIcon(hImgList,hRemovable);
+            ImageList_AddIcon(hImgList,hFixedDirty);
+            ImageList_AddIcon(hImgList,hRemovableDirty);
+            SendMessage(hList,LVM_SETIMAGELIST,LVSIL_SMALL,(LRESULT)hImgList);
+        } else {
+            if(hFixed) DestroyIcon(hFixed);
+            if(hRemovable) DestroyIcon(hRemovable);
+            if(hFixedDirty) DestroyIcon(hFixedDirty);
+            if(hRemovableDirty) DestroyIcon(hRemovableDirty);
         }
     }
 }
