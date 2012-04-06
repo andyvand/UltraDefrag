@@ -27,9 +27,10 @@ if %UD_BLD_FLG_DIPLAY_HELP% equ 1 (
     exit /B 0
 )
 
-:: delete all previously compiled files
-call :cleanup
-if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 exit /B 0
+if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 (
+    call :cleanup
+    exit /B 0
+)
 
 :: set environment
 call :set_build_environment
@@ -93,26 +94,38 @@ rem Sets environment for the build process.
         set UDEFRAG_PORTABLE=
     )
 
-    echo #define VERSION %VERSION% > .\include\ultradfgver.h
-    echo #define VERSION2 %VERSION2% >> .\include\ultradfgver.h
+    echo #define VERSION %VERSION% > .\include\ultradfgver.new
+    echo #define VERSION2 %VERSION2% >> .\include\ultradfgver.new
     if "%RELEASE_STAGE%" neq "" (
-        echo #define VERSIONINTITLE "UltraDefrag %ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.h
-        echo #define VERSIONINTITLE_PORTABLE "UltraDefrag %ULTRADFGVER% %RELEASE_STAGE% Portable" >> .\include\ultradfgver.h
-        echo #define ABOUT_VERSION "Ultra Defragmenter version %ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.h
+        echo #define VERSIONINTITLE "UltraDefrag %ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.new
+        echo #define VERSIONINTITLE_PORTABLE "UltraDefrag %ULTRADFGVER% %RELEASE_STAGE% Portable" >> .\include\ultradfgver.new
+        echo #define ABOUT_VERSION "Ultra Defragmenter version %ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.new
     ) else (
-        echo #define VERSIONINTITLE "UltraDefrag %ULTRADFGVER%" >> .\include\ultradfgver.h
-        echo #define VERSIONINTITLE_PORTABLE "UltraDefrag %ULTRADFGVER% Portable" >> .\include\ultradfgver.h
-        echo #define ABOUT_VERSION "Ultra Defragmenter version %ULTRADFGVER%" >> .\include\ultradfgver.h
+        echo #define VERSIONINTITLE "UltraDefrag %ULTRADFGVER%" >> .\include\ultradfgver.new
+        echo #define VERSIONINTITLE_PORTABLE "UltraDefrag %ULTRADFGVER% Portable" >> .\include\ultradfgver.new
+        echo #define ABOUT_VERSION "Ultra Defragmenter version %ULTRADFGVER%" >> .\include\ultradfgver.new
     )
     
     rem remove preview menu for release candidates
-    if /I "%RELEASE_STAGE:~0,2%" equ "RC" echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.h
+    if /I "%RELEASE_STAGE:~0,2%" equ "RC" echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.new
     rem remove preview menu for final release
-    if "%RELEASE_STAGE%" equ "" echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.h
+    if "%RELEASE_STAGE%" equ "" echo #define _UD_HIDE_PREVIEW_ >> .\include\ultradfgver.new
+    
+    rem update ultradfgver.h only when something
+    rem changed to speed incremental compilation up
+    fc .\include\ultradfgver.new .\include\ultradfgver.h >nul
+    if errorlevel 1 move /Y .\include\ultradfgver.new .\include\ultradfgver.h
+    del /q .\include\ultradfgver.new
 
     rem force zenwinx version to be the same as ultradefrag version
-    echo #define ZENWINX_VERSION %VERSION% > .\dll\zenwinx\zenwinxver.h
-    echo #define ZENWINX_VERSION2 %VERSION2% >> .\dll\zenwinx\zenwinxver.h
+    echo #define ZENWINX_VERSION %VERSION% > .\dll\zenwinx\zenwinxver.new
+    echo #define ZENWINX_VERSION2 %VERSION2% >> .\dll\zenwinx\zenwinxver.new
+
+    rem update zenwinxver.h only when something
+    rem changed to speed incremental compilation up
+    fc .\dll\zenwinx\zenwinxver.new .\dll\zenwinx\zenwinxver.h >nul
+    if errorlevel 1 move /Y .\dll\zenwinx\zenwinxver.new .\dll\zenwinx\zenwinxver.h
+    del /q .\dll\zenwinx\zenwinxver.new
 goto :EOF
 
 rem Synopsis: call :build_installer {path to binaries} {arch}

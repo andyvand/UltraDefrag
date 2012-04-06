@@ -27,6 +27,7 @@ mkdir release
 call build-src-package.cmd || goto build_failed
 copy .\src_package\ultradefrag-%UDVERSION_SUFFIX%.src.7z .\release\
 
+call build.cmd --clean
 call build.cmd --all --use-winddk || goto build_failed
 
 :: copy all packages to the release directory

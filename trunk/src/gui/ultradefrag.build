@@ -11,6 +11,9 @@ src = {
 }
 rc = { "ultradefrag.rc" }
 
+-- list of directories containing headers the program relies on
+includes = { "gui", "include", "lua5.1", "udefrag", "wgx" }
+
 libs = {
     "kernel32", "user32", "gdi32", "comctl32",
     "shell32", "msvcrt", "comdlg32", "advapi32",
