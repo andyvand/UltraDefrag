@@ -35,7 +35,7 @@
     - WgxShowWindow and WgxHideWindow definitions added to wgx.h file
 
 
-  Version 5.0.4  2012-03-
+  Version 5.0.4  2012-04-07
   ------------------------------------------------------------------------------
     - dirty volumes needing CHKDSK repair were returned
       to the drives list with a special mark in their status field
