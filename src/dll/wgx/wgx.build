@@ -11,6 +11,9 @@ src = {
 
 rc = { "wgx.rc" }
 
+-- list of directories containing headers the library relies on
+includes = { "include", "lua5.1", "wgx" }
+
 deffile  = "wgx.def"
 -- we never use __stdcall convention
 mingw_deffile  = "wgx.def"

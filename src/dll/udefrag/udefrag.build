@@ -11,6 +11,9 @@ src = {
 
 rc = { "udefrag.rc" }
 
+-- list of directories containing headers the library relies on
+includes = { "include", "udefrag", "zenwinx" }
+
 deffile  = "udefrag.def"
 -- we never use __stdcall convention
 mingw_deffile  = "udefrag.def"
