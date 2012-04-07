@@ -3,8 +3,8 @@
 name        = "lua5.1a_gui"
 target_type = "gui"
 
-src = { "lua_gui.c" }
-rc = { "lua_gui.rc" }
+src = { "lua-gui.c" }
+rc = { "lua-gui.rc" }
 
 -- list of directories containing headers the program relies on
 includes = { "include", "lua5.1" }

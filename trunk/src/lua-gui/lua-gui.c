@@ -1,7 +1,7 @@
 /*
 ** Simple Lua interpreter with graphical interface.
 ** Based on Lua stand-alone interpreter source code.
-** See Copyright Notice in lua.h
+** See Copyright Notice in ../lua5.1/lua.h
 */
 
 /* Modified by dmitriar: interactive mode removed; MessageBox added */
@@ -16,10 +16,10 @@
 
 #define lua_c
 
-#include "lua.h"
+#include "../lua5.1/lua.h"
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include "../lua5.1/lauxlib.h"
+#include "../lua5.1/lualib.h"
 
 
 static lua_State *globalL = NULL;

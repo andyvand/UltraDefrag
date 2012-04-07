@@ -66,6 +66,8 @@ xcopy .\gui\res     .\obj\gui\res    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\hibernate   .\obj\hibernate  /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\include     .\obj\include    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\lua5.1      .\obj\lua5.1     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\lua         .\obj\lua        /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\lua-gui     .\obj\lua-gui    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\native      .\obj\native     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\share       .\obj\share      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 
@@ -97,6 +99,8 @@ copy /Y .\headers .\zenwinx    || exit /B 1
 copy /Y .\headers .\gui        || exit /B 1
 copy /Y .\headers .\hibernate  || exit /B 1
 copy /Y .\headers .\lua5.1     || exit /B 1
+copy /Y .\headers .\lua        || exit /B 1
+copy /Y .\headers .\lua-gui    || exit /B 1
 copy /Y .\headers .\native     || exit /B 1
 cd ..
 
@@ -321,14 +325,11 @@ exit /B 0
     )
 
     cd ..\lua5.1
-    :: _objects.mac needs to be recompiled because
-    :: three different modules share a single directory
-    del /s /q _objects.mac
-    %UD_BUILD_TOOL% lua5.1a_dll.build || goto fail
-    del /s /q _objects.mac
-    %UD_BUILD_TOOL% lua5.1a_exe.build || goto fail
-    del /s /q _objects.mac
-    %UD_BUILD_TOOL% lua5.1a_gui.build || goto fail
+    %UD_BUILD_TOOL% lua.build || goto fail
+    cd ..\lua
+    %UD_BUILD_TOOL% lua.build || goto fail
+    cd ..\lua-gui
+    %UD_BUILD_TOOL% lua-gui.build || goto fail
 
     rem workaround for WDK 6 and above
     if "%UD_DDK_VER%" NEQ "3790" (
