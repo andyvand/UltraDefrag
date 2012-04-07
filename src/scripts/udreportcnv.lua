@@ -275,24 +275,13 @@ function write_main_table(f)
 end
 
 function build_text_report()
-    local filename
-    local pos = 0
-
-    repeat
-        pos = string.find(report_path,"\\",pos + 1,true)
-        if pos == nil then filename = "fraglist.txt" ; break end
-    until string.find(report_path,"\\",pos + 1,true) == nil
-    filename = string.sub(report_path,1,pos) .. "fraglist.txt"
-
-    -- note that 'b' flag is needed for utf-16 files
-    local f = assert(io.open(filename,"wb"))
-
-    -- write the header
-    write_text_header(f)
+    local filename, f
     
-    -- write the main table
+    filename = string.gsub(report_path,"%.luar$","%.txt")
+    -- note that 'b' flag is needed for utf-16 files
+    f = assert(io.open(filename,"wb"))
+    write_text_header(f)
     write_main_table(f)
-
     f:close()
     return filename
 end
@@ -394,9 +383,7 @@ function get_javascript()
 end
 
 function get_css()
-    local css = ""
-    local custom_css = ""
-    local f
+    local f, css = "", custom_css = ""
 
     -- read udreport.css file contents
     f = assert(io.open(instdir .. "\\scripts\\udreport.css", "r"))
@@ -468,15 +455,9 @@ end
 
 function build_html_report()
     local filename
-    local pos = 0
     local js, css
 
-    repeat
-        pos = string.find(report_path,"\\",pos + 1,true)
-        if pos == nil then filename = "fraglist.html" ; break end
-    until string.find(report_path,"\\",pos + 1,true) == nil
-    filename = string.sub(report_path,1,pos) .. "fraglist.html"
-
+    filename = string.gsub(report_path,"%.luar$","%.html")
     -- note that 'b' flag is needed for utf-16 files
     local f = assert(io.open(filename,"wb"))
 

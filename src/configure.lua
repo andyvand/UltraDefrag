@@ -51,22 +51,14 @@ winsdkbase = ""
 
 show_obsolete_options = 0
 
-if arg[1] ~= nil then
-    if arg[1] == "--all" then
-        show_obsolete_options = 1
-    end
+if arg[1] == "--all" then
+    show_obsolete_options = 1
 end
 
--- make a backup copy of the file
--- f = assert(io.open("./SETVARS.BK","w"))
-
--- get parameters from SETVARS.CMD file
-for line in io.lines("./SETVARS.CMD") do
-    -- f:write(line,"\n")
-    -- split line to a name-value pair
+-- get parameters from setvars.cmd file
+for line in io.lines("setvars.cmd") do
+    -- split line to name-value pair
     for k, v in string.gmatch(line,"(.+)=(.+)") do
-        -- print(k, v)
-        -- f:write(k,"=",v,"\n")
         if string.find(k, "ULTRADFGVER") then udver = v
         elseif string.find(k, "RELEASE_STAGE") then stage = v
         elseif string.find(k, "WINDDKBASE") then ddkbase = v
@@ -78,8 +70,6 @@ for line in io.lines("./SETVARS.CMD") do
         end
     end
 end
-
--- f:close()
 
 function param_action(dialog, param_index)
     if param_index == -2 then
@@ -142,7 +132,7 @@ else
 end
 if ret == 1 then
     -- save options
-    f = assert(io.open("./SETVARS.CMD","w"))
+    f = assert(io.open("setvars.cmd","w"))
     f:write("@echo off\necho Set common environment variables...\n")
     for i, j, k in string.gmatch(udver,"(%d+).(%d+).(%d+)") do
         f:write("set VERSION=", i, ",", j, ",", k, ",0\n")
@@ -164,7 +154,7 @@ if ret == 1 then
     f:write("set NSISDIR=", nsisroot, "\n")
     f:write("set SEVENZIP_PATH=", ziproot, "\n")
     f:close()
-    print("SETVARS.CMD script was successfully updated.")
+    print("setvars.cmd script was updated successfully.")
     if apply_patch == 1 then
         print("Apply MinGW patch option was selected.")
         if os.execute("cmd.exe /C .\\dll\\zenwinx\\mingw_patch.cmd " .. mingwbase) ~= 0 then
