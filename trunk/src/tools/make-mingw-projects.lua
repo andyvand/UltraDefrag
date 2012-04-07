@@ -121,18 +121,45 @@ function expand (s)
 end
 
 function build_project_file(path)
-    local f, line
+    local f, line, files, search_path
 
     i, j, name = string.find(path,"^.*\\(.-)$")
     if name == nil then name = path end
     print(name .. " Preparing the project file generation...")
 
-    name, deffile, mingw_deffile = "", "", ""
-    src, rc, libs, adlibs = {}, {}, {}, {}
-    target_type = ""
+    name, target_type = "", ""
+    libs, adlibs = {}, {}
     nativedll = 0
     mingw_project_rules = nil
     dofile(path)
+
+    i, j, search_path = string.find(path,"^(.*)\\.-$")
+    if search_path == nil then search_path = "" end
+    if os.execute("cmd.exe /C dir /B " .. search_path .. "\\*.* >project_files") ~= 0 then
+        error("Cannot get directory listing!")
+    end
+    f = assert(io.open("project_files","rt"))
+    files = {}
+    for line in f:lines() do
+        table.insert(files,line)
+    end
+    f:close()
+    os.execute("cmd.exe /C del /Q project_files")
+    assert(files[1],"No project files found!")
+    
+    -- search for .def files
+    deffile, mingw_deffile = "", ""
+    for i, def in ipairs(files) do
+        if string.find(def,"%.def$") then
+            if string.find(def,"mingw%.def$") then
+                mingw_deffile = def
+            else
+                deffile = def
+            end
+        end
+    end
+    if deffile == "" then deffile = mingw_deffile end
+    if mingw_deffile == "" then mingw_deffile = deffile end
 
     if target_type == "console" or target_type == "gui" or target_type == "native" then
         target_ext = "exe"
@@ -203,9 +230,12 @@ function build_project_file(path)
         ignoreStartupFile = 1
         ignoreDefaultLibs = 1
     end
+
+    adsources = nil
     if mingw_project_rules ~= nil then
         mingw_project_rules()
     end
+
     f:write(expand(debug_section))
 
     dbg_linker_opts = ""
@@ -225,43 +255,51 @@ function build_project_file(path)
     f:write(expand(release_section))
 
     f:write("[Source]\n")
-    for i, v in ipairs(src) do
-        if string.find(v,"getopt") == nil then
-            f:write(i, "=", v, "\n")
-        else
-            f:write(i, "=..\\share\\", v, "\n")
+    index = 1
+    for i, v in ipairs(files) do
+        if string.find(v,"%.c$") then
+            if string.find(v,"getopt") == nil then
+                f:write(index, "=", v, "\n")
+            else
+                f:write(index, "=..\\share\\", v, "\n")
+            end
+            index = index + 1
+        end
+    end
+    if adsources ~= nil then
+        for i, v in ipairs(adsources) do
+            f:write(index, "=", v, "\n")
+            index = index + 1
         end
     end
 
     f:write("[Header]\n")
     index = 1
-    i, j, path = string.find(path,"^(.*)\\.-$")
-    if path == nil then path = "" end
-    os.execute("cmd.exe /C dir /B " .. path .. "\\*.h >headers")
-    h = io.open("headers","rt")
-    if h ~= nil then
-        for line in h:lines() do
-            f:write(index, "=", line, "\n")
+    for i, v in ipairs(files) do
+        if string.find(v,"%.h$") then
+            f:write(index, "=", v, "\n")
             index = index + 1
         end
-        h:close()
-        os.execute("cmd.exe /C del /Q headers")
     end
 
     f:write("[Resource]\n")
-    for i, v in ipairs(rc) do
-        f:write(i, "=", v, "\n")
+    index = 1
+    for i, v in ipairs(files) do
+        if string.find(v,"%.rc$") then
+            f:write(index, "=", v, "\n")
+            index = index + 1
+        end
     end
 
     f:write("[Other]\n")
-    i = 1
+    index = 1
     if deffile ~= "" then
-        f:write(i, "=", deffile, "\n")
-        i = i + 1
+        f:write(index, "=", deffile, "\n")
+        index = index + 1
     end
     if mingw_deffile ~= deffile then
-        f:write(i, "=", mingw_deffile, "\n")
-        i = i + 1
+        f:write(index, "=", mingw_deffile, "\n")
+        index = index + 1
     end
 
     f:write("[History]\n")

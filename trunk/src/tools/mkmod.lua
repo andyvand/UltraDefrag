@@ -34,14 +34,15 @@
     * kernel mode driver cannot be compiled
 
   If some library exports functions of __stdcall calling convention
-  the mingw_deffile variable should point to a separate file
-  containing names decorated by at signs and number of bytes needed
-  to pass all the parameters on a 32-bit machine.
+  a *mingw.def file must be presented; it must contain names 
+  decorated by at signs and number of bytes needed to pass all 
+  the parameters on a 32-bit machine.
 --]]
 
 name, deffile, mingw_deffile, baseaddr, nativedll, umentry = "", "", "", "", 0, ""
 src, rc, includes, libs, adlibs = {}, {}, {}, {}, {}
 
+files = {}
 headers = {}
 inc = {}
 
@@ -645,6 +646,41 @@ dofile(input_filename)
 if arg[2] ~= nil then
     if arg[2] == "static-lib" then
         static_lib = 1
+    end
+end
+
+if os.execute("cmd.exe /C dir /B >project_files") ~= 0 then
+    error("Cannot get directory listing!")
+end
+f = assert(io.open("project_files","rt"))
+files = {}
+for line in f:lines() do
+    table.insert(files,line)
+end
+f:close()
+os.execute("cmd.exe /C del /Q project_files")
+assert(files[1],"No project files found!")
+
+-- search for .def files
+deffile, mingw_deffile = "", ""
+for i, def in ipairs(files) do
+    if string.find(def,"%.def$") then
+        if string.find(def,"mingw%.def$") then
+            mingw_deffile = def
+        else
+            deffile = def
+        end
+    end
+end
+if deffile == "" then deffile = mingw_deffile end
+if mingw_deffile == "" then mingw_deffile = deffile end
+
+-- setup src and rc tables
+for i, v in ipairs(files) do
+    if string.find(v,"%.c$") then
+        table.insert(src,v)
+    elseif string.find(v,"%.rc$") then
+        table.insert(rc,v)
     end
 end
 
