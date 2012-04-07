@@ -35,6 +35,11 @@
     - WgxShowWindow and WgxHideWindow definitions added to wgx.h file
 
 
+  Version 5.0.5  2012-04-
+  ------------------------------------------------------------------------------
+    - Internals: make-mingw-projects.lua script added
+
+
   Version 5.0.4  2012-04-07
   ------------------------------------------------------------------------------
     - dirty volumes needing CHKDSK repair were returned

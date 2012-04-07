@@ -19,3 +19,7 @@ adlibs = {
 }
 
 umentry = "main"
+
+function mingw_project_rules()
+    output_dir = "../obj/console"
+end

@@ -14,3 +14,7 @@ adlibs = {
     "$(UDEFRAG_LIB_PATH)\\zenwinx",
     "$(UDEFRAG_LIB_PATH)\\udefrag"
 }
+
+function mingw_project_rules()
+    output_dir = "../obj/native"
+end
