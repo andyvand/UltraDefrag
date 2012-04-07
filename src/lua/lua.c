@@ -1,7 +1,7 @@
 /*
 ** $Id: lua.c,v 1.160 2006/06/02 15:34:00 roberto Exp $
 ** Lua stand-alone interpreter
-** See Copyright Notice in lua.h
+** See Copyright Notice in ../lua5.1/lua.h
 */
 
 /* Modified by dmitriar: __cdecl conventions were added to be compatible with win ddk. */
@@ -13,10 +13,10 @@
 
 #define lua_c
 
-#include "lua.h"
+#include "../lua5.1/lua.h"
 
-#include "lauxlib.h"
-#include "lualib.h"
+#include "../lua5.1/lauxlib.h"
+#include "../lua5.1/lualib.h"
 
 
 static lua_State *globalL = NULL;
