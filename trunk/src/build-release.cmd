@@ -21,13 +21,14 @@
 :: Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ::
 
+call build.cmd --clean
+
 rd /s /q release
 mkdir release
 
 call build-src-package.cmd || goto build_failed
 copy .\src_package\ultradefrag-%UDVERSION_SUFFIX%.src.7z .\release\
 
-call build.cmd --clean
 call build.cmd --all --use-winddk || goto build_failed
 
 :: copy all packages to the release directory
