@@ -26,3 +26,7 @@ adlibs = {
 }
 
 umentry = "winmain"
+
+function mingw_project_rules()
+    output_dir = "../obj/gui"
+end
