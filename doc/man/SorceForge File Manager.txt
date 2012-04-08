@@ -1,0 +1,11 @@
+
+The SF.net File Manager is explained at
+http://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download
+
+Hints for the current folder and its containing folders are contained in a ReadMe file.
+See http://sourceforge.net/p/forge/documentation/Files-Readme/
+
+We use the Markdown language to format the text.
+See http://daringfireball.net/projects/markdown/syntax
+
+A free, online WYSIWYG editor is available at http://dillinger.io/
