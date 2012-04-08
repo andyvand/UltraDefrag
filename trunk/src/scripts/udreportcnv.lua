@@ -383,7 +383,8 @@ function get_javascript()
 end
 
 function get_css()
-    local f, css = "", custom_css = ""
+    local f, css = ""
+    local custom_css = ""
 
     -- read udreport.css file contents
     f = assert(io.open(instdir .. "\\scripts\\udreport.css", "r"))
