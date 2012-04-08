@@ -504,7 +504,7 @@ int CreateMainWindow(int nShowCmd)
 
     /* maximize window if required */
     if(init_maximized_window)
-        SendMessage(hWindow,(WM_USER + 1),0,0);
+        SendMessage(hWindow,WM_MAXIMIZE_MAIN_WINDOW,0,0);
     
     /* resize controls */
     ResizeMainWindow(1);
@@ -1141,7 +1141,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         if(!maximized_window && !size_changed)
             memcpy((void *)&r_rc,(void *)&win_rc,sizeof(RECT));
         return 0;
-    case (WM_USER + 1):
+    case WM_MAXIMIZE_MAIN_WINDOW:
         /* maximize window */
         ShowWindow(hWnd,SW_MAXIMIZE);
         return 0;
