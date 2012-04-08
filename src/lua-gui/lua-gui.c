@@ -60,7 +60,11 @@ static void print_usage (void) {
 static void l_message (const char *pname, const char *msg) {
   if(silent_mode) return;
   if (!pname) pname = "Lua GUI";
-  MessageBox(0,msg,pname,MB_OK);
+  /*
+  * MB_TOPMOST and MB_SETFOREGROUND flags are needed 
+  * for UltraDefrag GUI options verification.
+  */
+  MessageBox(0,msg,pname,MB_OK | MB_TOPMOST | MB_SETFOREGROUND);
 }
 
 

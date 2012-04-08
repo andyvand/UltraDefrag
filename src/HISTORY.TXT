@@ -37,6 +37,7 @@
 
   Version 5.0.5  2012-04-
   ------------------------------------------------------------------------------
+    - GUI options verification was added
     - Internals: make-mingw-projects.lua script added
 
 
