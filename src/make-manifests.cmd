@@ -31,7 +31,8 @@ call :make_manifest %1 1.0.0.0          hibernate    "Hibernate for Windows"    
 call :make_manifest %1 %ULTRADFGVER%.0  udefrag      "UltraDefrag console interface" >.\obj\console\defrag.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  ultradefrag  "UltraDefrag GUI"               >.\obj\gui\res\ultradefrag.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  bootexctrl   "BootExecute Control Program"   >.\obj\bootexctrl\bootexctrl.manifest
-call :make_manifest %1 5.1.2.0          Lua          "Lua Console"                   >.\obj\lua5.1\lua.manifest
+call :make_manifest %1 5.1.2.0          Lua          "Lua Console"                   >.\obj\lua\lua.manifest
+call :make_manifest %1 5.1.2.0          Lua          "Lua GUI"                       >.\obj\lua-gui\lua.manifest
 
 rem update manifests in working copy of sources
 if /i "%1" equ "X86" (
@@ -39,8 +40,8 @@ if /i "%1" equ "X86" (
     copy /Y .\obj\console\defrag.manifest .\console\defrag.manifest
     copy /Y .\obj\gui\res\ultradefrag.manifest .\gui\res\ultradefrag.manifest
     copy /Y .\obj\bootexctrl\bootexctrl.manifest .\bootexctrl\bootexctrl.manifest
-    copy /Y .\obj\lua5.1\lua.manifest .\lua5.1\lua.manifest
-    rem copy /Y .\obj\utf8-16\utf8-16.manifest .\utf8-16\utf8-16.manifest
+    copy /Y .\obj\lua\lua.manifest .\lua\lua.manifest
+    copy /Y .\obj\lua-gui\lua.manifest .\lua-gui\lua.manifest
 )
 exit /B 0
 
