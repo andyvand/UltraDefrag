@@ -367,7 +367,7 @@ function write_file_status(f,file)
 end
 
 function get_javascript()
-    local js = "", f
+    local f, js = ""
     if(enable_sorting == 1) then
         -- read udsorting.js file contents
         f = assert(io.open(instdir .. "\\scripts\\udsorting.js", "r"))
