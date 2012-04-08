@@ -270,6 +270,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     int s_list_height;
     int s_show_taskbar_icon_overlay;
     int s_minimize_to_system_tray;
+    ULONGLONG counter = 0;
     
     h = FindFirstChangeNotification(".\\options",
             FALSE,FILE_NOTIFY_CHANGE_LAST_WRITE);
@@ -282,81 +283,97 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     while(!stop_track_changes){
         status = WaitForSingleObject(h,100);
         if(status == WAIT_OBJECT_0){
-            /* synchronize preferences reload with map redraw */
-            if(WaitForSingleObject(hMapEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hMapEvent failed");
+            if(counter % 2 == 0){
+                /*
+                * Do nothing, since
+                * "If a change occurs after a call 
+                * to FindFirstChangeNotification but
+                * before a call to FindNextChangeNotification,
+                * the operating system records the change.
+                * When FindNextChangeNotification is executed,
+                * the recorded change immediately satisfies 
+                * a wait for the change notification." (MSDN)
+                * And so on... it happens between
+                * FindNextChangeNotification calls too.
+                */
             } else {
-                /* save state */
-                memcpy(&rc,&r_rc,sizeof(RECT));
-                s_maximized = maximized_window;
-                s_init_maximized = init_maximized_window;
-                s_skip_removable = skip_removable;
-                s_repeat_action = repeat_action;
-                memcpy(&cw,&user_defined_column_widths,sizeof(user_defined_column_widths));
-                s_list_height = list_height;
-                s_job_flags = job_flags;
-                s_show_taskbar_icon_overlay = show_taskbar_icon_overlay;
-                s_minimize_to_system_tray = minimize_to_system_tray;
-                
-                /* reload preferences */
-                GetPrefs();
-                
-                /* restore state */
-                memcpy(&r_rc,&rc,sizeof(RECT));
-                maximized_window = s_maximized;
-                init_maximized_window = s_init_maximized;
-                skip_removable = s_skip_removable;
-                repeat_action = s_repeat_action;
-                memcpy(&user_defined_column_widths,&cw,sizeof(user_defined_column_widths));
-                list_height = s_list_height;
-                job_flags = s_job_flags;
-                
-                SetEvent(hMapEvent);
-
-                if(dry_run == 0){
-                    if(portable_mode) SetWindowText(hWindow,VERSIONINTITLE_PORTABLE);
-                    else SetWindowText(hWindow,VERSIONINTITLE);
+                /* synchronize preferences reload with map redraw */
+                if(WaitForSingleObject(hMapEvent,INFINITE) != WAIT_OBJECT_0){
+                    WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hMapEvent failed");
                 } else {
-                    if(portable_mode) SetWindowText(hWindow,VERSIONINTITLE_PORTABLE " (dry run)");
-                    else SetWindowText(hWindow,VERSIONINTITLE " (dry run)");
-                }
-
-                /* if block size or grid line width changed since last redraw, resize map */
-                if(map_block_size != last_block_size  || grid_line_width != last_grid_width){
-                    ResizeMap(last_x,last_y,last_width,last_height);
-                    InvalidateRect(hMap,NULL,TRUE);
-                    UpdateWindow(hMap);
-                } else {
-                    /* redraw map if grid color changed */
-                    RedrawMap(current_job,0);
-                }
-                
-                /* handle show_taskbar_icon_overlay and minimize_to_system_tray options adjustment */
-                if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                    WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
-                } else {
-                    if(show_taskbar_icon_overlay != s_show_taskbar_icon_overlay){
-                        if(show_taskbar_icon_overlay && job_is_running)
-                            SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
-                        else
-                            RemoveTaskbarIconOverlay();
+                    /* save state */
+                    memcpy(&rc,&r_rc,sizeof(RECT));
+                    s_maximized = maximized_window;
+                    s_init_maximized = init_maximized_window;
+                    s_skip_removable = skip_removable;
+                    s_repeat_action = repeat_action;
+                    memcpy(&cw,&user_defined_column_widths,sizeof(user_defined_column_widths));
+                    s_list_height = list_height;
+                    s_job_flags = job_flags;
+                    s_show_taskbar_icon_overlay = show_taskbar_icon_overlay;
+                    s_minimize_to_system_tray = minimize_to_system_tray;
+                    
+                    /* reload preferences */
+                    GetPrefs();
+                    
+                    /* restore state */
+                    memcpy(&r_rc,&rc,sizeof(RECT));
+                    maximized_window = s_maximized;
+                    init_maximized_window = s_init_maximized;
+                    skip_removable = s_skip_removable;
+                    repeat_action = s_repeat_action;
+                    memcpy(&user_defined_column_widths,&cw,sizeof(user_defined_column_widths));
+                    list_height = s_list_height;
+                    job_flags = s_job_flags;
+                    
+                    SetEvent(hMapEvent);
+    
+                    if(dry_run == 0){
+                        if(portable_mode) SetWindowText(hWindow,VERSIONINTITLE_PORTABLE);
+                        else SetWindowText(hWindow,VERSIONINTITLE);
+                    } else {
+                        if(portable_mode) SetWindowText(hWindow,VERSIONINTITLE_PORTABLE " (dry run)");
+                        else SetWindowText(hWindow,VERSIONINTITLE " (dry run)");
                     }
-                    if(minimize_to_system_tray != s_minimize_to_system_tray){
-                        if(IsIconic(hWindow)){
-                            if(minimize_to_system_tray)
-                                WgxHideWindow(hWindow);
+    
+                    /* if block size or grid line width changed since last redraw, resize map */
+                    if(map_block_size != last_block_size  || grid_line_width != last_grid_width){
+                        ResizeMap(last_x,last_y,last_width,last_height);
+                        InvalidateRect(hMap,NULL,TRUE);
+                        UpdateWindow(hMap);
+                    } else {
+                        /* redraw map if grid color changed */
+                        RedrawMap(current_job,0);
+                    }
+                    
+                    /* handle show_taskbar_icon_overlay and minimize_to_system_tray options adjustment */
+                    if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+                        WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
+                    } else {
+                        if(show_taskbar_icon_overlay != s_show_taskbar_icon_overlay){
+                            if(show_taskbar_icon_overlay && job_is_running)
+                                SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
                             else
-                                WgxShowWindow(hWindow);
+                                RemoveTaskbarIconOverlay();
                         }
-                        /* set/remove notification area icon */
-                        if(minimize_to_system_tray)
-                            ShowSystemTrayIcon(NIM_ADD);
-                        else
-                            HideSystemTrayIcon();
+                        if(minimize_to_system_tray != s_minimize_to_system_tray){
+                            if(IsIconic(hWindow)){
+                                if(minimize_to_system_tray)
+                                    WgxHideWindow(hWindow);
+                                else
+                                    WgxShowWindow(hWindow);
+                            }
+                            /* set/remove notification area icon */
+                            if(minimize_to_system_tray)
+                                ShowSystemTrayIcon(NIM_ADD);
+                            else
+                                HideSystemTrayIcon();
+                        }
+                        SetEvent(hTaskbarIconEvent);
                     }
-                    SetEvent(hTaskbarIconEvent);
                 }
             }
+            counter ++;
             /* wait for the next notification */
             if(!FindNextChangeNotification(h)){
                 WgxDbgPrintLastError("PrefsChangesTrackingProc: FindNextChangeNotification failed");
