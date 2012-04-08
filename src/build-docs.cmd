@@ -23,6 +23,8 @@
 echo Build UltraDefrag development docs...
 echo.
 
+call ParseCommandLine.cmd %*
+
 :: set environment variables if they aren't already set
 if "%ULTRADFGVER%" equ "" (
     call setvars.cmd
@@ -39,11 +41,13 @@ call :compile_docs .\dll\zenwinx                     || goto fail
 call :compile_docs ..\doc\html\handbook              || goto fail
 
 :: compile PDF documentation if MiKTeX is installed
-pdflatex --version >nul 2>&1
-if not errorlevel 1 (
-    mkdir .\release
-    call :compile_pdf ..\doc\html\handbook a4     UltraDefrag_Handbook || goto fail
-    call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook || goto fail
+if "%UD_BLD_FLG_BUILD_PDF%" == "1" (
+    pdflatex --version >nul 2>&1
+    if not errorlevel 1 (
+        mkdir .\release
+        call :compile_pdf ..\doc\html\handbook a4     UltraDefrag_Handbook || goto fail
+        call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook || goto fail
+    )
 )
 
 :: move .htaccess file to the root of dev docs
