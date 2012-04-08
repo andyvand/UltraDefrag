@@ -47,6 +47,7 @@ set UD_BLD_FLG_BUILD_AMD64=0
 set UD_BLD_FLG_BUILD_IA64=0
 set UD_BLD_FLG_BUILD_ALL=0
 set UD_BLD_FLG_BUILD_PDF=1
+set UD_BLD_FLG_BUILD_DEV=1
 
 :ParseArgs
 if "%1" == "--use-mingw" (
@@ -82,6 +83,7 @@ if "%1" == "--no-x86"       set UD_BLD_FLG_BUILD_X86=0
 if "%1" == "--no-amd64"     set UD_BLD_FLG_BUILD_AMD64=0
 if "%1" == "--no-ia64"      set UD_BLD_FLG_BUILD_IA64=0
 if "%1" == "--no-pdf"       set UD_BLD_FLG_BUILD_PDF=0
+if "%1" == "--no-dev"       set UD_BLD_FLG_BUILD_DEV=0
 
 shift
 if not "%1" == "" goto :ParseArgs
@@ -94,5 +96,5 @@ set ud
 
 :: clear variables
 for %%V in ( UD_BLD_FLG_USE_COMPILER UD_BLD_FLG_DO_INSTALL UD_BLD_FLG_ONLY_CLEANUP UD_BLD_FLG_DIPLAY_HELP ) do set %%V=
-for %%V in ( UD_BLD_FLG_IS_PORTABLE UD_BLD_FLG_BUILD_ALL UD_BLD_FLG_BUILD_PDF ) do set %%V=
+for %%V in ( UD_BLD_FLG_IS_PORTABLE UD_BLD_FLG_BUILD_ALL UD_BLD_FLG_BUILD_PDF UD_BLD_FLG_BUILD_DEV ) do set %%V=
 for %%V in ( UD_BLD_FLG_BUILD_X86 UD_BLD_FLG_BUILD_AMD64 UD_BLD_FLG_BUILD_IA64 ) do set %%V=
