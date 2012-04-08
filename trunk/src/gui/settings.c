@@ -84,6 +84,8 @@ int stop_track_boot_exec = 0;
 int boot_exec_tracking_stopped = 0;
 extern int boot_time_defrag_enabled;
 
+RECT map_rc = {0,0,0,0};
+
 /* options read from guiopts.lua */
 WGX_OPTION read_only_options[] = {
     /* type, value buffer size, name, value, default value */
@@ -377,7 +379,12 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     
                     /* if block size or grid line width changed since last redraw, resize map */
                     if(map_block_size != last_block_size  || grid_line_width != last_grid_width){
-                        ResizeMap(last_x,last_y,last_width,last_height);
+                        /* ResizeMap is not safe to be called from threads */
+                        map_rc.left = last_x;
+                        map_rc.top = last_y;
+                        map_rc.right = last_width;
+                        map_rc.bottom = last_height;
+                        PostMessage(hMap,WM_RESIZE_MAP,0,(LPARAM)&map_rc);
                         InvalidateRect(hMap,NULL,TRUE);
                         UpdateWindow(hMap);
                     } else {

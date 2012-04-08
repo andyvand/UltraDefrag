@@ -93,20 +93,34 @@ void InitMap(void)
 LRESULT CALLBACK RectWndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
 {
     PAINTSTRUCT ps;
+    RECT *rc;
 
-    if(iMsg == WM_ERASEBKGND)
+    switch(iMsg){
+    case WM_ERASEBKGND:
         return 1;
-    
-    if(iMsg == WM_PAINT){
+    case WM_PAINT:
         (void)BeginPaint(hWnd,&ps); /* (void)? */
         RedrawMap(current_job,0);
         EndPaint(hWnd,&ps);
+        break;
+    case WM_RESIZE_MAP:
+        /* 
+        * ResizeMap wrapper safe for calling
+        * from other threads through PostMessage.
+        */
+        rc = (RECT *)(DWORD_PTR)lParam;
+        ResizeMap(rc->left,rc->top,rc->right,rc->bottom);
+        break;
+    default:
+        break;
     }
     return WgxSafeCallWndProc(OldRectWndProc,hWnd,iMsg,wParam,lParam);
 }
 
 /**
  * @brief Resizes cluster map.
+ * @note Not safe to be called from threads, post 
+ * WM_RESIZE_MAP message to the map control instead.
  */
 void ResizeMap(int x, int y, int width, int height)
 {
