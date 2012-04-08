@@ -40,7 +40,7 @@ echo %ULTRADFGVER% > ..\doc\html\version_xp.ini
 call build-targets.cmd %* || goto fail
 
 :: build documentation
-call build-docs.cmd || goto fail
+call build-docs.cmd %* || goto fail
 
 :: update installer lang.ini
 call make-lang-ini.cmd || goto fail
@@ -136,6 +136,10 @@ rem Example:  call :build_installer .\bin\ia64 ia64
     pushd %1
     copy /Y "%~dp0\installer\UltraDefrag.nsi" .\
     copy /Y "%~dp0\installer\lang.ini" .\
+
+    echo The Ultra Defragmenter Version %ULTRADFGVER% >.\README.TXT
+    type "%~dp0\README.TXT" >>.\README.TXT
+
     if "%RELEASE_STAGE%" neq "" (
         set NSIS_COMPILER_FLAGS=/DULTRADFGVER=%ULTRADFGVER% /DULTRADFGARCH=%2 /DRELEASE_STAGE=%RELEASE_STAGE% /DUDVERSION_SUFFIX=%UDVERSION_SUFFIX%
     ) else (
@@ -264,6 +268,7 @@ rem Displays usage information.
     echo --all           build all packages: regular and portable
     echo --install       perform silent installation after the build
     echo --clean         perform full cleanup instead of the build
+    echo --no-pdf        skip building of PDF documentation
     echo.
     echo Compiler:
     echo --use-mingw     (default)
