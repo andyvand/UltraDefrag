@@ -34,10 +34,12 @@ if "%ULTRADFGVER%" equ "" (
 
 doxygen --version >nul 2>&1 || goto fail
 
-call :compile_docs .                                 || goto fail
-call :compile_docs .\dll\udefrag        udefrag.dll  || goto fail
-call :compile_docs .\dll\wgx            wgx          || goto fail
-call :compile_docs .\dll\zenwinx                     || goto fail
+if "%UD_BLD_FLG_BUILD_DEV%" == "1" (
+    call :compile_docs .                                 || goto fail
+    call :compile_docs .\dll\udefrag        udefrag.dll  || goto fail
+    call :compile_docs .\dll\wgx            wgx          || goto fail
+    call :compile_docs .\dll\zenwinx                     || goto fail
+)
 call :compile_docs ..\doc\html\handbook              || goto fail
 
 :: compile PDF documentation if MiKTeX is installed
