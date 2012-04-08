@@ -39,6 +39,9 @@
   ------------------------------------------------------------------------------
     - GUI options verification was added
     - Internals: make-mingw-projects.lua script added
+    - the following translations were updated:
+
+      Hebrew
 
 
   Version 5.0.4  2012-04-07
