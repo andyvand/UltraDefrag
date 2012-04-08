@@ -134,7 +134,7 @@ goto finished
 :10
 title Build Test Release for Stefan
 echo.
-call build.cmd --use-winddk --no-ia64
+call build.cmd --use-winddk --no-ia64 --no-pdf
 echo.
 call :CopyInstallers -zip
 goto finished
@@ -142,8 +142,8 @@ goto finished
 :11
 title Build Test Installation for Stefan
 echo.
-if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winddk --no-ia64 --no-x86 --install
-if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winddk --no-ia64 --no-amd64 --install
+if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winddk --no-ia64 --no-x86 --install --no-pdf
+if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winddk --no-ia64 --no-amd64 --install --no-pdf
 echo.
 cd /d %UD_BLD_MENU_DIR%
 call build.cmd --clean
@@ -152,7 +152,7 @@ goto finished
 :12
 title Build Test AMD64 for Stefan
 echo.
-call build.cmd --use-winddk --no-ia64 --no-x86
+call build.cmd --use-winddk --no-ia64 --no-x86 --no-pdf
 echo.
 call :CopyInstallers
 goto finished
@@ -160,7 +160,7 @@ goto finished
 :13
 title Build Test x86 for Stefan
 echo.
-call build.cmd --use-winddk --no-ia64 --no-amd64
+call build.cmd --use-winddk --no-ia64 --no-amd64 --no-pdf
 echo.
 call :CopyInstallers
 goto finished
