@@ -9,12 +9,11 @@ new pre-release:
 8. kindly request translation updates from known translators
 
 new release:
-1. update version in readme file
-2. add date to history.txt file
-3. run build-release.cmd
-4. upload files through file manager
-5. update website (+ HISTORY.TXT, version.ini, version_xp.ini, downloads, left_side_index),
+1. add date to history.txt file
+2. run build-release.cmd
+3. upload files through file manager
+4. update website (+ HISTORY.TXT, version.ini, version_xp.ini, downloads, left_side_index),
    handbook, dev docs, zenwinx docs
-6. submit news
-7. close bugs and requests, but still allow posting comments
-8. update project info
+5. submit news
+6. close bugs and requests, but still allow posting comments
+7. update project info

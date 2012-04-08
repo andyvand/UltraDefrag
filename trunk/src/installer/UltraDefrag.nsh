@@ -141,7 +141,7 @@ Var AtLeastXP
         File "${ROOTDIR}\src\LICENSE.TXT"
         File "${ROOTDIR}\src\CREDITS.TXT"
         File "${ROOTDIR}\src\HISTORY.TXT"
-        File "${ROOTDIR}\src\README.TXT"
+        File "README.TXT"
 
         File "lua5.1a.exe"
         File "lua5.1a_gui.exe"
