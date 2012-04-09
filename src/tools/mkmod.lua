@@ -668,7 +668,7 @@ end
 if deffile == "" then deffile = mingw_deffile end
 if mingw_deffile == "" then mingw_deffile = deffile end
 
--- setup src and rc tables
+-- setup src, rc and resources tables
 for i, v in ipairs(files) do
     local i, j, name, p
     i, j, name = string.find(v,"^.*\\(.-)$")
