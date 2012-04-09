@@ -46,6 +46,11 @@ files = {}
 headers = {}
 inc = {}
 
+-- files which names contain these patterns will be
+-- included as dependencies to MinGW makefiles
+rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
+resources = {}
+
 input_filename = ""
 target_type, target_ext, target_name = "", "", ""
 arch = ""
@@ -492,6 +497,9 @@ function produce_mingw_makefile()
         for i, v in ipairs(inc) do
             f:write("\\\n", v, " ")
         end
+        for i, v in ipairs(resources) do
+            f:write("\\\n", v, " ")
+        end
         f:write("\n\t\$(compile_resource)\n\n")
     end
 
@@ -611,6 +619,9 @@ function produce_mingw_x64_makefile()
         for i, v in ipairs(inc) do
             f:write("\\\n", v, " ")
         end
+        for i, v in ipairs(resources) do
+            f:write("\\\n", v, " ")
+        end
         f:write("\n\t\$(compile_resource)\n\n")
     end
 
@@ -628,7 +639,7 @@ if arg[2] == "static-lib" then
     static_lib = 1
 end
 
-if os.execute("cmd.exe /C dir /B >project_files") ~= 0 then
+if os.execute("cmd.exe /C dir /S /B >project_files") ~= 0 then
     error("Cannot get directory listing!")
 end
 f = assert(io.open("project_files","rt"))
@@ -642,7 +653,10 @@ assert(files[1],"No project files found!")
 
 -- search for .def files
 deffile, mingw_deffile = "", ""
-for i, def in ipairs(files) do
+for i, v in ipairs(files) do
+    local i, j, def
+    i, j, def = string.find(v,"^.*\\(.-)$")
+    if def == nil then def = v end
     if string.find(def,"%.def$") then
         if string.find(def,"mingw%.def$") then
             mingw_deffile = def
@@ -656,10 +670,19 @@ if mingw_deffile == "" then mingw_deffile = deffile end
 
 -- setup src and rc tables
 for i, v in ipairs(files) do
-    if string.find(v,"%.c$") then
-        table.insert(src,v)
-    elseif string.find(v,"%.rc$") then
-        table.insert(rc,v)
+    local i, j, name, p
+    i, j, name = string.find(v,"^.*\\(.-)$")
+    if name == nil then name = v end
+    if string.find(name,"%.c$") then
+        table.insert(src,name)
+    elseif string.find(name,"%.rc$") then
+        table.insert(rc,name)
+    end
+    for i, p in ipairs(rsrc_patterns) do
+        if string.find(v,p) then
+            table.insert(resources,v)
+            break
+        end
     end
 end
 
