@@ -46,7 +46,7 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     {0, L"DEFRAGMENT",               L"&Defragment",              NULL},
     {0, L"QUICK_OPTIMIZE",           L"&Quick optimization",      NULL},
     {0, L"FULL_OPTIMIZE",            L"&Full optimization",       NULL},
-    {0, L"OPTIMIZE_MFT",             L"&Optimize MFT",             NULL},
+    {0, L"OPTIMIZE_MFT",             L"&Optimize MFT",            NULL},
     {0, L"STOP",                     L"&Stop",                    NULL},
     {0, L"REPEAT_ACTION",            L"Re&peat action",           NULL},
     {0, L"SKIP_REMOVABLE_MEDIA",     L"Skip removable &media",    NULL},
@@ -106,7 +106,6 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     {0, L"FILES",                    L"files",                    NULL},
     {0, L"FRAGMENTED",               L"fragmented",               NULL},
     {0, L"COMPRESSED",               L"compressed",               NULL},
-    {0, L"MFT",                      L"MFT",                      NULL},
 
     /* about box */
     {0, L"ABOUT_WIN_TITLE",          L"About Ultra Defragmenter", NULL},
