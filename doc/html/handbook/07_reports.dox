@@ -40,11 +40,13 @@
  *
  * By default, all files are sorted by number of fragments
  * in descending order. To change the sorting click the column
- * heading by which to sort the list. Note that it is a slow
- * process (~350 lines/sec on 1.8GHz CPU). Sorting
+ * heading by which to sort the list.
+ * @note
+ * This is a slow process (~350 lines/sec on 1.8GHz CPU). Sorting
  * implemented in JavaScript is slow, but very reliable.
  *
- * Note that files excluded from processing are never treated as fragmented.
+ * @note
+ * Files excluded from processing are never treated as fragmented.
  * Because only files affecting system performance should get our attention.
  *
  * <h1>Columns</h1>

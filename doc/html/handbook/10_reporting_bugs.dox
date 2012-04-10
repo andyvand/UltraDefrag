@@ -43,11 +43,12 @@
  * @par Taking a screen-shot
  * Hit <b>[Alt]+[Print Screen]</b> to save an image of the currently active window to the clipboard.
  * You can use your favorite screen-capture tool too, a free one is <a href="http://www.gen.hardcopy.de/">Hardcopy</a>.
+ * Starting with Windows 7 you can use the snipping tool.
  *
  * @par Create a PNG image file
  * It is recommended to <b>not</b> paste the image from the clipboard into an Office document,
  * but to create a PNG image of it by pasting into <b>Paint</b> or any other drawing program.<br/>
- * If you use Hardcopy you can save it directly.
+ * If you use Hardcopy or the snipping tool you can save it directly.
  * @latexonly
  * \end{Indent}
  * @endlatexonly
@@ -59,6 +60,7 @@
  * @par Debugging the GUI
  * The <b>dbgprint_level</b> and <b>log_file_path</b> settings are contained in the options file,
  * which you can access via the wrench icon of the tool-bar or the settings menu.
+ * The log file is created after you close the application window.
  *
  * @par Debugging the console utility
  * Set the <b>UD_DBGPRINT_LEVEL</b> and <b>UD_LOG_FILE_PATH</b> environment variables before
@@ -77,7 +79,8 @@
  * Don't forget to check the <b>Capture Win32</b> item of the Capture menu of the DbgView program.
  * Check one of the <b>Log to file</b> items of the <b>File</b> menu to create a log file you can send us.
  *
- * Note that DbgView cannot capture information from the user mode driver during the Windows boot process.
+ * @note
+ * DbgView cannot capture information from the user mode driver during the Windows boot process.
  * This is a well known DbgView limitation.
  * <br/><br/>
  *
@@ -91,7 +94,8 @@
  * It is best to ZIP your collected files into a single compressed archive, which will reduce the up- and download size immensely.
  * If you do not own a ZIP utility, check out <a href="http://sourceforge.net/projects/sevenzip/">7-zip</a>.
  *
- * Note that the Sourceforge trackers only allow uploading files of 256KB in size.
+ * @note
+ * The Sourceforge trackers only allow uploading files of 256KB in size.
  * For bigger files you may use one of the free file hosting services.
  *
  * @htmlonly
