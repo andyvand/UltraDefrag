@@ -258,11 +258,7 @@ function build_project_file(path)
     index = 1
     for i, v in ipairs(files) do
         if string.find(v,"%.c$") then
-            if string.find(v,"getopt") == nil then
-                f:write(index, "=", v, "\n")
-            else
-                f:write(index, "=..\\share\\", v, "\n")
-            end
+            f:write(index, "=", v, "\n")
             index = index + 1
         end
     end
@@ -299,7 +295,6 @@ function build_project_file(path)
     end
     if mingw_deffile ~= deffile then
         f:write(index, "=", mingw_deffile, "\n")
-        index = index + 1
     end
 
     f:write("[History]\n")

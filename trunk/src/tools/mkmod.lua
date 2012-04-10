@@ -39,21 +39,13 @@
   the parameters on a 32-bit machine.
 --]]
 
-name, deffile, mingw_deffile, baseaddr, nativedll, umentry = "", "", "", "", 0, ""
+nativedll = 0
 src, rc, includes, libs, adlibs = {}, {}, {}, {}, {}
-
-files = {}
-headers = {}
-inc = {}
+files, resources, headers, inc = {}, {}, {}, {}
 
 -- files which names contain these patterns will be
 -- included as dependencies to MinGW makefiles
 rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
-resources = {}
-
-input_filename = ""
-target_type, target_ext, target_name = "", "", ""
-arch = ""
 
 -- FIXME: Only DDK compiler can compile native executable 
 -- with static zenwinx and udefrag libraries.
