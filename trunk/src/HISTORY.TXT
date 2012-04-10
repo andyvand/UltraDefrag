@@ -39,6 +39,8 @@
   ------------------------------------------------------------------------------
     - cluster map scaling was forced to be more accurate
     - GUI options verification was added
+    - ability to analyze, optimize and quick optimize drive from
+      Explorer context menu added
     - the following translations were updated:
 
       Hebrew
