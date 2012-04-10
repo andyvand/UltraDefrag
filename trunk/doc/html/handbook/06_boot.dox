@@ -21,10 +21,10 @@
  * <a href="http://ultradefrag.sourceforge.net/screenshots.html">View screenshots...</a>
  *
  * If the boot time defragmenter is enabled, it will run
- * at every boot. Note that you will have a chance
- * to exit immediately, just press any key when the appropriate
- * prompt is displayed. If no key is pressed during this
- * delay, the boot time script will be executed.
+ * at every boot.
+ * @note
+ * You will have a chance to exit immediately, just press any key when the appropriate
+ * prompt is displayed. If no key is pressed during this delay, the boot time script will be executed.
  *
  * You can always stop the disk analysis/defragmentation by pressing
  * the Pause/Break key on the keyboard.
