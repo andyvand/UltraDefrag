@@ -158,14 +158,10 @@ void UpdateStatusBar(udefrag_progress_info *pi)
         free(text);
     }
 
-    text = WgxGetResourceString(i18n_table,L"MFT");
-    if(text){
-        (void)udefrag_bytes_to_hr(pi->mft_size,2,s,sizeof(s));
-        (void)_snwprintf(bf,BFSIZE - 1,L"%S %s",s,text);
-        bf[BFSIZE - 1] = 0;
-        (void)SendMessage(hStatus,SB_SETTEXTW,4,(LPARAM)bf);
-        free(text);
-    }
+    (void)udefrag_bytes_to_hr(pi->mft_size,2,s,sizeof(s));
+    (void)_snwprintf(bf,BFSIZE - 1,L"%S MFT",s);
+    bf[BFSIZE - 1] = 0;
+    (void)SendMessage(hStatus,SB_SETTEXTW,4,(LPARAM)bf);
 }
 
 /** @} */
