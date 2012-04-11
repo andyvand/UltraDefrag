@@ -485,9 +485,6 @@ void RepairSelectedVolumes(void)
     buffer[MAX_PATH - 1] = 0;
     strcpy(path,buffer);
     
-    _snprintf(command,MAX_PATH,"%s /C .\\repair-drives.cmd",path);
-    command[MAX_PATH - 1] = 0;
-    
     index = -1;
     while(1){
         SelectedItem = SendMessage(hList,LVM_GETNEXTITEM,(WPARAM)index,LVNI_SELECTED);
@@ -499,9 +496,8 @@ void RepairSelectedVolumes(void)
         lvi.cchTextMax = 127;
         if(SendMessage(hList,LVM_GETITEM,0,(LRESULT)&lvi)){
             letter = buffer[0];
-            _snprintf(buffer,MAX_PATH,"%s %c:",command,letter);
-            buffer[MAX_PATH - 1] = 0;
-            strcpy(command,buffer);
+            _snprintf(command,MAX_PATH,"/C title CHKDSK %c: & echo. & chkdsk %c: /V /F & echo. & pause",letter,letter);
+            command[MAX_PATH - 1] = 0;
         }
         index = (int)SelectedItem;
     }

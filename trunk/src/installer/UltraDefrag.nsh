@@ -359,7 +359,6 @@ Var AtLeastXP
     SetOutPath "$INSTDIR"
         Delete "$INSTDIR\ultradefrag.exe"
         File "ultradefrag.exe"
-        File "${ROOTDIR}\src\installer\repair-drives.cmd"
         
     SetOutPath "$INSTDIR\scripts"
         File "${ROOTDIR}\src\scripts\upgrade-guiopts.lua"
@@ -430,7 +429,6 @@ Var AtLeastXP
     RMDir /r "$INSTDIR\i18n"
 
     Delete "$INSTDIR\ultradefrag.exe"
-    Delete "$INSTDIR\repair-drives.cmd"
     Delete "$INSTDIR\scripts\upgrade-guiopts.lua"
     
     Push $R0
@@ -822,6 +820,7 @@ Var AtLeastXP
     Delete "$INSTDIR\ud_i18n.dll"
     Delete "$INSTDIR\wgx.dll"
     Delete "$INSTDIR\lua5.1a.dll"
+    Delete "$INSTDIR\repair-drives.cmd"
 
     Delete "$INSTDIR\udefrag-scheduler.exe"
     Delete "$INSTDIR\*.lng"
