@@ -133,6 +133,10 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     /* tray icon context menu */
     {0,                 L"SHOW",                       L"Show",                       NULL},
     {0,                 L"HIDE",                       L"Hide",                       NULL},
+    
+    /* upgrade dialog */
+    {0,                 L"UPGRADE_CAPTION",            L"You can upgrade me ^-^",     NULL},
+    {0,                 L"UPGRADE_MESSAGE",            L"release is available for download!", NULL},
 
     /* end of the table */
     {0,                 NULL,                          NULL,                          NULL}
