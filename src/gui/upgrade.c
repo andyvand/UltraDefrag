@@ -142,6 +142,7 @@ static wchar_t *GetNewVersionAnnouncement(void)
     int unstable_version = 0;
     int upgrade_needed = 0;
     int res;
+    wchar_t *text, *message;
 
     lv = GetLatestVersion();
     if(lv == NULL) return NULL;
@@ -172,9 +173,11 @@ static wchar_t *GetNewVersionAnnouncement(void)
     if(last_version > current_version) upgrade_needed = 1;
     else if(last_version == current_version && unstable_version) upgrade_needed = 1;
     if(upgrade_needed){
-        _snwprintf(announcement,MAX_ANNOUNCEMENT_LEN,L"%hs%ws",
-            lv,L" release is available for download!");
+        text = WgxGetResourceString(i18n_table,L"UPGRADE_MESSAGE");
+        if(text) message = text; else message = L"release is available for download!";
+        _snwprintf(announcement,MAX_ANNOUNCEMENT_LEN,L"%hs %ws",lv,message);
         announcement[MAX_ANNOUNCEMENT_LEN - 1] = 0;
+        if(text) free(text);
         
         WgxDbgPrint("GetNewVersionAnnouncement: upgrade to %s\n",lv);
         return announcement;
@@ -205,12 +208,15 @@ void CheckForTheNewVersion(void)
 
 DWORD WINAPI CheckForTheNewVersionThreadProc(LPVOID lpParameter)
 {
-    wchar_t *s;
+    wchar_t *s, *text, *caption;
     
     s = GetNewVersionAnnouncement();
     if(s){
-        if(MessageBoxW(hWindow,s,L"You can upgrade me ^-^",MB_OKCANCEL | MB_ICONINFORMATION) == IDOK)
+        text = WgxGetResourceString(i18n_table,L"UPGRADE_CAPTION");
+        if(text) caption = text; else caption = L"You can upgrade me ^-^";
+        if(MessageBoxW(hWindow,s,caption,MB_OKCANCEL | MB_ICONINFORMATION) == IDOK)
             (void)WgxShellExecuteW(hWindow,L"open",L"http://ultradefrag.sourceforge.net",NULL,NULL,SW_SHOW);
+        if(text) free(text);
     }
     
     return 0;
