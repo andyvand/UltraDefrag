@@ -59,6 +59,8 @@ WGX_MENU action_menu[] = {
     {MF_STRING | MF_ENABLED | MF_CHECKED,IDM_IGNORE_REMOVABLE_MEDIA, NULL, L"Skip removable &media\tCtrl+M", -1 },
     {MF_STRING | MF_ENABLED,IDM_RESCAN,                              NULL, L"&Rescan drives\tCtrl+D",        -1 },
     {MF_SEPARATOR,0,NULL,NULL,0},
+    {MF_STRING | MF_ENABLED,IDM_REPAIR,                              NULL, L"Repair drives",                 -1 },
+    {MF_SEPARATOR,0,NULL,NULL,0},
     {MF_STRING | MF_ENABLED | MF_POPUP,IDM_WHEN_DONE,                when_done_menu,L"&When done",           -1 },
     {MF_SEPARATOR,0,NULL,NULL,0},
     {MF_STRING | MF_ENABLED,IDM_EXIT,                                NULL, L"E&xit\tAlt+F4",                 -1 },

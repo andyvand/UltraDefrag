@@ -462,4 +462,64 @@ void release_jobs(void)
     }
 }
 
+/**
+ * @brief Tries to repair all selected volumes.
+ */
+void RepairSelectedVolumes(void)
+{
+    LRESULT SelectedItem;
+    LV_ITEM lvi;
+    char path[MAX_PATH];
+    char buffer[MAX_PATH];
+    char command[MAX_PATH];
+    char letter;
+    int index;
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    if(!GetSystemDirectory(path,MAX_PATH)){
+        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot retrieve the system directory path");
+        return;
+    }
+    _snprintf(buffer,MAX_PATH,"%s\\cmd.exe",path);
+    buffer[MAX_PATH - 1] = 0;
+    strcpy(path,buffer);
+    
+    _snprintf(command,MAX_PATH,"%s /C .\\repair-drives.cmd",path);
+    command[MAX_PATH - 1] = 0;
+    
+    index = -1;
+    while(1){
+        SelectedItem = SendMessage(hList,LVM_GETNEXTITEM,(WPARAM)index,LVNI_SELECTED);
+        if(SelectedItem == -1 || SelectedItem == index) break;
+        lvi.iItem = (int)SelectedItem;
+        lvi.iSubItem = 0;
+        lvi.mask = LVIF_TEXT;
+        lvi.pszText = buffer;
+        lvi.cchTextMax = 127;
+        if(SendMessage(hList,LVM_GETITEM,0,(LRESULT)&lvi)){
+            letter = buffer[0];
+            _snprintf(buffer,MAX_PATH,"%s %c:",command,letter);
+            buffer[MAX_PATH - 1] = 0;
+            strcpy(command,buffer);
+        }
+        index = (int)SelectedItem;
+    }
+
+    ZeroMemory(&si,sizeof(si));
+    si.cb = sizeof(si);
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_SHOW;
+    ZeroMemory(&pi,sizeof(pi));
+
+    if(!CreateProcess(path,command,
+      NULL,NULL,FALSE,0,NULL,NULL,&si,&pi)){
+        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
+            "Cannot execute cmd.exe program!");
+        return;
+    }
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+}
+
 /** @} */

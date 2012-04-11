@@ -143,6 +143,8 @@ void start_selected_jobs(udefrag_job_type job_type);
 void stop_all_jobs(void);
 void release_jobs(void);
 
+void RepairSelectedVolumes(void);
+
 int CreateMainMenu(void);
 int CreateToolbar(void);
 void UpdateToolbarTooltips(void);
