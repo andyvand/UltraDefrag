@@ -447,6 +447,7 @@
  * <tr><td>• Craig Oakes             </td><td>-</td><td> Hint about case mismatch of configuration dialog help files.</td></tr>
  * <tr><td>                          </td><td> </td><td> Hint about problem with .lua file open action registration.</td></tr>
  * <tr><td>• Dario Raparelli         </td><td>-</td><td> NT 4.0 support.</td></tr>
+ * <tr><td>• Gan Yau Kuang           </td><td>-</td><td> Drives repair GUI menu.</td></tr>
  * <tr><td>• Jan Loncik              </td><td>-</td><td> x64 native support. Better default values for filters.</td></tr>
  * <tr><td>• Jim Laski               </td><td>-</td><td> System fonts and visual styles for graphical interface.</td></tr>
  * <tr><td>• Joachim Otahal          </td><td>-</td><td> Disk processing algorithms optimization.</td></tr>
@@ -477,6 +478,7 @@
  * • Craig Oakes              & - & Hint about case mismatch of configuration dialog help files. \\
  *                            &   & Hint about problem with .lua file open action registration. \\
  * • Dario Raparelli          & - & NT 4.0 support. \\
+ * • Gan Yau Kuang            & - & Drives repair GUI menu. \\
  * • Jan Loncik               & - & x64 native support. Better default values for filters. \\
  * • Jim Laski                & - & System fonts and visual styles for graphical interface. \\
  * • Joachim Otahal           & - & Disk processing algorithms optimization. \\
