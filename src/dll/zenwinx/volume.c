@@ -431,8 +431,6 @@ int winx_get_volume_information(char volume_letter,winx_volume_information *v)
     
     /* get dirty flag */
     get_volume_dirty_flag(v);
-    if(v->volume_letter == 'C' || v->volume_letter == 'c')
-        v->is_dirty = 1;
     
     NtClose(hRoot);
     return 0;
