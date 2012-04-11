@@ -125,6 +125,7 @@ typedef struct _udefrag_map {
 
 typedef struct _volume_processing_job {
     char volume_letter;
+    int dirty_volume;
     udefrag_job_type job_type;
     int termination_flag;
     udefrag_progress_info pi;

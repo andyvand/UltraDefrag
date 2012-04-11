@@ -276,6 +276,7 @@ void VolListNotifyHandler(LPARAM lParam)
 {
     volume_processing_job *job;
     LPNMLISTVIEW lpnm;
+    int id;
     
     lpnm = (LPNMLISTVIEW)lParam;
     if(lpnm->hdr.code == LVN_ITEMCHANGED && lpnm->iItem != (-1)){
@@ -290,8 +291,13 @@ void VolListNotifyHandler(LPARAM lParam)
         if(job) UpdateStatusBar(&job->pi);
     }
     /* perform a volume analysis when list item becomes double-clicked */
-    if(lpnm->hdr.hwndFrom == hList && lpnm->hdr.code == NM_DBLCLK)
-        PostMessage(hWindow,WM_COMMAND,(WPARAM)IDM_ANALYZE,0);
+    if(lpnm->hdr.hwndFrom == hList && lpnm->hdr.code == NM_DBLCLK){
+        job = get_first_selected_job();
+        if(job){
+            id = job->dirty_volume ? IDM_REPAIR : IDM_ANALYZE;
+            PostMessage(hWindow,WM_COMMAND,(WPARAM)id,0);
+        }
+    }
 }
 
 /**
@@ -400,9 +406,13 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
  */
 void SetVolumeDirtyStatus(int index, volume_info *v)
 {
+    volume_processing_job *job;
     LV_ITEMW lviw;
     wchar_t *text;
 
+    job = get_job(v->letter);
+    if(job) job->dirty_volume = v->is_dirty;
+    
     lviw.iItem = index;
     lviw.iSubItem = 1;
     if(v->is_dirty){
