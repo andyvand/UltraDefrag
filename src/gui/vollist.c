@@ -401,14 +401,18 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
 void SetVolumeDirtyStatus(int index, volume_info *v)
 {
     LV_ITEMW lviw;
+    wchar_t *text;
 
     lviw.iItem = index;
     lviw.iSubItem = 1;
     if(v->is_dirty){
         lviw.mask = LVIF_TEXT | LVIF_IMAGE;
-        lviw.pszText = L"Disk is dirty, run CHKDSK to repair it";
+        text = WgxGetResourceString(i18n_table,L"STATUS_DIRTY");
+        if(text) lviw.pszText = text;
+        else lviw.pszText = L"Disk needs to be repaired";
         lviw.iImage = v->is_removable ? 3 : 2;
         (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
+        if(text) free(text);
     } else {
         lviw.mask = LVIF_IMAGE;
         lviw.iImage = v->is_removable ? 1 : 0;

@@ -101,6 +101,7 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     {0, L"STATUS_ANALYSED",          L"Analyzed",                 NULL},
     {0, L"STATUS_DEFRAGMENTED",      L"Defragmented",             NULL},
     {0, L"STATUS_OPTIMIZED",         L"Optimized",                NULL},
+    {0, L"STATUS_DIRTY",             L"Disk needs to be repaired",NULL},
 
     /* status bar */
     {0, L"DIRS",                     L"folders",                  NULL},
