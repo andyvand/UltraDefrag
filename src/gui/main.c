@@ -909,6 +909,10 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             if(!busy_flag)
                 UpdateVolList();
             return 0;
+        case IDM_REPAIR:
+            if(!busy_flag)
+                RepairSelectedVolumes();
+            return 0;
         case IDM_EXIT:
             goto done;
         /* Reports menu handler */

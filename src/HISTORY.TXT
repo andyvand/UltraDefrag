@@ -37,6 +37,7 @@
 
   Version 5.0.5  2012-04-
   ------------------------------------------------------------------------------
+    - repair drives action was added to the GUI menu
     - cluster map scaling was forced to be more accurate
     - GUI options verification was added
     - ability to analyze, optimize and quick optimize drive from
