@@ -149,26 +149,28 @@ Var AtLeastXP
     SetOutPath "$INSTDIR\scripts"
         File "${ROOTDIR}\src\scripts\udreportcnv.lua"
         File "${ROOTDIR}\src\scripts\udsorting.js"
+        File "${ROOTDIR}\src\scripts\upgrade-rptopts.lua"
 
-    ; A. install default CSS for file fragmentation reports
-        ${If} ${FileExists} "$INSTDIR\scripts\udreport.css"
-            ${Unless} ${FileExists} "$INSTDIR\scripts\udreport.css.old"
-                ; ensure that user's choice will not be lost
-                Rename "$INSTDIR\scripts\udreport.css" "$INSTDIR\scripts\udreport.css.old"
-            ${EndUnless}
-        ${EndIf}
-        File "${ROOTDIR}\src\scripts\udreport.css"
+    DetailPrint "Upgrade report options..."
+    ; ensure that target directory exists
+    CreateDirectory "$INSTDIR\options"
+    ${If} ${Silent}
+        ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-rptopts.lua" "$INSTDIR"'
+    ${Else}
+        ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-rptopts.lua" "$INSTDIR"'
+    ${EndIf}
+    ; get rid of obsolete files
+    Delete "$INSTDIR\options\udreportopts-custom.lua"
+
+    ; install default CSS for file fragmentation reports
+    ${If} ${FileExists} "$INSTDIR\scripts\udreport.css"
+        ${Unless} ${FileExists} "$INSTDIR\scripts\udreport.css.old"
+            ; ensure that user's choice will not be lost
+            Rename "$INSTDIR\scripts\udreport.css" "$INSTDIR\scripts\udreport.css.old"
+        ${EndUnless}
+    ${EndIf}
+    File "${ROOTDIR}\src\scripts\udreport.css"
         
-    ; B. install default report options
-    SetOutPath "$INSTDIR\options"
-        ${If} ${FileExists} "$INSTDIR\options\udreportopts.lua"
-            ${Unless} ${FileExists} "$INSTDIR\options\udreportopts.lua.old"
-                ; ensure that user's choice will not be lost
-                Rename "$INSTDIR\options\udreportopts.lua" "$INSTDIR\options\udreportopts.lua.old"
-            ${EndUnless}
-        ${EndIf}
-        File "${ROOTDIR}\src\scripts\udreportopts.lua"
-
     SetOutPath "$SYSDIR"
         File "zenwinx.dll"
         File "udefrag.dll"
