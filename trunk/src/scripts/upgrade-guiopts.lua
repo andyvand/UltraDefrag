@@ -372,10 +372,8 @@ if upgrade_needed ~= 0 then
         contents = f:read("*all")
         f:close()
         f = assert(io.open(path .. ".old", "w"))
-        if f ~= nil then
-            f:write(contents)
-            f:close()
-        end
+        f:write(contents)
+        f:close()
     end
 
     -- RULES OF UPGRADE TO THE CURRENT VERSION
@@ -395,19 +393,15 @@ if upgrade_needed ~= 0 then
 
     -- save the upgraded configuration
     f = assert(io.open(path, "w"))
-    if f ~= nil then
-        save_preferences(f)
-        f:close()
-    end
+    save_preferences(f)
+    f:close()
 
     -- save guiopts-internals.lua when needed
     if old_version == 0 then
         if rx ~= nil then
             f = assert(io.open(instdir .. "\\options\\guiopts-internals.lua", "w"))
-            if f ~= nil then
-                save_internal_preferences(f)
-                f:close()
-            end
+            save_internal_preferences(f)
+            f:close()
         end
     end
 end
