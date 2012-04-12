@@ -483,16 +483,8 @@ end
 -------------------------------------------------------------------------------
 -- Main Code
 -------------------------------------------------------------------------------
--- read default options
+-- get report options
 dofile(instdir .. "\\options\\udreportopts.lua")
-
--- read custom (user defined) options
-custom_options = instdir .. "\\options\\udreportopts-custom.lua"
-f = io.open(custom_options)
-if f ~= nil then
-    f:close()
-    dofile(custom_options)
-end
 
 -- read source file
 dofile(report_path)
