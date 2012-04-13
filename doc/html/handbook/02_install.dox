@@ -16,10 +16,14 @@
  * <a href="http://sourceforge.net/projects/ultradefrag/files/">project's download page</a>.
  *
  * @note
+ * You must be an administrator to install and run UltraDefrag.<br /><br />
  * UltraDefrag installs into the Windows directory. This is by design,
  * because it highly simplifies the program development.
  * Moreover, it is impossible to run the boot time defragmenter without having its
  * files inside the System32 directory.<br/><br/>
+ * You must have a 64-bit version of Windows to run the 64-bit versions of the program.
+ * The IA-64 version was never tested by the authors. It requires the Intel Itanium processor
+ * and an appropriate 64-bit edition of Windows.
  *
  * There are two different types of packages available for download:
  * @par Full-featured installer
@@ -45,12 +49,6 @@
  * of websites around the world use the same service to gather basic statistics
  * of use. However, the UltraDefrag usage tracking can be turned off during an 
  * installation.
- *
- * @note
- * <ul><li>You must have a 64-bit version of Windows to run the 64-bit versions of the program.<br/><br/></li>
- * <li>The IA-64 version was never tested by the authors. 
- * It requires the Intel Itanium processor and an appropriate 64-bit edition of Windows.<br/><br/></li>
- * <li>You must be an administrator to install and run UltraDefrag.<br/><br/></li></ul>
  *
  * <h1>Silent Installation</h1>
  * UltraDefrag can be installed in silent mode by adding the <b>/S</b> switch to the installer's command line
