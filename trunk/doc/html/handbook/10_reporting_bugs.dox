@@ -12,7 +12,7 @@
 /**
  * @page ReportingBugs Reporting Bugs
  *
- * If you have encountered a bug please submit your report via the
+ * If you have encountered a bug please submit your report via our
  * <a href="http://sourceforge.net/tracker/?atid=969870&group_id=199532&func=browse">bug tracker</a>.
  * Additional debugging information is always very appreciated.
  * <br/><br/>
@@ -22,8 +22,8 @@
  * \begin{Indent}
  * @endlatexonly
  * @par Create screen-shots
- * This is highly recommended for reporting display related problems.<br/>
- * In addition they help to visualize the current state of your disk.
+ * We recommend to send us screen-shots for display related problems.<br/>
+ * They help to visualize also the current state of your disk.
  *
  * @par Enable debugging output
  * Use the <b>dbgprint_level</b> setting or the <b>UD_DBGPRINT_LEVEL</b> environment variable and set it to <b>DETAILED</b>
@@ -46,7 +46,7 @@
  * Starting with Windows 7 you can use the snipping tool.
  *
  * @par Create a PNG image file
- * It is recommended to <b>not</b> paste the image from the clipboard into an Office document,
+ * We recommend to <b>not</b> paste the image from the clipboard into an Office document,
  * but to create a PNG image of it by pasting into <b>Paint</b> or any other drawing program.<br/>
  * If you use Hardcopy or the snipping tool you can save it directly.
  * @latexonly

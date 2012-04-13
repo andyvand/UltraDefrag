@@ -637,6 +637,10 @@
  * darker one marks objects above the size threshold, if one
  * is set.
  *
+ * @note
+ * Files excluded from processing are never treated as fragmented,
+ * because only files affecting system performance should get our attention.
+ *
  * @par MFT
  * Dark magenta represents the master file table (MFT), light magenta - the space reserved for the
  * <a href="http://support.microsoft.com/kb/174619">MFT expansion</a>.
@@ -649,23 +653,21 @@
  * since it is impossible to display 0,99 clusters per block.
  *
  * @note
- * <ul><li>Files excluded from processing are never treated as fragmented,
- * because only files affecting system performance should get our attention.</li><br/><br/>
- * <li>Unused map blocks are <b>not</b> to be confused with free space.</li></ul>
+ * Unused map blocks are <b>not</b> to be confused with free space.
  *
  * <h1>When done</h1>
  * If any of the actions except <b>None</b> is checked, UltraDefrag
  * will automatically perform that action after the job completes.
  *
  * @note
- * <ul><li>Your system and hardware configuration must support
+ * Your system and hardware configuration must support
  * shutdown and power off, otherwise Windows may reboot your PC
  * or even do nothing. Therefore test this mode before using it
- * at a regular basis.</li><br/><br/>
- * <li>Your system must support the selected suspend mode
+ * at a regular basis.<br /><br />
+ * Your system must support the selected suspend mode
  * and it must be turned on. Otherwise Windows
  * will display a message box containing a brief error description
- * and the system will not be switched into any suspend mode.</li></ul>
+ * and the system will not be switched into any suspend mode.
  *
  * <h1>Configuring</h1>
  * The default font is Courier New, 9.
