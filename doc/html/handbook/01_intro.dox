@@ -54,7 +54,7 @@
  * - ability to automatically hibernate/shutdown PC after a job is done
  * - ability to make an automatic effective defragmentation through Windows Task Scheduler
  * - multilingual graphical interface
- * - little binaries (less than 500 kb)
+ * - little binaries (about 500 kb)
  * - portable version available which requires no installation
  * - native 64-bit support
  * - open source code licensed under GPL
