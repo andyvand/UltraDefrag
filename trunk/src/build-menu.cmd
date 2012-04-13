@@ -81,7 +81,7 @@ goto finished
 
 :3
 title Build with Defaults and Install
-call build.cmd --install
+call build.cmd --install --no-pdf --no-dev
 goto finished
 
 :4
