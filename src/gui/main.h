@@ -205,7 +205,7 @@ void StopI18nFolderChangesTracking();
 
 int ShutdownOrHibernate(void);
 
-void OpenWebPage(char *page);
+void OpenWebPage(char *page, char *anchor);
 
 extern HANDLE hTaskbarIconEvent;
 extern int job_is_running;

@@ -418,6 +418,23 @@
  * @latexonly
  * &
  * @endlatexonly
+ * @par Cluster map legend
+ * This launches the @ref cluster_map_legend "Cluster Map" section of this page.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
  * @par Check for update
  * This checks for program updates on demand, this is helpful if automatic update checks are disabled.
  *
@@ -564,6 +581,7 @@
  * To select all drives you can use Ctrl+A too.
  * Double-clicking a drive will start its analysis.
  *
+ * @anchor cluster_map_legend
  * <h1>Cluster Map</h1>
  * It represents the disk clusters by little colored squares.
  * The first cluster on disk is the one in the top-left corner of the map.
