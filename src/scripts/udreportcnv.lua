@@ -132,10 +132,16 @@ function write_unicode_name(f,name)
 end
 
 function display_report(path)
+    local ret
     if os.shellexec ~= nil then
-        os.shellexec(path,"open")
+        ret = os.shellexec(path,"open")
+        if ret <= 32 then
+            error("Cannot open " .. path .. ", error code = " .. ret .. "!")
+        end
     else
-        os.execute("cmd.exe /C " .. path)
+        if os.execute("cmd.exe /C " .. path) ~= 0 then
+            error("Cannot execute cmd.exe /C " .. path .. " command!")
+        end
     end
 end
 
