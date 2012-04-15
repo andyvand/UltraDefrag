@@ -574,8 +574,8 @@ void OpenWebPage(char *page, char *anchor)
         if(GetModuleFileName(NULL,cd,MAX_PATH)){
             cd[MAX_PATH-1] = 0;
 
-            i = strlen(cd);
-            while(i > 0) {
+            i = strlen(cd) - 1;
+            while(i >= 0) {
                 if(cd[i] == '\\'){
                     cd[i] = 0;
                     break;
