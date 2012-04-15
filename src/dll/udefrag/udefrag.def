@@ -14,4 +14,5 @@ EXPORTS
     udefrag_release_default_formatted_results
     udefrag_get_error_description
     udefrag_set_log_file_path
+    udefrag_flush_dbg_log
     udefrag_init_failed

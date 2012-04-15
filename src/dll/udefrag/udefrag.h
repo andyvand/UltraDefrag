@@ -142,6 +142,7 @@ char udefrag_toupper(char c);
 char udefrag_tolower(char c);
 
 int udefrag_set_log_file_path(void);
+void udefrag_flush_dbg_log(void);
 int udefrag_init_failed(void);
 
 #endif /* _UDEFRAG_H_ */
