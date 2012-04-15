@@ -26,8 +26,6 @@
     - high DPI screens support was improved
     - Internals: flags field removed from winx_file_disposition structure
     - many zenwinx prototypes changed by replacing short keyword by wchar_t
-    - unsafe IncreaseGoogleAnalyticsCounterAsynch routine
-      removed from wgx library
     - useless fat32_xxx fields removed from winx_volume_information structure
     - Windows Server 2003 DDK needs to be patched in order to compile
       the program; look at rsc/compilation.dox for details
@@ -49,6 +47,9 @@
       Hebrew
 
     - Internals: make-mingw-projects.lua script added
+    - unsafe IncreaseGoogleAnalyticsCounterAsynch routine
+      removed from wgx library
+    - WgxCreateProcess and WgxCreateThread routines added to wgx library
 
 
   Version 5.0.4  2012-04-07
