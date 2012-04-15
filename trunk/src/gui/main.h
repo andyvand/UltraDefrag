@@ -299,9 +299,6 @@ extern int minimize_to_system_tray;
 * }
 */
 
-#define create_thread(func,param,ph) \
-        CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)func,(void *)param,0,ph)
-
 #define UNDEFINED_COORD (-10000)
 
 /* this macro converts pixels from 96 DPI to the current one */
