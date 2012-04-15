@@ -40,6 +40,7 @@
     - GUI options verification was added
     - ability to analyze, optimize and quick optimize drive from
       Explorer context menu added
+    - support of relative log paths added to both GUI and console interface
     - status bar MFT string removed from translations, since it is nearly
       impossible to translate due to space issues
     - the following translations were updated:
