@@ -605,27 +605,70 @@ char *udefrag_get_error_description(int error_code)
  */
 int udefrag_set_log_file_path(void)
 {
-    wchar_t *path;
+    wchar_t *path, *buffer;
     char *native_path, *path_copy, *filename;
     int result;
+    DWORD (__stdcall *func_GetLongPathNameW)(
+        wchar_t *lpszShortPath,wchar_t *lpszLongPath,
+        DWORD cchBuffer) = NULL;
+    DWORD (__stdcall *func_GetFullPathNameW)(
+        wchar_t *lpFileName,DWORD nBufferLength,
+        wchar_t *lpBuffer,wchar_t **lpFilePart) = NULL;
     
     path = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
     if(path == NULL)
         return UDEFRAG_NO_MEM;
+    buffer = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
+    if(buffer == NULL){
+        winx_heap_free(path);
+        return UDEFRAG_NO_MEM;
+    }
     
     result = winx_query_env_variable(L"UD_LOG_FILE_PATH",path,ENV_BUFFER_SIZE);
     if(result < 0 || path[0] == 0){
         /* empty variable forces to disable log */
         winx_disable_dbg_log();
         winx_heap_free(path);
+        winx_heap_free(buffer);
         return 0;
+    }
+    
+    /* convert to the full path whenever possible */
+    winx_get_proc_address(L"kernel32.dll",
+        "GetLongPathNameW",
+        (void *)&func_GetLongPathNameW);
+    winx_get_proc_address(L"kernel32.dll",
+        "GetFullPathNameW",
+        (void *)&func_GetFullPathNameW);
+    if(func_GetLongPathNameW){
+        result = func_GetLongPathNameW(path,buffer,ENV_BUFFER_SIZE);
+        if(result == 0){
+            DebugPrint("udefrag_set_log_file_path: GetLongPathNameW failed");
+        } else if(result > ENV_BUFFER_SIZE){
+            DebugPrint("udefrag_set_log_file_path: path %ws is too long",path);
+        } else {
+            buffer[ENV_BUFFER_SIZE - 1] = 0;
+            wcscpy(path,buffer);
+        }
+    }
+    if(func_GetFullPathNameW){
+        result = func_GetFullPathNameW(path,ENV_BUFFER_SIZE,buffer,NULL);
+        if(result == 0){
+            DebugPrint("udefrag_set_log_file_path: GetFullPathNameW failed");
+        } else if(result > ENV_BUFFER_SIZE){
+            DebugPrint("udefrag_set_log_file_path: path %ws is too long",path);
+        } else {
+            buffer[ENV_BUFFER_SIZE - 1] = 0;
+            wcscpy(path,buffer);
+        }
     }
     
     /* convert to native path */
     native_path = winx_sprintf("\\??\\%ws",path);
     if(native_path == NULL){
-        DebugPrint("set_log_file_path: cannot build native path");
+        DebugPrint("udefrag_set_log_file_path: cannot build native path");
         winx_heap_free(path);
+        winx_heap_free(buffer);
         return (-1);
     }
     
@@ -636,7 +679,7 @@ int udefrag_set_log_file_path(void)
     result = 0;
     path_copy = winx_strdup(native_path);
     if(path_copy == NULL){
-        DebugPrint("set_log_file_path: not enough memory");
+        DebugPrint("udefrag_set_log_file_path: not enough memory");
     } else {
         winx_path_remove_filename(path_copy);
         result = winx_create_path(path_copy);
@@ -647,17 +690,17 @@ int udefrag_set_log_file_path(void)
     if(result < 0){
         result = winx_query_env_variable(L"TMP",path,ENV_BUFFER_SIZE);
         if(result < 0 || path[0] == 0){
-            DebugPrint("set_log_file_path: failed to query %%TMP%%");
+            DebugPrint("udefrag_set_log_file_path: failed to query %%TMP%%");
         } else {
             filename = winx_strdup(native_path);
             if(filename == NULL){
-                DebugPrint("set_log_file_path: cannot allocate memory for filename");
+                DebugPrint("udefrag_set_log_file_path: cannot allocate memory for filename");
             } else {
                 winx_path_extract_filename(filename);
                 winx_heap_free(native_path);
                 native_path = winx_sprintf("\\??\\%ws\\UltraDefrag_Logs\\%s",path,filename);
                 if(native_path == NULL){
-                    DebugPrint("set_log_file_path: cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
+                    DebugPrint("udefrag_set_log_file_path: cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
                 } else {
                     /* delete old logfile from the temporary folder */
                     winx_delete_file(native_path);
@@ -672,6 +715,7 @@ int udefrag_set_log_file_path(void)
     
     winx_heap_free(native_path);
     winx_heap_free(path);
+    winx_heap_free(buffer);
     return 0;
 }
 
