@@ -411,12 +411,9 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
  */
 void start_selected_jobs(udefrag_job_type job_type)
 {
-    DWORD id;
-    HANDLE h;
     char *action = "disk analysis";
 
-    h = create_thread(StartJobsThreadProc,(LPVOID)(DWORD_PTR)job_type,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(StartJobsThreadProc,(LPVOID)(DWORD_PTR)job_type)){
         if(job_type == DEFRAGMENTATION_JOB)
             action = "disk defragmentation";
         else if(job_type == FULL_OPTIMIZATION_JOB)
@@ -428,8 +425,6 @@ void start_selected_jobs(udefrag_job_type job_type)
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
             "Cannot create thread starting %s!",
             action);
-    } else {
-        CloseHandle(h);
     }
 }
 
@@ -467,7 +462,7 @@ void release_jobs(void)
  * @brief Buffers for RepairSelectedVolumes.
  */
 #define MAX_CMD_LENGTH 32768
-char command[MAX_CMD_LENGTH];
+char args[MAX_CMD_LENGTH];
 char buffer[MAX_CMD_LENGTH];
 
 /**
@@ -477,24 +472,12 @@ void RepairSelectedVolumes(void)
 {
     LRESULT SelectedItem;
     LV_ITEM lvi;
-    char path[MAX_PATH];
     char letter;
     int index;
-    STARTUPINFO si;
-    PROCESS_INFORMATION pi;
     int counter = 0;
 
-    if(!GetSystemDirectory(path,MAX_PATH)){
-        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot retrieve the system directory path");
-        return;
-    }
-    _snprintf(buffer,MAX_PATH,"%s\\cmd.exe",path);
-    buffer[MAX_PATH - 1] = 0;
-    strcpy(path,buffer);
-    
-    _snprintf(command,MAX_CMD_LENGTH,"%s /C",path);
-    command[MAX_CMD_LENGTH - 1] = 0;
-    
+    strcpy(args,"/C");
+
     index = -1;
     while(1){
         SelectedItem = SendMessage(hList,LVM_GETNEXTITEM,(WPARAM)index,LVNI_SELECTED);
@@ -508,9 +491,9 @@ void RepairSelectedVolumes(void)
             letter = buffer[0];
             _snprintf(buffer,MAX_CMD_LENGTH,
                 "%s title CHKDSK %c: & echo. & chkdsk %c: /V /F & echo. & pause &",
-                command,letter,letter);
+                args,letter,letter);
             buffer[MAX_CMD_LENGTH - 1] = 0;
-            strcpy(command,buffer);
+            strcpy(args,buffer);
             counter ++;
         }
         index = (int)SelectedItem;
@@ -518,20 +501,10 @@ void RepairSelectedVolumes(void)
     
     if(counter == 0) return;
 
-    ZeroMemory(&si,sizeof(si));
-    si.cb = sizeof(si);
-    si.dwFlags = STARTF_USESHOWWINDOW;
-    si.wShowWindow = SW_SHOW;
-    ZeroMemory(&pi,sizeof(pi));
-
-    if(!CreateProcess(path,command,
-      NULL,NULL,FALSE,0,NULL,NULL,&si,&pi)){
+    if(!WgxCreateProcess("%windir%\\system32\\cmd.exe",args)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
             "Cannot execute cmd.exe program!");
-        return;
     }
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
 }
 
 /** @} */

@@ -205,42 +205,22 @@ void SetEnvironmentVariables(void)
  * by passing them through Lua
  * interpreter.
  */
-static void ValidateGUIOptions(char *file)
+static void ValidateGUIOptions(void)
 {
     FILE *f;
-    char cmd[MAX_PATH];
-    char buffer[MAX_PATH];
-    STARTUPINFO si;
-    PROCESS_INFORMATION pi;
     
     /* check file existence */
-    f = fopen(file,"r");
+    f = fopen(".\\options\\guiopts.lua","r");
     if(f) fclose(f);
     else return;
 
     /* run Lua interpreter */
-    strcpy(cmd,".\\lua5.1a_gui.exe");
-    _snprintf(buffer,MAX_PATH,".\\lua5.1a_gui.exe \"%s\"",file);
-    buffer[MAX_PATH - 1] = 0;
-
-    ZeroMemory(&si,sizeof(si));
-    si.cb = sizeof(si);
-    si.dwFlags = STARTF_USESHOWWINDOW;
-    si.wShowWindow = SW_SHOW;
-    ZeroMemory(&pi,sizeof(pi));
-
-    if(!CreateProcess(cmd,buffer,
-      NULL,NULL,FALSE,0,NULL,NULL,&si,&pi)){
-        WgxDbgPrintLastError("Cannot execute lua5.1a_gui.exe program");
-        return;
-    }
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
+    (void)WgxCreateProcess(".\\lua5.1a_gui.exe", ".\\options\\guiopts.lua");
 }
 
 void GetPrefs(void)
 {
-    ValidateGUIOptions(".\\options\\guiopts.lua");
+    ValidateGUIOptions();
     WgxGetOptions(".\\options\\guiopts.lua",read_only_options);
     WgxGetOptions(".\\options\\guiopts-internals.lua",internal_options);
     
@@ -439,15 +419,9 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
  */
 void StartPrefsChangesTracking()
 {
-    HANDLE h;
-    DWORD id;
-    
-    h = create_thread(PrefsChangesTrackingProc,NULL,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(PrefsChangesTrackingProc,NULL)){
         WgxDbgPrintLastError("Cannot create thread for guiopts.lua changes tracking");
         changes_tracking_stopped = 1;
-    } else {
-        CloseHandle(h);
     }
 }
 
@@ -588,16 +562,10 @@ done:
  */
 void StartBootExecChangesTracking()
 {
-    HANDLE h;
-    DWORD id;
-
     if(btd_installed){
-        h = create_thread(BootExecTrackingProc,NULL,&id);
-        if(h == NULL){
+        if(!WgxCreateThread(BootExecTrackingProc,NULL)){
             WgxDbgPrintLastError("Cannot create thread for BootExecute registry value changes tracking");
             boot_exec_tracking_stopped = 1;
-        } else {
-            CloseHandle(h);
         }
     } else {
         boot_exec_tracking_stopped = 1;

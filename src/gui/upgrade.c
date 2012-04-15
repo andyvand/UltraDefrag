@@ -192,17 +192,11 @@ static wchar_t *GetNewVersionAnnouncement(void)
  */
 void CheckForTheNewVersion(void)
 {
-    HANDLE h;
-    DWORD id;
-    
     if(disable_latest_version_check) return;
     
-    h = create_thread(CheckForTheNewVersionThreadProc,NULL,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(CheckForTheNewVersionThreadProc,NULL)){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONWARNING,
             "Cannot create thread checking the latest version of the program!");
-    } else {
-        CloseHandle(h);
     }
 }
 

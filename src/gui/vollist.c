@@ -510,15 +510,9 @@ static DWORD WINAPI RescanDrivesThreadProc(LPVOID lpParameter)
  */
 void UpdateVolList(void)
 {
-    DWORD id;
-    HANDLE h;
-
-    h = create_thread(RescanDrivesThreadProc,NULL,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(RescanDrivesThreadProc,NULL)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
             "Cannot create thread starting drives rescan!");
-    } else {
-        CloseHandle(h);
     }
 }
 

@@ -1232,15 +1232,9 @@ DWORD WINAPI UpdateWebStatisticsThreadProc(LPVOID lpParameter)
  */
 void start_web_statistics(void)
 {
-    HANDLE h;
-    DWORD id;
-
-    h = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)UpdateWebStatisticsThreadProc,NULL,0,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(UpdateWebStatisticsThreadProc,NULL)){
         WgxDbgPrintLastError("Cannot run UpdateWebStatisticsThreadProc");
         web_statistics_completed = 1;
-    } else {
-        CloseHandle(h);
     }
 }
 

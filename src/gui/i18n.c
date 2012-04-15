@@ -580,15 +580,9 @@ DWORD WINAPI LangIniChangesTrackingProc(LPVOID lpParameter)
  */
 void StartLangIniChangesTracking()
 {
-    HANDLE h;
-    DWORD id;
-    
-    h = create_thread(LangIniChangesTrackingProc,NULL,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(LangIniChangesTrackingProc,NULL)){
         WgxDbgPrintLastError("Cannot create thread for lang.ini changes tracking");
         lang_ini_tracking_stopped = 1;
-    } else {
-        CloseHandle(h);
     }
 }
 
@@ -656,15 +650,9 @@ DWORD WINAPI I18nFolderChangesTrackingProc(LPVOID lpParameter)
  */
 void StartI18nFolderChangesTracking()
 {
-    HANDLE h;
-    DWORD id;
-    
-    h = create_thread(I18nFolderChangesTrackingProc,NULL,&id);
-    if(h == NULL){
+    if(!WgxCreateThread(I18nFolderChangesTrackingProc,NULL)){
         WgxDbgPrintLastError("Cannot create thread for i18n folder changes tracking");
         i18n_folder_tracking_stopped = 1;
-    } else {
-        CloseHandle(h);
     }
 }
 
