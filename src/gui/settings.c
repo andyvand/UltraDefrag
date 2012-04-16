@@ -148,6 +148,11 @@ WGX_OPTION internal_options[] = {
     {0,               0, NULL, NULL, NULL}
 };
 
+/**
+ * @brief Cleans up the environment
+ * by removing all the variables set
+ * by the program.
+ */
 void DeleteEnvironmentVariables(void)
 {
     (void)SetEnvironmentVariable("UD_IN_FILTER",NULL);
@@ -164,36 +169,67 @@ void DeleteEnvironmentVariables(void)
     (void)SetEnvironmentVariable("UD_DRY_RUN",NULL);
 }
 
-void SetEnvironmentVariables(void)
+/**
+ * @internal
+ * @brief Sets a single
+ * environment variable.
+ */
+static void SetEnvVariable(wchar_t *name,char *utf8_value)
+{
+    wchar_t *utf16_value;
+    int length;
+    
+    if(name == NULL || utf8_value == NULL) return;
+    if(utf8_value[0] == 0) return;
+    
+    length = strlen(utf8_value);
+    utf16_value = malloc((length + 1) * 2);
+    if(utf16_value == NULL){
+        WgxDbgPrint("SetEnvVariable: not enough memory for %s",utf8_value);
+        return;
+    }
+    if(!MultiByteToWideChar(CP_UTF8,0,utf8_value,-1,utf16_value,length + 1)){
+        WgxDbgPrintLastError("SetEnvVariable: MultiByteToWideChar failed");
+        free(utf16_value);
+        return;
+    }
+    
+    (void)SetEnvironmentVariableW(name,utf16_value);
+    free(utf16_value);
+}
+
+/**
+ * @internal
+ * @brief Applies UltraDefrag
+ * options to the environment.
+ */
+static void SetEnvironmentVariables(void)
 {
     char buffer[128];
-    
-    if(in_filter[0])
-        (void)SetEnvironmentVariable("UD_IN_FILTER",in_filter);
-    if(ex_filter[0])
-        (void)SetEnvironmentVariable("UD_EX_FILTER",ex_filter);
-    if(fragment_size_threshold[0])
-        (void)SetEnvironmentVariable("UD_FRAGMENT_SIZE_THRESHOLD",fragment_size_threshold);
-    if(file_size_threshold[0])
-        (void)SetEnvironmentVariable("UD_FILE_SIZE_THRESHOLD",file_size_threshold);
-    if(optimizer_file_size_threshold[0])
-        (void)SetEnvironmentVariable("UD_OPTIMIZER_FILE_SIZE_THRESHOLD",optimizer_file_size_threshold);
-    if(timelimit[0])
-        (void)SetEnvironmentVariable("UD_TIME_LIMIT",timelimit);
+
+    /* cleanup the environment */
+    DeleteEnvironmentVariables();
+
+    /* set environment variables */
+    SetEnvVariable(L"UD_IN_FILTER",in_filter);
+    SetEnvVariable(L"UD_EX_FILTER",ex_filter);
+    SetEnvVariable(L"UD_FRAGMENT_SIZE_THRESHOLD",fragment_size_threshold);
+    SetEnvVariable(L"UD_FILE_SIZE_THRESHOLD",file_size_threshold);
+    SetEnvVariable(L"UD_OPTIMIZER_FILE_SIZE_THRESHOLD",optimizer_file_size_threshold);
+    SetEnvVariable(L"UD_TIME_LIMIT",timelimit);
     if(fragments_threshold){
         (void)sprintf(buffer,"%i",fragments_threshold);
-        (void)SetEnvironmentVariable("UD_FRAGMENTS_THRESHOLD",buffer);
+        SetEnvVariable(L"UD_FRAGMENTS_THRESHOLD",buffer);
     }
     if(refresh_interval){
         (void)sprintf(buffer,"%i",refresh_interval);
-        (void)SetEnvironmentVariable("UD_REFRESH_INTERVAL",buffer);
+        SetEnvVariable(L"UD_REFRESH_INTERVAL",buffer);
     }
     (void)sprintf(buffer,"%i",disable_reports);
-    (void)SetEnvironmentVariable("UD_DISABLE_REPORTS",buffer);
-    if(dbgprint_level[0])
-        (void)SetEnvironmentVariable("UD_DBGPRINT_LEVEL",dbgprint_level);
+    SetEnvVariable(L"UD_DISABLE_REPORTS",buffer);
+    SetEnvVariable(L"UD_DBGPRINT_LEVEL",dbgprint_level);
     if(log_file_path[0]){
-        (void)SetEnvironmentVariable("UD_LOG_FILE_PATH",log_file_path);
+        SetEnvVariable(L"UD_LOG_FILE_PATH",log_file_path);
         (void)udefrag_set_log_file_path();
     }
     if(dry_run)
@@ -236,7 +272,6 @@ void GetPrefs(void)
     if(grid_line_width < 0)
         grid_line_width = DEFAULT_GRID_LINE_WIDTH;
 
-    DeleteEnvironmentVariables();
     SetEnvironmentVariables();
 }
 

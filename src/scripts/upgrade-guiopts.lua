@@ -25,6 +25,10 @@ config_file_contents = [[
 --------------------------------------------------------------------------------
 -- UltraDefrag GUI Configuration file
 -- This file is written in Lua programming language http://www.lua.org/
+--
+-- To use Unicode characters in filters and other strings, edit this file
+-- in Notepad++ editor (http://www.notepad-plus-plus.org/) and save it in
+-- UTF-8 (without BOM) encoding.
 --------------------------------------------------------------------------------
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,6 +180,8 @@ dbgprint_level = "$dbgprint_level"
 --    log_file_path = os.getenv("SystemRoot") .. "\\UltraDefrag\\Logs\\ultradefrag.log"
 -- b) Uses the temporary directory of the executing user
 --    log_file_path = os.getenv("TEMP") .. "\\UltraDefrag_Logs\\ultradefrag.log"
+--
+-- Unicode characters cannot be included in log file paths.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 log_file_path = "$log_file_path"
@@ -314,7 +320,7 @@ end
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 104
+current_version = 105
 old_version = 0
 upgrade_needed = 1
 
