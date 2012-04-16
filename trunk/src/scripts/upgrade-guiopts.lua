@@ -173,12 +173,13 @@ dbgprint_level = "$dbgprint_level"
 -- Set log_file_path to the path and file name of the log file to be created,
 -- for normal operation set it to an empty string ("").
 -- For example:
--- log_file_path = "C:\\Windows\\UltraDefrag\\Logs\\ultradefrag.log"
+--     log_file_path = "C:\\Windows\\UltraDefrag\\Logs\\ultradefrag.log"
 --
--- Examples using environment variables:
--- a) Same as above, but uses SystemRoot (= windir) variable
---    log_file_path = os.getenv("SystemRoot") .. "\\UltraDefrag\\Logs\\ultradefrag.log"
--- b) Uses the temporary directory of the executing user
+--  Same as above, but uses relative path
+--    log_file_path = ".\\Logs\\ultradefrag.log"
+--
+-- Example using environment variable:
+--  Uses the temporary directory of the executing user
 --    log_file_path = os.getenv("TEMP") .. "\\UltraDefrag_Logs\\ultradefrag.log"
 --
 -- Unicode characters cannot be included in log file paths.
