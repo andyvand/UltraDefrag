@@ -134,10 +134,8 @@ end
 function display_report(path)
     local ret
     if os.shellexec ~= nil then
-        ret = os.shellexec(path,"open")
-        if ret <= 32 then
-            error("Cannot open " .. path .. ", error code = " .. ret .. "!")
-        end
+        ret, msg = os.shellexec(path,"open")
+        if ret <= 32 then error(msg) end
     else
         if os.execute("cmd.exe /C " .. path) ~= 0 then
             error("Cannot execute cmd.exe /C " .. path .. " command!")

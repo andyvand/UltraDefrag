@@ -25,8 +25,9 @@ os.setenv(name [, value])
 
 os.shellexec(path, action)
     Performs an operation of a specified file. If this function
-    fails it returns an error code which is always less than
-    or equal to 32. Read MSDN article on ShellExecute for details.
+    fails it returns an error code, which is always less than
+    or equal to 32, and a string describing the error. 
+    Read MSDN article on ShellExecute for details.
 
 The lua.build file is included to produce Lua modules for three processor
 architectures (i386, amd64 and ia64) during the automatic UltraDefrag

@@ -72,6 +72,7 @@ static int os_setenv (lua_State *L) {
   const char *name = luaL_checkstring(L, 1);
   if(name[0] == 0){
     /* nothing to do */
+    lua_pushboolean(L, 1);
     return 1;
   }
 
@@ -107,25 +108,95 @@ static int os_setenv (lua_State *L) {
   if(result < 0){
     return luaL_error(L, strerror(en));
   }
+  lua_pushboolean(L, 1);
   return 1;
 }
 
 static int os_shellexec (lua_State *L) {
+  int error;
   HINSTANCE hShell = LoadLibrary("shell32.dll");
   if(!hShell){
-	  lua_pushinteger(L, 0);
-	  return 1;
+    error = GetLastError();
+	lua_pushinteger(L, 0);
+    if(error == ERROR_COMMITMENT_LIMIT || error == ERROR_NOT_ENOUGH_MEMORY){
+      lua_pushstring(L, "unable to load shell32.dll: not enough memory");
+    } else {
+      lua_pushfstring(L, "unable to load shell32.dll: error code = 0x%x",error);
+    }
+	return 2;
   }
   /* get function address dynamically to reduce lua.dll loading time */
   func_ShellExecuteA = (void *)GetProcAddress(hShell,"ShellExecuteA");
   if(!func_ShellExecuteA){
-	  lua_pushinteger(L, 0);
-	  return 1;
+    error = GetLastError();
+	lua_pushinteger(L, 0);
+    if(error == ERROR_COMMITMENT_LIMIT || error == ERROR_NOT_ENOUGH_MEMORY){
+      lua_pushstring(L, "unable to find ShellExecute: not enough memory");
+    } else {
+      lua_pushfstring(L, "unable to find ShellExecute: error code = 0x%x",error);
+    }
+    return 2;
   }
-  lua_pushinteger(L, (int)(LONG_PTR)func_ShellExecuteA(NULL,
-		luaL_checkstring(L, 2),
-		luaL_checkstring(L, 1),
-		NULL,NULL,SW_SHOW));
+  const char *path = luaL_checkstring(L, 1);
+  const char *action = luaL_checkstring(L, 2);
+  error = (int)(LONG_PTR)func_ShellExecuteA(NULL,
+    action,path,NULL,NULL,SW_SHOW);
+  lua_pushinteger(L, error);
+  char *error_description;
+  switch(error){
+  case 0:
+    error_description = "out of memory or resources";
+    break;
+  case ERROR_FILE_NOT_FOUND:
+  /*case SE_ERR_FNF:*/
+    error_description = "file not found";
+    break;
+  case ERROR_PATH_NOT_FOUND:
+  /*case SE_ERR_PNF:*/
+    error_description = "path not found";
+    break;
+  case ERROR_BAD_FORMAT:
+    error_description = "invalid .exe file";
+    break;
+  case SE_ERR_ACCESSDENIED:
+    error_description = "access denied";
+    break;
+  case SE_ERR_ASSOCINCOMPLETE:
+    error_description = "incomplete or invalid file name association";
+    break;
+  case SE_ERR_DDEBUSY:
+    error_description = "DDE transaction not completed because other transactions were being processed";
+    break;
+  case SE_ERR_DDEFAIL:
+    error_description = "DDE transaction failed";
+    break;
+  case SE_ERR_DDETIMEOUT:
+    error_description = "DDE transaction not completed because request timed out";
+    break;
+  case SE_ERR_DLLNOTFOUND:
+    error_description = "library not found";
+    break;
+  case SE_ERR_NOASSOC:
+    error_description = "no application associated with file name extension "
+                        "or you attempt to print a file that is not printable";
+    break;
+  case SE_ERR_OOM:
+    error_description = "not enough memory";
+    break;
+  case SE_ERR_SHARE:
+    error_description = "sharing violation";
+    break;
+  default:
+    error_description = NULL;
+  }
+  if(error <= 32){
+    if(error_description){
+      lua_pushfstring(L, "unable to %s %s: %s",action,path,error_description);
+    } else {
+      lua_pushfstring(L, "unable to %s %s: error code = 0x%x",action,path,error);
+    }
+    return 2;
+  }
   return 1;
 }
 
