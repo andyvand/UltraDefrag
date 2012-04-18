@@ -5,9 +5,8 @@
 */
 
 /*
-* os.shellexec call has been added
-* by Dmitri Arkhangelski (2008) especially
-* for UltraDefrag report converter.
+* os.setenv and os.shellexec calls has been
+* added by Dmitri Arkhangelski (2008, 2012).
 */
 
 #include <windows.h>
@@ -53,18 +52,76 @@ static int os_execute (lua_State *L) {
   return 1;
 }
 
+/* converts UTF-8 string to UTF-16 string, returns also Win32 error */
+static wchar_t *convert_to_utf16(const char *utf8_string,int *error) {
+  int length = strlen(utf8_string);
+  wchar_t *utf16_string = malloc((length + 1) * 2);
+  if(utf16_string == NULL){
+    *error = ERROR_NOT_ENOUGH_MEMORY;
+    return NULL;
+  }
+  if(!MultiByteToWideChar(CP_UTF8,0,utf8_string,-1,utf16_string,length + 1)){
+    *error = GetLastError();
+    free(utf16_string);
+    return NULL;
+  }
+  return utf16_string;
+}
+
+static int os_setenv (lua_State *L) {
+  const char *name = luaL_checkstring(L, 1);
+  if(name[0] == 0){
+    /* nothing to do */
+    return 1;
+  }
+
+  const char *value;
+  if(lua_isnoneornil(L, 2)){
+    value = "";
+  } else {
+    value = luaL_checkstring(L, 2);
+  }
+  int error;
+  wchar_t *utf16_value = convert_to_utf16(value,&error);
+  if(utf16_value == NULL){
+    if(error == ERROR_COMMITMENT_LIMIT || error == ERROR_NOT_ENOUGH_MEMORY){
+      return luaL_error(L, "unable to convert %s to UTF-16: not enough memory",value);
+    } else {
+      return luaL_error(L, "unable to convert %s to UTF-16: error code = 0x%x",value,error);
+    }
+  }
+
+  int length = strlen(name) + 1 + wcslen(utf16_value) + 1;
+  wchar_t *buffer = malloc(length * sizeof(wchar_t));
+  if(buffer == NULL){
+    free(utf16_value);
+    return luaL_error(L, "not enough memory");
+  }
+  _snwprintf(buffer,length,L"%hs=%ws",name,utf16_value);
+  buffer[length - 1] = 0;
+
+  int result = _wputenv(buffer);
+  int en = errno;
+  free(utf16_value);
+  free(buffer);
+  if(result < 0){
+    return luaL_error(L, strerror(en));
+  }
+  return 1;
+}
+
 static int os_shellexec (lua_State *L) {
   HINSTANCE hShell = LoadLibrary("shell32.dll");
   if(!hShell){
 	  lua_pushinteger(L, 0);
 	  return 1;
   }
+  /* get function address dynamically to reduce lua.dll loading time */
   func_ShellExecuteA = (void *)GetProcAddress(hShell,"ShellExecuteA");
   if(!func_ShellExecuteA){
 	  lua_pushinteger(L, 0);
 	  return 1;
   }
-  /* get function address dynamically to reduce lua.dll loading time */
   lua_pushinteger(L, (int)(LONG_PTR)func_ShellExecuteA(NULL,
 		luaL_checkstring(L, 2),
 		luaL_checkstring(L, 1),
@@ -261,6 +318,7 @@ static const luaL_Reg syslib[] = {
   {"setlocale", os_setlocale},
   {"time",      os_time},
   {"tmpname",   os_tmpname},
+  {"setenv",    os_setenv},
   {"shellexec", os_shellexec},
   {NULL, NULL}
 };
