@@ -27,23 +27,6 @@
 #include "main.h"
 
 /*
-* These options have the same effect as environment 
-* variables accepted by the command line interface.
-*/
-char in_filter[32767];
-char ex_filter[32767];
-char fragment_size_threshold[128];
-char file_size_threshold[128];
-char optimizer_file_size_threshold[128];
-char timelimit[256];
-int fragments_threshold;
-int refresh_interval;
-int disable_reports;
-char dbgprint_level[32] = {0};
-char log_file_path[32767] = {0};
-int dry_run;
-
-/*
 * GUI specific options
 */
 int seconds_for_shutdown_rejection = 60;
@@ -64,6 +47,8 @@ int rx = UNDEFINED_COORD;
 int ry = UNDEFINED_COORD;
 int rwidth = 0;
 int rheight = 0;
+
+int dry_run;
 
 extern RECT r_rc;
 extern int map_block_size;
@@ -89,17 +74,6 @@ RECT map_rc = {0,0,0,0};
 /* options read from guiopts.lua */
 WGX_OPTION read_only_options[] = {
     /* type, value buffer size, name, value, default value */
-    {WGX_CFG_STRING,  sizeof(in_filter), "in_filter", in_filter, ""},
-    {WGX_CFG_STRING,  sizeof(ex_filter), "ex_filter", ex_filter, ""},
-    {WGX_CFG_STRING,  sizeof(file_size_threshold), "file_size_threshold", file_size_threshold, ""},
-    {WGX_CFG_STRING,  sizeof(fragment_size_threshold), "fragment_size_threshold", fragment_size_threshold, ""},
-    {WGX_CFG_STRING,  sizeof(optimizer_file_size_threshold), "optimizer_file_size_threshold", optimizer_file_size_threshold, ""},
-    {WGX_CFG_INT,     0, "fragments_threshold", &fragments_threshold, 0},
-    {WGX_CFG_STRING,  sizeof(timelimit), "time_limit", timelimit, ""},
-    {WGX_CFG_INT,     0, "refresh_interval", &refresh_interval, (void *)DEFAULT_REFRESH_INTERVAL},
-    {WGX_CFG_INT,     0, "disable_reports", &disable_reports, 0},
-    {WGX_CFG_STRING,  sizeof(dbgprint_level), "dbgprint_level", dbgprint_level, ""},
-    {WGX_CFG_STRING,  sizeof(log_file_path), "log_file_path", log_file_path, ""},
     {WGX_CFG_INT,     0, "dry_run", &dry_run, 0},
     {WGX_CFG_INT,     0, "seconds_for_shutdown_rejection", &seconds_for_shutdown_rejection, (void *)60},
     {WGX_CFG_INT,     0, "map_block_size", &map_block_size, (void *)DEFAULT_MAP_BLOCK_SIZE},
@@ -170,73 +144,6 @@ void DeleteEnvironmentVariables(void)
 }
 
 /**
- * @internal
- * @brief Sets a single
- * environment variable.
- */
-static void SetEnvVariable(wchar_t *name,char *utf8_value)
-{
-    wchar_t *utf16_value;
-    int length;
-    
-    if(name == NULL || utf8_value == NULL) return;
-    if(utf8_value[0] == 0) return;
-    
-    length = strlen(utf8_value);
-    utf16_value = malloc((length + 1) * 2);
-    if(utf16_value == NULL){
-        WgxDbgPrint("SetEnvVariable: not enough memory for %s",utf8_value);
-        return;
-    }
-    if(!MultiByteToWideChar(CP_UTF8,0,utf8_value,-1,utf16_value,length + 1)){
-        WgxDbgPrintLastError("SetEnvVariable: MultiByteToWideChar failed");
-        free(utf16_value);
-        return;
-    }
-    
-    (void)SetEnvironmentVariableW(name,utf16_value);
-    free(utf16_value);
-}
-
-/**
- * @internal
- * @brief Applies UltraDefrag
- * options to the environment.
- */
-static void SetEnvironmentVariables(void)
-{
-    char buffer[128];
-
-    /* cleanup the environment */
-    DeleteEnvironmentVariables();
-
-    /* set environment variables */
-    SetEnvVariable(L"UD_IN_FILTER",in_filter);
-    SetEnvVariable(L"UD_EX_FILTER",ex_filter);
-    SetEnvVariable(L"UD_FRAGMENT_SIZE_THRESHOLD",fragment_size_threshold);
-    SetEnvVariable(L"UD_FILE_SIZE_THRESHOLD",file_size_threshold);
-    SetEnvVariable(L"UD_OPTIMIZER_FILE_SIZE_THRESHOLD",optimizer_file_size_threshold);
-    SetEnvVariable(L"UD_TIME_LIMIT",timelimit);
-    if(fragments_threshold){
-        (void)sprintf(buffer,"%i",fragments_threshold);
-        SetEnvVariable(L"UD_FRAGMENTS_THRESHOLD",buffer);
-    }
-    if(refresh_interval){
-        (void)sprintf(buffer,"%i",refresh_interval);
-        SetEnvVariable(L"UD_REFRESH_INTERVAL",buffer);
-    }
-    (void)sprintf(buffer,"%i",disable_reports);
-    SetEnvVariable(L"UD_DISABLE_REPORTS",buffer);
-    SetEnvVariable(L"UD_DBGPRINT_LEVEL",dbgprint_level);
-    if(log_file_path[0]){
-        SetEnvVariable(L"UD_LOG_FILE_PATH",log_file_path);
-        (void)udefrag_set_log_file_path();
-    }
-    if(dry_run)
-        (void)SetEnvironmentVariable("UD_DRY_RUN","1");
-}
-
-/**
  * @brief Validates GUI options
  * by passing them through Lua
  * interpreter.
@@ -272,7 +179,7 @@ void GetPrefs(void)
     if(grid_line_width < 0)
         grid_line_width = DEFAULT_GRID_LINE_WIDTH;
 
-    SetEnvironmentVariables();
+    (void)udefrag_set_log_file_path();
 }
 
 void SavePrefsCallback(char *error)
