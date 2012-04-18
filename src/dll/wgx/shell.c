@@ -100,7 +100,11 @@ BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
     if(!lpParameters) lpParameters = L"";
 
     buffer_length = wcslen(lpOperation) + wcslen(lpFile) + wcslen(lpParameters);
-    buffer_length += strlen(error_description);
+    if(error_description[0]){
+        buffer_length += strlen(error_description);
+    } else {
+        buffer_length += 64;
+    }
     buffer_length += 64;
 
     error_msg = malloc(buffer_length * sizeof(wchar_t));
@@ -109,8 +113,13 @@ BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
         return FALSE;
     }
     
-    (void)_snwprintf(error_msg,buffer_length,L"Cannot %ls %ls %ls\n%hs",
-            lpOperation,lpFile,lpParameters,error_description);
+    if(error_description[0]){
+        (void)_snwprintf(error_msg,buffer_length,L"Cannot %ls %ls %ls\n%hs",
+                lpOperation,lpFile,lpParameters,error_description);
+    } else {
+        (void)_snwprintf(error_msg,buffer_length,L"Cannot %ls %ls %ls\nError code = 0x%x",
+                lpOperation,lpFile,lpParameters,error_code);
+    }
     error_msg[buffer_length-1] = 0;
 
     MessageBoxW(hwnd,error_msg,L"Error!",MB_OK | MB_ICONHAND);
