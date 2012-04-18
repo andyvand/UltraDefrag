@@ -55,6 +55,7 @@
     - WgxCreateProcess and WgxCreateThread routines added to wgx library
     - winx_flush_dbg_log routine added to zenwinx library
     - udefrag_flush_dbg_log routine added to udefrag library
+    - os.setenv routine added to Lua library
 
 
   Version 5.0.4  2012-04-07
