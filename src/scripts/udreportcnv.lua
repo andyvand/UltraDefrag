@@ -36,6 +36,20 @@ text_report_path = ""
 -- Ancillary Procedures
 -------------------------------------------------------------------------------
 
+-- converts number of bytes to a human readable format
+function hrsize(n)
+    local suffixes = {"b", "Kb", "Mb", "Gb", "Tb", "Pb", "Eb", "Zb", "Yb"}
+    local i = 1
+    while n >= 1024 do
+        n = n / 1024
+        i = i + 1
+    end
+    -- round up
+    local m = math.floor(n)
+    if n >= (m + 0.5) then m = m + 1 end
+    return m .. " " .. suffixes[i]
+end
+
 function write_unicode_character(f,c)
     local b1, b2, b3
     
@@ -64,69 +78,73 @@ function write_unicode_character(f,c)
     return
 end
 
-function write_unicode_name_splitted(f,name)
-    local name_length = table.maxn(name)
-    local parts = {}
-    local n_parts = 1
-    local index = 1
-    local part_length
-    local chars_to_write
-    
-    -- write short names directly
-    if name_length <= max_chars_per_line or max_chars_per_line == 0 or max_chars_per_line == nil then
-        for j, b in ipairs(name) do
-            write_unicode_character(f,b)
-        end
+function write_file_path(path,f)
+    local split = false
+    if split_long_names ~= 1 then
+    elseif max_chars_per_line == nil then
+    elseif max_chars_per_line == 0 then
+    elseif string.len(path) <= max_chars_per_line then
+    else split = true
+    end
+    if not split then
+        f:write(path)
         return
     end
-    
-    -- split a name to parts
-    parts[1] = {}
-    for j, b in ipairs(name) do
-        parts[n_parts][index] = b
-        if b == 0x5C then -- \ character
-            n_parts = n_parts + 1
-            parts[n_parts] = {}
-            index = 1
+    -- split long lines
+    local parts, part, seq = {}, {}, ""
+    for c in string.gfind(path,"(.)") do
+        local b = string.byte(c)
+        if b < 0x80 then
+            -- single byte sequence
+            if string.len(seq) ~= 0 then
+                table.insert(part,seq)
+                seq = ""
+            end
+            table.insert(part,c)
+        elseif b < 0xC2 then
+            -- 2-nd or 3-rd byte of multibyte sequence
+            seq = seq .. c
         else
-            index = index + 1
+            -- 1-st byte of multibyte sequence
+            if string.len(seq) ~= 0 then
+                table.insert(part,seq)
+            end
+            seq = c
+        end
+        if b == 0x5C then -- back slash
+            table.insert(parts,part)
+            part = {}
         end
     end
-    
-    chars_to_write = max_chars_per_line
-    for j, part in pairs(parts) do
-        part_len = table.maxn(part)
-        if part_len == 0 then return end
+    if string.len(seq) ~= 0 then
+        table.insert(part,seq)
+    end
+    table.insert(parts,part)
+    local chars_to_write = max_chars_per_line
+    local break_at_end = false
+    for j, part in ipairs(parts) do
+        local part_len = table.maxn(part)
+        if part_len == 0 then break end
         if part_len > chars_to_write then
-            if j ~= 1 then
-                f:write("<br>")
+            if j ~= 1 and not break_at_end then
+                f:write("<br>"); break_at_end = true
                 chars_to_write = max_chars_per_line
             end
         end
         if part_len <= chars_to_write then
-            for k, b in ipairs(part) do
-                write_unicode_character(f,b)
+            for k, seq in ipairs(part) do
+                f:write(seq); break_at_end = false
             end
             chars_to_write = chars_to_write - part_len
         else -- current part is too long
-            for k, b in ipairs(part) do
-                write_unicode_character(f,b)
+            for k, seq in ipairs(part) do
+                f:write(seq); break_at_end = false
                 chars_to_write = chars_to_write - 1
                 if chars_to_write == 0 then
-                    f:write("<br>")
+                    f:write("<br>"); break_at_end = true
                     chars_to_write = max_chars_per_line
                 end
             end
-        end
-    end
-end
-
-function write_unicode_name(f,name)
-    if split_long_names == 1 then
-        write_unicode_name_splitted(f,name)
-    else
-        for j, b in ipairs(name) do
-            write_unicode_character(f,b)
         end
     end
 end
@@ -150,7 +168,8 @@ end
 localized = {}
 
 function get_localization_strings()
-    local f, i, j, lang = nil
+    local f, i, j
+    local lang = nil
     local contents
     local a, b, c, name, value, s
     local eq_sign_detected
@@ -256,25 +275,22 @@ function write_text_header(f)
     f:write(string.char(0xBB))
     f:write(string.char(0xBF))
 
-    f:write(";---------------------------------------------------------------------------------------------\r\n")
-    f:write("; Fragmented files on ", volume_letter, ": [", formatted_time, "]\r\n;\r\n")
-    f:write("; Fragments    Filesize  Comment      Status    Filename\r\n")
-    f:write(";---------------------------------------------------------------------------------------------\r\n")
-    f:write("\r\n")
+    f:write(";---------------------------------------------------------------------------------------------\n")
+    f:write("; Fragmented files on ", volume_letter, ": [", formatted_time, "]\n;\n")
+    f:write("; Fragments    Filesize  Comment      Status    Filename\n")
+    f:write(";---------------------------------------------------------------------------------------------\n")
+    f:write("\n")
 end
 
 function write_main_table(f)
     for i, file in ipairs(files) do
-        if file.filtered == 0 then
-            f:write(string.format("%11u%12s%9s%12s    ", file.fragments, 
-                string.gsub(file.hrsize,"&nbsp;"," "), file.comment,
-                file.status)
-            )
-            for j, b in ipairs(file.uname) do
-                write_unicode_character(f,b)
-            end
-            f:write("\r\n")
-        end
+        f:write(string.format("%11u%12s%9s%12s    ",
+            file.fragments, 
+            hrsize(file.size),
+            file.comment,
+            file.status)
+        )
+        f:write(string.gsub(file.path,"/","\\"),"\n")
     end
 end
 
@@ -282,8 +298,7 @@ function build_text_report()
     local filename, f
     
     filename = string.gsub(report_path,"%.luar$","%.txt")
-    -- note that 'b' flag is needed for utf-16 files
-    f = assert(io.open(filename,"wb"))
+    f = assert(io.open(filename,"w"))
     write_text_header(f)
     write_main_table(f)
     f:close()
@@ -371,7 +386,7 @@ function write_file_status(f,file)
 end
 
 function get_javascript()
-    local f, js = ""
+    local f, js = nil, ""
     if(enable_sorting == 1) then
         -- read udsorting.js file contents
         f = assert(io.open(instdir .. "\\scripts\\udsorting.js", "r"))
@@ -387,7 +402,7 @@ function get_javascript()
 end
 
 function get_css()
-    local f, css = ""
+    local f, css = nil, ""
     local custom_css = ""
 
     -- read udreport.css file contents
@@ -447,12 +462,16 @@ end
 
 function write_main_table_body(f)
     for i, file in ipairs(files) do
-        local class
-        if file.filtered == 1 then class = "f" else class = "u" end
-        f:write("<tr class=\"", class, "\"><td class=\"c\">", file.fragments,"</td>")
-        f:write("<td class=\"filesize\" id=\"", file.size, "\">", file.hrsize,"</td><td>")
-        write_unicode_name(f,file.uname)
-        f:write("</td><td class=\"c\">", file.comment, "</td><td class=\"file-status\">")
+        f:write("<tr class=\"u\">",
+            "<td class=\"c\">",file.fragments,"</td>",
+            "<td class=\"filesize\" id=\"", file.size, "\">",
+            string.gsub(hrsize(file.size)," ","&nbsp;"),"</td>"
+        )
+        f:write("<td>")
+        write_file_path(string.gsub(file.path,"/","\\"),f)
+        f:write("</td>")
+        f:write("<td class=\"c\">", file.comment, "</td>")
+        f:write("<td class=\"file-status\">")
         write_file_status(f,file)
         f:write("</td></tr>\n")
     end
@@ -463,8 +482,7 @@ function build_html_report()
     local js, css
 
     filename = string.gsub(report_path,"%.luar$","%.html")
-    -- note that 'b' flag is needed for utf-16 files
-    local f = assert(io.open(filename,"wb"))
+    local f = assert(io.open(filename,"w"))
 
     -- get JavaScript and CSS
     js = get_javascript()
@@ -493,9 +511,14 @@ dofile(instdir .. "\\options\\udreportopts.lua")
 -- read source file
 dofile(report_path)
 
+error_msg = [[
+Reports produced by old versions of UltraDefrag are no more supported.
+Update the program at least to the 5.0.5 version.
+]]
+
 -- check the report format version
-if format_version == nil or format_version < 5 then
-    error("Reports produced by old versions of UltraDefrag are no more supported.\nUpdate the program at least to the 5.0.3 version.")
+if format_version == nil or format_version < 6 then
+    error(error_msg)
 end
 
 -- read i18n strings

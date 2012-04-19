@@ -36,6 +36,48 @@
  */
 #define RSB_SIZE (512 * 1024)
 
+static void convert_to_utf8_path(char *dst,int size,wchar_t *src)
+{
+    int i; /* src index */
+    int j; /* dst index */
+    wchar_t c, b1, b2, b3;
+    
+    for(i = j = 0; src[i]; i++){
+        c = src[i];
+        if(c < 0x80){
+            if(j > (size - 2)) break;
+            /* replace all back slashes with */
+            /* forward slashes to please Lua */
+            if(c == '\\'){
+                dst[j] = '/';
+            } else {
+                dst[j] = (char)c;
+            }
+            j ++;
+        } else if(c < 0x800){ /* 0x80 - 0x7FF: 2 bytes */
+            if(j > (size - 3)) break;
+            b2 = 0x80 | (c & 0x3F);
+            c >>= 6;
+            b1 = 0xC0 | c;
+            dst[j] = (char)b1;
+            dst[j+1] = (char)b2;
+            j += 2;
+        } else { /* 0x800 - 0xFFFF: 3 bytes */
+            if(j > (size - 4)) break;
+            b3 = 0x80 | (c & 0x3F);
+            c >>= 6;
+            b2 = 0x80 | (c & 0x3F);
+            c >>= 6;
+            b1 = 0xE0 | c;
+            dst[j] = (char)b1;
+            dst[j+1] = (char)b2;
+            dst[j+2] = (char)b3;
+            j += 3;
+        }
+    }
+    dst[j] = 0;
+}
+
 static int save_lua_report(udefrag_job_parameters *jp)
 {
     char path[] = "\\??\\A:\\fraglist.luar";
@@ -44,17 +86,25 @@ static int save_lua_report(udefrag_job_parameters *jp)
     udefrag_fragmented_file *file;
     char *comment;
     char *status;
-    int i, length, offset;
-    char human_readable_size[32];
-    int n1, n2;
-    char s[32]; /* must be at least 32 chars long */
+    int length;
     winx_time t;
+    
+    /* should be enough for any path in UTF-8 encoding */
+    #define MAX_UTF8_PATH_LENGTH (256 * 1024)
+    char *utf8_path;
+    
+    utf8_path = winx_heap_alloc(MAX_UTF8_PATH_LENGTH);
+    if(utf8_path == NULL){
+        DebugPrint("save_lua_report: not enough memory");
+        return (-1);
+    }
     
     path[4] = jp->volume_letter;
     f = winx_fbopen(path,"w",RSB_SIZE);
     if(f == NULL){
         f = winx_fopen(path,"w");
         if(f == NULL){
+            winx_heap_free(utf8_path);
             return (-1);
         }
     }
@@ -64,9 +114,8 @@ static int save_lua_report(udefrag_job_parameters *jp)
     (void)winx_get_local_time(&t);
     (void)_snprintf(buffer,sizeof(buffer),
         "-- UltraDefrag report for disk %c:\r\n\r\n"
-        "format_version = 5\r\n\r\n"
+        "format_version = 6\r\n\r\n"
         "volume_letter = \"%c\"\r\n"
-        /*"current_time = \"%02i.%02i.%04i at %02i:%02i\"\r\n"*/
         "current_time = {\r\n"
         "\tyear = %04i,\r\n"
         "\tmonth = %02i,\r\n"
@@ -78,8 +127,8 @@ static int save_lua_report(udefrag_job_parameters *jp)
         "}\r\n\r\n"
         "files = {\r\n",
         jp->volume_letter, jp->volume_letter,
-        /*(int)t.day,(int)t.month,(int)t.year,(int)t.hour,(int)t.minute*/
-        (int)t.year,(int)t.month,(int)t.day,(int)t.hour,(int)t.minute,(int)t.second
+        (int)t.year,(int)t.month,(int)t.day,
+        (int)t.hour,(int)t.minute,(int)t.second
         );
     buffer[sizeof(buffer) - 1] = 0;
     (void)winx_fwrite(buffer,1,strlen(buffer),f);
@@ -110,42 +159,32 @@ static int save_lua_report(udefrag_job_parameters *jp)
             else
                 status = " - ";
             
-            (void)winx_bytes_to_hr(file->f->disp.clusters * jp->v_info.bytes_per_cluster,
-                1,human_readable_size,sizeof(human_readable_size));
-            if(sscanf(human_readable_size,"%u.%u %31s",&n1,&n2,s) == 3){
-                if(n2 >= 5) n1 += 1; /* round up, so 1.9 will get 2 instead of 1*/
-
-                _snprintf(human_readable_size,sizeof(human_readable_size),"%u&nbsp;%s",n1,s);
-                human_readable_size[sizeof(human_readable_size) - 1] = 0;
-            }
             (void)_snprintf(buffer, sizeof(buffer),
-                "\t{fragments = %u,size = %I64u,hrsize = \"%s\",filtered = %u,"
-                "comment = \"%s\",status = \"%s\",uname = {",
+                "\t{fragments = %u,"
+                "size = %I64u,"
+                "comment = \"%s\","
+                "status = \"%s\","
+                "path = \"",
                 (UINT)file->f->disp.fragments,
                 file->f->disp.clusters * jp->v_info.bytes_per_cluster,
-                human_readable_size,
-                (UINT)is_excluded(file->f),
-                comment,status
+                comment,
+                status
                 );
             buffer[sizeof(buffer) - 1] = 0;
             (void)winx_fwrite(buffer,1,strlen(buffer),f);
 
-            if(file->f->path == NULL){
-                strcpy(buffer,"0");
-                (void)winx_fwrite(buffer,1,strlen(buffer),f);
-            } else {
+            if(file->f->path != NULL){
                 /* skip \??\ sequence in the beginning of the path */
                 length = wcslen(file->f->path);
-                if(length > 4) offset = 4; else offset = 0;
-                for(i = offset; i < length; i++){
-                    /* conversion to unsigned short firstly is needed here to convert all unicode chars properly */
-                    (void)_snprintf(buffer,sizeof(buffer),"%u,",(unsigned int)(unsigned short)file->f->path[i]);
-                    buffer[sizeof(buffer) - 1] = 0;
-                    (void)winx_fwrite(buffer,1,strlen(buffer),f);
+                if(length > 4){
+                    convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->f->path + 4);
+                } else {
+                    convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->f->path);
                 }
+                (void)winx_fwrite(utf8_path,1,strlen(utf8_path),f);
             }
 
-            (void)strcpy(buffer,"}},\r\n");
+            (void)strcpy(buffer,"\"},\r\n");
             (void)winx_fwrite(buffer,1,strlen(buffer),f);
         }
         if(file->next == jp->fragmented_files) break;
@@ -157,6 +196,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
 
     DebugPrint("report saved to %s",path);
     winx_fclose(f);
+    winx_heap_free(utf8_path);
     return 0;
 }
 
