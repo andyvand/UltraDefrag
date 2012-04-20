@@ -20,7 +20,7 @@
 ACTION                    = &Akcija
 REPORT                    = &Izvještaj
 SETTINGS                  = &Postavke
-HELP                      = P&moć
+HELP                      = P&omoć
 
 ; --- Action Menu
 
@@ -32,9 +32,9 @@ OPTIMIZE_MFT              = &Optimiziraj MFT
 STOP                      = &Zaustavi
 REPEAT_ACTION             = Po&novi akciju
 SKIP_REMOVABLE_MEDIA      = Preskoči prenosne &medije
-RESCAN_DRIVES             = Osvježi &diskove
+RESCAN_DRIVES             = Os&vježi diskove
 REPAIR_DRIVES             = Repair drives
-WHEN_DONE                 = Po za&vršetku...
+WHEN_DONE                 = Po zav&ršetku...
 EXIT                      = Iz&laz
 
 ; --- --- When done submenu
@@ -78,7 +78,7 @@ CONTENTS                  = &Sadržaj
 BEST_PRACTICE             = Najbolja &praksa
 FAQ                       = &Česta pitanja i odgovori
 CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CHECK_UPDATE              = Provjerite ima li nova &verzija
 ABOUT                     = &O programu
 
 ; --- Toolbar Tooltips
@@ -135,28 +135,28 @@ UPGRADE_MESSAGE           = release is available for download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Zadatak se izvršava
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Prikaži
+HIDE                      = Sakrij
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmentirani fajlovi uključeni
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Posjetite našu web-stranicu
+VIEW_REPORT_OPTIONS       = Pregledajte opcije izvještaja
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenti
+SIZE                      = veličina
+FILENAME                  = ime fajla
+COMMENT                   = komentar
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = zaključan
+MOVE_FAILED               = premještanje neuspjelo
+INVALID                   = pogrešno
 
 ; END OF FILE
