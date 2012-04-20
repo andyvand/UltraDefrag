@@ -130,7 +130,7 @@ void ShowSystemTrayIconContextMenu(void)
     mi.fType = MFT_STRING;
     mi.wID = IDM_SHOWHIDE;
     mi.fState = MFS_DEFAULT;
-    text = WgxGetResourceString(i18n_table,IsWindowVisible(hWindow) ? L"HIDE" : L"SHOW");
+    text = WgxGetResourceString(i18n_table,IsWindowVisible(hWindow) ? "HIDE" : "SHOW");
     if(text){
         mi.dwTypeData = text;
         if(!InsertMenuItemW(hMenu,IDM_SHOWHIDE,FALSE,&mi)){
@@ -156,7 +156,7 @@ void ShowSystemTrayIconContextMenu(void)
     mi.fType = MFT_STRING;
     mi.wID = IDM_EXIT;
     mi.fState = 0;
-    text = WgxGetResourceString(i18n_table,L"EXIT");
+    text = WgxGetResourceString(i18n_table,"EXIT");
     if(text){
         mi.dwTypeData = text;
         if(!InsertMenuItemW(hMenu,IDM_EXIT,FALSE,&mi)){

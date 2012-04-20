@@ -43,6 +43,7 @@
       Explorer context menu added
     - relative log paths support added to both GUI and console interface
     - support of Unicode strings added to GUI options
+    - encoding of language packs changed to UTF-8
     - status bar MFT string removed from translations, since it is nearly
       impossible to translate due to space issues
     - the following translations were updated:

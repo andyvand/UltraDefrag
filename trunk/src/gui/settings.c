@@ -320,7 +320,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                     } else {
                         if(show_taskbar_icon_overlay != s_show_taskbar_icon_overlay){
                             if(show_taskbar_icon_overlay && job_is_running)
-                                SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+                                SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
                             else
                                 RemoveTaskbarIconOverlay();
                         }

@@ -58,7 +58,7 @@ void InitVolList(void)
 
     /* create header */
     lvc.mask = LVCF_TEXT;
-    lvc.pszText = text = WgxGetResourceString(i18n_table,L"VOLUME");
+    lvc.pszText = text = WgxGetResourceString(i18n_table,"VOLUME");
     if(text){
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,0,(LRESULT)&lvc);
         free(text);
@@ -67,7 +67,7 @@ void InitVolList(void)
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,0,(LRESULT)&lvc);
     }
 
-    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"STATUS");
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,"STATUS");
     if(text){
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,1,(LRESULT)&lvc);
         free(text);
@@ -78,7 +78,7 @@ void InitVolList(void)
 
     lvc.mask |= LVCF_FMT;
     lvc.fmt = LVCFMT_RIGHT;
-    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"TOTAL");
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,"TOTAL");
     if(text){
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,2,(LRESULT)&lvc);
         free(text);
@@ -87,7 +87,7 @@ void InitVolList(void)
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,2,(LRESULT)&lvc);
     }
 
-    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"FREE");
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,"FREE");
     if(text){
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,3,(LRESULT)&lvc);
         free(text);
@@ -96,7 +96,7 @@ void InitVolList(void)
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,3,(LRESULT)&lvc);
     }
 
-    lvc.pszText =  text = WgxGetResourceString(i18n_table,L"PERCENT");
+    lvc.pszText =  text = WgxGetResourceString(i18n_table,"PERCENT");
     if(text){
         (void)SendMessage(hList,LVM_INSERTCOLUMNW,4,(LRESULT)&lvc);
         free(text);
@@ -352,19 +352,19 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
     
     /* each job starts with a volume analysis */
     if(job->pi.current_operation == VOLUME_ANALYSIS && job->job_type != NEVER_EXECUTED_JOB){
-        ProcessCaption = WgxGetResourceString(i18n_table,L"STATUS_ANALYSED");
+        ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_ANALYSED");
     } else {
         switch(job->job_type){
             case ANALYSIS_JOB:
-                ProcessCaption = WgxGetResourceString(i18n_table,L"STATUS_ANALYSED");
+                ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_ANALYSED");
                 break;
             case DEFRAGMENTATION_JOB:
-                ProcessCaption = WgxGetResourceString(i18n_table,L"STATUS_DEFRAGMENTED");
+                ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_DEFRAGMENTED");
                 break;
             case FULL_OPTIMIZATION_JOB:
             case QUICK_OPTIMIZATION_JOB:
             case MFT_OPTIMIZATION_JOB:
-                ProcessCaption = WgxGetResourceString(i18n_table,L"STATUS_OPTIMIZED");
+                ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_OPTIMIZED");
                 break;
         }
     }
@@ -417,7 +417,7 @@ void SetVolumeDirtyStatus(int index, volume_info *v)
     lviw.iSubItem = 1;
     if(v->is_dirty){
         lviw.mask = LVIF_TEXT | LVIF_IMAGE;
-        text = WgxGetResourceString(i18n_table,L"STATUS_DIRTY");
+        text = WgxGetResourceString(i18n_table,"STATUS_DIRTY");
         if(text) lviw.pszText = text;
         else lviw.pszText = L"Disk needs to be repaired";
         lviw.iImage = v->is_removable ? 3 : 2;

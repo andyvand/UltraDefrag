@@ -57,7 +57,7 @@
 /* wgx structures */
 typedef struct _WGX_I18N_RESOURCE_ENTRY {
     int ControlID;
-    wchar_t *Key;
+    char *Key;
     wchar_t *DefaultString;
     wchar_t *LoadedString;
 } WGX_I18N_RESOURCE_ENTRY, *PWGX_I18N_RESOURCE_ENTRY;
@@ -98,11 +98,10 @@ HMENU WgxBuildPopupMenu(WGX_MENU *menu_table,HBITMAP bitmap);
 
 HBITMAP WgxCreateMenuBitmapMasked(HBITMAP hSrc,COLORREF crTransparent);
 
-/* lines in language files are limited by 8191 characters, which is more than enough */
-BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,wchar_t *lng_file_path);
+BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path);
 void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow);
-void WgxSetText(HWND hWnd, PWGX_I18N_RESOURCE_ENTRY table, wchar_t *key);
-wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,wchar_t *key);
+void WgxSetText(HWND hWnd, PWGX_I18N_RESOURCE_ENTRY table, char *key);
+wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key);
 void WgxDestroyResourceTable(PWGX_I18N_RESOURCE_ENTRY table);
 
 void WgxEnableWindows(HANDLE hMainWindow, ...);

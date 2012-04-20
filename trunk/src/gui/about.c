@@ -264,9 +264,9 @@ BOOL CALLBACK AboutDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
             /* Window Initialization */
             if(use_custom_font_in_dialogs)
                 WgxSetFont(hWnd,&wgxFont);
-            WgxSetText(hWnd,i18n_table,L"ABOUT_WIN_TITLE");
-            WgxSetText(GetDlgItem(hWnd,IDC_CREDITS),i18n_table,L"CREDITS");
-            WgxSetText(GetDlgItem(hWnd,IDC_LICENSE),i18n_table,L"LICENSE");
+            WgxSetText(hWnd,i18n_table,"ABOUT_WIN_TITLE");
+            WgxSetText(GetDlgItem(hWnd,IDC_CREDITS),i18n_table,"CREDITS");
+            WgxSetText(GetDlgItem(hWnd,IDC_LICENSE),i18n_table,"LICENSE");
             (void)WgxAddAccelerators(hInstance,hWnd,IDR_ACCELERATOR2);
             /* adjust positions of controls to make the window nice looking */
             ResizeAboutDialog(hWnd);
