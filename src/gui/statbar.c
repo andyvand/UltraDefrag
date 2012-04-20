@@ -126,7 +126,7 @@ void UpdateStatusBar(udefrag_progress_info *pi)
 
     if(!hStatus) return;
 
-    text = WgxGetResourceString(i18n_table,L"DIRS");
+    text = WgxGetResourceString(i18n_table,"DIRS");
     if(text){
         (void)_snwprintf(bf,BFSIZE - 1,L"%lu %s",pi->directories,text);
         bf[BFSIZE - 1] = 0;
@@ -134,7 +134,7 @@ void UpdateStatusBar(udefrag_progress_info *pi)
         free(text);
     }
 
-    text = WgxGetResourceString(i18n_table,L"FILES");
+    text = WgxGetResourceString(i18n_table,"FILES");
     if(text){
         (void)_snwprintf(bf,BFSIZE - 1,L"%lu %s",pi->files,text);
         bf[BFSIZE - 1] = 0;
@@ -142,7 +142,7 @@ void UpdateStatusBar(udefrag_progress_info *pi)
         free(text);
     }
 
-    text = WgxGetResourceString(i18n_table,L"FRAGMENTED");
+    text = WgxGetResourceString(i18n_table,"FRAGMENTED");
     if(text){
         (void)_snwprintf(bf,BFSIZE - 1,L"%lu %s",pi->fragmented,text);
         bf[BFSIZE - 1] = 0;
@@ -150,7 +150,7 @@ void UpdateStatusBar(udefrag_progress_info *pi)
         free(text);
     }
 
-    text = WgxGetResourceString(i18n_table,L"COMPRESSED");
+    text = WgxGetResourceString(i18n_table,"COMPRESSED");
     if(text){
         (void)_snwprintf(bf,BFSIZE - 1,L"%lu %s",pi->compressed,text);
         bf[BFSIZE - 1] = 0;

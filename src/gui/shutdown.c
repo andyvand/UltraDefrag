@@ -62,16 +62,16 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     /* get dimensions of texts */
     switch(when_done_action){
     case IDM_WHEN_DONE_HIBERNATE:
-        text1 = WgxGetResourceString(i18n_table,L"REALLY_HIBERNATE_WHEN_DONE");
+        text1 = WgxGetResourceString(i18n_table,"REALLY_HIBERNATE_WHEN_DONE");
         break;
     case IDM_WHEN_DONE_LOGOFF:
-        text1 = WgxGetResourceString(i18n_table,L"REALLY_LOGOFF_WHEN_DONE");
+        text1 = WgxGetResourceString(i18n_table,"REALLY_LOGOFF_WHEN_DONE");
         break;
     case IDM_WHEN_DONE_REBOOT:
-        text1 = WgxGetResourceString(i18n_table,L"REALLY_REBOOT_WHEN_DONE");
+        text1 = WgxGetResourceString(i18n_table,"REALLY_REBOOT_WHEN_DONE");
         break;
     case IDM_WHEN_DONE_SHUTDOWN:
-        text1 = WgxGetResourceString(i18n_table,L"REALLY_SHUTDOWN_WHEN_DONE");
+        text1 = WgxGetResourceString(i18n_table,"REALLY_SHUTDOWN_WHEN_DONE");
         break;
     default:
         text1 = _wcsdup(L"");
@@ -229,21 +229,21 @@ BOOL CALLBACK ShutdownConfirmDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lPa
     case WM_INITDIALOG:
         if(use_custom_font_in_dialogs)
             WgxSetFont(hWnd,&wgxFont);
-        WgxSetText(hWnd,i18n_table,L"PLEASE_CONFIRM");
-        WgxSetText(GetDlgItem(hWnd,IDC_YES_BUTTON),i18n_table,L"YES");
-        WgxSetText(GetDlgItem(hWnd,IDC_NO_BUTTON),i18n_table,L"NO");
+        WgxSetText(hWnd,i18n_table,"PLEASE_CONFIRM");
+        WgxSetText(GetDlgItem(hWnd,IDC_YES_BUTTON),i18n_table,"YES");
+        WgxSetText(GetDlgItem(hWnd,IDC_NO_BUTTON),i18n_table,"NO");
         switch(when_done_action){
         case IDM_WHEN_DONE_HIBERNATE:
-            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_HIBERNATION");
+            text = WgxGetResourceString(i18n_table,"SECONDS_TILL_HIBERNATION");
             break;
         case IDM_WHEN_DONE_LOGOFF:
-            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_LOGOFF");
+            text = WgxGetResourceString(i18n_table,"SECONDS_TILL_LOGOFF");
             break;
         case IDM_WHEN_DONE_REBOOT:
-            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_REBOOT");
+            text = WgxGetResourceString(i18n_table,"SECONDS_TILL_REBOOT");
             break;
         case IDM_WHEN_DONE_SHUTDOWN:
-            text = WgxGetResourceString(i18n_table,L"SECONDS_TILL_SHUTDOWN");
+            text = WgxGetResourceString(i18n_table,"SECONDS_TILL_SHUTDOWN");
             break;
         }
         if(text){

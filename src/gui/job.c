@@ -331,7 +331,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
         WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
     } else {
-        SetTaskbarIconOverlay(IDI_BUSY,L"JOB_IS_RUNNING");
+        SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
         job_is_running = 1;
         ShowSystemTrayIcon(NIM_MODIFY);
         SetEvent(hTaskbarIconEvent);

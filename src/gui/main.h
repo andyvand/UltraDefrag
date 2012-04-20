@@ -209,7 +209,7 @@ void OpenWebPage(char *page, char *anchor);
 
 extern HANDLE hTaskbarIconEvent;
 extern int job_is_running;
-void SetTaskbarIconOverlay(int resource_id, wchar_t *description_key);
+void SetTaskbarIconOverlay(int resource_id, char *description_key);
 void RemoveTaskbarIconOverlay(void);
 
 #define WM_TRAYMESSAGE           (WM_APP+1)

@@ -23,14 +23,22 @@ usage = [[
 USAGE: lua udreportcnv.lua {path to Lua Report} {UltraDefrag installation directory} [-v]
 ]]
 
-report_path = arg[1]
-instdir     = arg[2]
+-------------------------------------------------------------------------------
+-- Localization Strings
+-------------------------------------------------------------------------------
 
-assert(report_path, usage)
-assert(instdir, usage)
-
-html_report_path = ""
-text_report_path = ""
+FRAGMENTED_FILES_ON = "Fragmented files on"
+VISIT_HOMEPAGE      = "Visit our Homepage"
+VIEW_REPORT_OPTIONS = "View report options"
+POWERED_BY_LUA      = "Powered by Lua"
+FRAGMENTS           = "fragments"
+SIZE                = "size"
+FILENAME            = "filename"
+COMMENT             = "comment"
+STATUS              = "status"
+LOCKED              = "locked"
+MOVE_FAILED         = "move failed"
+INVALID             = "invalid"
 
 -------------------------------------------------------------------------------
 -- Ancillary Procedures
@@ -50,34 +58,7 @@ function hrsize(n)
     return m .. " " .. suffixes[i]
 end
 
-function write_unicode_character(f,c)
-    local b1, b2, b3
-    
-    --- we'll convert a character to UTF-8 encoding
-    if c < 0x80 then
-        f:write(string.char(math.band(c,0xFF)))
-        return
-    end
-    if c < 0x800 then -- 0x80 - 0x7FF: 2 bytes
-        b2 = math.bor(0x80,math.band(c,0x3F))
-        c = math.rshift(c,6)
-        b1 = math.bor(0xC0,c)
-        f:write(string.char(b1))
-        f:write(string.char(b2))
-        return
-    end
-    -- 0x800 - 0xFFFF: 3 bytes
-    b3 = math.bor(0x80,math.band(c,0x3F))
-    c = math.rshift(c,6)
-    b2 = math.bor(0x80,math.band(c,0x3F))
-    c = math.rshift(c,6)
-    b1 = math.bor(0xE0,c)
-    f:write(string.char(b1))
-    f:write(string.char(b2))
-    f:write(string.char(b3))
-    return
-end
-
+-- writes path to the file, splitted when requested
 function write_file_path(path,f)
     local split = false
     if split_long_names ~= 1 then
@@ -150,8 +131,8 @@ function write_file_path(path,f)
 end
 
 function display_report(path)
-    local ret
-    if os.shellexec ~= nil then
+    local ret, msg
+    if os.shellexec then
         ret, msg = os.shellexec(path,"open")
         if ret <= 32 then error(msg) end
     else
@@ -165,94 +146,33 @@ end
 -- Internationalization Procedures
 -------------------------------------------------------------------------------
 
-localized = {}
-
 function get_localization_strings()
-    local f, i, j
     local lang = nil
-    local contents
-    local a, b, c, name, value, s
-    local eq_sign_detected
-    local value_length
+    local BOM = string.char(0xEF,0xBB,0xBF)
     
     -- get selected language name
-    f = io.open(instdir .. "\\lang.ini","r")
-    if f == nil then return end
+    local f = io.open(instdir .. "\\lang.ini","r")
+    if not f then return end
     for line in f:lines() do
         i, j, lang = string.find(line,"^%s*Selected%s*=%s*(.-)%s*$")
-        if lang ~= nil then break end
+        if lang then break end
     end
     f:close()
-    if lang == nil then return end
+    if not lang then return end
     
-    -- read .lng file as a whole
-    f = io.open(instdir .. "\\i18n\\" .. lang .. ".lng","rb")
-    if f == nil then return end
-    contents = f:read("*all")
+    -- read .lng file
+    f = io.open(instdir .. "\\i18n\\" .. lang .. ".lng","r")
+    if not f then return end
+    for line in f:lines() do
+        local pair, key, value
+        i, j, pair = string.find(line,string.format("^%s(.-)$",BOM))
+        if not pair then pair = line end
+        i, j, key, value = string.find(pair,"^%s*(.-)%s*=%s*(.-)%s*$")
+        if key and value then
+            if _G[key] then _G[key] = string.gsub(value,"\\n","\n") end
+        end
+    end
     f:close()
-    if contents == nil then return end
-    
-    -- fill table of localized strings
-    name = ""; value = {}
-    value_length = 0
-    eq_sign_detected = 0
-    for c1, c2 in string.gfind(contents,"(.)(.)") do
-        -- decode subsequent UTF-16 LE character
-        a = string.byte(c1)
-        b = math.lshift(string.byte(c2),8)
-        c = math.bor(a,b)
-        if c == 0xD or c == 0xA then
-            -- \r or \n detected
-            if name ~= "" and value[1] ~= nil then
-                -- remove trailing white space from the name
-                i, j, s = string.find(name,"^%s*(.-)%s*$")
-                if s ~= nil then name = s else name = "" end
-                -- remove trailing white space from the value
-                for i = value_length, 1, -1 do
-                    if value[i] == 0x20 or value[i] == 0x9 then
-                        value[i] = nil
-                    else
-                        break
-                    end
-                end
-                if name ~= "" and value[1] ~= nil then
-                    -- add localized string to the table
-                    localized[name] = value
-                end
-            end
-            -- reset both name and value
-            name = ""; value = {}
-            value_length = 0
-            eq_sign_detected = 0
-        elseif c == 0x3D then
-            eq_sign_detected = 1
-        else
-            if eq_sign_detected == 1 then
-                if c == 0x20 or c == 0x9 then
-                    -- white space detected
-                    if value[1] ~= nil then
-                        table.insert(value,c)
-                        value_length = value_length + 1
-                    end
-                else
-                    table.insert(value,c)
-                    value_length = value_length + 1
-                end
-            else
-                name = string.format("%s%c",name,c)
-            end
-        end
-    end
-end
-
-function write_localized_string(f,key,default_string)
-    if localized[key] ~= nil then
-        for i, c in ipairs(localized[key]) do
-            write_unicode_character(f,c)
-        end
-    else
-        f:write(default_string)
-    end
 end
 
 -------------------------------------------------------------------------------
@@ -266,14 +186,12 @@ function write_text_header(f)
     local formatted_time = ""
     
     -- format time appropriate for locale
-    if current_time ~= nil then
+    if current_time then
         formatted_time = os.date("%c",os.time(current_time))
     end
     
     -- write byte order mark
-    f:write(string.char(0xEF))
-    f:write(string.char(0xBB))
-    f:write(string.char(0xBF))
+    f:write(string.char(0xEF,0xBB,0xBF))
 
     f:write(";---------------------------------------------------------------------------------------------\n")
     f:write("; Fragmented files on ", volume_letter, ": [", formatted_time, "]\n;\n")
@@ -295,10 +213,8 @@ function write_main_table(f)
 end
 
 function build_text_report()
-    local filename, f
-    
-    filename = string.gsub(report_path,"%.luar$","%.txt")
-    f = assert(io.open(filename,"w"))
+    local filename = string.gsub(report_path,"%.luar$","%.txt")
+    local f = assert(io.open(filename,"w"))
     write_text_header(f)
     write_main_table(f)
     f:close()
@@ -312,152 +228,77 @@ end
 -- HTML reports are intended to be opened in a web
 -- browser. So, let's use localized strings there.
 
-links_1 = [[
-<table class="links_toolbar" width="100%"><tbody>
-<tr>
-<td class="left"><a href="http://ultradefrag.sourceforge.net">
-]]
-
-links_2 = [[
-</a></td>
-<td class="center"><a href="file:///
-]]
-
-links_3 = [[
-\options\udreportopts.lua">
-]]
-
-links_4 = [[
-</a></td>
-<td class="right">
-<a href="http://www.lua.org/">
-]]
-
-links_5 = [[
-</a>
-</td>
-</tr>
-</tbody></table>
-
-]]
-
 -- these markups must be identical, except of representation
 table_head        = [[<table id="main_table" border="1" cellspacing="0" width="100%">]]
 table_head_for_js = [[<table id=\"main_table\" border=\"1\" cellspacing=\"0\" width=\"100%%\">]]
 
-function write_links_toolbar(f)
-    f:write(links_1)
-    write_localized_string(f,"VISIT_HOMEPAGE","Visit our Homepage")
-    f:write(links_2, instdir, links_3)
-    write_localized_string(f,"VIEW_REPORT_OPTIONS","View report options")
-    f:write(links_4)
-    write_localized_string(f,"POWERED_BY_LUA","Powered by Lua")
-    f:write(links_5)
-end
+js, css = "", ""
+formatted_time = ""
 
-function write_page_title(f)
-    write_localized_string(f,"FRAGMENTED_FILES_ON","Fragmented files on")
-end
+header = [[
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>$FRAGMENTED_FILES_ON $volume_letter: [$formatted_time]</title>
+    <style type="text/css">
+      $css
+    </style>
+    <script language="javascript">
+      $js
+    </script>
+  </head>
+  <body>
+    <h3 class="title">$FRAGMENTED_FILES_ON $volume_letter: ($formatted_time)</h3>
+    <table class="links_toolbar" width="100%"><tbody>
+      <tr>
+        <td class="left"><a href="http://ultradefrag.sourceforge.net">$VISIT_HOMEPAGE</a></td>
+        <td class="center"><a href="file:///$instdir\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
+        <td class="right"><a href="http://www.lua.org/">$POWERED_BY_LUA</a></td>
+      </tr>
+    </tbody></table>
+    <div id="for_msie">
+      $table_head
+      <tr>
+        <td class="c"><a href="javascript:sort_items('fragments')">$FRAGMENTS</a></td>
+        <td class="c"><a href="javascript:sort_items('size')">$SIZE</a></td>
+        <td class="c"><a href="javascript:sort_items('name')">$FILENAME</a></td>
+        <td class="c"><a href="javascript:sort_items('comment')">$COMMENT</a></td>
+        <td class="c"><a href="javascript:sort_items('status')">$STATUS</a></td>
+      </tr>
+]]
 
-function write_main_table_header(f)
-    f:write("<tr>\n<td class=\"c\"><a href=\"javascript:sort_items(\'fragments\')\">")
-    write_localized_string(f,"FRAGMENTS","fragments")
-    f:write("</a></td>\n<td class=\"c\"><a href=\"javascript:sort_items(\'size\')\">")
-    write_localized_string(f,"SIZE","size")
-    f:write("</a></td>\n<td class=\"c\"><a href=\"javascript:sort_items(\'name\')\">")
-    write_localized_string(f,"FILENAME","filename")
-    f:write("</a></td>\n<td class=\"c\"><a href=\"javascript:sort_items(\'comment\')\">")
-    write_localized_string(f,"COMMENT","comment")
-    f:write("</a></td>\n<td class=\"c\"><a href=\"javascript:sort_items(\'status\')\">")
-    write_localized_string(f,"STATUS","status")
-    f:write("</a></td>\n</tr>\n")
+footer = [[
+      </table>
+    </div>
+    <table class="links_toolbar" width="100%"><tbody>
+      <tr>
+        <td class="left"><a href="http://ultradefrag.sourceforge.net">$VISIT_HOMEPAGE</a></td>
+        <td class="center"><a href="file:///$instdir\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
+        <td class="right"><a href="http://www.lua.org/">$POWERED_BY_LUA</a></td>
+      </tr>
+    </tbody></table>
+    <script type="text/javascript">init_sorting_engine();</script>
+  </body>
+</html>
+]]
+
+function expand (s)
+  s = string.gsub(s, "$([%w_]+)", function (n)
+        return tostring(_G[n])
+      end)
+  return s
 end
 
 function write_file_status(f,file)
     if file.status == "locked" then
-        write_localized_string(f,"LOCKED","locked")
+        f:write(LOCKED)
     elseif file.status == "move failed" then
-        write_localized_string(f,"MOVE_FAILED","move failed")
+        f:write(MOVE_FAILED)
     elseif file.status == "invalid" then
-        write_localized_string(f,"INVALID","invalid")
+        f:write(INVALID)
     else
         f:write(file.status)
     end
-end
-
-function get_javascript()
-    local f, js = nil, ""
-    if(enable_sorting == 1) then
-        -- read udsorting.js file contents
-        f = assert(io.open(instdir .. "\\scripts\\udsorting.js", "r"))
-        js = f:read("*all")
-        f:close()
-    end
-    if js == nil or js == "" then
-        js = "function init_sorting_engine(){}\nfunction sort_items(criteria){}\n"
-    end
-
-    -- replace $TABLE_HEAD by actual markup
-    return string.gsub(js,"$TABLE_HEAD",table_head_for_js)
-end
-
-function get_css()
-    local f, css = nil, ""
-    local custom_css = ""
-
-    -- read udreport.css file contents
-    f = assert(io.open(instdir .. "\\scripts\\udreport.css", "r"))
-    css = f:read("*all")
-    f:close()
-    if css == nil then
-        css = ""
-    end
-
-    -- read udreport-custom.css file contents
-    f = io.open(instdir .. "\\scripts\\udreport-custom.css", "r")
-    if f ~= nil then
-        custom_css = f:read("*all")
-        f:close()
-        if custom_css == nil then
-            custom_css = ""
-        end
-    end
-
-    return (css .. custom_css)
-end
-
-function write_web_page_header(f,js,css)
-    local formatted_time = ""
-    
-    -- format time appropriate for locale
-    if current_time ~= nil then
-        formatted_time = os.date("%c",os.time(current_time))
-    end
-    
-    f:write(
-        "<html>\n",
-         "<head>\n",
-          "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\">\n",
-          "<title>"
-    )
-    write_page_title(f)
-    f:write(" ", volume_letter, ": [", formatted_time, "]</title>\n",
-         "<style type=\"text/css\">\n", css, "</style>\n",
-         "<script language=\"javascript\">\n", js, "</script>\n",
-        "</head>\n",
-        "<body>\n",
-         "<h3 class=\"title\">"
-    )
-    write_page_title(f)
-    f:write(" ", volume_letter, ": (", formatted_time, ")</h3>\n")
-    write_links_toolbar(f)
-    f:write("<div id=\"for_msie\">\n",table_head,"\n")
-end
-
-function write_web_page_footer(f)
-    f:write("</table>\n</div>\n")
-    write_links_toolbar(f)
-    f:write("<script type=\"text/javascript\">init_sorting_engine();</script>\n</body></html>\n")
 end
 
 function write_main_table_body(f)
@@ -477,26 +318,58 @@ function write_main_table_body(f)
     end
 end
 
-function build_html_report()
-    local filename
-    local js, css
+function get_javascript()
+    local js = ""
+    if(enable_sorting == 1) then
+        -- read udsorting.js file contents
+        local f = assert(io.open(instdir .. "\\scripts\\udsorting.js", "r"))
+        js = f:read("*all")
+        if not js then js = "" end
+        f:close()
+    end
+    if js == "" then
+        js = "function init_sorting_engine(){}\nfunction sort_items(criteria){}\n"
+    end
 
-    filename = string.gsub(report_path,"%.luar$","%.html")
+    -- replace $TABLE_HEAD by actual markup
+    return string.gsub(js,"$TABLE_HEAD",table_head_for_js)
+end
+
+function get_css()
+    -- read udreport.css file contents
+    local f = assert(io.open(instdir .. "\\scripts\\udreport.css", "r"))
+    local css = f:read("*all")
+    if not css then css = "" end
+    f:close()
+
+    -- read udreport-custom.css file contents
+    local custom_css = ""
+    f = io.open(instdir .. "\\scripts\\udreport-custom.css", "r")
+    if f then
+        custom_css = f:read("*all")
+        if not custom_css then custom_css = "" end
+        f:close()
+    end
+
+    return (css .. custom_css)
+end
+
+function build_html_report()
+    local filename = string.gsub(report_path,"%.luar$","%.html")
     local f = assert(io.open(filename,"w"))
 
     -- get JavaScript and CSS
     js = get_javascript()
     css = get_css()
     
-    -- write the web page header
-    write_web_page_header(f,js,css)
-    
-    -- write the main table
-    write_main_table_header(f)
+    -- format time appropriate for locale
+    if current_time then
+        formatted_time = os.date("%c",os.time(current_time))
+    end
+
+    f:write(expand(header))
     write_main_table_body(f)
-    
-    -- write the web page footer
-    write_web_page_footer(f)
+    f:write(expand(footer))
 
     f:close()
     return filename
@@ -505,6 +378,12 @@ end
 -------------------------------------------------------------------------------
 -- Main Code
 -------------------------------------------------------------------------------
+report_path = arg[1]
+instdir     = arg[2]
+
+assert(report_path, usage)
+assert(instdir, usage)
+
 -- get report options
 dofile(instdir .. "\\options\\udreportopts.lua")
 
