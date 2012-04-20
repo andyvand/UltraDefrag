@@ -375,13 +375,13 @@ grid_color_b = 0
 -- get user preferences
 path = instdir .. "\\options\\guiopts.lua"
 f = io.open(path, "r")
-if f ~= nil then
+if f then
     f:close()
     dofile(path)
 end
 
 -- if version of configuration file is greater or equal than the current one, do nothing
-if version ~= nil then
+if version then
     old_version = version
     if version >= current_version then
         upgrade_needed = 0
@@ -392,7 +392,7 @@ end
 if upgrade_needed ~= 0 then
     -- make a backup copy
     f = io.open(path, "r")
-    if f ~= nil then
+    if f then
         contents = f:read("*all")
         f:close()
         f = assert(io.open(path .. ".old", "w"))
@@ -406,11 +406,11 @@ if upgrade_needed ~= 0 then
         in_filter = ""
         ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar"
     end
-    if file_size_threshold == nil then
+    if not file_size_threshold then
         -- sizelimit has been superseded by file_size_threshold
         file_size_threshold = sizelimit
     end
-    if optimizer_file_size_threshold == nil then
+    if not optimizer_file_size_threshold then
         -- optimizer_sizelimit has been superseded by optimizer_file_size_threshold
         optimizer_file_size_threshold = optimizer_sizelimit
     end
@@ -422,7 +422,7 @@ if upgrade_needed ~= 0 then
 
     -- save guiopts-internals.lua when needed
     if old_version == 0 then
-        if rx ~= nil then
+        if rx then
             f = assert(io.open(instdir .. "\\options\\guiopts-internals.lua", "w"))
             save_internal_preferences(f)
             f:close()
