@@ -130,8 +130,8 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...);
 
 typedef void (*WGX_SAVE_OPTIONS_CALLBACK)(char *error);
 
-BOOL WgxGetOptions(char *config_file_path,WGX_OPTION *opts_table);
-BOOL WgxSaveOptions(char *config_file_path,WGX_OPTION *opts_table,WGX_SAVE_OPTIONS_CALLBACK cb);
+BOOL WgxGetOptions(char *path,WGX_OPTION *table);
+BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb);
 
 BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, wchar_t *description);
 BOOL WgxRemoveTaskbarIconOverlay(HWND hWindow);
