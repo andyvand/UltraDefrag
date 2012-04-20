@@ -48,7 +48,7 @@
       impossible to translate due to space issues
     - the following translations were updated:
 
-      Hebrew
+      Hebrew, Bosanski
 
     - Internals: make-mingw-projects.lua script added
     - WgxCreateProcess and WgxCreateThread routines added to wgx library
