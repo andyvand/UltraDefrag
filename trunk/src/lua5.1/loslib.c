@@ -70,20 +70,23 @@ static wchar_t *convert_to_utf16(const char *utf8_string,int *error) {
 
 static int os_setenv (lua_State *L) {
   const char *name = luaL_checkstring(L, 1);
+  const char *value;
+  int error, length, result, en;
+  wchar_t *utf16_value;
+  wchar_t *buffer;
+  
   if(name[0] == 0){
     /* nothing to do */
     lua_pushboolean(L, 1);
     return 1;
   }
 
-  const char *value;
   if(lua_isnoneornil(L, 2)){
     value = "";
   } else {
     value = luaL_checkstring(L, 2);
   }
-  int error;
-  wchar_t *utf16_value = convert_to_utf16(value,&error);
+  utf16_value = convert_to_utf16(value,&error);
   if(utf16_value == NULL){
     if(error == ERROR_COMMITMENT_LIMIT || error == ERROR_NOT_ENOUGH_MEMORY){
       return luaL_error(L, "unable to convert %s to UTF-16: not enough memory",value);
@@ -92,8 +95,8 @@ static int os_setenv (lua_State *L) {
     }
   }
 
-  int length = strlen(name) + 1 + wcslen(utf16_value) + 1;
-  wchar_t *buffer = malloc(length * sizeof(wchar_t));
+  length = strlen(name) + 1 + wcslen(utf16_value) + 1;
+  buffer = malloc(length * sizeof(wchar_t));
   if(buffer == NULL){
     free(utf16_value);
     return luaL_error(L, "not enough memory");
@@ -101,8 +104,8 @@ static int os_setenv (lua_State *L) {
   _snwprintf(buffer,length,L"%hs=%ws",name,utf16_value);
   buffer[length - 1] = 0;
 
-  int result = _wputenv(buffer);
-  int en = errno;
+  result = _wputenv(buffer);
+  en = errno;
   free(utf16_value);
   free(buffer);
   if(result < 0){
@@ -114,22 +117,25 @@ static int os_setenv (lua_State *L) {
 
 static int os_shellexec (lua_State *L) {
   int error;
+  char *error_description;
+  const char *path;
+  const char *action;
   HINSTANCE hShell = LoadLibrary("shell32.dll");
   if(!hShell){
     error = GetLastError();
-	lua_pushinteger(L, 0);
+    lua_pushinteger(L, 0);
     if(error == ERROR_COMMITMENT_LIMIT || error == ERROR_NOT_ENOUGH_MEMORY){
       lua_pushstring(L, "unable to load shell32.dll: not enough memory");
     } else {
       lua_pushfstring(L, "unable to load shell32.dll: error code = 0x%x",error);
     }
-	return 2;
+    return 2;
   }
   /* get function address dynamically to reduce lua.dll loading time */
   func_ShellExecuteA = (void *)GetProcAddress(hShell,"ShellExecuteA");
   if(!func_ShellExecuteA){
     error = GetLastError();
-	lua_pushinteger(L, 0);
+    lua_pushinteger(L, 0);
     if(error == ERROR_COMMITMENT_LIMIT || error == ERROR_NOT_ENOUGH_MEMORY){
       lua_pushstring(L, "unable to find ShellExecute: not enough memory");
     } else {
@@ -137,12 +143,11 @@ static int os_shellexec (lua_State *L) {
     }
     return 2;
   }
-  const char *path = luaL_checkstring(L, 1);
-  const char *action = luaL_checkstring(L, 2);
+  path = luaL_checkstring(L, 1);
+  action = luaL_checkstring(L, 2);
   error = (int)(LONG_PTR)func_ShellExecuteA(NULL,
     action,path,NULL,NULL,SW_SHOW);
   lua_pushinteger(L, error);
-  char *error_description;
   switch(error){
   case 0:
     error_description = "out of memory or resources";
