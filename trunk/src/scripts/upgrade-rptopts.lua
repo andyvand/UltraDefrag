@@ -101,19 +101,19 @@ max_chars_per_line = 50
 -- get user preferences
 path = instdir .. "\\options\\udreportopts.lua"
 f = io.open(path, "r")
-if f ~= nil then
+if f then
     f:close()
     dofile(path)
 end
 path = instdir .. "\\options\\udreportopts-custom.lua"
 f = io.open(path, "r")
-if f ~= nil then
+if f then
     f:close()
     dofile(path)
 end
 
 -- if version of configuration file is greater or equal than the current one, do nothing
-if version ~= nil then
+if version then
     old_version = version
     if version >= current_version then
         upgrade_needed = 0
@@ -125,11 +125,11 @@ if upgrade_needed ~= 0 then
     -- make a backup copy
     path = instdir .. "\\options\\udreportopts-custom.lua"
     f = io.open(path, "r")
-    if f == nil then
+    if not f then
         path = instdir .. "\\options\\udreportopts.lua"
         f = io.open(path, "r")
     end
-    if f ~= nil then
+    if f then
         contents = f:read("*all")
         f:close()
         path = instdir .. "\\options\\udreportopts.lua.old"

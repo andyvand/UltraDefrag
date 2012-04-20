@@ -124,7 +124,7 @@ function build_project_file(path)
     local f, line, files, search_path
 
     i, j, name = string.find(path,"^.*\\(.-)$")
-    if name == nil then name = path end
+    if not name then name = path end
     print(name .. " Preparing the project file generation...")
 
     name, target_type = "", ""
@@ -134,7 +134,7 @@ function build_project_file(path)
     dofile(path)
 
     i, j, search_path = string.find(path,"^(.*)\\.-$")
-    if search_path == nil then search_path = "" end
+    if not search_path then search_path = "" end
     if os.execute("cmd.exe /C dir /B " .. search_path .. "\\*.* >project_files") ~= 0 then
         error("Cannot get directory listing!")
     end
@@ -206,7 +206,7 @@ function build_project_file(path)
             libraries = libraries .. ","
         end
         i, j, file = string.find(v,"^.*\\(.-)$")
-        if file == nil then
+        if not file then
             libraries = libraries .. v
         else
             libraries = libraries .. file
@@ -232,7 +232,7 @@ function build_project_file(path)
     end
 
     adsources = nil
-    if mingw_project_rules ~= nil then
+    if mingw_project_rules then
         mingw_project_rules()
     end
 
@@ -262,7 +262,7 @@ function build_project_file(path)
             index = index + 1
         end
     end
-    if adsources ~= nil then
+    if adsources then
         for i, v in ipairs(adsources) do
             f:write(index, "=", v, "\n")
             index = index + 1
@@ -309,7 +309,7 @@ if os.execute("cmd.exe /C dir /S /B *.build >files") ~= 0 then
 end
 f = assert(io.open("files","rt"))
 for line in f:lines() do
-    if string.find(line,"\\obj\\") == nil then
+    if not string.find(line,"\\obj\\") then
         build_project_file(line)
     end
 end

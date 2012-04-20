@@ -67,7 +67,7 @@ end
 
 function build_list_of_headers()
     local f, i, j, dir, n, h
-    if includes[1] == nil then return end
+    if not includes[1] then return end
     -- include headers listed in 'headers' file,
     -- but only these locating in directories
     -- listed in 'includes' table
@@ -648,7 +648,7 @@ deffile, mingw_deffile = "", ""
 for i, v in ipairs(files) do
     local i, j, def
     i, j, def = string.find(v,"^.*\\(.-)$")
-    if def == nil then def = v end
+    if not def then def = v end
     if string.find(def,"%.def$") then
         if string.find(def,"mingw%.def$") then
             mingw_deffile = def
@@ -664,7 +664,7 @@ if mingw_deffile == "" then mingw_deffile = deffile end
 for i, v in ipairs(files) do
     local i, j, name, p
     i, j, name = string.find(v,"^.*\\(.-)$")
-    if name == nil then name = v end
+    if not name then name = v end
     if string.find(name,"%.c$") then
         table.insert(src,name)
     elseif string.find(name,"%.rc$") then
@@ -695,8 +695,8 @@ if os.getenv("BUILD_ENV") == "winddk" then
     end
     print(input_filename .. " winddk build performing...\n")
     arch = "i386"
-    if os.getenv("AMD64") ~= nil then arch = "amd64" end
-    if os.getenv("IA64") ~= nil then arch = "ia64" end
+    if os.getenv("AMD64") then arch = "amd64" end
+    if os.getenv("IA64") then arch = "ia64" end
     if os.execute(ddk_cmd) ~= 0 then
         error("Cannot build the target!")
     end
@@ -725,8 +725,8 @@ elseif os.getenv("BUILD_ENV") == "winsdk" then
         end
         print(input_filename .. " windows sdk build performing...\n")
         arch = "i386"
-        if os.getenv("AMD64") ~= nil then arch = "amd64" end
-        if os.getenv("IA64") ~= nil then arch = "ia64" end
+        if os.getenv("AMD64") then arch = "amd64" end
+        if os.getenv("IA64") then arch = "ia64" end
         sdk_cmd = sdk_cmd .. name .. ".mak"
         if os.execute(sdk_cmd) ~= 0 then
             error("Cannot build the target!")
