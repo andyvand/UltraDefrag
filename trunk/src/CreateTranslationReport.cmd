@@ -34,13 +34,23 @@ echo.
 for %%F in ( "%~dp0\gui\i18n\translation.template" "%~dp0\gui\i18n\*.lng" ) do echo Processing "%%~nF" ... & call :ExtractStrings "%%~F" >"%TMP%\%%~nF.tmp"
 
 echo.
-echo Counting total tramslation strings ...
+echo Counting total translation strings ...
+set TotalStrings=0
 set gCounter=0
-for /F %%L in ( %TMP%\translation.tmp ) do call :IncreaseCounter
+call :CountLines "%TMP%\translation.tmp"
 set TotalStrings=%gCounter%
 
 echo.
 echo %TotalStrings% translation strings total ...
+
+echo.
+echo Checking number of translation strings ...
+set CheckFailed=0
+for %%F in ( "%~dp0\gui\i18n\*.lng" ) do call :CountLines "%TMP%\%%~nF.tmp"
+if %CheckFailed% EQU 1 (
+    echo At least one translation is corrupted!
+    goto :quit
+)
 
 echo.
 echo Comparing files ...
@@ -112,6 +122,24 @@ goto :EOF
 ::
 :: === procedures ===
 ::
+
+::
+:: This procedure counts the number of lines
+::
+:CountLines
+    set gCounter=0
+    set FileName="%~n1" ........................................
+    for /F %%L in ( 'type "%~1"' ) do call :IncreaseCounter
+    
+    if "%~n1" NEQ "translation" (
+        if %gCounter% NEQ %TotalStrings% (
+            echo %FileName:~0,40% %gCounter% ???
+            set CheckFailed=1
+        ) else (
+            echo %FileName:~0,40% OK
+        )
+    )
+goto :EOF
 
 ::
 :: This procedure processes one file
