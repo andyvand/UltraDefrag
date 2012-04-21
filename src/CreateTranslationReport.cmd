@@ -168,7 +168,7 @@ goto :EOF
 :: so only translation strings remain
 ::
 :ExtractStrings
-    type "%~1" | findstr /v /r "^;" | findstr /v /r "^$" >"%TMP%\%~n1.tmp1"
+    type "%~1" | findstr /v ";----------" | findstr /v /r "^;" | findstr /v /r "^$" >"%TMP%\%~n1.tmp1"
     
     setlocal EnableDelayedExpansion
     
