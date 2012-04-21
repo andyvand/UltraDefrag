@@ -34,6 +34,7 @@ QUICK_OPTIMIZE            = Ottimizzazione &veloce
 FULL_OPTIMIZE             = Ottimizzazione &completa
 OPTIMIZE_MFT              = &MFT ottimizzazione
 STOP                      = &Interrompi
+REPEAT_ACTION             = Re&peat action
 SKIP_REMOVABLE_MEDIA      = Escludi dischi &rimovibili
 RESCAN_DRIVES             = Riscansiona &unità
 REPAIR_DRIVES             = Repair drives
