@@ -258,6 +258,9 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                 * a wait for the change notification." (MSDN)
                 * And so on... it happens between
                 * FindNextChangeNotification calls too.
+                *
+                * However, everything mentioned above is not true
+                * when the program modifies the file itself.
                 */
             } else {
                 /* synchronize preferences reload with map redraw */
