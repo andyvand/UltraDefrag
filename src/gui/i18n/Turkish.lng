@@ -19,73 +19,71 @@
 
 ; Main Menu
 
-ACTION                    = İşleme
-REPORT                    = Rapor
-SETTINGS                  = Ayarlar
-HELP                      = Yardım
+ACTION                    = &Eylemler
+REPORT                    = &Rapor
+SETTINGS                  = &Ayarlar
+HELP                      = &Yardım
 
 ; --- Action Menu
 
-ANALYSE                   = İncele
-DEFRAGMENT                = Birleştir
-QUICK_OPTIMIZE            = Hızlı optimizasyonu
-FULL_OPTIMIZE             = Tam optimizasyonu
-OPTIMIZE_MFT              = MFT en iyi duruma getirme
-STOP                      = Dur
-REPEAT_ACTION             = İşlemi tekrarlayın
-SKIP_REMOVABLE_MEDIA      = Çıkarılabilir sürücüler hariç
-RESCAN_DRIVES             = Sürücüleri Listele
-REPAIR_DRIVES             = Repair drives
-WHEN_DONE                 = Bitmiş halde
-EXIT                      = Çık
+ANALYSE                   = &İncele
+DEFRAGMENT                = &Birleştir
+QUICK_OPTIMIZE            = &Hızlı optimizasyon
+FULL_OPTIMIZE             = &Tam optimizasyon
+OPTIMIZE_MFT              = &MFT optimizasyonu
+STOP                      = &Dur
+REPEAT_ACTION             = &İşlemi tekrarla
+SKIP_REMOVABLE_MEDIA      = Çıkarılabilir sürücüleri &gizle
+RESCAN_DRIVES             = Sürücü listesini &yenile
+WHEN_DONE                 = İşlem &bittiğinde...
+EXIT                      = Çı&kış
 
 ; --- --- When done submenu
 
-WHEN_DONE_NONE            = Kal
-WHEN_DONE_EXIT            = Çıkış
-WHEN_DONE_STANDBY         = Bekleme hali
-WHEN_DONE_HIBERNATE       = Uyku hali
-WHEN_DONE_LOGOFF          = Oturumu kapat
-WHEN_DONE_REBOOT          = Yeniden Başlat
-WHEN_DONE_SHUTDOWN        = Kapat
+WHEN_DONE_NONE            = &Bekle
+WHEN_DONE_EXIT            = &Programı kapat
+WHEN_DONE_STANDBY         = &Uyku moduna gir
+WHEN_DONE_HIBERNATE       = &Hazırda beklet
+WHEN_DONE_LOGOFF          = O&turumu kapat
+WHEN_DONE_REBOOT          = Ye&niden başlat
+WHEN_DONE_SHUTDOWN        = Bilgisayarı &kapat
 
 ; --- Report Menu
 
-SHOW_REPORT               = Göster
+SHOW_REPORT               = &Raporu göster
 
 ; --- Settings Menu
 
 LANGUAGE                  = Dil
-GRAPHICAL_INTERFACE       = Grafik arabirimi
-BOOT_TIME_SCAN            = Windows yüklemeden evel başla
+GRAPHICAL_INTERFACE       = Grafiksel arabirim
+BOOT_TIME_SCAN            = Açılışta çalış
 REPORTS                   = Raporlar
 
 ; --- --- Language submenu
 
-TRANSLATIONS_FOLDER       = Tercüme Dosyasi
+TRANSLATIONS_FOLDER       = &Çeviri Klasörü
 
 ; --- --- Graphical interface submenu
 
-FONT                      = Yazi
-OPTIONS                   = Seçenekler
+FONT                      = &Yazı tipi
+OPTIONS                   = &Seçenekler
 
 ; --- --- Boot time scan submenu
 
-ENABLE                    = Etkinleştir
-SCRIPT                    = Betik
+ENABLE                    = &Etkinleştir
+SCRIPT                    = &Betiği düzenle
 
 ; --- Help Menu
 
-CONTENTS                  = Icindekiler
-BEST_PRACTICE             = En doğru kullanış
-FAQ                       = Sıkça sorulan sorular
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
-ABOUT                     = Hakkında
+CONTENTS                  = &Yardım konuları
+BEST_PRACTICE             = &En doğru kullanım şekli
+FAQ                       = &Sıkça sorulan sorular
+CHECK_UPDATE              = &Güncellemeleri denetle
+ABOUT                     = &Hakkında
 
 ; --- Toolbar Tooltips
 
-BOOT_TIME_SCRIPT          = Windows´un yüklemenden evel Betiği
+BOOT_TIME_SCRIPT          = Çalıştırma Betiğini Düze&nle
 
 ; Drives list items.
 
@@ -100,7 +98,7 @@ PERCENT                   = % Boş
 STATUS_RUNNING            = Çalışıyor
 STATUS_ANALYSED           = İncelendi
 STATUS_DEFRAGMENTED       = Birleştirildi
-STATUS_OPTIMIZED          = Sıralandırldı
+STATUS_OPTIMIZED          = Optimize edildi
 STATUS_DIRTY              = Disk needs to be repaired
 
 ; Status bar messages.
@@ -118,17 +116,17 @@ LICENSE                   = Lisans
 
 ; Shutdown confirmation
 
-PLEASE_CONFIRM            = Lütfen onaylayın
+PLEASE_CONFIRM            = Lütfen Onaylayın
 REALLY_SHUTDOWN_WHEN_DONE = Bittiğinde gerçekten kapatmayı istiyor musunuz?
 REALLY_HIBERNATE_WHEN_DONE= Bittiğinde gerçekten beklemeye almayı istiyor musunuz?
 REALLY_LOGOFF_WHEN_DONE   = Bittiğinde gerçekten sizin oturumunu kapatmayı istiyor musunuz?
 REALLY_REBOOT_WHEN_DONE   = Bittiğinde gerçekten yeniden başlatmak istiyor musunuz?
-SECONDS_TILL_SHUTDOWN     = saniye içinde kapanacak
+SECONDS_TILL_SHUTDOWN     = saniye içinde kapatılacak
 SECONDS_TILL_HIBERNATION  = saniye içinde beklemeye alınacak
-SECONDS_TILL_LOGOFF       = saniye içinde oturumu kapatacak
-SECONDS_TILL_REBOOT       = saniye içinde yeniden başlatcak
-YES                       = Evet
-NO                        = Hayır
+SECONDS_TILL_LOGOFF       = saniye içinde oturum kapatılacak
+SECONDS_TILL_REBOOT       = saniye içinde yeniden başlatılacak
+YES                       = &Evet
+NO                        = &Hayır
 
 ; Upgrade dialog
 
@@ -137,28 +135,28 @@ UPGRADE_MESSAGE           = release is available for download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Bir işlem çalıştırılıyor
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Göster
+HIDE                      = Gizle
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Dosyaları parçalanmış sürücü:
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Web sayfamızı ziyaret edin
+VIEW_REPORT_OPTIONS       = Raporlama ayarları
+POWERED_BY_LUA            = Lua ile oluşturulmuştur
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = parçalar
+SIZE                      = boyut
+FILENAME                  = dosya adı
+COMMENT                   = yorum
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = kilitli
+MOVE_FAILED               = taşınamadı
+INVALID                   = bulunamadı
 
 ; END OF FILE
