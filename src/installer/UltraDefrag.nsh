@@ -548,7 +548,7 @@ Var AtLeastXP
     StrCpy $9 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -a $\"%1$\""
     StrCpy $R0 "[--- &Optimize drive with UltraDefrag ---]"
     StrCpy $R1 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -o $\"%1$\""
-    StrCpy $R2 "[--- &Quick optimize drive with UltraDefrag ---]"
+    StrCpy $R2 "[--- &Quickly optimize drive with UltraDefrag ---]"
     StrCpy $R3 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -q $\"%1$\""
 
     ${If} $AtLeastXP == "1"
