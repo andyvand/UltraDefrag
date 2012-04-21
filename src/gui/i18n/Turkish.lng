@@ -35,6 +35,7 @@ STOP                      = &Dur
 REPEAT_ACTION             = &İşlemi tekrarla
 SKIP_REMOVABLE_MEDIA      = Çıkarılabilir sürücüleri &gizle
 RESCAN_DRIVES             = Sürücü listesini &yenile
+REPAIR_DRIVES             = Repair drives
 WHEN_DONE                 = İşlem &bittiğinde...
 EXIT                      = Çı&kış
 
@@ -78,6 +79,7 @@ SCRIPT                    = &Betiği düzenle
 CONTENTS                  = &Yardım konuları
 BEST_PRACTICE             = &En doğru kullanım şekli
 FAQ                       = &Sıkça sorulan sorular
+CM_LEGEND                 = Cluster map &legend
 CHECK_UPDATE              = &Güncellemeleri denetle
 ABOUT                     = &Hakkında
 
