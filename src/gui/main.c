@@ -903,6 +903,12 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         case IDM_OPTIMIZE_MFT:
             start_selected_jobs(MFT_OPTIMIZATION_JOB);
             return 0;
+        case IDM_PAUSE:
+            if(pause_flag)
+                ReleasePause();
+            else
+                SetPause();
+            return 0;
         case IDM_STOP:
             stop_all_jobs();
             return 0;

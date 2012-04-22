@@ -53,16 +53,17 @@ struct toolbar_button buttons[] = {
     {4,  IDM_QUICK_OPTIMIZE,   TBSTATE_ENABLED, TBSTYLE_BUTTON, "QUICK_OPTIMIZE",   "F7"      },
     {5,  IDM_FULL_OPTIMIZE,    TBSTATE_ENABLED, TBSTYLE_BUTTON, "FULL_OPTIMIZE",    "Ctrl+F7" },
     {6,  IDM_OPTIMIZE_MFT,     TBSTATE_ENABLED, TBSTYLE_BUTTON, "OPTIMIZE_MFT",     "Shift+F7"},
-    {7,  IDM_STOP,             TBSTATE_ENABLED, TBSTYLE_BUTTON, "STOP",             "Ctrl+C"  },
-    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL      },
-    {8,  IDM_SHOW_REPORT,      TBSTATE_ENABLED, TBSTYLE_BUTTON, "REPORT",           "F8"      },
-    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL      },
-    {9,  IDM_CFG_GUI_SETTINGS, TBSTATE_ENABLED, TBSTYLE_BUTTON, "OPTIONS",          "F10"     },
-    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL      },
-    {10, IDM_CFG_BOOT_ENABLE,  TBSTATE_ENABLED, TBSTYLE_CHECK,  "BOOT_TIME_SCAN",   "F11"     },
-    {11, IDM_CFG_BOOT_SCRIPT,  TBSTATE_ENABLED, TBSTYLE_BUTTON, "BOOT_TIME_SCRIPT", "F12"     },
-    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL      },
-    {12, IDM_CONTENTS,         TBSTATE_ENABLED, TBSTYLE_BUTTON, "HELP",             "F1"      }
+    {7,  IDM_PAUSE,            TBSTATE_ENABLED, TBSTYLE_BUTTON, "PAUSE",            "Space"   },
+    {8,  IDM_STOP,             TBSTATE_ENABLED, TBSTYLE_BUTTON, "STOP",             "Ctrl+C"  },
+    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL     },
+    {9,  IDM_SHOW_REPORT,      TBSTATE_ENABLED, TBSTYLE_BUTTON, "REPORT",           "F8"      },
+    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL     },
+    {10, IDM_CFG_GUI_SETTINGS, TBSTATE_ENABLED, TBSTYLE_BUTTON, "OPTIONS",          "F10"     },
+    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL     },
+    {11, IDM_CFG_BOOT_ENABLE,  TBSTATE_ENABLED, TBSTYLE_CHECK,  "BOOT_TIME_SCAN",   "F11"     },
+    {12, IDM_CFG_BOOT_SCRIPT,  TBSTATE_ENABLED, TBSTYLE_BUTTON, "BOOT_TIME_SCRIPT", "F12"     },
+    {0,  0,                    TBSTATE_ENABLED, TBSTYLE_SEP,    NULL,                NULL     },
+    {13, IDM_CONTENTS,         TBSTATE_ENABLED, TBSTYLE_BUTTON, "HELP",             "F1"      }
 };
 
 #define N_BUTTONS (sizeof(buttons)/sizeof(struct toolbar_button))
