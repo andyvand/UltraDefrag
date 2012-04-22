@@ -6,6 +6,7 @@
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
 ; Revised Apr. 17, 2012 by Jiri Sedlak
+; Revised Apr. 22, 2012 by Pavel Kinkor
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -33,8 +34,8 @@ OPTIMIZE_MFT              = Optimalizovat MFT
 STOP                      = Zastavit
 REPEAT_ACTION             = Opakovat akci
 SKIP_REMOVABLE_MEDIA      = Přeskočit vyměnitelná média
-RESCAN_DRIVES             = Aktualizovat
-REPAIR_DRIVES             = Repair drives
+RESCAN_DRIVES             = Aktualizovat jednotky
+REPAIR_DRIVES             = Opravit jednotky
 WHEN_DONE                 = Po dokončení
 EXIT                      = Konec
 
@@ -78,7 +79,7 @@ SCRIPT                    = Skript
 CONTENTS                  = Obsah
 BEST_PRACTICE             = Osvědčené postupy
 FAQ                       = Často kladené otázky
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Legenda k mapě svazku
 CHECK_UPDATE              = Zjistit aktualizace
 ABOUT                     = O aplikaci
 
@@ -100,7 +101,7 @@ STATUS_RUNNING            = Probíhá
 STATUS_ANALYSED           = Analyzováno
 STATUS_DEFRAGMENTED       = Defragmentováno
 STATUS_OPTIMIZED          = Optimalizováno
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk potřebuje opravit
 
 ; Status bar messages.
 
@@ -131,8 +132,8 @@ NO                        = Ne
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Je možné mě aktualizovat ^-^
+UPGRADE_MESSAGE           = vydání je dostupné ke stažení!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -151,7 +152,7 @@ VISIT_HOMEPAGE            = Navštivte domovskou stránku
 VIEW_REPORT_OPTIONS       = Zobraz nastavení zprávy
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragmenty
+FRAGMENTS                 = fragmenty/ů
 SIZE                      = velikost
 FILENAME                  = jméno souboru
 COMMENT                   = komentář
