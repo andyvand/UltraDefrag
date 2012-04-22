@@ -144,6 +144,9 @@ void start_selected_jobs(udefrag_job_type job_type);
 void stop_all_jobs(void);
 void release_jobs(void);
 
+void SetPause(void);
+void ReleasePause(void);
+
 void RepairSelectedVolumes(void);
 
 int CreateMainMenu(void);
@@ -244,6 +247,7 @@ extern int use_custom_font_in_dialogs;
 extern int portable_mode;
 extern int btd_installed;
 
+extern int pause_flag;
 extern int stop_pressed;
 
 /* common preferences */

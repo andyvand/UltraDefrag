@@ -88,6 +88,7 @@
 #define IDM_QUICK_OPTIMIZE              1130
 #define IDM_FULL_OPTIMIZE               1131
 #define IDM_OPTIMIZE_MFT                1132
+#define IDM_PAUSE                       1134
 #define IDM_STOP                        1135
 #define IDM_REPEAT_ACTION               1137
 #define IDM_IGNORE_REMOVABLE_MEDIA      1140

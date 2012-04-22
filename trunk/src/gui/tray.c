@@ -108,15 +108,51 @@ void SetSystemTrayIconTooltip(wchar_t *text)
         WgxDbgPrintLastError("SetSystemTrayIconTooltip: Shell_NotifyIconW failed");
 }
 
+static BOOL InsertContextMenuSeparator(HMENU hMenu,UINT pos)
+{
+    MENUITEMINFOW mi;
+
+    memset(&mi,0,sizeof(MENUITEMINFOW));
+    mi.cbSize = sizeof(MENUITEMINFOW);
+    mi.fMask = MIIM_TYPE;
+    mi.fType = MFT_SEPARATOR;
+    if(!InsertMenuItemW(hMenu,pos,TRUE,&mi)){
+        WgxDbgPrintLastError("InsertSeparator failed");
+        return FALSE;
+    }
+    return TRUE;
+}
+
+static BOOL InsertContextMenuItem(HMENU hMenu,UINT pos,
+    UINT id,UINT state,char *i18n_key,wchar_t *default_text)
+{
+    MENUITEMINFOW mi;
+    wchar_t *text;
+    BOOL result;
+
+    memset(&mi,0,sizeof(MENUITEMINFOW));
+    mi.cbSize = sizeof(MENUITEMINFOW);
+    mi.fMask = MIIM_ID | MIIM_TYPE | MIIM_STATE;
+    mi.fType = MFT_STRING;
+    mi.wID = id;
+    mi.fState = state;
+    text = WgxGetResourceString(i18n_table,i18n_key);
+    mi.dwTypeData = text ? text : default_text;
+    result = InsertMenuItemW(hMenu,pos,TRUE,&mi);
+    if(!result){
+        WgxDbgPrintLastError("InsertMenuItem failed");
+    }
+    if(text) free(text);
+    return result;
+}
+
 /**
  * @brief Shows the tray icon context menu.
  */
 void ShowSystemTrayIconContextMenu(void)
 {
-    MENUITEMINFOW mi;
     HMENU hMenu = NULL;
     POINT pt;
-    wchar_t *text;
     
     /* create popup menu */
     hMenu = CreatePopupMenu();
@@ -124,55 +160,15 @@ void ShowSystemTrayIconContextMenu(void)
         WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot create menu");
         goto done;
     }
-    memset(&mi,0,sizeof(MENUITEMINFOW));
-    mi.cbSize = sizeof(MENUITEMINFOW);
-    mi.fMask = MIIM_ID | MIIM_TYPE | MIIM_STATE;
-    mi.fType = MFT_STRING;
-    mi.wID = IDM_SHOWHIDE;
-    mi.fState = MFS_DEFAULT;
-    text = WgxGetResourceString(i18n_table,IsWindowVisible(hWindow) ? "HIDE" : "SHOW");
-    if(text){
-        mi.dwTypeData = text;
-        if(!InsertMenuItemW(hMenu,IDM_SHOWHIDE,FALSE,&mi)){
-            WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot insert menu item (case 1)");
-            free(text);
-            goto done;
-        }
-        free(text);
-    } else {
-        mi.dwTypeData = IsWindowVisible(hWindow) ? L"Hide" : L"Show";
-        if(!InsertMenuItemW(hMenu,IDM_SHOWHIDE,FALSE,&mi)){
-            WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot insert menu item (case 1)");
-            goto done;
-        }
-    }
-    mi.fType = MFT_SEPARATOR;
-    mi.wID = 0, mi.fState = 0;
-    mi.dwTypeData = NULL;
-    if(!InsertMenuItemW(hMenu,0,FALSE,&mi)){
-        WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot insert menu item (case 2)");
-        goto done;
-    }
-    mi.fType = MFT_STRING;
-    mi.wID = IDM_EXIT;
-    mi.fState = 0;
-    text = WgxGetResourceString(i18n_table,"EXIT");
-    if(text){
-        mi.dwTypeData = text;
-        if(!InsertMenuItemW(hMenu,IDM_EXIT,FALSE,&mi)){
-            WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot insert menu item (case 3)");
-            free(text);
-            goto done;
-        }
-        free(text);
-    } else {
-        mi.dwTypeData = L"Exit";
-        if(!InsertMenuItemW(hMenu,IDM_EXIT,FALSE,&mi)){
-            WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot insert menu item (case 3)");
-            goto done;
-        }
-    }
     
+    if(!InsertContextMenuItem(hMenu,0,IDM_SHOWHIDE,MFS_DEFAULT,
+        IsWindowVisible(hWindow) ? "HIDE" : "SHOW",
+        IsWindowVisible(hWindow) ? L"Hide" : L"Show")) goto done;
+    if(!InsertContextMenuSeparator(hMenu,1)) goto done;
+    if(!InsertContextMenuItem(hMenu,2,IDM_PAUSE,0,"PAUSE",L"Pause")) goto done;
+    if(!InsertContextMenuSeparator(hMenu,3)) goto done;
+    if(!InsertContextMenuItem(hMenu,4,IDM_EXIT,0,"EXIT",L"Exit")) goto done;
+
     /* show menu */
     if(!GetCursorPos(&pt)){
         WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot get cursor position");

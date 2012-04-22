@@ -11,6 +11,7 @@
       environment variable in command line tool and boot time interface)
     - ability to tune the disk optimization by UD_OPTIMIZER_FILE_SIZE_THRESHOLD
       environment variable (optimizer_file_size_threshold GUI option) was added
+    - ability to suspend/resume the running job was added to GUI
     - ability to minimize the program to the taskbar notification
       area (system tray) was added; it can be turned on/off by
       minimize_to_system_tray GUI option
@@ -31,6 +32,7 @@
       the program; look at rsc/compilation.dox for details
     - device_capacity field added to winx_volume_information structure
     - WgxShowWindow and WgxHideWindow definitions added to wgx.h file
+    - WgxSetProcessPriority routine added to wgx library
 
 
   Version 5.0.5  2012-04-

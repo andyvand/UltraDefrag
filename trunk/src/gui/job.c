@@ -54,6 +54,8 @@ int exit_pressed = 0;
 /* this flag is used for taskbar icon redraw synchonization */
 int job_is_running = 0;
 
+int pause_flag = 0;
+
 extern int map_blocks_per_line;
 extern int map_lines;
 
@@ -181,11 +183,36 @@ static void update_progress(udefrag_progress_info *pi, void *p)
 }
 
 /**
+ * @brief Puts the job into sleep.
+ */
+void SetPause(void)
+{
+    pause_flag = 1;
+    CheckMenuItem(hMainMenu,IDM_PAUSE,
+        MF_BYCOMMAND | MF_CHECKED);
+    SendMessage(hToolbar,TB_CHECKBUTTON,IDM_PAUSE,MAKELONG(TRUE,0));
+    WgxSetProcessPriority(IDLE_PRIORITY_CLASS);
+}
+
+/**
+ * @brief Wakes the job from sleep.
+ */
+void ReleasePause(void)
+{
+    pause_flag = 0;
+    CheckMenuItem(hMainMenu,IDM_PAUSE,
+        MF_BYCOMMAND | MF_UNCHECKED);
+    SendMessage(hToolbar,TB_CHECKBUTTON,IDM_PAUSE,MAKELONG(FALSE,0));
+    WgxSetProcessPriority(NORMAL_PRIORITY_CLASS);
+}
+
+/**
  * @internal
  * @brief Terminates currently running job.
  */
 static int terminator(void *p)
 {
+    while(pause_flag) Sleep(300);
     return stop_pressed;
 }
 
@@ -413,6 +440,8 @@ void start_selected_jobs(udefrag_job_type job_type)
 {
     char *action = "disk analysis";
 
+    ReleasePause();
+    
     if(!WgxCreateThread(StartJobsThreadProc,(LPVOID)(DWORD_PTR)job_type)){
         if(job_type == DEFRAGMENTATION_JOB)
             action = "disk defragmentation";
@@ -433,6 +462,7 @@ void start_selected_jobs(udefrag_job_type job_type)
  */
 void stop_all_jobs(void)
 {
+    ReleasePause();
     stop_pressed = 1;
 }
 
