@@ -140,9 +140,10 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
 
     /* taskbar icon overlay message */
     {0,                 "JOB_IS_RUNNING",             L"A job is running",           NULL},
+    {0,                 "JOB_IS_PAUSED",              L"A job is paused",            NULL},
 
     /* end of the table */
-    {0,                 NULL,                          NULL,                          NULL}
+    {0,                 NULL,                          NULL,                         NULL}
 };
 
 struct menu_item {

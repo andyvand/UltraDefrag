@@ -41,8 +41,11 @@
 
 #define IDI_SHUTDOWN                    140
 #define IDI_BUSY                        145
-#define IDI_TRAY_ICON                   146
-#define IDI_TRAY_ICON_BUSY              147
+#define IDI_PAUSED                      146
+#define IDI_TRAY_ICON                   147
+#define IDI_TRAY_ICON_BUSY              148
+#define IDI_TRAY_ICON_PAUSED            149
+
 #define IDR_MAIN_ACCELERATOR            150
 
 #define IDB_TOOLBAR_16                  160

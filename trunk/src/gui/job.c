@@ -192,6 +192,15 @@ void SetPause(void)
         MF_BYCOMMAND | MF_CHECKED);
     SendMessage(hToolbar,TB_CHECKBUTTON,IDM_PAUSE,MAKELONG(TRUE,0));
     WgxSetProcessPriority(IDLE_PRIORITY_CLASS);
+
+    /* set taskbar icon overlay and notification area icon */
+    if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+        WgxDbgPrintLastError("SetPause: wait on hTaskbarIconEvent failed");
+    } else {
+        SetTaskbarIconOverlay(IDI_PAUSED,"JOB_IS_PAUSED");
+        ShowSystemTrayIcon(NIM_MODIFY);
+        SetEvent(hTaskbarIconEvent);
+    }
 }
 
 /**
@@ -204,6 +213,19 @@ void ReleasePause(void)
         MF_BYCOMMAND | MF_UNCHECKED);
     SendMessage(hToolbar,TB_CHECKBUTTON,IDM_PAUSE,MAKELONG(FALSE,0));
     WgxSetProcessPriority(NORMAL_PRIORITY_CLASS);
+
+    /* set taskbar icon overlay and notification area icon */
+    if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
+        WgxDbgPrintLastError("SetPause: wait on hTaskbarIconEvent failed");
+    } else {
+        if(job_is_running){
+            SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
+        } else {
+            RemoveTaskbarIconOverlay();
+        }
+        ShowSystemTrayIcon(NIM_MODIFY);
+        SetEvent(hTaskbarIconEvent);
+    }
 }
 
 /**

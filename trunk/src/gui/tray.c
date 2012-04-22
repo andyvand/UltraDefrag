@@ -70,6 +70,7 @@ BOOL ShowSystemTrayIcon(DWORD dwMessage)
         }
         /* set icon */
         id = job_is_running ? IDI_TRAY_ICON_BUSY : IDI_TRAY_ICON;
+        id = pause_flag ? IDI_TRAY_ICON_PAUSED : id;
         if(!WgxLoadIcon(hInstance,id,GetSystemMetrics(SM_CXSMICON),&nid.hIcon)) goto fail;
         /* set tooltip */
         wcscpy(nid.szTip,L"UltraDefrag");
@@ -168,6 +169,9 @@ void ShowSystemTrayIconContextMenu(void)
     if(!InsertContextMenuItem(hMenu,2,IDM_PAUSE,0,"PAUSE",L"Pause")) goto done;
     if(!InsertContextMenuSeparator(hMenu,3)) goto done;
     if(!InsertContextMenuItem(hMenu,4,IDM_EXIT,0,"EXIT",L"Exit")) goto done;
+    if(pause_flag){
+        CheckMenuItem(hMenu,IDM_PAUSE,MF_BYCOMMAND | MF_CHECKED);
+    }
 
     /* show menu */
     if(!GetCursorPos(&pt)){

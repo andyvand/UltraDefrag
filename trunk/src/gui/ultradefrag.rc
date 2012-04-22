@@ -43,8 +43,10 @@ IDB_ABOUTBOX_PICTURE    BITMAP  DISCARDABLE     "res/ship.bmp"
 * It is licensed under a Creative Commons Attribution 3.0 License.
 */
 IDI_BUSY                ICON    DISCARDABLE     "res/overlay.ico"
+IDI_PAUSED              ICON    DISCARDABLE     "res/overlay_paused.ico"
 IDI_TRAY_ICON           ICON    DISCARDABLE     "res/tray.ico"
 IDI_TRAY_ICON_BUSY      ICON    DISCARDABLE     "res/tray_busy.ico"
+IDI_TRAY_ICON_PAUSED    ICON    DISCARDABLE     "res/tray_paused.ico"
 
 /*
 * All toolbar pictures must be in 24bpp format.
