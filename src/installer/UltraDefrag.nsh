@@ -137,6 +137,9 @@ Var AtLeastXP
     ${DisableX64FSRedirection}
 
     DetailPrint "Installing core files..."
+    SetOutPath "$SYSDIR"
+        File "lua5.1a.dll"
+
     SetOutPath "$INSTDIR"
         File "${ROOTDIR}\src\LICENSE.TXT"
         File "${ROOTDIR}\src\CREDITS.TXT"
@@ -175,7 +178,6 @@ Var AtLeastXP
         File "zenwinx.dll"
         File "udefrag.dll"
         File "wgx.dll"
-        File "lua5.1a.dll"
         File /oname=hibernate4win.exe "hibernate.exe"
         File "${ROOTDIR}\src\installer\ud-help.cmd"
 
