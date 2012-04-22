@@ -112,4 +112,29 @@ BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param)
     return TRUE;
 }
 
+/**
+ * @brief Sets priority class for the current process.
+ * @param[in] priority_class process priority class.
+ * Read MSDN article on SetPriorityClass for details.
+ * @return Boolean value. TRUE indicates success.
+ */
+BOOL WgxSetProcessPriority(DWORD priority_class)
+{
+    HANDLE hProcess;
+    BOOL result;
+    
+    hProcess = OpenProcess(PROCESS_SET_INFORMATION,
+        FALSE,GetCurrentProcessId());
+    if(hProcess == NULL){
+        WgxDbgPrintLastError("WgxSetProcessPriority: cannot open current process");
+        return FALSE;
+    }
+    result = SetPriorityClass(hProcess,priority_class);
+    if(!result){
+        WgxDbgPrintLastError("WgxSetProcessPriority: cannot set priority class");
+    }
+    CloseHandle(hProcess);
+    return result;
+}
+
 /** @} */
