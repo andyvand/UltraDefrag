@@ -463,6 +463,9 @@ static int defrag_sequence(udefrag_job_parameters *jp)
         /* break if nothing moved */
         if(result < 0 || jp->pi.moved_clusters == 0) break;
         
+        /* break if no repeat allowed */
+        if(!(jp->udo.job_flags & UD_JOB_REPEAT)) break;
+        
         /* defragment a few remaining files on the next pass */
         jp->pi.pass_number ++;
     }
@@ -485,6 +488,9 @@ static int defrag_sequence(udefrag_job_parameters *jp)
             /* break if nothing moved */
             if(result < 0 || jp->pi.moved_clusters == 0) break;
             
+            /* break if no repeat allowed */
+            if(!(jp->udo.job_flags & UD_JOB_REPEAT)) break;
+
             /* defragment a few remaining files on the next pass */
             jp->pi.pass_number ++;
         }
