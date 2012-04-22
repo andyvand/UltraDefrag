@@ -1,7 +1,7 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Czech Language Pack.
 ; Copyright (C) 2009, 2010 David Horák /Dave MacBlack/.
-; Copyright (C) 2010, 2011 Pavel Kinkor.
+; Copyright (C) 2010-2012 Pavel Kinkor.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
-; THIS FILE MUST BE SAVED IN UNICODE (UTF-8) ENCODING
+; THIS FILE MUST BE SAVED IN **UTF-8** ENCODING
 ; Use \n as a newline character in strings.
 ; Use an ampersand (&) before a letter to make it a keyboard accelerator
 
@@ -79,7 +79,7 @@ CONTENTS                  = Obsah
 BEST_PRACTICE             = Osvědčené postupy
 FAQ                       = Často kladené otázky
 CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CHECK_UPDATE              = Zjistit aktualizace
 ABOUT                     = O aplikaci
 
 ; --- Toolbar Tooltips
@@ -136,7 +136,7 @@ UPGRADE_MESSAGE           = release is available for download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Úloha probíhá
 
 ; Strings for system tray icon context menu.
 
@@ -145,19 +145,19 @@ HIDE                      = Skrýt
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmentované soubory na
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Navštivte domovskou stránku
+VIEW_REPORT_OPTIONS       = Zobraz nastavení zprávy
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragmentů
+FRAGMENTS                 = fragmenty
 SIZE                      = velikost
 FILENAME                  = jméno souboru
 COMMENT                   = komentář
 
 LOCKED                    = uzamčený
-MOVE_FAILED               = přesun selhal
-INVALID                   = nevalidní
+MOVE_FAILED               = selhal přesun
+INVALID                   = neplatný
 
 ; END OF FILE
