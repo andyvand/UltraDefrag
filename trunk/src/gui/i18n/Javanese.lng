@@ -10,7 +10,7 @@
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
-; THIS FILE MUST BE SAVED IN UNICODE (UTF-8) ENCODING
+; THIS FILE MUST BE SAVED IN **UTF-8** ENCODING
 ; Use \n as a newline character in strings.
 ; Use an ampersand (&) before a letter to make it a keyboard accelerator
 
