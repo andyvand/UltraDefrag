@@ -40,7 +40,7 @@
  * - NTFS metafiles defragmentation
  * - ultra fast NTFS analysis
  * - fast defragmentation algorithm
- * - effective disk optimization algorithm
+ * - effective disk optimization algorithm (two strategies available)
  * - safety, it can never damage processed files
  * - simplicity, it can be used without reading the documentation
  * - ability to defragment single files/directories from the context menu of Explorer
@@ -99,7 +99,7 @@
  * by joining them together. This speeds up access to individual files.</li>
  * </ol>
  *
- * <h2>Optimization algorithm</h2>
+ * <h2>Full optimization algorithm</h2>
  * <ol>
  * <li>The analysis phase is the same as for defragmentation.</li>
  * <li>The next phase moves all small files and fragments to the end of the
@@ -109,7 +109,13 @@
  * <li>The last phase defragments all files.</li>
  * </ol>
  *
- * @note Optimization algorithm ignores any size, name and fragment count filters.
+ * <h2>Quick optimization algorithm</h2>
+ * Quick optimization consists of the same steps as the full
+ * optimization. However, to speed things up it skips already sorted out
+ * groups of files. Free space consolidation becomes not so good
+ * in this case, but overall disk processing time becomes shorter.
+ *
+ * @note Optimization algorithms ignore any size, name and fragment count filters.
  *
  * Sometimes even the disk optimization fails to make a large 
  * continuous free space gap. This happens when unmovable (locked)
