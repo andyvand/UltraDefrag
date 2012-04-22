@@ -74,7 +74,10 @@ Var AtLeastXP
        even worse, enabling boot time processing results in an unbootable system */
     ${If} ${AtMostWin2000}
         MessageBox MB_OK|MB_ICONEXCLAMATION \
-        "This program is not supported on Windows 2000 and below!$\nIf you are running Windows XP and higher, then something is wrong.$\nPlease report this problem to the developers." \
+        "This program is not supported on Windows 2000 and below!$\n$\n\
+        If you are running Windows XP and higher, then something is wrong.$\n\
+        Please report this problem to the developers.$\n$\n\
+        Download UltraDefrag v5 if you'd like to use it on NT 4 or Windows 2000." \
         /SD IDOK
         Abort
     ${EndIf}
