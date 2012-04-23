@@ -152,7 +152,8 @@ goto :EOF
     set suffix=%%
     
     echo Processing "%~n1" ...
-    for /F "tokens=1*" %%L in ( 'type "%~1"' ) do if not "%%~L" == "" call :ParseResult "%~n1" "%%~L" "%%~nM"
+    for /F %%L in ( 'findstr /i /c:"%~n1" "%~1"' ) do call :IncreaseCounter
+    set /A gCounter-=1
     
     set /A Percentage="%gCounter% * 100 / %TotalStrings%"
     
@@ -165,15 +166,6 @@ goto :EOF
     
     echo %FileName:~1,40% %TranslatedFormat:~-3% ^| %TotalFormat:~-3% ... %PercentFormat:~-5% %suffix%>>"%TMP%\TranslationReport.tmp"
     echo ^|^| %FileNameWiki:~1,70% ^|^| ^|^|= %TranslatedFormat:~-3% ^|^| ^|^|= %TotalFormat:~-3% ^|^| ^|^|^> %PercentFormat:~-5% %% ^|^|>>"%TMP%\TranslationReportWiki.tmp"
-goto :EOF
-
-::
-:: This procedure parses the compare results
-::
-:: usage: call :ParseResult {file name} {first token} {remaining tokens as file name}
-::
-:ParseResult
-    if "%~2" == "*****" if /i "%~1" == "%~3" call :IncreaseCounter
 goto :EOF
 
 ::
