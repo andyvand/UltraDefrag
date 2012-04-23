@@ -9,6 +9,7 @@
 ;------------------------------------------------------------------------------
 ; Revised Jan. 31, 2010 by Connection
 ; Revised Nov. 21, 2011 by Giulio Fornasar
+; Revised Mar. 23, 2012 by Antonio Vivace
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -34,7 +35,7 @@ QUICK_OPTIMIZE            = Ottimizzazione &veloce
 FULL_OPTIMIZE             = Ottimizzazione &completa
 OPTIMIZE_MFT              = &MFT ottimizzazione
 STOP                      = &Interrompi
-REPEAT_ACTION             = Re&peat action
+REPEAT_ACTION             = Ripeti &Azione
 SKIP_REMOVABLE_MEDIA      = Escludi dischi &rimovibili
 RESCAN_DRIVES             = Riscansiona &unità
 REPAIR_DRIVES             = Repair drives
