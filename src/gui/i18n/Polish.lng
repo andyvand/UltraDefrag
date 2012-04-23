@@ -33,16 +33,16 @@ QUICK_OPTIMIZE            = Szybka optymalizacja
 FULL_OPTIMIZE             = Pełna optymalizacja
 OPTIMIZE_MFT              = Optymalizacja MFT
 STOP                      = Zatrzymaj
-REPEAT_ACTION             = Powtórz działania
-SKIP_REMOVABLE_MEDIA      = Pomiń dyski wymienne
-RESCAN_DRIVES             = Przeskanuj listę dysków
-REPAIR_DRIVES             = Repair drives
+REPEAT_ACTION             = Powtórzenie działania
+SKIP_REMOVABLE_MEDIA      = Pominięcie dysków przenośnych
+RESCAN_DRIVES             = Ponowne skanowanie listy dysków
+REPAIR_DRIVES             = Naprawienie dysków
 WHEN_DONE                 = Po ukończeniu działań
 EXIT                      = Zakończ
 
 ; --- --- When done submenu
 
-WHEN_DONE_NONE            = Nie podejmuj żadnych działań
+WHEN_DONE_NONE            = Nie podejmuj żadnych akcji
 WHEN_DONE_EXIT            = Zakończ program
 WHEN_DONE_STANDBY         = Wstrzymaj
 WHEN_DONE_HIBERNATE       = Hibernuj
@@ -57,8 +57,8 @@ SHOW_REPORT               = Pokaż raport
 ; --- Settings Menu
 
 LANGUAGE                  = Język
-GRAPHICAL_INTERFACE       = Graficzny interfejs
-BOOT_TIME_SCAN            = Skanowanie podczas rozruchu
+GRAPHICAL_INTERFACE       = Interfejs graficzny
+BOOT_TIME_SCAN            = Skanowanie uruchomieniowe
 REPORTS                   = Raporty
 
 ; --- --- Language submenu
@@ -73,28 +73,28 @@ OPTIONS                   = Opcje
 ; --- --- Boot time scan submenu
 
 ENABLE                    = Aktywuj
-SCRIPT                    = Skrypt startowy
+SCRIPT                    = Skrypt uruchomieniowy
 
 ; --- Help Menu
 
 CONTENTS                  = Zawartość
 BEST_PRACTICE             = Najlepsze praktyki
 FAQ                       = Najczęściej zadawane pytania
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Sprawdź aktualizację
+CM_LEGEND                 = Objaśnienie mapy dysku
+CHECK_UPDATE              = Sprawdź aktualizacje
 ABOUT                     = O UltraDefrag
 
 ; --- Toolbar Tooltips
 
-BOOT_TIME_SCRIPT          = Skrypt startowy
+BOOT_TIME_SCRIPT          = Skrypt uruchomieniowy
 
 ; Drives list items.
 
 VOLUME                    = Dysk
 STATUS                    = Stan
-TOTAL                     = Całk. miejsce
+TOTAL                     = Całkowite miejsce
 FREE                      = Wolne miejsce
-PERCENT                   = Procent
+PERCENT                   = % wolnego
 
 ; Status messages
 
@@ -102,7 +102,7 @@ STATUS_RUNNING            = Wykonano
 STATUS_ANALYSED           = Przeanalizowano
 STATUS_DEFRAGMENTED       = Zdefragmentowano
 STATUS_OPTIMIZED          = Zoptymalizowano
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Dysk musi zostać naprawiony
 
 ; Status bar messages.
 
@@ -119,7 +119,7 @@ LICENSE                   = Licencja
 
 ; Shutdown confirmation
 
-PLEASE_CONFIRM            = Proszę potwierdź
+PLEASE_CONFIRM            = Proszę o potwierdzenie
 REALLY_SHUTDOWN_WHEN_DONE = Wyłączyć komputer po zakończeniu?
 REALLY_HIBERNATE_WHEN_DONE= Zahibernować komputer po zakończeniu?
 REALLY_LOGOFF_WHEN_DONE   = Wylogować po zakończeniu?
@@ -133,8 +133,8 @@ NO                        = Nie
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Możesz mnie uaktualnić ^-^
+UPGRADE_MESSAGE           = wydanie jest dostępne do pobrania!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -158,8 +158,8 @@ SIZE                      = rozmiar
 FILENAME                  = nazwa pliku
 COMMENT                   = komentarz
 
-LOCKED                    = zablokowane
+LOCKED                    = zablokowany
 MOVE_FAILED               = nie powiodło się przeniesienie
-INVALID                   = niewłaściwe
+INVALID                   = niewłaściwy
 
 ; END OF FILE
