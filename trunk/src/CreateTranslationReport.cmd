@@ -173,15 +173,7 @@ goto :EOF
 :: usage: call :ParseResult {file name} {first token} {remaining tokens as file name}
 ::
 :ParseResult
-    if "%~2" == "*****" (
-        if /i "%~1" == "%~3" (
-            set StartCounting=1
-        ) else (
-            set StartCounting=0
-        )
-    ) else (
-        if %StartCounting% EQU 1 call :IncreaseCounter
-    )
+    if "%~2" == "*****" if /i "%~1" == "%~3" call :IncreaseCounter
 goto :EOF
 
 ::
