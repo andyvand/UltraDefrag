@@ -342,6 +342,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     char buffer[64];
     int index;
     TBBUTTONINFO tbi;
+    UINT id;
     udefrag_job_type job_type = (udefrag_job_type)(DWORD_PTR)lpParameter;
     
     /* return immediately if we are busy */
@@ -376,6 +377,23 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     SendMessage(hToolbar,TB_SETBUTTONINFO,IDM_REPEAT_ACTION,(LRESULT)&tbi);
     SendMessage(hToolbar,TB_ENABLEBUTTON,IDM_SHOW_REPORT,MAKELONG(FALSE,0));
     
+    /* set check mark in front of the selected optimization method */
+    switch(job_type){
+    case FULL_OPTIMIZATION_JOB:
+        id = IDM_FULL_OPTIMIZE;
+        break;
+    case QUICK_OPTIMIZATION_JOB:
+        id = IDM_QUICK_OPTIMIZE;
+        break;
+    case MFT_OPTIMIZATION_JOB:
+        id = IDM_OPTIMIZE_MFT;
+        break;
+    default:
+        id = 0;
+        break;
+    }
+    if(id) CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_CHECKED);
+    
     /* set taskbar icon overlay and notification area icon */
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
         WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
@@ -408,6 +426,9 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     }
 
     busy_flag = 0;
+    
+    /* remove check mark set in front of the selected optimization method */
+    if(id) CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_UNCHECKED);
 
     /* enable menu entries */
     EnableMenuItem(hMainMenu,IDM_ANALYZE,MF_BYCOMMAND | MF_ENABLED);
