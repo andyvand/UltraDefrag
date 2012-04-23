@@ -6,7 +6,7 @@
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
-; Revised {Jan. 01, 1900} by {Replace with your name}
+; Revised Apr. 23, 2012 by Alper Tiryakioglu
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -35,7 +35,7 @@ STOP                      = &Dur
 REPEAT_ACTION             = &İşlemi tekrarla
 SKIP_REMOVABLE_MEDIA      = Çıkarılabilir sürücüleri &gizle
 RESCAN_DRIVES             = Sürücü listesini &yenile
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Sürücüyü &onar
 WHEN_DONE                 = İşlem &bittiğinde...
 EXIT                      = Çı&kış
 
@@ -79,7 +79,7 @@ SCRIPT                    = &Betiği düzenle
 CONTENTS                  = &Yardım konuları
 BEST_PRACTICE             = &En doğru kullanım şekli
 FAQ                       = &Sıkça sorulan sorular
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = &Küme haritası işaretleri
 CHECK_UPDATE              = &Güncellemeleri denetle
 ABOUT                     = &Hakkında
 
@@ -101,7 +101,7 @@ STATUS_RUNNING            = Çalışıyor
 STATUS_ANALYSED           = İncelendi
 STATUS_DEFRAGMENTED       = Birleştirildi
 STATUS_OPTIMIZED          = Optimize edildi
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk onarılmalı
 
 ; Status bar messages.
 
@@ -132,8 +132,8 @@ NO                        = &Hayır
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Beni güncelleyebilirsin ^-^
+UPGRADE_MESSAGE           = sürümü indirilmeye hazır!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

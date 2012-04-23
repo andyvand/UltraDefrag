@@ -1,6 +1,6 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Georgian Language Pack.
-; Copyright (C) 2011 UGLT.org.
+; Copyright (C) 2011-2012 UGLT.org.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ STOP                      = &გაჩერება
 REPEAT_ACTION             = &მოქმედების გამეორება
 SKIP_REMOVABLE_MEDIA      = მ&ოხსნადი დისკების გამოტოვება
 RESCAN_DRIVES             = &დისკების ხელახალი სკანირება
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = დისკების აღდგენა
 WHEN_DONE                 = დ&ასრულების შემდეგ
 EXIT                      = გამოს&ვლა
 
@@ -77,8 +77,8 @@ SCRIPT                    = &სცენარი
 CONTENTS                  = &დახმარების ფაილი
 BEST_PRACTICE             = &სასარგებლო რჩევები
 FAQ                       = &ხშირად დასმული კითხვები
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = კლასტერების რუკის ლეგენდა
+CHECK_UPDATE              = განახლების შემოწმება
 ABOUT                     = &პროგრამის შესახებ
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = სრულდება
 STATUS_ANALYSED           = გაანალიზებულია
 STATUS_DEFRAGMENTED       = დეფრაგმენტებულია
 STATUS_OPTIMIZED          = ოპტიმიზებულია
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = დისკი საჭიროებს აღდგენას
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = &არა
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = შეგიძლია გამაუმჯობესო ^_^
+UPGRADE_MESSAGE           = გადმოსაწერად ხელმისაწვდომია ახალი ვერსია!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = მიმდინარეობს სამუშაო
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = გამოჩენა
+HIDE                      = დამალვა
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = დაფრაგმენტებული ფაილები
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = ეწვიეთ ვებ-გვერდს
+VIEW_REPORT_OPTIONS       = ანგარიშის პარამეტრების ნახვა
+POWERED_BY_LUA            = შემქმნელია Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = ფრაგმენტი
+SIZE                      = ზომა
+FILENAME                  = ფაილის სახელი
+COMMENT                   = კომენტარი
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = ჩაკეტილია
+MOVE_FAILED               = გადატანა შეუძლებელია
+INVALID                   = დაზიანებულია
 
 ; END OF FILE

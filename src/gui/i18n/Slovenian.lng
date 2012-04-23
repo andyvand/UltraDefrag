@@ -18,7 +18,7 @@
 
 ; Main Menu
 
-ACTION                    = Akcijski
+ACTION                    = Opravila
 REPORT                    = Poročilo
 SETTINGS                  = Nastavitve
 HELP                      = Pomoč
@@ -26,21 +26,21 @@ HELP                      = Pomoč
 ; --- Action Menu
 
 ANALYSE                   = Analiza
-DEFRAGMENT                = Defrag
-QUICK_OPTIMIZE            = Hitri optimizacija
+DEFRAGMENT                = Defragmentacija
+QUICK_OPTIMIZE            = Hitra optimizacija
 FULL_OPTIMIZE             = Polna optimizacija
-OPTIMIZE_MFT              = Optimizirajte MFT
-STOP                      = Ustavi se
-REPEAT_ACTION             = Ponovite ukrepanje
+OPTIMIZE_MFT              = Optimizacija MFT
+STOP                      = Ustavi
+REPEAT_ACTION             = Ponovi opravilo
 SKIP_REMOVABLE_MEDIA      = Preskoči odstranljive medije
 RESCAN_DRIVES             = Osveži
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Popravi
 WHEN_DONE                 = Ko končate
 EXIT                      = Izhod
 
 ; --- --- When done submenu
 
-WHEN_DONE_NONE            = Noben
+WHEN_DONE_NONE            = Nič
 WHEN_DONE_EXIT            = Izhod
 WHEN_DONE_STANDBY         = Stanje pripravljenosti
 WHEN_DONE_HIBERNATE       = Mirovanje
@@ -61,7 +61,7 @@ REPORTS                   = Poročila
 
 ; --- --- Language submenu
 
-TRANSLATIONS_FOLDER       = &Prevodi mapo
+TRANSLATIONS_FOLDER       = Ma&pa prevodov
 
 ; --- --- Graphical interface submenu
 
@@ -71,7 +71,7 @@ OPTIONS                   = Možnosti
 ; --- --- Boot time scan submenu
 
 ENABLE                    = Vključi
-SCRIPT                    = Scenarij
+SCRIPT                    = Skripta
 
 ; --- Help Menu
 
@@ -84,7 +84,7 @@ ABOUT                     = O programu
 
 ; --- Toolbar Tooltips
 
-BOOT_TIME_SCRIPT          = Zagonski čas skript
+BOOT_TIME_SCRIPT          = Skripta ob zagonu
 
 ; Drives list items.
 
@@ -96,15 +96,15 @@ PERCENT                   = Odstotek
 
 ; Status messages
 
-STATUS_RUNNING            = Izvedene
-STATUS_ANALYSED           = Analizirali
+STATUS_RUNNING            = Se izvaja
+STATUS_ANALYSED           = Analizirano
 STATUS_DEFRAGMENTED       = Defragmentirano
 STATUS_OPTIMIZED          = Optimirano
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk je potrebno popraviti
 
 ; Status bar messages.
 
-DIRS                      = dir
+DIRS                      = map
 FILES                     = datotek
 FRAGMENTED                = fragmentirano
 COMPRESSED                = skompresirano
@@ -112,31 +112,31 @@ COMPRESSED                = skompresirano
 ; About window.
 
 ABOUT_WIN_TITLE           = O Programu Ultra Defragmenter
-CREDITS                   = Krediti
+CREDITS                   = Zasluge
 LICENSE                   = Licenca
 
 ; Shutdown confirmation
 
 PLEASE_CONFIRM            = Prosimo, da potrdite
-REALLY_SHUTDOWN_WHEN_DONE = Ali res želite zaustavitev ko narediti?
-REALLY_HIBERNATE_WHEN_DONE= Ali želite res mirovanje, ko narediti?
-REALLY_LOGOFF_WHEN_DONE   = Ali res želite odjava, ko končate?
-REALLY_REBOOT_WHEN_DONE   = Ali res želite ponovno zagnati, ko je naredil?
+REALLY_SHUTDOWN_WHEN_DONE = Ali res želite, da se računalnik zaustavi, ko se opravila končajo?
+REALLY_HIBERNATE_WHEN_DONE= Ali res želite, da računalnik preide v mirovanje, ko se opravila končajo?
+REALLY_LOGOFF_WHEN_DONE   = Ali se res želite odjaviti, ko se opravila končajo?
+REALLY_REBOOT_WHEN_DONE   = Ali res želite, da se računalnik ponovno zažene, ko se opravila končajo?
 SECONDS_TILL_SHUTDOWN     = sekunde do zaustavitve
 SECONDS_TILL_HIBERNATION  = sekunde do mirovanja
-SECONDS_TILL_LOGOFF       = sekunde do Odjava
-SECONDS_TILL_REBOOT       = sekunde do reboot
+SECONDS_TILL_LOGOFF       = sekunde do odjave
+SECONDS_TILL_REBOOT       = sekunde do ponovnega zagona
 YES                       = Da
 NO                        = Ne
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Na voljo so posodobitve ^-^
+UPGRADE_MESSAGE           = na voljo je nova različica!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = Nalogo teče
+JOB_IS_RUNNING            = Opravilo se izvaja
 
 ; Strings for system tray icon context menu.
 
@@ -148,16 +148,16 @@ HIDE                      = Skrij
 FRAGMENTED_FILES_ON       = Fragmentirano datotek na
 
 VISIT_HOMEPAGE            = Obiščite našo spletno stran
-VIEW_REPORT_OPTIONS       = Možnosti od poročilo
+VIEW_REPORT_OPTIONS       = Možnosti poročila
 POWERED_BY_LUA            = Deluje na Lua
 
-FRAGMENTS                 = število od fragmenti
+FRAGMENTS                 = število fragmentov
 SIZE                      = velikost
-FILENAME                  = ime od datoteke
+FILENAME                  = ime datoteke
 COMMENT                   = komentar
 
 LOCKED                    = blokirana
-MOVE_FAILED               = ni uspelo premikati
-INVALID                   = napaka v algoritmu ali v datotečni sistem
+MOVE_FAILED               = ni uspelo premakniti
+INVALID                   = napaka v algoritmu ali v datotečnem sistemu
 
 ; END OF FILE
