@@ -33,7 +33,7 @@ STOP                      = &Стоп
 REPEAT_ACTION             = &Разрешить повтор
 SKIP_REMOVABLE_MEDIA      = &Исключить сменные диски
 RESCAN_DRIVES             = &Поиск дисков
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Исправить диски
 WHEN_DONE                 = После о&бработки дисков
 EXIT                      = Вы&ход
 
@@ -77,7 +77,7 @@ SCRIPT                    = &Сценарий
 CONTENTS                  = &Содержание
 BEST_PRACTICE             = &Полезные советы
 FAQ                       = &Часто задаваемые вопросы
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = &Легенда карты
 CHECK_UPDATE              = &Проверить обновления
 ABOUT                     = &О программе
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Выполняется
 STATUS_ANALYSED           = Проанализирован
 STATUS_DEFRAGMENTED       = Дефрагментирован
 STATUS_OPTIMIZED          = Оптимизирован
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Диск нуждается в исправлении
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = &Нет
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Вы можете меня обновить ^-^
+UPGRADE_MESSAGE           = релиз доступен для загрузки!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
