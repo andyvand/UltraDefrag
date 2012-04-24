@@ -41,6 +41,7 @@
     - displaying the cluster map legend from the help menu was added
     - cluster map scaling was forced to be more accurate
     - GUI options verification was added
+    - a bug causing "wrong map detected" error was fixed
     - ability to analyze, optimize and quick optimize drive from
       Explorer context menu added
     - relative log paths support added to both GUI and console interface
