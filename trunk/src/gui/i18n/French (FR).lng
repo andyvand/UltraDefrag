@@ -81,8 +81,8 @@ SCRIPT                    = Script
 CONTENTS                  = Contenu
 BEST_PRACTICE             = Astuces
 FAQ                       = Foire aux questions
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = &Légende de la carte des clusters
+CHECK_UPDATE              = Vérifier les &mise à jour
 ABOUT                     = À propos
 
 ; --- Toolbar Tooltips
@@ -103,7 +103,7 @@ STATUS_RUNNING            = En cours d'exécution
 STATUS_ANALYSED           = Analysé
 STATUS_DEFRAGMENTED       = Défragmenté
 STATUS_OPTIMIZED          = Optimisé
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Le Disque nécessite d'être réparé
 
 ; Status bar messages.
 
@@ -134,8 +134,8 @@ NO                        = Non
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Vous pouvez me mettre à niveau ^-^
+UPGRADE_MESSAGE           = une nouvelle version est disponnible au téléchargement!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -148,10 +148,10 @@ HIDE                      = Cacher
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fichiers fragmentés sur
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Visiter notre page d'accueil
+VIEW_REPORT_OPTIONS       = Voir les options du rapport
 POWERED_BY_LUA            = Powered by Lua
 
 FRAGMENTS                 = fragments
@@ -159,8 +159,8 @@ SIZE                      = taille
 FILENAME                  = fichier
 COMMENT                   = commentaire
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
+LOCKED                    = verrouillé
+MOVE_FAILED               = déplacement raté
 INVALID                   = invalide
 
 ; END OF FILE

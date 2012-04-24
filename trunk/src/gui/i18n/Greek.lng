@@ -30,10 +30,10 @@ QUICK_OPTIMIZE            = Γρήγορη βελτιστοποίηση
 FULL_OPTIMIZE             = Πλήρης βελτιστοποίηση
 OPTIMIZE_MFT              = Βελτιστοποίηση MFT
 STOP                      = Διακοπή
-REPEAT_ACTION             = Επαναλάβετε την ενέργεια
-SKIP_REMOVABLE_MEDIA      = Παράλειψη αφαιρ. συσκ.
+REPEAT_ACTION             = Επανάληψη ενέργειας
+SKIP_REMOVABLE_MEDIA      = Παράλειψη αφαιρούμενων συσκευών
 RESCAN_DRIVES             = Επανεξέταση δίσκων
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Επιδιόρθωση δίσκων
 WHEN_DONE                 = Όταν ολοκληρωθεί
 EXIT                      = Έξοδος
 
@@ -77,8 +77,8 @@ SCRIPT                    = Σενάριο
 CONTENTS                  = Περιεχόμενα
 BEST_PRACTICE             = Καλύτερη πρακτική
 FAQ                       = ΣΕΑ(FAQ)
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Χάρτης συστοιχιών και υπόμνημα
+CHECK_UPDATE              = Έλεγχος για ενημερώσεις
 ABOUT                     = Σχετικά
 
 ; --- Toolbar Tooltips
@@ -95,11 +95,11 @@ PERCENT                   = Ποσοστό
 
 ; Status messages
 
-STATUS_RUNNING            = Εκτελείτε
+STATUS_RUNNING            = Εκτελείται
 STATUS_ANALYSED           = Αναλύθηκε
 STATUS_DEFRAGMENTED       = Ανασυγκροτήθηκε
 STATUS_OPTIMIZED          = Βελτιστοποιήθηκε
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Απαιτείται επιδιόρθωση δίσκου
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = Οχι
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Δυνατότητα αναβάθμισης ^-^
+UPGRADE_MESSAGE           = Νέα έκδοση διαθέσιμη!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Εκτελείται διεργασία
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Εμφάνιση
+HIDE                      = Απόκρυψη
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Κατακερματισμένα αρχεία στον
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Επίσκεψη του ιστοτόπου μας
+VIEW_REPORT_OPTIONS       = Επισκόπηση επιλογών αναφοράς
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = κατακερματισμένα στοιχεία
+SIZE                      = μέγεθος
+FILENAME                  = όνομα αρχείου
+COMMENT                   = σχόλιο
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = κλειδωμένο
+MOVE_FAILED               = αποτυχία μετακίνησης
+INVALID                   = άκυρο
 
 ; END OF FILE

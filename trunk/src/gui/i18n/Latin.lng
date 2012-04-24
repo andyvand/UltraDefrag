@@ -33,7 +33,7 @@ STOP                      = Pau&sa
 REPEAT_ACTION             = Permitto repetitionis
 SKIP_REMOVABLE_MEDIA      = &Exclude discorum amovibilium
 RESCAN_DRIVES             = &Reproba discorum
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Correcto discorum
 WHEN_DONE                 = Post &operam
 EXIT                      = E&xitus
 
@@ -77,7 +77,7 @@ SCRIPT                    = &Scriptum
 CONTENTS                  = Indicem &contenta
 BEST_PRACTICE             = &Usus optimus
 FAQ                       = &Saepe interrogavit
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = &Descriptio tabulae
 CHECK_UPDATE              = Inquiro pro &nova
 ABOUT                     = &Informatio
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Continuus
 STATUS_ANALYSED           = Investigam
 STATUS_DEFRAGMENTED       = Defragmentam
 STATUS_OPTIMIZED          = Consummam
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Discus requirit correctionem
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = &Non
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Potes renovo mei ^-^
+UPGRADE_MESSAGE           = release accessibilis est!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

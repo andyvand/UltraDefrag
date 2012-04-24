@@ -35,7 +35,7 @@ STOP                      = 멈춤(&S)
 REPEAT_ACTION             = 다시 작업(&P)
 SKIP_REMOVABLE_MEDIA      = 이동식 디스크 제외(&M)
 RESCAN_DRIVES             = 드라이브 다시 검색(&R)
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = 드라이브 복구
 WHEN_DONE                 = 작업을 마치면...(&W)
 EXIT                      = 끝내기(&X)
 
@@ -79,7 +79,7 @@ SCRIPT                    = 스크립트(&S)
 CONTENTS                  = 도움말 내용(&C)
 BEST_PRACTICE             = 우수 사례(&P)
 FAQ                       = 질문과 답변(&F)
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = 클러스터 맵 설명(&L)
 CHECK_UPDATE              = 업데이트 확인(&U)
 ABOUT                     = 정보(&A)
 
@@ -93,7 +93,7 @@ VOLUME                    = 볼륨
 STATUS                    = 상태
 TOTAL                     = 전체 용량
 FREE                      = 여유 용량
-PERCENT                   = 여유 용량 %
+PERCENT                   = 여유 용량 비율
 
 ; Status messages
 
@@ -101,7 +101,7 @@ STATUS_RUNNING            = 실행 중
 STATUS_ANALYSED           = 분석됨
 STATUS_DEFRAGMENTED       = 조각모음됨
 STATUS_OPTIMIZED          = 최적화됨
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = 디스크를 복구해야 합니다.
 
 ; Status bar messages.
 
@@ -132,8 +132,8 @@ NO                        = 아니오(&N)
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = 업그레이드할 수 있습니다. ^-^
+UPGRADE_MESSAGE           = 버전은 다운로드할 수 있습니다!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -150,7 +150,7 @@ FRAGMENTED_FILES_ON       = 조각난 파일 -
 
 VISIT_HOMEPAGE            = 홈페이지 방문
 VIEW_REPORT_OPTIONS       = 보고서 옵션 보기
-POWERED_BY_LUA            = Powered by Lua
+POWERED_BY_LUA            = 제공 : Lua
 
 FRAGMENTS                 = 조각 개수
 SIZE                      = 크기
@@ -159,6 +159,6 @@ COMMENT                   = 설명
 
 LOCKED                    = 잠김
 MOVE_FAILED               = 이동 실패
-INVALID                   = 올바르지 않음
+INVALID                   = 잘못됨
 
 ; END OF FILE

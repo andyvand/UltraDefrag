@@ -119,10 +119,10 @@ LICENSE                   = &Lizenz
 ; Shutdown confirmation
 
 PLEASE_CONFIRM            = Bitte bestätigen
-REALLY_SHUTDOWN_WHEN_DONE = Wollen Sie nach dem Abschluss den Computer wirklich herunterfahren?
-REALLY_HIBERNATE_WHEN_DONE= Wollen Sie nach dem Abschluss den Computer wirklich in den Ruhezustand versetzen?
-REALLY_LOGOFF_WHEN_DONE   = Wollen Sie sich nach dem Abschluss wirklich abmelden?
-REALLY_REBOOT_WHEN_DONE   = Wollen Sie nach dem Abschluss den Computer wirklich neu starten?
+REALLY_SHUTDOWN_WHEN_DONE = Wollen Sie nach Abschluss den Computer wirklich herunterfahren?
+REALLY_HIBERNATE_WHEN_DONE= Wollen Sie nach Abschluss den Computer wirklich in den Ruhezustand versetzen?
+REALLY_LOGOFF_WHEN_DONE   = Wollen Sie sich nach Abschluss wirklich abmelden?
+REALLY_REBOOT_WHEN_DONE   = Wollen Sie nach Abschluss den Computer wirklich neu starten?
 SECONDS_TILL_SHUTDOWN     = Sekunden bis zum Herunterfahren
 SECONDS_TILL_HIBERNATION  = Sekunden bis zum Ruhezustand
 SECONDS_TILL_LOGOFF       = Sekunden bis zur Abmeldung
@@ -133,7 +133,7 @@ NO                        = &Nein
 ; Upgrade dialog
 
 UPGRADE_CAPTION           = Du kannst mich aktualisieren ^-^
-UPGRADE_MESSAGE           = Version ist zum Herunterladen bereit!
+UPGRADE_MESSAGE           = Neue Version zum Herunterladen vorhanden!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

@@ -10,6 +10,7 @@
 ; Revised Jan. 31, 2010 by Connection
 ; Revised Nov. 21, 2011 by Giulio Fornasar
 ; Revised Mar. 23, 2012 by Antonio Vivace
+; Revised Apr. 24, 2012 by Alessandro Visentin
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -135,8 +136,8 @@ NO                        = &No
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Aggiornamento disponibile ^-^
+UPGRADE_MESSAGE           = release è a disposizione per il download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
