@@ -33,7 +33,7 @@ STOP                      = Dừng
 REPEAT_ACTION             = Lặp lại hành động
 SKIP_REMOVABLE_MEDIA      = Không quét các thiết bị di động
 RESCAN_DRIVES             = Quét Ổ đĩa
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Sửa chữa ổ đĩa
 WHEN_DONE                 = Khi hoàn tất
 EXIT                      = Thoát
 
@@ -77,8 +77,8 @@ SCRIPT                    = Chỉnh sửa
 CONTENTS                  = Nội dung trợ giúp
 BEST_PRACTICE             = Hướng dẫn trực tuyến
 FAQ                       = Hỏi đáp
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cụm bản đồ huyền thoại
+CHECK_UPDATE              = Kiểm tra cho cập nhật
 ABOUT                     = Giới thiệu
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Đang tiến hành...
 STATUS_ANALYSED           = Đã phân tích
 STATUS_DEFRAGMENTED       = Đã chống phân mảnh
 STATUS_OPTIMIZED          = Đã tối ưu hóa
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Đĩa cần phải được sửa chữa
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = Không
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Bạn có thể nâng cấp tôi ^-^
+UPGRADE_MESSAGE           = phát hành là có sẵn để tải về!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Một công việc đang chạy
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
+SHOW                      = Hiển thị
 HIDE                      = Hide
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Bị phân mảnh các tập tin về
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Chủ của chúng tôi
+VIEW_REPORT_OPTIONS       = Xem các tùy chọn báo cáo
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = mảnh vỡ
+SIZE                      = kích thước
+FILENAME                  = tên tập tin
+COMMENT                   = bình luận
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = khóa
+MOVE_FAILED               = di chuyển không thành công
+INVALID                   = không hợp lệ
 
 ; END OF FILE

@@ -33,7 +33,7 @@ STOP                      = &நிறுத்து
 REPEAT_ACTION             = &அதிரடி செய்யவும்
 SKIP_REMOVABLE_MEDIA      = &நீக்கக்கூடிய ஊடகத்தில் தவிர்க்கவும்
 RESCAN_DRIVES             = &Rescan இயக்கிகள்
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = பழுது இயக்கிகள்
 WHEN_DONE                 = &முடிந்தவுடன்
 EXIT                      = &வெளியேறு
 
@@ -77,8 +77,8 @@ SCRIPT                    = &ஸ்கிரிப்ட்
 CONTENTS                  = &பொருளடக்கம்
 BEST_PRACTICE             = &சிறந்த பயிற்சி
 FAQ                       = &கேள்விகள்
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = கொத்து வரைபடத்தை விளக்கவுரை
+CHECK_UPDATE              = மேம்படுத்தல் சோதிக்க
 ABOUT                     = &பற்றி
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = செயல்படுகிறது
 STATUS_ANALYSED           = பாகுபடுத்தப்பட்டது
 STATUS_DEFRAGMENTED       = சீரமைக்கப்பட்டது
 STATUS_OPTIMIZED          = உகப்பாக்கப்பட்டது
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = வட்டு பழுது வேண்டும்
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = &இல்லை
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = நீங்கள் என்னை மேம்படுத்த முடியும் ^-^
+UPGRADE_MESSAGE           = வெளியீடு பதிவிறக்க கிடைக்கும்!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = ஒரு வேலை இயங்கும்
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = காண்பி
+HIDE                      = மறை
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = துண்டுதுண்டாக கோப்புகளை அன்று
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = நம் தமிழுக்கு
+VIEW_REPORT_OPTIONS       = அறிக்கை விருப்பங்களை காண்க
+POWERED_BY_LUA            = திருத்தினோம் Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = துண்டுகள்
+SIZE                      = அளவு
+FILENAME                  = கோப்புப்பெயர்
+COMMENT                   = கருத்து
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = பூட்டப்பட்டுள்ளது
+MOVE_FAILED               = நகர்த்த முடியவில்லை
+INVALID                   = செல்லுபடியாகாத
 
 ; END OF FILE

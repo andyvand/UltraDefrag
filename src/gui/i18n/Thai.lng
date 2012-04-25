@@ -33,7 +33,7 @@ STOP                      = หยุดทำงาน
 REPEAT_ACTION             = ทำซ้ำการกระทำ
 SKIP_REMOVABLE_MEDIA      = ยกเว้นไดรฟ์ไม่ถาวร
 RESCAN_DRIVES             = ตรวจหาไดรฟ์อีกครั้ง
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = ไดรฟ์ซ่อมแซม
 WHEN_DONE                 = เมื่อเสร็จแล้ว
 EXIT                      = ทางออก
 
@@ -77,8 +77,8 @@ SCRIPT                    = สคริปต์
 CONTENTS                  = สารบัญ
 BEST_PRACTICE             = ปฏิบัติที่ดีที่สุด
 FAQ                       = คำถามที่พบบ่อย
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = ตำนานคลัสเตอร์แผนที่
+CHECK_UPDATE              = ตรวจสอบสำหรับการปรับปรุง
 ABOUT                     = เี่กี่ยวกับ
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = เรียกใช้
 STATUS_ANALYSED           = วิเคราะห์
 STATUS_DEFRAGMENTED       = จัดระเบียบ
 STATUS_OPTIMIZED          = เหมาะ
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = ดิสก์จะต้องมีการซ่อมแซม
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = ไม่มี
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = คุณสามารถปรับรุ่นผม ^-^
+UPGRADE_MESSAGE           = ปล่อยพร้อมสำหรับการดาวน์โหลด!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = งานกำลังทำงานอยู่
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = แสดง
+HIDE                      = ซ่อน
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = ไฟล์กระจัดกระจายบน
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = ไปที่หน้าแรกของเรา
+VIEW_REPORT_OPTIONS       = ดูตัวเลือกรายงาน
+POWERED_BY_LUA            = ขับเคลื่อนด้วย Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = เศษ
+SIZE                      = ขนาด
+FILENAME                  = ชื่อไฟล์
+COMMENT                   = ความเห็น
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = ล็อค
+MOVE_FAILED               = ย้ายล้มเหลว
+INVALID                   = ที่ไม่ถูกต้อง
 
 ; END OF FILE

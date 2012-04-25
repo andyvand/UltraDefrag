@@ -4,7 +4,7 @@
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
-; Revised {Jan. 01, 1900} by {Replace by Name of Reviser}
+; Revised Apr. 25, 2012 by Dionisios Klonaris
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -49,13 +49,13 @@ WHEN_DONE_SHUTDOWN        = Τερματισμός
 
 ; --- Report Menu
 
-SHOW_REPORT               = Δείξε την αναφορά
+SHOW_REPORT               = Προβολή αναφοράς
 
 ; --- Settings Menu
 
 LANGUAGE                  = Γλώσσα
 GRAPHICAL_INTERFACE       = Γραφικό περιβάλλον
-BOOT_TIME_SCAN            = Έλεγχος εκκίνησης των Windows
+BOOT_TIME_SCAN            = Έλεγχος κατά την εκκίνηση
 REPORTS                   = Αναφορές
 
 ; --- --- Language submenu
@@ -148,7 +148,7 @@ FRAGMENTED_FILES_ON       = Κατακερματισμένα αρχεία στο
 
 VISIT_HOMEPAGE            = Επίσκεψη του ιστοτόπου μας
 VIEW_REPORT_OPTIONS       = Επισκόπηση επιλογών αναφοράς
-POWERED_BY_LUA            = Powered by Lua
+POWERED_BY_LUA            = Βασισμένο στη Lua
 
 FRAGMENTS                 = κατακερματισμένα στοιχεία
 SIZE                      = μέγεθος
