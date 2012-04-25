@@ -34,7 +34,7 @@ STOP                      = Стоп
 REPEAT_ACTION             = Поновите акција
 SKIP_REMOVABLE_MEDIA      = Прескочити преносиве медијe
 RESCAN_DRIVES             = Освежи
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Поправити дискови
 WHEN_DONE                 = Када завршите
 EXIT                      = Излаз
 
@@ -78,7 +78,7 @@ SCRIPT                    = Сценарио
 CONTENTS                  = Садржај
 BEST_PRACTICE             = Најбоља пракса
 FAQ                       = Питања
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Картова легенда
 CHECK_UPDATE              = Проверите да ли постоје исправке
 ABOUT                     = О програму
 
@@ -97,10 +97,10 @@ PERCENT                   = Проценат
 ; Status messages
 
 STATUS_RUNNING            = Дефрагментовање...
-STATUS_ANALYSED           = Анализирano
+STATUS_ANALYSED           = Анализирaнo
 STATUS_DEFRAGMENTED       = Дефрагментовано
 STATUS_OPTIMIZED          = Оптимизовано
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Диск треба да се поправи
 
 ; Status bar messages.
 
@@ -131,8 +131,8 @@ NO                        = Не
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Можете да ми ажурирати ^-^
+UPGRADE_MESSAGE           = издање је доступно за преузимање!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

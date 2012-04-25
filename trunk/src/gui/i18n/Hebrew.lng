@@ -33,7 +33,7 @@ STOP                      = עצור
 REPEAT_ACTION             = בצע שוב
 SKIP_REMOVABLE_MEDIA      = דלג על דעסקין נשלפים
 RESCAN_DRIVES             = לסרוק מחדש כונני
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = תיקון כוננים
 WHEN_DONE                 = כאשר נעשה
 EXIT                      = יציאה
 
@@ -77,7 +77,7 @@ SCRIPT                    = תסריט
 CONTENTS                  = תוכן
 BEST_PRACTICE             = הכי טוב להתאמן
 FAQ                       = שאלות נפוצות
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = האגדה על המפה
 CHECK_UPDATE              = בדוק אם יש עדכון
 ABOUT                     = אודות התוכנית
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = ביצוע
 STATUS_ANALYSED           = ניתחתי
 STATUS_DEFRAGMENTED       = איחוי
 STATUS_OPTIMIZED          = אופטימליים
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = בדיסק יש לתקן
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = לא
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = אתה יכול לשדרג אותי ^-^
+UPGRADE_MESSAGE           = שחרור זמינה להורדה!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

@@ -35,7 +35,7 @@ STOP                      = Stoppa
 REPEAT_ACTION             = Upprepande aktivitet
 SKIP_REMOVABLE_MEDIA      = Hoppa över flyttbara medier
 RESCAN_DRIVES             = Uppdatera enhetslistan
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Reparation enheter
 WHEN_DONE                 = Avslutande åtgärd
 EXIT                      = Avsluta
 
@@ -79,8 +79,8 @@ SCRIPT                    = Redigera skript
 CONTENTS                  = Innehåll
 BEST_PRACTICE             = Tips och råd
 FAQ                       = Vanliga frågor
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster map legend
+CHECK_UPDATE              = Kontrollera uppdatering
 ABOUT                     = Om
 
 ; --- Toolbar Tooltips
@@ -101,7 +101,7 @@ STATUS_RUNNING            = Bearbetas
 STATUS_ANALYSED           = Analyserats
 STATUS_DEFRAGMENTED       = Defragmenterats
 STATUS_OPTIMIZED          = Optimerats
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Skiva behöver repareras
 
 ; Status bar messages.
 
@@ -132,33 +132,33 @@ NO                        = Nej
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
+UPGRADE_CAPTION           = Du kan uppgradera mig ^-^
 UPGRADE_MESSAGE           = release is available for download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Ett jobb är igång
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Visar
+HIDE                      = Göm
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmenterade filer på
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Besök vår hemsida
+VIEW_REPORT_OPTIONS       = Visa rapportalternativ
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragment
+SIZE                      = storlek
+FILENAME                  = filnamn
+COMMENT                   = kommentera
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = låst
+MOVE_FAILED               = flytta misslyckades
+INVALID                   = ogiltig
 
 ; END OF FILE

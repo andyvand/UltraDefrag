@@ -33,7 +33,7 @@ STOP                      = האַלטן
 REPEAT_ACTION             = איבערחזרן אַקציע
 SKIP_REMOVABLE_MEDIA      = דיסקים נשלפים האָפּקען
 RESCAN_DRIVES             = דערפרישן רשימה פון דיסקים
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = פאַרריכטן דיסקים
 WHEN_DONE                 = נאָך אַרבעט
 EXIT                      = אַרויסגאַנג
 
@@ -77,7 +77,7 @@ SCRIPT                    = סצענאַר
 CONTENTS                  = ינהאַלט
 BEST_PRACTICE             = בעסטער פיר
 FAQ                       = שאלות נפוצות
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = האגדה פון דער קאַרטע
 CHECK_UPDATE              = טשעק פֿאַר דערהייַנטיקן
 ABOUT                     = וועגן
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = דורכפירונג
 STATUS_ANALYSED           = אבאליזירט
 STATUS_DEFRAGMENTED       = דעפראגםענטירט
 STATUS_OPTIMIZED          = אָפּטימיזירט
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = דיסק דארף צו זיין פאַרריכט
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = ניט
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = דו קאן לשדרג מיר ^-^
+UPGRADE_MESSAGE           = שחרור זמינה להורדה!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
