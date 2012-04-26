@@ -3,10 +3,11 @@
 ; Copyright (C) 2008, 2009 muzuiget.
 ; Copyright (C) 2010 HPJ.
 ; Copyright (C) 2011 Tommy He.
+; Copyright (C) 2012 Elita Alutee.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
-; Revised {Jan. 01, 1900} by {Replace with your name}
+; Revised {Jan. 01, 2000} by {Replace with your name}
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -30,13 +31,13 @@ ANALYSE                   = 分析
 DEFRAGMENT                = 整理
 QUICK_OPTIMIZE            = 快速优化
 FULL_OPTIMIZE             = 全面优化
-OPTIMIZE_MFT              = 优化的MFT
+OPTIMIZE_MFT              = 优化MFT
 STOP                      = 停止
-REPEAT_ACTION             = 重复动作
+REPEAT_ACTION             = 重复操作
 SKIP_REMOVABLE_MEDIA      = 忽略移动磁盘
 RESCAN_DRIVES             = 重新扫描
-REPAIR_DRIVES             = Repair drives
-WHEN_DONE                 = 整理完后
+REPAIR_DRIVES             = 修复磁盘
+WHEN_DONE                 = 整理完成后
 EXIT                      = 退出
 
 ; --- --- When done submenu
@@ -47,7 +48,7 @@ WHEN_DONE_STANDBY         = 待机
 WHEN_DONE_HIBERNATE       = 休眠
 WHEN_DONE_LOGOFF          = 注销
 WHEN_DONE_REBOOT          = 重启
-WHEN_DONE_SHUTDOWN        = 关闭
+WHEN_DONE_SHUTDOWN        = 关机
 
 ; --- Report Menu
 
@@ -57,7 +58,7 @@ SHOW_REPORT               = 显示报告
 
 LANGUAGE                  = 语言
 GRAPHICAL_INTERFACE       = 图形界面
-BOOT_TIME_SCAN            = 系统启动扫描
+BOOT_TIME_SCAN            = 启动时扫描
 REPORTS                   = 报告
 
 ; --- --- Language submenu
@@ -80,7 +81,7 @@ CONTENTS                  = 目录
 BEST_PRACTICE             = 最佳方法
 FAQ                       = 常见问题解答
 CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CHECK_UPDATE              = 检查更新
 ABOUT                     = 关于
 
 ; --- Toolbar Tooltips
@@ -101,7 +102,7 @@ STATUS_RUNNING            = 运行中
 STATUS_ANALYSED           = 分析完成
 STATUS_DEFRAGMENTED       = 碎片整理完成
 STATUS_OPTIMIZED          = 优化完成
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = 磁盘需要修复
 
 ; Status bar messages.
 
@@ -132,33 +133,33 @@ NO                        = 否
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = 升级吧 ^-^
+UPGRADE_MESSAGE           = 有新的更新可以下载！
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = 正在执行一个操作，请稍等
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = 显示
+HIDE                      = 隐藏
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = 碎片文件
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = 访问我们的主页
+VIEW_REPORT_OPTIONS       = 查看报告选项
+POWERED_BY_LUA            = 由Lua技术支持
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = 碎片
+SIZE                      = 大小
+FILENAME                  = 文件名
+COMMENT                   = 意见
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = 冻结中
+MOVE_FAILED               = 移动失败
+INVALID                   = 无效的
 
 ; END OF FILE

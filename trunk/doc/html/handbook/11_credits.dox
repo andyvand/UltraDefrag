@@ -45,6 +45,7 @@
  * <tr><td>• Chinese (Simplified)         </td><td>-</td><td> muzuiget</td></tr>
  * <tr><td>                               </td><td>-</td><td> HPJ</td></tr>
  * <tr><td>                               </td><td>-</td><td> Tommy He</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Elita Alutee</td></tr>
  * <tr><td>• Chinese (Traditional)        </td><td>-</td><td> muzuiget</td></tr>
  * <tr><td>                               </td><td>-</td><td> Ryan Ping Chih Ko</td></tr>
  * <tr><td>                               </td><td>-</td><td> rexx</td></tr>
@@ -81,6 +82,7 @@
  * <tr><td>• Hungarian                    </td><td>-</td><td> Nagy Zsolt</td></tr>
  * <tr><td>                               </td><td>-</td><td> Áron Hegedüs</td></tr>
  * <tr><td>                               </td><td>-</td><td> Gellért Lukács</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Brechler Zsolt</td></tr>
  * <tr><td>• Icelandic                    </td><td>-</td><td> Stefan Pendl</td></tr>
  * <tr><td>• Iloko                        </td><td>-</td><td> Joseph S. B. Maza</td></tr>
  * <tr><td>• Indonesian (Bahasa Indonesia)</td><td>-</td><td> Taufan Nur Hidayat</td></tr>
@@ -154,6 +156,7 @@
  * • Chinese (Simplified)          & - & muzuiget \\
  *                                 & - & HPJ \\
  *                                 & - & Tommy He \\
+ *                                 & - & Elita Alutee \\
  * • Chinese (Traditional)         & - & muzuiget \\
  *                                 & - & Ryan Ping Chih Ko \\
  *                                 & - & rexx \\
@@ -190,6 +193,7 @@
  * • Hungarian                     & - & Nagy Zsolt \\
  *                                 & - & Áron Hegedüs \\
  *                                 & - & Gellért Lukács \\
+ *                                 & - & Brechler Zsolt \\
  * • Icelandic                     & - & Stefan Pendl \\
  * • Iloko                         & - & Joseph S. B. Maza \\
  * • Indonesian (Bahasa Indonesia) & - & Taufan Nur Hidayat \\
@@ -381,6 +385,24 @@
  *
  * Default Icon by interactivemania is licensed under
  * a <a href="http://creativecommons.org/licenses/by-nd/3.0/">Creative Commons Attribution-No Derivative Works 3.0</a>.</li>
+ * </ul>
+ *
+ * Lua and Lua Report icons are based on <a href="http://lua-users.org/wiki/LuaLogo">artwork by Alexandre Nakonechnyj</a>.
+ *
+ * <ul>
+ * <li> Portions Copyright &copy; 1998 Lua.org. Graphic design by Alexandre Nakonechnyj.
+ *
+ * Permission is hereby granted, without written agreement and without
+ * license or royalty fees, to use, copy, and distribute this logo
+ * for any purpose, including commercial applications, subject to the
+ * following conditions:
+ *
+ * - The origin of this logo must not be misrepresented; you must
+ *   not claim that you drew the original logo.
+ * - The only modification you can make is to adapt the orbiting
+ *   text to your product name.
+ * - The logo can be used in any scale as long as the relative
+ *   proportions of its elements are maintained.</li>
  * </ul>
  *
  * Taskbar overlay icon is based on
