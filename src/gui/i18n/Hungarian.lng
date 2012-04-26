@@ -3,6 +3,7 @@
 ; Copyright (C) 2008-2010 Nagy Zsolt.
 ; Copyright (C) 2010 Áron Hegedüs.
 ; Copyright (C) 2011 Gellért Lukács.
+; Copyright (C) 2012 Brechler Zsolt.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ STOP                      = Megáll
 REPEAT_ACTION             = Művelet ismétlése
 SKIP_REMOVABLE_MEDIA      = Hordozható meghajtók kihagyása
 RESCAN_DRIVES             = Frissítés
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Meghajtók javítása
 WHEN_DONE                 = Ha kész
 EXIT                      = Kilépés
 
@@ -79,8 +80,8 @@ SCRIPT                    = Szkript
 CONTENTS                  = Tartalom
 BEST_PRACTICE             = Bevált gyakorlat
 FAQ                       = GYIK (FAQ)
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Klaszter térkép &magyarázat
+CHECK_UPDATE              = &Frissítés ellenőrzése
 ABOUT                     = Névjegy
 
 ; --- Toolbar Tooltips
@@ -101,7 +102,7 @@ STATUS_RUNNING            = Végrehajt
 STATUS_ANALYSED           = Elemzett
 STATUS_DEFRAGMENTED       = Töredezettségmentes
 STATUS_OPTIMIZED          = Optimalizált
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = A lemeznek javításra van szüksége
 
 ; Status bar messages.
 
@@ -132,33 +133,33 @@ NO                        = Nem
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Frissíthetnél engem ^-^
+UPGRADE_MESSAGE           = kiadás elérhető letöltésre!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Egy feladat már fut
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Mutat
+HIDE                      = Elrejt
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Töredezett fájlok itt:
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Látogasd meg a honlapunkat
+VIEW_REPORT_OPTIONS       = Jelentési beállítások mutatása
+POWERED_BY_LUA            = Meghajtja a Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = töredékek
+SIZE                      = méret
+FILENAME                  = fájlnév
+COMMENT                   = megjegyzés
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = zárt
+MOVE_FAILED               = mozgatás sikertelen
+INVALID                   = érvénytelen
 
 ; END OF FILE
