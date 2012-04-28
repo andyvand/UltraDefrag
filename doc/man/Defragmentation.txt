@@ -15,3 +15,6 @@ Windows XP Professional Resource Kit: Working with File Systems
 
 Inside Windows NT Disk Defragmenting
     http://www.adminko.sk/!Admin/!utils/systernals/systernals/www.sysinternals.com/ntw2k/info/defrag.html
+
+Don’t judge a book by its cover – why Windows Vista Defrag is cool
+    http://blogs.technet.com/b/filecab/archive/2007/01/26/don-t-judge-a-book-by-its-cover-why-windows-vista-defrag-is-cool.aspx#640450
