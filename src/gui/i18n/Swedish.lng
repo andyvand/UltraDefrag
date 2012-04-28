@@ -2,11 +2,11 @@
 ; UltraDefrag GUI Swedish Language Pack.
 ; Copyright (C) 2009 Magnus Rostedt.
 ; Copyright (C) 2010, 2011 Per-Eric Jenshagen.
+; Copyright (C) 2011, 2012 Christoffer Ekberg.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
 ; Revised Aug. 17, 2010 by Patrick Palm
-; Revised Nov. 30, 2011 by Christoffer Ekberg
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -35,7 +35,7 @@ STOP                      = Stoppa
 REPEAT_ACTION             = Upprepande aktivitet
 SKIP_REMOVABLE_MEDIA      = Hoppa över flyttbara medier
 RESCAN_DRIVES             = Uppdatera enhetslistan
-REPAIR_DRIVES             = Reparation enheter
+REPAIR_DRIVES             = Reparera enheter
 WHEN_DONE                 = Avslutande åtgärd
 EXIT                      = Avsluta
 
@@ -79,8 +79,8 @@ SCRIPT                    = Redigera skript
 CONTENTS                  = Innehåll
 BEST_PRACTICE             = Tips och råd
 FAQ                       = Vanliga frågor
-CM_LEGEND                 = Cluster map legend
-CHECK_UPDATE              = Kontrollera uppdatering
+CM_LEGEND                 = Förklaring av klusterkarta
+CHECK_UPDATE              = Sök efter uppdatering
 ABOUT                     = Om
 
 ; --- Toolbar Tooltips
@@ -101,7 +101,7 @@ STATUS_RUNNING            = Bearbetas
 STATUS_ANALYSED           = Analyserats
 STATUS_DEFRAGMENTED       = Defragmenterats
 STATUS_OPTIMIZED          = Optimerats
-STATUS_DIRTY              = Skiva behöver repareras
+STATUS_DIRTY              = Erfordras reparation
 
 ; Status bar messages.
 
@@ -132,33 +132,33 @@ NO                        = Nej
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = Du kan uppgradera mig ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Du kan uppdatera mig ^-^
+UPGRADE_MESSAGE           = Ny version finns tillgänglig!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = Ett jobb är igång
+JOB_IS_RUNNING            = En åtgärd utförs...
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Visar
-HIDE                      = Göm
+SHOW                      = Visa
+HIDE                      = Dölj
 
 ; Strings for the file fragmentation reports.
 
 FRAGMENTED_FILES_ON       = Fragmenterade filer på
 
-VISIT_HOMEPAGE            = Besök vår hemsida
-VIEW_REPORT_OPTIONS       = Visa rapportalternativ
+VISIT_HOMEPAGE            = Besök hemsidan
+VIEW_REPORT_OPTIONS       = Visa rapportsalternativ
 POWERED_BY_LUA            = Powered by Lua
 
 FRAGMENTS                 = fragment
 SIZE                      = storlek
 FILENAME                  = filnamn
-COMMENT                   = kommentera
+COMMENT                   = kommentar
 
 LOCKED                    = låst
-MOVE_FAILED               = flytta misslyckades
+MOVE_FAILED               = omplacering misslyckades
 INVALID                   = ogiltig
 
 ; END OF FILE
