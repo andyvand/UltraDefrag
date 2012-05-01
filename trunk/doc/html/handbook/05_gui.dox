@@ -184,6 +184,25 @@
  * @latexonly
  * &
  * @endlatexonly
+ * @par Repair drives
+ * This runs CHKDSK against the selected drives to clear the status
+ * <b>Disk needs to be repaired</b> if possible.\n
+ * You need to rescan the drives afterwards to update their status.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
  * @par When done
  * This allows one to select an action that will be executed after all operations have been performed.<br/>
  * The default is <b>None</b>, available actions are: <b>Exit, Standby, Hibernate, Logoff, Reboot</b> and <b>Shutdown</b>.
