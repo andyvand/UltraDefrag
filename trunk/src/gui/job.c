@@ -549,7 +549,7 @@ void RepairSelectedVolumes(void)
     int index;
     int counter = 0;
 
-    strcpy(args,"/C");
+    strcpy(args,"");
 
     index = -1;
     while(1){
@@ -562,9 +562,7 @@ void RepairSelectedVolumes(void)
         lvi.cchTextMax = 127;
         if(SendMessage(hList,LVM_GETITEM,0,(LRESULT)&lvi)){
             letter = buffer[0];
-            _snprintf(buffer,MAX_CMD_LENGTH,
-                "%s title CHKDSK %c: & echo. & chkdsk %c: /V /F & echo. & pause &",
-                args,letter,letter);
+            _snprintf(buffer,MAX_CMD_LENGTH,"%s %c:",args,letter);
             buffer[MAX_CMD_LENGTH - 1] = 0;
             strcpy(args,buffer);
             counter ++;
@@ -573,6 +571,14 @@ void RepairSelectedVolumes(void)
     }
     
     if(counter == 0) return;
+
+    _snprintf(buffer,MAX_CMD_LENGTH,
+        "/C ( for %%D in ( %s ) do @echo. & echo chkdsk %%D & echo. & chkdsk %%D /V /F & echo. & echo %s & ping -n 6 localhost >nul ) & echo. & pause",
+        args,"-------------------------------------------------");
+    buffer[MAX_CMD_LENGTH - 1] = 0;
+    strcpy(args,buffer);
+    
+    WgxDbgPrint("Command Line: %s", args);
 
     if(!WgxCreateProcess("%windir%\\system32\\cmd.exe",args)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
