@@ -36,7 +36,7 @@ STOP                      = &Parar
 REPEAT_ACTION             = &Repetir ação
 SKIP_REMOVABLE_MEDIA      = &Ignorar mídia removível
 RESCAN_DRIVES             = Re-&escanear drives
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Unidades de reparação
 WHEN_DONE                 = &Quando concluído
 EXIT                      = &Sair
 
@@ -80,8 +80,8 @@ SCRIPT                    = &Script
 CONTENTS                  = &Conteúdos
 BEST_PRACTICE             = Melhor &prática
 FAQ                       = &FAQ
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster mapa &lenda
+CHECK_UPDATE              = Verifique se há atualização
 ABOUT                     = &Sobre
 
 ; --- Toolbar Tooltips
@@ -102,7 +102,7 @@ STATUS_RUNNING            = Executando
 STATUS_ANALYSED           = Analisado
 STATUS_DEFRAGMENTED       = Desfragmentado
 STATUS_OPTIMIZED          = Otimizado
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disco precisa ser reparado
 
 ; Status bar messages.
 
@@ -133,33 +133,33 @@ NO                        = &Não
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Você pode atualizar me ^-^
+UPGRADE_MESSAGE           = versão está disponível para download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Um trabalho está sendo executado
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Mostrar
+HIDE                      = Esconder
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Arquivos fragmentados no
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Visite nossa homepage
+VIEW_REPORT_OPTIONS       = Ver opções de relatório
+POWERED_BY_LUA            = Desenvolvido por Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmentos
+SIZE                      = tamanho
+FILENAME                  = nome do arquivo
+COMMENT                   = comentar
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = trancado
+MOVE_FAILED               = mover falhou
+INVALID                   = inválido
 
 ; END OF FILE

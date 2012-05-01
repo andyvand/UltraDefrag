@@ -37,7 +37,7 @@ STOP                      = &Stoppen
 REPEAT_ACTION             = Actie he&rhalen
 SKIP_REMOVABLE_MEDIA      = &Verwijderbare media overslaan
 RESCAN_DRIVES             = &Her-scannen harde schijven/media
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Reparatie drives
 WHEN_DONE                 = &Indien klaar
 EXIT                      = &Programma afsluiten
 
@@ -81,8 +81,8 @@ SCRIPT                    = &Script
 CONTENTS                  = In&houd
 BEST_PRACTICE             = &Beste aanpak
 FAQ                       = &Veelgestelde vragen
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster kaart &legende
+CHECK_UPDATE              = Controleer voor &update
 ABOUT                     = &Info
 
 ; --- Toolbar Tooltips
@@ -103,7 +103,7 @@ STATUS_RUNNING            = Bezig...
 STATUS_ANALYSED           = Geanalyseerd
 STATUS_DEFRAGMENTED       = Gedefragmenteerd
 STATUS_OPTIMIZED          = Geoptimaliseerd
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk moet worden gerepareerd
 
 ; Status bar messages.
 
@@ -134,33 +134,33 @@ NO                        = &Nee
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = U kunt een upgrade me ^-^
+UPGRADE_MESSAGE           = release is beschikbaar voor download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Een opdracht wordt uitgevoerd
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Tonen
+HIDE                      = Verbergen
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Gefragmenteerde bestanden op
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Bezoek onze Homepage
+VIEW_REPORT_OPTIONS       = Bekijk rapportagemogelijkheden
+POWERED_BY_LUA            = Aangedreven door Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenten
+SIZE                      = grootte
+FILENAME                  = bestandsnaam
+COMMENT                   = commentaar
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = op slot
+MOVE_FAILED               = te verplaatsen mislukt
+INVALID                   = ongeldig
 
 ; END OF FILE

@@ -33,7 +33,7 @@ STOP                      = रोके
 REPEAT_ACTION             = कार्रवाई दोहराएँ
 SKIP_REMOVABLE_MEDIA      = हटाने लायक ड्राइव छोडे
 RESCAN_DRIVES             = ड्राइव पूनर्जाच
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = मरम्मत ड्राइव
 WHEN_DONE                 = जब पूर्ण हो
 EXIT                      = प्रस्थान
 
@@ -77,7 +77,7 @@ SCRIPT                    = लिपि
 CONTENTS                  = विषय-सूची
 BEST_PRACTICE             = सर्वोत्तम कार्य
 FAQ                       = अक्सर पूछे गए सवाल
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = क्लस्टर नक्शा कथा
 CHECK_UPDATE              = &अपडेट के लिए जांचे
 ABOUT                     = संबंध में
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = संचालन जारी
 STATUS_ANALYSED           = विश्लेषण पुर्ण
 STATUS_DEFRAGMENTED       = एकीकरण पुर्ण
 STATUS_OPTIMIZED          = अनुकूलित
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = डिस्क की मरम्मत की जरूरत है
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = नहीं
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = तुम मुझे उन्नयन कर सकते हैं ^-^
+UPGRADE_MESSAGE           = विज्ञप्ति में Download के लिए उपलब्ध है!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

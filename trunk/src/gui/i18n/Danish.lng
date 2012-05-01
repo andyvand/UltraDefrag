@@ -33,7 +33,7 @@ STOP                      = Stop
 REPEAT_ACTION             = Gentag handling
 SKIP_REMOVABLE_MEDIA      = Kun faste drev
 RESCAN_DRIVES             = Opdater drevlisten
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Reparation drev
 WHEN_DONE                 = Efter udførsel
 EXIT                      = Luk programmet
 
@@ -77,8 +77,8 @@ SCRIPT                    = Script
 CONTENTS                  = Indhold
 BEST_PRACTICE             = Bedste praksis
 FAQ                       = Ofte stillede spørgsmål
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster kort legende
+CHECK_UPDATE              = Check for opdatering
 ABOUT                     = Om
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Kører
 STATUS_ANALYSED           = Analyseret
 STATUS_DEFRAGMENTED       = Defragmenteret
 STATUS_OPTIMIZED          = Optimeret
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk skal repareres
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = Nej
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Du kan opgradere mig ^-^
+UPGRADE_MESSAGE           = release er tilgængelig for download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Et job kører
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Vis
+HIDE                      = Skjul
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmenterede filer på
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Besøg vores hjemmeside
+VIEW_REPORT_OPTIONS       = Se rapport muligheder
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenter
+SIZE                      = størrelse
+FILENAME                  = filnavn
+COMMENT                   = kommentere
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = låst
+MOVE_FAILED               = flytte mislykkedes
+INVALID                   = ugyldig
 
 ; END OF FILE

@@ -2,9 +2,9 @@
 ; UltraDefrag GUI Farsi Language Pack.
 ; Copyright (C) 2008-2011 Ali Jafari.
 ;------------------------------------------------------------------------------
-; History --- Date ---------- Ali Jafari
+; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
-; Revised {Jan. 01, 1900} by {Replace by Name of Reviser}
+; Revised {Jan. 01, 1900} by {Replace with your name}
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -33,7 +33,7 @@ STOP                      = توقف
 REPEAT_ACTION             = تکرار عمل
 SKIP_REMOVABLE_MEDIA      = رد كردن مدياي قابل حذف
 RESCAN_DRIVES             = اسكن دوباره درايو
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = درایوهای تعمیرات
 WHEN_DONE                 = هنگام انجام شدن
 EXIT                      = خروج
 
@@ -77,8 +77,8 @@ SCRIPT                    = حروف
 CONTENTS                  = محتویات
 BEST_PRACTICE             = بهترین تمرین
 FAQ                       = سوالات متداول
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = خوشه نقشه افسانه ای
+CHECK_UPDATE              = چک برای به روز رسانی
 ABOUT                     = درباره
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = در حال اجرا
 STATUS_ANALYSED           = آنالیز شد
 STATUS_DEFRAGMENTED       = دیفراگ شد
 STATUS_OPTIMIZED          = پردازش شد
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = دیسک نیاز به تعمیر
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = خیر
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = شما می توانید به من ارتقاء ^-^
+UPGRADE_MESSAGE           = نسخه برای دانلود در دسترس است.!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = یک کار در حال اجرا است
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = نشان دادن
+HIDE                      = مخفی کردن
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = فایل های تکه تکه بر
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = ارسال یک پیام خصوصی به ما
+VIEW_REPORT_OPTIONS       = نمایش گزینه های گزارش
+POWERED_BY_LUA            = صفحه Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = قطعات
+SIZE                      = اندازه
+FILENAME                  = نام فایل
+COMMENT                   = نظر
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = قفل شده
+MOVE_FAILED               = حرکت شکست خورد
+INVALID                   = نامعتبر
 
 ; END OF FILE

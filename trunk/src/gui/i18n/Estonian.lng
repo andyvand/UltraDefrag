@@ -33,7 +33,7 @@ STOP                      = Peata
 REPEAT_ACTION             = Korda tegevust
 SKIP_REMOVABLE_MEDIA      = Jäta vahele eemaldatav meedia
 RESCAN_DRIVES             = Taasskänni kettaid
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Remont kõvakettad
 WHEN_DONE                 = Kui teha
 EXIT                      = Välju
 
@@ -77,8 +77,8 @@ SCRIPT                    = Skript
 CONTENTS                  = Sisu
 BEST_PRACTICE             = Parimate tavade
 FAQ                       = Korduma kippuvad küsimused
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster kaart legend
+CHECK_UPDATE              = Vaata uuendust
 ABOUT                     = Info
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Lahti pakitakse
 STATUS_ANALYSED           = Analüüsitud
 STATUS_DEFRAGMENTED       = Defragmentidud
 STATUS_OPTIMIZED          = Optimiseeritud
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk tuleb parandada
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = Ei
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Võite minna mind ^-^
+UPGRADE_MESSAGE           = versioon on allalaadimiseks kättesaadav!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

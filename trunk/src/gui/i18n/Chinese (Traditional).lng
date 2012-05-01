@@ -36,7 +36,7 @@ STOP                      = 停止
 REPEAT_ACTION             = 重複動作
 SKIP_REMOVABLE_MEDIA      = 不顯示卸除式磁碟
 RESCAN_DRIVES             = 更新磁碟機清單
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = 修復硬盤
 WHEN_DONE                 = 作業完成後
 EXIT                      = 離開
 
@@ -80,8 +80,8 @@ SCRIPT                    = 指令碼
 CONTENTS                  = 內容
 BEST_PRACTICE             = 最佳作法
 FAQ                       = 問與答
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = 群集地圖圖例
+CHECK_UPDATE              = 檢查更新
 ABOUT                     = 關於
 
 ; --- Toolbar Tooltips
@@ -102,7 +102,7 @@ STATUS_RUNNING            = 正在執行作業
 STATUS_ANALYSED           = 已分析
 STATUS_DEFRAGMENTED       = 已重組
 STATUS_OPTIMIZED          = 已優化
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = 磁盤需要被修復
 
 ; Status bar messages.
 
@@ -133,33 +133,33 @@ NO                        = 否
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = 你可以升級我 ^-^
+UPGRADE_MESSAGE           = 版本是可供下載!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = 作業運行
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = 顯示
+HIDE                      = 隱藏
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = 上零散的文件。
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = 訪問我們的網站
+VIEW_REPORT_OPTIONS       = 報告選項
+POWERED_BY_LUA            = 技術支持 Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = 片段
+SIZE                      = 大小
+FILENAME                  = 文件名
+COMMENT                   = 評語
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = 鎖定
+MOVE_FAILED               = 移動失敗
+INVALID                   = 無效
 
 ; END OF FILE

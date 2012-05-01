@@ -35,7 +35,7 @@ STOP                      = &Parar
 REPEAT_ACTION             = Re&petir ação
 SKIP_REMOVABLE_MEDIA      = Ignorar discos a&movíveis
 RESCAN_DRIVES             = Analisar d&iscos
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Unidades de reparação
 WHEN_DONE                 = Ao &terminar
 EXIT                      = &Sair
 
@@ -79,7 +79,7 @@ SCRIPT                    = "&Script"
 CONTENTS                  = &Conteúdo
 BEST_PRACTICE             = Melhores &práticas
 FAQ                       = Perguntas mais &frequentes
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Cluster mapa &lenda
 CHECK_UPDATE              = Verificar at&ualizações
 ABOUT                     = &Sobre
 
@@ -101,7 +101,7 @@ STATUS_RUNNING            = Em execução
 STATUS_ANALYSED           = Analisado
 STATUS_DEFRAGMENTED       = Desfragmentado
 STATUS_OPTIMIZED          = Otimizado
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disco precisa ser reparado
 
 ; Status bar messages.
 
@@ -132,8 +132,8 @@ NO                        = &Não
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Você pode atualizar me ^-^
+UPGRADE_MESSAGE           = versão está disponível para download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

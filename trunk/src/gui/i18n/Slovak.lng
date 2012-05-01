@@ -34,7 +34,7 @@ STOP                      = Zastaviť
 REPEAT_ACTION             = O&pakovať akciu
 SKIP_REMOVABLE_MEDIA      = Preskočiť vymeniteľné média
 RESCAN_DRIVES             = Obnoviť jednotky
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Opravy diskov
 WHEN_DONE                 = Po dokončení
 EXIT                      = Skončiť
 
@@ -78,7 +78,7 @@ SCRIPT                    = Skript
 CONTENTS                  = Obsah
 BEST_PRACTICE             = Vhodné použitie
 FAQ                       = Časté otázky
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Cluster mapa legenda
 CHECK_UPDATE              = Skontrolovať aktualizácie
 ABOUT                     = O programe
 
@@ -100,7 +100,7 @@ STATUS_RUNNING            = vykonáva sa
 STATUS_ANALYSED           = analyzované
 STATUS_DEFRAGMENTED       = defragmentované
 STATUS_OPTIMIZED          = optimalizované
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk je potrebné opraviť
 
 ; Status bar messages.
 
@@ -131,33 +131,33 @@ NO                        = nie
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Môžete upgradovať ma ^-^
+UPGRADE_MESSAGE           = Správa je k dispozícii na stiahnutie!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Práca beží
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Ukázať
+HIDE                      = Skryť
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmentované súbory na
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Navštívte našu homepage
+VIEW_REPORT_OPTIONS       = Zobraziť prehľad možností
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenty
+SIZE                      = veľkosť
+FILENAME                  = súboru
+COMMENT                   = komentár
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = zamknutý
+MOVE_FAILED               = pohybovať sa nepodarilo
+INVALID                   = neplatný
 
 ; END OF FILE

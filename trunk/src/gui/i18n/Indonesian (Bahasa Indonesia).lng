@@ -34,7 +34,7 @@ STOP                      = &Berhenti
 REPEAT_ACTION             = &Ulangi aksi
 SKIP_REMOVABLE_MEDIA      = &Hindari media lepas
 RESCAN_DRIVES             = S&can ulang drives
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Perbaikan drive
 WHEN_DONE                 = &Ketika selesai
 EXIT                      = K&eluar
 
@@ -78,7 +78,7 @@ SCRIPT                    = &Naskah
 CONTENTS                  = &Konten
 BEST_PRACTICE             = &Praktek Terbaik
 FAQ                       = &FAQ
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Peta Cluster &legenda
 CHECK_UPDATE              = Tinjau Pem&baruan
 ABOUT                     = &Tentang
 
@@ -100,7 +100,7 @@ STATUS_RUNNING            = Mengeksekusi
 STATUS_ANALYSED           = Teranalisa
 STATUS_DEFRAGMENTED       = Terdefrag
 STATUS_OPTIMIZED          = Teroptimalkan
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk perlu diperbaiki
 
 ; Status bar messages.
 
@@ -131,8 +131,8 @@ NO                        = &Tidak
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Anda dapat meng-upgrade saya ^-^
+UPGRADE_MESSAGE           = rilis tersedia untuk di-download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
