@@ -83,7 +83,7 @@ ABOUT                     = &Maipapan iti
 
 ; --- Toolbar Tooltips
 
-BOOT_TIME_SCRIPT          = Pamayaan iti Panagrugi
+BOOT_TIME_SCRIPT          = Pamayaan iti Panagrugina
 
 ; Drives list items.
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Nakaandar
 STATUS_ANALYSED           = Inusig
 STATUS_DEFRAGMENTED       = Dinagup
 STATUS_OPTIMIZED          = Inkanatad
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Masapol a matarimaan ti disk
 
 ; Status bar messages.
 
@@ -122,9 +122,9 @@ REALLY_HIBERNATE_WHEN_DONE= Apagleppasna ket kayatyo a pagturogen?
 REALLY_LOGOFF_WHEN_DONE   = Apagleppasna ket kayatyo a turposen?
 REALLY_REBOOT_WHEN_DONE   = Apagleppasna ket kayatyo nga irugi manen?
 SECONDS_TILL_SHUTDOWN     = kanito intuno panagiddepna
-SECONDS_TILL_HIBERNATION  = kanito intuno pannakapaturogna
-SECONDS_TILL_LOGOFF       = kanito intuno pannakaturposna
-SECONDS_TILL_REBOOT       = kanito intuno pannakairugina manen
+SECONDS_TILL_HIBERNATION  = kanito intuno panagpaturogna
+SECONDS_TILL_LOGOFF       = kanito intuno panagturposna
+SECONDS_TILL_REBOOT       = kanito intuno panagrugina manen
 YES                       = &Wen
 NO                        = &Saan
 
@@ -148,7 +148,7 @@ FRAGMENTED_FILES_ON       = Napisi nga intar iti
 
 VISIT_HOMEPAGE            = Basaen ti Purok Web
 VIEW_REPORT_OPTIONS       = Imatangan ti opsion ti padamag
-POWERED_BY_LUA            = Kabaelan ti Lua
+POWERED_BY_LUA            = Babaen ti teknolohia ti Lua
 
 FRAGMENTS                 = pisi
 SIZE                      = kadakkel

@@ -1,7 +1,7 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Filipino (Tagalog) Language Pack.
 ; Copyright (C) 2010 Stefan Pendl.
-; Copyright (C) 2011 Joseph S. B. Maza.
+; Copyright (C) 2011, 2012 Joseph S. B. Maza.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ ANALYSE                   = Mag&suri
 DEFRAGMENT                = Mag&buo
 QUICK_OPTIMIZE            = Magpahusay na &Mabilis
 FULL_OPTIMIZE             = M&agpahusay ng Buo
-OPTIMIZE_MFT              = Pahusayin ang M&FT
+OPTIMIZE_MFT              = Pahusayan ang M&FT
 STOP                      = &Tigilin
 REPEAT_ACTION             = Mag-&ulit
 SKIP_REMOVABLE_MEDIA      = Laktawan ang Matatanggal na &Media
@@ -99,8 +99,8 @@ PERCENT                   = % ng Palayain
 STATUS_RUNNING            = Tumutupad
 STATUS_ANALYSED           = Sinuri
 STATUS_DEFRAGMENTED       = Binuo
-STATUS_OPTIMIZED          = Pinahusay
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_OPTIMIZED          = Pinahusayan
+STATUS_DIRTY              = Dapat makumpuni ang disk
 
 ; Status bar messages.
 
@@ -131,33 +131,33 @@ NO                        = &Hindi
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Maipaasenso ang bersiyong ito ^-^
+UPGRADE_MESSAGE           = na bersiyon ay mai-download na!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = May nasa lalayag na tungkulin
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Ipakita
+HIDE                      = Taguin
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = nakapirisong file sa
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Basahin ang Homepag
+VIEW_REPORT_OPTIONS       = Tanawan ang mga Opsiyon ng Ulat
+POWERED_BY_LUA            = Napapaandar ng Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
+FRAGMENTS                 = piraso
+SIZE                      = kalakihan
 FILENAME                  = filename
-COMMENT                   = comment
+COMMENT                   = puna
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = nakakandado
+MOVE_FAILED               = hindi nalipat
+INVALID                   = hindi naangkop
 
 ; END OF FILE

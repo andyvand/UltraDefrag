@@ -1,12 +1,12 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Catalan Language Pack.
 ; Copyright (C) 2008, 2009 IllesBalears traducció català.
-; Copyright (C) 2011 Joseph S. Maza.
+; Copyright (C) 2011, 2012 Joseph S. Maza.
 ; Copyright (C) 2011 TurboHz.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
-; Revised {Jan. 01, 1900} by {Replace by Name of Reviser}
+; Revised {Jan. 01, 2000} by {Replace by Name of Reviser}
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -132,33 +132,33 @@ NO                        = &No
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Actualització disponible  ^-^
+UPGRADE_MESSAGE           = versió es disponible!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = S'està executant una tasca 
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Mostra
+HIDE                      = Amaga
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fitxers fragmentats en
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Visita la pàgina inicial
+VIEW_REPORT_OPTIONS       = Visualitza les opcions d'informe
+POWERED_BY_LUA            = Amb tecnologia de Lua
 
 FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+SIZE                      = mida
+FILENAME                  = nom del fitxer
+COMMENT                   = comentari
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = blocat
+MOVE_FAILED               = error en desplaçar
+INVALID                   = no és vàlid
 
 ; END OF FILE
