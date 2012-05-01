@@ -194,6 +194,7 @@ TIME ... 12-04
  * <h1>Boot time script example</h1>
  * The following script is used by default:
  * @code
+ * @echo off
  * ;--------------------------------------------------------------------
  * ;                UltraDefrag Boot Time Shell Script
  * ;--------------------------------------------------------------------
@@ -202,6 +203,12 @@ TIME ... 12-04
  *
  * set UD_IN_FILTER=*windows*;*winnt*;*ntuser*;*pagefile.sys;*hiberfil.sys
  * set UD_EX_FILTER=*temp*;*tmp*;*.zip;*.7z;*.rar;*dllcache*;*ServicePackFiles*
+ *
+ * ; uncomment the following line to create debugging output
+ * ; set UD_DBGPRINT_LEVEL=DETAILED
+ *
+ * ; uncomment the following line to save debugging information to a log file
+ * ; set UD_LOG_FILE_PATH=%SystemRoot%\UltraDefrag\Logs\defrag_native.log
  *
  * udefrag c:
  *
