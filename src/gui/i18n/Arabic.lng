@@ -33,7 +33,7 @@ STOP                      = &إيقاف
 REPEAT_ACTION             = إع&ادة الفعل
 SKIP_REMOVABLE_MEDIA      = استبعاد &الوسائط القابلة للنقل
 RESCAN_DRIVES             = &إعادة تفحّص الأقراص
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = اصلاح محركات
 WHEN_DONE                 = &عند الإنتهاء
 EXIT                      = خ&روج
 
@@ -77,7 +77,7 @@ SCRIPT                    = &حروف
 CONTENTS                  = &محتويات
 BEST_PRACTICE             = &نصائح
 FAQ                       = &أسئلة مطروحة غالبا
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = كتلة خريطة أسطورة
 CHECK_UPDATE              = تحقق من &التحديث
 ABOUT                     = &حول
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = تنفيذ
 STATUS_ANALYSED           = تم التحليل
 STATUS_DEFRAGMENTED       = تم إلغاء التجزئة
 STATUS_OPTIMIZED          = محسّن
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = القرص يحتاج إلى إصلاح
 
 ; Status bar messages.
 
@@ -130,12 +130,12 @@ NO                        = &لا
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = يمكنك ترقية لي ^-^
+UPGRADE_MESSAGE           = إطلاق يتوفر للتحميل!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = ألف وظيفة يشغل
 
 ; Strings for system tray icon context menu.
 
@@ -144,10 +144,10 @@ HIDE                      = إخفاء
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = تجزئة الملفات على
 
 VISIT_HOMEPAGE            = قم بزيارة صفحتنا الرئيسية
-VIEW_REPORT_OPTIONS       = View report options
+VIEW_REPORT_OPTIONS       = عرض خيارات تقرير
 POWERED_BY_LUA            = مشغّل بواسطة Lua
 
 FRAGMENTS                 = أجزاء

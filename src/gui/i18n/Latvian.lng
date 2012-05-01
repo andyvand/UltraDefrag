@@ -34,7 +34,7 @@ STOP                      = Ap&turēt
 REPEAT_ACTION             = Da&rbību atkārtot
 SKIP_REMOVABLE_MEDIA      = Izlaist maināmus datu &nesējus
 RESCAN_DRIVES             = Di&sku meklēšana
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Remonta diski
 WHEN_DONE                 = &Kad izdarīts
 EXIT                      = &Iziet
 
@@ -78,8 +78,8 @@ SCRIPT                    = &Skriptu
 CONTENTS                  = &Saturs
 BEST_PRACTICE             = &Labākās prakses
 FAQ                       = &Biežāk uzdotie jautājumi
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = &Klasteru karte leģenda
+CHECK_UPDATE              = Pārbaudīt &update
 ABOUT                     = &Par programmu
 
 ; --- Toolbar Tooltips
@@ -100,7 +100,7 @@ STATUS_RUNNING            = Izpildes
 STATUS_ANALYSED           = Analīze
 STATUS_DEFRAGMENTED       = Defragmented
 STATUS_OPTIMIZED          = Optimizēta
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disks jālabo
 
 ; Status bar messages.
 
@@ -131,33 +131,33 @@ NO                        = &Nē
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Jūs varat jaunināt mani ^-^
+UPGRADE_MESSAGE           = presei ir pieejama lejupielādei!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Darbs darbojas
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Rādīt
+HIDE                      = Slēpt
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Sadrumstalota failus
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Apmeklējiet mūsu mājas lapā
+VIEW_REPORT_OPTIONS       = Skatīt atskaišu iespējas
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenti
+SIZE                      = izmērs
+FILENAME                  = faila nosaukums
+COMMENT                   = komentāri
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = slēgts
+MOVE_FAILED               = pārvietot neizdevās
+INVALID                   = nederīgs
 
 ; END OF FILE

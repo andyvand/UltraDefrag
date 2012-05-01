@@ -34,7 +34,7 @@ STOP                      = &Stopp
 REPEAT_ACTION             = Gjenta handling
 SKIP_REMOVABLE_MEDIA      = &Hopp over flyttbare media
 RESCAN_DRIVES             = Skann på &nytt
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Reparasjon stasjoner
 WHEN_DONE                 = Når &utført
 EXIT                      = A&vslutt
 
@@ -78,8 +78,8 @@ SCRIPT                    = Pro&grammer
 CONTENTS                  = &Innhold
 BEST_PRACTICE             = &Anbefalinger
 FAQ                       = Spørs&mål og svar
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = &Cluster kart legende
+CHECK_UPDATE              = &Se etter oppdatering
 ABOUT                     = &Om
 
 ; --- Toolbar Tooltips
@@ -100,7 +100,7 @@ STATUS_RUNNING            = Utfører
 STATUS_ANALYSED           = Analysert
 STATUS_DEFRAGMENTED       = Defragmentert
 STATUS_OPTIMIZED          = Optimalisert
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk må repareres
 
 ; Status bar messages.
 
@@ -131,33 +131,33 @@ NO                        = &Nei
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Du kan oppgradere meg ^-^
+UPGRADE_MESSAGE           = utgivelsen er tilgjengelig for nedlasting!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = En jobb kjører
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Vis
+HIDE                      = Skjul
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmenterte filer på
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Besøk vår hjemmeside
+VIEW_REPORT_OPTIONS       = Se rapport alternativer
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenter
+SIZE                      = størrelse
+FILENAME                  = filnavn
+COMMENT                   = kommentere
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = låst
+MOVE_FAILED               = flytte mislyktes
+INVALID                   = ugyldig
 
 ; END OF FILE

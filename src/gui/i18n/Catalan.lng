@@ -35,7 +35,7 @@ STOP                      = At&ura
 REPEAT_ACTION             = &Repeteix l'acció
 SKIP_REMOVABLE_MEDIA      = Omet unitats &extraïbles
 RESCAN_DRIVES             = Reanalit&za
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Les &unitats de reparació
 WHEN_DONE                 = En aca&bar-se
 EXIT                      = &Surt
 
@@ -79,8 +79,8 @@ SCRIPT                    = &Seqüència
 CONTENTS                  = &Continguts
 BEST_PRACTICE             = &Millors pràctiques
 FAQ                       = &Preguntes més freqüents
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Grup &llegenda del mapa
+CHECK_UPDATE              = Cercar &actualitzacions
 ABOUT                     = &Quant a
 
 ; --- Toolbar Tooltips
@@ -101,7 +101,7 @@ STATUS_RUNNING            = S'està executant
 STATUS_ANALYSED           = Analitzat
 STATUS_DEFRAGMENTED       = Compactat
 STATUS_OPTIMIZED          = Optimitzat
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disc que hagi d'arreglar
 
 ; Status bar messages.
 

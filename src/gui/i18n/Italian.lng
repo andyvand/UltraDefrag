@@ -10,7 +10,6 @@
 ; Revised Jan. 31, 2010 by Connection
 ; Revised Nov. 21, 2011 by Giulio Fornasar
 ; Revised Mar. 23, 2012 by Antonio Vivace
-; Revised Apr. 24, 2012 by Alessandro Visentin
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -39,7 +38,7 @@ STOP                      = &Interrompi
 REPEAT_ACTION             = Ripeti &Azione
 SKIP_REMOVABLE_MEDIA      = Escludi dischi &rimovibili
 RESCAN_DRIVES             = Riscansiona &unità
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Unità di ri&parazione
 WHEN_DONE                 = Quando &finito
 EXIT                      = &Esci
 
@@ -83,8 +82,8 @@ SCRIPT                    = &Script
 CONTENTS                  = &Contenuti
 BEST_PRACTICE             = &Metodo migliore
 FAQ                       = &Domande frequenti
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster &legenda
+CHECK_UPDATE              = Controlla &aggiornamenti
 ABOUT                     = &Info
 
 ; --- Toolbar Tooltips
@@ -105,7 +104,7 @@ STATUS_RUNNING            = In esecuzione
 STATUS_ANALYSED           = Analizzato
 STATUS_DEFRAGMENTED       = Deframmentato
 STATUS_OPTIMIZED          = Ottimizzato
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disco deve essere riparato
 
 ; Status bar messages.
 

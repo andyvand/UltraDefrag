@@ -34,7 +34,7 @@ STOP                      = &Lopeta
 REPEAT_ACTION             = To&ista toiminto
 SKIP_REMOVABLE_MEDIA      = Ohita &siirrettävät asemat
 RESCAN_DRIVES             = Skannaa &uudelleen
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Korjaus-asemat
 WHEN_DONE                 = &Kun valmis, niin...
 EXIT                      = &Poistu
 
@@ -78,8 +78,8 @@ SCRIPT                    = &Skripti
 CONTENTS                  = &Sisältö
 BEST_PRACTICE             = &Parhaat käytännöt
 FAQ                       = &Usein kysytyt kysymykset
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster kartta &legenda
+CHECK_UPDATE              = &Tarkista päivitykset
 ABOUT                     = &Ohjelmasta
 
 ; --- Toolbar Tooltips
@@ -100,7 +100,7 @@ STATUS_RUNNING            = Käynnissä
 STATUS_ANALYSED           = Analysoitu
 STATUS_DEFRAGMENTED       = Eheytetty
 STATUS_OPTIMIZED          = Optimoitu
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Levyn pitää korjata
 
 ; Status bar messages.
 
@@ -131,33 +131,33 @@ NO                        = Ei
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Voit päivittää minua ^-^
+UPGRADE_MESSAGE           = julkaisu on ladattavissa!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Työ on käynnissä
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Näyttää
+HIDE                      = Piiloutua
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Pirstoutuneet tiedostot
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Käy kotisivuillamme
+VIEW_REPORT_OPTIONS       = Näytä raportti vaihtoehtoja
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = sirpaleet
+SIZE                      = koko
+FILENAME                  = tiedoston nimi
+COMMENT                   = kommentti
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = lukittu
+MOVE_FAILED               = siirrä epäonnistui
+INVALID                   = pätemätön
 
 ; END OF FILE

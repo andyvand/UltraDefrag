@@ -33,7 +33,7 @@ STOP                      = Stöðva
 REPEAT_ACTION             = Endurtaka aðgerðir
 SKIP_REMOVABLE_MEDIA      = Sleppa færanlegur frá miðöldum
 RESCAN_DRIVES             = Rifta ökuferð
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Viðgerð diska
 WHEN_DONE                 = Þegar gert
 EXIT                      = Hætta
 
@@ -77,7 +77,7 @@ SCRIPT                    = Skrifletur
 CONTENTS                  = Efnisyfirlit
 BEST_PRACTICE             = Best practice
 FAQ                       = Spurt og svarað
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Cluster kort þjóðsaga
 CHECK_UPDATE              = Athugaðu að uppfærslu
 ABOUT                     = Um
 
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Framkvæmd
 STATUS_ANALYSED           = Greindu
 STATUS_DEFRAGMENTED       = Defragmented
 STATUS_OPTIMIZED          = Bjartsýni
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Diskur þarf að gera
 
 ; Status bar messages.
 
@@ -130,8 +130,8 @@ NO                        = Engin
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Þú getur uppfæra mig ^-^
+UPGRADE_MESSAGE           = gefa út er hægt að sækja!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 

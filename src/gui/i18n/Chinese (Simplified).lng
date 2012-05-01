@@ -80,7 +80,7 @@ SCRIPT                    = 脚本
 CONTENTS                  = 目录
 BEST_PRACTICE             = 最佳方法
 FAQ                       = 常见问题解答
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = 群集地图图例
 CHECK_UPDATE              = 检查更新
 ABOUT                     = 关于
 

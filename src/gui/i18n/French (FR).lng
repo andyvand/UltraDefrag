@@ -37,7 +37,7 @@ STOP                      = Arrêt
 REPEAT_ACTION             = Répétez l'action
 SKIP_REMOVABLE_MEDIA      = Exclure les supports amovibles
 RESCAN_DRIVES             = Actualiser
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Lecteurs de réparation
 WHEN_DONE                 = Une fois terminé
 EXIT                      = Quitter
 
@@ -152,9 +152,9 @@ FRAGMENTED_FILES_ON       = Fichiers fragmentés sur
 
 VISIT_HOMEPAGE            = Visiter notre page d'accueil
 VIEW_REPORT_OPTIONS       = Voir les options du rapport
-POWERED_BY_LUA            = Powered by Lua
+POWERED_BY_LUA            = Propulsé par Lua
 
-FRAGMENTS                 = fragments
+FRAGMENTS                 = débris
 SIZE                      = taille
 FILENAME                  = fichier
 COMMENT                   = commentaire

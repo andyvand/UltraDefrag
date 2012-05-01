@@ -35,7 +35,7 @@ STOP                      = Zaustavi
 REPEAT_ACTION             = Ponovi radnju
 SKIP_REMOVABLE_MEDIA      = Preskoči prijenosne medije
 RESCAN_DRIVES             = Osvježi
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Popravak pogoni
 WHEN_DONE                 = Nakon dovršetka
 EXIT                      = Izlaz
 
@@ -79,7 +79,7 @@ SCRIPT                    = Skripta
 CONTENTS                  = Sadržaj
 BEST_PRACTICE             = Najbolja praksa
 FAQ                       = Pitanja i odgovori
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = Klaster karta legenda
 CHECK_UPDATE              = Provjerite ažuriranja
 ABOUT                     = O programu
 
@@ -101,7 +101,7 @@ STATUS_RUNNING            = Izvršava se
 STATUS_ANALYSED           = Analizirano
 STATUS_DEFRAGMENTED       = Defragmentiranao
 STATUS_OPTIMIZED          = Optimizirano
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disk treba popraviti
 
 ; Status bar messages.
 
@@ -132,33 +132,33 @@ NO                        = Ne
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Možete me nadogradnju ^-^
+UPGRADE_MESSAGE           = Izdanje je dostupan za download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Posao se izvodi
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Pokazati
+HIDE                      = Sakriti
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fragmentiranih datoteka na
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Posjetite našu početnu stranicu
+VIEW_REPORT_OPTIONS       = Pregled izvješća opcije
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = fragmenti
+SIZE                      = veličina
+FILENAME                  = naziv datoteke
+COMMENT                   = komentar
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = zaključan
+MOVE_FAILED               = premjestiti nije
+INVALID                   = nevažeći
 
 ; END OF FILE

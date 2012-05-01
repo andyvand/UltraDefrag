@@ -33,7 +33,7 @@ STOP                      = Stop
 REPEAT_ACTION             = Repeta actiunea
 SKIP_REMOVABLE_MEDIA      = Treci peste drive-urile portabile
 RESCAN_DRIVES             = Re-scaneaza partitiile
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Unităţi de reparaţii
 WHEN_DONE                 = Cand e gata
 EXIT                      = Iesire
 
@@ -77,8 +77,8 @@ SCRIPT                    = Scenariu
 CONTENTS                  = Continut
 BEST_PRACTICE             = Cea mai buna practica
 FAQ                       = Întrebări frecvente
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster hartă legenda
+CHECK_UPDATE              = Verificaţi pentru actualizare
 ABOUT                     = Despre
 
 ; --- Toolbar Tooltips
@@ -99,7 +99,7 @@ STATUS_RUNNING            = Executare
 STATUS_ANALYSED           = Analizare
 STATUS_DEFRAGMENTED       = Defragmentare
 STATUS_OPTIMIZED          = Optimizare
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = Disc trebuie să fie reparat
 
 ; Status bar messages.
 
@@ -130,33 +130,33 @@ NO                        = Nu
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Poţi să-mi faceţi upgrade ^-^
+UPGRADE_MESSAGE           = eliberare este disponibil pentru download!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Un loc de muncă se execută
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Arăta
+HIDE                      = Ascunde
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fişierelor fragmentate de pe
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
+VISIT_HOMEPAGE            = Vizitaţi pagina noastră
+VIEW_REPORT_OPTIONS       = Vizualizaţi opţiunile de raport
 POWERED_BY_LUA            = Powered by Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
+FRAGMENTS                 = fragmente
+SIZE                      = dimensiune
 FILENAME                  = filename
-COMMENT                   = comment
+COMMENT                   = comentariu
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
+LOCKED                    = blocat
+MOVE_FAILED               = mutaţi nu a reuşit
 INVALID                   = invalid
 
 ; END OF FILE

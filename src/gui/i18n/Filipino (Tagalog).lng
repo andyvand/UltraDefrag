@@ -34,7 +34,7 @@ STOP                      = &Tigilin
 REPEAT_ACTION             = Mag-&ulit
 SKIP_REMOVABLE_MEDIA      = Laktawan ang Matatanggal na &Media
 RESCAN_DRIVES             = Magaliksik ng mga &Drive
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Pag&kumpuni Drive
 WHEN_DONE                 = &Pagkatapos...
 EXIT                      = &Lumabas
 
@@ -78,8 +78,8 @@ SCRIPT                    = I&skrip
 CONTENTS                  = &Nilalaman
 BEST_PRACTICE             = &Mahusay na Palakad
 FAQ                       = Ma&dalas na Tanong
-CM_LEGEND                 = Cluster map &legend
-CHECK_UPDATE              = Check for &update
+CM_LEGEND                 = Cluster mapa &alamat
+CHECK_UPDATE              = Suriin para sa mga &update
 ABOUT                     = &Tungkol sa
 
 ; --- Toolbar Tooltips

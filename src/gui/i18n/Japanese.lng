@@ -36,7 +36,7 @@ STOP                      = 停止
 REPEAT_ACTION             = 操作を繰り返す
 SKIP_REMOVABLE_MEDIA      = リムーバブルメディアは除外
 RESCAN_DRIVES             = ドライブを再読込み
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = 修理·ドライブ
 WHEN_DONE                 = デフラグ完了後の動作
 EXIT                      = 終了
 
@@ -80,7 +80,7 @@ SCRIPT                    = 起動時の設定
 CONTENTS                  = 目次
 BEST_PRACTICE             = 使い方のヒント
 FAQ                       = FAQ
-CM_LEGEND                 = Cluster map &legend
+CM_LEGEND                 = クラスタマップの凡例
 CHECK_UPDATE              = アップデートを確認(&U)
 ABOUT                     = UltraDefrag について
 
@@ -102,7 +102,7 @@ STATUS_RUNNING            = 実行中
 STATUS_ANALYSED           = 分析済み
 STATUS_DEFRAGMENTED       = ファイルのデフラグ完了
 STATUS_OPTIMIZED          = 再配置含むデフラグ完了
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_DIRTY              = ディスクを修復する必要があります
 
 ; Status bar messages.
 
@@ -133,8 +133,8 @@ NO                        = いいえ
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = あなたは私をアップグレードすることができます ^-^
+UPGRADE_MESSAGE           = リリースがダウンロード可能です!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -151,7 +151,7 @@ FRAGMENTED_FILES_ON       = 断片化されたファイル
 
 VISIT_HOMEPAGE            = ホームページを訪問
 VIEW_REPORT_OPTIONS       = レポートオプションを表示
-POWERED_BY_LUA            = Powered by Lua
+POWERED_BY_LUA            = を搭載 Lua
 
 FRAGMENTS                 = フラグメント
 SIZE                      = サイズ
