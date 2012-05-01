@@ -49,6 +49,7 @@
     - encoding of language packs changed to UTF-8
     - status bar MFT string removed from translations, since it is nearly
       impossible to translate due to space issues
+    - handbook section about bug reporting reworked to include detailed steps
     - the following translations were updated:
 
       Hebrew, Bosanski
