@@ -4,7 +4,8 @@
 ; Copyright (C) 2010 Jérôme Blum.
 ; Copyright (C) 2010 Mathieu Van Weersch.
 ; Copyright (C) 2010 Marina Louwrier-Johannsen.
-; Copyright (C) 2012 Thomas Laroche
+; Copyright (C) 2012 Thomas Laroche.
+; Copyright (C) 2012 William Gathoye.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -21,69 +22,69 @@
 
 ; Main Menu
 
-ACTION                    = Action
-REPORT                    = Rapport
-SETTINGS                  = Paramètres
-HELP                      = Aide
+ACTION                    = &Action
+REPORT                    = &Rapport
+SETTINGS                  = &Paramètres
+HELP                      = A&ide
 
 ; --- Action Menu
 
-ANALYSE                   = Analyser
-DEFRAGMENT                = Défragmenter
-QUICK_OPTIMIZE            = Optimisation rapide
-FULL_OPTIMIZE             = Optimisation complète
-OPTIMIZE_MFT              = Optimiser MFT
-STOP                      = Arrêt
-REPEAT_ACTION             = Répétez l'action
-SKIP_REMOVABLE_MEDIA      = Exclure les supports amovibles
-RESCAN_DRIVES             = Actualiser
-REPAIR_DRIVES             = Lecteurs de réparation
-WHEN_DONE                 = Une fois terminé
-EXIT                      = Quitter
+ANALYSE                   = &Analyser
+DEFRAGMENT                = &Défragmenter
+QUICK_OPTIMIZE            = Optimisation &rapide
+FULL_OPTIMIZE             = Optimisation &complète
+OPTIMIZE_MFT              = Optimiser &MFT
+STOP                      = Arrê&ter
+REPEAT_ACTION             = Ré&péter l'action
+SKIP_REMOVABLE_MEDIA      = Exclure les supports a&movibles
+RESCAN_DRIVES             = A&ctualiser les disques
+REPAIR_DRIVES             = &Réparer les disques
+WHEN_DONE                 = &Une fois terminé
+EXIT                      = &Quitter
 
 ; --- --- When done submenu
 
-WHEN_DONE_NONE            = Ne rien faire
-WHEN_DONE_EXIT            = Quitter
-WHEN_DONE_STANDBY         = Mettre en veille
-WHEN_DONE_HIBERNATE       = Mettre en veille prolongée
-WHEN_DONE_LOGOFF          = Déconnecter l'ordinateur
-WHEN_DONE_REBOOT          = Redémarrer l'ordinateur
-WHEN_DONE_SHUTDOWN        = Arrêter l'ordinateur
+WHEN_DONE_NONE            = &Ne rien faire
+WHEN_DONE_EXIT            = &Quitter
+WHEN_DONE_STANDBY         = Mettre en &veille
+WHEN_DONE_HIBERNATE       = Mettre en veille &prolongée
+WHEN_DONE_LOGOFF          = Se &déconnecter de la session
+WHEN_DONE_REBOOT          = &Redémarrer l'ordinateur
+WHEN_DONE_SHUTDOWN        = &Arrêter l'ordinateur
 
 ; --- Report Menu
 
-SHOW_REPORT               = Montrer le rapport
+SHOW_REPORT               = A&fficher le rapport
 
 ; --- Settings Menu
 
-LANGUAGE                  = Langue
-GRAPHICAL_INTERFACE       = Environnement Graphique
-BOOT_TIME_SCAN            = Balayage au démarrage de Windows
-REPORTS                   = Rapports
+LANGUAGE                  = &Langue
+GRAPHICAL_INTERFACE       = Interface &graphique
+BOOT_TIME_SCAN            = &Analyse au démarrage de Windows
+REPORTS                   = &Rapports
 
 ; --- --- Language submenu
 
-TRANSLATIONS_FOLDER       = Dossier traductions
+TRANSLATIONS_FOLDER       = Dossier des &traductions
 
 ; --- --- Graphical interface submenu
 
-FONT                      = Police
-OPTIONS                   = Options
+FONT                      = &Police
+OPTIONS                   = &Options
 
 ; --- --- Boot time scan submenu
 
-ENABLE                    = Activer
-SCRIPT                    = Script
+ENABLE                    = &Activer
+SCRIPT                    = &Script
 
 ; --- Help Menu
 
-CONTENTS                  = Contenu
-BEST_PRACTICE             = Astuces
-FAQ                       = Foire aux questions
+CONTENTS                  = &Contenu
+BEST_PRACTICE             = A&stuces
+FAQ                       = &Foire aux questions
 CM_LEGEND                 = &Légende de la carte des clusters
-CHECK_UPDATE              = Vérifier les &mise à jour
-ABOUT                     = À propos
+CHECK_UPDATE              = Vérifier les &mises à jour
+ABOUT                     = À &propos
 
 ; --- Toolbar Tooltips
 
@@ -103,39 +104,39 @@ STATUS_RUNNING            = En cours d'exécution
 STATUS_ANALYSED           = Analysé
 STATUS_DEFRAGMENTED       = Défragmenté
 STATUS_OPTIMIZED          = Optimisé
-STATUS_DIRTY              = Le Disque nécessite d'être réparé
+STATUS_DIRTY              = Le Disque doit être réparé
 
 ; Status bar messages.
 
-DIRS                      = Répertoires
-FILES                     = Fichiers
-FRAGMENTED                = Fragmenté
-COMPRESSED                = Compressé
+DIRS                      = dossiers
+FILES                     = fichiers
+FRAGMENTED                = fragmenté
+COMPRESSED                = compressé
 
 ; About window.
 
 ABOUT_WIN_TITLE           = À propos d'UltraDefrag
-CREDITS                   = Crédits
-LICENSE                   = Licence
+CREDITS                   = &Crédits
+LICENSE                   = &Licence
 
 ; Shutdown confirmation
 
 PLEASE_CONFIRM            = Veuillez confirmer
-REALLY_SHUTDOWN_WHEN_DONE = Arrêter vraiment le PC une fois terminé?
-REALLY_HIBERNATE_WHEN_DONE= Mettre vraiment le PC en veille une fois terminé?
-REALLY_LOGOFF_WHEN_DONE   = Déconnecter vraiment une fois terminé?
-REALLY_REBOOT_WHEN_DONE   = Redémarrer vraiment une fois terminé?
-SECONDS_TILL_SHUTDOWN     = Secondes avant l'arrêt
-SECONDS_TILL_HIBERNATION  = Secondes avant la mise en veille
-SECONDS_TILL_LOGOFF       = Secondes avant la déconnection
-SECONDS_TILL_REBOOT       = Secondes avant le redémarrage
-YES                       = Oui
-NO                        = Non
+REALLY_SHUTDOWN_WHEN_DONE = Voulez-vous vraiment arrêter l'ordinateur une fois terminé ?
+REALLY_HIBERNATE_WHEN_DONE= Voulez-vous vraiment mettre en veille l'ordinateur une fois terminé?
+REALLY_LOGOFF_WHEN_DONE   = Voulez-vous vraiment vous déconnecter de votre session une fois terminé ?
+REALLY_REBOOT_WHEN_DONE   = Voulez-vous vraiment redémarrer l'ordinateur une fois terminé ?
+SECONDS_TILL_SHUTDOWN     = secondes avant l'arrêt
+SECONDS_TILL_HIBERNATION  = secondes avant la mise en veille
+SECONDS_TILL_LOGOFF       = secondes avant la déconnexion
+SECONDS_TILL_REBOOT       = secondes avant le redémarrage
+YES                       = &Oui
+NO                        = &Non
 
 ; Upgrade dialog
 
 UPGRADE_CAPTION           = Vous pouvez me mettre à niveau ^-^
-UPGRADE_MESSAGE           = une nouvelle version est disponnible au téléchargement!
+UPGRADE_MESSAGE           = une nouvelle version est disponible en téléchargement !
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -154,13 +155,13 @@ VISIT_HOMEPAGE            = Visiter notre page d'accueil
 VIEW_REPORT_OPTIONS       = Voir les options du rapport
 POWERED_BY_LUA            = Propulsé par Lua
 
-FRAGMENTS                 = débris
-SIZE                      = taille
-FILENAME                  = fichier
-COMMENT                   = commentaire
+FRAGMENTS                 = Fragments
+SIZE                      = Taille
+FILENAME                  = Fichiers
+COMMENT                   = Commentaire
 
-LOCKED                    = verrouillé
-MOVE_FAILED               = déplacement raté
-INVALID                   = invalide
+LOCKED                    = Verrouillé
+MOVE_FAILED               = Déplacement échoué
+INVALID                   = Invalide
 
 ; END OF FILE
