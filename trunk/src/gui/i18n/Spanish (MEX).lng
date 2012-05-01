@@ -2,10 +2,11 @@
 ; UltraDefrag GUI Spanish Mexican Language Pack.
 ; Copyright (C) 2011 Conrad Flyckt.
 ; Copyright (C) 2012 Felipe Ángel González Báñez.
+; Copyright (C) 2012 Joseph S. Maza.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
-; Revised {Jan. 01, 1900} by {Replace by Name of Reviser}
+; Revised {Jan. 01, 2000} by {Replace by Name of Reviser}
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -131,33 +132,33 @@ NO                        = No
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Una actualización está disponible ^-^
+UPGRADE_MESSAGE           = versión está disponible para descargar!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Una tarea se está ejecutando
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = Show
-HIDE                      = Hide
+SHOW                      = Mostrar
+HIDE                      = Ocultar
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Archivos fragmentados en
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Visitar el sitio Web
+VIEW_REPORT_OPTIONS       = Ver las opciones de informe
+POWERED_BY_LUA            = Desarrollado por Lua
 
-FRAGMENTS                 = fragments
-SIZE                      = size
-FILENAME                  = filename
-COMMENT                   = comment
+FRAGMENTS                 = framentos
+SIZE                      = tamaño
+FILENAME                  = nombre de archivo
+COMMENT                   = comentario
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = cerrado
+MOVE_FAILED               = error al mover
+INVALID                   = inválido
 
 ; END OF FILE
