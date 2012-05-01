@@ -33,7 +33,7 @@ ANALYSE                   = &Analyser
 DEFRAGMENT                = &Défragmenter
 QUICK_OPTIMIZE            = Optimisation &rapide
 FULL_OPTIMIZE             = Optimisation &complète
-OPTIMIZE_MFT              = Optimiser &MFT
+OPTIMIZE_MFT              = Optimiser la &MFT
 STOP                      = Arrê&ter
 REPEAT_ACTION             = Ré&péter l'action
 SKIP_REMOVABLE_MEDIA      = Exclure les supports a&movibles
@@ -46,8 +46,8 @@ EXIT                      = &Quitter
 
 WHEN_DONE_NONE            = &Ne rien faire
 WHEN_DONE_EXIT            = &Quitter
-WHEN_DONE_STANDBY         = Mettre en &veille
-WHEN_DONE_HIBERNATE       = Mettre en veille &prolongée
+WHEN_DONE_STANDBY         = Mettre l'ordinateur en &veille
+WHEN_DONE_HIBERNATE       = Mettre l'ordinateur en veille &prolongée
 WHEN_DONE_LOGOFF          = Se &déconnecter de la session
 WHEN_DONE_REBOOT          = &Redémarrer l'ordinateur
 WHEN_DONE_SHUTDOWN        = &Arrêter l'ordinateur
@@ -88,7 +88,7 @@ ABOUT                     = À &propos
 
 ; --- Toolbar Tooltips
 
-BOOT_TIME_SCRIPT          = Script de démarrage Windows
+BOOT_TIME_SCRIPT          = Script lancé au démarrage de Windows
 
 ; Drives list items.
 
@@ -104,7 +104,7 @@ STATUS_RUNNING            = En cours d'exécution
 STATUS_ANALYSED           = Analysé
 STATUS_DEFRAGMENTED       = Défragmenté
 STATUS_OPTIMIZED          = Optimisé
-STATUS_DIRTY              = Le Disque doit être réparé
+STATUS_DIRTY              = Le disque doit être réparé
 
 ; Status bar messages.
 
@@ -151,8 +151,8 @@ HIDE                      = Cacher
 
 FRAGMENTED_FILES_ON       = Fichiers fragmentés sur
 
-VISIT_HOMEPAGE            = Visiter notre page d'accueil
-VIEW_REPORT_OPTIONS       = Voir les options du rapport
+VISIT_HOMEPAGE            = Visiter notre site
+VIEW_REPORT_OPTIONS       = Afficher les options du rapport
 POWERED_BY_LUA            = Propulsé par Lua
 
 FRAGMENTS                 = Fragments
