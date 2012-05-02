@@ -20,7 +20,7 @@
 /**
  * List of existing translations.
  */
-var translations = ["en", "de", "fa", "ru"];
+var translations = ["en", "de", "ru"];
 
 /**
  * Target language.

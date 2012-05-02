@@ -40,4 +40,6 @@ Redirect permanent /bugs             http://sourceforge.net/tracker/?group_id=19
 Redirect permanent /forum            http://sourceforge.net/projects/ultradefrag/forums/
 Redirect permanent /stats            https://apps.sourceforge.net/piwik/ultradefrag/
 
+RedirectMatch temp /fa/(.*)$         http://ultradefrag.sourceforge.net/en/$1
+
 Redirect seeother  /vista_guide.html http://ultradefrag.sourceforge.net/handbook/
