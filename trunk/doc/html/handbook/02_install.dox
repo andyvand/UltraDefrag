@@ -88,9 +88,6 @@
  * Example: <b>/SHELLEXTENSION=0</b> removes the Explorer context menu handler.<br/>
  * Installing the context menu handler forces the console interface it depends on to be installed.
  *
- * @par /DISABLE_USAGE_TRACKING=(0|1)
- * Enable or disable web based usage tracking. Example: <b>/DISABLE_USAGE_TRACKING=1</b> disables usage tracking.
- *
  * @par /STARTMENUICON=(0|1)
  * Install or remove the start menu icon. Example: <b>/STARTMENUICON=1</b> installs the start menu icon.<br/>
  * Installing the start menu icon forces the GUI interface it depends on to be installed.
