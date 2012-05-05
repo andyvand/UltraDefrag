@@ -35,7 +35,7 @@
     - WgxSetProcessPriority routine added to wgx library
 
 
-  Version 5.0.5  2012-04-
+  Version 5.0.5  2012-05-05
   ------------------------------------------------------------------------------
     - repair drives action was added to the GUI menu
     - displaying the cluster map legend from the help menu was added
