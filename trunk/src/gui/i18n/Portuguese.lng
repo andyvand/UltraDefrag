@@ -31,14 +31,14 @@ HELP                      = A&juda
 
 ANALYSE                   = A&nalisar
 DEFRAGMENT                = &Desfragmentar
-QUICK_OPTIMIZE            = Otimização rápida
-FULL_OPTIMIZE             = Otimização completa
-OPTIMIZE_MFT              = Otimizar MFT
+QUICK_OPTIMIZE            = Otimização &rápida
+FULL_OPTIMIZE             = Otimização &completa
+OPTIMIZE_MFT              = &Otimizar MFT
 STOP                      = &Parar
-REPEAT_ACTION             = Re&petir ação
+REPEAT_ACTION             = Rep&etir ação
 SKIP_REMOVABLE_MEDIA      = Ignorar discos a&movíveis
 RESCAN_DRIVES             = Analisar d&iscos
-REPAIR_DRIVES             = Unidades de reparação
+REPAIR_DRIVES             = Reparar unidades
 WHEN_DONE                 = Ao &terminar
 EXIT                      = &Sair
 
@@ -82,7 +82,7 @@ SCRIPT                    = "&Script"
 CONTENTS                  = &Conteúdo
 BEST_PRACTICE             = Melhores &práticas
 FAQ                       = Perguntas mais &frequentes
-CM_LEGEND                 = Cluster mapa &lenda
+CM_LEGEND                 = &Legenda do cluster
 CHECK_UPDATE              = Verificar at&ualizações
 ABOUT                     = &Sobre
 
@@ -104,7 +104,7 @@ STATUS_RUNNING            = Em execução
 STATUS_ANALYSED           = Analisado
 STATUS_DEFRAGMENTED       = Desfragmentado
 STATUS_OPTIMIZED          = Otimizado
-STATUS_DIRTY              = Disco precisa ser reparado
+STATUS_DIRTY              = O disco tem que ser reparado
 
 ; Status bar messages.
 
@@ -135,8 +135,8 @@ NO                        = &Não
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = Você pode atualizar me ^-^
-UPGRADE_MESSAGE           = versão está disponível para download!
+UPGRADE_CAPTION           = Pode atualizar ^-^
+UPGRADE_MESSAGE           = está disponível uma nova versão!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
