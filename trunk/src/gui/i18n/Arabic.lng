@@ -23,7 +23,7 @@
 ACTION                    = &إجراء
 REPORT                    = &تقرير
 SETTINGS                  = &إعدادات
-HELP                      = &مساعدة
+HELP                      = تعل&يمات
 
 ; --- Action Menu
 
@@ -33,7 +33,7 @@ QUICK_OPTIMIZE            = &تحسين سريع
 FULL_OPTIMIZE             = &تحسين كامل
 OPTIMIZE_MFT              = &تحسين MFT
 STOP                      = &إيقاف
-REPEAT_ACTION             = إع&ادة الفعل
+REPEAT_ACTION             = إع&ادة الإجراء
 SKIP_REMOVABLE_MEDIA      = استبعاد &الوسائط القابلة للنقل
 RESCAN_DRIVES             = &إعادة تفحّص الأقراص
 REPAIR_DRIVES             = اصلاح محركات
@@ -72,7 +72,7 @@ OPTIONS                   = &خيارات
 
 ; --- --- Boot time scan submenu
 
-ENABLE                    = &مكّن
+ENABLE                    = &تمكين
 SCRIPT                    = &حروف
 
 ; --- Help Menu
@@ -94,7 +94,7 @@ VOLUME                    = محرك الاقراص
 STATUS                    = الحالة
 TOTAL                     = المساحة الكلية
 FREE                      = المساحة الحرة
-PERCENT                   = % حر
+PERCENT                   = النسبة المئوية
 
 ; Status messages
 
@@ -138,18 +138,18 @@ UPGRADE_MESSAGE           = إطلاق يتوفر للتحميل!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = ألف وظيفة يشغل
+JOB_IS_RUNNING            = المهمة قيد التنفيذ
 
 ; Strings for system tray icon context menu.
 
-SHOW                      = عرض
+SHOW                      = إظهار
 HIDE                      = إخفاء
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = تجزئة الملفات على
+FRAGMENTED_FILES_ON       = الملفات المجزأة على
 
-VISIT_HOMEPAGE            = قم بزيارة صفحتنا الرئيسية
+VISIT_HOMEPAGE            = صفحتنا الرئيسية
 VIEW_REPORT_OPTIONS       = عرض خيارات تقرير
 POWERED_BY_LUA            = مشغّل بواسطة Lua
 
