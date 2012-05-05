@@ -39,7 +39,7 @@
   ------------------------------------------------------------------------------
     - the following translations were updated:
 
-      Arabic
+      Arabic, Portuguese
 
 
   Version 5.0.5  2012-05-05
