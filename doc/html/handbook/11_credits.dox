@@ -104,12 +104,12 @@
  * <tr><td>                               </td><td>-</td><td> 4Li</td></tr>
  * <tr><td>• Latin                        </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Latvian                      </td><td>-</td><td> Sevelyr</td></tr>
- * <tr><td>                               </td><td>-</td><td> Vladislav Stuzhnev</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Vladislav Stuznev</td></tr>
  * <tr><td>• Macedonian                   </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Norwegian                    </td><td>-</td><td> Sveinung Heggen</td></tr>
  * <tr><td>                               </td><td>-</td><td> Stefan Pendl</td></tr>
  * <tr><td>• Polish                       </td><td>-</td><td> Andrzej Rudnik</td></tr>
- * <tr><td>                               </td><td>-</td><td> Krzysztof Swiderski</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Krzysztof Świderski</td></tr>
  * <tr><td>                               </td><td>-</td><td> Ireneusz Chorosz</td></tr>
  * <tr><td>                               </td><td>-</td><td> Mateusz Kacprzak</td></tr>
  * <tr><td>• Portuguese (BR)              </td><td>-</td><td> Depeo da Masol</td></tr>
@@ -150,7 +150,7 @@
  * \par\begin{Indent}\begin{xtabular}{p{0.4\linewidth}cl}
  * • Arabic                        & - & Ahmed Arbaoui \\
  * • Belarusian                    & - & Dmitri Arkhangelski \\
- * • Bosanski                      & - & Timur Ljubuncic \\
+ * • Bosanski                      & - & Timur Ljubunčić \\
  * • Bulgarian                     & - & Dmitri Arkhangelski \\
  * • Burmese (Padauk)              & - & Muhammed Widuya \\
  * • Catalan                       & - & Illes Balears \\
@@ -164,7 +164,7 @@
  *                                 & - & Ryan Ping Chih Ko \\
  *                                 & - & rexx \\
  *                                 & - & James Bond \\
- * • Croatian                      & - & Denis Jelicic \\
+ * • Croatian                      & - & Denis Jeličić \\
  *                                 & - & Dmitri Arkhangelski \\
  *                                 & - & Mladen Ivošević \\
  * • Czech                         & - & David Horák /Dave MacBlack/ \\
@@ -218,12 +218,12 @@
  *                                 & - & 4Li \\
  * • Latin                         & - & Dmitri Arkhangelski \\
  * • Latvian                       & - & Sevelyr \\
- *                                 & - & Vladislav Stuzhnev \\
+ *                                 & - & Vladislav Stuznev \\
  * • Macedonian                    & - & Dmitri Arkhangelski \\
  * • Norwegian                     & - & Sveinung Heggen \\
  *                                 & - & Stefan Pendl \\
  * • Polish                        & - & Andrzej Rudnik \\
- *                                 & - & Krzysztof Swiderski \\
+ *                                 & - & Krzysztof Świderski \\
  *                                 & - & Ireneusz Chorosz \\
  *                                 & - & Mateusz Kacprzak \\
  * • Portuguese (BR)               & - & Depeo da Masol \\
@@ -251,7 +251,7 @@
  * • Thai                          & - & Pat Taweewat \\
  * • Turkish                       & - & Huseyin Kozan \\
  *                                 & - & Vedat Odabasioglu \\
- *                                 & - & Sahin Salincakli \\
+ *                                 & - & Şahin Salincakli \\
  * • Ukrainian                     & - & Dmitri Arkhangelski \\
  * • Vietnamese (VI)               & - & Vietnamize Team \\
  * • Wáray-Wáray                   & - & Harvey Fiji \\
@@ -516,23 +516,25 @@
  *
  * Special thanks for correcting and updating translations (in alphabetical order):
  *
- * - Alessandro Visentin
+ * - Alper Tiryakioglu
+ * - Antonio Vivace
  * - Benny Stütz
- * - Christoffer Ekberg
  * - Connection
  * - Dionisios Klonaris
  * - Erwin Dokter
  * - Francisco Ortega Olivos
  * - FS
- * - Gellért Lukács
  * - Giulio Fornasar
  * - Haein Jung
  * - Harald Arnesen
  * - Jan Iemhoff
+ * - Luigi C.
+ * - Denis Jeličić
+ * - Javier Valdivieso
  * - Joseph S. B. Maza
+ * - Joseph S. Maza
  * - José Carlos Taveira de Souza
  * - José Luis Farías
- * - kako
  * - Ken Choy
  * - Latino
  * - Leo Smulders
