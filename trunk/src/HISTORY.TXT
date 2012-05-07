@@ -39,7 +39,7 @@
   ------------------------------------------------------------------------------
     - the following translations were updated:
 
-      Arabic, Portuguese, Italian, Spanish (ES), Hebrew
+      Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian
 
 
   Version 5.0.5  2012-05-05

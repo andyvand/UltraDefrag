@@ -30,14 +30,14 @@ HELP                      = Помоћ
 
 ANALYSE                   = Анализираj
 DEFRAGMENT                = Дефрагментуј
-QUICK_OPTIMIZE            = Брзи оптимизацију
+QUICK_OPTIMIZE            = Брзa оптимизацијa
 FULL_OPTIMIZE             = Пуна оптимизација
 OPTIMIZE_MFT              = Оптимизујте МФТ
 STOP                      = Стоп
-REPEAT_ACTION             = Поновите акција
+REPEAT_ACTION             = Поновите акцију
 SKIP_REMOVABLE_MEDIA      = Прескочити преносиве медијe
 RESCAN_DRIVES             = Освежи
-REPAIR_DRIVES             = Поправити дискови
+REPAIR_DRIVES             = Поправи дискове
 WHEN_DONE                 = Када завршите
 EXIT                      = Излаз
 
