@@ -1216,6 +1216,7 @@ HANDLE      NTAPI    RtlDestroyHeap(HANDLE);
 BOOLEAN     NTAPI    RtlDosPathNameToNtPathName_U(PCWSTR,PUNICODE_STRING,PCWSTR*,CURDIR*);
 /* VOID     NTAPI    RtlExitUserThread(NTSTATUS); - NEVER use this unreliable call! */
 NTSTATUS    NTAPI    RtlExpandEnvironmentStrings_U(PWSTR,const UNICODE_STRING*,UNICODE_STRING*,ULONG*);
+NTSTATUS    NTAPI    RtlFindMessage(PVOID BaseAddress,ULONG Type,ULONG Language,ULONG MessageId,MESSAGE_RESOURCE_ENTRY **MessageResourceEntry);
 VOID        NTAPI    RtlFreeAnsiString(PANSI_STRING);
 BOOLEAN     NTAPI    RtlFreeHeap(HANDLE,SIZE_T,PVOID);
 VOID        NTAPI    RtlFreeUnicodeString(PUNICODE_STRING);
@@ -1228,42 +1229,13 @@ NTSTATUS    NTAPI    RtlSetEnvironmentVariable(PWSTR,PUNICODE_STRING,PUNICODE_ST
 NTSTATUS    NTAPI    RtlSystemTimeToLocalTime(const LARGE_INTEGER* SystemTime,PLARGE_INTEGER LocalTime);
 VOID        NTAPI    RtlTimeToTimeFields(PLARGE_INTEGER Time,PTIME_FIELDS TimeFields);
 NTSTATUS    NTAPI    RtlUnicodeStringToAnsiString(PANSI_STRING,PUNICODE_STRING,SIZE_T);
+NTSTATUS    NTAPI    RtlUnicodeToMultiByteN(PCHAR,ULONG,PULONG,PCWCH,ULONG);
 
 VOID        NTAPI    DbgBreakPoint(VOID);
 NTSTATUS    NTAPI    LdrGetDllHandle(SIZE_T,SIZE_T,const UNICODE_STRING*,HMODULE*);
 NTSTATUS    NTAPI    LdrGetProcedureAddress(PVOID,PANSI_STRING,SIZE_T,PVOID *);
 NTSTATUS    NTAPI    ZwQuerySystemInformation(IN SYSTEM_INFORMATION_CLASS,PVOID,SIZE_T,PULONG);
 NTSTATUS    NTAPI    ZwTerminateThread(HANDLE,NTSTATUS);
-
-/*
-typedef enum _LATENCY_TIME {
-    LT_DONT_CARE,
-    LT_LOWEST_LATENCY
-} LATENCY_TIME, *PLATENCY_TIME;
-
-typedef enum _SYSTEM_POWER_STATE {
-    PowerSystemUnspecified,
-    PowerSystemWorking,
-    PowerSystemSleeping1,
-    PowerSystemSleeping2,
-    PowerSystemSleeping3,
-    PowerSystemHibernate,
-    PowerSystemShutdown,
-    PowerSystemMaximum
-} SYSTEM_POWER_STATE, *PSYSTEM_POWER_STATE;
-#define POWER_SYSTEM_MAXIMUM PowerSystemMaximum
-
-typedef enum {
-    PowerActionNone,
-    PowerActionReserved,
-    PowerActionSleep,
-    PowerActionHibernate,
-    PowerActionShutdown,
-    PowerActionShutdownReset,
-    PowerActionShutdownOff,
-    PowerActionWarmEject
-} POWER_ACTION, *PPOWER_ACTION;
-*/
 
 /*
 * This is the definition for the data structure that is passed in to
