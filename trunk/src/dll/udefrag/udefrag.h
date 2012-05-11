@@ -143,6 +143,23 @@ char udefrag_tolower(char c);
 
 int udefrag_set_log_file_path(void);
 void udefrag_flush_dbg_log(void);
+
+/**
+ * @brief Delivers a message to the Debug View
+ * program and appends it to the log file as well.
+ * @note
+ * - If <b>: $LE</b> appears at end of the format
+ * string, the last error code will be appended 
+ * to the message as well as its description.
+ * - If <b>: $NS</b> appears at end of the format
+ * string, the NT status code of the last operation 
+ * will be appended to the message as well as its
+ * description.
+ * - Not all system API set last status code.
+ * Use winx_dbg_print_ex to catch the status for sure.
+ */
+void udefrag_dbg_print(char *format, ...);
+
 int udefrag_init_failed(void);
 
 #endif /* _UDEFRAG_H_ */

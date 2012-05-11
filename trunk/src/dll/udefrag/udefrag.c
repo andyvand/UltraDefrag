@@ -101,6 +101,8 @@ static void dbg_print_header(udefrag_job_parameters *jp)
     /* force MinGW to export both udefrag_tolower and udefrag_toupper */
     ch = 'a';
     ch = winx_tolower(ch) - winx_toupper(ch);
+    /* ensure that MinGW will export udefrag_dbg_print */
+    winx_dbg_print(NULL);
 }
 
 /**
