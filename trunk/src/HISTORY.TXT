@@ -40,6 +40,8 @@
     - the following translations were updated:
 
       Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian
+      
+    - Internals: winx_to_utf8 routine added to zenwinx library
 
 
   Version 5.0.5  2012-05-05

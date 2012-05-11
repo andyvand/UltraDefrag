@@ -38,44 +38,18 @@
 
 static void convert_to_utf8_path(char *dst,int size,wchar_t *src)
 {
-    int i; /* src index */
-    int j; /* dst index */
-    wchar_t c, b1, b2, b3;
+    char *p = dst;
     
-    for(i = j = 0; src[i]; i++){
-        c = src[i];
-        if(c < 0x80){
-            if(j > (size - 2)) break;
-            /* replace all back slashes with */
-            /* forward slashes to please Lua */
-            if(c == '\\'){
-                dst[j] = '/';
-            } else {
-                dst[j] = (char)c;
-            }
-            j ++;
-        } else if(c < 0x800){ /* 0x80 - 0x7FF: 2 bytes */
-            if(j > (size - 3)) break;
-            b2 = 0x80 | (c & 0x3F);
-            c >>= 6;
-            b1 = 0xC0 | c;
-            dst[j] = (char)b1;
-            dst[j+1] = (char)b2;
-            j += 2;
-        } else { /* 0x800 - 0xFFFF: 3 bytes */
-            if(j > (size - 4)) break;
-            b3 = 0x80 | (c & 0x3F);
-            c >>= 6;
-            b2 = 0x80 | (c & 0x3F);
-            c >>= 6;
-            b1 = 0xE0 | c;
-            dst[j] = (char)b1;
-            dst[j+1] = (char)b2;
-            dst[j+2] = (char)b3;
-            j += 3;
-        }
+    winx_to_utf8(dst,size,src);
+    
+    /* replace all back slashes with */
+    /* forward slashes to please Lua */
+    while(1){
+        p = strchr(p,'\\');
+        if(p == NULL) break;
+        *p = '/';
+        p++;
     }
-    dst[j] = 0;
 }
 
 static int save_lua_report(udefrag_job_parameters *jp)
