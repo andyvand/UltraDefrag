@@ -43,6 +43,7 @@
       
     - Internals: winx_to_utf8 routine added to zenwinx library
     - winx_dbg_print routine enhanced: $NS and $LE magic sequences support added
+    - udefrag_dbg_print routine added to udefrag library
 
 
   Version 5.0.5  2012-05-05
