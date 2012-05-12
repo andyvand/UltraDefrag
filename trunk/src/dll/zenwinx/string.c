@@ -28,6 +28,18 @@
 #include <math.h> /* for pow function */
 
 /**
+ * @bug _ftol2 unresolved symbol error with WDK 7 for WinXP build
+ */
+#ifdef _MSC_VER
+#if _MSC_VER >= 1400
+#ifndef _WIN64
+extern long _cdecl _ftol(double x);
+long _cdecl _ftol2(double x){return _ftol(x);}
+#endif
+#endif
+#endif
+
+/**
  * @brief Size of the buffer used by winx_vsprintf
  * initially. Larger sizes tend to reduce time needed
  * to format long strings.
