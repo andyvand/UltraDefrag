@@ -90,7 +90,7 @@ void WgxDbgPrintLastError(char *format, ...)
 {
     char *msg;
     va_list arg;
-    int length;
+    unsigned int length;
     char *seq = ": $LE";
     DWORD error = GetLastError();
     
@@ -135,7 +135,7 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
 {
     char *msg;
     va_list arg;
-    int length;
+    unsigned int length;
     char *seq = ": $LE";
     DWORD error = GetLastError();
     wchar_t *umsg, *desc = NULL, *text;
