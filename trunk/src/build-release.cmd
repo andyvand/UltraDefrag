@@ -46,6 +46,8 @@ cd release
 ..\tools\md5sum ultradefrag-%UDVERSION_SUFFIX%.src.* >> ultradefrag-%UDVERSION_SUFFIX%.MD5SUMS
 cd ..
 
+copy .\HISTORY.TXT .\release\
+
 echo.
 echo Release made successfully!
 exit /B 0
