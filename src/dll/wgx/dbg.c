@@ -78,7 +78,7 @@ void WgxDbgPrint(char *format, ...)
     va_end(arg);
 
     /* send formatted string to the debugger */
-    DbgPrintHandler(msg);
+    DbgPrintHandler("%s",msg);
     free(msg);
 }
 
@@ -118,7 +118,7 @@ void WgxDbgPrintLastError(char *format, ...)
 
     /* send formatted string to the debugger */
     SetLastError(error);
-    DbgPrintHandler(msg);
+    DbgPrintHandler("%s",msg);
     free(msg);
 }
 
@@ -167,7 +167,7 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
             strcat(msg,seq);
         }
         SetLastError(error);
-        DbgPrintHandler(msg);
+        DbgPrintHandler("%s",msg);
         msg[length] = 0;
     }    
     
