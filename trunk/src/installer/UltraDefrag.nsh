@@ -916,4 +916,40 @@ Var AtLeastXP
 
 ;-----------------------------------------
 
+!macro RegisterInstallationFolder
+
+    ${DisableX64FSRedirection}
+
+    WriteRegStr HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "UD_INSTALL_DIR" "$INSTDIR"
+
+    ; "Export" our change
+    SendMessage ${HWND_BROADCAST} ${WM_SETTINGCHANGE} 0 "STR:Environment" /TIMEOUT=5000
+
+    ${EnableX64FSRedirection}
+
+!macroend
+
+!define RegisterInstallationFolder "!insertmacro RegisterInstallationFolder"
+
+;-----------------------------------------
+
+!macro UnRegisterInstallationFolder
+
+    ${DisableX64FSRedirection}
+
+    DeleteRegValue HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "UD_INSTALL_DIR"
+    DeleteRegValue HKLM "SYSTEM\ControlSet001\Control\Session Manager\Environment"     "UD_INSTALL_DIR"
+    DeleteRegValue HKLM "SYSTEM\ControlSet002\Control\Session Manager\Environment"     "UD_INSTALL_DIR"
+
+    ; "Export" our change
+    SendMessage ${HWND_BROADCAST} ${WM_SETTINGCHANGE} 0 "STR:Environment" /TIMEOUT=5000
+
+    ${EnableX64FSRedirection}
+
+!macroend
+
+!define UnRegisterInstallationFolder "!insertmacro UnRegisterInstallationFolder"
+
+;-----------------------------------------
+
 !endif /* _ULTRA_DEFRAG_NSH_ */
