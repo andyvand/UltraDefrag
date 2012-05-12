@@ -40,7 +40,8 @@
     - GUI debugging output was forced to be saved in the log file
     - the following translations were updated:
 
-      Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian
+      Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian, Javanese,
+      Indonesian (Bahasa Indonesia)
       
     - Internals: winx_to_utf8 routine added to zenwinx library
     - winx_dbg_print routine enhanced: $NS and $LE magic sequences support added
