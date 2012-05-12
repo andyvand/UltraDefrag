@@ -104,8 +104,8 @@ static void add_dbg_log_entry(char *msg)
         if(logging_enabled){
             if(dbg_log)
                 last_log_entry = dbg_log->prev;
-            new_log_entry = (winx_dbg_log_entry *)winx_list_insert_item((list_entry **)(void *)&dbg_log,
-                (list_entry *)last_log_entry,sizeof(winx_dbg_log_entry));
+                new_log_entry = (winx_dbg_log_entry *)winx_list_insert_item((list_entry **)(void *)&dbg_log,
+                    (list_entry *)last_log_entry,sizeof(winx_dbg_log_entry));
             if(new_log_entry == NULL){
                 /* not enough memory */
             } else {
