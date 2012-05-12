@@ -37,6 +37,7 @@
 
   Version 5.0.6  2012-06-
   ------------------------------------------------------------------------------
+    - GUI debugging output was forced to be saved in the log file
     - the following translations were updated:
 
       Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian
@@ -44,6 +45,7 @@
     - Internals: winx_to_utf8 routine added to zenwinx library
     - winx_dbg_print routine enhanced: $NS and $LE magic sequences support added
     - udefrag_dbg_print routine added to udefrag library
+    - WgxSetDbgPrintHandler routine added to wgx library
 
 
   Version 5.0.5  2012-05-05
