@@ -125,26 +125,11 @@ static void add_dbg_log_entry(char *msg)
 
 /**
  * @internal
- * @brief Delivers a message to the Debug View
- * program and appends it to the log file as well.
  */
-static void deliver_message(char *msg)
-{
-    int length;
-    
-    /* get rid of the trailing new line character */
-    length = strlen(msg);
-    if(length){
-        if(msg[length - 1] == '\n')
-            msg[length - 1] = 0;
-    }
-    
-    if(pOutputDebugString){
-        pOutputDebugString(msg);
-        pOutputDebugString("\n");
-    }
-    add_dbg_log_entry(msg);
-}
+enum {
+    ENC_ANSI,
+    ENC_UTF8
+};
 
 /**
  * @internal
@@ -153,7 +138,7 @@ static void deliver_message(char *msg)
  * @note Returned string should be
  * freed by winx_heap_free call.
  */
-static char *get_description(ULONG error)
+static char *get_description(ULONG error,int encoding)
 {
     UNICODE_STRING uStr;
     NTSTATUS Status;
@@ -180,7 +165,12 @@ static char *get_description(ULONG error)
         desc = winx_heap_alloc(bytes * 2); /* enough to hold UTF-8 string */
         if(desc == NULL)
             return NULL;
-        winx_to_utf8(desc,bytes * 2,(wchar_t *)mre->Text);
+        if(encoding == ENC_UTF8){
+            winx_to_utf8(desc,bytes * 2,(wchar_t *)mre->Text);
+        } else {
+            _snprintf(desc,bytes * 2,"%ls",(wchar_t *)mre->Text);
+            desc[bytes * 2 - 1] = 0;
+        }
         return desc;
     } else {
         return winx_strdup((const char *)mre->Text);
@@ -207,7 +197,11 @@ void winx_dbg_print(char *format, ...)
     char *p, *msg = NULL;
     char *err_msg = NULL;
     char *ext_msg = NULL;
+    char *ansi_err_msg = NULL;
+    char *ansi_ext_msg = NULL;
+    char *new_msg;
     ULONG status, error;
+    int ns_flag = 0, le_flag = 0;
     int length;
     va_list arg;
     
@@ -223,42 +217,86 @@ void winx_dbg_print(char *format, ...)
     }
     if(!msg) return;
     
-    /* check for $NS and $LE magic sequences */
+    /* get rid of trailing new line character */
     length = strlen(msg);
+    if(length){
+        if(msg[length - 1] == '\n')
+            msg[length - 1] = 0;
+    }
+
+    /* check for $NS and $LE magic sequences */
     p = strstr(msg,": $NS");
     if(p == msg + length - 5){
         msg[length - 5] = 0;
         error = RtlNtStatusToDosError(status);
-        err_msg = get_description(error);
-        if(err_msg){
-            ext_msg = winx_sprintf("%s: 0x%x status: %s",
-                 msg,(UINT)status,err_msg);
-        } else {
-            ext_msg = winx_sprintf("%s: 0x%x status",
-                 msg,(UINT)status);
-        }
+        ns_flag = 1;
     } else {
         p = strstr(msg,": $LE");
         if(p == msg + length - 5){
             msg[length - 5] = 0;
-            err_msg = get_description(error);
-            if(err_msg){
-                ext_msg = winx_sprintf("%s: 0x%x error: %s",
-                    msg,(UINT)error,err_msg);
+            le_flag = 1;
+        }
+    }
+    
+    if(ns_flag || le_flag){
+        err_msg = get_description(error,ENC_UTF8);
+        if(err_msg){
+            /* get rid of trailing new line character */
+            length = strlen(err_msg);
+            if(length){
+                if(err_msg[length - 1] == '\n')
+                    err_msg[length - 1] = 0;
+            }
+            ext_msg = winx_sprintf("%s: 0x%x %s: %s",
+                 msg,ns_flag ? (UINT)status : (UINT)error,
+                 ns_flag ? "status" : "error",err_msg);
+        } else {
+            ext_msg = winx_sprintf("%s: 0x%x %s",
+                 msg,ns_flag ? (UINT)status : (UINT)error,
+                 ns_flag ? "status" : "error");
+        }
+        if(pOutputDebugString){
+            ansi_err_msg = get_description(error,ENC_ANSI);
+            if(ansi_err_msg){
+                /* get rid of trailing new line character */
+                length = strlen(ansi_err_msg);
+                if(length){
+                    if(ansi_err_msg[length - 1] == '\n')
+                        ansi_err_msg[length - 1] = 0;
+                }
+                ansi_ext_msg = winx_sprintf("%s: 0x%x %s: %s\n",
+                     msg,ns_flag ? (UINT)status : (UINT)error,
+                     ns_flag ? "status" : "error",ansi_err_msg);
             } else {
-                ext_msg = winx_sprintf("%s: 0x%x error",
-                    msg,(UINT)error);
+                ansi_ext_msg = winx_sprintf("%s: 0x%x %s\n",
+                     msg,ns_flag ? (UINT)status : (UINT)error,
+                     ns_flag ? "status" : "error");
             }
         }
     }
     
-    /* send message */
-    deliver_message(ext_msg ? ext_msg : msg);
+    /* append message to the log */
+    add_dbg_log_entry(ext_msg ? ext_msg : msg);
+    
+    /* send message to the Debug View program */
+    if(pOutputDebugString){
+        if(ansi_ext_msg){
+            pOutputDebugString(ansi_ext_msg);
+        } else {
+            new_msg = winx_sprintf("%s\n",msg);
+            if(new_msg){
+                pOutputDebugString(new_msg);
+                winx_heap_free(new_msg);
+            }
+        }
+    }
     
     /* cleanup */
     winx_heap_free(msg);
     winx_heap_free(err_msg);
     winx_heap_free(ext_msg);
+    winx_heap_free(ansi_err_msg);
+    winx_heap_free(ansi_ext_msg);
 }
 
 /**
@@ -326,13 +364,13 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
             length = strlen(string);
             if(length > (width - 4)){
                 /* print string not decorated */
-                deliver_message(string);
+                winx_dbg_print("%s",string);
             } else {
                 /* allocate buffer for entire string */
                 buffer = winx_heap_alloc(width + 1);
                 if(buffer == NULL){
                     /* print string not decorated */
-                    deliver_message(string);
+                    winx_dbg_print("%s",string);
                 } else {
                     /* fill buffer by character */
                     memset(buffer,ch,width);
@@ -345,7 +383,7 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
                     /* paste closing space */
                     buffer[left + 1 + length] = 0x20;
                     /* print decorated string */
-                    deliver_message(buffer);
+                    winx_dbg_print("%s",buffer);
                     winx_heap_free(buffer);
                 }
             }
