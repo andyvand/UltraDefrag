@@ -8,6 +8,7 @@
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
 ; Revised Oct. 17, 2010 by SMHA
+; Revised May. 12, 2012 by JIFF
 ;------------------------------------------------------------------------------
 
 ; This translation can be updated/corrected at
@@ -61,12 +62,12 @@ SHOW_REPORT               = Pokaż raport
 
 LANGUAGE                  = Język
 GRAPHICAL_INTERFACE       = Interfejs graficzny
-BOOT_TIME_SCAN            = Skanowanie uruchomieniowe
+BOOT_TIME_SCAN            = Skanowanie podczas uruchamiania systemu
 REPORTS                   = Raporty
 
 ; --- --- Language submenu
 
-TRANSLATIONS_FOLDER       = Katalog tłumaczeń
+TRANSLATIONS_FOLDER       = Folder z tłumaczeniami
 
 ; --- --- Graphical interface submenu
 
@@ -76,7 +77,7 @@ OPTIONS                   = Opcje
 ; --- --- Boot time scan submenu
 
 ENABLE                    = Aktywuj
-SCRIPT                    = Skrypt uruchomieniowy
+SCRIPT                    = Skrypt wykonywany podczas uruchamiania systemu
 
 ; --- Help Menu
 
@@ -89,7 +90,7 @@ ABOUT                     = O UltraDefrag
 
 ; --- Toolbar Tooltips
 
-BOOT_TIME_SCRIPT          = Skrypt uruchomieniowy
+BOOT_TIME_SCRIPT          = Skrypt wykonywany podczas uruchamiania systemu
 
 ; Drives list items.
 
