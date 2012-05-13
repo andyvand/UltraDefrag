@@ -365,7 +365,6 @@ no_description:
     
     /* cleanup */
     winx_heap_free(msg);
-    winx_heap_free(err_msg);
     winx_heap_free(ext_msg);
     winx_heap_free(cnv_msg);
 }
