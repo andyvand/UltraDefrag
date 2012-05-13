@@ -422,6 +422,7 @@ void BuildLanguageMenu(void)
     if(text){
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_CHANGE_LOG,text))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append change log");
+        free(text);
     } else {
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_CHANGE_LOG,L"&View change log"))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append change log");
@@ -430,6 +431,7 @@ void BuildLanguageMenu(void)
     if(text){
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_REPORT,text))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append report");
+        free(text);
     } else {
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_REPORT,L"View translation &report"))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append report");
@@ -438,6 +440,7 @@ void BuildLanguageMenu(void)
     if(text){
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_FOLDER,text))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append folder");
+        free(text);
     } else {
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_FOLDER,L"&Translations folder"))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append folder");
@@ -446,11 +449,11 @@ void BuildLanguageMenu(void)
     if(text){
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_SUBMIT,text))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append submit");
+        free(text);
     } else {
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_SUBMIT,L"&Submit current translation"))
             WgxDbgPrintLastError("BuildLanguageMenu: cannot append submit");
     }
-    if(text) free(text);
     AppendMenu(hLangMenu,MF_SEPARATOR,0,NULL);
     
     h = _wfindfirst(L".\\i18n\\*.lng",&lng_file);
