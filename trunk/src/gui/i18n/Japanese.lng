@@ -10,9 +10,6 @@
 ; Revised Nov.  5, 2011 by Dmitri Arkhangelski
 ;------------------------------------------------------------------------------
 
-; This translation can be updated/corrected at
-; http://ultradefrag.wikispaces.com/Japanese.lng
-
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
@@ -66,7 +63,10 @@ REPORTS                   = レポートファイルの設定
 
 ; --- --- Language submenu
 
+TRANSLATIONS_CHANGE_LOG   = &View change log
+TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = 言語ファイルのフォルダ
+TRANSLATIONS_SUBMIT       = &Submit current translation
 
 ; --- --- Graphical interface submenu
 

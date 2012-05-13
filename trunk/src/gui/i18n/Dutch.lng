@@ -11,9 +11,6 @@
 ; Revised Jan. 10, 2012 by Jan Iemhoff
 ;------------------------------------------------------------------------------
 
-; This translation can be updated/corrected at
-; http://ultradefrag.wikispaces.com/Dutch.lng
-
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
@@ -67,7 +64,10 @@ REPORTS                   = &Logboeken
 
 ; --- --- Language submenu
 
+TRANSLATIONS_CHANGE_LOG   = &View change log
+TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = &Map met vertalingen
+TRANSLATIONS_SUBMIT       = &Submit current translation
 
 ; --- --- Graphical interface submenu
 

@@ -7,9 +7,6 @@
 ; Revised Apr. 25, 2012 by Dionisios Klonaris
 ;------------------------------------------------------------------------------
 
-; This translation can be updated/corrected at
-; http://ultradefrag.wikispaces.com/Greek.lng
-
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
@@ -63,7 +60,10 @@ REPORTS                   = Αναφορές
 
 ; --- --- Language submenu
 
+TRANSLATIONS_CHANGE_LOG   = &View change log
+TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = Φάκελος μεταφράσεων
+TRANSLATIONS_SUBMIT       = &Submit current translation
 
 ; --- --- Graphical interface submenu
 

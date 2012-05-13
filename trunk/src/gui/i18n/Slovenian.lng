@@ -8,9 +8,6 @@
 ; Revised Feb. 12, 2010 by Dmitri Arkhangelski
 ;------------------------------------------------------------------------------
 
-; This translation can be updated/corrected at
-; http://ultradefrag.wikispaces.com/Slovenian.lng
-
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
@@ -64,7 +61,10 @@ REPORTS                   = Poročila
 
 ; --- --- Language submenu
 
+TRANSLATIONS_CHANGE_LOG   = &View change log
+TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = Ma&pa prevodov
+TRANSLATIONS_SUBMIT       = &Submit current translation
 
 ; --- --- Graphical interface submenu
 
