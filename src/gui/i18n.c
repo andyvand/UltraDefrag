@@ -70,7 +70,10 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     /* settings menu */
     {0, "SETTINGS",                 L"&Settings",                NULL},
     {0, "LANGUAGE",                 L"&Language",                NULL},
+    {0, "TRANSLATIONS_CHANGE_LOG",  L"&View change log",         NULL},
+    {0, "TRANSLATIONS_REPORT",      L"View translation &report", NULL},
     {0, "TRANSLATIONS_FOLDER",      L"&Translations folder",     NULL},
+    {0, "TRANSLATIONS_SUBMIT",      L"&Submit current translation", NULL},
     {0, "GRAPHICAL_INTERFACE",      L"&Graphical interface",     NULL},
     {0, "FONT",                     L"&Font",                    NULL},
     {0, "OPTIONS",                  L"&Options",                 NULL},
@@ -177,7 +180,10 @@ struct menu_item menu_items[] = {
     {IDM_WHEN_DONE_SHUTDOWN,      "WHEN_DONE_SHUTDOWN",       NULL},
     {IDM_EXIT,                    "EXIT",                     "Alt+F4"},
     {IDM_SHOW_REPORT,             "SHOW_REPORT",              "F8"    },
+    {IDM_TRANSLATIONS_CHANGE_LOG, "TRANSLATIONS_CHANGE_LOG",  NULL    },
+    {IDM_TRANSLATIONS_REPORT,     "TRANSLATIONS_REPORT",      NULL    },
     {IDM_TRANSLATIONS_FOLDER,     "TRANSLATIONS_FOLDER",      NULL    },
+    {IDM_TRANSLATIONS_SUBMIT,     "TRANSLATIONS_SUBMIT",      NULL    },
     {IDM_CFG_GUI_FONT,            "FONT",                     "F9"    },
     {IDM_CFG_GUI_SETTINGS,        "OPTIONS",                  "F10"   },
     {IDM_CFG_BOOT_ENABLE,         "ENABLE",                   "F11"   },
@@ -411,16 +417,40 @@ void BuildLanguageMenu(void)
         return;
     }
     
-    /* add translations folder menu item and a separator */
+    /* add translation menu items and a separator */
+    text = WgxGetResourceString(i18n_table,"TRANSLATIONS_CHANGE_LOG");
+    if(text){
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_CHANGE_LOG,text))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append change log");
+    } else {
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_CHANGE_LOG,L"&View change log"))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append change log");
+    }
+    text = WgxGetResourceString(i18n_table,"TRANSLATIONS_REPORT");
+    if(text){
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_REPORT,text))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append report");
+    } else {
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_REPORT,L"View translation &report"))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append report");
+    }
     text = WgxGetResourceString(i18n_table,"TRANSLATIONS_FOLDER");
     if(text){
         if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_FOLDER,text))
-            WgxDbgPrintLastError("BuildLanguageMenu: cannot append menu item");
-        free(text);
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append folder");
     } else {
-        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_FOLDER,L"Translations folder"))
-            WgxDbgPrintLastError("BuildLanguageMenu: cannot append menu item");
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_FOLDER,L"&Translations folder"))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append folder");
     }
+    text = WgxGetResourceString(i18n_table,"TRANSLATIONS_SUBMIT");
+    if(text){
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_SUBMIT,text))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append submit");
+    } else {
+        if(!AppendMenuW(hLangMenu,MF_STRING | MF_ENABLED,IDM_TRANSLATIONS_SUBMIT,L"&Submit current translation"))
+            WgxDbgPrintLastError("BuildLanguageMenu: cannot append submit");
+    }
+    if(text) free(text);
     AppendMenu(hLangMenu,MF_SEPARATOR,0,NULL);
     
     h = _wfindfirst(L".\\i18n\\*.lng",&lng_file);
