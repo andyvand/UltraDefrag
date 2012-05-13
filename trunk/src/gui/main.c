@@ -605,6 +605,22 @@ void OpenWebPage(char *page, char *anchor)
 }
 
 /**
+ * @brief Opens a page of the translation wiki.
+ * @param[in] islang 1 indicates a language page, 0 not
+ */
+void OpenTranslationWebPage(wchar_t *page, int islang)
+{
+    wchar_t path[MAX_PATH] = {0};
+
+    if(islang == 0 )
+        (void)_snwprintf(path,MAX_PATH,L"\"http://ultradefrag.wikispaces.com/%ls\"",page);
+    else
+        (void)_snwprintf(path,MAX_PATH,L"\"http://ultradefrag.wikispaces.com/%ls.lng\"",page);
+    path[MAX_PATH - 1] = 0;
+    (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+}
+
+/**
  * @internal
  * @brief Updates the global win_rc structure.
  * @return Zero for success, negative value otherwise.
@@ -954,10 +970,19 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             ShowReports();
             return 0;
         /* Settings menu handlers */
+        case IDM_TRANSLATIONS_CHANGE_LOG:
+            OpenTranslationWebPage(L"Change+Log", 0);
+            return 0;
+        case IDM_TRANSLATIONS_REPORT:
+            OpenTranslationWebPage(L"Translation+Report", 0);
+            return 0;
         case IDM_TRANSLATIONS_FOLDER:
             (void)WgxShellExecuteW(hWindow,L"open",L"explorer.exe",
                 L"/select, \".\\i18n\\translation.template\"",NULL,SW_SHOW);
-            //(void)WgxShellExecuteW(hWindow,L"open",L".\\i18n",NULL,NULL,SW_SHOW);
+            return 0;
+        case IDM_TRANSLATIONS_SUBMIT:
+            if(GetPrivateProfileStringW(L"Language",L"Selected",NULL,lang_name,MAX_PATH,L".\\lang.ini")>0)
+                OpenTranslationWebPage(lang_name, 1);
             return 0;
         case IDM_CFG_GUI_FONT:
             memset(&cf,0,sizeof(cf));
