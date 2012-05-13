@@ -7,9 +7,6 @@
 ; Revised Feb. 02, 2010 by José Luis Farías
 ;------------------------------------------------------------------------------
 
-; This translation can be updated/corrected at
-; http://ultradefrag.wikispaces.com/Spanish+%28AR%29.lng
-
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
@@ -63,7 +60,10 @@ REPORTS                   = &Reportes
 
 ; --- --- Language submenu // Submenu Idioma
 
+TRANSLATIONS_CHANGE_LOG   = &View change log
+TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = &Carpeta de Traducciones
+TRANSLATIONS_SUBMIT       = &Submit current translation
 
 ; --- --- Graphical interface submenu // Submenu Interfaz Gráfica
 

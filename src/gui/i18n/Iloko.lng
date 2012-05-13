@@ -7,9 +7,6 @@
 ; Revised {Jan. 01, 2000} by {Replace by Name of Reviser}
 ;------------------------------------------------------------------------------
 
-; This translation can be updated/corrected at
-; http://ultradefrag.wikispaces.com/Iloko.lng
-
 ; Please keep the header and comments in English and use Latin letters,
 ; so everyone understands them
 
@@ -63,7 +60,10 @@ REPORTS                   = Pa&damag
 
 ; --- --- Language submenu
 
+TRANSLATIONS_CHANGE_LOG   = &View change log
+TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = &Kaulog
+TRANSLATIONS_SUBMIT       = &Submit current translation
 
 ; --- --- Graphical interface submenu
 
