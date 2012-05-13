@@ -145,8 +145,6 @@ echo.
 if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winddk --no-ia64 --no-x86 --install --no-pdf --no-dev
 if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winddk --no-ia64 --no-amd64 --install --no-pdf --no-dev
 echo.
-cd /d %UD_BLD_MENU_DIR%
-call build.cmd --clean
 goto finished
 
 :12
@@ -190,6 +188,4 @@ del /f /q "ultradefrag-%UDVERSION_SUFFIX%.7z"
 "%SEVENZIP_PATH%\7z.exe" a -r -t7z -mx9 -pud -mhe=on "ultradefrag-%UDVERSION_SUFFIX%.7z" "ultradefrag-%UDVERSION_SUFFIX%.bin.*.exe"
 :noZip
 echo.
-cd /d %UD_BLD_MENU_DIR%
-call build.cmd --clean
 goto :EOF
