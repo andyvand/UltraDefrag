@@ -32,8 +32,6 @@
 
 #include "zenwinx.h"
 
-void (__stdcall *pOutputDebugString)(char *msg) = NULL;
-
 /* controls whether the messages will be collected or not */
 int logging_enabled = 0;
 
@@ -66,11 +64,6 @@ static void close_dbg_log(void);
  */
 int winx_dbg_init(void)
 {
-    (void)winx_get_proc_address(
-        L"kernel32.dll",
-        "OutputDebugStringA",
-        (void *)&pOutputDebugString
-    );
     if(dbg_lock == NULL)
         dbg_lock = winx_init_spin_lock("winx_dbg_lock");
     if(dbg_lock == NULL)
@@ -125,27 +118,127 @@ static void add_dbg_log_entry(char *msg)
 
 /**
  * @internal
+ * @brief Internal structure used to deliver
+ * information to the Debug View program.
+ */
+typedef struct _DBG_OUTPUT_DEBUG_STRING_BUFFER {
+    ULONG ProcessId;
+    UCHAR Msg[4096-sizeof(ULONG)];
+} DBG_OUTPUT_DEBUG_STRING_BUFFER, *PDBG_OUTPUT_DEBUG_STRING_BUFFER;
+
+#define DBG_OUT_BUFFER_SIZE (4096-sizeof(ULONG))
+
+/**
+ * @internal
+ * @brief Low-level routine for delivering
+ * of debugging messages to the Debug View program.
+ * @details OutputDebugString is not safe - being called
+ * from DllMain it may crash the application (confirmed on w2k).
+ * Because of that we're maintaining this routine.
+ */
+static void deliver_message(char *string)
+{
+    HANDLE hEvtBufferReady = NULL;
+    HANDLE hEvtDataReady = NULL;
+    HANDLE hSection = NULL;
+    LPVOID BaseAddress = NULL;
+    LARGE_INTEGER SectionOffset;
+    ULONG ViewSize = 0;
+    UNICODE_STRING us;
+    OBJECT_ATTRIBUTES oa;
+    NTSTATUS Status;
+    LARGE_INTEGER interval;
+    DBG_OUTPUT_DEBUG_STRING_BUFFER *dbuffer;
+    int length;
+    
+    /* open debugger's objects */
+    RtlInitUnicodeString(&us,L"\\BaseNamedObjects\\DBWIN_BUFFER_READY");
+    InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
+    Status = NtOpenEvent(&hEvtBufferReady,SYNCHRONIZE,&oa);
+    if(!NT_SUCCESS(Status)) goto done;
+    
+    RtlInitUnicodeString(&us,L"\\BaseNamedObjects\\DBWIN_DATA_READY");
+    InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
+    Status = NtOpenEvent(&hEvtDataReady,EVENT_MODIFY_STATE,&oa);
+    if(!NT_SUCCESS(Status)) goto done;
+
+    RtlInitUnicodeString(&us,L"\\BaseNamedObjects\\DBWIN_BUFFER");
+    InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
+    Status = NtOpenSection(&hSection,SECTION_ALL_ACCESS,&oa);
+    if(!NT_SUCCESS(Status)) goto done;
+    SectionOffset.QuadPart = 0;
+    Status = NtMapViewOfSection(hSection,NtCurrentProcess(),
+        &BaseAddress,0,0,&SectionOffset,(SIZE_T *)&ViewSize,ViewShare,
+        0,PAGE_READWRITE);
+    if(!NT_SUCCESS(Status)) goto done;
+    
+    /* send a message */
+    /*
+    * wait a maximum of 10 seconds for the debug monitor 
+    * to finish processing the shared buffer
+    */
+    interval.QuadPart = -(10000 * 10000);
+    if(NtWaitForSingleObject(hEvtBufferReady,FALSE,&interval) != WAIT_OBJECT_0)
+        goto done;
+    
+    /* write the process id into the buffer */
+    dbuffer = (DBG_OUTPUT_DEBUG_STRING_BUFFER *)BaseAddress;
+    dbuffer->ProcessId = (DWORD)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess);
+
+    (void)strncpy(dbuffer->Msg,string,DBG_OUT_BUFFER_SIZE);
+    dbuffer->Msg[DBG_OUT_BUFFER_SIZE - 1] = 0;
+
+    /* ensure that the buffer has new line character */
+    length = strlen(dbuffer->Msg);
+    if(length > 0){
+        if(dbuffer->Msg[length-1] != '\n'){
+            if(length == (DBG_OUT_BUFFER_SIZE - 1)){
+                dbuffer->Msg[length-1] = '\n';
+            } else {
+                dbuffer->Msg[length] = '\n';
+                dbuffer->Msg[length+1] = 0;
+            }
+        }
+    } else {
+        strcpy(dbuffer->Msg,"\n");
+    }
+    
+    /* signal that the buffer contains meaningful data and can be read */
+    (void)NtSetEvent(hEvtDataReady,NULL);
+
+done:
+    NtCloseSafe(hEvtBufferReady);
+    NtCloseSafe(hEvtDataReady);
+    if(BaseAddress)
+        (void)NtUnmapViewOfSection(NtCurrentProcess(),BaseAddress);
+    NtCloseSafe(hSection);
+}
+
+/**
+ * @internal
  */
 enum {
     ENC_ANSI,
-    ENC_UTF8
+    ENC_UTF16
 };
 
 /**
  * @internal
- * @brief Retuns error description
- * as UTF-8 encoded string.
+ * @brief Retuns error description.
+ * @param[in] error the error code.
+ * @param[out] encoding pointer to variable
+ * receiving the string encoding.
+ * The buffer length must be equal
+ * to <b>DBG_OUT_BUFFER_SIZE</b>.
  * @note Returned string should be
  * freed by winx_heap_free call.
  */
-static char *get_description(ULONG error,int encoding)
+static void *get_description(ULONG error,int *encoding)
 {
     UNICODE_STRING uStr;
     NTSTATUS Status;
     HMODULE base_addr;
     MESSAGE_RESOURCE_ENTRY *mre;
-    int bytes;
-    char *desc;
 
     /* kernel32.dll has much better messages than ntdll.dll */
     RtlInitUnicodeString(&uStr,L"kernel32.dll");
@@ -160,22 +253,10 @@ static char *get_description(ULONG error,int encoding)
         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),error,&mre);
     if(!NT_SUCCESS(Status))
         return NULL; /* no appropriate message found */
-    if(mre->Flags & MESSAGE_RESOURCE_UNICODE){
-        bytes = mre->Length - sizeof(MESSAGE_RESOURCE_ENTRY) + 1;
-        desc = winx_heap_alloc(bytes * 2); /* enough to hold UTF-8 string */
-        if(desc == NULL)
-            return NULL;
-        if(encoding == ENC_UTF8){
-            winx_to_utf8(desc,bytes * 2,(wchar_t *)mre->Text);
-        } else {
-            _snprintf(desc,bytes * 2,"%ls",(wchar_t *)mre->Text);
-            desc[bytes * 2 - 1] = 0;
-        }
-        return desc;
-    } else {
-        return winx_strdup((const char *)mre->Text);
+    if(encoding){
+        *encoding = (mre->Flags & MESSAGE_RESOURCE_UNICODE) ? ENC_UTF16 : ENC_ANSI;
     }
-    return NULL;
+    return (void *)(mre->Text);
 }
 
 /**
@@ -197,11 +278,10 @@ void winx_dbg_print(char *format, ...)
     char *p, *msg = NULL;
     char *err_msg = NULL;
     char *ext_msg = NULL;
-    char *ansi_err_msg = NULL;
-    char *ansi_ext_msg = NULL;
-    char *new_msg;
+    char *cnv_msg = NULL;
     ULONG status, error;
     int ns_flag = 0, le_flag = 0;
+    int encoding;
     int length;
     va_list arg;
     
@@ -239,64 +319,55 @@ void winx_dbg_print(char *format, ...)
     }
     
     if(ns_flag || le_flag){
-        err_msg = get_description(error,ENC_UTF8);
+        err_msg = get_description(error,&encoding);
         if(err_msg){
-            /* get rid of trailing new line character */
-            length = strlen(err_msg);
-            if(length){
-                if(err_msg[length - 1] == '\n')
-                    err_msg[length - 1] = 0;
+            if(encoding == ENC_ANSI){
+                ext_msg = winx_sprintf("%s: 0x%x %s: %s",
+                     msg,ns_flag ? (UINT)status : (UINT)error,
+                     ns_flag ? "status" : "error",err_msg);
+                add_dbg_log_entry(ext_msg ? ext_msg : msg);
+                deliver_message(ext_msg ? ext_msg : msg);
+            } else {
+                length = (wcslen((wchar_t *)err_msg) + 1) * sizeof(wchar_t);
+                length *= 2; /* enough to hold UTF-8 string */
+                cnv_msg = winx_heap_alloc(length);
+                if(cnv_msg){
+                    /* write message to log in UTF-8 encoding */
+                    winx_to_utf8(cnv_msg,length,(wchar_t *)err_msg);
+                    ext_msg = winx_sprintf("%s: 0x%x %s: %s",
+                         msg,ns_flag ? (UINT)status : (UINT)error,
+                         ns_flag ? "status" : "error",cnv_msg);
+                    add_dbg_log_entry(ext_msg ? ext_msg : msg);
+                    winx_heap_free(ext_msg); ext_msg = NULL;
+                    /* send message to debugger in ANSI encoding */
+                    _snprintf(cnv_msg,length,"%ls",(wchar_t *)err_msg);
+                    cnv_msg[length - 1] = 0;
+                    ext_msg = winx_sprintf("%s: 0x%x %s: %s",
+                         msg,ns_flag ? (UINT)status : (UINT)error,
+                         ns_flag ? "status" : "error",cnv_msg);
+                    deliver_message(ext_msg ? ext_msg : msg);
+                } else {
+                    goto no_description;
+                }
             }
-            ext_msg = winx_sprintf("%s: 0x%x %s: %s",
-                 msg,ns_flag ? (UINT)status : (UINT)error,
-                 ns_flag ? "status" : "error",err_msg);
         } else {
+no_description:
             ext_msg = winx_sprintf("%s: 0x%x %s",
                  msg,ns_flag ? (UINT)status : (UINT)error,
                  ns_flag ? "status" : "error");
+            add_dbg_log_entry(ext_msg ? ext_msg : msg);
+            deliver_message(ext_msg ? ext_msg : msg);
         }
-        if(pOutputDebugString){
-            ansi_err_msg = get_description(error,ENC_ANSI);
-            if(ansi_err_msg){
-                /* get rid of trailing new line character */
-                length = strlen(ansi_err_msg);
-                if(length){
-                    if(ansi_err_msg[length - 1] == '\n')
-                        ansi_err_msg[length - 1] = 0;
-                }
-                ansi_ext_msg = winx_sprintf("%s: 0x%x %s: %s\n",
-                     msg,ns_flag ? (UINT)status : (UINT)error,
-                     ns_flag ? "status" : "error",ansi_err_msg);
-            } else {
-                ansi_ext_msg = winx_sprintf("%s: 0x%x %s\n",
-                     msg,ns_flag ? (UINT)status : (UINT)error,
-                     ns_flag ? "status" : "error");
-            }
-        }
-    }
-    
-    /* append message to the log */
-    add_dbg_log_entry(ext_msg ? ext_msg : msg);
-    
-    /* send message to the Debug View program */
-    if(pOutputDebugString){
-        if(ansi_ext_msg){
-            pOutputDebugString(ansi_ext_msg);
-        } else {
-            new_msg = winx_sprintf("%s\n",msg);
-            if(new_msg){
-                pOutputDebugString(new_msg);
-                winx_heap_free(new_msg);
-            }
-        }
+    } else {
+        add_dbg_log_entry(msg);
+        deliver_message(msg);
     }
     
     /* cleanup */
     winx_heap_free(msg);
     winx_heap_free(err_msg);
     winx_heap_free(ext_msg);
-    winx_heap_free(ansi_err_msg);
-    winx_heap_free(ansi_ext_msg);
+    winx_heap_free(cnv_msg);
 }
 
 /**
@@ -547,11 +618,19 @@ static void flush_dbg_log(int already_synchronized)
         * UTF-8 encoded files need BOM to be written before the contents;
         * multiple occurencies of BOM inside the file contens are allowed.
         */
-        (void)winx_fwrite(bom,sizeof(char),3,f);
+        if(winx_get_os_version() > WINDOWS_NT){
+            /* NT4 libraries contain ANSI encoded messages; confirmed on its Russian edition */
+            (void)winx_fwrite(bom,sizeof(char),3,f);
+        }
         for(log_entry = old_dbg_log; log_entry; log_entry = log_entry->next){
             if(log_entry->buffer){
                 length = strlen(log_entry->buffer);
                 if(length){
+                    /* get rid of trailing new line character */
+                    if(log_entry->buffer[length - 1] == '\n'){
+                        log_entry->buffer[length - 1] = 0;
+                        length --;
+                    }
                     time_stamp = winx_sprintf("%04d-%02d-%02d %02d:%02d:%02d.%03d ",
                         log_entry->time_stamp.year, log_entry->time_stamp.month, log_entry->time_stamp.day,
                         log_entry->time_stamp.hour, log_entry->time_stamp.minute, log_entry->time_stamp.second,
