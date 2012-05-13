@@ -613,9 +613,9 @@ void OpenTranslationWebPage(wchar_t *page, int islang)
     wchar_t path[MAX_PATH] = {0};
 
     if(islang == 0 )
-        (void)_snwprintf(path,MAX_PATH,L"\"http://ultradefrag.wikispaces.com/%ls\"",page);
+        (void)_snwprintf(path,MAX_PATH,L"http://ultradefrag.wikispaces.com/%ls",page);
     else
-        (void)_snwprintf(path,MAX_PATH,L"\"http://ultradefrag.wikispaces.com/%ls.lng\"",page);
+        (void)_snwprintf(path,MAX_PATH,L"http://ultradefrag.wikispaces.com/%ls.lng",page);
     path[MAX_PATH - 1] = 0;
     (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
 }
