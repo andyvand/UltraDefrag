@@ -338,7 +338,7 @@ end
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 106
+current_version = 107
 old_version = 0
 upgrade_needed = 1
 
@@ -357,7 +357,7 @@ time_limit = ""
 refresh_interval = 100
 disable_reports = 0
 dbgprint_level = ""
-log_file_path = ""
+log_file_path = ".\\logs\\ultradefrag.log"
 dry_run = 0
 seconds_for_shutdown_rejection = 60
 disable_latest_version_check = 0
@@ -413,6 +413,13 @@ if upgrade_needed ~= 0 then
     if not optimizer_file_size_threshold then
         -- optimizer_sizelimit has been superseded by optimizer_file_size_threshold
         optimizer_file_size_threshold = optimizer_sizelimit
+    end
+    local path_upgrade_needed = 0
+    if old_version < 8 then path_upgrade_needed = 1 end
+    if old_version > 99 and old_version < 107 then path_upgrade_needed = 1 end
+    if path_upgrade_needed ~= 0 and log_file_path == "" then
+        -- default log is needed for easier bug reporting
+        log_file_path = ".\\logs\\ultradefrag.log"
     end
 
     -- save the upgraded configuration
