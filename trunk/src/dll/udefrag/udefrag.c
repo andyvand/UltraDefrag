@@ -610,6 +610,29 @@ char *udefrag_get_error_description(int error_code)
 }
 
 /**
+ * @internal
+ * @brief Writes a header to the log file.
+ */
+static void write_log_file_header(char *path)
+{
+    WINX_FILE *f;
+    char header[] = "--------------------------------------------------------------------------------\r\n"
+                    "UltraDefrag log file\r\n"
+                    "--------------------------------------------------------------------------------\r\n"
+                    "If you'd like to report a bug,\r\n"
+                    "attach this file to your bug report please:\r\n"
+                    "http://sourceforge.net/tracker/?group_id=199532&atid=969870\r\n"
+                    "--------------------------------------------------------------------------------\r\n";
+    
+    f = winx_fopen(path,"a");
+    if(f == NULL)
+        return;
+    
+    winx_fwrite(header,1,sizeof(header) - 1,f);
+    winx_fclose(f);
+}
+
+/**
  * @brief Enables debug logging to the file
  * if <b>\%UD_LOG_FILE_PATH\%</b> is set, otherwise
  * disables the logging.
@@ -726,8 +749,12 @@ int udefrag_set_log_file_path(void)
         }
     }
     
-    if(native_path)
+    if(native_path){
+        /* write header to the log file */
+        write_log_file_header(native_path);
+        /* allow debugging output to be appended */
         winx_enable_dbg_log(native_path);
+    }
     
     winx_heap_free(native_path);
     winx_heap_free(path);
