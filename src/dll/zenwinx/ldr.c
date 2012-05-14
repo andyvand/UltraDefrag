@@ -57,7 +57,8 @@ int winx_get_proc_address(wchar_t *libname,char *funcname,PVOID *proc_addr)
     Status = LdrGetProcedureAddress(base_addr,&aStr,0,proc_addr);
     if(!NT_SUCCESS(Status)){
         *proc_addr = NULL;
-        DebugPrint("winx_get_proc_address: cannot get address of %s: %x",funcname,(UINT)Status);
+        if(strcmp(funcname,"RtlGetVersion")) /* reduce amount of debugging output on NT4 */
+            DebugPrint("winx_get_proc_address: cannot get address of %s: %x",funcname,(UINT)Status);
         return (-1);
     }
     return 0;
