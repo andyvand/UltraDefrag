@@ -546,7 +546,7 @@ ULONGLONG winx_hr_to_bytes(char *string)
 
 /**
  * @brief Converts a string to UTF-8 encoding.
- * @param[out] dest the destination buffer.
+ * @param[out] dst the destination buffer.
  * @param[in] size size of the destination buffer.
  * @param[in] src the source string.
  * @note Each converted character needs maximum
