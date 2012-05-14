@@ -1421,8 +1421,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     }
     
     WgxDestroyFont(&wgxFont);
-    DestroySynchObjects();
     WgxDestroyResourceTable(i18n_table);
+    DestroySynchObjects();
     return 0;
 }
 
