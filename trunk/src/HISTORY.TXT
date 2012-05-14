@@ -38,7 +38,7 @@
   Version 5.0.6  2012-06-
   ------------------------------------------------------------------------------
     - GUI debugging output was forced to be saved in the log file
-    - added "Debug" item to the action menu
+    - added "Debug" item to the help menu
     - added "View change log", "View translation report" and
       "Submit current translation" items to language menu
     - the following translations were updated:
