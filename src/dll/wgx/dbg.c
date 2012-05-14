@@ -20,6 +20,10 @@
 /**
  * @file dbg.c
  * @brief Debugging.
+ * @details All the provided routines are safe,
+ * in contrary to OutputDebugString which cannot
+ * be called safely from DllMain - it may crash
+ * the application in some cases (confirmed on w2k).
  * @addtogroup Debug
  * @{
  */
@@ -65,7 +69,7 @@ void WgxDbgPrint(char *format, ...)
 
     msg = malloc(DBG_BUFFER_SIZE);
     if(msg == NULL){
-        OutputDebugString("Cannot allocate memory for WgxDbgPrint!\n");
+        DbgPrintHandler("Cannot allocate memory for WgxDbgPrint!");
         return;
     }
 
@@ -98,7 +102,7 @@ void WgxDbgPrintLastError(char *format, ...)
 
     msg = malloc(DBG_BUFFER_SIZE);
     if(msg == NULL){
-        OutputDebugString("Cannot allocate memory for WgxDbgPrintLastError!\n");
+        DbgPrintHandler("Cannot allocate memory for WgxDbgPrintLastError!");
         return;
     }
 
@@ -148,7 +152,8 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
 
     msg = malloc(DBG_BUFFER_SIZE);
     if(msg == NULL){
-        OutputDebugString("Cannot allocate memory for WgxDisplayLastError (case 1)!\n");
+        if(DbgPrintHandler)
+            DbgPrintHandler("Cannot allocate memory for WgxDisplayLastError (case 1)!");
         return 0;
     }
 
@@ -174,7 +179,8 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
     /* display message box */
     umsg = malloc(DBG_BUFFER_SIZE * sizeof(wchar_t));
     if(umsg == NULL){
-        OutputDebugString("Cannot allocate memory for WgxDisplayLastError (case 2)!\n");
+        if(DbgPrintHandler)
+            DbgPrintHandler("Cannot allocate memory for WgxDisplayLastError (case 2)!");
         free(msg);
         return 0;
     }
