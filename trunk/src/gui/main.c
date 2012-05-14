@@ -621,6 +621,21 @@ void OpenTranslationWebPage(wchar_t *page, int islang)
 }
 
 /**
+ * @brief Opens the log file.
+ */
+void OpenLog(void)
+{
+    wchar_t *path = _wgetenv(L"UD_LOG_FILE_PATH");
+    
+    if(path == NULL){
+        MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
+    } else {
+        udefrag_flush_dbg_log();
+        (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+    }
+}
+
+/**
  * @internal
  * @brief Updates the global win_rc structure.
  * @return Zero for success, negative value otherwise.
@@ -962,6 +977,14 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         case IDM_REPAIR:
             if(!busy_flag)
                 RepairSelectedVolumes();
+            return 0;
+        case IDM_OPEN_LOG:
+            OpenLog();
+            return 0;
+        case IDM_REPORT_BUG:
+            (void)WgxShellExecuteW(hWindow,L"open",
+                L"http://sourceforge.net/tracker/?group_id=199532&atid=969870",
+                NULL,NULL,SW_SHOW);
             return 0;
         case IDM_EXIT:
             goto done;
