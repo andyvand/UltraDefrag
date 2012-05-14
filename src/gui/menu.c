@@ -33,6 +33,12 @@
 
 HMENU hMainMenu = NULL;
 
+WGX_MENU debug_menu[] = {
+    {MF_STRING | MF_ENABLED,IDM_OPEN_LOG,                           NULL, L"Open &log\tAlt+L", -1 },
+    {MF_STRING | MF_ENABLED,IDM_REPORT_BUG,                         NULL, L"Send bug &report", -1 },
+    {0,0,NULL,NULL,0}
+};
+
 WGX_MENU when_done_menu[] = {
     {MF_STRING | MF_ENABLED | MF_CHECKED,IDM_WHEN_DONE_NONE,        NULL, L"&None",       -1 },
     {MF_SEPARATOR,0,NULL,NULL,0},
@@ -62,6 +68,7 @@ WGX_MENU action_menu[] = {
     {MF_SEPARATOR,0,NULL,NULL,0},
     {MF_STRING | MF_ENABLED,IDM_REPAIR,                              NULL, L"Repair dri&ves",                -1 },
     {MF_SEPARATOR,0,NULL,NULL,0},
+    {MF_STRING | MF_ENABLED | MF_POPUP,IDM_DEBUG,                    debug_menu,    L"De&bug",               -1 },
     {MF_STRING | MF_ENABLED | MF_POPUP,IDM_WHEN_DONE,                when_done_menu,L"&When done",           -1 },
     {MF_SEPARATOR,0,NULL,NULL,0},
     {MF_STRING | MF_ENABLED,IDM_EXIT,                                NULL, L"E&xit\tAlt+F4",                 -1 },

@@ -97,6 +97,9 @@
 #define IDM_IGNORE_REMOVABLE_MEDIA      1140
 #define IDM_RESCAN                      1150
 #define IDM_REPAIR                      1155
+#define IDM_DEBUG                       1156
+#define IDM_OPEN_LOG                    1157
+#define IDM_REPORT_BUG                  1158
 
 #define IDM_WHEN_DONE                   1160
 #define IDM_WHEN_DONE_NONE              1161

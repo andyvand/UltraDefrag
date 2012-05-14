@@ -53,6 +53,9 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     {0, "SKIP_REMOVABLE_MEDIA",     L"Skip removable &media",    NULL},
     {0, "RESCAN_DRIVES",            L"&Rescan drives",           NULL},
     {0, "REPAIR_DRIVES",            L"Repair dri&ves",           NULL},
+    {0, "DEBUG",                    L"De&bug",                   NULL},
+    {0, "OPEN_LOG",                 L"Open &log",                NULL},
+    {0, "REPORT_BUG",               L"Send bug &report",         NULL},
     {0, "WHEN_DONE",                L"&When done",               NULL},
     {0, "WHEN_DONE_NONE",           L"&None",                    NULL},
     {0, "WHEN_DONE_EXIT",           L"E&xit",                    NULL},
@@ -144,7 +147,7 @@ WGX_I18N_RESOURCE_ENTRY i18n_table[] = {
     /* taskbar icon overlay message */
     {0,                 "JOB_IS_RUNNING",             L"A job is running",           NULL},
     {0,                 "JOB_IS_PAUSED",              L"A job is paused",            NULL},
-
+    
     /* end of the table */
     {0,                 NULL,                         NULL,                          NULL}
 };
@@ -171,6 +174,8 @@ struct menu_item menu_items[] = {
     {IDM_IGNORE_REMOVABLE_MEDIA,  "SKIP_REMOVABLE_MEDIA",     "Ctrl+M"},
     {IDM_RESCAN,                  "RESCAN_DRIVES",            "Ctrl+D"},
     {IDM_REPAIR,                  "REPAIR_DRIVES",            NULL},
+    {IDM_OPEN_LOG,                "OPEN_LOG",                 "Alt+L"},
+    {IDM_REPORT_BUG,              "REPORT_BUG",               NULL},
     {IDM_WHEN_DONE_NONE,          "WHEN_DONE_NONE",           NULL},
     {IDM_WHEN_DONE_EXIT,          "WHEN_DONE_EXIT",           NULL},
     {IDM_WHEN_DONE_STANDBY,       "WHEN_DONE_STANDBY",        NULL},
@@ -196,6 +201,7 @@ struct menu_item menu_items[] = {
     {IDM_CHECK_UPDATE,            "CHECK_UPDATE",             NULL    },
     {IDM_ABOUT,                   "ABOUT",                    "F4"    },
     /* submenus */
+    {IDM_DEBUG,                   "DEBUG",                    NULL},
     {IDM_WHEN_DONE,               "WHEN_DONE",                NULL},
     {IDM_LANGUAGE,                "LANGUAGE",                 NULL},
     {IDM_CFG_GUI,                 "GRAPHICAL_INTERFACE",      NULL},
