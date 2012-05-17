@@ -60,10 +60,10 @@ REPORTS                   = &ანგარიშები
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &ცვლილებების ნახვა
+TRANSLATIONS_REPORT       = თარგმანის ანგარიშის ნახვა
 TRANSLATIONS_FOLDER       = &თარგმანების საქაღალდე
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &მიმდინარე თარგმანის გაგზავნა
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = &დახმარების ფაილი
 BEST_PRACTICE             = &სასარგებლო რჩევები
 FAQ                       = &ხშირად დასმული კითხვები
 CM_LEGEND                 = კლასტერების რუკის ლეგენდა
-DEBUG                     = De&bug
+DEBUG                     = გას&წორება
 CHECK_UPDATE              = განახლების შემოწმება
 ABOUT                     = &პროგრამის შესახებ
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = ჟურნალის &გახსნა
+REPORT_BUG                = შეცდომის &შეტყობინება
 
 ; --- Toolbar Tooltips
 
