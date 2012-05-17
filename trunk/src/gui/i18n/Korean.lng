@@ -83,8 +83,14 @@ CONTENTS                  = 도움말 내용(&C)
 BEST_PRACTICE             = 우수 사례(&P)
 FAQ                       = 질문과 답변(&F)
 CM_LEGEND                 = 클러스터 맵 설명(&L)
+DEBUG                     = De&bug
 CHECK_UPDATE              = 업데이트 확인(&U)
 ABOUT                     = 정보(&A)
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

@@ -83,8 +83,14 @@ CONTENTS                  = &Conteúdo
 BEST_PRACTICE             = Melhores &práticas
 FAQ                       = Perguntas mais &frequentes
 CM_LEGEND                 = &Legenda do cluster
+DEBUG                     = De&bug
 CHECK_UPDATE              = Verificar at&ualizações
 ABOUT                     = &Sobre
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

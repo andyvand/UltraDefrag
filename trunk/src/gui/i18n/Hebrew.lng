@@ -81,8 +81,14 @@ CONTENTS                  = תוכן
 BEST_PRACTICE             = הכי טוב להתאמן
 FAQ                       = שאלות נפוצות
 CM_LEGEND                 = האגדה על המפה
+DEBUG                     = De&bug
 CHECK_UPDATE              = בדוק אם יש עדכון
 ABOUT                     = אודות התוכנית
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

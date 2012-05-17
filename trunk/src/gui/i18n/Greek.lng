@@ -81,8 +81,14 @@ CONTENTS                  = Περιεχόμενα
 BEST_PRACTICE             = Καλύτερη πρακτική
 FAQ                       = ΣΕΑ(FAQ)
 CM_LEGEND                 = Χάρτης συστοιχιών και υπόμνημα
+DEBUG                     = De&bug
 CHECK_UPDATE              = Έλεγχος για ενημερώσεις
 ABOUT                     = Σχετικά
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

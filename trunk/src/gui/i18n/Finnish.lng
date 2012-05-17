@@ -82,8 +82,14 @@ CONTENTS                  = &Sisältö
 BEST_PRACTICE             = &Parhaat käytännöt
 FAQ                       = &Usein kysytyt kysymykset
 CM_LEGEND                 = Cluster kartta &legenda
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Tarkista päivitykset
 ABOUT                     = &Ohjelmasta
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

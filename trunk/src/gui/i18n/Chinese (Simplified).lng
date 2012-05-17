@@ -84,8 +84,14 @@ CONTENTS                  = 目录
 BEST_PRACTICE             = 最佳方法
 FAQ                       = 常见问题解答
 CM_LEGEND                 = 群集地图图例
+DEBUG                     = De&bug
 CHECK_UPDATE              = 检查更新
 ABOUT                     = 关于
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

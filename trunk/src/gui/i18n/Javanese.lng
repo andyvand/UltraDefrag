@@ -81,8 +81,14 @@ CONTENTS                  = &Konten
 BEST_PRACTICE             = &Praktek terapik
 FAQ                       = &Pitakon
 CM_LEGEND                 = Ke&terangane peta cluster
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Cek pengapikan
 ABOUT                     = &Tentang
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

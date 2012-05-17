@@ -81,8 +81,14 @@ CONTENTS                  = Sisu
 BEST_PRACTICE             = Parimate tavade
 FAQ                       = Korduma kippuvad küsimused
 CM_LEGEND                 = Cluster kaart legend
+DEBUG                     = De&bug
 CHECK_UPDATE              = Vaata uuendust
 ABOUT                     = Info
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

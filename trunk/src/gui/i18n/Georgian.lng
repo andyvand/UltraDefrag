@@ -81,8 +81,14 @@ CONTENTS                  = &დახმარების ფაილი
 BEST_PRACTICE             = &სასარგებლო რჩევები
 FAQ                       = &ხშირად დასმული კითხვები
 CM_LEGEND                 = კლასტერების რუკის ლეგენდა
+DEBUG                     = De&bug
 CHECK_UPDATE              = განახლების შემოწმება
 ABOUT                     = &პროგრამის შესახებ
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

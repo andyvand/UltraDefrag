@@ -84,8 +84,14 @@ CONTENTS                  = Tartalom
 BEST_PRACTICE             = Bevált gyakorlat
 FAQ                       = GYIK (FAQ)
 CM_LEGEND                 = Klaszter térkép &magyarázat
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Frissítés ellenőrzése
 ABOUT                     = Névjegy
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

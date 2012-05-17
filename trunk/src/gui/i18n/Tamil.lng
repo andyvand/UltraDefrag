@@ -81,8 +81,14 @@ CONTENTS                  = &பொருளடக்கம்
 BEST_PRACTICE             = &சிறந்த பயிற்சி
 FAQ                       = &கேள்விகள்
 CM_LEGEND                 = கொத்து வரைபடத்தை விளக்கவுரை
+DEBUG                     = De&bug
 CHECK_UPDATE              = மேம்படுத்தல் சோதிக்க
 ABOUT                     = &பற்றி
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

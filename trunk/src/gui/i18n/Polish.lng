@@ -85,8 +85,14 @@ CONTENTS                  = Zawartość
 BEST_PRACTICE             = Najlepsze praktyki
 FAQ                       = Najczęściej zadawane pytania
 CM_LEGEND                 = Objaśnienie mapy dysku
+DEBUG                     = De&bug
 CHECK_UPDATE              = Sprawdź aktualizacje
 ABOUT                     = O UltraDefrag
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

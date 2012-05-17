@@ -62,7 +62,7 @@ REPORTS                   = &Berichte
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = Änderungs&protokol anzeigen
+TRANSLATIONS_CHANGE_LOG   = Änderungs&protokoll anzeigen
 TRANSLATIONS_REPORT       = Übersetzungs&bericht anzeigen
 TRANSLATIONS_FOLDER       = Übersetzungs&ordner
 TRANSLATIONS_SUBMIT       = &Aktuelle Übersetzung einreichen
@@ -83,8 +83,14 @@ CONTENTS                  = &Inhalt
 BEST_PRACTICE             = Empfohlene &Verwendung
 FAQ                       = Häufig gestellte &Fragen
 CM_LEGEND                 = &Zuordnungstabellenerklärung
+DEBUG                     = &Problem berichten
 CHECK_UPDATE              = Auf &Aktualisierung prüfen
 ABOUT                     = &Über
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = &Protokoll öffnen
+REPORT_BUG                = Problembericht &senden
 
 ; --- Toolbar Tooltips
 

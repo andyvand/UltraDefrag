@@ -82,8 +82,14 @@ CONTENTS                  = &Nilalaman
 BEST_PRACTICE             = &Mahusay na Palakad
 FAQ                       = Ma&dalas na Tanong
 CM_LEGEND                 = Cluster mapa &alamat
+DEBUG                     = De&bug
 CHECK_UPDATE              = Suriin para sa mga &update
 ABOUT                     = &Tungkol sa
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

@@ -82,8 +82,14 @@ CONTENTS                  = &Innhold
 BEST_PRACTICE             = &Anbefalinger
 FAQ                       = Spørs&mål og svar
 CM_LEGEND                 = &Cluster kart legende
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Se etter oppdatering
 ABOUT                     = &Om
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

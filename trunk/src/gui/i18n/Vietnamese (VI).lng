@@ -81,8 +81,14 @@ CONTENTS                  = Nội dung trợ giúp
 BEST_PRACTICE             = Hướng dẫn trực tuyến
 FAQ                       = Hỏi đáp
 CM_LEGEND                 = Cụm bản đồ huyền thoại
+DEBUG                     = De&bug
 CHECK_UPDATE              = Kiểm tra cho cập nhật
 ABOUT                     = Giới thiệu
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

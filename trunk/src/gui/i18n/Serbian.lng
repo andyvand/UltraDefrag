@@ -82,8 +82,14 @@ CONTENTS                  = Садржај
 BEST_PRACTICE             = Најбоља пракса
 FAQ                       = Питања
 CM_LEGEND                 = Картова легенда
+DEBUG                     = De&bug
 CHECK_UPDATE              = Проверите да ли постоје исправке
 ABOUT                     = О програму
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

@@ -81,8 +81,14 @@ CONTENTS                  = Indicem &contenta
 BEST_PRACTICE             = &Usus optimus
 FAQ                       = &Saepe interrogavit
 CM_LEGEND                 = &Descriptio tabulae
+DEBUG                     = De&bug
 CHECK_UPDATE              = Inquiro pro &nova
 ABOUT                     = &Informatio
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 
