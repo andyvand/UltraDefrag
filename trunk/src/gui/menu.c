@@ -33,12 +33,6 @@
 
 HMENU hMainMenu = NULL;
 
-WGX_MENU debug_menu[] = {
-    {MF_STRING | MF_ENABLED,IDM_OPEN_LOG,                           NULL, L"Open &log\tAlt+L", -1 },
-    {MF_STRING | MF_ENABLED,IDM_REPORT_BUG,                         NULL, L"Send bug &report", -1 },
-    {0,0,NULL,NULL,0}
-};
-
 WGX_MENU when_done_menu[] = {
     {MF_STRING | MF_ENABLED | MF_CHECKED,IDM_WHEN_DONE_NONE,        NULL, L"&None",       -1 },
     {MF_SEPARATOR,0,NULL,NULL,0},
@@ -106,6 +100,12 @@ WGX_MENU settings_menu[] = {
     {MF_STRING | MF_ENABLED | MF_POPUP, IDM_CFG_GUI,     gui_config_menu,  L"&Graphical interface", -1 },
     {MF_STRING | MF_ENABLED | MF_POPUP, IDM_CFG_BOOT,    boot_config_menu, L"&Boot time scan",      -1 },
     {MF_STRING | MF_ENABLED,            IDM_CFG_REPORTS, NULL,             L"&Reports\tCtrl+R",     -1 },
+    {0,0,NULL,NULL,0}
+};
+
+WGX_MENU debug_menu[] = {
+    {MF_STRING | MF_ENABLED,IDM_OPEN_LOG,                           NULL, L"Open &log\tAlt+L", -1 },
+    {MF_STRING | MF_ENABLED,IDM_REPORT_BUG,                         NULL, L"Send bug &report", -1 },
     {0,0,NULL,NULL,0}
 };
 
