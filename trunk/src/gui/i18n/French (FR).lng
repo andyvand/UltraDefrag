@@ -65,10 +65,10 @@ REPORTS                   = &Rapports
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = Afficher le &journal des modifications
+TRANSLATIONS_REPORT       = Afficher le &rapport de traduction
 TRANSLATIONS_FOLDER       = Dossier des &traductions
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Soumettre la traduction actuelle
 
 ; --- --- Graphical interface submenu
 
@@ -86,14 +86,14 @@ CONTENTS                  = &Contenu
 BEST_PRACTICE             = A&stuces
 FAQ                       = &Foire aux questions
 CM_LEGEND                 = &Légende de la carte des clusters
-DEBUG                     = De&bug
+DEBUG                     = Dé&bogage
 CHECK_UPDATE              = Vérifier les &mises à jour
 ABOUT                     = À &propos
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Afficher le journal des événe&ments
+REPORT_BUG                = Envoyer un &rapport de bogue
 
 ; --- Toolbar Tooltips
 
