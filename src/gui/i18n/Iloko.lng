@@ -81,8 +81,14 @@ CONTENTS                  = &Laon
 BEST_PRACTICE             = &Nalaing a Pagsurotan
 FAQ                       = Masansan a &Saludsod
 CM_LEGEND                 = Cluster map &legend
+DEBUG                     = De&bug
 CHECK_UPDATE              = Check for &update
 ABOUT                     = &Maipapan iti
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

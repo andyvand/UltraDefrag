@@ -83,8 +83,14 @@ CONTENTS                  = &Yardım konuları
 BEST_PRACTICE             = &En doğru kullanım şekli
 FAQ                       = &Sıkça sorulan sorular
 CM_LEGEND                 = &Küme haritası işaretleri
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Güncellemeleri denetle
 ABOUT                     = &Hakkında
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

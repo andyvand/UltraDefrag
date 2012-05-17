@@ -81,8 +81,14 @@ CONTENTS                  = ינהאַלט
 BEST_PRACTICE             = בעסטער פיר
 FAQ                       = שאלות נפוצות
 CM_LEGEND                 = האגדה פון דער קאַרטע
+DEBUG                     = De&bug
 CHECK_UPDATE              = טשעק פֿאַר דערהייַנטיקן
 ABOUT                     = וועגן
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

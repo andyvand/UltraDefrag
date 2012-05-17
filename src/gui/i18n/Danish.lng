@@ -81,8 +81,14 @@ CONTENTS                  = Indhold
 BEST_PRACTICE             = Bedste praksis
 FAQ                       = Ofte stillede spørgsmål
 CM_LEGEND                 = Cluster kort legende
+DEBUG                     = De&bug
 CHECK_UPDATE              = Check for opdatering
 ABOUT                     = Om
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

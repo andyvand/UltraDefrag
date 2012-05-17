@@ -82,8 +82,14 @@ CONTENTS                  = ပါဝင်ရာများ
 BEST_PRACTICE             = အကောင်းဆုံး လုပ်စဉ်
 FAQ                       = မေးပါများ စကားရ
 CM_LEGEND                 = စုပြုံလိုက် ပုံနှင့် ဖြစ်စဉ်
+DEBUG                     = De&bug
 CHECK_UPDATE              = နောက်ဆုံးပေါ် စစ်ဆေးရန်
 ABOUT                     = အကြောင်းအရာ
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

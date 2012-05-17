@@ -82,8 +82,14 @@ CONTENTS                  = Obsah
 BEST_PRACTICE             = Osvědčené postupy
 FAQ                       = Často kladené otázky
 CM_LEGEND                 = Legenda k mapě svazku
+DEBUG                     = De&bug
 CHECK_UPDATE              = Zjistit aktualizace
 ABOUT                     = O aplikaci
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

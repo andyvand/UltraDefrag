@@ -81,8 +81,14 @@ CONTENTS                  = &Съдържание
 BEST_PRACTICE             = &Най-добри практики
 FAQ                       = &ЧЗВ (FAQ)
 CM_LEGEND                 = &Легенда на картата
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Проверка за актуализации
 ABOUT                     = &За програмата
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

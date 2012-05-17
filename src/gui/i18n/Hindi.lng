@@ -81,8 +81,14 @@ CONTENTS                  = विषय-सूची
 BEST_PRACTICE             = सर्वोत्तम कार्य
 FAQ                       = अक्सर पूछे गए सवाल
 CM_LEGEND                 = क्लस्टर नक्शा कथा
+DEBUG                     = De&bug
 CHECK_UPDATE              = &अपडेट के लिए जांचे
 ABOUT                     = संबंध में
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

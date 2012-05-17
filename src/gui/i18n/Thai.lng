@@ -81,8 +81,14 @@ CONTENTS                  = สารบัญ
 BEST_PRACTICE             = ปฏิบัติที่ดีที่สุด
 FAQ                       = คำถามที่พบบ่อย
 CM_LEGEND                 = ตำนานคลัสเตอร์แผนที่
+DEBUG                     = De&bug
 CHECK_UPDATE              = ตรวจสอบสำหรับการปรับปรุง
 ABOUT                     = เี่กี่ยวกับ
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

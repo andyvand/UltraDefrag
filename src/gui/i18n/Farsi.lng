@@ -81,8 +81,14 @@ CONTENTS                  = محتویات
 BEST_PRACTICE             = بهترین تمرین
 FAQ                       = سوالات متداول
 CM_LEGEND                 = خوشه نقشه افسانه ای
+DEBUG                     = De&bug
 CHECK_UPDATE              = چک برای به روز رسانی
 ABOUT                     = درباره
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

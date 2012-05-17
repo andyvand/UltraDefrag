@@ -84,8 +84,14 @@ CONTENTS                  = &Contenidos
 BEST_PRACTICE             = &Procedimientos recomendados
 FAQ                       = Preguntas &frecuentes
 CM_LEGEND                 = &Grupo leyenda del mapa
+DEBUG                     = De&bug
 CHECK_UPDATE              = &Buscar actualizaciones
 ABOUT                     = &Acerca de...
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

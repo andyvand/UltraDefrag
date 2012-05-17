@@ -83,8 +83,14 @@ CONTENTS                  = Sadržaj
 BEST_PRACTICE             = Najbolja praksa
 FAQ                       = Pitanja i odgovori
 CM_LEGEND                 = Klaster karta legenda
+DEBUG                     = De&bug
 CHECK_UPDATE              = Provjerite ažuriranja
 ABOUT                     = O programu
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

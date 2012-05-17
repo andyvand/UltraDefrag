@@ -81,8 +81,14 @@ CONTENTS                  = &Kalamnan
 BEST_PRACTICE             = &Mayap a Palakad
 FAQ                       = &Maralas a Kutang
 CM_LEGEND                 = Cluster map &legend
+DEBUG                     = De&bug
 CHECK_UPDATE              = Check for &update
 ABOUT                     = &Tungkul king
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

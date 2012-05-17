@@ -81,8 +81,14 @@ CONTENTS                  = &Sadržaj
 BEST_PRACTICE             = Najbolja &praksa
 FAQ                       = &Česta pitanja i odgovori
 CM_LEGEND                 = Cluster map &legend
+DEBUG                     = De&bug
 CHECK_UPDATE              = Provjerite ima li nova &verzija
 ABOUT                     = &O programu
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

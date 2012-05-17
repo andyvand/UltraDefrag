@@ -84,8 +84,14 @@ CONTENTS                  = 目次
 BEST_PRACTICE             = 使い方のヒント
 FAQ                       = FAQ
 CM_LEGEND                 = クラスタマップの凡例
+DEBUG                     = De&bug
 CHECK_UPDATE              = アップデートを確認(&U)
 ABOUT                     = UltraDefrag について
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

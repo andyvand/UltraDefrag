@@ -82,8 +82,14 @@ CONTENTS                  = &Isi
 BEST_PRACTICE             = &Praktik terbaik
 FAQ                       = Pertanyaan &yang sering diajukan
 CM_LEGEND                 = Peta Cluster &legenda
+DEBUG                     = De&bug
 CHECK_UPDATE              = Tinjau Pem&baruan
 ABOUT                     = &Tentang
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

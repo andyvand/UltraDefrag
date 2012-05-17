@@ -83,8 +83,14 @@ CONTENTS                  = &Continguts
 BEST_PRACTICE             = &Millors pràctiques
 FAQ                       = &Preguntes més freqüents
 CM_LEGEND                 = Grup &llegenda del mapa
+DEBUG                     = De&bug
 CHECK_UPDATE              = Cercar &actualitzacions
 ABOUT                     = &Quant a
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

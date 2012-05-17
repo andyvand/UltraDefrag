@@ -85,8 +85,14 @@ CONTENTS                  = In&houd
 BEST_PRACTICE             = &Beste aanpak
 FAQ                       = &Veelgestelde vragen
 CM_LEGEND                 = Cluster kaart &legende
+DEBUG                     = De&bug
 CHECK_UPDATE              = Controleer voor &update
 ABOUT                     = &Info
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

@@ -82,8 +82,14 @@ CONTENTS                  = &Saturs
 BEST_PRACTICE             = &Labākās prakses
 FAQ                       = &Biežāk uzdotie jautājumi
 CM_LEGEND                 = &Klasteru karte leģenda
+DEBUG                     = De&bug
 CHECK_UPDATE              = Pārbaudīt &update
 ABOUT                     = &Par programmu
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

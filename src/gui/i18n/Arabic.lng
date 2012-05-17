@@ -82,8 +82,14 @@ CONTENTS                  = &محتويات
 BEST_PRACTICE             = &نصائح
 FAQ                       = &أسئلة مطروحة غالبا
 CM_LEGEND                 = &شرح رموز الخريطة
+DEBUG                     = De&bug
 CHECK_UPDATE              = تحقق من &التحديث
 ABOUT                     = &حول
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 

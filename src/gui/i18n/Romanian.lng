@@ -81,8 +81,14 @@ CONTENTS                  = Continut
 BEST_PRACTICE             = Cea mai buna practica
 FAQ                       = Întrebări frecvente
 CM_LEGEND                 = Cluster hartă legenda
+DEBUG                     = De&bug
 CHECK_UPDATE              = Verificaţi pentru actualizare
 ABOUT                     = Despre
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = Open &log
+REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
 
