@@ -461,6 +461,25 @@
  * @latexonly
  * &
  * @endlatexonly
+ * @par Debug
+ * - The entry <b>Open log (Alt+L)</b> opens the current debug log file in a text editor.
+ * - The entry <b>Send bug report</b> opens the bug tracker web page in the browser,
+ * which allows you to submit a bug report.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
  * @par Check for update
  * This checks for program updates on demand, this is helpful if automatic update checks are disabled.
  *
