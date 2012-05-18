@@ -5,6 +5,7 @@
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
 ; Revised Feb. 02, 2010 by José Luis Farías
+; Revised May  18, 2012 by Gerardo Venier
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -60,10 +61,10 @@ REPORTS                   = &Reportes
 
 ; --- --- Language submenu // Submenu Idioma
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Ver log de cambios
+TRANSLATIONS_REPORT       = Ver reporte de traducciones
 TRANSLATIONS_FOLDER       = &Carpeta de Traducciones
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Enviar traducción actual
 
 ; --- --- Graphical interface submenu // Submenu Interfaz Gráfica
 

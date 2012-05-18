@@ -81,15 +81,15 @@ SCRIPT                    = I&skrip
 CONTENTS                  = &Nilalaman
 BEST_PRACTICE             = &Mahusay na Palakad
 FAQ                       = Ma&dalas na Tanong
-CM_LEGEND                 = Cluster mapa &alamat
-DEBUG                     = De&bug
+CM_LEGEND                 = &Cluster Mapa Alamat
+DEBUG                     = &Debug
 CHECK_UPDATE              = Suriin para sa mga &update
 ABOUT                     = &Tungkol sa
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Buksan ang &Talaan
+REPORT_BUG                = Ipadala ang &Ulat ng Bug
 
 ; --- Toolbar Tooltips
 
@@ -156,7 +156,7 @@ HIDE                      = Taguin
 
 FRAGMENTED_FILES_ON       = nakapirisong file sa
 
-VISIT_HOMEPAGE            = Basahin ang Homepag
+VISIT_HOMEPAGE            = Basahin ang Homepage
 VIEW_REPORT_OPTIONS       = Tanawan ang mga Opsiyon ng Ulat
 POWERED_BY_LUA            = Napapaandar ng Lua
 

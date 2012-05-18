@@ -1,7 +1,7 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Arabic Language Pack.
 ; Copyright (C) 2012 Ahmed Arbaoui.
-; Copyright (C) 2012 Awadh A Al-Ghaamdi
+; Copyright (C) 2012 Awadh A Al-Ghaamdi _ منتديات عميد التعريب
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -61,10 +61,10 @@ REPORTS                   = &تقارير
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &مشاهدة سجل التطورات
+TRANSLATIONS_REPORT       = مشاهدة تقرير &عن الترجمة
 TRANSLATIONS_FOLDER       = &مجلد الترجمات
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = ت&سليم الترجمة الحالية
 
 ; --- --- Graphical interface submenu
 
@@ -82,14 +82,14 @@ CONTENTS                  = &محتويات
 BEST_PRACTICE             = &نصائح
 FAQ                       = &أسئلة مطروحة غالبا
 CM_LEGEND                 = &شرح رموز الخريطة
-DEBUG                     = De&bug
+DEBUG                     = ت&صحيح
 CHECK_UPDATE              = تحقق من &التحديث
 ABOUT                     = &حول
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = &فتح السجل
+REPORT_BUG                = إ&رسال نقرير عن مشكلة
 
 ; --- Toolbar Tooltips
 
