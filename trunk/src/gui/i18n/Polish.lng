@@ -64,10 +64,10 @@ REPORTS                   = Raporty
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Wyświetl listę zmian
+TRANSLATIONS_REPORT       = Zobacz &raport tłumaczeń
 TRANSLATIONS_FOLDER       = Folder z tłumaczeniami
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = Wy&ślij obecne tłumaczenie
 
 ; --- --- Graphical interface submenu
 
@@ -85,14 +85,14 @@ CONTENTS                  = Zawartość
 BEST_PRACTICE             = Najlepsze praktyki
 FAQ                       = Najczęściej zadawane pytania
 CM_LEGEND                 = Objaśnienie mapy dysku
-DEBUG                     = De&bug
+DEBUG                     = De&buguj
 CHECK_UPDATE              = Sprawdź aktualizacje
 ABOUT                     = O UltraDefrag
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Otwórz &log
+REPORT_BUG                = Wyślij &raport błędów
 
 ; --- Toolbar Tooltips
 
