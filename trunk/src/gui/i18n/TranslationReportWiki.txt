@@ -43,7 +43,7 @@
 || [[Latvian.lng|Latvian]]                                               || ||=  82 || ||=  90 || ||>    91 % ||
 || [[Macedonian.lng|Macedonian]]                                         || ||=  84 || ||=  90 || ||>    93 % ||
 || [[Norwegian.lng|Norwegian]]                                           || ||=  82 || ||=  90 || ||>    91 % ||
-|| [[Polish.lng|Polish]]                                                 || ||=  89 || ||=  90 || ||>    98 % ||
+|| [[Polish.lng|Polish]]                                                 || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Portuguese (BR).lng|Portuguese (BR)]]                               || ||=  81 || ||=  90 || ||>    90 % ||
 || [[Portuguese.lng|Portuguese]]                                         || ||=  83 || ||=  90 || ||>    92 % ||
 || [[Romanian.lng|Romanian]]                                             || ||=  81 || ||=  90 || ||>    90 % ||
@@ -73,9 +73,9 @@
 || [[Greek.lng|Greek]]                                                   || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Georgian.lng|Georgian]]                                             || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Turkish.lng|Turkish]]                                               || ||=  90 || ||=  90 || ||>   100 % ||
-|| [[German.lng|German]]                                                 || ||=  89 || ||=  90 || ||>    98 % ||
+|| [[Polish.lng|Polish]]                                                 || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Czech.lng|Czech]]                                                   || ||=  89 || ||=  90 || ||>    98 % ||
-|| [[Polish.lng|Polish]]                                                 || ||=  89 || ||=  90 || ||>    98 % ||
+|| [[German.lng|German]]                                                 || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Iloko.lng|Iloko]]                                                   || ||=  88 || ||=  90 || ||>    97 % ||
 || [[French (FR).lng|French (FR)]]                                       || ||=  86 || ||=  90 || ||>    95 % ||
 || [[Filipino (Tagalog).lng|Filipino (Tagalog)]]                         || ||=  85 || ||=  90 || ||>    94 % ||

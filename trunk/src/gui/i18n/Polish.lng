@@ -162,7 +162,7 @@ FRAGMENTED_FILES_ON       = Pofragmentowane pliki na
 
 VISIT_HOMEPAGE            = Odwiedź naszą witrynę
 VIEW_REPORT_OPTIONS       = Pokaż opcje raportu
-POWERED_BY_LUA            = Powered by Lua
+POWERED_BY_LUA            = Wykorzystuje Lua
 
 FRAGMENTS                 = fragmentów
 SIZE                      = rozmiar
