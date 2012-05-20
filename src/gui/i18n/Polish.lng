@@ -65,10 +65,10 @@ REPORTS                   = Raporty
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &Wyświetl listę zmian
-TRANSLATIONS_REPORT       = Zobacz &raport tłumaczeń
-TRANSLATIONS_FOLDER       = Folder z tłumaczeniami
-TRANSLATIONS_SUBMIT       = Wy&ślij obecne tłumaczenie
+TRANSLATIONS_CHANGE_LOG   = Pokaż listę zmian
+TRANSLATIONS_REPORT       = Pokaż &raport tłumaczeń
+TRANSLATIONS_FOLDER       = Katalog z &tłumaczeniami
+TRANSLATIONS_SUBMIT       = Wy&ślij aktualne tłumaczenie
 
 ; --- --- Graphical interface submenu
 
@@ -92,8 +92,8 @@ ABOUT                     = O UltraDefrag
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Otwórz &log
-REPORT_BUG                = Wyślij &raport błędów
+OPEN_LOG                  = Otwórz raport
+REPORT_BUG                = Wyślij &raport o błędach
 
 ; --- Toolbar Tooltips
 
