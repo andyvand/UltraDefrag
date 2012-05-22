@@ -93,8 +93,8 @@ ABOUT                     = &Info
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Apri &log
+REPORT_BUG                = Invia &rapporto errore
 
 ; --- Toolbar Tooltips
 
