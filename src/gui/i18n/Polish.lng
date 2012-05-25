@@ -60,7 +60,7 @@ SHOW_REPORT               = Pokaż raport
 
 LANGUAGE                  = Język
 GRAPHICAL_INTERFACE       = Interfejs graficzny
-BOOT_TIME_SCAN            = Skanowanie podczas uruchamiania systemu
+BOOT_TIME_SCAN            = Skanowanie przy uruchomieniu
 REPORTS                   = Raporty
 
 ; --- --- Language submenu
@@ -78,7 +78,7 @@ OPTIONS                   = Opcje
 ; --- --- Boot time scan submenu
 
 ENABLE                    = Aktywuj
-SCRIPT                    = Skrypt wykonywany podczas uruchamiania systemu
+SCRIPT                    = Skrypt
 
 ; --- Help Menu
 
@@ -162,7 +162,7 @@ FRAGMENTED_FILES_ON       = Pofragmentowane pliki na
 
 VISIT_HOMEPAGE            = Odwiedź naszą witrynę
 VIEW_REPORT_OPTIONS       = Pokaż opcje raportu
-POWERED_BY_LUA            = Wykorzystuje Lua
+POWERED_BY_LUA            = Stworzono wykorzystując Lua
 
 FRAGMENTS                 = fragmentów
 SIZE                      = rozmiar
