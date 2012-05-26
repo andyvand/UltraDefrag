@@ -16,14 +16,14 @@
 ; Use an ampersand (&) before a letter to make it a keyboard accelerator
 
 
-; Main Menu // Menu Principal
+; Main Menu // Menú Principal
 
 ACTION                    = &Comandos
 REPORT                    = &Reporte
 SETTINGS                  = &Opciones
 HELP                      = &Ayuda
 
-; --- Action Menu // Menu de Acciones
+; --- Action Menu // Menú de Acciones
 
 ANALYSE                   = &Analizar
 DEFRAGMENT                = &Desfragmentar
@@ -38,7 +38,7 @@ REPAIR_DRIVES             = Repair drives
 WHEN_DONE                 = Al &Terminar
 EXIT                      = Salir
 
-; --- --- When done submenu // Submenu 'al terminar'
+; --- --- When done submenu // Submenú 'al terminar'
 
 WHEN_DONE_NONE            = &Nada
 WHEN_DONE_EXIT            = &Salir
@@ -61,7 +61,7 @@ REPORTS                   = &Reportes
 
 ; --- --- Language submenu // Submenu Idioma
 
-TRANSLATIONS_CHANGE_LOG   = &Ver log de cambios
+TRANSLATIONS_CHANGE_LOG   = &Ver registro de cambios
 TRANSLATIONS_REPORT       = Ver reporte de traducciones
 TRANSLATIONS_FOLDER       = &Carpeta de Traducciones
 TRANSLATIONS_SUBMIT       = &Enviar traducción actual
@@ -89,7 +89,7 @@ ABOUT                     = &Acerca de...
 ; --- --- Debug submenu
 
 OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+REPORT_BUG                = Enviar &reporte de errores
 
 ; --- Toolbar Tooltips // Descripciones Emergentes en Barra de Herramientas
 
