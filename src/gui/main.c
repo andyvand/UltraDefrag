@@ -1337,13 +1337,8 @@ void stop_web_statistics()
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
     int result;
-    OSVERSIONINFO osvi;
     INITCOMMONCONTROLSEX icce;
-    BOOL bIsWindows2korLater;
     
-    icce.dwSize = sizeof(INITCOMMONCONTROLSEX);
-    icce.dwICC = ICC_WIN95_CLASSES | ICC_STANDARD_CLASSES;
-
     WgxSetDbgPrintHandler(udefrag_dbg_print);
     hInstance = GetModuleHandle(NULL);
     
@@ -1372,26 +1367,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     start_web_statistics();
     CheckForTheNewVersion();
 
-    /*
-    * This call needs on dmitriar's pc (on xp) no more than 550 cpu tacts,
-    * but InitCommonControlsEx() needs about 90000 tacts.
-    * Because the first function is just a stub on xp.
-    * InitCommonControls does nothing on WinXP and above,
-    * see http://msdn.microsoft.com/en-us/library/windows/desktop/bb775695%28v=vs.85%29.aspx
-    * So we need to use InitCommonControlsEx instead.
-    */
-    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
-    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-    GetVersionEx(&osvi);
-
-    bIsWindows2korLater = (osvi.dwMajorVersion >= 5);
-
-    if(bIsWindows2korLater){
-        (void)InitCommonControlsEx(&icce);
-    } else {
-        InitCommonControls();
-    }
+    /* InitCommonControlsEx is always available on XP and more recent Windows editions */
+    icce.dwSize = sizeof(INITCOMMONCONTROLSEX);
+    icce.dwICC = ICC_WIN95_CLASSES | ICC_STANDARD_CLASSES;
+    InitCommonControlsEx(&icce);
     
     init_jobs();
     
