@@ -63,10 +63,10 @@ REPORTS                   = 報告
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = 查看更改日誌
+TRANSLATIONS_REPORT       = 查看交易及報告
 TRANSLATIONS_FOLDER       = 翻譯資料夾
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = 提交當前翻譯
 
 ; --- --- Graphical interface submenu
 
@@ -90,8 +90,8 @@ ABOUT                     = 關於
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = 打開及登錄
+REPORT_BUG                = 發送錯誤報告
 
 ; --- Toolbar Tooltips
 
