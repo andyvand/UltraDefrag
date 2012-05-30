@@ -29,7 +29,7 @@ DEFRAGMENT                = Defragmenter
 QUICK_OPTIMIZE            = Hurtig optimering
 FULL_OPTIMIZE             = Fuld optimering
 OPTIMIZE_MFT              = Optimer MFT
-STOP                      = Stop
+STOP                      = Stands
 REPEAT_ACTION             = Gentag handling
 SKIP_REMOVABLE_MEDIA      = Kun faste drev
 RESCAN_DRIVES             = Opdater drevlisten
@@ -60,10 +60,10 @@ REPORTS                   = Rapporter
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = Se ændre log
+TRANSLATIONS_REPORT       = Vis oversættelse &rapport
 TRANSLATIONS_FOLDER       = Oversættelsesmappe
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = Indsend nuværende oversættelse
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = Indhold
 BEST_PRACTICE             = Bedste praksis
 FAQ                       = Ofte stillede spørgsmål
 CM_LEGEND                 = Cluster kort legende
-DEBUG                     = De&bug
-CHECK_UPDATE              = Check for opdatering
+DEBUG                     = Fejlsøg
+CHECK_UPDATE              = Kontroller for opdatering
 ABOUT                     = Om
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Åbn &log
+REPORT_BUG                = Send fejl&rapport
 
 ; --- Toolbar Tooltips
 
