@@ -6,8 +6,9 @@
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
 ; Revised Mar. 18, 2011 by Joseph S. Maza
-; Revised Aug.  3, 2011 by Francisco Ortega Olivos
+; Revised Aug. 03, 2011 by Francisco Ortega Olivos
 ; Revised May  06, 2012 by Javier Valdivieso
+; Revised June 06, 2012 by Daniel Rodríguez
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -63,10 +64,10 @@ REPORTS                   = Infor&mes
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Ver lista de cambios
+TRANSLATIONS_REPORT       = Ver &informes de tranducción
 TRANSLATIONS_FOLDER       = &Carpeta de traducciones
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Enviar traducción actual
 
 ; --- --- Graphical interface submenu
 
@@ -90,8 +91,8 @@ ABOUT                     = &Acerca de...
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Abrir &log
+REPORT_BUG                = Enviar &informe de fallo
 
 ; --- Toolbar Tooltips
 
