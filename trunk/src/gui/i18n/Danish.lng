@@ -157,7 +157,7 @@ FRAGMENTED_FILES_ON       = Fragmenterede filer på
 
 VISIT_HOMEPAGE            = Besøg vores hjemmeside
 VIEW_REPORT_OPTIONS       = Se rapport muligheder
-POWERED_BY_LUA            = Powered by Lua
+POWERED_BY_LUA            = Understøttet af Lua
 
 FRAGMENTS                 = fragmenter
 SIZE                      = størrelse

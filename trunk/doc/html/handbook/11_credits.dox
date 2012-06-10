@@ -81,6 +81,7 @@
  * <tr><td>• Greek                        </td><td>-</td><td> Konstantinos Kapoukranidis</td></tr>
  * <tr><td>• Hebrew                       </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Hindi                        </td><td>-</td><td> Gaurav Chatterjee</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Utkarsh Ray</td></tr>
  * <tr><td>• Hungarian                    </td><td>-</td><td> Nagy Zsolt</td></tr>
  * <tr><td>                               </td><td>-</td><td> Áron Hegedüs</td></tr>
  * <tr><td>                               </td><td>-</td><td> Gellért Lukács</td></tr>
@@ -196,6 +197,7 @@
  * • Greek                         & - & Konstantinos Kapoukranidis \\
  * • Hebrew                        & - & Dmitri Arkhangelski \\
  * • Hindi                         & - & Gaurav Chatterjee \\
+ *                                 & - & Utkarsh Ray \\
  * • Hungarian                     & - & Nagy Zsolt \\
  *                                 & - & Áron Hegedüs \\
  *                                 & - & Gellért Lukács \\
@@ -523,6 +525,7 @@
  * - Benny Stütz
  * - Connection
  * - Dandy Cheung
+ * - Daniel Rodríguez
  * - Dionisios Klonaris
  * - Erwin Dokter
  * - Fabrizio Marana
@@ -547,10 +550,12 @@
  * - Patrick Palm
  * - Reynald Didier
  * - Robert Jr
+ * - Rodrigo Lopes Paitach
  * - Seph
  * - SMHA
  * - Timo VJ Lähde
  * - translucens
+ * - Zirikkanen
  *
  * Special thanks for extensive testing (in alphabetical order):
  *
