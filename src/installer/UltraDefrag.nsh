@@ -816,6 +816,9 @@ Var AtLeastXP
     RMDir /r "$INSTDIR\portable_${ULTRADFGARCH}_package"
     RMDir /r "$INSTDIR\i18n\gui"
     RMDir /r "$INSTDIR\i18n\gui-config"
+    
+    Delete "$INSTDIR\i18n\French (FR).lng"
+    Delete "$INSTDIR\i18n\Vietnamese (VI).lng"
 
     Delete "$INSTDIR\scripts\udctxhandler.lua"
     Delete "$INSTDIR\dfrg.exe"
