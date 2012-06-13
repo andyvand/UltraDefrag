@@ -45,7 +45,8 @@
 
       Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian, Javanese,
       Indonesian (Bahasa Indonesia), Polish, Korean, Filipino (Tagalog),
-      Iloko, Chinese (Simplified), Dutch, Portuguese (BR), Danish, Hindi
+      Iloko, Chinese (Simplified), Dutch, Portuguese (BR), Danish, Hindi,
+      Bulgarian
 
     - the following translations were renamed:
 
