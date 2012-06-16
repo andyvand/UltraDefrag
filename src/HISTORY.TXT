@@ -41,6 +41,7 @@
     - added "Debug" item to the help menu
     - added "View change log", "View translation report" and
       "Submit current translation" items to language menu
+    - result of the previous operation stays visible for the boot time interface
     - the following translations were updated:
 
       Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian, Javanese,
