@@ -60,10 +60,10 @@ REPORTS                   = Skýrslur
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
-TRANSLATIONS_FOLDER       = Þýðingar möppu
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_CHANGE_LOG   = &Skoða breyta þig inn
+TRANSLATIONS_REPORT       = Skoða &þýðingu skýrslu
+TRANSLATIONS_FOLDER       = &Þýðingar möppu
+TRANSLATIONS_SUBMIT       = Senda &núverandi þýðingu
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = Efnisyfirlit
 BEST_PRACTICE             = Best practice
 FAQ                       = Spurt og svarað
 CM_LEGEND                 = Cluster kort þjóðsaga
-DEBUG                     = De&bug
+DEBUG                     = Kemba
 CHECK_UPDATE              = Athugaðu að uppfærslu
 ABOUT                     = Um
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Opnaðu þig
+REPORT_BUG                = Senda villuskýrslu
 
 ; --- Toolbar Tooltips
 

@@ -63,7 +63,7 @@ REPORTS                   = מעלדונג
 TRANSLATIONS_CHANGE_LOG   = &View change log
 TRANSLATIONS_REPORT       = View translation &report
 TRANSLATIONS_FOLDER       = טעקע פון איבערזעצונג
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = פאָרלייגן קראַנט איבערזעצונג
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = ינהאַלט
 BEST_PRACTICE             = בעסטער פיר
 FAQ                       = שאלות נפוצות
 CM_LEGEND                 = האגדה פון דער קאַרטע
-DEBUG                     = De&bug
+DEBUG                     = דעבוג
 CHECK_UPDATE              = טשעק פֿאַר דערהייַנטיקן
 ABOUT                     = וועגן
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = עפענען קלאָץ
+REPORT_BUG                = שיקן זשוק מעלדונג
 
 ; --- Toolbar Tooltips
 

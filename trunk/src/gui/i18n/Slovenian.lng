@@ -61,10 +61,10 @@ REPORTS                   = Poročila
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = Poglej spremeniti dnevnik
+TRANSLATIONS_REPORT       = Poglej prevod poročila
 TRANSLATIONS_FOLDER       = Ma&pa prevodov
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = Pošlji trenutno prevod
 
 ; --- --- Graphical interface submenu
 
@@ -88,8 +88,8 @@ ABOUT                     = O programu
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Odprite &dnevnik
+REPORT_BUG                = Pošlji poročilo o hrošču
 
 ; --- Toolbar Tooltips
 

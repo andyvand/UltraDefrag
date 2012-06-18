@@ -60,8 +60,8 @@ REPORTS                   = &Famae
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Considerabit mutare stipes
+TRANSLATIONS_REPORT       = Considerabit translationem &fama
 TRANSLATIONS_FOLDER       = Liber &translationis
 TRANSLATIONS_SUBMIT       = &Submit current translation
 
@@ -87,7 +87,7 @@ ABOUT                     = &Informatio
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
+OPEN_LOG                  = &Aperire stipes
 REPORT_BUG                = Send bug &report
 
 ; --- Toolbar Tooltips
