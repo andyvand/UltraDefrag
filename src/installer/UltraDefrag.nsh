@@ -819,6 +819,7 @@ Var AtLeastXP
     
     Delete "$INSTDIR\i18n\French (FR).lng"
     Delete "$INSTDIR\i18n\Vietnamese (VI).lng"
+    Delete "$INSTDIR\i18n\Bosanski.lng"
 
     Delete "$INSTDIR\scripts\udctxhandler.lua"
     Delete "$INSTDIR\dfrg.exe"
