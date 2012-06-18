@@ -61,10 +61,10 @@ REPORTS                   = &Laporan
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Lihat perubahan log
+TRANSLATIONS_REPORT       = Lihat laporan &penerjemahan
 TRANSLATIONS_FOLDER       = &Berkas Terjemahan
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Kirim terjemahan saat ini
 
 ; --- --- Graphical interface submenu
 
@@ -88,8 +88,8 @@ ABOUT                     = &Tentang
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Buka &log
+REPORT_BUG                = &Kirim laporan bug
 
 ; --- Toolbar Tooltips
 

@@ -62,10 +62,10 @@ REPORTS                   = Izvješća
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = Pregled promijeniti zapisnik
+TRANSLATIONS_REPORT       = Pregled prijevod izvješće
 TRANSLATIONS_FOLDER       = Mapa s prijevodima
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = Slanje trenutni prijevod
 
 ; --- --- Graphical interface submenu
 
@@ -89,8 +89,8 @@ ABOUT                     = O programu
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Otvorite zapisnik
+REPORT_BUG                = Pošalji bug izvještaj
 
 ; --- Toolbar Tooltips
 

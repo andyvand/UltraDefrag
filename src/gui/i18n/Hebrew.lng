@@ -60,10 +60,10 @@ REPORTS                   = דוחות
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = צפה לשנות התחבר
+TRANSLATIONS_REPORT       = הצג את דו"ח תרגום
 TRANSLATIONS_FOLDER       = תרגומים תיקייה
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = שלח התרגום הנוכחי
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = תוכן
 BEST_PRACTICE             = הכי טוב להתאמן
 FAQ                       = שאלות נפוצות
 CM_LEGEND                 = האגדה על המפה
-DEBUG                     = De&bug
+DEBUG                     = לנפות
 CHECK_UPDATE              = בדוק אם יש עדכון
 ABOUT                     = אודות התוכנית
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = לפתוח יומן
+REPORT_BUG                = שלח דווח על באג
 
 ; --- Toolbar Tooltips
 

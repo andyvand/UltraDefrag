@@ -60,10 +60,10 @@ REPORTS                   = &Извештаи
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = Прикажи ги промените &најавите
+TRANSLATIONS_REPORT       = Прикажи ги превод &извештај
 TRANSLATIONS_FOLDER       = &Папка со преводи
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Достави сегашната превод
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = &Содржина
 BEST_PRACTICE             = &Најдобри практики
 FAQ                       = &ЧПП (FAQ)
 CM_LEGEND                 = &Легенда на картата
-DEBUG                     = De&bug
+DEBUG                     = &Дебагирање
 CHECK_UPDATE              = &Провери за надградби
 ABOUT                     = &За програмата
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Отвори &најавите
+REPORT_BUG                = Испрати извештај за &бубачки
 
 ; --- Toolbar Tooltips
 

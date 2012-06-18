@@ -61,10 +61,10 @@ REPORTS                   = &Ulat
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Tingnan baguhin log
+TRANSLATIONS_REPORT       = Tingnan ang pagsasalin &ulat
 TRANSLATIONS_FOLDER       = &Pagsasalin
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Isumite ang kasalukuyang pagsasalin
 
 ; --- --- Graphical interface submenu
 

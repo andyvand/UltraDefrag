@@ -62,10 +62,10 @@ REPORTS                   = Infor&mes
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Veure el canvi de registre
+TRANSLATIONS_REPORT       = Veure &informe de la traducció
 TRANSLATIONS_FOLDER       = &Carpeta de traduccions
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Enviar traducció actual
 
 ; --- --- Graphical interface submenu
 
@@ -83,14 +83,14 @@ CONTENTS                  = &Continguts
 BEST_PRACTICE             = &Millors pràctiques
 FAQ                       = &Preguntes més freqüents
 CM_LEGEND                 = Grup &llegenda del mapa
-DEBUG                     = De&bug
+DEBUG                     = &Depurar
 CHECK_UPDATE              = Cercar &actualitzacions
 ABOUT                     = &Quant a
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Obrir &registre
+REPORT_BUG                = &Envieu l'informe d'error
 
 ; --- Toolbar Tooltips
 

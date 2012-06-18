@@ -60,10 +60,10 @@ REPORTS                   = Raportid
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Vaata muuta log
+TRANSLATIONS_REPORT       = Vaata tõlke &aruanne
 TRANSLATIONS_FOLDER       = &Tõlked kausta
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Esitama praegune tõlge
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = Sisu
 BEST_PRACTICE             = Parimate tavade
 FAQ                       = Korduma kippuvad küsimused
 CM_LEGEND                 = Cluster kaart legend
-DEBUG                     = De&bug
+DEBUG                     = Siluda
 CHECK_UPDATE              = Vaata uuendust
 ABOUT                     = Info
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Avage &log
+REPORT_BUG                = &Saada vearaport
 
 ; --- Toolbar Tooltips
 

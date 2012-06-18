@@ -60,10 +60,10 @@ REPORTS                   = &Informes
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Ver cambiar rexistro
+TRANSLATIONS_REPORT       = Ver informe &tradución
 TRANSLATIONS_FOLDER       = &Cartafol de traducións
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Enviar tradución corrente
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = &Contidos
 BEST_PRACTICE             = Óptimos &resultados
 FAQ                       = &Preguntas máis frecuentes
 CM_LEGEND                 = Cluster mapa &lenda
-DEBUG                     = De&bug
+DEBUG                     = &Depurar
 CHECK_UPDATE              = Asegúrese de que hai actuali&zación
 ABOUT                     = &Acerca de
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = &Abre rexistro
+REPORT_BUG                = &Enviar informe de erro
 
 ; --- Toolbar Tooltips
 

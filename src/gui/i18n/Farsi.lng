@@ -60,10 +60,10 @@ REPORTS                   = گزارشات
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = تغییر ورود به سیستم
+TRANSLATIONS_REPORT       = گزارش ترجمه
 TRANSLATIONS_FOLDER       = پوشه ترجمه
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = ارسال ترجمه فعلی
 
 ; --- --- Graphical interface submenu
 
@@ -81,14 +81,14 @@ CONTENTS                  = محتویات
 BEST_PRACTICE             = بهترین تمرین
 FAQ                       = سوالات متداول
 CM_LEGEND                 = خوشه نقشه افسانه ای
-DEBUG                     = De&bug
+DEBUG                     = اشکال زدایی
 CHECK_UPDATE              = چک برای به روز رسانی
 ABOUT                     = درباره
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = باز کردن ورود به سیستم
+REPORT_BUG                = ارسال گزارش اشکال
 
 ; --- Toolbar Tooltips
 

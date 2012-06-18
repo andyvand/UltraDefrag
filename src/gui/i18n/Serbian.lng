@@ -61,10 +61,10 @@ REPORTS                   = Извештаји
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = Погледај променити дневник
+TRANSLATIONS_REPORT       = Погледајте извештај за превођење
 TRANSLATIONS_FOLDER       = Преводи директоријум
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = Пошаљи тренутни превод
 
 ; --- --- Graphical interface submenu
 
@@ -82,14 +82,14 @@ CONTENTS                  = Садржај
 BEST_PRACTICE             = Најбоља пракса
 FAQ                       = Питања
 CM_LEGEND                 = Картова легенда
-DEBUG                     = De&bug
+DEBUG                     = Отклонити неисправност
 CHECK_UPDATE              = Проверите да ли постоје исправке
 ABOUT                     = О програму
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Отвори дневник
+REPORT_BUG                = Пошаљи извештај о грешци
 
 ; --- Toolbar Tooltips
 

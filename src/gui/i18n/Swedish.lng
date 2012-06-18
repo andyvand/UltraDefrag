@@ -62,10 +62,10 @@ REPORTS                   = Rapporter
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Visa Ändra logg
+TRANSLATIONS_REPORT       = Visa översättning &rapport
 TRANSLATIONS_FOLDER       = Översättningsmapp
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Lämna ström översättning
 
 ; --- --- Graphical interface submenu
 
@@ -89,8 +89,8 @@ ABOUT                     = Om
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Öppna &logg
+REPORT_BUG                = Skicka &felrapport
 
 ; --- Toolbar Tooltips
 
