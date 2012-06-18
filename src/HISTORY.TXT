@@ -1,40 +1,5 @@
 ﻿HISTORY
 
-  Version 6.0.0 2012-01-
-  ------------------------------------------------------------------------------
-    beta1:
-    - all the disk processing algorithms were reimplemented
-      to reach better efficiency and shorter processing times
-    - FAT optimization was implemented
-    - ability to filter out files by size of their fragments was added
-      (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
-      environment variable in command line tool and boot time interface)
-    - ability to tune the disk optimization by UD_OPTIMIZER_FILE_SIZE_THRESHOLD
-      environment variable (optimizer_file_size_threshold GUI option) was added
-    - ability to suspend/resume the running job was added to GUI
-    - ability to minimize the program to the taskbar notification
-      area (system tray) was added; it can be turned on/off by
-      minimize_to_system_tray GUI option
-    - MFT optimization was forced to do nothing silently on non-NTFS disks
-    - Windows NT 4.0 and Windows 2000 support was dropped because of
-      weakness of the Windows Defrag API on these systems;
-      for these people who still use old Windows editions
-      we recommend to use the 5.0.x series of UltraDefrag
-    - low color depth (8 bits per pixel) support was dropped for GUI toolbar
-    - quite useless cyan color removed from the cluster map
-    - icons were redesigned to reach better appearance
-      on Windows Vista and above
-    - high DPI screens support was improved
-    - Internals: flags field removed from winx_file_disposition structure
-    - many zenwinx prototypes changed by replacing short keyword by wchar_t
-    - useless fat32_xxx fields removed from winx_volume_information structure
-    - Windows Server 2003 DDK needs to be patched in order to compile
-      the program; look at rsc/compilation.dox for details
-    - device_capacity field added to winx_volume_information structure
-    - WgxShowWindow and WgxHideWindow definitions added to wgx.h file
-    - WgxSetProcessPriority routine added to wgx library
-
-
   Version 5.0.6  2012-06-
   ------------------------------------------------------------------------------
     - GUI debugging output was forced to be saved in the log file
@@ -47,7 +12,7 @@
       Arabic, Portuguese, Italian, Spanish (ES), Hebrew, Serbian, Javanese,
       Indonesian (Bahasa Indonesia), Polish, Korean, Filipino (Tagalog),
       Iloko, Chinese (Simplified), Dutch, Portuguese (BR), Danish, Hindi,
-      Bulgarian
+      Bulgarian, Russian
 
     - the following translations were renamed:
 
