@@ -114,6 +114,9 @@ Function LangShow
     ${If} $LanguagePack == "Vietnamese (VI)"
         StrCpy $LanguagePack "Vietnamese"
     ${EndIf}
+    ${If} $LanguagePack == "Bosanski"
+        StrCpy $LanguagePack "Bosnian"
+    ${EndIf}
 
     WriteINIStr "$PLUGINSDIR\lang.ini" "Field 2" "State" $LanguagePack
     FlushINI "$PLUGINSDIR\lang.ini"
