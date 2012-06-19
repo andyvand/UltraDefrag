@@ -61,10 +61,10 @@ REPORTS                   = Poročila
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = Poglej spremeniti dnevnik
+TRANSLATIONS_CHANGE_LOG   = Poglej dnevnik sprememb
 TRANSLATIONS_REPORT       = Poglej prevod poročila
 TRANSLATIONS_FOLDER       = Ma&pa prevodov
-TRANSLATIONS_SUBMIT       = Pošlji trenutno prevod
+TRANSLATIONS_SUBMIT       = Pošlji trenutni prevod
 
 ; --- --- Graphical interface submenu
 
@@ -88,7 +88,7 @@ ABOUT                     = O programu
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Odprite &dnevnik
+OPEN_LOG                  = Odpri &dnevnik
 REPORT_BUG                = Pošlji poročilo o hrošču
 
 ; --- Toolbar Tooltips
@@ -120,7 +120,7 @@ COMPRESSED                = skompresirano
 
 ; About window.
 
-ABOUT_WIN_TITLE           = O Programu Ultra Defragmenter
+ABOUT_WIN_TITLE           = O programu Ultra Defragmenter
 CREDITS                   = Zasluge
 LICENSE                   = Licenca
 
