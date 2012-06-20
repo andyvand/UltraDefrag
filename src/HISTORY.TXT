@@ -35,7 +35,7 @@
     - WgxSetProcessPriority routine added to wgx library
 
 
-  Version 5.0.6  2012-06-
+  Version 5.0.6  2012-06-20
   ------------------------------------------------------------------------------
     - GUI debugging output was forced to be saved in the log file
     - added "Debug" item to the help menu
