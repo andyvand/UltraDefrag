@@ -464,7 +464,7 @@ static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
     }
 #ifndef _WIN64
     if(size > 0xFFFFFFFF){
-        winx_printf("\n%ws: files larger than ~4Gb aren\'t supported\n\n",argv[0]);
+        winx_printf("\n%ws: files larger than ~4GB aren\'t supported\n\n",argv[0]);
         winx_fclose(f);
         return (-1);
     }

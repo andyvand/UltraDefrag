@@ -681,7 +681,7 @@ static void cut_off_group_of_files(udefrag_job_parameters *jp,
     winx_file_info *file;
     ULONGLONG magic_length;
     
-    /* group should be larger than 20 Mb or should contain at least 10 files */
+    /* group should be larger than 20 MB or should contain at least 10 files */
     magic_length = min(OPTIMIZER_MAGIC_CONSTANT,jp->udo.optimizer_size_limit);
     if(length * jp->v_info.bytes_per_cluster < magic_length){
         if(n < OPTIMIZER_MAGIC_CONSTANT_N)

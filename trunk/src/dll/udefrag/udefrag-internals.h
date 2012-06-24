@@ -188,12 +188,12 @@ struct performance_counters {
     ULONGLONG temp_space_releasing_time;  /* time needed to release space temporarily allocated by system */
 };
 
-#define TINY_FILE_SIZE            0 * 1024  /* < 10 kb */
-#define SMALL_FILE_SIZE          10 * 1024  /* 10 - 100 kb */
-#define AVERAGE_FILE_SIZE       100 * 1024  /* 100 kb - 1 Mb */
-#define BIG_FILE_SIZE          1024 * 1024  /* 1 - 16 Mb */
-#define HUGE_FILE_SIZE    16 * 1024 * 1024  /* 16 - 128 Mb */
-#define GIANT_FILE_SIZE  128 * 1024 * 1024  /* > 128 Mb */
+#define TINY_FILE_SIZE            0 * 1024  /* < 10 KB */
+#define SMALL_FILE_SIZE          10 * 1024  /* 10 - 100 KB */
+#define AVERAGE_FILE_SIZE       100 * 1024  /* 100 KB - 1 MB */
+#define BIG_FILE_SIZE          1024 * 1024  /* 1 - 16 MB */
+#define HUGE_FILE_SIZE    16 * 1024 * 1024  /* 16 - 128 MB */
+#define GIANT_FILE_SIZE  128 * 1024 * 1024  /* > 128 MB */
 
 struct file_counters {
     unsigned long tiny_files;

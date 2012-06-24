@@ -40,7 +40,7 @@
 * For example, let's assume that hard disk
 * has 1 billion clusters. We need at least
 * 4 bits to save color of each cluster.
-* Therefore, we need to allocate 500 Mb
+* Therefore, we need to allocate 500 MB
 * of memory, which isn't acceptable.
 *
 * Due to this reason, we're splitting
