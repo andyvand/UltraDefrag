@@ -109,31 +109,7 @@ rem Example:  call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook
     :compilation_succeeded
     pushd doxy-doc\latex_%2
 
-    echo.
-    pdflatex  refman
-    echo ----
-    echo.
-    makeindex refman.tex
-    echo ----
-    echo.
-    pdflatex  refman
-
-    setlocal enabledelayedexpansion
-    set count=5
-    :repeat
-        set content=X
-        for /F "tokens=*" %%T in ( 'findstr /C:"Rerun LaTeX" refman.log' ) do set content="%%~T"
-        if !content! == X for /F "tokens=*" %%T in ( 'findstr /C:"Rerun to get cross-references right" refman.log' ) do set content="%%~T"
-        if !content! == X goto :skip
-        set /a count-=1
-        if !count! EQU 0 goto :skip
-
-        echo ----
-        echo.
-        pdflatex  refman
-    goto :repeat
-    :skip
-    endlocal
+    call make.bat
 
     if "%3" neq "" copy /Y refman.pdf "%~dp0\release\%3_%ULTRADFGVER%_%2.pdf" || goto compilation_failed
 
