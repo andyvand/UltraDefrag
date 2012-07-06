@@ -33,7 +33,7 @@ STOP                      = &Isardeng
 REPEAT_ACTION             = Ulet&en
 SKIP_REMOVABLE_MEDIA      = Ikulasay ti &Media a Maikkat
 RESCAN_DRIVES             = Suki&maten ti Drive
-REPAIR_DRIVES             = Repair drives
+REPAIR_DRIVES             = Tarimnen ti Drive
 WHEN_DONE                 = &Apagleppasna...
 EXIT                      = &Ressaten
 
@@ -100,7 +100,7 @@ VOLUME                    = Tomo
 STATUS                    = Kasasaad
 TOTAL                     = Laon
 FREE                      = Nawaya
-PERCENT                   = % ti Nawaya
+PERCENT                   = Nawaya a %
 
 ; Status messages
 
