@@ -42,7 +42,7 @@
       Current scripts will still function, since we ignore character case.
     - the following translations were updated:
 
-      Vietnamese, Polish, Iloko, Portuguese (BR)
+      Vietnamese, Polish, Iloko, Portuguese (BR), Norwegian
 
     - 
 
