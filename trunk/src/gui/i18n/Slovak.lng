@@ -61,10 +61,10 @@ REPORTS                   = Reporty
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = Zobraziť zmeny protokolu
-TRANSLATIONS_REPORT       = Zobraziť preklad správy
+TRANSLATIONS_CHANGE_LOG   = Zobraziť zoznam zmien
+TRANSLATIONS_REPORT       = Zobraziť report prekladu
 TRANSLATIONS_FOLDER       = Priečinok s jazykovými prekladmi
-TRANSLATIONS_SUBMIT       = Odoslať aktuálne preklad
+TRANSLATIONS_SUBMIT       = Odoslať váš preklad
 
 ; --- --- Graphical interface submenu
 
@@ -81,7 +81,7 @@ SCRIPT                    = Skript
 CONTENTS                  = Obsah
 BEST_PRACTICE             = Vhodné použitie
 FAQ                       = Časté otázky
-CM_LEGEND                 = Cluster mapa legenda
+CM_LEGEND                 = Legenda cluster mapy
 DEBUG                     = Ladiť
 CHECK_UPDATE              = Skontrolovať aktualizácie
 ABOUT                     = O programe
@@ -140,8 +140,8 @@ NO                        = nie
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = Môžete upgradovať ma ^-^
-UPGRADE_MESSAGE           = Správa je k dispozícii na stiahnutie!
+UPGRADE_CAPTION           = Môžete ma upgradovať ^-^
+UPGRADE_MESSAGE           = Nová verzia je k dispozícii na stiahnutie!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
@@ -166,7 +166,7 @@ FILENAME                  = súboru
 COMMENT                   = komentár
 
 LOCKED                    = zamknutý
-MOVE_FAILED               = pohybovať sa nepodarilo
+MOVE_FAILED               = presun sa nepodaril
 INVALID                   = neplatný
 
 ; END OF FILE
