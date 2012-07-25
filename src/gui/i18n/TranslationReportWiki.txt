@@ -49,7 +49,7 @@
 || [[Romanian.lng|Romanian]]                                             || ||=  87 || ||=  90 || ||>    96 % ||
 || [[Russian.lng|Russian]]                                               || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Serbian.lng|Serbian]]                                               || ||=  90 || ||=  90 || ||>   100 % ||
-|| [[Slovak.lng|Slovak]]                                                 || ||=  88 || ||=  90 || ||>    97 % ||
+|| [[Slovak.lng|Slovak]]                                                 || ||=  87 || ||=  90 || ||>    96 % ||
 || [[Slovenian.lng|Slovenian]]                                           || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Spanish (AR).lng|Spanish (AR)]]                                     || ||=  87 || ||=  90 || ||>    96 % ||
 || [[Spanish (ES).lng|Spanish (ES)]]                                     || ||=  88 || ||=  90 || ||>    97 % ||
@@ -106,10 +106,10 @@
 || [[Latvian.lng|Latvian]]                                               || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Norwegian.lng|Norwegian]]                                           || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Slovenian.lng|Slovenian]]                                           || ||=  88 || ||=  90 || ||>    97 % ||
-|| [[Slovak.lng|Slovak]]                                                 || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Filipino (Tagalog).lng|Filipino (Tagalog)]]                         || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Spanish (ES).lng|Spanish (ES)]]                                     || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Romanian.lng|Romanian]]                                             || ||=  87 || ||=  90 || ||>    96 % ||
+|| [[Slovak.lng|Slovak]]                                                 || ||=  87 || ||=  90 || ||>    96 % ||
 || [[Portuguese (BR).lng|Portuguese (BR)]]                               || ||=  87 || ||=  90 || ||>    96 % ||
 || [[Spanish (AR).lng|Spanish (AR)]]                                     || ||=  87 || ||=  90 || ||>    96 % ||
 || [[Finnish.lng|Finnish]]                                               || ||=  86 || ||=  90 || ||>    95 % ||
