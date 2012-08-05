@@ -43,7 +43,7 @@
     - the following translations were updated:
 
       Vietnamese, Polish, Iloko, Portuguese (BR), Norwegian, Slovak,
-      Chinese (Simplified)
+      Chinese (Simplified), Chinese (Traditional)
 
     - 
 
