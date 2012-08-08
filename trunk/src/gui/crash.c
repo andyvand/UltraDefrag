@@ -37,6 +37,7 @@ int crash_info_check_stopped = 0;
 int stop_crash_info_check = 0;
 
 HANDLE hLogFile = NULL;
+DWORD last_time_stamp = 0; /* time stamp of the last processed event */
 int crash_info_collected = 0;
 
 DWORD WINAPI CrashInfoCheckingProc(LPVOID lpParameter);
@@ -82,6 +83,7 @@ DWORD WINAPI CrashInfoCheckingProc(LPVOID lpParameter)
                 "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
                 "\r\n";
     DWORD bytes_written;
+    char time_stamp[32];
     
     /* open crash-info.log file for exclusive access */
     hLogFile = CreateFile("crash-info.log",GENERIC_WRITE,
@@ -97,7 +99,8 @@ DWORD WINAPI CrashInfoCheckingProc(LPVOID lpParameter)
     }
 
     /* get time stamp of the last processed event */
-    /* TODO */
+    GetPrivateProfileString("LastProcessedEvent","TimeStamp","0",time_stamp,32,".\\crash-info.ini");
+    last_time_stamp = atoi(time_stamp);
     if(stop_crash_info_check) goto done;
     
     /* collect information on all the events not processed yet */
@@ -108,7 +111,9 @@ DWORD WINAPI CrashInfoCheckingProc(LPVOID lpParameter)
     ShowCrashInfo();
     
     /* save the time stamp of the last processed event */
-    /* TODO */
+    _snprintf(time_stamp,32,"%u",last_time_stamp);
+    time_stamp[31] = 0;
+    WritePrivateProfileString("LastProcessedEvent","TimeStamp",time_stamp,".\\crash-info.ini");
     
 done:
     if(hLogFile) CloseHandle(hLogFile);
@@ -131,7 +136,10 @@ static void CollectCrashInfo(void)
     PEVENTLOGRECORD rec;
     char *data;
     DWORD bytes_written;
+    DWORD new_time_stamp;
     
+    new_time_stamp = last_time_stamp;
+
     bytes_to_read = EVENT_BUFFER_SIZE;
     buffer = malloc(bytes_to_read);
     if(buffer == NULL){
@@ -174,7 +182,8 @@ static void CollectCrashInfo(void)
             rec = (PEVENTLOGRECORD)buffer;
             while(!stop_crash_info_check){
                 if((char *)rec >= buffer + bytes_read) break;
-                /* TODO: skip records older than already processed before */
+                /* skip records older than already processed before */
+                if(rec->TimeGenerated <= last_time_stamp) break;
                 /* handle Application Error events only */
                 if(rec->EventType == EVENTLOG_ERROR_TYPE && (rec->EventID & 0xFFFF) == 1000){
                     if(rec->DataLength > 0){
@@ -191,6 +200,8 @@ static void CollectCrashInfo(void)
                                     WgxDbgPrintLastError("CollectCrashInfo: cannot write to crash-info.log file");
                                 } else {
                                     crash_info_collected = 1;
+                                    if(rec->TimeGenerated > new_time_stamp)
+                                        new_time_stamp = rec->TimeGenerated;
                                 }
                             }
                             free(data);
@@ -202,7 +213,8 @@ static void CollectCrashInfo(void)
         }
     }
 
-done:        
+done:
+    last_time_stamp = new_time_stamp;
     if(hLog) CloseEventLog(hLog);
     if(buffer) free(buffer);
 }
