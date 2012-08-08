@@ -63,7 +63,7 @@
  * Windows Server 2008 and Windows 7, including all 64 bit versions of Windows.
  *
  * Both Windows NT 4.0 and Windows 2000 have very restricted Defrag API,
- * so the most recent versions of UltraDefrag doesn't support them.
+ * so the most recent versions of UltraDefrag don't support them.
  * However, the 5.0.x series of UltraDefrag is fully compatible
  * with Windows NT 4.0 and Windows 2000.
  *
