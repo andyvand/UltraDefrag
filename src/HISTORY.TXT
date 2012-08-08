@@ -37,6 +37,8 @@
 
   Version 5.0.7  2012-07-
   ------------------------------------------------------------------------------
+    - added crash handling code to the GUI, it shows the crash information
+      on startup when the program crashed during the last run
     - changed unit suffixes from lower case 'b' to capital 'B',
       this is going conform with the SI units.
       Current scripts will still function, since we ignore character case.
