@@ -227,6 +227,9 @@ BOOL HideSystemTrayIcon(void);
 void ShowSystemTrayIconContextMenu(void);
 void SetSystemTrayIconTooltip(wchar_t *text);
 
+void StartCrashInfoCheck(void);
+void StopCrashInfoCheck(void);
+
 /* common global variables */
 extern HINSTANCE hInstance;
 extern HWND hWindow;
