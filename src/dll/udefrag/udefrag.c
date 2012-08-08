@@ -616,13 +616,18 @@ char *udefrag_get_error_description(int error_code)
 static void write_log_file_header(char *path)
 {
     WINX_FILE *f;
-    char header[] = "--------------------------------------------------------------------------------\r\n"
-                    "UltraDefrag log file\r\n"
-                    "--------------------------------------------------------------------------------\r\n"
-                    "If you'd like to report a bug,\r\n"
-                    "attach this file to your bug report please:\r\n"
-                    "http://sourceforge.net/tracker/?group_id=199532&atid=969870\r\n"
-                    "--------------------------------------------------------------------------------\r\n";
+    char header[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
+                    "\r\n"
+                    "                           UltraDefrag log file\r\n"
+                    "\r\n"
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
+                    "\r\n"
+                    "                       If you'd like to report a bug,\r\n"
+                    "                  attach this file to your bug report please:\r\n"
+                    "          http://sourceforge.net/tracker/?group_id=199532&atid=969870\r\n"
+                    "\r\n"
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
+                    "\r\n";
     
     f = winx_fopen(path,"a");
     if(f == NULL)
