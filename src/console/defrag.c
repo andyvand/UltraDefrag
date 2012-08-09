@@ -295,13 +295,14 @@ static void display_invalid_volume_error(int error_code)
  */
 void display_last_error(char *caption)
 {
-    LPVOID lpMsgBuf;
+    wchar_t *msg;
+    int length;
     DWORD error = GetLastError();
 
-    if(!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+    if(!FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
             FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
             NULL,error,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-            (LPTSTR)&lpMsgBuf,0,NULL)){
+            (LPWSTR)(void *)&msg,0,NULL)){
                 if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
                 if(error == ERROR_COMMITMENT_LIMIT)
                     printf("\n%s\nNot enough memory.\n\n",caption);
@@ -310,9 +311,21 @@ void display_last_error(char *caption)
                 if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     } else {
         if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
-        printf("\n%s\n%s\n",caption,(char *)lpMsgBuf);
+        printf("\n%s\n",caption);
+        /* get rid of trailing new line */
+        length = wcslen(msg);
+        if(length > 0){
+            if(msg[length - 1] == '\n')
+                msg[length - 1] = 0;
+        }
+        if(length > 1){
+            if(msg[length - 2] == '\r')
+                msg[length - 2] = 0;
+        }
+        print_unicode_string(msg);
+        printf("\n");
         if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-        LocalFree(lpMsgBuf);
+        LocalFree(msg);
     }
 }
 
