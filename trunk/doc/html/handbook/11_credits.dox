@@ -146,6 +146,7 @@
  * <tr><td>                               </td><td>-</td><td> DT</td></tr>
  * <tr><td>• Wáray-Wáray                  </td><td>-</td><td> Harvey Fiji</td></tr>
  * <tr><td>                               </td><td>-</td><td> Voltaire Oyzon</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Joseph S. Maza</td></tr>
  * <tr><td>• Yiddish                      </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * </table>
  * @endhtmlonly
@@ -264,6 +265,7 @@
  *                                 & - & DT \\
  * • Wáray-Wáray                   & - & Harvey Fiji \\
  *                                 & - & Voltaire Oyzon \\
+ *                                 & - & Joseph S. Maza \\
  * • Yiddish                       & - & Dmitri Arkhangelski \\
  * \end{xtabular}\end{Indent}\par
  * @endlatexonly
