@@ -65,6 +65,13 @@
 !packhdr temp.dat '"${ROOTDIR}\src\tools\upx\upx" --best -q temp.dat'
 
 /*
+ * Include additional plug-in folders
+ */
+
+!addplugindir "${ROOTDIR}\src\installer\plug_ins\Plugin"
+!addincludedir "${ROOTDIR}\src\installer\plug_ins\Include"
+
+/*
  * Installer Attributes
  */
 
@@ -128,6 +135,7 @@ VIAddVersionKey  "FileVersion"     "${ULTRADFGVER}"
 !include "WinVer.nsh"
 !include "x64.nsh"
 !include "MUI.nsh"
+!include "Time.nsh"
 !include "${ROOTDIR}\src\installer\UltraDefrag.nsh"
 !include "${ROOTDIR}\src\installer\LanguageSelector.nsh"
 !include "${ROOTDIR}\src\installer\PresetSections.nsh"
@@ -330,6 +338,8 @@ Function .onInstSuccess
     ${UpdateUninstallSizeValue}
 
     ${RegisterInstallationFolder}
+    
+    ${InitCrashDate}
 
 FunctionEnd
 
