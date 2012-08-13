@@ -50,7 +50,8 @@
       Chinese (Simplified), Chinese (Traditional), Spanish (MEX), Iloko,
       Wáray-Wáray
 
-    - Internals: WgxPrintUnicodeString routine added to wgx library
+    - Internals: WgxPrintUnicodeString, WgxCheckAdminRights
+      routines added to wgx library
 
 
   Version 5.0.6  2012-06-20
