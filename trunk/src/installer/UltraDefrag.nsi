@@ -278,6 +278,7 @@ SectionEnd
 
 Function .onInit
 
+    ${CheckAdminRights}
     ${CheckWinVersion}
     ${CheckMutex}
 
@@ -299,6 +300,7 @@ FunctionEnd
 
 Function un.onInit
 
+    ${CheckAdminRights}
     ${CheckMutex}
 
     ${DisableX64FSRedirection}
