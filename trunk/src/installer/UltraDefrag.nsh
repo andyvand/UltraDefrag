@@ -63,18 +63,16 @@ Var AtLeastXP
 !macro CheckAdminRights
 
     Push $R0
-    Push $R1
-    
-    ; check if the user has administrative rights by openening "HKEY_USERS\S-1-5-19" registry key
-    System::Call 'advapi32::RegOpenKey(i 0x80000003, t "S-1-5-19", *i 0 R1) i .R0'
-    ${If} $R0 == 0 ; ERROR_SUCCESS
-        System::Call 'advapi32::RegCloseKey(i $R1)'
-    ${Else}
+
+    ; check if the user has administrative rights
+    UserInfo::GetAccountType
+    Pop $R0
+
+    ${If} $R0 != "Admin"
         MessageBox MB_OK|MB_ICONEXCLAMATION "Administrative rights are needed to install the program!" /SD IDOK
         Abort
     ${EndIf}
 
-    Pop $R1
     Pop $R0
 
 !macroend
