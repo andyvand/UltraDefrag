@@ -89,8 +89,8 @@ ABOUT                     = &Bahin han
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Open &log
-REPORT_BUG                = Send bug &report
+OPEN_LOG                  = Buklará &an talaan
+REPORT_BUG                = Igsumat it &bug
 
 ; --- Toolbar Tooltips
 

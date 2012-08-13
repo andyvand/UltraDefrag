@@ -60,7 +60,7 @@
 || [[Turkish.lng|Turkish]]                                               || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Ukrainian.lng|Ukrainian]]                                           || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Vietnamese.lng|Vietnamese]]                                         || ||=  90 || ||=  90 || ||>   100 % ||
-|| [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  77 || ||=  90 || ||>    85 % ||
+|| [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  79 || ||=  90 || ||>    87 % ||
 || [[Yiddish.lng|Yiddish]]                                               || ||=  88 || ||=  90 || ||>    97 % ||
 
 [[toc]]
@@ -121,7 +121,7 @@
 || [[Icelandic.lng|Icelandic]]                                           || ||=  84 || ||=  90 || ||>    93 % ||
 || [[Javanese.lng|Javanese]]                                             || ||=  84 || ||=  90 || ||>    93 % ||
 || [[Burmese (Padauk).lng|Burmese (Padauk)]]                             || ||=  83 || ||=  90 || ||>    92 % ||
-|| [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  77 || ||=  90 || ||>    85 % ||
+|| [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  79 || ||=  90 || ||>    87 % ||
 || [[Bosnian.lng|Bosnian]]                                               || ||=  76 || ||=  90 || ||>    84 % ||
 || [[Kapampangan.lng|Kapampangan]]                                       || ||=  66 || ||=  90 || ||>    73 % ||
 || [[English (GB).lng|English (GB)]]                                     || ||=  11 || ||=  90 || ||>    12 % ||
