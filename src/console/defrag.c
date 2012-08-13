@@ -221,7 +221,7 @@ BOOL WINAPI CtrlHandlerRoutine(DWORD dwCtrlType)
 void display_error(char *string)
 {
     if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
-    printf("%s",string);
+    fprintf(stderr,"%s",string);
     if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 }
 
@@ -245,12 +245,12 @@ static void display_defrag_error(udefrag_job_type job_type, int error_code)
     default:
         break;
     }
-    printf("\nDisk %s failed!\n\n",operation);
+    fprintf(stderr,"\nDisk %s failed!\n\n",operation);
     
     if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-    printf("%s\n\n",udefrag_get_error_description(error_code));
+    fprintf(stderr,"%s\n\n",udefrag_get_error_description(error_code));
     if(error_code == UDEFRAG_UNKNOWN_ERROR)
-        printf("Enable logs or use DbgView program to get more information.\n\n");
+        fprintf(stderr,"Enable logs or use DbgView program to get more information.\n\n");
     
     if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 }
@@ -262,14 +262,14 @@ static void display_defrag_error(udefrag_job_type job_type, int error_code)
 static void display_invalid_volume_error(int error_code)
 {
     if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
-    printf("The disk cannot be processed.\n\n");
+    fprintf(stderr,"The disk cannot be processed.\n\n");
     if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
     if(error_code == UDEFRAG_UNKNOWN_ERROR){
-        printf("Disk is missing or some unknown error has been encountered.\n");
-        printf("Enable logs or use DbgView program to get more information.\n\n");
+        fprintf(stderr,"Disk is missing or some unknown error has been encountered.\n");
+        fprintf(stderr,"Enable logs or use DbgView program to get more information.\n\n");
     } else {
-        printf("%s\n\n",udefrag_get_error_description(error_code));
+        fprintf(stderr,"%s\n\n",udefrag_get_error_description(error_code));
     }
 
     if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -290,13 +290,13 @@ void display_last_error(char *caption)
             (LPWSTR)(void *)&msg,0,NULL)){
                 if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
                 if(error == ERROR_COMMITMENT_LIMIT)
-                    printf("\n%s\nNot enough memory.\n\n",caption);
+                    fprintf(stderr,"\n%s\nNot enough memory.\n\n",caption);
                 else
-                    printf("\n%s\nError code = 0x%x\n\n",caption,(UINT)error);
+                    fprintf(stderr,"\n%s\nError code = 0x%x\n\n",caption,(UINT)error);
                 if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
     } else {
         if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
-        printf("\n%s\n",caption);
+        fprintf(stderr,"\n%s\n",caption);
         /* get rid of trailing new line */
         length = wcslen(msg);
         if(length > 0){
@@ -307,8 +307,8 @@ void display_last_error(char *caption)
             if(msg[length - 2] == '\r')
                 msg[length - 2] = 0;
         }
-        WgxPrintUnicodeString(msg,stdout);
-        printf("\n");
+        WgxPrintUnicodeString(msg,stderr);
+        fprintf(stderr,"\n");
         if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
         LocalFree(msg);
     }
@@ -390,32 +390,32 @@ void update_progress(udefrag_progress_info *pi, void *p)
             op_name = "optimize: ";
             break;
         }
-        clear_line(stderr);
+        clear_line(stdout);
         if(pi->current_operation == VOLUME_OPTIMIZATION && !stop_flag && pi->completion_status == 0){
             if(pi->pass_number > 1)
-                fprintf(stderr,"\r%c: %s%6.2lf%% complete, pass %lu, moves total = %I64u",
+                printf("\r%c: %s%6.2lf%% complete, pass %lu, moves total = %I64u",
                     volume_letter,op_name,pi->percentage,pi->pass_number,pi->total_moves);
             else
-                fprintf(stderr,"\r%c: %s%6.2lf%% complete, moves total = %I64u",
+                printf("\r%c: %s%6.2lf%% complete, moves total = %I64u",
                     volume_letter,op_name,pi->percentage,pi->total_moves);
         } else {
             if(pi->pass_number > 1)
-                fprintf(stderr,"\r%c: %s%6.2lf%% complete, pass %lu, fragmented/total = %lu/%lu",
+                printf("\r%c: %s%6.2lf%% complete, pass %lu, fragmented/total = %lu/%lu",
                     volume_letter,op_name,pi->percentage,pi->pass_number,pi->fragmented,pi->files);
             else
-                fprintf(stderr,"\r%c: %s%6.2lf%% complete, fragmented/total = %lu/%lu",
+                printf("\r%c: %s%6.2lf%% complete, fragmented/total = %lu/%lu",
                     volume_letter,op_name,pi->percentage,pi->fragmented,pi->files);
         }
         if(pi->completion_status != 0 && !stop_flag){
             /* set progress indicator to 100% state */
-            clear_line(stderr);
+            clear_line(stdout);
             if(pi->pass_number > 1)
-                fprintf(stderr,"\r%c: %s100.00%% complete, %lu passes needed, fragmented/total = %lu/%lu",
+                printf("\r%c: %s100.00%% complete, %lu passes needed, fragmented/total = %lu/%lu",
                     volume_letter,op_name,pi->pass_number,pi->fragmented,pi->files);
             else
-                fprintf(stderr,"\r%c: %s100.00%% complete, fragmented/total = %lu/%lu",
+                printf("\r%c: %s100.00%% complete, fragmented/total = %lu/%lu",
                     volume_letter,op_name,pi->fragmented,pi->files);
-            if(!m_flag) fprintf(stderr,"\n");
+            if(!m_flag) printf("\n");
         }
         
         if(m_flag)
@@ -525,11 +525,11 @@ static int process_volumes(void)
     /* skip invalid paths */
     for(path = paths; path; path = path->next){
         if(wcslen(path->path) < 2){
-            printf("incomplete path detected: %ls\n",path->path);
+            fprintf(stderr,"incomplete path detected: %ls\n",path->path);
             path->processed = 1;
         }
         if(path->path[1] != ':'){
-            printf("incomplete path detected: %ls\n",path->path);
+            fprintf(stderr,"incomplete path detected: %ls\n",path->path);
             path->processed = 1;
         }
         if(path->next == paths) break;
