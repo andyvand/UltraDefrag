@@ -54,6 +54,35 @@ static void show_help(void)
         );
 }
 
+static void dbg_print(char *format, ...)
+{
+    va_list arg;
+    char *buffer;
+    int size, result;
+    
+    if(format){
+        va_start(arg,format);
+        size = 128; /* set initial buffer size */
+        do {
+            buffer = malloc(size);
+            if(buffer == NULL) break;
+            memset(buffer,0,size); /* needed for _vsnprintf */
+            result = _vsnprintf(buffer,size,format,arg);
+            if(result != -1 && result != size){
+                OutputDebugString(buffer);
+                OutputDebugString("\n");
+                free(buffer);
+                break;
+            }
+            /* buffer is too small; try to allocate two times larger */
+            free(buffer);
+            size <<= 1;
+            if(size <= 0) break;
+        } while(1);
+        va_end(arg);
+    }
+}
+
 static void handle_error(char *msg)
 {
     DWORD error;
@@ -116,6 +145,8 @@ int __cdecl main(int argc, char **argv)
 
     printf("Hibernate for Windows - a command line tool for Windows hibernation.\n");
     printf("Copyright (c) UltraDefrag Development Team, 2009-2012.\n\n");
+    
+    WgxSetDbgPrintHandler(dbg_print);
 
     /* enable shutdown privilege */
     if(!OpenProcessToken(GetCurrentProcess(), 
