@@ -142,6 +142,8 @@ BOOL WgxCreateProcess(char *cmd,char *args);
 BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param);
 BOOL WgxSetProcessPriority(DWORD priority_class);
 
+void WgxPrintUnicodeString(wchar_t *string,FILE *f);
+
 /* wgx macro definitions */
 
 /*
