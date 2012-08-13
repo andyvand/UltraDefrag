@@ -42,6 +42,8 @@
     - changed unit suffixes from lower case 'b' to capital 'B',
       this is going conform with the SI units.
       Current scripts will still function, since we ignore character case.
+    - error messages of the command line tool redirected to stderr
+      while everything else - to stdout to comply with the common practice
     - the following translations were updated:
 
       Vietnamese, Polish, Iloko, Portuguese (BR), Norwegian, Slovak,
