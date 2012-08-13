@@ -1342,6 +1342,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     WgxSetDbgPrintHandler(udefrag_dbg_print);
     hInstance = GetModuleHandle(NULL);
     
+    /* check for admin rights - they're strongly required */
+    if(!WgxCheckAdminRights()){
+        MessageBox(NULL,"Administrative rights are needed "
+          "to run the program!","UltraDefrag",
+          MB_OK | MB_ICONHAND);
+        return 1;
+    }
+
     /* show crash info when the program crashed last time */
     StartCrashInfoCheck();
     

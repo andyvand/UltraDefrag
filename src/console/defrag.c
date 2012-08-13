@@ -767,6 +767,12 @@ int __cdecl main(int argc, char **argv)
         "and you are welcome to redistribute it under certain conditions.\n\n"
         );
         
+    /* check for admin rights - they're strongly required */
+    if(!WgxCheckAdminRights()){
+        display_error("Administrative rights are needed to run the program!\n");
+        terminate_console(1);
+    }
+
     /* handle initialization failure */
     if(udefrag_init_failed()){
         display_error("Initialization failed!\nSend bug report to the authors please.\n");
