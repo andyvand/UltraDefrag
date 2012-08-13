@@ -111,21 +111,6 @@ void clear_line(FILE *f)
         display_last_error("Cannot set cursor position!");
 }
 
-/**
- * @brief Prints Unicode string.
- * @note Only characters compatible
- * with the current locale (OEM by default)
- * will be printed correctly. Otherwise
- * the '?' characters will be printed instead.
- */
-void print_unicode_string(wchar_t *string)
-{
-    DWORD written;
-    
-    if(string)
-        WriteConsoleW(hStdOut,string,wcslen(string),&written,NULL);
-}
-
 /* -------------------------------------------- */
 /*         UltraDefrag specific routines        */
 /* -------------------------------------------- */
@@ -322,7 +307,7 @@ void display_last_error(char *caption)
             if(msg[length - 2] == '\r')
                 msg[length - 2] = 0;
         }
-        print_unicode_string(msg);
+        WgxPrintUnicodeString(msg,stdout);
         printf("\n");
         if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
         LocalFree(msg);
@@ -554,11 +539,11 @@ static int process_volumes(void)
         if(path->processed == 0){
             if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
             if(first_path){
-                print_unicode_string(path->path);
+                WgxPrintUnicodeString(path->path,stdout);
                 printf("\n");
             } else {
                 printf("\n");
-                print_unicode_string(path->path);
+                WgxPrintUnicodeString(path->path,stdout);
                 printf("\n");
             }
             if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -618,7 +603,7 @@ static int process_volumes(void)
                             wcscpy(new_in_filter,aux_buffer);
                             path_found = 1;
                             if(!b_flag) settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-                            print_unicode_string(another_path->path);
+                            WgxPrintUnicodeString(another_path->path,stdout);
                             printf("\n");
                             if(!b_flag) settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
                             another_path->processed = 1;
