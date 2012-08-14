@@ -111,18 +111,27 @@
 */
 #define UD_FILE_REGION_NOT_FOUND       0x1000
 
-#define is_excluded(f)           ((f)->user_defined_flags & UD_FILE_EXCLUDED)
-#define is_over_limit(f)         ((f)->user_defined_flags & UD_FILE_OVER_LIMIT)
-#define is_locked(f)             ((f)->user_defined_flags & UD_FILE_LOCKED)
-#define is_moving_failed(f)      ((f)->user_defined_flags & UD_FILE_MOVING_FAILED)
-#define is_in_improper_state(f)  ((f)->user_defined_flags & UD_FILE_IMPROPER_STATE)
-#define is_currently_excluded(f) ((f)->user_defined_flags & UD_FILE_CURRENTLY_EXCLUDED)
-#define is_moved_to_front(f)     ((f)->user_defined_flags & UD_FILE_MOVED_TO_FRONT)
-#define is_fragmented_by_file_opt(f) ((f)->user_defined_flags & UD_FILE_FRAGMENTED_BY_FILE_OPT)
-#define is_excluded_by_path(f)   ((f)->user_defined_flags & UD_FILE_EXCLUDED_BY_PATH)
-#define is_essential_dos_file(f) ((f)->user_defined_flags & UD_FILE_ESSENTIAL_DOS_FILE)
+/*
+* Some essential boot files need to be
+* at fixed locations on disk, so we're
+* skipping them to keep the computer 
+* bootable.
+*/
+#define UD_FILE_ESSENTIAL_BOOT_FILE    0x2000
 
-#define is_block_excluded(b)     ((b)->length == 0)
+#define is_excluded(f)               ((f)->user_defined_flags & UD_FILE_EXCLUDED)
+#define is_over_limit(f)             ((f)->user_defined_flags & UD_FILE_OVER_LIMIT)
+#define is_locked(f)                 ((f)->user_defined_flags & UD_FILE_LOCKED)
+#define is_moving_failed(f)          ((f)->user_defined_flags & UD_FILE_MOVING_FAILED)
+#define is_in_improper_state(f)      ((f)->user_defined_flags & UD_FILE_IMPROPER_STATE)
+#define is_currently_excluded(f)     ((f)->user_defined_flags & UD_FILE_CURRENTLY_EXCLUDED)
+#define is_moved_to_front(f)         ((f)->user_defined_flags & UD_FILE_MOVED_TO_FRONT)
+#define is_fragmented_by_file_opt(f) ((f)->user_defined_flags & UD_FILE_FRAGMENTED_BY_FILE_OPT)
+#define is_excluded_by_path(f)       ((f)->user_defined_flags & UD_FILE_EXCLUDED_BY_PATH)
+#define is_essential_dos_file(f)     ((f)->user_defined_flags & UD_FILE_ESSENTIAL_DOS_FILE)
+#define is_essential_boot_file(f)    ((f)->user_defined_flags & UD_FILE_ESSENTIAL_BOOT_FILE)
+
+#define is_block_excluded(b)         ((b)->length == 0)
 
 /*
 * MSDN states that environment variables

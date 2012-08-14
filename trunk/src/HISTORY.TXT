@@ -37,6 +37,11 @@
 
   Version 5.0.7  2012-08-
   ------------------------------------------------------------------------------
+    - added compatibility with the following software by exclusion their 
+      essential files from moving (excluded files are listed in brackets):
+      SafeBoot (safeboot.fs), Symantec GoBack (Gobackio.bin),
+      PGP Whole Disk Encryption (PGPWDE0*), Acronis OS Selector (bootwiz*),
+      DriveCrypt (BootAuth?.sys), DiskCryptor ($dcsys$)
     - added crash handling code to the GUI, it shows the crash information
       on startup when the program crashed during the last run
     - changed unit suffixes from lower case 'b' to capital 'B',
