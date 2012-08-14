@@ -41,6 +41,7 @@
 || [[Korean.lng|Korean]]                                                 || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Latin.lng|Latin]]                                                   || ||=  86 || ||=  90 || ||>    95 % ||
 || [[Latvian.lng|Latvian]]                                               || ||=  88 || ||=  90 || ||>    97 % ||
+|| [[Lithuanian.lng|Lithuanian]]                                         || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Macedonian.lng|Macedonian]]                                         || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Norwegian.lng|Norwegian]]                                           || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Polish.lng|Polish]]                                                 || ||=  90 || ||=  90 || ||>   100 % ||
@@ -90,11 +91,12 @@
 || [[Greek.lng|Greek]]                                                   || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Macedonian.lng|Macedonian]]                                         || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Japanese.lng|Japanese]]                                             || ||=  90 || ||=  90 || ||>   100 % ||
+|| [[Portuguese.lng|Portuguese]]                                         || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Estonian.lng|Estonian]]                                             || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Czech.lng|Czech]]                                                   || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Tamil.lng|Tamil]]                                                   || ||=  89 || ||=  90 || ||>    98 % ||
-|| [[Portuguese.lng|Portuguese]]                                         || ||=  89 || ||=  90 || ||>    98 % ||
 || [[German.lng|German]]                                                 || ||=  89 || ||=  90 || ||>    98 % ||
+|| [[Lithuanian.lng|Lithuanian]]                                         || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Iloko.lng|Iloko]]                                                   || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Indonesian.lng|Indonesian]]                                         || ||=  89 || ||=  90 || ||>    98 % ||
 || [[Indonesian (Bahasa Indonesia).lng|Indonesian (Bahasa Indonesia)]]   || ||=  89 || ||=  90 || ||>    98 % ||
