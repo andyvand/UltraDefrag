@@ -183,8 +183,8 @@ static void dbg_print_performance_counters(udefrag_job_parameters *jp)
 /**
  * @brief Delivers progress information to the caller.
  * @note 
- * - completion_status parameter delivers to the caller
- * instead of an appropriate field of jp->pi structure.
+ * - completion_status parameter becomes delivered to the caller
+ * instead of the appropriate field of jp->pi structure.
  * - If cluster map cell is occupied entirely by MFT zone
  * it will be drawn in light magenta if no files exist there.
  * Otherwise, such a cell will be drawn in different color
