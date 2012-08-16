@@ -62,10 +62,10 @@ REPORTS                   = &Sumat
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &View change log
-TRANSLATIONS_REPORT       = View translation &report
+TRANSLATIONS_CHANGE_LOG   = &Kitaa an talaan hin pagbag-o
+TRANSLATIONS_REPORT       = Kitaa an &sumat han paghubad
 TRANSLATIONS_FOLDER       = &Hiripusán han mga hinubad
-TRANSLATIONS_SUBMIT       = &Submit current translation
+TRANSLATIONS_SUBMIT       = &Igsumite an yana nga ginhubad
 
 ; --- --- Graphical interface submenu
 
