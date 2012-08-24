@@ -1163,7 +1163,7 @@ int parse_command(wchar_t *cmdline)
     * Handle unknown commands.
     */
     if(cmd_table[i].cmd_handler == NULL){
-        winx_printf("\nUnknown command %ws!\n\n",argv[0]);
+        winx_printf("\nUnknown command: %ws!\n\n",argv[0]);
         winx_heap_free(argv);
         if(envp) winx_heap_free(envp);
         winx_heap_free(cmdline_copy);
