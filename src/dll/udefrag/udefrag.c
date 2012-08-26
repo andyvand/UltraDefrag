@@ -42,13 +42,12 @@
  * -# filter files properly
  * -# produce reports properly
  *
- * How statistical data adjusts in all the volume processing routines:
- * -# we calculate maximum amount of data which may be moved in process
+ * How the statistical data adjusts in all the volume processing routines:
+ * -# we calculate the maximum amount of data which may be moved in process
  *    and assign this value to jp->pi.clusters_to_process counter
  * -# when we move something, we adjust jp->pi.processed_clusters
- *
- * NOTE: progress over 100% means deeper processing than expected.
- * This is not a bug, this is an algorithm feature.
+ * -# before each pass we adjust the jp->pi.clusters_to_process value
+ *    to prevent the progress indicator overflow
  * @addtogroup Engine
  * @{
  */

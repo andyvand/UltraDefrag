@@ -850,7 +850,7 @@ static ULONGLONG count_clusters(udefrag_job_parameters *jp,ULONGLONG start_lcn)
  * @return Zero for success,
  * negative value otherwise.
  */
-static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
+static int optimize_routine(udefrag_job_parameters *jp)
 {
     winx_file_info *f;
     struct prb_table *pt;
@@ -860,10 +860,6 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     int result = 0;
 
     jp->pi.current_operation = VOLUME_OPTIMIZATION;
-    jp->pi.processed_clusters = extra_clusters;
-    /* we have a chance to move everything to the end and then back */
-    /* more precise calculation is difficult */
-    jp->pi.clusters_to_process = count_clusters(jp,0) * 2 + extra_clusters;
 
     /* open the volume */
     jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
@@ -910,8 +906,8 @@ static int optimize_routine(udefrag_job_parameters *jp,ULONGLONG extra_clusters)
     jp->pi.pass_number = 0; start_lcn = end_lcn = 0;
     while(!jp->termination_router((void *)jp)){
         winx_dbg_print_header(0,0,"volume optimization pass #%u",jp->pi.pass_number);
-        jp->pi.processed_clusters = \
-            jp->pi.clusters_to_process - count_clusters(jp,start_lcn) * 2;
+        jp->pi.clusters_to_process = \
+            jp->pi.processed_clusters + count_clusters(jp,start_lcn) * 2;
         
         /* cleanup space in the beginning of the disk */
         move_files_to_back(jp,&end_lcn);
@@ -968,6 +964,8 @@ int optimize(udefrag_job_parameters *jp)
     jp->pi.processed_clusters = 0;
     if(jp->is_fat) extra_clusters += opt_dirs_cc_routine(jp);
     if(jp->fs_type == FS_NTFS) extra_clusters += opt_mft_cc_routine(jp);
+    /* we have a chance to move everything to the end and then back */
+    /* more precise calculation is difficult */
     jp->pi.clusters_to_process = count_clusters(jp,0) * 2 + extra_clusters;
 
     /* FAT specific: optimize directories */
@@ -989,14 +987,13 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* optimize the disk */
-    result = optimize_routine(jp,extra_clusters);
+    result = optimize_routine(jp);
     if(result == 0){
         /* optimization succeeded */
         overall_result = 0;
     }
     
     /* get rid of fragmented files */
-    jp->pi.clusters_to_process += defrag_cc_routine(jp);
     defragment(jp);
     return overall_result;
 }
@@ -1028,7 +1025,6 @@ int optimize_mft(udefrag_job_parameters *jp)
     result = optimize_mft_routine(jp);
     
     /* cleanup the disk */
-    jp->pi.clusters_to_process += defrag_cc_routine(jp);
     defragment(jp);
     return result;
 }
