@@ -31,6 +31,8 @@
 
 #include "udefrag-internals.h"
 
+static ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp);
+
 /************************************************************/
 /*                       Test suite                         */
 /************************************************************/
@@ -227,7 +229,7 @@ void release_fragments_list(winx_blockmap **fragments)
  * @brief Calculates total number of clusters
  * needed to be moved to complete the defragmentation.
  */
-ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp)
+static ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp)
 {
     udefrag_fragmented_file *f;
     ULONGLONG n = 0;
@@ -283,6 +285,12 @@ static int defrag_routine(udefrag_job_parameters *jp)
         return (-1);
 
     time = start_timing("defragmentation",jp);
+
+    jp->pi.clusters_to_process = \
+        jp->pi.processed_clusters + defrag_cc_routine(jp);
+        
+    DebugPrint(">>> %I64u\\%I64u <<<",
+        jp->pi.processed_clusters,jp->pi.clusters_to_process);
 
     /*
     * Eliminate little fragments. Defragment
@@ -423,6 +431,9 @@ completed:
         if(next == head) break;
     }
     
+    DebugPrint(">>> %I64u\\%I64u <<<",
+        jp->pi.processed_clusters,jp->pi.clusters_to_process);
+
     /* display amount of moved data and number of defragmented files */
     DebugPrint("%I64u files defragmented",defragmented_files);
     DebugPrint("  %I64u clusters moved",jp->pi.moved_clusters);
@@ -527,7 +538,7 @@ int defragment(udefrag_job_parameters *jp)
     #endif
         /* reset counters */
         jp->pi.processed_clusters = 0;
-        jp->pi.clusters_to_process = defrag_cc_routine(jp);
+        jp->pi.clusters_to_process = 0;
     }
     
     /* do the job */

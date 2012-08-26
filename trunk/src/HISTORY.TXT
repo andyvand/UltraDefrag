@@ -49,6 +49,7 @@
       Current scripts will still function, since we ignore character case.
     - error messages of the command line tool redirected to stderr
       while everything else - to stdout to comply with the common practice
+    - fixed the progress indicator overflow; now it should never go over 100%
 
     - the following translations were added:
 
