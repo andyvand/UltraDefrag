@@ -34,6 +34,7 @@
  *
  * @htmlonly
  * <table style="border:none; margin-left:20px;">
+ * <tr><td>• Albanian                     </td><td>-</td><td> Fitim I. HALILI - Gjakovë</td></tr>
  * <tr><td>• Arabic                       </td><td>-</td><td> Ahmed Arbaoui</td></tr>
  * <tr><td>                               </td><td>-</td><td> Awadh A Al-Ghaamdi</td></tr>
  * <tr><td>• Belarusian                   </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
@@ -154,6 +155,7 @@
  *
  * @latexonly
  * \par\begin{Indent}\begin{xtabular}{p{0.4\linewidth}cl}
+ * • Albanian                      & - & Fitim I. HALILI - Gjakovë \\
  * • Arabic                        & - & Ahmed Arbaoui \\
  *                                 & - & Awadh A Al-Ghaamdi \\
  * • Belarusian                    & - & Dmitri Arkhangelski \\

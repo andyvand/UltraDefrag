@@ -53,7 +53,7 @@
 
     - the following translations were added:
 
-      Lithuanian
+      Lithuanian, Albanian
 
     - the following translations were updated:
 
