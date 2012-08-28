@@ -243,7 +243,7 @@ typedef struct _udefrag_job_parameters {
     ULONGLONG already_optimized_clusters;       /* number of clusters needing no sorting in optimization */
 } udefrag_job_parameters;
 
-int  get_options(udefrag_job_parameters *jp);
+int get_options(udefrag_job_parameters *jp);
 void release_options(udefrag_job_parameters *jp);
 
 int save_fragmentation_report(udefrag_job_parameters *jp);
@@ -283,6 +283,7 @@ int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp);
 winx_blockmap *build_fragments_list(winx_file_info *f,ULONGLONG *n_fragments);
 void release_fragments_list(winx_blockmap **fragments);
+void clear_currently_excluded_flag(udefrag_job_parameters *jp);
 
 int move_file(winx_file_info *f,
               ULONGLONG vcn,
