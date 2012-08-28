@@ -226,6 +226,19 @@ void release_fragments_list(winx_blockmap **fragments)
 }
 
 /**
+ * @brief Clears the UD_FILE_CURRENTLY_EXCLUDED flag for all of the files.
+ */
+void clear_currently_excluded_flag(udefrag_job_parameters *jp)
+{
+    winx_file_info *f;
+
+    for(f = jp->filelist; f; f = f->next){
+        f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
+        if(f->next == jp->filelist) break;
+    }
+}
+
+/**
  * @brief Calculates total number of clusters
  * needed to be moved to complete the defragmentation.
  */
@@ -274,10 +287,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
     release_temp_space_regions(jp);
 
     /* no files are excluded by this task currently */
-    for(f = jp->fragmented_files; f; f = f->next){
-        f->f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-        if(f->next == jp->fragmented_files) break;
-    }
+    clear_currently_excluded_flag(jp);
 
     /* open the volume */
     jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
@@ -450,6 +460,9 @@ completed:
     DebugPrint("  %s moved",buffer);
     
     stop_timing("defragmentation",time,jp);
+
+    /* cleanup */
+    clear_currently_excluded_flag(jp);
     winx_fclose(jp->fVolume);
     jp->fVolume = NULL;
     return 0;

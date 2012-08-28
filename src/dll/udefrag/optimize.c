@@ -370,6 +370,9 @@ static int optimize_directories(udefrag_job_parameters *jp)
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
     DebugPrint("%s moved",buffer);
     stop_timing("directories optimization",time,jp);
+
+    /* cleanup */
+    clear_currently_excluded_flag(jp);
     winx_fclose(jp->fVolume);
     jp->fVolume = NULL;
     return 0;
@@ -429,10 +432,7 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
     jp->pi.moved_clusters = 0;
 
     /* no files are excluded by this task currently */
-    for(f = jp->filelist; f; f = f->next){
-        f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-        if(f->next == jp->filelist) break;
-    }
+    clear_currently_excluded_flag(jp);
 
     /* open the volume */
     jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
@@ -470,6 +470,9 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
     DebugPrint("%s moved",buffer);
     stop_timing("mft optimization",time,jp);
+
+    /* cleanup */
+    clear_currently_excluded_flag(jp);
     winx_fclose(jp->fVolume);
     jp->fVolume = NULL;
     return result;
@@ -846,6 +849,29 @@ static ULONGLONG count_clusters(udefrag_job_parameters *jp,ULONGLONG start_lcn)
 }
 
 /**
+ * @brief Calculates number
+ * of clusters still needing
+ * to be optimized.
+ */
+static ULONGLONG clusters_to_optimize(udefrag_job_parameters *jp,struct prb_table *pt)
+{
+    winx_file_info *f;
+    struct prb_traverser t;
+    ULONGLONG n = 0;
+
+    prb_t_init(&t,pt);
+    f = prb_t_first(&t,pt);
+    while(f){
+        if(!is_moved_to_front(f)){
+            if(can_move_entirely(f,jp))
+                n += f->disp.clusters;
+        }
+        f = prb_t_next(&t);
+    }
+    return n;
+}
+
+/**
  * @brief Optimizes the disk.
  * @return Zero for success,
  * negative value otherwise.
@@ -869,10 +895,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
     time = start_timing("optimization",jp);
 
     /* no files are excluded by this task currently */
-    for(f = jp->filelist; f; f = f->next){
-        f->user_defined_flags &= ~UD_FILE_CURRENTLY_EXCLUDED;
-        if(f->next == jp->filelist) break;
-    }
+    clear_currently_excluded_flag(jp);
 
     /* build tree of files sorted by path */
     pt = prb_create(files_compare,NULL,NULL);
@@ -907,7 +930,9 @@ static int optimize_routine(udefrag_job_parameters *jp)
     while(!jp->termination_router((void *)jp)){
         winx_dbg_print_header(0,0,"volume optimization pass #%u",jp->pi.pass_number);
         jp->pi.clusters_to_process = \
-            jp->pi.processed_clusters + count_clusters(jp,start_lcn) * 2;
+            jp->pi.processed_clusters \
+            + count_clusters(jp,start_lcn) \
+            + clusters_to_optimize(jp,pt);
         
         /* cleanup space in the beginning of the disk */
         move_files_to_back(jp,&end_lcn);
@@ -928,6 +953,9 @@ static int optimize_routine(udefrag_job_parameters *jp)
     
 done:
     stop_timing("optimization",time,jp);
+
+    /* cleanup */
+    clear_currently_excluded_flag(jp);
     winx_fclose(jp->fVolume);
     jp->fVolume = NULL;
     if(pt) prb_destroy(pt,NULL);
