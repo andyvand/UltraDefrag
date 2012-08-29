@@ -299,8 +299,10 @@ static int defrag_routine(udefrag_job_parameters *jp)
     jp->pi.clusters_to_process = \
         jp->pi.processed_clusters + defrag_cc_routine(jp);
         
+    /*
     DebugPrint(">>> %I64u\\%I64u <<<",
         jp->pi.processed_clusters,jp->pi.clusters_to_process);
+    */
 
     /*
     * Eliminate little fragments. Defragment
@@ -441,8 +443,10 @@ completed:
         if(next == head) break;
     }
     
+    /*
     DebugPrint(">>> %I64u\\%I64u <<<",
         jp->pi.processed_clusters,jp->pi.clusters_to_process);
+    */
 
     /* display amount of moved data and number of defragmented files */
     DebugPrint("%I64u files defragmented",defragmented_files);
