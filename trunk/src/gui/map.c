@@ -178,7 +178,6 @@ void ResizeMap(int x, int y, int width, int height)
 static void DrawGrid(HDC hdc)
 {
     HPEN hPen, hOldPen;
-    HBRUSH hBrush, hOldBrush;
     RECT rc;
     int i, j;
 
@@ -186,11 +185,7 @@ static void DrawGrid(HDC hdc)
     rc.top = rc.left = 0;
     rc.bottom = map_height;
     rc.right = map_width;
-    hBrush = GetStockObject(WHITE_BRUSH);
-    hOldBrush = SelectObject(hdc,hBrush);
-    (void)FillRect(hdc,&rc,hBrush);
-    (void)SelectObject(hdc,hOldBrush);
-    (void)DeleteObject(hBrush);
+    (void)FillRect(hdc,&rc,hBrushes[FREE_SPACE]);
 
     if(grid_line_width == 0)
         return;
