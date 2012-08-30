@@ -50,6 +50,9 @@ COLORREF grid_color = RGB(0,0,0); //RGB(200,200,200)
 int grid_color_r = 0;
 int grid_color_g = 0;
 int grid_color_b = 0;
+int free_color_r = 255;
+int free_color_g = 255;
+int free_color_b = 255;
 
 COLORREF colors[NUM_OF_SPACE_STATES] = 
 {
@@ -79,6 +82,8 @@ void InitMap(void)
     int i;
     
     OldRectWndProc = WgxSafeSubclassWindow(hMap,RectWndProc);
+    
+    colors[FREE_SPACE] = RGB(free_color_r,free_color_g,free_color_b);
 
     for(i = 0; i < NUM_OF_SPACE_STATES; i++){
         hBrushes[i] = CreateSolidBrush(colors[i]);
@@ -289,6 +294,14 @@ void RedrawMap(volume_processing_job *job, int map_refill_required)
         return;
     }
     
+    /* if background color changed, redefine it */
+    if(colors[FREE_SPACE] != RGB(free_color_r,free_color_g,free_color_b)){
+        (void)DeleteObject(hBrushes[FREE_SPACE]);
+        colors[FREE_SPACE] = RGB(free_color_r,free_color_g,free_color_b);
+        hBrushes[FREE_SPACE] = CreateSolidBrush(colors[FREE_SPACE]);
+        map_refill_required = 1;
+    }
+    
     /* if volume bitmap is empty or have improper size, recreate it */
     if(job->map.hdc == NULL || job->map.hbitmap == NULL ||
         job->map.width != map_width || job->map.height != map_height){
@@ -332,7 +345,7 @@ void RedrawMap(volume_processing_job *job, int map_refill_required)
             DrawGrid(job->map.hdc);
         }
     }
-        
+    
     /* if cluster map does not exist, draw empty bitmap */
     if(job->map.buffer == NULL)
         goto redraw;
