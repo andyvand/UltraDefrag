@@ -56,20 +56,21 @@ mkdir bin\ia64
     echo .html
 ) >"%~n0_exclude.txt"
 
-xcopy .\bootexctrl  .\obj\bootexctrl /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\console     .\obj\console    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\dll\udefrag .\obj\udefrag    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\dll\wgx     .\obj\wgx        /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\dll\zenwinx .\obj\zenwinx    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\gui         .\obj\gui        /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\gui\res     .\obj\gui\res    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\hibernate   .\obj\hibernate  /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\include     .\obj\include    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\lua5.1      .\obj\lua5.1     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\lua         .\obj\lua        /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\lua-gui     .\obj\lua-gui    /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\native      .\obj\native     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\share       .\obj\share      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\bootexctrl  .\obj\bootexctrl  /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\console     .\obj\console     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\console\res .\obj\console\res /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\dll\udefrag .\obj\udefrag     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\dll\wgx     .\obj\wgx         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\dll\zenwinx .\obj\zenwinx     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\gui         .\obj\gui         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\gui\res     .\obj\gui\res     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\hibernate   .\obj\hibernate   /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\include     .\obj\include     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\lua5.1      .\obj\lua5.1      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\lua         .\obj\lua         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\lua-gui     .\obj\lua-gui     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\native      .\obj\native      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\share       .\obj\share       /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 
 del /f /q "%~n0_exclude.txt"
 
