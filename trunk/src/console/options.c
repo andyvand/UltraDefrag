@@ -73,6 +73,7 @@ void show_help(void)
         "  -h,  --help                         Show this help screen\n"
         "  -?                                  Show this help screen\n"
         "\n"
+        "  The commands are exclusive and can't be combined with each other.\n"
         "  If no command is specified it will defragment the disk.\n"
         "\n"
         "Options:\n"
