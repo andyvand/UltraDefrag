@@ -32,7 +32,7 @@
  *
  * @par --optimize-mft
  * Optimize the MFT by placing its fragments as close to each other as possible.
- * This is also included in full and quick optimize.
+ * This is also included in full and quick optimization.
  *
  * @par -q, --quick-optimize
  * Optimize the disk space by moving not fragmented files to the beginning of the disk.

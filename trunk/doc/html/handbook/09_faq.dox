@@ -94,15 +94,14 @@
  *
  * <h1>Boot time processing</h1>
  * <h3>What is the best configuration for boot disks?</h3>
- * For NTFS it should be sufficient to use quick optimize.
+ * For NTFS it should be sufficient to use quick optimization.
  * For FAT it is highly recommended to convert the boot disk into NTFS
  * due to performance and security reasons.
- * If you need to use FAT for various reasons, only defragment is supported.
  *
  * <h3>Why are there still some files fragmented?</h3>
  * Some system configurations are locking files even at boot, which can't be prevented. 
  * In some cases the size of the free space regions is not big enough to hold the entire file,
- * this can be corrected by using quick optimize, which consolidates free space.
+ * this can be corrected by using quick optimization, which consolidates free space.
  *
  * <h1>Miscellaneous</h1>
  * <h3>How can I disable the boot time defragmenter manually?</h3>
