@@ -1,6 +1,6 @@
 new pre-release:
 1. prepare website (index) and history.txt for pre-release
-2. run build-pre-release.cmd
+2. run build-release.cmd
 3. upload files through sf.net file manager
 4. update website (+ downloads, left_side_index),
 5. submit news
@@ -11,7 +11,7 @@ new pre-release:
 new release:
 1. add date to history.txt file
 2. run build-release.cmd
-3. upload files through file manager
+3. upload files through sf.net file manager
 4. update website (+ HISTORY.TXT, version.ini, version_xp.ini, downloads, left_side_index),
    handbook, dev docs, zenwinx docs
 5. submit news
