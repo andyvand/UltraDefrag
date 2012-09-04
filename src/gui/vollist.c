@@ -397,8 +397,7 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
     }
 
     (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
-    if(ProcessCaption)
-        free(ProcessCaption);
+    free(ProcessCaption);
 }
 
 /**
@@ -422,7 +421,7 @@ void SetVolumeDirtyStatus(int index, volume_info *v)
         else lviw.pszText = L"Disk needs to be repaired";
         lviw.iImage = v->is_removable ? 3 : 2;
         (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
-        if(text) free(text);
+        free(text);
     } else {
         lviw.mask = LVIF_IMAGE;
         lviw.iImage = v->is_removable ? 1 : 0;

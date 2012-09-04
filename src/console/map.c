@@ -112,8 +112,7 @@ int AllocateClusterMap(void)
  */
 void FreeClusterMap(void)
 {
-    if(cluster_map)
-        free(cluster_map);
+    free(cluster_map);
 }
 
 /**

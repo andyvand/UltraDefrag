@@ -143,7 +143,7 @@ static BOOL InsertContextMenuItem(HMENU hMenu,UINT pos,
     if(!result){
         WgxDbgPrintLastError("InsertMenuItem failed");
     }
-    if(text) free(text);
+    free(text);
     return result;
 }
 
