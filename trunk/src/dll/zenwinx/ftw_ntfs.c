@@ -57,6 +57,9 @@ typedef struct {
     ULONG Flags;                     /* combination of FILE_ATTRIBUTE_xxx flags defined in winnt.h */
     UCHAR NameType;                  /**/
     WCHAR Name[MAX_PATH];            /**/
+    ULONGLONG CreationTime;          /* The time when the file was created in the standard time format. */
+    ULONGLONG LastWriteTime;         /* The time when the file was last written in the standard time format. */
+    ULONGLONG LastAccessTime;        /* The time when the file was last accessed in the standard time format. */
 } my_file_information;
 
 typedef struct _mft_scan_parameters {
@@ -778,6 +781,20 @@ static void get_file_flags(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_parameters *sp)
         sp->mfi.Flags |= si->FileAttributes;
 }
 
+static void get_file_access_times(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_parameters *sp)
+{
+    STANDARD_INFORMATION *si;
+    
+    si = (STANDARD_INFORMATION *)((char *)pr_attr + pr_attr->ValueOffset);
+    if(pr_attr->ValueLength < 48){ /* 48 = size of the shortest STANDARD_INFORMATION structure */
+        DebugPrint("get_file_access_times: STANDARD_INFORMATION attribute is too short");
+    } else {
+        sp->mfi.CreationTime = si->CreationTime;
+        sp->mfi.LastWriteTime = si->LastWriteTime;
+        sp->mfi.LastAccessTime = si->LastAccessTime;
+    }
+}
+
 static void update_file_name(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_parameters *sp)
 {
     FILENAME_ATTRIBUTE *fn;
@@ -886,6 +903,7 @@ static void analyze_resident_stream(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_paramet
     switch(pr_attr->Attribute.AttributeType){
     case AttributeStandardInformation: /* always resident */
         get_file_flags(pr_attr,sp);
+        get_file_access_times(pr_attr,sp);
         break;
     case AttributeFileName: /* always resident */
         update_file_name(pr_attr,sp);
@@ -1050,6 +1068,9 @@ static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_paramete
     memset(&f->disp,0,sizeof(winx_file_disposition));
     f->internal.BaseMftId = sp->mfi.BaseMftId;
     f->internal.ParentDirectoryMftId = FILE_root;
+    f->creation_time = 0;
+    f->last_modification_time = 0;
+    f->last_access_time = 0;
     return f;
 }
 
@@ -1312,6 +1333,9 @@ static void analyze_file_record(NTFS_FILE_RECORD_OUTPUT_BUFFER *nfrob,
         sp->mfi.Flags |= FILE_ATTRIBUTE_DIRECTORY;
     sp->mfi.NameType = 0x0; /* Assume FILENAME_POSIX */
     memset(sp->mfi.Name,0,MAX_PATH);
+    sp->mfi.CreationTime = 0;
+    sp->mfi.LastWriteTime = 0;
+    sp->mfi.LastAccessTime = 0;
     
     /* skip attribute lists */
     enumerate_attributes(frh,analyze_attribute_callback,sp);
@@ -1344,6 +1368,10 @@ static void analyze_file_record(NTFS_FILE_RECORD_OUTPUT_BUFFER *nfrob,
         if(f->internal.BaseMftId == sp->mfi.BaseMftId){
             /* update flags, because sp->mfi contains more actual data  */
             f->flags = sp->mfi.Flags;
+            /* update access times */
+            f->creation_time = sp->mfi.CreationTime;
+            f->last_modification_time = sp->mfi.LastWriteTime;
+            f->last_access_time = sp->mfi.LastAccessTime;
             /* set parent directory id for the stream */
             f->internal.ParentDirectoryMftId = sp->mfi.ParentDirectoryMftId;
             /* add filename to the name of the stream */

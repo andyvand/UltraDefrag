@@ -35,6 +35,12 @@
     - WgxSetProcessPriority routine added to wgx library
 
 
+  Version 5.1.0  2012-09-
+  ------------------------------------------------------------------------------
+    - Internals: creation_time, last_modification_time, last_access_time
+      members added to the winx_file_info structure
+
+
   Version 5.0.7  2012-09-01
   ------------------------------------------------------------------------------
     - added compatibility with the following software by exclusion their 
