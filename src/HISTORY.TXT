@@ -6,6 +6,9 @@
     - all the disk processing algorithms were reimplemented
       to reach better efficiency and shorter processing times
     - FAT optimization was implemented
+    - ability to sort files on the disk by the disk optimization was added;
+      files can be sorted by path, size, creation time, last modification time,
+      last access time - in eighter ascending or descending order
     - ability to filter out files by size of their fragments was added
       (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
       environment variable in command line tool and boot time interface)

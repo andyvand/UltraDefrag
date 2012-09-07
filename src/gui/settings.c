@@ -122,7 +122,8 @@ WGX_OPTION internal_options[] = {
     {WGX_CFG_INT,     0, "list_height", &list_height, (void *)0},
     {WGX_CFG_EMPTY,   0, "", NULL, ""},
 
-    {WGX_CFG_INT,     0, "job_flags", &job_flags, (void *)UD_PREVIEW_MATCHING},
+    {WGX_CFG_INT,     0, "job_flags",     &job_flags,     (void *)0},
+    {WGX_CFG_INT,     0, "sorting_flags", &sorting_flags, (void *)(SORT_BY_PATH | SORT_ASCENDING)},
     {WGX_CFG_EMPTY,   0, "", NULL, ""},
 
     {0,               0, NULL, NULL, NULL}
@@ -147,6 +148,8 @@ void DeleteEnvironmentVariables(void)
     (void)SetEnvironmentVariable("UD_LOG_FILE_PATH",NULL);
     (void)SetEnvironmentVariable("UD_TIME_LIMIT",NULL);
     (void)SetEnvironmentVariable("UD_DRY_RUN",NULL);
+    (void)SetEnvironmentVariable("UD_SORTING",NULL);
+    (void)SetEnvironmentVariable("UD_SORTING_ORDER",NULL);
 }
 
 /**
@@ -169,6 +172,7 @@ static void ValidateGUIOptions(void)
 
 void GetPrefs(void)
 {
+    DeleteEnvironmentVariables();
     ValidateGUIOptions();
     WgxGetOptions(".\\options\\guiopts.lua",read_only_options);
     WgxGetOptions(".\\options\\guiopts-internals.lua",internal_options);

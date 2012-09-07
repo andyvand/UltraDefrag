@@ -268,6 +268,7 @@ extern int user_defined_column_widths[];
 extern int list_height;
 extern int dry_run;
 extern int job_flags;
+extern int sorting_flags;
 extern int repeat_action;
 extern int show_menu_icons;
 extern int show_taskbar_icon_overlay;
@@ -326,5 +327,14 @@ extern int minimize_to_system_tray;
 #define MIN_BTN_HEIGHT DPI(23) /* recommended button height */
 #define BTN_H_SPACING  DPI(9)  /* minimal space between text and button right/left sides */
 #define BTN_V_SPACING  DPI(4)  /* minimal space between text and button top/bottom sides */
+
+/* flags for the preview menu */
+#define SORT_BY_PATH               0x1
+#define SORT_BY_SIZE               0x2
+#define SORT_BY_CREATION_TIME      0x4
+#define SORT_BY_MODIFICATION_TIME  0x8
+#define SORT_BY_ACCESS_TIME        0x10
+#define SORT_ASCENDING             0x20
+#define SORT_DESCENDING            0x40
 
 #endif /* _UDEFRAG_GUI_MAIN_H_ */

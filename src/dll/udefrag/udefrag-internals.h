@@ -140,6 +140,17 @@
 */
 #define ENV_BUFFER_SIZE 32767
 
+/*
+* The UD_SORT_BY_xxx flags
+* are mutually exclusive.
+*/
+#define UD_SORT_BY_PATH               0x1
+#define UD_SORT_BY_SIZE               0x2
+#define UD_SORT_BY_CREATION_TIME      0x4
+#define UD_SORT_BY_MODIFICATION_TIME  0x8
+#define UD_SORT_BY_ACCESS_TIME        0x10
+#define UD_SORT_DESCENDING            0x20
+
 typedef struct _udefrag_options {
     winx_patlist in_filter;     /* patterns for file inclusion */
     winx_patlist ex_filter;     /* patterns for file exclusion */
@@ -153,6 +164,7 @@ typedef struct _udefrag_options {
     int dbgprint_level;         /* controls amount of debugging information */
     int dry_run;                /* set %UD_DRY_RUN% variable to avoid actual data moving in tests */
     int job_flags;              /* flags triggering algorithm features */
+    int sorting_flags;          /* flags triggering file sorting features (UD_SORT_xxx flags) */
     int algorithm_defined_fst;  /* nonzero value indicates that the fragment size
                                    threshold is set by algorithm and not by user */
 } udefrag_options;

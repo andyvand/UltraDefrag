@@ -33,6 +33,16 @@ VARIABLES
         UD_FRAGMENTS_THRESHOLD
                 exclude files which lesser fragments
 
+        UD_SORTING
+                file sorting method for the disk optimization
+                PATH (default), SIZE, C_TIME (creation time),
+                M_TIME (last modification time),
+                A_TIME (last access time)
+
+        UD_SORTING_ORDER
+                file sorting order for the disk optimization
+                ASC (default), DESC (descending)
+
         UD_TIME_LIMIT
                 space separated list of maximum timeout to terminate
                 processing

@@ -70,8 +70,9 @@ int btd_installed = 0;
 
 int web_statistics_completed = 0;
 
-/* algorithm preview flags controlled through the preview menu */
-int job_flags = UD_PREVIEW_MATCHING;
+/* flags controlled through the preview menu */
+int job_flags = 0;
+int sorting_flags = SORT_BY_PATH | SORT_ASCENDING;
 
 /* forward declarations */
 LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
@@ -854,7 +855,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
     wchar_t lang_name[MAX_PATH];
     wchar_t *report_opts_path;
     FILE *f;
-    int flag, disable_latest_version_check_old;
+    int disable_latest_version_check_old;
     
     /* handle shell restart */
     if(uMsg == TaskbarButtonCreatedMsg){
@@ -1152,36 +1153,68 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             }
             /* handle preview submenu */
             if(id > IDM_PREVIEW && id < IDM_PREVIEW_LAST_ITEM){
+                CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_CHECKED);
                 switch(id){
-                /* case IDM_PREVIEW_MOVE_FRONT:
-                    flag = UD_PREVIEW_MOVE_FRONT;
-                    break; */
-                case IDM_PREVIEW_LARGEST:
-                    /* "find largest" menu item affects "find matching" item too */
-                    id = IDM_PREVIEW_MATCHING;
-                case IDM_PREVIEW_MATCHING:
-                    flag = UD_PREVIEW_MATCHING;
+                case IDM_PREVIEW_SORT_BY_PATH:
+                    (void)SetEnvironmentVariable("UD_SORTING","path");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_PATH;
                     break;
-                /* case IDM_PREVIEW_SKIP_PARTIAL:
-                    flag = UD_PREVIEW_SKIP_PARTIAL;
-                    break; */
+                case IDM_PREVIEW_SORT_BY_SIZE:
+                    (void)SetEnvironmentVariable("UD_SORTING","size");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_SIZE;
+                    break;
+                case IDM_PREVIEW_SORT_BY_CREATION_TIME:
+                    (void)SetEnvironmentVariable("UD_SORTING","c_time");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_CREATION_TIME;
+                    break;
+                case IDM_PREVIEW_SORT_BY_MODIFICATION_TIME:
+                    (void)SetEnvironmentVariable("UD_SORTING","m_time");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_MODIFICATION_TIME;
+                    break;
+                case IDM_PREVIEW_SORT_BY_ACCESS_TIME:
+                    (void)SetEnvironmentVariable("UD_SORTING","a_time");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_ACCESS_TIME;
+                    break;
+                case IDM_PREVIEW_SORT_ASCENDING:
+                    (void)SetEnvironmentVariable("UD_SORTING_ORDER","asc");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_DESCENDING,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= ~(SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_ASCENDING;
+                    break;
+                case IDM_PREVIEW_SORT_DESCENDING:
+                    (void)SetEnvironmentVariable("UD_SORTING_ORDER","desc");
+                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_ASCENDING,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= ~(SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_DESCENDING;
+                    break;
                 default:
-                    flag = 0;
                     break;
                 }
-                if(job_flags & flag){
-                    CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_UNCHECKED);
-                    job_flags ^= flag;
-                } else {
-                    CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_CHECKED);
-                    job_flags |= flag;
-                }
-                
-                /* set "find largest" menu state opposed to "find matching" state */
-                if(job_flags & UD_PREVIEW_MATCHING)
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_LARGEST,MF_BYCOMMAND | MF_UNCHECKED);
-                else
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_LARGEST,MF_BYCOMMAND | MF_CHECKED);
             }
             break;
         }

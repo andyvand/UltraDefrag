@@ -155,6 +155,16 @@
  *
  * @par UD_FRAGMENTS_THRESHOLD
  * Exclude all files which have less fragments than the specified number.
+ *
+ * @par UD_SORTING
+ * Set the file sorting method for the disk optimization. PATH is used by default,
+ * it forces to sort files by their paths. Four more options are available:
+ * SIZE (sort by size), C_TIME (sort by creation time), M_TIME (sort by last
+ * modification time) and A_TIME (sort by last access time).
+ *
+ * @par UD_SORTING_ORDER
+ * Set the file sorting order for the disk optimization. ASC (ascending) is used
+ * by default. DESC (descending) forces to sort files in descending order.
  * @latexonly
  * \end{Indent}
  * @endlatexonly
