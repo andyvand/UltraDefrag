@@ -24,8 +24,8 @@ HELP                      = &Bantuan
 
 ; --- Action Menu
 
-ANALYSE                   = &Analyze
-DEFRAGMENT                = &Defragmentasi
+ANALYSE                   = &Analisa
+DEFRAGMENT                = &Defragment
 QUICK_OPTIMIZE            = &Optimalkan &Cepat
 FULL_OPTIMIZE             = &Optimalkan &Penuh
 OPTIMIZE_MFT              = &Optimalkan MFT
@@ -104,47 +104,47 @@ PERCENT                   = % kosong
 
 ; Status messages
 
-STATUS_RUNNING            = Executing
-STATUS_ANALYSED           = Analyzed
-STATUS_DEFRAGMENTED       = Defragmented
-STATUS_OPTIMIZED          = Optimized
-STATUS_DIRTY              = Disk needs to be repaired
+STATUS_RUNNING            = Melaksanakan
+STATUS_ANALYSED           = Dianalisis
+STATUS_DEFRAGMENTED       = Didefragmentasi
+STATUS_OPTIMIZED          = Dioptimumkan
+STATUS_DIRTY              = Cakera perlu dibaiki
 
 ; Status bar messages.
 
-DIRS                      = folders
-FILES                     = files
-FRAGMENTED                = fragmented
-COMPRESSED                = compressed
+DIRS                      = direktori
+FILES                     = fail
+FRAGMENTED                = berpecah
+COMPRESSED                = termampat
 
 ; About window.
 
-ABOUT_WIN_TITLE           = About Ultra Defragmenter
-CREDITS                   = &Credits
-LICENSE                   = &License
+ABOUT_WIN_TITLE           = Mengenai Ultra Defragmenter
+CREDITS                   = &Kredit
+LICENSE                   = &Lesen
 
 ; Shutdown confirmation
 
 PLEASE_CONFIRM            = Sila sahkan
-REALLY_SHUTDOWN_WHEN_DONE = Do you really want to shutdown when done?
-REALLY_HIBERNATE_WHEN_DONE= Do you really want to hibernate when done?
-REALLY_LOGOFF_WHEN_DONE   = Do you really want to log off when done?
-REALLY_REBOOT_WHEN_DONE   = Do you really want to reboot when done?
-SECONDS_TILL_SHUTDOWN     = seconds until shutdown
-SECONDS_TILL_HIBERNATION  = seconds until hibernation
-SECONDS_TILL_LOGOFF       = seconds until logoff
-SECONDS_TILL_REBOOT       = seconds until reboot
-YES                       = &Yes
-NO                        = &No
+REALLY_SHUTDOWN_WHEN_DONE = Adakah anda benar-benar mahu untuk matikan apabila dilakukan?
+REALLY_HIBERNATE_WHEN_DONE= Adakah anda benar-benar mahu untuk hibernate apabila dilakukan?
+REALLY_LOGOFF_WHEN_DONE   = Adakah anda benar-benar mahu untuk log off apabila dilakukan?
+REALLY_REBOOT_WHEN_DONE   = Adakah anda benar-benar mahu untuk bemula semula apabila dilakukan?
+SECONDS_TILL_SHUTDOWN     = saat sehingga matikan
+SECONDS_TILL_HIBERNATION  = saat sehingga hibernate
+SECONDS_TILL_LOGOFF       = saat sehingga log off
+SECONDS_TILL_REBOOT       = saat sehingga bemula semula
+YES                       = &Ya
+NO                        = &Tidak
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = You can upgrade me ^-^
-UPGRADE_MESSAGE           = release is available for download!
+UPGRADE_CAPTION           = Anda boleh menaik taraf saya! ^-^
+UPGRADE_MESSAGE           = memindahkan terdapat untuk dimuat turun!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = A job is running
+JOB_IS_RUNNING            = Kerja sedang berjalan
 
 ; Strings for system tray icon context menu.
 
@@ -153,19 +153,19 @@ HIDE                      = Hide
 
 ; Strings for the file fragmentation reports.
 
-FRAGMENTED_FILES_ON       = Fragmented files on
+FRAGMENTED_FILES_ON       = Fail berpecah pada:
 
-VISIT_HOMEPAGE            = Visit our Homepage
-VIEW_REPORT_OPTIONS       = View report options
-POWERED_BY_LUA            = Powered by Lua
+VISIT_HOMEPAGE            = Lawati laman web kami
+VIEW_REPORT_OPTIONS       = Lihat pilihan laporan
+POWERED_BY_LUA            = Dikuasakan oleh Lua
 
-FRAGMENTS                 = Fragments
-SIZE                      = Size
-FILENAME                  = Filename
-COMMENT                   = Comment
+FRAGMENTS                 = Serpihan
+SIZE                      = Saiz
+FILENAME                  = Nama fail
+COMMENT                   = Komen
 
-LOCKED                    = locked
-MOVE_FAILED               = move failed
-INVALID                   = invalid
+LOCKED                    = dikunci
+MOVE_FAILED               = pindah gagal
+INVALID                   = tidak sah
 
 ; END OF FILE

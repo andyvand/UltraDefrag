@@ -44,7 +44,7 @@
 || [[Latvian.lng|Latvian]]                                               || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Lithuanian.lng|Lithuanian]]                                         || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Macedonian.lng|Macedonian]]                                         || ||=  90 || ||=  90 || ||>   100 % ||
-|| [[Malay.lng|Malay]]                                                   || ||=  48 || ||=  90 || ||>    53 % ||
+|| [[Malay.lng|Malay]]                                                   || ||=  84 || ||=  90 || ||>    93 % ||
 || [[Norwegian.lng|Norwegian]]                                           || ||=  88 || ||=  90 || ||>    97 % ||
 || [[Polish.lng|Polish]]                                                 || ||=  90 || ||=  90 || ||>   100 % ||
 || [[Portuguese (BR).lng|Portuguese (BR)]]                               || ||=  87 || ||=  90 || ||>    96 % ||
@@ -123,13 +123,13 @@
 || [[Romanian.lng|Romanian]]                                             || ||=  85 || ||=  90 || ||>    94 % ||
 || [[Croatian.lng|Croatian]]                                             || ||=  85 || ||=  90 || ||>    94 % ||
 || [[Javanese.lng|Javanese]]                                             || ||=  84 || ||=  90 || ||>    93 % ||
+|| [[Malay.lng|Malay]]                                                   || ||=  84 || ||=  90 || ||>    93 % ||
 || [[Icelandic.lng|Icelandic]]                                           || ||=  84 || ||=  90 || ||>    93 % ||
 || [[Burmese (Padauk).lng|Burmese (Padauk)]]                             || ||=  83 || ||=  90 || ||>    92 % ||
 || [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  82 || ||=  90 || ||>    91 % ||
 || [[Bosnian.lng|Bosnian]]                                               || ||=  76 || ||=  90 || ||>    84 % ||
 || [[Kapampangan.lng|Kapampangan]]                                       || ||=  66 || ||=  90 || ||>    73 % ||
 || [[Albanian.lng|Albanian]]                                             || ||=  64 || ||=  90 || ||>    71 % ||
-|| [[Malay.lng|Malay]]                                                   || ||=  48 || ||=  90 || ||>    53 % ||
 || [[English (GB).lng|English (GB)]]                                     || ||=  11 || ||=  90 || ||>    12 % ||
 || [[English (US).lng|English (US)]]                                     || ||=   0 || ||=  90 || ||>     0 % ||
 
