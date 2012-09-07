@@ -479,22 +479,59 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
 }
 
 /**
- * @brief Auxiliary routine to sort files by path in binary tree.
+ * @brief Auxiliary routine to sort files in the binary tree.
+ * @details This routine exclusively defines rules of the file
+ * sorting on the disk.
  */
 static int files_compare(const void *prb_a, const void *prb_b, void *prb_param)
 {
     winx_file_info *a, *b;
+    udefrag_job_parameters *jp;
+    int result;
     
     a = (winx_file_info *)prb_a;
     b = (winx_file_info *)prb_b;
+    jp = (udefrag_job_parameters *)prb_param;
     
-    return _wcsicmp(a->path, b->path);
+    if(jp->udo.sorting_flags & UD_SORT_BY_SIZE){
+        /* sort files of equal sizes by path */
+        if(a->disp.clusters == b->disp.clusters) goto paths_compare;
+        result = (a->disp.clusters > b->disp.clusters) ? 1 : (-1);
+        goto done;
+    }
+    
+    if(jp->udo.sorting_flags & UD_SORT_BY_CREATION_TIME){
+        /* sort files of equal creation times by path */
+        if(a->creation_time == b->creation_time) goto paths_compare;
+        result = (a->creation_time > b->creation_time) ? 1 : (-1);
+        goto done;
+    }
+
+    if(jp->udo.sorting_flags & UD_SORT_BY_MODIFICATION_TIME){
+        /* sort files of equal last modification times by path */
+        if(a->last_modification_time == b->last_modification_time) goto paths_compare;
+        result = (a->last_modification_time > b->last_modification_time) ? 1 : (-1);
+        goto done;
+    }
+
+    if(jp->udo.sorting_flags & UD_SORT_BY_ACCESS_TIME){
+        /* sort files of equal last access times by path */
+        if(a->last_access_time == b->last_access_time) goto paths_compare;
+        result = (a->last_access_time > b->last_access_time) ? 1 : (-1);
+        goto done;
+    }
+
+paths_compare:    
+    result = _wcsicmp(a->path, b->path);
+    
+done:
+    if(jp->udo.sorting_flags & UD_SORT_DESCENDING) result *= (-1);
+    return result;
 }
 
 /**
- * @brief Moves small files
- * to the beginning of the disk,
- * sorted by path.
+ * @brief Moves small files to the 
+ * beginning of the disk, sorted.
  * @param[in] jp the job parameters.
  * @param[in,out] start_lcn LCN of
  * the space not optimized yet.
@@ -897,8 +934,8 @@ static int optimize_routine(udefrag_job_parameters *jp)
     /* no files are excluded by this task currently */
     clear_currently_excluded_flag(jp);
 
-    /* build tree of files sorted by path */
-    pt = prb_create(files_compare,NULL,NULL);
+    /* build tree of files sorted by the requested criteria */
+    pt = prb_create(files_compare,(void *)jp,NULL);
     if(pt == NULL){
         DebugPrint("optimize_routine: cannot create binary tree");
         result = UDEFRAG_NO_MEM;
@@ -938,7 +975,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
         move_files_to_back(jp,&end_lcn);
         if(jp->termination_router((void *)jp)) break;
         
-        /* move small files back, sorted by path */
+        /* move small files back, sorted */
         move_files_to_front(jp,&start_lcn,end_lcn,&t);
         
         /* break if no more files need optimization */
@@ -970,8 +1007,8 @@ done:
  * @brief Performs a volume optimization.
  * @details The disk optimization sorts
  * small files (below fragment size threshold)
- * by path on the disk. On FAT it optimizes
- * directories also. On NTFS it optimizes the MFT.
+ * on the disk. On FAT it optimizes directories
+ * also. On NTFS it optimizes the MFT.
  * @return Zero for success, negative value otherwise.
  */
 int optimize(udefrag_job_parameters *jp)

@@ -36,7 +36,11 @@ int get_options(udefrag_job_parameters *jp)
 {
     wchar_t *buffer;
     char buf[64];
-    int i;
+    int i, index = 0;
+    char *methods[] = {
+        "path", "path", "size", "creation time",
+        "last modification time", "last access time"
+    };
 
     if(jp == NULL)
         return (-1);
@@ -90,6 +94,26 @@ int get_options(udefrag_job_parameters *jp)
     /* set file fragments threshold */
     if(winx_query_env_variable(L"UD_FRAGMENTS_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0)
         jp->udo.fragments_limit = (ULONGLONG)_wtol(buffer);
+    
+    /* set file sorting options */
+    if(winx_query_env_variable(L"UD_SORTING",buffer,ENV_BUFFER_SIZE) >= 0){
+        (void)_wcslwr(buffer);
+        if(!wcscmp(buffer,L"path"))
+            index = 1, jp->udo.sorting_flags |= UD_SORT_BY_PATH;
+        else if(!wcscmp(buffer,L"size"))
+            index = 2, jp->udo.sorting_flags |= UD_SORT_BY_SIZE;
+        else if(!wcscmp(buffer,L"c_time"))
+            index = 3, jp->udo.sorting_flags |= UD_SORT_BY_CREATION_TIME;
+        else if(!wcscmp(buffer,L"m_time"))
+            index = 4, jp->udo.sorting_flags |= UD_SORT_BY_MODIFICATION_TIME;
+        else if(!wcscmp(buffer,L"a_time"))
+            index = 5, jp->udo.sorting_flags |= UD_SORT_BY_ACCESS_TIME;
+    }
+    if(winx_query_env_variable(L"UD_SORTING_ORDER",buffer,ENV_BUFFER_SIZE) >= 0){
+        (void)_wcslwr(buffer);
+        if(wcsstr(buffer,L"desc"))
+            jp->udo.sorting_flags |= UD_SORT_DESCENDING;
+    }
     
     /* set time limit */
     if(winx_query_env_variable(L"UD_TIME_LIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
@@ -145,6 +169,8 @@ int get_options(udefrag_job_parameters *jp)
     (void)winx_bytes_to_hr(jp->udo.fragment_size_threshold,1,buf,sizeof(buf));
     DebugPrint("fragment size threshold                   = %s",buf);
     DebugPrint("file fragments threshold = %I64u",jp->udo.fragments_limit);
+    DebugPrint("files will be sorted by %s in %s order",methods[index],
+        (jp->udo.sorting_flags & UD_SORT_DESCENDING) ? "descending" : "ascending");
     DebugPrint("time limit = %I64u seconds",jp->udo.time_limit);
     DebugPrint("progress refresh interval = %u msec",jp->udo.refresh_interval);
     if(jp->udo.disable_reports) DebugPrint("reports disabled");

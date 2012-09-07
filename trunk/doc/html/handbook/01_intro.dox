@@ -21,9 +21,9 @@
  *
  * UltraDefrag reduces the file fragmentation, thus it makes disk
  * operations faster. Also the program can optimize a whole disk
- * by placing small files close to each other sorted by path.
- * After the disk optimization less mechanical work is needed
- * to read groups of small files. This reduces startup times
+ * by placing small files close to each other, sorted by path (or
+ * other criteria). After the disk optimization less mechanical work
+ * is needed to read groups of small files. This reduces startup times
  * of many applications including web and photo browsers.
  *
  * In contrast with the most other disk defragmenters UltraDefrag
@@ -40,7 +40,7 @@
  * - NTFS metafiles defragmentation
  * - ultra fast NTFS analysis
  * - fast defragmentation algorithm
- * - effective disk optimization algorithm (two strategies available)
+ * - effective disk optimization algorithm (many strategies available)
  * - safety, it can never damage processed files
  * - simplicity, it can be used without reading the documentation
  * - ability to defragment single files/directories from the context menu of Explorer
@@ -104,8 +104,8 @@
  * <li>The analysis phase is the same as for defragmentation.</li>
  * <li>The next phase moves all small files and fragments to the end of the
  * disk to free space at the beginning of it.</li>
- * <li>The third phase moves small files back, sorted by path
- * in ascending order. This speeds up access to groups of files.</li>
+ * <li>The third phase moves small files back, sorted by user defined criteria 
+ * (by path in ascending order by default). This speeds up access to groups of files.</li>
  * <li>The last phase defragments all files.</li>
  * </ol>
  *

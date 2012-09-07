@@ -77,9 +77,12 @@ typedef enum {
 } udefrag_operation_type;
 
 /* flags triggering algorithm features */
-#define UD_JOB_REPEAT               0x1
-#define UD_PREVIEW_MATCHING         0x2
-#define UD_JOB_CONTEXT_MENU_HANDLER 0x10
+#define UD_JOB_REPEAT                     0x1
+/*
+* 0x2, 0x4, 0x8 flags have been used 
+* in the past for experimental options
+*/
+#define UD_JOB_CONTEXT_MENU_HANDLER       0x10
 
 /*
 * MFT_ZONE_SPACE has special meaning - 

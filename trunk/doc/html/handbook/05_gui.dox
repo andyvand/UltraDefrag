@@ -541,8 +541,8 @@
  * @latexonly
  * &
  * @endlatexonly
- * @par Find matching free space
- * Always fill a free space region which is similar to the size of the file.
+ * @par Sort by path
+ * Sort files by their paths in the disk optimization.
  *
  * @htmlonly
  * </td></tr><tr><td>
@@ -558,9 +558,93 @@
  * @latexonly
  * &
  * @endlatexonly
- * @par Skip partial defragmenting
- * On regular defragmentation skip the final partial defragmentation,
- * which consolidates small parts of files.
+ * @par Sort by size
+ * Sort files by their sizes in the disk optimization.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
+ * @par Sort by creation time
+ * Sort files by their creation times in the disk optimization.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
+ * @par Sort by last modification time
+ * Sort files by their last modification times in the disk optimization.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
+ * @par Sort by last access time
+ * Sort files by their last access times in the disk optimization.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
+ * @par Sort in ascending order
+ * Sort files in ascending order in the disk optimization.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
+ * @par Sort in descending order
+ * Sort files in descending order in the disk optimization.
  *
  * @htmlonly
  * </td></tr></table>

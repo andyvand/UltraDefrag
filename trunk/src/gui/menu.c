@@ -125,8 +125,14 @@ WGX_MENU help_menu[] = {
 };
 
 WGX_MENU preview_menu[] = {
-    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_LARGEST,  NULL, L"Find largest free space",  -1 },
-    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_MATCHING, NULL, L"Find matching free space", -1 },
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_BY_PATH,              NULL, L"Sort by path",  -1 },
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_BY_SIZE,              NULL, L"Sort by size", -1 },
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_BY_CREATION_TIME,     NULL, L"Sort by creation time",  -1 },
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME, NULL, L"Sort by last modification time", -1 },
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_BY_ACCESS_TIME,       NULL, L"Sort by last access time",  -1 },
+    {MF_SEPARATOR,0,NULL,NULL,0},
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_ASCENDING,            NULL, L"Sort in ascending order", -1 },
+    {MF_STRING | MF_ENABLED | MF_UNCHECKED,IDM_PREVIEW_SORT_DESCENDING,           NULL, L"Sort in descending order",  -1 },
     {0,0,NULL,NULL,0}
 };
 
@@ -220,15 +226,20 @@ int CreateMainMenu(void)
         EnableMenuItem(hMainMenu,IDM_CFG_BOOT_SCRIPT,MF_BYCOMMAND | MF_GRAYED);
     }
     
-    if(job_flags & UD_PREVIEW_MATCHING){
-        CheckMenuItem(hMainMenu,
-            IDM_PREVIEW_MATCHING,
-            MF_BYCOMMAND | MF_CHECKED);
-    } else {
-        CheckMenuItem(hMainMenu,
-            IDM_PREVIEW_LARGEST,
-            MF_BYCOMMAND | MF_CHECKED);
-    }
+    if(sorting_flags & SORT_BY_PATH)
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_CHECKED);
+    else if(sorting_flags & SORT_BY_SIZE)
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_CHECKED);
+    else if(sorting_flags & SORT_BY_CREATION_TIME)
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_CHECKED);
+    else if(sorting_flags & SORT_BY_MODIFICATION_TIME)
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_CHECKED);
+    else if(sorting_flags & SORT_BY_ACCESS_TIME)
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_CHECKED);
+    if(sorting_flags & SORT_ASCENDING)
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_ASCENDING,MF_BYCOMMAND | MF_CHECKED);
+    else
+        CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_DESCENDING,MF_BYCOMMAND | MF_CHECKED);
 
     if(!DrawMenuBar(hWindow))
         WgxDbgPrintLastError("Cannot redraw main menu");
