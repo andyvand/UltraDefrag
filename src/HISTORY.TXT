@@ -40,6 +40,14 @@
 
   Version 5.1.0  2012-09-
   ------------------------------------------------------------------------------
+    - 
+
+    - the following translations were added:
+
+      Malay
+
+    - the following translations were updated:
+
     - Internals: creation_time, last_modification_time, last_access_time
       members added to the winx_file_info structure
 
