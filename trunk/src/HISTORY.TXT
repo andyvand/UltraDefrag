@@ -40,7 +40,8 @@
 
   Version 5.1.0  2012-09-
   ------------------------------------------------------------------------------
-    - 
+    - added settings for file pattern groups to easier exclude or include
+      groups of files (fixes issue #3449331)
 
     - the following translations were added:
 
