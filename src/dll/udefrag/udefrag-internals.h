@@ -253,6 +253,7 @@ typedef struct _udefrag_job_parameters {
     struct file_counters f_counters;            /* file counters */
     NTSTATUS last_move_status;                  /* status of the last move file operation; zero by default */
     ULONGLONG already_optimized_clusters;       /* number of clusters needing no sorting in optimization */
+    int progress_trigger;                       /* a trigger used for debugging purposes */
 } udefrag_job_parameters;
 
 int get_options(udefrag_job_parameters *jp);
