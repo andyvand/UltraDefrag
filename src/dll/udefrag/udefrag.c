@@ -89,8 +89,12 @@ static void dbg_print_header(udefrag_job_parameters *jp)
 {
     int os_version;
     int mj, mn;
-    char ch;
     winx_time t;
+    char ch;
+    wchar_t c;
+    wchar_t s1[] = L"a";
+    wchar_t s2[] = L"b";
+    int result;
 
     /* print driver version */
     winx_dbg_print_header(0,0,"*");
@@ -109,10 +113,11 @@ static void dbg_print_header(udefrag_job_parameters *jp)
         (int)t.day,(int)t.month,(int)t.year,(int)t.hour,(int)t.minute);
     winx_dbg_print_header(0,0,"*");
     
-    /* force MinGW to export both udefrag_tolower and udefrag_toupper */
-    ch = 'a';
-    ch = winx_tolower(ch) - winx_toupper(ch);
-    /* ensure that MinGW will export udefrag_dbg_print */
+    /* force MinGW to export general purpose udefrag_xxx routines */
+    ch = 'a'; ch = winx_tolower(ch) - winx_toupper(ch);
+    c = 'a'; c = winx_towlower(c) - winx_towupper(c);
+    winx_wcslwr(s1); winx_wcsupr(s2);
+    result = winx_wcsicmp(s1,s2);
     winx_dbg_print(NULL);
 }
 

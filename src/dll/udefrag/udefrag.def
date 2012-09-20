@@ -9,6 +9,11 @@ EXPORTS
     udefrag_hr_to_bytes=winx_hr_to_bytes
     udefrag_tolower=winx_tolower
     udefrag_toupper=winx_toupper
+    udefrag_towupper=winx_towupper
+    udefrag_towlower=winx_towlower
+    udefrag_wcsupr=winx_wcsupr
+    udefrag_wcslwr=winx_wcslwr
+    udefrag_wcsicmp=winx_wcsicmp
     udefrag_start_job
     udefrag_get_default_formatted_results
     udefrag_release_default_formatted_results

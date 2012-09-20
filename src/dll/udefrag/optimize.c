@@ -522,7 +522,7 @@ static int files_compare(const void *prb_a, const void *prb_b, void *prb_param)
     }
 
 paths_compare:    
-    result = _wcsicmp(a->path, b->path);
+    result = winx_wcsicmp(a->path, b->path);
     
 done:
     if(jp->udo.sorting_flags & UD_SORT_DESCENDING) result *= (-1);
@@ -919,6 +919,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
     struct prb_table *pt;
     struct prb_traverser t;
     ULONGLONG start_lcn, end_lcn;
+    void **p;
     ULONGLONG time;
     int result = 0;
 
@@ -945,10 +946,14 @@ static int optimize_routine(udefrag_job_parameters *jp)
         if(f->disp.clusters * jp->v_info.bytes_per_cluster \
           < jp->udo.optimizer_size_limit){
             if(can_move_entirely(f,jp)){
-                if(prb_probe(pt,(void *)f) == NULL){
+                p = prb_probe(pt,(void *)f);
+                if(p == NULL){
                     DebugPrint("optimize_routine: cannot add file to the tree");
                     result = UDEFRAG_NO_MEM;
                     goto done;
+                }
+                if(*p != f){
+                    DebugPrint("optimize_routine: a duplicate found for %ws",f->path);
                 }
             }
         }

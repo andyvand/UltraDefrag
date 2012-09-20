@@ -40,6 +40,8 @@
 
   Version 5.1.0  2012-09-
   ------------------------------------------------------------------------------
+    - bug fix: filters forced to be case insensitive for all the characters
+      (they worked properly for English characters only)
     - added settings for file pattern groups to easier exclude or include
       groups of files (fixes issue #3449331)
 
@@ -53,6 +55,17 @@
 
     - Internals: creation_time, last_modification_time, last_access_time
       members added to the winx_file_info structure
+    - bug fix: winx_wcsistr, winx_wcsmatch, winx_patfind, winx_patcmp 
+      routines forced to work properly for all the characters 
+      (they worked well for English characters only)
+    - winx_toupper, winx_tolower, winx_wcsistr, winx_stristr, winx_wcsmatch,
+      winx_patfind, winx_patcmp routines optimized for speed
+    - winx_towupper, winx_towlower, winx_wcsupr, winx_wcslwr, winx_wcsicmp
+      routines added to zenwinx library to be used instead of the fake 
+      Windows routines working properly for English letters only
+    - udefrag_towupper, udefrag_towlower, udefrag_wcsupr, udefrag_wcslwr, 
+      udefrag_wcsicmp routines added to udefrag library for the same reasons
+      as mentioned above
 
 
   Version 5.0.7  2012-09-01

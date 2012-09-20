@@ -143,6 +143,14 @@ char *udefrag_get_error_description(int error_code);
 /* reliable _toupper and _tolower analogs */
 char udefrag_toupper(char c);
 char udefrag_tolower(char c);
+/* reliable towupper and towlower analogs */
+wchar_t udefrag_towupper(wchar_t c);
+wchar_t udefrag_towlower(wchar_t c);
+/* reliable _wcsupr and _wcslwr analogs */
+wchar_t *udefrag_wcsupr(wchar_t *s);
+wchar_t *udefrag_wcslwr(wchar_t *s);
+/* reliable _wcsicmp analog */
+int udefrag_wcsicmp(const wchar_t *s1, const wchar_t *s2);
 
 int udefrag_set_log_file_path(void);
 void udefrag_flush_dbg_log(void);

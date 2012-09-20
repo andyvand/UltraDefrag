@@ -146,18 +146,18 @@ static void DestroySynchObjects(void)
  */
 static int IsPortable(void)
 {
-    char cd[MAX_PATH];
-    char instdir[MAX_PATH];
-    char path[MAX_PATH];
+    wchar_t cd[MAX_PATH];
+    wchar_t instdir[MAX_PATH];
+    wchar_t path[MAX_PATH];
     HKEY hRegKey = NULL;
-    DWORD path_length = MAX_PATH - 1;
+    DWORD path_length = (MAX_PATH - 1) * sizeof(wchar_t);
     REGSAM samDesired = KEY_READ;
     OSVERSIONINFO osvi;
     BOOL bIsWindowsXPorLater;
     LONG result;
     int i;
     
-    if(!GetModuleFileName(NULL,cd,MAX_PATH)){
+    if(!GetModuleFileNameW(NULL,cd,MAX_PATH)){
         WgxDbgPrintLastError("IsPortable: cannot get module file name");
         return 1;
     }
@@ -167,8 +167,8 @@ static int IsPortable(void)
     cd[MAX_PATH-1] = 0;
     
     /* strip off the file name */
-    i = strlen(cd);
-    while(i > 0) {
+    i = wcslen(cd);
+    while(i >= 0) {
         if(cd[i] == '\\'){
             cd[i] = 0;
             break;
@@ -199,7 +199,7 @@ static int IsPortable(void)
         return 1;
     }
     
-    result = RegQueryValueEx(hRegKey,"InstallLocation",NULL,NULL,(LPBYTE) &instdir,&path_length);
+    result = RegQueryValueExW(hRegKey,L"InstallLocation",NULL,NULL,(LPBYTE) &instdir,&path_length);
     RegCloseKey(hRegKey);
     if(result != ERROR_SUCCESS){
         SetLastError((DWORD)result);
@@ -208,22 +208,22 @@ static int IsPortable(void)
     }
     
     /* make sure we have a trailing zero character */
-    instdir[path_length] = 0;
+    instdir[path_length / sizeof(wchar_t)] = 0;
     
     /* strip off any double quotes */
     if(instdir[0] == '"'){
-        (void)strncpy(path,&instdir[1],strlen(instdir)-2);
-        path[strlen(instdir)-2] = 0;
+        (void)wcsncpy(path,&instdir[1],wcslen(instdir)-2);
+        path[wcslen(instdir)-2] = 0;
     } else {
-        (void)strcpy(path,instdir);
+        (void)wcscpy(path,instdir);
     }
     
-    if(_stricmp(path,cd) == 0){
-        WgxDbgPrint("Install location \"%s\" matches \"%s\", so it isn't portable\n",path,cd);
+    if(udefrag_wcsicmp(path,cd) == 0){
+        WgxDbgPrint("Install location \"%ws\" matches \"%ws\", so it isn't portable\n",path,cd);
         return 0;
     }
     
-    WgxDbgPrint("Install location \"%s\" differs from \"%s\", so it is portable\n",path,cd);
+    WgxDbgPrint("Install location \"%ws\" differs from \"%ws\", so it is portable\n",path,cd);
     return 1;
 }
 
