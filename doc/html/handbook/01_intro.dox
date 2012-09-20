@@ -167,15 +167,6 @@
  * To participate in UltraDefrag translation
  * please visit <a href="http://ultradefrag.wikispaces.com/">WikiSpaces.com</a>.
  *
- * The most recent version of this handbook can be obtained
- * from the program's <a href="http://ultradefrag.svn.sourceforge.net/viewvc/ultradefrag/trunk/doc/html/handbook.tar.gz?view=tar">SVN repository</a>. 
- * Download the archive, unpack it, run the
- * <a href="http://www.doxygen.org/">Doxygen</a> tool and
- * copy all files from the /rsc subdirectory to
- * /doxy-doc/html. After these steps open /doxy-doc/html/index.html
- * in your browser to view the latest version of
- * the documentation.
- *
  * @htmlonly
  * <HR>
  *  <TABLE STYLE="border: none; width: 97%; margin:auto;">
