@@ -338,11 +338,18 @@ int winx_print_array_of_strings(char **strings,int line_width,int max_rows,char 
 /* reliable _toupper and _tolower analogs */
 char winx_toupper(char c);
 char winx_tolower(char c);
+/* reliable towupper and towlower analogs */
+wchar_t winx_towupper(wchar_t c);
+wchar_t winx_towlower(wchar_t c);
+/* reliable _wcsupr and _wcslwr analogs */
+wchar_t *winx_wcsupr(wchar_t *s);
+wchar_t *winx_wcslwr(wchar_t *s);
 
 char *winx_strdup(const char *s);
 wchar_t *winx_wcsdup(const wchar_t *s);
-wchar_t *winx_wcsistr(const wchar_t * wcs1,const wchar_t * wcs2);
-char *winx_stristr(const char * s1,const char * s2);
+int winx_wcsicmp(const wchar_t *s1, const wchar_t *s2);
+wchar_t *winx_wcsistr(const wchar_t *s1, const wchar_t *s2);
+char *winx_stristr(const char *s1, const char *s2);
 int winx_wcsmatch(wchar_t *string, wchar_t *mask, int flags);
 char *winx_vsprintf(const char *format,va_list arg);
 char *winx_sprintf(const char *format, ...);
