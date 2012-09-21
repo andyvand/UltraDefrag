@@ -45,6 +45,7 @@ def write_table(_file, _type, _name, _range, _case):
             else: _file.write("  ")
         else:
             # UTF-16 conversion rules
+            if cc == c: cc = 0x0
             _file.write("0x%04x" % cc)
             if c < 0xFFFF: _file.write(", ")
             else: _file.write("  ")
