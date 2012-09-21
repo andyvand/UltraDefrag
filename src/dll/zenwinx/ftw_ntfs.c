@@ -1453,17 +1453,17 @@ static winx_file_info * find_directory_by_mft_id(ULONGLONG mft_id,
 
 /**
  * @param[in] mft_id mft index of directory.
- * @param[out] path directory path, MAX_PATH long.
+ * @param[out] path pointer to variable receiving directory path.
  * @param[out] parent_mft_id mft index of parent directory.
- * @return Nonzero value indicates that path contains full
+ * @return Nonzero value indicates that returned path contains full
  * native path, otherwise it contains directory name only.
  */
-static int get_directory_information(ULONGLONG mft_id,wchar_t *path,ULONGLONG *parent_mft_id,
+static int get_directory_information(ULONGLONG mft_id,wchar_t **path,ULONGLONG *parent_mft_id,
     file_entry *f_array,unsigned long n_entries,mft_scan_parameters *sp)
 {
     winx_file_info *f;
     
-    path[0] = 0;
+    *path = NULL;
     *parent_mft_id = FILE_root;
     
     f = find_directory_by_mft_id(mft_id,f_array,n_entries,sp);
@@ -1476,21 +1476,18 @@ static int get_directory_information(ULONGLONG mft_id,wchar_t *path,ULONGLONG *p
     *parent_mft_id = f->internal.ParentDirectoryMftId;
     
     if(f->path){
-        wcsncpy(path,f->path,MAX_PATH - 1);
-        path[MAX_PATH - 1] = 0;
+        *path = f->path;
         return 1;
     }
     
     if(f->name){
-        wcsncpy(path,f->name,MAX_PATH - 1);
-        path[MAX_PATH - 1] = 0;
+        *path = f->name;
     }
     return 0;
 }
 
 /* ancillary structure used by build_file_path routine */
 typedef struct _path_parts {
-    wchar_t parent[MAX_PATH];  /* path of the parent directory */
     wchar_t child[MAX_PATH];   /* already gathered part of the path */
     wchar_t buffer[MAX_PATH];  /* ancillary buffer */
 } path_parts;
@@ -1500,7 +1497,7 @@ static void build_file_path(winx_file_info *f,file_entry *f_array,
 {
     ULONGLONG mft_id,parent_mft_id;
     int full_path_retrieved = 0;
-    wchar_t *src;
+    wchar_t *parent_path,*src;
     
     /* initialize p->child by filename */
     wcsncpy(p->child,f->name,MAX_PATH - 1);
@@ -1509,12 +1506,14 @@ static void build_file_path(winx_file_info *f,file_entry *f_array,
     /* loop through parent directories */
     parent_mft_id = f->internal.ParentDirectoryMftId;
     while(parent_mft_id != FILE_root && !full_path_retrieved){
-        if(ftw_ntfs_check_for_termination(sp))
-            return;
+        if(ftw_ntfs_check_for_termination(sp)) return;
         mft_id = parent_mft_id;
-        full_path_retrieved = get_directory_information(mft_id,p->parent,&parent_mft_id,
-            f_array,n_entries,sp);
-        _snwprintf(p->buffer,MAX_PATH,L"%ws\\%ws",p->parent,p->child);
+        full_path_retrieved = get_directory_information(mft_id,
+            &parent_path,&parent_mft_id,f_array,n_entries,sp);
+        if(parent_path)
+            _snwprintf(p->buffer,MAX_PATH,L"%ws\\%ws",parent_path,p->child);
+        else
+            _snwprintf(p->buffer,MAX_PATH,L"\\%ws",p->child);
         p->buffer[MAX_PATH - 1] = 0;
         wcscpy(p->child,p->buffer);
     }
