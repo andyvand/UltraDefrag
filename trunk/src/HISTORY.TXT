@@ -59,6 +59,8 @@
     - bug fix: winx_wcsistr, winx_wcsmatch, winx_patfind, winx_patcmp 
       routines forced to work properly for all the characters 
       (they worked well for English characters only)
+    - bug fix: winx_hr_to_bytes routine forced to convert numbers with
+      leading zeros after the decimal point properly
     - winx_toupper, winx_tolower, winx_wcsistr, winx_stristr, winx_wcsmatch,
       winx_patfind, winx_patcmp routines optimized for speed
     - winx_towupper, winx_towlower, winx_wcsupr, winx_wcslwr, winx_wcsicmp
