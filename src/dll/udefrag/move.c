@@ -707,14 +707,17 @@ int move_file(winx_file_info *f,
         if(!was_fragmented || was_excluded){
             jp->pi.fragmented ++;
             jp->pi.fragments += (new_file_info.disp.fragments - 1);
+            jp->pi.bad_fragments += new_file_info.disp.fragments;
         } else {
             jp->pi.fragments -= (f->disp.fragments - new_file_info.disp.fragments);
+            jp->pi.bad_fragments -= (f->disp.fragments - new_file_info.disp.fragments);
         }
     }
     if(!became_fragmented || is_excluded(f)){
         if(was_fragmented && !was_excluded){
             jp->pi.fragmented --;
             jp->pi.fragments -= (f->disp.fragments - 1);
+            jp->pi.bad_fragments -= f->disp.fragments;
         }
     }
 

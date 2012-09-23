@@ -218,6 +218,14 @@ static void deliver_progress_info(udefrag_job_parameters *jp,int completion_stat
     if(y == 0) pi.percentage = 0.00;
     else pi.percentage = ((double)(LONGLONG)x / (double)(LONGLONG)y) * 100.00;
     
+    /* calculate fragmentation percentage */
+    /* conversion to LONGLONG is needed for Win DDK */
+    /* so, let's divide both numbers to make safe conversion then */
+    x = pi.bad_fragments / 2;
+    y = pi.fragments / 2;
+    if(y == 0) pi.fragmentation = 0.00;
+    else pi.fragmentation = ((double)(LONGLONG)x / (double)(LONGLONG)y) * 100.00;
+    
     /* refill cluster map */
     if(jp->pi.cluster_map && jp->cluster_map.array \
       && jp->pi.cluster_map_size == jp->cluster_map.map_size){

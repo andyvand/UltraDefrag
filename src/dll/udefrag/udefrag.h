@@ -114,6 +114,8 @@ typedef struct _udefrag_progress_info {
     unsigned long compressed;         /* number of compressed files */
     unsigned long fragmented;         /* number of fragmented files */
     ULONGLONG fragments;              /* number of fragments */
+    ULONGLONG bad_fragments;          /* number of fragments which need to be joined together */
+    double fragmentation;             /* fragmentation percentage */
     ULONGLONG total_space;            /* volume size, in bytes */
     ULONGLONG free_space;             /* free space amount, in bytes */
     ULONGLONG mft_size;               /* mft size, in bytes */
@@ -121,7 +123,7 @@ typedef struct _udefrag_progress_info {
     unsigned long pass_number;        /* the current volume optimizer pass */
     ULONGLONG clusters_to_process;    /* number of clusters to process */
     ULONGLONG processed_clusters;     /* number of already processed clusters */
-    double percentage;                /* used to deliver a job completion percentage to the caller */
+    double percentage;                /* job completion percentage */
     int completion_status;            /* zero for running job, positive value for succeeded, negative for failed */
     char *cluster_map;                /* pointer to the cluster map buffer */
     int cluster_map_size;             /* size of the cluster map buffer, in bytes */
