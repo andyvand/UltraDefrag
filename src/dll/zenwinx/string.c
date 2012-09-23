@@ -621,10 +621,10 @@ void winx_patfree(winx_patlist *patterns)
 int winx_bytes_to_hr(ULONGLONG bytes, int digits, char *buffer, int length)
 {
     char *suffixes[] = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-    ULONGLONG n; /* an integer part of the result */
-    ULONGLONG m; /* a multiplier */
-    ULONGLONG r; /* a remaining part */
-    int i;       /* an index for the suffixes array */
+    ULONGLONG n; /* integer part */
+    ULONGLONG m; /* multiplier */
+    ULONGLONG r; /* remaining part */
+    int i;       /* index for the suffixes array */
     double rd;
     char spec[] = "%I64u.%00I64u %s";
     int result;
@@ -667,11 +667,12 @@ ULONGLONG winx_hr_to_bytes(char *string)
 {
     char *suffixes[] = { "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
     int suffix_found = 0;
-    char *dp;    /* a dot position */
-    ULONGLONG n; /* an integer part */
-    ULONGLONG m; /* a multiplier */
-    ULONGLONG r; /* a remaining part */
-    int i;       /* an index for the suffixes array */
+    char *dp;        /* dot position */
+    ULONGLONG n;     /* integer part */
+    ULONGLONG m;     /* multiplier */
+    ULONGLONG r = 0; /* remaining part */
+    int i;           /* index for the suffixes array */
+    int z;           /* number of zeros after the dot */
     double rd;
     
     DbgCheck1(string != NULL, "winx_hr_to_bytes", 0);
@@ -689,13 +690,13 @@ ULONGLONG winx_hr_to_bytes(char *string)
     }
 
     dp = strchr(string, '.');
-    if(dp == NULL){
-        return n * m;
+    if(dp != NULL){
+        for(z = 0; dp[z + 1] == '0'; z++) {}
+        for(rd = (double)_atoi64(dp + 1); rd > 1; rd /= 10){}
+        /* convertion to LONGLONG is needed for MinGW */
+        r = (ULONGLONG)(LONGLONG)((double)(LONGLONG)m * rd * pow(10, -z));
     }
     
-    for(rd = (double)_atoi64(dp + 1); rd > 1; rd /= 10){}
-    /* convertion to LONGLONG is needed for MinGW */
-    r = (ULONGLONG)(LONGLONG)((double)(LONGLONG)m * rd);
     return n * m + r;
 }
 
