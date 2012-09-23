@@ -786,12 +786,17 @@ void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp
 static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
 {
     winx_file_info *f;
+    ULONGLONG bad_fragments = 0;
     
     for(f = jp->filelist; f; f = f->next){
-        if(is_fragmented(f))
+        if(is_fragmented(f) && !is_excluded(f)){
             expand_fragmented_files_list(f,jp);
+            /* more precise calculation seems to be too slow */
+            bad_fragments += f->disp.fragments;
+        }
         if(f->next == jp->filelist) break;
     }
+    jp->pi.bad_fragments = bad_fragments;
 }
 
 /**

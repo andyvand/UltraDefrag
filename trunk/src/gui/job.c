@@ -120,6 +120,7 @@ static void update_progress(udefrag_progress_info *pi, void *p)
     memcpy(&job->pi,pi,sizeof(udefrag_progress_info));
     
     VolListUpdateStatusField(job);
+    VolListUpdateFragmentationField(job);
     UpdateStatusBar(pi);
     
     switch(pi->current_operation){
