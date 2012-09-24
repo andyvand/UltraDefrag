@@ -557,7 +557,6 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
     ip = (unsigned int)(p * 100.00);
     if(ip < 100) ip = 100; /* fix round off error */
     ifr = (unsigned int)(pi->fragmentation * 100.00);
-    if(ifr < 100) ifr = 100; /* fix round off error */
 
     (void)_snprintf(msg,MSG_LENGTH,
               "Drive information:\n\n"
