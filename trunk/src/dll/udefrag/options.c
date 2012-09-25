@@ -25,6 +25,7 @@
  */
      
 #include "udefrag-internals.h"
+#include <math.h> /* for pow function */
 
 /**
  * @brief Retrieves all ultradefrag
@@ -34,9 +35,11 @@
  */
 int get_options(udefrag_job_parameters *jp)
 {
-    wchar_t *buffer;
+    wchar_t *buffer, *dp;
     char buf[64];
-    int i, index = 0;
+    double r;
+    unsigned int it;
+    int i, z, index = 0;
     char *methods[] = {
         "path", "path", "size", "creation time",
         "last modification time", "last access time"
@@ -149,7 +152,19 @@ int get_options(udefrag_job_parameters *jp)
             jp->udo.dry_run = 1;
         }
     }
-
+    
+    /* set fragmentation threshold */
+    if(winx_query_env_variable(L"UD_FRAGMENTATION_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
+        jp->udo.fragmentation_threshold = (double)_wtoi(buffer);
+        dp = wcschr(buffer,'.');
+        if(dp != NULL){
+            for(z = 0; dp[z + 1] == '0'; z++) {}
+            for(r = (double)_wtoi(dp + 1); r > 1; r /= 10){}
+            r *= pow(10, -z);
+            jp->udo.fragmentation_threshold += r;
+        }
+    }
+    
     /* print all options */
     winx_dbg_print_header(0,0,"ultradefrag job options");
     if(jp->udo.in_filter.count){
@@ -162,17 +177,19 @@ int get_options(udefrag_job_parameters *jp)
         for(i = 0; i < jp->udo.ex_filter.count; i++)
             DebugPrint("  - %ws",jp->udo.ex_filter.array[i]);
     }
+    it = (unsigned int)(jp->udo.fragmentation_threshold * 100.00);
+    DebugPrint("fragmentation threshold                   = %u.%02u %%",it / 100,it % 100);
     (void)winx_bytes_to_hr(jp->udo.size_limit,1,buf,sizeof(buf));
     DebugPrint("file size threshold (for defragmentation) = %s",buf);
     (void)winx_bytes_to_hr(jp->udo.optimizer_size_limit,1,buf,sizeof(buf));
     DebugPrint("file size threshold (for optimization)    = %s",buf);
     (void)winx_bytes_to_hr(jp->udo.fragment_size_threshold,1,buf,sizeof(buf));
     DebugPrint("fragment size threshold                   = %s",buf);
-    DebugPrint("file fragments threshold = %I64u",jp->udo.fragments_limit);
+    DebugPrint("file fragments threshold                  = %I64u",jp->udo.fragments_limit);
     DebugPrint("files will be sorted by %s in %s order",methods[index],
         (jp->udo.sorting_flags & UD_SORT_DESCENDING) ? "descending" : "ascending");
-    DebugPrint("time limit = %I64u seconds",jp->udo.time_limit);
-    DebugPrint("progress refresh interval = %u msec",jp->udo.refresh_interval);
+    DebugPrint("time limit                                = %I64u seconds",jp->udo.time_limit);
+    DebugPrint("progress refresh interval                 = %u msec",jp->udo.refresh_interval);
     if(jp->udo.disable_reports) DebugPrint("reports disabled");
     else DebugPrint("reports enabled");
     switch(jp->udo.dbgprint_level){

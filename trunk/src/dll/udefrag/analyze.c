@@ -819,6 +819,34 @@ static int check_requested_action(udefrag_job_parameters *jp)
 }
 
 /**
+ * @brief Defines whether the fragmentation level
+ * is above the fragmentation threshold or not.
+ */
+int check_fragmentation_level(udefrag_job_parameters *jp)
+{
+    ULONGLONG x, y;
+    unsigned int ifr, it;
+    double fragmentation;
+    
+    /* conversion to LONGLONG is needed for Win DDK */
+    /* so, let's divide both numbers to make safe conversion then */
+    x = jp->pi.bad_fragments / 2;
+    y = jp->pi.fragments / 2;
+    if(y == 0) fragmentation = 0.00;
+    else fragmentation = ((double)(LONGLONG)x / (double)(LONGLONG)y) * 100.00;
+    ifr = (unsigned int)(fragmentation * 100.00);
+    it = (unsigned int)(jp->udo.fragmentation_threshold * 100.00);
+    if(fragmentation < jp->udo.fragmentation_threshold){
+        DebugPrint("fragmentation is below the threshold: %u.%02u%% < %u.%02u%%",
+            ifr / 100, ifr % 100, it / 100, it % 100);
+        return 0;
+    }
+    DebugPrint("fragmentation is above the threshold: %u.%02u%% >= %u.%02u%%",
+        ifr / 100, ifr % 100, it / 100, it % 100);
+    return 1;
+}
+
+/**
  * @brief Displays message like
  * <b>analysis of c: started</b>
  * and returns the current time
@@ -884,6 +912,7 @@ int analyze(udefrag_job_parameters *jp)
 
     /* produce list of fragmented files */
     produce_list_of_fragmented_files(jp);
+    (void)check_fragmentation_level(jp); /* for debugging */
 
     result = check_requested_action(jp);
     if(result < 0)
