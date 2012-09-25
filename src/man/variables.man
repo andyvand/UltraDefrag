@@ -43,6 +43,12 @@ VARIABLES
                 file sorting order for the disk optimization
                 ASC (default), DESC (descending)
 
+        UD_FRAGMENTATION_THRESHOLD
+                fragmentation threshold, in percents;
+                all the jobs except of the MFT optimization
+                will be performed only if the disk fragmentation
+                level is above the specified value
+
         UD_TIME_LIMIT
                 space separated list of maximum timeout to terminate
                 processing
@@ -100,4 +106,4 @@ COPYRIGHT
         There is NO warranty; not even for MERCHANTABILITY
         or FITNESS FOR A PARTICULAR PURPOSE.
 
-variables                    Febuary 2012                           1
+variables                   September 2012                          1

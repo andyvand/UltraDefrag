@@ -48,6 +48,7 @@
  * - ability to exclude any unimportant files based on flexible filters
  * - ability to defragment files, which have more fragments than specified by a threshold
  * - ability to automatically break defragmentation when the specified time interval elapses
+ * - ability to perform defragmentation only when the disk fragmentation level is above the specified value
  * - ability to select multiple disks for defragmentation
  * - well readable HTML reports
  * - powerful command line interface

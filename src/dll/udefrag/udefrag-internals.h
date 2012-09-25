@@ -167,6 +167,7 @@ typedef struct _udefrag_options {
     int sorting_flags;          /* flags triggering file sorting features (UD_SORT_xxx flags) */
     int algorithm_defined_fst;  /* nonzero value indicates that the fragment size
                                    threshold is set by algorithm and not by user */
+    double fragmentation_threshold; /* fragmentation level threshold */
 } udefrag_options;
 
 typedef struct _udefrag_fragmented_file {
@@ -279,6 +280,7 @@ int defragment(udefrag_job_parameters *jp);
 int optimize(udefrag_job_parameters *jp);
 int optimize_mft(udefrag_job_parameters *jp);
 void destroy_lists(udefrag_job_parameters *jp);
+int check_fragmentation_level(udefrag_job_parameters *jp);
 
 ULONGLONG start_timing(char *operation_name,udefrag_job_parameters *jp);
 void stop_timing(char *operation_name,ULONGLONG start_time,udefrag_job_parameters *jp);

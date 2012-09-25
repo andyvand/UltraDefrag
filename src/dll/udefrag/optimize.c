@@ -1030,6 +1030,10 @@ int optimize(udefrag_job_parameters *jp)
     result = analyze(jp); /* we need to call it once, here */
     if(result < 0) return result;
     
+    /* check fragmentation level */
+    if(!check_fragmentation_level(jp))
+        return 0;
+    
     /* reset counters */
     jp->pi.processed_clusters = 0;
     if(jp->is_fat) extra_clusters += opt_dirs_cc_routine(jp);

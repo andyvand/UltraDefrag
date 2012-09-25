@@ -553,6 +553,9 @@ int defragment(udefrag_job_parameters *jp)
         test_special_files_defrag(jp);
         return 0;
     #endif
+        /* check fragmentation level */
+        if(!check_fragmentation_level(jp))
+            return 0;
         /* reset counters */
         jp->pi.processed_clusters = 0;
         jp->pi.clusters_to_process = 0;
