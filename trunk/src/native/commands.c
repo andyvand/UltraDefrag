@@ -1024,6 +1024,7 @@ int parse_command(wchar_t *cmdline)
     int i, j, n, argc;
     int at_detected = 0;
     int arg_detected;
+    wchar_t *full_cmdline;
     wchar_t *cmdline_copy;
     wchar_t **argv = NULL;
     wchar_t **envp = NULL;
@@ -1051,6 +1052,7 @@ int parse_command(wchar_t *cmdline)
             cmdline[i] != '\n' && cmdline[i] != '\r') break;
         cmdline[i] = 0; /* remove trailing spaces and newlines */
     }
+    full_cmdline = cmdline;
     
     /*
     * Skip @ in the beginning of the line.
@@ -1163,7 +1165,8 @@ int parse_command(wchar_t *cmdline)
     * Handle unknown commands.
     */
     if(cmd_table[i].cmd_handler == NULL){
-        winx_printf("\nUnknown command: %ws!\n\n",argv[0]);
+        winx_printf("\nUnknown command: %ws!\n\n",full_cmdline);
+        DebugPrint("Unknown command: %ws!",full_cmdline);
         winx_heap_free(argv);
         if(envp) winx_heap_free(envp);
         winx_heap_free(cmdline_copy);
