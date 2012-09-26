@@ -40,7 +40,6 @@ volume_processing_job * get_first_selected_job(void);
 static void InitImageList(void);
 static void DestroyImageList(void);
 
-#define LIST_COLUMNS 6
 int column_widths_adjusted = 0;
 
 HANDLE hListEvent = NULL;
@@ -160,7 +159,14 @@ LRESULT CALLBACK ListWndProc(HWND hWnd, UINT iMsg, WPARAM wParam, LPARAM lParam)
  */
 static void AdjustVolListColumns(void)
 {
-    int cw[LIST_COLUMNS] = {110,110,110,110,110,65};
+    int cw[LIST_COLUMNS] = {
+        C1_DEFAULT_WIDTH,
+        C2_DEFAULT_WIDTH,
+        C3_DEFAULT_WIDTH,
+        C4_DEFAULT_WIDTH,
+        C5_DEFAULT_WIDTH,
+        C6_DEFAULT_WIDTH
+    };
     int total_width = 0;
     int i, width;
     RECT rc;
@@ -181,9 +187,11 @@ static void AdjustVolListColumns(void)
                 user_defined_column_widths[i] * width / total_width);
         }
     } else {
+        for(i = 0; i < sizeof(cw) / sizeof(int); i++)
+            total_width += cw[i];
         for(i = 0; i < sizeof(cw) / sizeof(int); i++){
             (void)SendMessage(hList,LVM_SETCOLUMNWIDTH,i,
-                cw[i] * width / 615);
+                cw[i] * width / total_width);
         }
     }
     column_widths_adjusted = 1;
