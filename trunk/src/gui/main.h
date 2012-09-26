@@ -338,4 +338,13 @@ extern int minimize_to_system_tray;
 #define SORT_ASCENDING             0x20
 #define SORT_DESCENDING            0x40
 
+/* volume list characteristics */
+#define LIST_COLUMNS 6
+#define C1_DEFAULT_WIDTH 110
+#define C2_DEFAULT_WIDTH 110
+#define C3_DEFAULT_WIDTH 110
+#define C4_DEFAULT_WIDTH 110
+#define C5_DEFAULT_WIDTH 110
+#define C6_DEFAULT_WIDTH 65
+
 #endif /* _UDEFRAG_GUI_MAIN_H_ */

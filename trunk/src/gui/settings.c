@@ -114,12 +114,12 @@ WGX_OPTION internal_options[] = {
     {WGX_CFG_INT,     0, "repeat_action", &repeat_action, (void *)0},
     {WGX_CFG_EMPTY,   0, "", NULL, ""},
 
-    {WGX_CFG_INT,     0, "column1_width", &user_defined_column_widths[0], 0},
-    {WGX_CFG_INT,     0, "column2_width", &user_defined_column_widths[1], 0},
-    {WGX_CFG_INT,     0, "column3_width", &user_defined_column_widths[2], 0},
-    {WGX_CFG_INT,     0, "column4_width", &user_defined_column_widths[3], 0},
-    {WGX_CFG_INT,     0, "column5_width", &user_defined_column_widths[4], 0},
-    {WGX_CFG_INT,     0, "column6_width", &user_defined_column_widths[5], 0},
+    {WGX_CFG_INT,     0, "column1_width",  &user_defined_column_widths[0], (void *)C1_DEFAULT_WIDTH},
+    {WGX_CFG_INT,     0, "column2_width",  &user_defined_column_widths[1], (void *)C2_DEFAULT_WIDTH},
+    {WGX_CFG_INT,     0, "column2b_width", &user_defined_column_widths[2], (void *)C3_DEFAULT_WIDTH},
+    {WGX_CFG_INT,     0, "column3_width",  &user_defined_column_widths[3], (void *)C4_DEFAULT_WIDTH},
+    {WGX_CFG_INT,     0, "column4_width",  &user_defined_column_widths[4], (void *)C5_DEFAULT_WIDTH},
+    {WGX_CFG_INT,     0, "column5_width",  &user_defined_column_widths[5], (void *)C6_DEFAULT_WIDTH},
     {WGX_CFG_INT,     0, "list_height", &list_height, (void *)0},
     {WGX_CFG_EMPTY,   0, "", NULL, ""},
 
