@@ -48,7 +48,7 @@
     - added settings for file pattern groups to easier exclude or include
       groups of files (fixes issue #3449331)
     - bug fix: filters forced to be case insensitive for all the characters
-      (they worked properly for English characters only)
+      (they worked properly for ASCII characters only)
 
     - the following translations were added:
 
@@ -62,14 +62,14 @@
       members added to the winx_file_info structure
     - bug fix: winx_wcsistr, winx_wcsmatch, winx_patfind, winx_patcmp 
       routines forced to work properly for all the characters 
-      (they worked well for English characters only)
+      (they worked well for ASCII characters only)
     - bug fix: winx_hr_to_bytes routine forced to convert numbers with
       leading zeros after the decimal point properly
     - winx_toupper, winx_tolower, winx_wcsistr, winx_stristr, winx_wcsmatch,
       winx_patfind, winx_patcmp routines optimized for speed
     - winx_towupper, winx_towlower, winx_wcsupr, winx_wcslwr, winx_wcsicmp
       routines added to zenwinx library to be used instead of the fake 
-      Windows routines working properly for English letters only
+      Windows routines working properly for ASCII characters only
     - udefrag_towupper, udefrag_towlower, udefrag_wcsupr, udefrag_wcslwr, 
       udefrag_wcsicmp routines added to udefrag library for the same reasons
       as mentioned above
