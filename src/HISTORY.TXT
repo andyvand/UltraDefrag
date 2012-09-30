@@ -47,6 +47,7 @@
       and boot time interface)
     - added settings for file pattern groups to easier exclude or include
       groups of files (fixes issue #3449331)
+    - bug fix: GUI forced to handle any settings changes reliably
     - bug fix: filters forced to be case insensitive for all the characters
       (they worked properly for ASCII characters only)
 
@@ -73,6 +74,7 @@
     - udefrag_towupper, udefrag_towlower, udefrag_wcsupr, udefrag_wcslwr, 
       udefrag_wcsicmp routines added to udefrag library for the same reasons
       as mentioned above
+    - os.setenv, os.getenv Lua routines reimplemented for better reliability
 
 
   Version 5.0.7  2012-09-01
