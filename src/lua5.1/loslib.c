@@ -111,7 +111,7 @@ static int os_setenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert %s to "
-        "utf-16: error code = 0x%p", name, (void *)error);
+        "utf-16: error code = 0x%8x", name, error);
     }
   }
   utf16_value = convert_to_utf16(value,&error);
@@ -121,7 +121,7 @@ static int os_setenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert %s to "
-        "utf-16: error code = 0x%p", value, (void *)error);
+        "utf-16: error code = 0x%8x", value, error);
     }
   }
 
@@ -142,7 +142,7 @@ static int os_setenv (lua_State *L) {
   free(utf16_value);
   if(result == 0 && error != ERROR_ENVVAR_NOT_FOUND){
     return luaL_error(L, "SetEnvironmentVariableW "
-      "failed: error code = 0x%p", (void *)error);
+      "failed: error code = 0x%8x", error);
   }
   lua_pushboolean(L, 1);
   return 1;
@@ -163,7 +163,7 @@ static int os_shellexec (lua_State *L) {
         "not enough memory");
     } else {
       lua_pushfstring(L, "unable to load shell32.dll: "
-        "error code = 0x%p", (void *)error);
+        "error code = 0x%8x", error);
     }
     return 2;
   }
@@ -178,7 +178,7 @@ static int os_shellexec (lua_State *L) {
         "not enough memory");
     } else {
       lua_pushfstring(L, "unable to find ShellExecute: "
-        "error code = 0x%p", (void *)error);
+        "error code = 0x%8x", error);
     }
     return 2;
   }
@@ -239,8 +239,8 @@ static int os_shellexec (lua_State *L) {
         action, path, error_description);
     } else {
       lua_pushfstring(L, "unable to %s %s: "
-        "error code = 0x%p", action, path, 
-        (void *)error);
+        "error code = 0x%8x", action, path, 
+        error);
     }
     return 2;
   }
@@ -285,7 +285,7 @@ static int os_getenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert %s to "
-        "utf-16: error code = 0x%p", name, (void *)error);
+        "utf-16: error code = 0x%8x", name, error);
     }
   }
   
@@ -305,7 +305,7 @@ static int os_getenv (lua_State *L) {
       return 1;
     }
     return luaL_error(L, "GetEnvironmentVariableW "
-      "failed: error code = 0x%p", (void *)error);
+      "failed: error code = 0x%8x", error);
   }
   
   utf8_value = convert_to_utf8(utf16_value,&error);
@@ -315,7 +315,7 @@ static int os_getenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert value to "
-        "utf-8: error code = 0x%p", (void *)error);
+        "utf-8: error code = 0x%8x", error);
     }
   }
   
