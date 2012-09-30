@@ -177,14 +177,15 @@ fragments_threshold = $fragments_threshold
 -- to avoid defragmentation/optimization of disks with fragmentation level
 -- below 10 percents, set:
 
--- fragmentation_threshold = "10%"
+-- fragmentation_threshold = 10
 
--- Both zero value and empty string ("") turn off the filter.
+-- The default value is zero (0), so all the disks are processed
+-- regardless of their fragmentation level.
 
 -- Note that this filter does not affect the MFT optimization task.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-fragmentation_threshold = "$fragmentation_threshold"
+fragmentation_threshold = $fragmentation_threshold
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- II. Miscellaneous options
@@ -421,7 +422,7 @@ end
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 111
+current_version = 112
 old_version = 0
 upgrade_needed = 1
 
@@ -450,7 +451,7 @@ fragment_size_threshold = "20 Mb"
 sizelimit = ""
 optimizer_sizelimit = "20 Mb"
 fragments_threshold = 0
-fragmentation_threshold = ""
+fragmentation_threshold = 0
 time_limit = ""
 refresh_interval = 100
 disable_reports = 0
@@ -555,6 +556,11 @@ if upgrade_needed ~= 0 then
             orig_ex_filter = string.gsub(orig_ex_filter, pattern(video_patterns), "")
         end
         orig_ex_filter = string.gsub(orig_ex_filter, ";*$", "")
+    end
+    -- convert fragmentation_threshold to number
+    if type(fragmentation_threshold) == "string" then
+        fragmentation_threshold = tonumber(fragmentation_threshold)
+        if not fragmentation_threshold then fragmentation_threshold = 0 end
     end
 
     -- save the upgraded configuration
