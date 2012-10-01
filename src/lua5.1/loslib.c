@@ -7,6 +7,9 @@
 /*
 * os.setenv and os.shellexec calls has been
 * added by Dmitri Arkhangelski (2008, 2012).
+*
+* Note: luaL_error doesn't accept %x
+* option, so we're using %p instead.
 */
 
 #include <windows.h>
@@ -29,6 +32,12 @@
 
 #include "lauxlib.h"
 #include "lualib.h"
+
+#if defined(_WIN64)
+#define ULONG_PTR unsigned __int64
+#else
+#define ULONG_PTR unsigned long
+#endif
 
 static HINSTANCE (WINAPI *func_ShellExecuteA)(HWND,LPCSTR,LPCSTR,LPCSTR,LPCSTR,INT);
 
@@ -111,7 +120,7 @@ static int os_setenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert %s to "
-        "utf-16: error code = 0x%8x", name, error);
+        "utf-16: error code = 0x%p", name, (void *)(ULONG_PTR)error);
     }
   }
   utf16_value = convert_to_utf16(value,&error);
@@ -121,7 +130,7 @@ static int os_setenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert %s to "
-        "utf-16: error code = 0x%8x", value, error);
+        "utf-16: error code = 0x%p", value, (void *)(ULONG_PTR)error);
     }
   }
 
@@ -142,7 +151,7 @@ static int os_setenv (lua_State *L) {
   free(utf16_value);
   if(result == 0 && error != ERROR_ENVVAR_NOT_FOUND){
     return luaL_error(L, "SetEnvironmentVariableW "
-      "failed: error code = 0x%8x", error);
+      "failed: error code = 0x%p", (void *)(ULONG_PTR)error);
   }
   lua_pushboolean(L, 1);
   return 1;
@@ -163,7 +172,7 @@ static int os_shellexec (lua_State *L) {
         "not enough memory");
     } else {
       lua_pushfstring(L, "unable to load shell32.dll: "
-        "error code = 0x%8x", error);
+        "error code = 0x%p", (void *)(ULONG_PTR)error);
     }
     return 2;
   }
@@ -178,7 +187,7 @@ static int os_shellexec (lua_State *L) {
         "not enough memory");
     } else {
       lua_pushfstring(L, "unable to find ShellExecute: "
-        "error code = 0x%8x", error);
+        "error code = 0x%p", (void *)(ULONG_PTR)error);
     }
     return 2;
   }
@@ -239,8 +248,8 @@ static int os_shellexec (lua_State *L) {
         action, path, error_description);
     } else {
       lua_pushfstring(L, "unable to %s %s: "
-        "error code = 0x%8x", action, path, 
-        error);
+        "error code = 0x%p", action, path, 
+        (void *)(ULONG_PTR)error);
     }
     return 2;
   }
@@ -285,7 +294,7 @@ static int os_getenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert %s to "
-        "utf-16: error code = 0x%8x", name, error);
+        "utf-16: error code = 0x%p", name, (void *)(ULONG_PTR)error);
     }
   }
   
@@ -305,7 +314,7 @@ static int os_getenv (lua_State *L) {
       return 1;
     }
     return luaL_error(L, "GetEnvironmentVariableW "
-      "failed: error code = 0x%8x", error);
+      "failed: error code = 0x%p", (void *)(ULONG_PTR)error);
   }
   
   utf8_value = convert_to_utf8(utf16_value,&error);
@@ -315,7 +324,7 @@ static int os_getenv (lua_State *L) {
       return luaL_error(L, "not enough memory");
     } else {
       return luaL_error(L, "unable to convert value to "
-        "utf-8: error code = 0x%8x", error);
+        "utf-8: error code = 0x%p", (void *)(ULONG_PTR)error);
     }
   }
   
