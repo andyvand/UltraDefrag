@@ -101,20 +101,18 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
     if(is_moving_failed(f))
         return 0;
     
-    /* keep DOS bootable */
-    if(is_essential_dos_file(f)) return 0;
+    /* keep the computer bootable */
+    if(is_not_essential_file(f)) return 1;
+    if(is_essential_boot_file(f)) return 0;
     if(jp->is_fat && !is_fragmented(f)){
         for(i = 0; dos_files[i]; i++){
             if(winx_wcsmatch(f->path,dos_files[i],WINX_PAT_ICASE)){
                 DebugPrint("can_move: essential dos file detected: %ws",f->path);
-                f->user_defined_flags |= UD_FILE_ESSENTIAL_DOS_FILE;
+                f->user_defined_flags |= UD_FILE_ESSENTIAL_BOOT_FILE;
                 return 0;
             }
         }
     }
-    
-    /* keep the computer bootable */
-    if(is_essential_boot_file(f)) return 0;
     for(i = 0; boot_files[i]; i++){
         if(winx_wcsmatch(f->path,boot_files[i],WINX_PAT_ICASE)){
             DebugPrint("can_move: essential boot file detected: %ws",f->path);
@@ -122,7 +120,7 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
             return 0;
         }
     }
-    
+    f->user_defined_flags |= UD_FILE_NOT_ESSENTIAL_FILE;
     return 1;
 }
 
