@@ -102,6 +102,7 @@ BOOT_TIME_SCRIPT          = Comandos al inicio
 
 VOLUME                    = Volumen
 STATUS                    = Estado
+FRAGMENTATION             = Fragmentation
 TOTAL                     = Capacidad
 FREE                      = Espacio libre
 PERCENT                   = % libre

@@ -99,6 +99,7 @@ BOOT_TIME_SCRIPT          = စက်အစ အညွှန်းစာတို
 
 VOLUME                    = ဋ္ဌာနေများထုထည်
 STATUS                    = အနေအထား
+FRAGMENTATION             = Fragmentation
 TOTAL                     = နေရာ အကုန်
 FREE                      = လွတ်လပ် နေရာ
 PERCENT                   = % လွတ်လပ်

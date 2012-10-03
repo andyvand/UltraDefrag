@@ -101,6 +101,7 @@ BOOT_TIME_SCRIPT          = Rendszerinduláskor lefutó szkript
 
 VOLUME                    = Meghajtó
 STATUS                    = Állapot
+FRAGMENTATION             = Fragmentation
 TOTAL                     = Kapacitás
 FREE                      = Szabad terület
 PERCENT                   = % szabad
