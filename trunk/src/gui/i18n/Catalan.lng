@@ -100,6 +100,7 @@ BOOT_TIME_SCRIPT          = Seqüència d'inici
 
 VOLUME                    = Volum
 STATUS                    = Estat
+FRAGMENTATION             = Fragmentation
 TOTAL                     = Total
 FREE                      = Lliure
 PERCENT                   = Percentatge

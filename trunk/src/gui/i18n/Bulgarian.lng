@@ -99,6 +99,7 @@ BOOT_TIME_SCRIPT          = Сценарий преди зареждане на 
 
 VOLUME                    = Диск
 STATUS                    = Състояние
+FRAGMENTATION             = Fragmentation
 TOTAL                     = Общо
 FREE                      = Свободно
 PERCENT                   = Процент

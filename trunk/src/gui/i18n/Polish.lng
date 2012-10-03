@@ -103,6 +103,7 @@ BOOT_TIME_SCRIPT          = Skrypt wykonywany podczas uruchamiania systemu
 
 VOLUME                    = Dysk
 STATUS                    = Stan
+FRAGMENTATION             = Fragmentation
 TOTAL                     = Całkowite miejsce
 FREE                      = Wolne miejsce
 PERCENT                   = % wolnego

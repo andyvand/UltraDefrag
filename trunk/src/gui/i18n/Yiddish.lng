@@ -98,6 +98,7 @@ BOOT_TIME_SCRIPT          = סצענאַר פון אָנהייב
 
 VOLUME                    = דיסק
 STATUS                    = מאַצעוו
+FRAGMENTATION             = Fragmentation
 TOTAL                     = גאַנץ אָרט
 FREE                      = פֿרייַ אָרט
 PERCENT                   = % פֿרייַ
