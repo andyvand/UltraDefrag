@@ -17,7 +17,7 @@
 || [[Czech.lng|Czech]]                                                   || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Danish.lng|Danish]]                                                 || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Dutch.lng|Dutch]]                                                   || ||=  86 || ||=  91 || ||>    94 % ||
-|| [[English (GB).lng|English (GB)]]                                     || ||=  11 || ||=  91 || ||>    12 % ||
+|| [[English (GB).lng|English (GB)]]                                     || ||=  12 || ||=  91 || ||>    13 % ||
 || [[English (US).lng|English (US)]]                                     || ||=   0 || ||=  91 || ||>     0 % ||
 || [[Estonian.lng|Estonian]]                                             || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Farsi.lng|Farsi]]                                                   || ||=  90 || ||=  91 || ||>    98 % ||
@@ -46,7 +46,7 @@
 || [[Macedonian.lng|Macedonian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Malay.lng|Malay]]                                                   || ||=  84 || ||=  91 || ||>    92 % ||
 || [[Norwegian.lng|Norwegian]]                                           || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Polish.lng|Polish]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Polish.lng|Polish]]                                                 || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Portuguese (BR).lng|Portuguese (BR)]]                               || ||=  87 || ||=  91 || ||>    95 % ||
 || [[Portuguese.lng|Portuguese]]                                         || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Romanian.lng|Romanian]]                                             || ||=  85 || ||=  91 || ||>    93 % ||
@@ -71,7 +71,7 @@
 =Sorted by percent completed=
 
 ||~ Language ||~ ||~ translated ||~ ||~ total ||~ ||~ percentage ||
-|| [[Hungarian.lng|Hungarian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Polish.lng|Polish]]                                                 || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Arabic.lng|Arabic]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Vietnamese.lng|Vietnamese]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Ukrainian.lng|Ukrainian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
@@ -89,7 +89,7 @@
 || [[Greek.lng|Greek]]                                                   || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Lithuanian.lng|Lithuanian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Farsi.lng|Farsi]]                                                   || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[Polish.lng|Polish]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Hungarian.lng|Hungarian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Galician.lng|Galician]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Georgian.lng|Georgian]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Macedonian.lng|Macedonian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
@@ -130,7 +130,7 @@
 || [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  82 || ||=  91 || ||>    90 % ||
 || [[Bosnian.lng|Bosnian]]                                               || ||=  76 || ||=  91 || ||>    83 % ||
 || [[Kapampangan.lng|Kapampangan]]                                       || ||=  66 || ||=  91 || ||>    72 % ||
-|| [[English (GB).lng|English (GB)]]                                     || ||=  11 || ||=  91 || ||>    12 % ||
+|| [[English (GB).lng|English (GB)]]                                     || ||=  12 || ||=  91 || ||>    13 % ||
 || [[English (US).lng|English (US)]]                                     || ||=   0 || ||=  91 || ||>     0 % ||
 
 [[toc]]
