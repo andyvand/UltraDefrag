@@ -42,14 +42,14 @@
   ------------------------------------------------------------------------------
     - added fragmentation level display to all the interfaces
     - added ability to skip the disk processing when fragmentation level
-      is below than specified (fragmentation_threshold option in GUI;
+      is below a specified one (fragmentation_threshold option in GUI;
       UD_FRAGMENTATION_THRESHOLD environment variable in command line tool
       and boot time interface)
     - added settings for file pattern groups to easier exclude or include
       groups of files (fixes issue #3449331)
-    - bug fix: GUI forced to handle any settings changes reliably
+    - bug fix: GUI forced to handle any setting changes reliably
     - bug fix: filters forced to be case insensitive for all the characters
-      (they worked properly for ASCII characters only)
+      (they worked properly for ANSI characters only)
 
     - the following translations were added:
 
@@ -58,7 +58,7 @@
     - the following translations were updated:
 
       Albanian, Spanish (MEX), Italian, English (GB), Polish, Burmese (Padauk),
-      Georgian
+      Georgian, Greek, Arabic
 
     - Internals: creation_time, last_modification_time, last_access_time
       members added to the winx_file_info structure
