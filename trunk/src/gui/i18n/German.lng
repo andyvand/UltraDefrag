@@ -100,7 +100,7 @@ BOOT_TIME_SCRIPT          = Windows-Start-Skript
 
 VOLUME                    = Laufwerk
 STATUS                    = Status
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Fragmentierung
 TOTAL                     = Gesamtgröße
 FREE                      = Frei
 PERCENT                   = % frei
