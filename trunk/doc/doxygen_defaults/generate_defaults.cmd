@@ -1,16 +1,24 @@
 @echo off
 ::
-:: This utility will generate the default HTML header, footer and CSS style sheet
-:: for a default doxygen configuration without any additional customization
+:: This utility will generate the default header, footer and style sheet for
+:: HTML, CSS and LaTeX
+:: of a default doxygen configuration without any additional customization
 ::
 :: Three versions will be created:
-::    1) regular ... no search and treeview
+::    1) regular ... no search and no treeview
 ::    2) search .... search only
 ::    3) tree ...... treeview only
 ::
 echo.
 
-del /f /q default_*.*
+doxygen --version >default_Current_Version.txt
+set /p DoxyCurVer=<default_Current_Version.txt
+
+mkdir default_%DoxyCurVer%
+
+del /f /q default_%DoxyCurVer%\default_*.*
+
+cd default_%DoxyCurVer%
 
 doxygen -g default_Doxyfile
 
