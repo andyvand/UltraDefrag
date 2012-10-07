@@ -192,7 +192,7 @@ move /y "%old_file%" "%new_file%"
 echo.
 if "%~1" == "" goto :noZip
 del /f /q "ultradefrag-%UDVERSION_SUFFIX%.7z"
-"%SEVENZIP_PATH%\7z.exe" a -r -t7z -mx9 -pud -mhe=on "ultradefrag-%UDVERSION_SUFFIX%.7z" "ultradefrag-%UDVERSION_SUFFIX%.bin.*.exe"
+"%SEVENZIP_PATH%\7z.exe" a -t7z -mx9 -pud -mhe=on "ultradefrag-%UDVERSION_SUFFIX%.7z" "ultradefrag-%UDVERSION_SUFFIX%.bin.*.exe"
 :noZip
 echo.
 goto :EOF
