@@ -40,14 +40,15 @@ echo.
 echo      5 ... Build .................. using WinDDK, no IA64
 echo      6 ... Build Portable ......... using WinDDK, no IA64
 echo      7 ... Build Docs
+echo      8 ... Build only Handbook
 echo.
-echo      8 ... Build .................. with Custom Switches
-echo      9 ... Build Portable ......... with Custom Switches
+echo      9 ... Build .................. with Custom Switches
+echo     10 ... Build Portable ......... with Custom Switches
 echo.
-echo     10 ... Build Test Release for Stefan
-echo     11 ... Build Test Installation for Stefan
-echo     12 ... Build Test AMD64 for Stefan
-echo     13 ... Build Test x86 for Stefan
+echo     11 ... Build Test Release for Stefan
+echo     12 ... Build Test Installation for Stefan
+echo     13 ... Build Test AMD64 for Stefan
+echo     14 ... Build Test x86 for Stefan
 echo.
 echo      0 ... EXIT
 
@@ -106,6 +107,12 @@ call build-docs.cmd
 goto finished
 
 :8
+title Build only Handbook
+call build.cmd --clean
+call build-docs.cmd --no-dev
+goto finished
+
+:9
 title Build .................. with Custom Switches
 cls
 echo.
@@ -118,7 +125,7 @@ echo.
 call build.cmd %UD_BLD_MENU_SWITCH%
 goto finished
 
-:9
+:10
 title Build Portable ......... with Custom Switches
 cls
 echo.
@@ -131,7 +138,7 @@ echo.
 call build.cmd --portable %UD_BLD_MENU_SWITCH%
 goto finished
 
-:10
+:11
 title Build Test Release for Stefan
 echo.
 call build.cmd --use-winddk --no-ia64 --no-pdf --no-dev
@@ -139,7 +146,7 @@ echo.
 call :CopyInstallers -zip
 goto finished
 
-:11
+:12
 title Build Test Installation for Stefan
 echo.
 if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winddk --no-ia64 --no-x86 --install --no-pdf --no-dev
@@ -147,7 +154,7 @@ if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winddk --no-ia64 --no-am
 echo.
 goto finished
 
-:12
+:13
 title Build Test AMD64 for Stefan
 echo.
 call build.cmd --use-winddk --no-ia64 --no-x86 --no-pdf --no-dev
@@ -155,7 +162,7 @@ echo.
 call :CopyInstallers
 goto finished
 
-:13
+:14
 title Build Test x86 for Stefan
 echo.
 call build.cmd --use-winddk --no-ia64 --no-amd64 --no-pdf --no-dev
