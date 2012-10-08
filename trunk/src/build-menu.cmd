@@ -53,7 +53,7 @@ echo.
 echo      0 ... EXIT
 
 :: this value holds the number of the last menu entry
-set UD_BLD_MENU_MAX_ENTRIES=13
+set UD_BLD_MENU_MAX_ENTRIES=14
 
 :AskSelection
 echo.
@@ -65,6 +65,7 @@ if %UD_BLD_MENU_SELECT% LEQ %UD_BLD_MENU_MAX_ENTRIES% goto %UD_BLD_MENU_SELECT%
 color 8C
 echo Wrong Selection !!!
 color
+set UD_BLD_MENU_SELECT=
 goto AskSelection
 
 :0
