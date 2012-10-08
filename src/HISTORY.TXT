@@ -50,6 +50,7 @@
     - bug fix: GUI forced to handle any setting changes reliably
     - bug fix: filters forced to be case insensitive for all the characters
       (they worked properly for ANSI characters only)
+    - added ability to specify the installation folder
 
     - the following translations were added:
 

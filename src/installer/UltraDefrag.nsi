@@ -50,7 +50,6 @@
  */
 
 !define UD_UNINSTALL_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\UltraDefrag"
-!define UD_INSTALL_DIR "$WINDIR\UltraDefrag"
 
 !if ${ULTRADFGARCH} == 'i386'
 !define ROOTDIR "..\.."
@@ -93,7 +92,15 @@
     !endif
 !endif
 
-InstallDir ${UD_INSTALL_DIR}
+!if ${ULTRADFGARCH} == 'i386'
+InstallDir "$PROGRAMFILES\UltraDefrag"
+!else
+InstallDir "$PROGRAMFILES64\UltraDefrag"
+!endif
+
+InstallDirRegKey HKLM ${UD_UNINSTALL_REG_KEY} "InstallLocation"
+
+Var OldInstallDir
 
 OutFile "ultradefrag-${UDVERSION_SUFFIX}.bin.${ULTRADFGARCH}.exe"
 LicenseData "${ROOTDIR}\src\LICENSE.TXT"
@@ -152,10 +159,11 @@ VIAddVersionKey  "FileVersion"     "${ULTRADFGVER}"
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "${ROOTDIR}\src\LICENSE.TXT"
+!insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_COMPONENTS
-;!insertmacro MUI_PAGE_DIRECTORY
 !insertmacro LANG_PAGE
 !insertmacro MUI_PAGE_INSTFILES
+!define MUI_FINISHPAGE_NOAUTOCLOSE
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
@@ -185,7 +193,7 @@ Section "Boot" SecBoot
     SectionIn 1 2
 
     ${InstallBootFiles}
-  
+
 SectionEnd
 
 Section "Console" SecConsole
@@ -193,7 +201,7 @@ Section "Console" SecConsole
     SectionIn 1 2
 
     ${InstallConsoleFiles}
-  
+
 SectionEnd
 
 Section "GUI (Default)" SecGUI
@@ -219,7 +227,7 @@ Section "Context menu handler (requires Console)" SecShellHandler
     SectionIn 1 2
 
     ${InstallShellHandlerFiles}
-  
+
 SectionEnd
 
 SectionGroup /e "Shortcuts (require GUI)" SecShortcuts
@@ -293,7 +301,10 @@ Function .onInit
     InitPluginsDir
 
     ${DisableX64FSRedirection}
-    StrCpy $INSTDIR ${UD_INSTALL_DIR}
+
+    ReadRegStr $OldInstallDir HKLM ${UD_UNINSTALL_REG_KEY} "InstallLocation"
+    StrCmp $OldInstallDir "" 0 +2
+    StrCpy $OldInstallDir $INSTDIR
 
     ${CollectOldLang}
     ${InitLanguageSelector}
@@ -310,10 +321,6 @@ Function un.onInit
     ${CheckAdminRights}
     ${CheckMutex}
 
-    ${DisableX64FSRedirection}
-    StrCpy $INSTDIR ${UD_INSTALL_DIR}
-    ${EnableX64FSRedirection}
-
 FunctionEnd
 
 ;----------------------------------------------
@@ -322,6 +329,39 @@ Function .onSelChange
 
     ${VerifySelections}
 
+FunctionEnd
+
+;----------------------------------------------
+
+Function .onVerifyInstDir
+    ; if $INSTDIR is a ultradefrag directory, let us install there
+    IfFileExists "$INSTDIR\lua5.1a_gui.exe" PathGood
+
+    ; if $INSTDIR is not empty, don't let us install there
+    Push $R1
+    Push $R2
+    Push $R3
+
+    StrCpy $R1 0
+    StrCpy $R2 0
+    StrCpy $R3 0
+
+    ${GetSize} "$INSTDIR" "" $R1 $R2 $R3
+    IntOp $R1 $R2 + $R3
+    IntCmp $R1 0 PathGoodPop PathGoodPop
+
+    Pop $R3
+    Pop $R2
+    Pop $R1
+
+    Abort
+
+PathGoodPop:
+    Pop $R3
+    Pop $R2
+    Pop $R1
+
+PathGood:
 FunctionEnd
 
 ;----------------------------------------------
@@ -337,7 +377,7 @@ Function .onInstSuccess
     ${UpdateUninstallSizeValue}
 
     ${RegisterInstallationFolder}
-    
+
     ${InitCrashDate}
 
 FunctionEnd
