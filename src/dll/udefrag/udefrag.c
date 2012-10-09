@@ -629,6 +629,7 @@ char *udefrag_get_error_description(int error_code)
 static void write_log_file_header(char *path)
 {
     WINX_FILE *f;
+    char bom[4] = {0xEF, 0xBB, 0xBF, 0x00};
     char header[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
                     "\r\n"
                     "                           UltraDefrag log file\r\n"
@@ -646,6 +647,13 @@ static void write_log_file_header(char *path)
     if(f == NULL)
         return;
     
+    /*
+    * UTF-8 encoded files need BOM to be written before the contents.
+    */
+    if(winx_get_os_version() > WINDOWS_NT){
+        /* NT4 libraries contain ANSI encoded messages; confirmed on its Russian edition */
+        (void)winx_fwrite(bom,sizeof(char),3,f);
+    }
     winx_fwrite(header,1,sizeof(header) - 1,f);
     winx_fclose(f);
 }
