@@ -626,13 +626,13 @@ void OpenTranslationWebPage(wchar_t *page, int islang)
  */
 void OpenLog(void)
 {
-    wchar_t *path = _wgetenv(L"UD_LOG_FILE_PATH");
-    
-    if(path == NULL){
-        MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
+    /* getenv() may give wrong results as stated in MSDN */
+    if(!GetEnvironmentVariableW(L"UD_LOG_FILE_PATH",env_buffer,MAX_ENV_VARIABLE_LENGTH + 1)){
+        if(GetLastError() != ERROR_ENVVAR_NOT_FOUND)
+            MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
     } else {
         udefrag_flush_dbg_log();
-        (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+        (void)WgxShellExecuteW(hWindow,L"open",env_buffer,NULL,NULL,SW_SHOW);
     }
 }
 
