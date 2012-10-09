@@ -92,7 +92,7 @@ ABOUT                     = À &propos
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Afficher le journal des événe&ments
+OPEN_LOG                  = Afficher le journa&l des événements
 REPORT_BUG                = Envoyer un &rapport de bogue
 
 ; --- Toolbar Tooltips
