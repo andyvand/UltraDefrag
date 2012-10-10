@@ -58,6 +58,7 @@ extern int lang_ini_tracking_stopped;
 */
 #define MAX_ENV_VARIABLE_LENGTH 32766
 wchar_t env_buffer[MAX_ENV_VARIABLE_LENGTH + 1];
+wchar_t env_buffer2[MAX_ENV_VARIABLE_LENGTH + 1];
 
 /* ensure that initial value is greater than any real value */
 int previous_list_height = 10000;
@@ -627,12 +628,12 @@ void OpenTranslationWebPage(wchar_t *page, int islang)
 void OpenLog(void)
 {
     /* getenv() may give wrong results as stated in MSDN */
-    if(!GetEnvironmentVariableW(L"UD_LOG_FILE_PATH",env_buffer,MAX_ENV_VARIABLE_LENGTH + 1)){
-        if(GetLastError() != ERROR_ENVVAR_NOT_FOUND)
-            MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
+    if(!GetEnvironmentVariableW(L"UD_LOG_FILE_PATH",env_buffer2,MAX_ENV_VARIABLE_LENGTH + 1)){
+        WgxDbgPrintLastError("OpenLog: cannot query UD_LOG_FILE_PATH environment variable");
+        MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
     } else {
         udefrag_flush_dbg_log();
-        (void)WgxShellExecuteW(hWindow,L"open",env_buffer,NULL,NULL,SW_SHOW);
+        (void)WgxShellExecuteW(hWindow,L"open",env_buffer2,NULL,NULL,SW_SHOW);
     }
 }
 
