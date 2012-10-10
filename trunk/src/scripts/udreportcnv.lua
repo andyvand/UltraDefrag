@@ -252,7 +252,7 @@ header = [[
     <table class="links_toolbar" width="100%"><tbody>
       <tr>
         <td class="left"><a href="http://ultradefrag.sourceforge.net">$VISIT_HOMEPAGE</a></td>
-        <td class="center"><a href="file:///$instdir\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
+        <td class="center"><a href="file:///$instdir_utf8\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
         <td class="right"><a href="http://www.lua.org/">$POWERED_BY_LUA</a></td>
       </tr>
     </tbody></table>
@@ -273,7 +273,7 @@ footer = [[
     <table class="links_toolbar" width="100%"><tbody>
       <tr>
         <td class="left"><a href="http://ultradefrag.sourceforge.net">$VISIT_HOMEPAGE</a></td>
-        <td class="center"><a href="file:///$instdir\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
+        <td class="center"><a href="file:///$instdir_utf8\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
         <td class="right"><a href="http://www.lua.org/">$POWERED_BY_LUA</a></td>
       </tr>
     </tbody></table>
@@ -380,6 +380,9 @@ end
 -------------------------------------------------------------------------------
 report_path = arg[1]
 instdir     = arg[2]
+
+instdir_utf8 = os.getenv("UD_INSTALL_DIR")
+if not instdir_utf8 then instdir_utf8 = "" end
 
 assert(report_path, usage)
 assert(instdir, usage)
