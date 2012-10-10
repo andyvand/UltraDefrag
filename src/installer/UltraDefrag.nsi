@@ -159,6 +159,7 @@ VIAddVersionKey  "FileVersion"     "${ULTRADFGVER}"
 
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE "${ROOTDIR}\src\LICENSE.TXT"
+!define MUI_DIRECTORYPAGE_TEXT_TOP "Only empty folders and folders containing a previous UltraDefrag installation are valid!$\nFor any other folders the $\"Next$\" button will be disabled."
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro LANG_PAGE
