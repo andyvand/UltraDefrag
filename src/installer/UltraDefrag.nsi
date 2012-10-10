@@ -340,24 +340,21 @@ Function .onVerifyInstDir
     ; if $INSTDIR is not empty, don't let us install there
     Push $R1
     Push $R2
-    Push $R3
 
-    StrCpy $R1 0
-    StrCpy $R2 0
-    StrCpy $R3 0
+    FindFirst $R1 $R2 "$INSTDIR\*"
+    StrCmp $R2 "" PathGoodPop
+    StrCmp $R1 "" +2
+    FindClose $R1
 
-    ${GetSize} "$INSTDIR" "" $R1 $R2 $R3
-    IntOp $R1 $R2 + $R3
-    IntCmp $R1 0 PathGoodPop PathGoodPop
-
-    Pop $R3
     Pop $R2
     Pop $R1
 
     Abort
 
 PathGoodPop:
-    Pop $R3
+    StrCmp $R1 "" +2
+    FindClose $R1
+
     Pop $R2
     Pop $R1
 
