@@ -116,7 +116,7 @@
  * There is also a silent mode for the uninstaller program.
  * At the command prompt type:
  * @code
- * %UD_INSTALL_DIR%\uninstall.exe /S _?=%UD_INSTALL_DIR%
+ * %UD_INSTALL_DIR%\uninstall.exe /S
  * @endcode
  * to automatically remove the program from the hard drive without any graphical dialogs.
  *
