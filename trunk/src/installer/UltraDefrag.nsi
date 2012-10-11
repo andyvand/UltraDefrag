@@ -343,9 +343,9 @@ Function .onVerifyInstDir
     Push $R2
 
     FindFirst $R1 $R2 "$INSTDIR\*"
-    StrCmp $R2 "" PathGoodPop
     StrCmp $R1 "" +2
     FindClose $R1
+    StrCmp $R2 "" PathGoodPop
 
     Pop $R2
     Pop $R1
@@ -353,9 +353,6 @@ Function .onVerifyInstDir
     Abort
 
 PathGoodPop:
-    StrCmp $R1 "" +2
-    FindClose $R1
-
     Pop $R2
     Pop $R1
 
