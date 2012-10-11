@@ -213,14 +213,17 @@ Var AtLeastXP
     StrCmp "$INSTDIR" "$OldInstallDir" SkipMove
 
     DetailPrint "Moving old installation to new location..."
+    CreateDirectory "$INSTDIR"
     ClearErrors
-    ExecShell "" "cmd.exe" '/c move /y "$OldInstallDir" "$INSTDIR"'
+    CopyFiles /SILENT "$OldInstallDir\*" "$INSTDIR"
     ${If} ${Errors}
         MessageBox MB_OK|MB_ICONSTOP \
             "Cannot move old installation to new location!" \
             /SD IDOK
         Abort
     ${EndIf}
+
+    RMDir /r "$OldInstallDir"
 
 SkipMove:
     DetailPrint "Installing core files..."
