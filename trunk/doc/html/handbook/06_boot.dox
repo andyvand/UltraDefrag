@@ -12,8 +12,8 @@
 /**
  * @page Boot Boot Time Defragmentation
  *
- * UltraDefrag also includes a new mode that allows to run it
- * at boot time in a manner similar to chkdsk. This is known as a 
+ * UltraDefrag also includes a new mode that allows you to run it
+ * at boot time in a manner similar to chkdsk. This is known as a
  * native application. The primary goal of it is defragmentation
  * of locked files. UltraDefrag runs at Windows boot before any 
  * file locking, so it can defragment almost everything,
@@ -46,7 +46,7 @@
  * @par Boot time script
  * The boot time script consists of the disk defragmentation commands,
  * ancillary commands and comments.
- * It is located at \%windir\%\\system32\\ud-boot-time.cmd.
+ * It is located at <b>\%windir\%\\system32\\ud-boot-time.cmd</b>.
  * To edit this file execute boot-config at the command prompt or simply click
  * the Boot time script button on the UltraDefrag GUI toolbar.
  * <br/><br/>
