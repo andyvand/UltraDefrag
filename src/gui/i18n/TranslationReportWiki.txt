@@ -55,7 +55,7 @@
 || [[Slovak.lng|Slovak]]                                                 || ||=  87 || ||=  91 || ||>    95 % ||
 || [[Slovenian.lng|Slovenian]]                                           || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Spanish (AR).lng|Spanish (AR)]]                                     || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Spanish (ES).lng|Spanish (ES)]]                                     || ||=  88 || ||=  91 || ||>    96 % ||
+|| [[Spanish (ES).lng|Spanish (ES)]]                                     || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Spanish (MEX).lng|Spanish (MEX)]]                                   || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Swedish.lng|Swedish]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Tamil.lng|Tamil]]                                                   || ||=  89 || ||=  91 || ||>    97 % ||
@@ -73,60 +73,60 @@
 ||~ Language ||~ ||~ translated ||~ ||~ total ||~ ||~ percentage ||
 || [[Georgian.lng|Georgian]]                                             || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Arabic.lng|Arabic]]                                                 || ||=  91 || ||=  91 || ||>   100 % ||
+|| [[Polish.lng|Polish]]                                                 || ||=  91 || ||=  91 || ||>   100 % ||
+|| [[Burmese (Padauk).lng|Burmese (Padauk)]]                             || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Korean.lng|Korean]]                                                 || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Greek.lng|Greek]]                                                   || ||=  91 || ||=  91 || ||>   100 % ||
-|| [[Burmese (Padauk).lng|Burmese (Padauk)]]                             || ||=  91 || ||=  91 || ||>   100 % ||
-|| [[Polish.lng|Polish]]                                                 || ||=  91 || ||=  91 || ||>   100 % ||
-|| [[Japanese.lng|Japanese]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[Belarusian.lng|Belarusian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Hebrew.lng|Hebrew]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Belarusian.lng|Belarusian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Japanese.lng|Japanese]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Thai.lng|Thai]]                                                     || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Turkish.lng|Turkish]]                                               || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Ukrainian.lng|Ukrainian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Chinese (Simplified).lng|Chinese (Simplified)]]                     || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[Chinese (Traditional).lng|Chinese (Traditional)]]                   || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Serbian.lng|Serbian]]                                               || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Russian.lng|Russian]]                                               || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Chinese (Traditional).lng|Chinese (Traditional)]]                   || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[German.lng|German]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Hindi.lng|Hindi]]                                                   || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[Ukrainian.lng|Ukrainian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Vietnamese.lng|Vietnamese]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Bulgarian.lng|Bulgarian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Farsi.lng|Farsi]]                                                   || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[Galician.lng|Galician]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Macedonian.lng|Macedonian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Lithuanian.lng|Lithuanian]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Galician.lng|Galician]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Hungarian.lng|Hungarian]]                                           || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[German.lng|German]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Estonian.lng|Estonian]]                                             || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Portuguese.lng|Portuguese]]                                         || ||=  89 || ||=  91 || ||>    97 % ||
+|| [[Spanish (ES).lng|Spanish (ES)]]                                     || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Spanish (MEX).lng|Spanish (MEX)]]                                   || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Tamil.lng|Tamil]]                                                   || ||=  89 || ||=  91 || ||>    97 % ||
-|| [[Czech.lng|Czech]]                                                   || ||=  89 || ||=  91 || ||>    97 % ||
-|| [[Estonian.lng|Estonian]]                                             || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Albanian.lng|Albanian]]                                             || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Indonesian (Bahasa Indonesia).lng|Indonesian (Bahasa Indonesia)]]   || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Iloko.lng|Iloko]]                                                   || ||=  89 || ||=  91 || ||>    97 % ||
+|| [[Czech.lng|Czech]]                                                   || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Indonesian.lng|Indonesian]]                                         || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Yiddish.lng|Yiddish]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Catalan.lng|Catalan]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Slovenian.lng|Slovenian]]                                           || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Swedish.lng|Swedish]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Danish.lng|Danish]]                                                 || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Latvian.lng|Latvian]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
-|| [[Spanish (ES).lng|Spanish (ES)]]                                     || ||=  88 || ||=  91 || ||>    96 % ||
+|| [[Swedish.lng|Swedish]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Spanish (AR).lng|Spanish (AR)]]                                     || ||=  88 || ||=  91 || ||>    96 % ||
+|| [[Catalan.lng|Catalan]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
+|| [[Latvian.lng|Latvian]]                                               || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Norwegian.lng|Norwegian]]                                           || ||=  88 || ||=  91 || ||>    96 % ||
+|| [[Slovenian.lng|Slovenian]]                                           || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Filipino (Tagalog).lng|Filipino (Tagalog)]]                         || ||=  88 || ||=  91 || ||>    96 % ||
 || [[Slovak.lng|Slovak]]                                                 || ||=  87 || ||=  91 || ||>    95 % ||
 || [[Portuguese (BR).lng|Portuguese (BR)]]                               || ||=  87 || ||=  91 || ||>    95 % ||
+|| [[Latin.lng|Latin]]                                                   || ||=  86 || ||=  91 || ||>    94 % ||
+|| [[Dutch.lng|Dutch]]                                                   || ||=  86 || ||=  91 || ||>    94 % ||
 || [[Italian.lng|Italian]]                                               || ||=  86 || ||=  91 || ||>    94 % ||
 || [[French.lng|French]]                                                 || ||=  86 || ||=  91 || ||>    94 % ||
-|| [[Dutch.lng|Dutch]]                                                   || ||=  86 || ||=  91 || ||>    94 % ||
-|| [[Latin.lng|Latin]]                                                   || ||=  86 || ||=  91 || ||>    94 % ||
 || [[Finnish.lng|Finnish]]                                               || ||=  86 || ||=  91 || ||>    94 % ||
 || [[Romanian.lng|Romanian]]                                             || ||=  85 || ||=  91 || ||>    93 % ||
 || [[Croatian.lng|Croatian]]                                             || ||=  85 || ||=  91 || ||>    93 % ||
-|| [[Malay.lng|Malay]]                                                   || ||=  84 || ||=  91 || ||>    92 % ||
 || [[Javanese.lng|Javanese]]                                             || ||=  84 || ||=  91 || ||>    92 % ||
 || [[Icelandic.lng|Icelandic]]                                           || ||=  84 || ||=  91 || ||>    92 % ||
+|| [[Malay.lng|Malay]]                                                   || ||=  84 || ||=  91 || ||>    92 % ||
 || [[Waray-Waray.lng|Waray-Waray]]                                       || ||=  82 || ||=  91 || ||>    90 % ||
 || [[Bosnian.lng|Bosnian]]                                               || ||=  76 || ||=  91 || ||>    83 % ||
 || [[Kapampangan.lng|Kapampangan]]                                       || ||=  66 || ||=  91 || ||>    72 % ||
