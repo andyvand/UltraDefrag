@@ -1,1 +1,0 @@
-This directory will contain temporary files.
