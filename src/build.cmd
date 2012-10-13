@@ -34,7 +34,6 @@ if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 (
 
 :: set environment
 call :set_build_environment
-echo %ULTRADFGVER% > ..\doc\html\version_xp.ini
 
 :: build all binaries
 call build-targets.cmd %* || goto fail

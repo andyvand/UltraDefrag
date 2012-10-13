@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /tmp
-Allow: /
-Sitemap: http://ultradefrag.sourceforge.net/sitemap.xml
