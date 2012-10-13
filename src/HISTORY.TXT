@@ -51,6 +51,7 @@
     - bug fix: filters forced to be case insensitive for all the characters
       (they worked properly for ANSI characters only)
     - added ability to specify the installation folder
+    - added log file creation to debug silent installations
 
     - the following translations were added:
 

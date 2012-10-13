@@ -49,7 +49,10 @@
  * <h1>Silent Installation</h1>
  * UltraDefrag can be installed in silent mode by adding the <b>/S</b> switch to the installer's command line
  * at the command prompt. In this case no dialogs will be shown and the program will be installed 
- * to the hard drive completely with all the features enabled. 
+ * to the hard drive completely with all the features enabled.<br/>
+ * For easier debugging of installation problems a log file will be created when an error is encontered.
+ * The log file is located in the temporary folder of the executing user:
+ * <b>"\%TEMP\%\\UltraDefrag_Install.log"</b> or <b>"\%TMP\%\\UltraDefrag_Install.log"</b>
  *
  * The following additional command line switches are supported:
  * @par /LANG

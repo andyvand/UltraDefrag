@@ -50,6 +50,7 @@
  */
 
 !define UD_UNINSTALL_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\UltraDefrag"
+!define UD_LOG_FILE "$TEMP\UltraDefrag_Install.log"
 
 !if ${ULTRADFGARCH} == 'i386'
 !define ROOTDIR "..\.."
@@ -101,6 +102,7 @@ InstallDir "$PROGRAMFILES64\UltraDefrag"
 InstallDirRegKey HKLM ${UD_UNINSTALL_REG_KEY} "InstallLocation"
 
 Var OldInstallDir
+Var ValidDestDir
 
 OutFile "ultradefrag-${UDVERSION_SUFFIX}.bin.${ULTRADFGARCH}.exe"
 LicenseData "${ROOTDIR}\src\LICENSE.TXT"
@@ -295,6 +297,10 @@ SectionEnd
 
 Function .onInit
 
+    ; remove old log file
+    Delete ${UD_LOG_FILE}
+    ClearErrors
+
     ${CheckAdminRights}
     ${CheckWinVersion}
     ${CheckMutex}
@@ -336,28 +342,12 @@ FunctionEnd
 ;----------------------------------------------
 
 Function .onVerifyInstDir
-    ; if $INSTDIR is a ultradefrag directory, let us install there
-    IfFileExists "$INSTDIR\lua5.1a_gui.exe" PathGood
 
-    ; if $INSTDIR is not empty, don't let us install there
-    Push $R1
-    Push $R2
+    ${CheckDestFolder}
 
-    FindFirst $R1 $R2 "$INSTDIR\*"
-    StrCmp $R1 "" +2
-    FindClose $R1
-    StrCmp $R2 "" PathGoodPop
-
-    Pop $R2
-    Pop $R1
-
+    StrCmp $ValidDestDir "1" +2
     Abort
 
-PathGoodPop:
-    Pop $R2
-    Pop $R1
-
-PathGood:
 FunctionEnd
 
 ;----------------------------------------------

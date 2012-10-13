@@ -36,6 +36,47 @@
 
 Var AtLeastXP
 
+!macro LogAndDisplayAbort _Message
+
+    ${If} ${Silent}
+        Push $R0
+
+        FileOpen $R0 ${UD_LOG_FILE} w
+
+        ${Unless} ${Errors}
+            FileWrite $R0 "$\r$\n"
+            FileWrite $R0 "This file contains information to debug installation problems.$\r$\n"
+            FileWrite $R0 "$\r$\n"
+            FileWrite $R0 "Error Message ..... ${_Message}$\r$\n"
+            FileWrite $R0 "$\r$\n"
+            FileWrite $R0 "Command Line ...... $CMDLINE$\r$\n"
+            FileWrite $R0 "$\r$\n"
+            FileWrite $R0 "Installer Path .... $EXEPATH$\r$\n"
+            FileWrite $R0 "Installer Type .... ${ULTRADFGARCH}$\r$\n"
+            FileWrite $R0 "At least XP ....... $AtLeastXP$\r$\n"
+            FileWrite $R0 "$\r$\n"
+            FileWrite $R0 "Install Dir ....... $INSTDIR$\r$\n"
+            FileWrite $R0 "Output Dir ........ $OUTDIR$\r$\n"
+            FileWrite $R0 "Old Install Dir ... $OldInstallDir$\r$\n"
+            FileWrite $R0 "Windows Dir ....... $WINDIR$\r$\n"
+            FileWrite $R0 "System Dir ........ $SYSDIR$\r$\n"
+            FileWrite $R0 "Plugin Dir ........ $PLUGINSDIR$\r$\n"
+            FileWrite $R0 "Temporary Dir ..... $TEMP$\r$\n"
+            FileWrite $R0 "$\r$\n"
+
+            FileClose $R0
+        ${EndUnless}
+
+        Pop $R0
+    ${EndIf}
+
+    MessageBox MB_OK|MB_ICONSTOP "${_Message}" /SD IDOK
+!macroend
+
+!define LogAndDisplayAbort "!insertmacro LogAndDisplayAbort"
+
+;-----------------------------------------
+
 !macro InitCrashDate
 
     Push $5
@@ -93,7 +134,7 @@ Var AtLeastXP
     Pop $R0
 
     ${If} $R0 != "Admin"
-        MessageBox MB_OK|MB_ICONSTOP "Administrative rights are needed to install the program!" /SD IDOK
+        ${LogAndDisplayAbort} "Administrative rights are needed to install the program!"
         Abort
     ${EndIf}
 
@@ -119,7 +160,7 @@ Var AtLeastXP
     ${EndIf}
     ${If} $R0 != 0
         System::Call 'kernel32::CloseHandle(i $R0)'
-        MessageBox MB_OK|MB_ICONSTOP "Ultra Defragmenter is running. Please close it first!" /SD IDOK
+        ${LogAndDisplayAbort} "Ultra Defragmenter is running. Please close it first!"
         Abort
     ${EndIf}
 
@@ -142,12 +183,11 @@ Var AtLeastXP
     /* release 6.0.0 and above is not compatible with Windows 2000 and below,
        even worse, enabling boot time processing results in an unbootable system */
     ${If} ${AtMostWin2000}
-        MessageBox MB_OK|MB_ICONSTOP \
-        "This program is not supported on Windows 2000 and below!$\n$\n\
-        If you are running Windows XP and higher, then something is wrong.$\n\
-        Please report this problem to the developers.$\n$\n\
-        Download UltraDefrag v5 if you'd like to use it on NT 4 or Windows 2000." \
-        /SD IDOK
+        ${LogAndDisplayAbort} \
+            "This program is not supported on Windows 2000 and below!$\n$\n\
+            If you are running Windows XP and higher, then something is wrong.$\n\
+            Please report this problem to the developers.$\n$\n\
+            Download UltraDefrag v5 if you'd like to use it on NT 4 or Windows 2000."
         Abort
     ${EndIf}
 
@@ -165,28 +205,25 @@ Var AtLeastXP
     ${Unless} ${Errors}
         ${If} $R0 == "x86"
         ${AndIf} ${ULTRADFGARCH} != "i386"
-            MessageBox MB_OK|MB_ICONSTOP \
-            "This installer cannot be used on 32-bit Windows!$\n \
-            Download the i386 version from http://ultradefrag.sourceforge.net/" \
-            /SD IDOK
+            ${LogAndDisplayAbort} \
+                "This installer cannot be used on 32-bit Windows!$\n \
+                Download the i386 version from http://ultradefrag.sourceforge.net/"
             Pop $R0
             Abort
         ${EndIf}
         ${If} $R0 == "amd64"
         ${AndIf} ${ULTRADFGARCH} != "amd64"
-            MessageBox MB_OK|MB_ICONSTOP \
-            "This installer cannot be used on x64 version of Windows!$\n \
-            Download the amd64 version from http://ultradefrag.sourceforge.net/" \
-            /SD IDOK
+            ${LogAndDisplayAbort} \
+                "This installer cannot be used on x64 version of Windows!$\n \
+                Download the amd64 version from http://ultradefrag.sourceforge.net/"
             Pop $R0
             Abort
         ${EndIf}
         ${If} $R0 == "ia64"
         ${AndIf} ${ULTRADFGARCH} != "ia64"
-            MessageBox MB_OK|MB_ICONSTOP \
-            "This installer cannot be used on IA-64 version of Windows!$\n \
-            Download the ia64 version from http://ultradefrag.sourceforge.net/" \
-            /SD IDOK
+            ${LogAndDisplayAbort} \
+                "This installer cannot be used on IA-64 version of Windows!$\n \
+                Download the ia64 version from http://ultradefrag.sourceforge.net/"
             Pop $R0
             Abort
         ${EndIf}
@@ -200,6 +237,55 @@ Var AtLeastXP
 ;-----------------------------------------
 
 /**
+ * This procedure validates the destination folder
+ * and is only used by the directory page verify callback.
+ * Only empty folders or folders containing an existing
+ * UltraDefrag installation are valid.
+ */
+!macro CheckDestFolder
+
+    StrCpy $ValidDestDir "1"
+
+    ; if $INSTDIR is a ultradefrag directory, let us install there
+    IfFileExists "$INSTDIR\lua5.1a_gui.exe" PathGood
+
+    ; if $INSTDIR is not empty, don't let us install there
+    Push $R1
+    Push $R2
+
+    FindFirst $R1 $R2 "$INSTDIR\*"
+    ${If} $R1 != ""
+        ${If} $R2 != ""
+            ${Do}
+                ${If} $R2 != "."
+                    ${AndIf} $R2 != ".."
+
+                    ${ExitDo}
+                ${EndIf}
+
+                FindNext $R1 $R2
+            ${Loop}
+        ${EndIf}
+
+        FindClose $R1
+    ${EndIf}
+
+    ${If} $R2 != ""
+        StrCpy $ValidDestDir "0"
+    ${EndIf}
+
+    Pop $R2
+    Pop $R1
+
+PathGood:
+
+!macroend
+
+!define CheckDestFolder "!insertmacro CheckDestFolder"
+
+;-----------------------------------------
+
+/**
  * This procedure installs all mandatory files and
  * upgrades already existing configuration files
  * if they are in obsolete format.
@@ -207,6 +293,17 @@ Var AtLeastXP
 !macro InstallCoreFiles
 
     ${DisableX64FSRedirection}
+
+    ; validate destination folder for silent installation here,
+    ; since the directory page is not displayed in silent mode
+    ${If} ${Silent}
+        ${CheckDestFolder}
+
+        ${If} $ValidDestDir == "0"
+            ${LogAndDisplayAbort} "Destination folder is invalid!"
+            Abort
+        ${EndIf}
+    ${EndIf}
 
     ; move old installation to new location
     IfFileExists "$OldInstallDir\*.*" 0 SkipMove
@@ -217,13 +314,13 @@ Var AtLeastXP
     ClearErrors
     CopyFiles /SILENT "$OldInstallDir\*" "$INSTDIR"
     ${If} ${Errors}
-        MessageBox MB_OK|MB_ICONSTOP \
-            "Cannot move old installation to new location!" \
-            /SD IDOK
+        ${LogAndDisplayAbort} "Cannot move old installation to new location!"
         Abort
     ${EndIf}
 
+    SetDetailsPrint textonly
     RMDir /r "$OldInstallDir"
+    SetDetailsPrint both
 
 SkipMove:
     DetailPrint "Installing core files..."
@@ -335,9 +432,7 @@ SkipMove:
             * force upgrade to the latest monolithic native
             * defragmenter.
             */
-            MessageBox MB_OK|MB_ICONSTOP \
-            "Cannot update $SYSDIR\defrag_native.exe file!" \
-            /SD IDOK
+            ${LogAndDisplayAbort} "Cannot update $SYSDIR\defrag_native.exe file!"
             ; try to recover the problem
             ExecWait '"$SYSDIR\bootexctrl.exe" /u /s defrag_native'
             ; the second attempt, just for safety
