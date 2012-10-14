@@ -263,6 +263,9 @@ rem by removing all intermediate files.
     del /f /q ..\..\web\doxy-doc\html\*.*
     del /f /q ..\..\web\doxy-doc\udefrag.dll\html\*.*
     del /f /q ..\..\web\doxy-doc\wgx\html\*.*
+
+    for %%F in ( "..\..\web\handbook\*.*" ) do if not "%%~nxF" == ".htaccess" del /f /q "%%~F"
+
     echo Done.
 goto :EOF
 
