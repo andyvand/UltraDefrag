@@ -23,7 +23,7 @@
  *
  * Windows Server 2003 DDK needs to be patched in order to accept
  * high resolution icons included in UltraDefrag. To patch DDK
- * replace bin\\x86\\rc.exe and bin\\x86\\rcdll.dll files by
+ * replace <b>bin\\x86\\rc.exe</b> and <b>bin\\x86\\rcdll.dll</b> files by
  * more recent versions extracted from Windows 7 WDK/SDK.
  *
  * MinGW also needs to be patched to be able to compile UltraDefrag.
@@ -49,14 +49,11 @@
  * - <a href="http://www.etree.org/md5com.html">md5sum tool</a> to create the checksums
  * - <a href="http://upx.sf.net/">UPX</a> to reduce the size of the installers
  * 
- * All listed packages can be downloaded from the
- * <a href="http://ultradefrag.sourceforge.net/devtools/">UltraDefrag web site</a>.
- *
  * - Install NSIS, 7-zip, Doxygen and optionally "Lua for Windows" and MiKTeX.
  * - If you did not install "Lua for Windows",
- * extract Lua, IUP and CD to some directory on your \%PATH\%, e.g. to C:\\Windows.
- * - Place md5sum.exe into the src\\tools folder of the source code distribution.
- * - Extract upx.exe into the src\\tools\\upx folder of the source code distribution.
+ * extract Lua, IUP and CD to some directory on your <b>\%PATH\%</b>, e.g. to <b>C:\\Windows</b>.
+ * - Place md5sum.exe into the <b>src\\tools</b> folder of the source code distribution.
+ * - Extract upx.exe into the <b>src\\tools\\upx</b> folder of the source code distribution.
  *
  * To properly set up the build environment type:
  * @code lua configure.lua @endcode
