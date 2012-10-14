@@ -143,27 +143,18 @@
  * will be deleted soon, therefore they will not decrease the system performance.
  *
  * <h1>Web resources</h1>
- * The Ultra Defragmenter's home page is at:
- * @latexonly
- * \\
- * @endlatexonly
- * http://ultradefrag.sourceforge.net
+ * The Ultra Defragmenter's
+ * <a href="http://ultradefrag.sourceforge.net/">home page at Sourceforge.net</a>.
  *
  * Please be sure to visit this site for information,
  * documentation, tutorials, news, etc. All UltraDefrag
  * related things are available there.
  *
- * For help requests visit our forum:
- * @latexonly
- * \\
- * @endlatexonly
- * http://ultradefrag.sourceforge.net/forum
+ * For help requests visit our
+ * <a href="http://sourceforge.net/p/ultradefrag/discussion/709673/">forum at Sourceforge.net</a>.
  *
- * Please report all problems and bugs via our bug tracker:
- * @latexonly
- * \\
- * @endlatexonly
- * http://ultradefrag.sourceforge.net/bugs
+ * Please report all problems and bugs via our
+ * <a href="http://sourceforge.net/p/ultradefrag/bugs/">bug tracker at Sourceforge.net</a>.
  *
  * To participate in UltraDefrag translation
  * please visit <a href="http://ultradefrag.wikispaces.com/">WikiSpaces.com</a>.

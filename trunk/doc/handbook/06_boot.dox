@@ -208,7 +208,7 @@ TIME ... 12-04
  * ; set UD_DBGPRINT_LEVEL=DETAILED
  *
  * ; uncomment the following line to save debugging information to a log file
- * ; set UD_LOG_FILE_PATH=%SystemRoot%\UltraDefrag\Logs\defrag_native.log
+ * ; set UD_LOG_FILE_PATH=%UD_INSTALL_DIR%\Logs\defrag_native.log
  *
  * udefrag c:
  *
@@ -227,7 +227,7 @@ TIME ... 12-04
  * set UD_EX_FILTER=*temp*;*tmp*;*.zip;*.7z;*.rar;*dllcache*;*ServicePackFiles*
  *
  * ;create a timestamped log file
- * set UD_LOG_FILE_PATH=%SystemRoot%\UltraDefrag\Logs\defrag_native_%DATE%_%TIME%.log
+ * set UD_LOG_FILE_PATH=%UD_INSTALL_DIR%\Logs\defrag_native_%DATE%_%TIME%.log
  *
  * udefrag %SystemDrive%
  *
