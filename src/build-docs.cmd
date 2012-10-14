@@ -41,15 +41,15 @@ if "%UD_BLD_FLG_BUILD_DEV%" == "1" (
     call :compile_docs .\dll\zenwinx                     || goto fail
 )
 
-call :compile_docs ..\doc\html\handbook              || goto fail
+call :compile_docs ..\doc\handbook || goto fail
 
 :: compile PDF documentation if MiKTeX is installed
 if "%UD_BLD_FLG_BUILD_PDF%" == "1" (
     pdflatex --version >nul 2>&1
     if not errorlevel 1 (
         mkdir .\release
-        call :compile_pdf ..\doc\html\handbook a4     UltraDefrag_Handbook || goto fail
-        call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook || goto fail
+        call :compile_pdf ..\doc\handbook a4     UltraDefrag_Handbook || goto fail
+        call :compile_pdf ..\doc\handbook letter UltraDefrag_Handbook || goto fail
     )
 )
 
@@ -85,7 +85,7 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
 goto :EOF
 
 rem Synopsis: call :compile_pdf {path} {paper size} {PDF name}
-rem Example:  call :compile_pdf ..\doc\html\handbook letter UltraDefrag_Handbook
+rem Example:  call :compile_pdf ..\doc\handbook letter UltraDefrag_Handbook
 :compile_pdf
     pushd %1
     rd /s /q doxy-doc\latex_%2

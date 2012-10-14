@@ -179,7 +179,7 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     copy /Y lua5.1a_gui.exe     %PORTABLE_DIR%\
     copy /Y wgx.dll             %PORTABLE_DIR%\
     mkdir %PORTABLE_DIR%\handbook
-    copy /Y "%~dp0\..\doc\html\handbook\doxy-doc\html\*.*" %PORTABLE_DIR%\handbook\
+    copy /Y "%~dp0\..\doc\handbook\doxy-doc\html\*.*" %PORTABLE_DIR%\handbook\
     mkdir %PORTABLE_DIR%\scripts
     copy /Y "%~dp0\scripts\udreportcnv.lua"      %PORTABLE_DIR%\scripts\
     copy /Y "%~dp0\scripts\udsorting.js"         %PORTABLE_DIR%\scripts\
@@ -247,15 +247,15 @@ rem by removing all intermediate files.
     rd /s /q dll\wgx\doxy-doc
     rd /s /q dll\udefrag\doxy-doc
     rd /s /q dll\zenwinx\doxy-doc
-    rd /s /q ..\doc\html\handbook\doxy-doc
+    rd /s /q ..\doc\handbook\doxy-doc
     rd /s /q doxy-defaults
     rd /s /q gui\doxy-defaults
     rd /s /q dll\wgx\doxy-defaults
     rd /s /q dll\udefrag\doxy-defaults
     rd /s /q dll\zenwinx\doxy-defaults
-    rd /s /q ..\doc\html\handbook\doxy-defaults
-    rd /s /q ..\doc\html\handbook\doxy-defaults_a4
-    rd /s /q ..\doc\html\handbook\doxy-defaults_letter
+    rd /s /q ..\doc\handbook\doxy-defaults
+    rd /s /q ..\doc\handbook\doxy-defaults_a4
+    rd /s /q ..\doc\handbook\doxy-defaults_letter
     rd /s /q src_package
     rd /s /q ..\src_package
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 rd /s /q release

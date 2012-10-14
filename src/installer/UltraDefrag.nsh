@@ -672,7 +672,7 @@ SkipMove:
     RMDir /r "$INSTDIR\handbook"
 
     SetOutPath "$INSTDIR\handbook"
-        File "${ROOTDIR}\doc\html\handbook\doxy-doc\html\*.*"
+        File "${ROOTDIR}\doc\handbook\doxy-doc\html\*.*"
 
     ${EnableX64FSRedirection}
 
