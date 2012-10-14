@@ -26,10 +26,10 @@ call :make_default .                    || goto fail
 call :make_default .\dll\udefrag        || goto fail
 call :make_default .\dll\wgx            || goto fail
 call :make_default .\dll\zenwinx        || goto fail
-call :make_default ..\doc\html\handbook || goto fail
+call :make_default ..\doc\handbook      || goto fail
 
-call :make_pdf_default ..\doc\html\handbook a4     || goto fail
-call :make_pdf_default ..\doc\html\handbook letter || goto fail
+call :make_pdf_default ..\doc\handbook a4     || goto fail
+call :make_pdf_default ..\doc\handbook letter || goto fail
 
 echo.
 echo Created default files successfully!
@@ -65,7 +65,7 @@ rem Example:  call :make_default .\dll\zenwinx
 goto :EOF
 
 rem Synopsis: call :make_pdf_default {path} {paper size}
-rem Example:  call :make_pdf_default ..\doc\html\handbook letter
+rem Example:  call :make_pdf_default ..\doc\handbook letter
 :make_pdf_default
     pushd %1
     echo ====
