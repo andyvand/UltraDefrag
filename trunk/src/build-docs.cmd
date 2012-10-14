@@ -42,6 +42,7 @@ if "%UD_BLD_FLG_BUILD_DEV%" == "1" (
 )
 
 call :compile_docs ..\doc\handbook || goto fail
+copy /Y ..\doc\handbook\doxy-doc\html\*.* "%~dp0\..\..\web\handbook" || goto fail
 
 :: compile PDF documentation if MiKTeX is installed
 if "%UD_BLD_FLG_BUILD_PDF%" == "1" (
