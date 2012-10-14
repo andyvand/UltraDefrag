@@ -35,13 +35,10 @@ if "%ULTRADFGVER%" equ "" (
 doxygen --version >nul 2>&1 || goto fail
 
 if "%UD_BLD_FLG_BUILD_DEV%" == "1" (
-    call :compile_docs .                                 || goto fail
+    call :compile_docs .                    .            || goto fail
     call :compile_docs .\dll\udefrag        udefrag.dll  || goto fail
     call :compile_docs .\dll\wgx            wgx          || goto fail
     call :compile_docs .\dll\zenwinx                     || goto fail
-
-    rem move .htaccess file to the root of dev docs
-    move /Y doxy-doc\html\.htaccess doxy-doc\.htaccess
 )
 
 call :compile_docs ..\doc\html\handbook              || goto fail
@@ -77,7 +74,7 @@ rem Example:  call :compile_docs .\dll\zenwinx zenwinx
     del /Q .\doxy-doc\html\doxygen.png
 
     if "%2" neq "" (
-        xcopy /I /Y /Q /S .\doxy-doc\html "%~dp0\doxy-doc\%2\html" || goto compilation_failed
+        copy /Y .\doxy-doc\html\*.* "%~dp0\..\..\web\doxy-doc\%2\html" || goto compilation_failed
     )
     :compilation_succeeded
     popd
