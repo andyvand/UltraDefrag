@@ -985,7 +985,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_REPORT_BUG:
             (void)WgxShellExecuteW(hWindow,L"open",
-                L"http://sourceforge.net/tracker/?group_id=199532&atid=969870",
+                L"http://sourceforge.net/p/ultradefrag/bugs/",
                 NULL,NULL,SW_SHOW);
             return 0;
         case IDM_EXIT:
