@@ -730,11 +730,11 @@ SkipMove:
     StrCpy $6 "[--- &Defragment folder itself ---]"
     StrCpy $7 "[--- &Defragment root folder itself ---]"
     StrCpy $8 "[--- &Analyze drive with UltraDefrag ---]"
-    StrCpy $9 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -a $\"%1$\""
+    StrCpy $9 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -a -v $\"%1$\""
     StrCpy $R0 "[--- &Optimize drive with UltraDefrag ---]"
-    StrCpy $R1 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -o $\"%1$\""
+    StrCpy $R1 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -o -v $\"%1$\""
     StrCpy $R2 "[--- &Quickly optimize drive with UltraDefrag ---]"
-    StrCpy $R3 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -q $\"%1$\""
+    StrCpy $R3 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -q -v $\"%1$\""
 
     ${If} $AtLeastXP == "1"
         WriteRegStr HKCR "Drive\shell\udefrag"                         ""     $2
