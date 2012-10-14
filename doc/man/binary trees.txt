@@ -1,5 +1,0 @@
-GNU libavl:
-    http://www.stanford.edu/~blp/avl/
-
-The Art of Computer Programming:
-    http://www.google.com/search?q=Donald+Knuth+The+Art+Of+Computer+Programming
