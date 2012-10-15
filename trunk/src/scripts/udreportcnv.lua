@@ -249,13 +249,6 @@ header = [[
   </head>
   <body>
     <h3 class="title">$FRAGMENTED_FILES_ON $volume_letter: ($formatted_time)</h3>
-    <table class="links_toolbar" width="100%"><tbody>
-      <tr>
-        <td class="left"><a href="http://ultradefrag.sourceforge.net">$VISIT_HOMEPAGE</a></td>
-        <td class="center"><a href="file:///$instdir_utf8\options\udreportopts.lua">$VIEW_REPORT_OPTIONS</a></td>
-        <td class="right"><a href="http://www.lua.org/">$POWERED_BY_LUA</a></td>
-      </tr>
-    </tbody></table>
     <div id="for_msie">
       $table_head
       <tr>
