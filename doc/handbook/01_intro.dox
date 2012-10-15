@@ -90,6 +90,12 @@
  *   the MFT. However, it can optimize it by placing all fragments
  *   close to each other.
  *
+ * <h1>Fragmentation level</h1>
+ * The fragmentation level or percentage is calculated as follows:
+ * @code
+ * fragmentation = number of fragmented file fragments / number of all file fragments
+ * @endcode
+ *
  * <h1>Processing algorithms</h1>
  *
  * <h2>Defragmentation algorithm</h2>
