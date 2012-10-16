@@ -98,7 +98,7 @@ BOOT_TIME_SCRIPT          = Skriptas OS įkrovai
 
 VOLUME                    = Diskas
 STATUS                    = Statusas
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Skilimas
 TOTAL                     = Bendras dydis
 FREE                      = Laisva
 PERCENT                   = % laisva

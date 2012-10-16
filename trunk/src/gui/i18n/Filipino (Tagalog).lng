@@ -99,7 +99,7 @@ BOOT_TIME_SCRIPT          = Iskrip sa Pagsisimula
 
 VOLUME                    = Aklat
 STATUS                    = Katayuan
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Pagkapira-piraso
 TOTAL                     = Kapasidad
 FREE                      = Palayaing
 PERCENT                   = % ng Palayain

@@ -59,8 +59,8 @@
 
     - the following translations were updated:
 
-      Albanian, Arabic, Burmese (Padauk), English (GB), French, Georgian, German, Greek,
-      Indonesian, Italian, Korean, Polish, Spanish (ES), Spanish (MEX)
+      Albanian, Arabic, English (GB), French, Indonesian, Italian, Polish,
+      Spanish (ES), Spanish (MEX)
 
     - Internals: creation_time, last_modification_time, last_access_time
       members added to the winx_file_info structure

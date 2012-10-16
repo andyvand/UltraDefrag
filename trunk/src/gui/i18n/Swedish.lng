@@ -100,7 +100,7 @@ BOOT_TIME_SCRIPT          = Redigera boot-skript
 
 VOLUME                    = Volym
 STATUS                    = Tillstånd
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Fragmentering
 TOTAL                     = Kapacitet
 FREE                      = Ledigt
 PERCENT                   = Andel ledigt

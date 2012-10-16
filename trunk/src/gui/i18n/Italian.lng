@@ -105,7 +105,7 @@ BOOT_TIME_SCRIPT          = Script deframmentazione all'avvio
 
 VOLUME                    = Volume
 STATUS                    = Stato
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Frammentazione
 TOTAL                     = Spazio totale
 FREE                      = Spazio libero
 PERCENT                   = % libero

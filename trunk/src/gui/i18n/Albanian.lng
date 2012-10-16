@@ -98,7 +98,7 @@ BOOT_TIME_SCRIPT          = Skriptimi para kyçjes së kompjuterit
 
 VOLUME                    = Disku
 STATUS                    = Statusi
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Copëzim
 TOTAL                     = Hapësira totale
 FREE                      = Hapësira e lirë
 PERCENT                   = % e lirë
