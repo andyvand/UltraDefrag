@@ -103,7 +103,7 @@ BOOT_TIME_SCRIPT          = Opstarttijd script
 
 VOLUME                    = Drive
 STATUS                    = Staat
-FRAGMENTATION             = Fragmentation
+FRAGMENTATION             = Fragmentatie
 TOTAL                     = Capaciteit
 FREE                      = Beschikbare ruimte
 PERCENT                   = % vrij
