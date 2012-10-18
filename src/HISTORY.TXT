@@ -38,7 +38,7 @@
     - WgxSetProcessPriority routine added to wgx library
 
 
-  Version 5.1.0  2012-10-
+  Version 5.1.0  2012-10-18
   ------------------------------------------------------------------------------
     - added fragmentation level display to all the interfaces
     - added ability to skip the disk processing when fragmentation level
