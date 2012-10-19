@@ -38,6 +38,21 @@
     - WgxSetProcessPriority routine added to wgx library
 
 
+  Version 5.1.1  2012-11-
+  ------------------------------------------------------------------------------
+    - added ability to install over an existing portable package
+
+    - the following translations were added:
+
+      
+
+    - the following translations were updated:
+
+      
+
+    - Internals:
+
+
   Version 5.1.0  2012-10-18
   ------------------------------------------------------------------------------
     - added fragmentation level display to all the interfaces
