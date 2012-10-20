@@ -49,8 +49,8 @@ cd ..
 copy .\HISTORY.TXT .\release\
 copy /Y .\HISTORY.TXT ..\..\web\
 
-echo %ULTRADFGVER% > ..\..\web\version.ini
-:: keep v6.0.0 beta1 upgradeable
+:: uncomment it before v6.0.0 beta2 release
+:: echo %ULTRADFGVER% > ..\..\web\version.ini
 echo %ULTRADFGVER% > ..\..\web\version_xp.ini
 
 echo.

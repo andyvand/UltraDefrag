@@ -96,6 +96,11 @@
  *   Because of that more free space may be needed to succeed with the
  *   disk processing.
  *
+ * Never try to run UltraDefrag on NTFS v1.2 formatted disks
+ * under Windows NT 4.0, because this might crash your system.
+ * NTFS 1.2 had beta status and the appropriate system driver
+ * was not reliable.
+ *
  * <h1>Fragmentation level</h1>
  * The fragmentation level or percentage is calculated as follows:
  * @code
