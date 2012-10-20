@@ -49,8 +49,9 @@ cd ..
 copy .\HISTORY.TXT .\release\
 copy /Y .\HISTORY.TXT ..\..\web\
 
-:: TODO uncomment line below before release of version 6.0.0
-:: echo %ULTRADFGVER% > ..\..\web\version_xp.ini
+echo %ULTRADFGVER% > ..\..\web\version.ini
+:: keep v6.0.0 beta1 upgradeable
+echo %ULTRADFGVER% > ..\..\web\version_xp.ini
 
 echo.
 echo Release made successfully!

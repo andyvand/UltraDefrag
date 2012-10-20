@@ -36,8 +36,8 @@
  * <h1>About the software</h1>
  * UltraDefrag has the following features:
  * - system files defragmentation (page-file, hibernation file, ...)
- * - MFT (master file table) defragmentation
- * - NTFS metafiles defragmentation
+ * - MFT (master file table) defragmentation (on XP and later systems)
+ * - NTFS metafiles defragmentation (on Windows 2000 and later systems)
  * - ultra fast NTFS analysis
  * - fast defragmentation algorithm
  * - effective disk optimization algorithm (many strategies available)
@@ -60,15 +60,11 @@
  * - native 64-bit support
  * - open source code licensed under GPL
  *
- * UltraDefrag runs on Windows XP, Windows Server 2003, Windows Vista,
- * Windows Server 2008 and Windows 7, including all 64 bit versions of Windows.
+ * UltraDefrag runs on Windows NT 4.0, Windows 2000, Windows XP,
+ * Windows Server 2003, Windows Vista, Windows Server 2008
+ * and Windows 7, including all 64 bit versions of Windows.
  *
- * Both Windows NT 4.0 and Windows 2000 have very restricted Defrag API,
- * so the most recent versions of UltraDefrag don't support them.
- * However, the 5.0.x series of UltraDefrag is fully compatible
- * with Windows NT 4.0 and Windows 2000.
- *
- * UltraDefrag cannot be used on DOS, Windows 9x, Windows NT 3.51 and Mac OS
+ * UltraDefrag cannot be used on DOS, Windows 9x, Windows NT 3.51, ReactOS and Mac OS
  * since these operating systems provide no defragmentation API.
  * However, <a href="http://b.andre.pagesperso-orange.fr/advanced-ntfs-3g.html">Linux port of UltraDefrag</a> exists.
  * It is based on NTFS-3G capabilities.
@@ -89,6 +85,16 @@
  *   system driver limitation. So, UltraDefrag cannot defragment
  *   the MFT. However, it can optimize it by placing all fragments
  *   close to each other.
+ * - The $Bitmap and other internal NTFS files cannot be
+ *   defragmented on Windows versions prior to Windows 2000 and
+ *   to defragment the $MFT file at least Windows XP is needed, because
+ *   the NTFS system driver prevents accessing them.
+ * - NTFS disks with a cluster size greater than 4 kilobytes
+ *   cannot be defragmented on Windows NT 4.0 and Windows 2000.
+ * - On NTFS disks under Windows NT 4.0 and Windows 2000 UltraDefrag moves
+ *   entire files only due to quite complex move file API restrictions.
+ *   Because of that more free space may be needed to succeed with the
+ *   disk processing.
  *
  * <h1>Fragmentation level</h1>
  * The fragmentation level or percentage is calculated as follows:

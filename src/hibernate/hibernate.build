@@ -5,7 +5,7 @@ target_type = "console"
 -- list of directories containing headers the program relies on
 includes = { "include", "lua5.1", "wgx" }
 
-libs = { "kernel32", "msvcrt", "advapi32", "powrprof" }
+libs = { "kernel32", "msvcrt", "advapi32" }
 adlibs = { 
     "$(UDEFRAG_LIB_PATH)\\wgx"
 }

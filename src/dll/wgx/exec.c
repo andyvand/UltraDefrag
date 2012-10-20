@@ -119,6 +119,8 @@ BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param)
  * @param[in] priority_class process priority class.
  * Read MSDN article on SetPriorityClass for details.
  * @return Boolean value. TRUE indicates success.
+ * @note Above normal and below normal priorities
+ * are not supported by Windows NT 4.0.
  */
 BOOL WgxSetProcessPriority(DWORD priority_class)
 {
