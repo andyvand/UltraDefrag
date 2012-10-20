@@ -1370,8 +1370,11 @@ void stop_web_statistics()
  */
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-    int result;
+    HMODULE hComCtlDll;
+    typedef BOOL (WINAPI *ICCE_PROC)(LPINITCOMMONCONTROLSEX lpInitCtrls);
+    ICCE_PROC pInitCommonControlsEx = NULL;
     INITCOMMONCONTROLSEX icce;
+    int result;
     
     WgxSetDbgPrintHandler(udefrag_dbg_print);
     hInstance = GetModuleHandle(NULL);
@@ -1414,10 +1417,18 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     start_web_statistics();
     CheckForTheNewVersion();
 
-    /* InitCommonControlsEx is always available on XP and more recent Windows editions */
-    icce.dwSize = sizeof(INITCOMMONCONTROLSEX);
-    icce.dwICC = ICC_WIN95_CLASSES | ICC_STANDARD_CLASSES;
-    InitCommonControlsEx(&icce);
+    /* InitCommonControlsEx may be not available on NT 4 */
+    hComCtlDll = LoadLibrary("comctl32.dll");
+    if(hComCtlDll){
+        pInitCommonControlsEx = (ICCE_PROC)GetProcAddress(hComCtlDll,"InitCommonControlsEx");
+    }
+    if(pInitCommonControlsEx){
+        icce.dwSize = sizeof(INITCOMMONCONTROLSEX);
+        icce.dwICC = ICC_WIN95_CLASSES | ICC_STANDARD_CLASSES;
+        pInitCommonControlsEx(&icce);
+    } else {
+        InitCommonControls();
+    }
     
     init_jobs();
     

@@ -30,7 +30,8 @@
 */
 
 #include "main.h"
-#include <powrprof.h>
+
+typedef BOOLEAN (WINAPI *SET_SUSPEND_STATE_PROC)(BOOLEAN Hibernate,BOOLEAN ForceCritical,BOOLEAN DisableWakeEvent);
 
 /**
  * @brief Adjusts position of controls inside
@@ -314,6 +315,8 @@ int ShutdownOrHibernate(void)
 {
     HANDLE hToken; 
     TOKEN_PRIVILEGES tkp;
+    HMODULE hPowrProfDll;
+    SET_SUSPEND_STATE_PROC pSetSuspendState = NULL;
     BOOL shutdown_cmd_present;
     BOOL result;
 
@@ -365,11 +368,28 @@ int ShutdownOrHibernate(void)
     * There is an opinion that SetSuspendState call
     * is more reliable than SetSystemPowerState:
     * http://msdn.microsoft.com/en-us/library/aa373206%28VS.85%29.aspx
+    * On the other hand, it is missing on NT4.
     */
+    if(when_done_action == IDM_WHEN_DONE_STANDBY || when_done_action == IDM_WHEN_DONE_HIBERNATE){
+        hPowrProfDll = LoadLibrary("powrprof.dll");
+        if(hPowrProfDll == NULL){
+            WgxDbgPrintLastError("ShutdownOrHibernate: cannot load powrprof.dll");
+        } else {
+            pSetSuspendState = (SET_SUSPEND_STATE_PROC)GetProcAddress(hPowrProfDll,"SetSuspendState");
+            if(pSetSuspendState == NULL)
+                WgxDbgPrintLastError("ShutdownOrHibernate: cannot get SetSuspendState address inside powrprof.dll");
+        }
+        if(pSetSuspendState == NULL)
+            WgxDbgPrint("Therefore SetSystemPowerState API will be used instead of SetSuspendState.\n");
+    }
+
     switch(when_done_action){
     case IDM_WHEN_DONE_STANDBY:
         /* suspend, request permission from apps and drivers */
-        result = SetSuspendState(FALSE,FALSE,FALSE);
+        if(pSetSuspendState)
+            result = pSetSuspendState(FALSE,FALSE,FALSE);
+        else
+            result = SetSystemPowerState(TRUE,FALSE);
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot suspend the system!");
             return 6;
@@ -377,7 +397,12 @@ int ShutdownOrHibernate(void)
         break;
     case IDM_WHEN_DONE_HIBERNATE:
         /* hibernate, request permission from apps and drivers */
-        result = SetSuspendState(TRUE,FALSE,FALSE);
+        if(pSetSuspendState){
+            result = pSetSuspendState(TRUE,FALSE,FALSE);
+        } else {
+            /* the second parameter must be FALSE, dmitriar's windows xp hangs otherwise */
+            result = SetSystemPowerState(FALSE,FALSE);
+        }
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot hibernate the computer!");
             return 7;
