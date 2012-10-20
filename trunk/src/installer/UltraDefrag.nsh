@@ -187,7 +187,7 @@ Var AtLeastXP
             "This program is not supported on Windows 2000 and below!$\n$\n\
             If you are running Windows XP and higher, then something is wrong.$\n\
             Please report this problem to the developers.$\n$\n\
-            Download UltraDefrag v5 if you'd like to use it on NT 4 or Windows 2000."
+            Wait for v6.0.0 beta2 please if you'd like to use it on NT 4 or Windows 2000."
         Abort
     ${EndIf}
 
