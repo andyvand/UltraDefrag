@@ -23,6 +23,7 @@
 
 #define IDD_MAIN                        101
 #define IDD_ABOUT                       102
+#define IDD_ABOUT_8_BIT                 103
 #define IDD_SHUTDOWN                    104
 #define IDI_APP                         106
 #define IDI_DIR                         107
@@ -31,6 +32,7 @@
 #define IDI_CMP                         112
 #define IDI_MFT                         113
 #define IDB_ABOUTBOX_PICTURE            127
+#define IDB_ABOUTBOX_PICTURE_8_BIT      128
 
 #define IDI_FIXED                       129
 #define IDI_REMOVABLE                   130
@@ -61,10 +63,15 @@
 #define IDB_TOOLBAR_DISABLED_32         170
 #define IDB_TOOLBAR_HIGHLIGHTED_32      171
 
-#define IDB_MENU_ICONS_15               172
-#define IDB_MENU_ICONS_19               173
-#define IDB_MENU_ICONS_25               174
-#define IDB_MENU_ICONS_31               175
+
+#define IDB_TOOLBAR_16_LOW_BPP             172
+#define IDB_TOOLBAR_DISABLED_16_LOW_BPP    173
+#define IDB_TOOLBAR_HIGHLIGHTED_16_LOW_BPP 174
+
+#define IDB_MENU_ICONS_15               175
+#define IDB_MENU_ICONS_19               176
+#define IDB_MENU_ICONS_25               177
+#define IDB_MENU_ICONS_31               178
 
 #define IDM_STATUSBAR                   500
 

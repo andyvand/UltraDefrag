@@ -77,6 +77,8 @@ TBBUTTON tb_buttons[N_BUTTONS] = {{0}};
 int CreateToolbar(void)
 {
     int i, size, id, id_d, id_h;
+    HDC hdc;
+    int bpp = 32;
     TOOLINFOW ti;
     RECT rc;
     
@@ -127,6 +129,17 @@ int CreateToolbar(void)
     SendMessage(hToolbar,TB_ADDBUTTONS,(WPARAM)N_BUTTONS,(LPARAM)&tb_buttons);
     
     /* assign images to buttons */
+    hdc = GetDC(hWindow);
+    if(hdc){
+        bpp = GetDeviceCaps(hdc,BITSPIXEL);
+        ReleaseDC(hWindow,hdc);
+    }
+    if(bpp <= 8 && size == 16){
+        /* for better nt4 and w2k support */
+        id = IDB_TOOLBAR_16_LOW_BPP;
+        id_d = IDB_TOOLBAR_DISABLED_16_LOW_BPP;
+        id_h = IDB_TOOLBAR_HIGHLIGHTED_16_LOW_BPP;
+    }
     hToolbarImgList = ImageList_LoadImage(hInstance,
         MAKEINTRESOURCE(id),size,0,RGB(255,0,255),
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
