@@ -180,7 +180,7 @@ Var AtLeastXP
         StrCpy $AtLeastXP 0
     ${EndIf}
 
-    /* release 6.0.0 and above is not compatible with Windows 2000 and below,
+    /* release 6.0.0 beta1 is not compatible with Windows 2000 and below,
        even worse, enabling boot time processing results in an unbootable system */
     ${If} ${AtMostWin2000}
         ${LogAndDisplayAbort} \
