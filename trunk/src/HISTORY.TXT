@@ -19,12 +19,11 @@
       area (system tray) was added; it can be turned on/off by
       minimize_to_system_tray GUI option
     - MFT optimization was forced to do nothing silently on non-NTFS disks
-    - Windows NT 4.0 and Windows 2000 support was dropped temporarily
-    - low color depth (8 bits per pixel) support was dropped for GUI toolbar
     - quite useless cyan color removed from the cluster map
     - icons were redesigned to reach better appearance
       on Windows Vista and above
     - high DPI screens support was improved
+    - Windows NT 4.0 and Windows 2000 support was dropped temporarily
     - Internals: flags field removed from winx_file_disposition structure
     - many zenwinx prototypes changed by replacing short keyword by wchar_t
     - useless fat32_xxx fields removed from winx_volume_information structure
