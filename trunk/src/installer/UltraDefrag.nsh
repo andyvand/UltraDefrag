@@ -349,14 +349,17 @@ SkipMove:
         File "${ROOTDIR}\src\scripts\udreportcnv.lua"
         File "${ROOTDIR}\src\scripts\udsorting.js"
         File "${ROOTDIR}\src\scripts\upgrade-rptopts.lua"
+        File "${ROOTDIR}\src\scripts\upgrade-guiopts.lua"
 
-    DetailPrint "Upgrade report options..."
+    DetailPrint "Upgrade report options and GUI preferences..."
     ; ensure that target directory exists
     CreateDirectory "$INSTDIR\options"
     ${If} ${Silent}
         ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-rptopts.lua" "$INSTDIR"'
+        ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-guiopts.lua" "$INSTDIR"'
     ${Else}
         ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-rptopts.lua" "$INSTDIR"'
+        ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-guiopts.lua" "$INSTDIR"'
     ${EndIf}
 
     ; install default CSS for file fragmentation reports
@@ -549,16 +552,6 @@ SkipMove:
         Delete "$INSTDIR\ultradefrag.exe"
         File "ultradefrag.exe"
 
-    SetOutPath "$INSTDIR\scripts"
-        File "${ROOTDIR}\src\scripts\upgrade-guiopts.lua"
-
-    DetailPrint "Upgrade GUI preferences..."
-    ${If} ${Silent}
-        ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-guiopts.lua" "$INSTDIR"'
-    ${Else}
-        ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-guiopts.lua" "$INSTDIR"'
-    ${EndIf}
-
     Push $R0
     Push $0
 
@@ -618,7 +611,6 @@ SkipMove:
     RMDir /r "$INSTDIR\i18n"
 
     Delete "$INSTDIR\ultradefrag.exe"
-    Delete "$INSTDIR\scripts\upgrade-guiopts.lua"
 
     Push $R0
 
