@@ -571,7 +571,7 @@ void RepairSelectedVolumes(void)
     if(counter == 0) return;
 
     _snprintf(buffer,MAX_CMD_LENGTH,
-        "/C ( for %%D in ( %s ) do @echo. & echo chkdsk %%D & echo. & chkdsk %%D /V /F & echo. & echo %s & ping -n 6 localhost >nul ) & echo. & pause",
+        "/C ( for %%D in ( %s ) do @echo. & echo chkdsk %%D & echo. & chkdsk %%D /F & echo. & echo %s & ping -n 11 localhost >nul ) & echo. & pause",
         args,"-------------------------------------------------");
     buffer[MAX_CMD_LENGTH - 1] = 0;
     strcpy(args,buffer);
