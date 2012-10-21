@@ -59,8 +59,7 @@ for %%F in ( "%~dp0\gui\i18n\*.lng" ) do fc /L /1 "%TMP%\translation.tmp" "%TMP%
 echo.
 echo Creating report ...
 echo.
-type NUL >"%TMP%\TranslationReport.tmp"
-type NUL >"%TMP%\TranslationReportWiki.tmp"
+del /f /q "%TMP%\TranslationReport*.tmp" 2>nul
 
 for %%F in ( "%~dp0\gui\i18n\*.lng" ) do call :CycleLines "%TMP%\%%~nF.cmp"
 
@@ -75,7 +74,7 @@ for %%F in ( "%~dp0\gui\i18n\*.lng" ) do call :CycleLines "%TMP%\%%~nF.cmp"
     echo.
 ) >"%~dp0\gui\i18n\TranslationReport.txt"
 
-sort /R /+56 "%TMP%\TranslationReport.tmp" >>"%~dp0\gui\i18n\TranslationReport.txt"
+for /l %%C in (%TotalStrings%,-1,0) do if exist "%TMP%\TranslationReport_%%C.tmp" sort "%TMP%\TranslationReport_%%C.tmp" >>"%~dp0\gui\i18n\TranslationReport.txt"
 
 :: text/wiki
 (
@@ -87,7 +86,8 @@ sort /R /+56 "%TMP%\TranslationReport.tmp" >>"%~dp0\gui\i18n\TranslationReport.t
     echo ^|^|~ Language ^|^|~ ^|^|~ translated ^|^|~ ^|^|~ total ^|^|~ ^|^|~ percentage ^|^|
 ) >"%~dp0\gui\i18n\TranslationReportWiki.txt"
 
-type "%TMP%\TranslationReportWiki.tmp" >>"%~dp0\gui\i18n\TranslationReportWiki.txt"
+for /l %%C in (%TotalStrings%,-1,0) do if exist "%TMP%\TranslationReportWiki_%%C.tmp" type "%TMP%\TranslationReportWiki_%%C.tmp" >>"%TMP%\TranslationReportWiki.tmp"
+sort "%TMP%\TranslationReportWiki.tmp" >>"%~dp0\gui\i18n\TranslationReportWiki.txt"
 
 (
     echo.
@@ -98,7 +98,7 @@ type "%TMP%\TranslationReportWiki.tmp" >>"%~dp0\gui\i18n\TranslationReportWiki.t
     echo ^|^|~ Language ^|^|~ ^|^|~ translated ^|^|~ ^|^|~ total ^|^|~ ^|^|~ percentage ^|^|
 ) >>"%~dp0\gui\i18n\TranslationReportWiki.txt"
 
-sort /R /+103 "%TMP%\TranslationReportWiki.tmp" >>"%~dp0\gui\i18n\TranslationReportWiki.txt"
+for /l %%C in (%TotalStrings%,-1,0) do if exist "%TMP%\TranslationReportWiki_%%C.tmp" sort "%TMP%\TranslationReportWiki_%%C.tmp" >>"%~dp0\gui\i18n\TranslationReportWiki.txt"
 
 (
     echo.
@@ -164,8 +164,8 @@ goto :EOF
     set TotalFormat=   %TotalStrings%
     set PercentFormat=     %Percentage%
     
-    echo %FileName:~1,40% %TranslatedFormat:~-3% ^| %TotalFormat:~-3% ... %PercentFormat:~-5% %suffix%>>"%TMP%\TranslationReport.tmp"
-    echo ^|^| %FileNameWiki:~1,70% ^|^| ^|^|= %TranslatedFormat:~-3% ^|^| ^|^|= %TotalFormat:~-3% ^|^| ^|^|^> %PercentFormat:~-5% %% ^|^|>>"%TMP%\TranslationReportWiki.tmp"
+    echo %FileName:~1,40% %TranslatedFormat:~-3% ^| %TotalFormat:~-3% ... %PercentFormat:~-5% %suffix%>>"%TMP%\TranslationReport_%gCounter%.tmp"
+    echo ^|^| %FileNameWiki:~1,70% ^|^| ^|^|= %TranslatedFormat:~-3% ^|^| ^|^|= %TotalFormat:~-3% ^|^| ^|^|^> %PercentFormat:~-5% %% ^|^|>>"%TMP%\TranslationReportWiki_%gCounter%.tmp"
 goto :EOF
 
 ::
