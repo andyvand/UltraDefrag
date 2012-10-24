@@ -172,7 +172,7 @@ static winx_blockmap *get_first_block_of_cluster_chain(winx_file_info *f,ULONGLO
  * - Volume must be opened before this call,
  * jp->fVolume must contain a proper handle.
  */
-static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
+static int move_file_clusters(winx_file_info *f,HANDLE hFile,ULONGLONG startVcn,
     ULONGLONG targetLcn,ULONGLONG n_clusters,udefrag_job_parameters *jp)
 {
     NTSTATUS Status;
@@ -221,7 +221,7 @@ static int move_file_clusters(HANDLE hFile,ULONGLONG startVcn,
         }
         jp->last_move_status = Status;
         if(!NT_SUCCESS(Status)){
-            DebugPrintEx(Status,"cannot move file clusters");
+            DebugPrintEx(Status,"cannot move file clusters of %ws",f->path);
             jp->pi.processed_clusters += n_clusters;
             return (-1);
         }
@@ -263,7 +263,7 @@ static void move_file_helper(HANDLE hFile, winx_file_info *f,
             block = block->next;
             clusters_to_move += min(block->length,length - clusters_to_move);
         }
-        result = move_file_clusters(hFile,vcn,target,clusters_to_move,jp);
+        result = move_file_clusters(f,hFile,vcn,target,clusters_to_move,jp);
         if(result < 0) break;
         target += clusters_to_move;
         length -= clusters_to_move;
@@ -333,7 +333,8 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     
     first_block = get_first_block_of_cluster_chain(f,vcn);
     if(first_block == NULL){
-        DebugPrint("calculate_file_disposition: get_first_block_of_cluster_chain failed");
+        DebugPrint("calculate_file_disposition: "
+            "get_first_block_of_cluster_chain failed for %ws",f->path);
         new_file_info->disp.clusters = 0;
         return;
     }
@@ -395,7 +396,7 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     return;
     
 fail:
-    DebugPrint("calculate_file_disposition: not enough memory");
+    DebugPrint("calculate_file_disposition: not enough memory for %ws",f->path);
     winx_list_destroy((list_entry **)(void *)&new_file_info->disp.blockmap);
     new_file_info->disp.fragments = 0;
     new_file_info->disp.clusters = 0;
@@ -498,6 +499,7 @@ int move_file(winx_file_info *f,
               )
 {
     ULONGLONG time;
+    wchar_t *path;
     NTSTATUS Status;
     HANDLE hFile;
     int old_color, new_color;
@@ -523,13 +525,15 @@ int move_file(winx_file_info *f,
         return (-1);
     }
     
+    path = f->path ? f->path : L"(null)";
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
-        DebugPrint("%ws",f->path);
+        DebugPrint("%ws",path);
         DebugPrint("vcn = %I64u, length = %I64u, target = %I64u",vcn,length,target);
     }
     
     if(length == 0){
-        DebugPrint("move_file: move of zero number of clusters requested");
+        DebugPrint("move_file: move of zero number "
+            "of clusters requested for %ws",path);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
         return 0; /* nothing to move */
@@ -542,7 +546,8 @@ int move_file(winx_file_info *f,
     }
     
     if(vcn + length > f->disp.blockmap->prev->vcn + f->disp.blockmap->prev->length){
-        DebugPrint("move_file: data move behind the end of the file requested");
+        DebugPrint("move_file: data move behind "
+            "the end of the file requested for %ws",path);
         DbgPrintBlocksOfFile(f->disp.blockmap);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
@@ -551,14 +556,16 @@ int move_file(winx_file_info *f,
     
     first_block = get_first_block_of_cluster_chain(f,vcn);
     if(first_block == NULL){
-        DebugPrint("move_file: data move out of file bounds requested");
+        DebugPrint("move_file: data move out of "
+            "file bounds requested for %ws",path);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
         return (-1);
     }
     
     if(!check_region(jp,target,length)){
-        DebugPrint("move_file: there is no sufficient free space available on target block");
+        DebugPrint("move_file: there is no sufficient "
+            "free space available on target block for %ws",path);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
         return (-1);
@@ -572,7 +579,7 @@ int move_file(winx_file_info *f,
     /* open the file */
     Status = winx_defrag_fopen(f,WINX_OPEN_FOR_MOVE,&hFile);
     if(Status != STATUS_SUCCESS){
-        DebugPrintEx(Status,"move_file: cannot open %ws",f->path);
+        DebugPrintEx(Status,"move_file: cannot open %ws",path);
         f->user_defined_flags |= UD_FILE_LOCKED;
         /* redraw space */
         colorize_file(jp,f,old_color);
@@ -620,10 +627,10 @@ int move_file(winx_file_info *f,
             moving_result = DETERMINED_MOVING_SUCCESS;
         } else {
             if(compare_file_dispositions(&new_file_info,f) == 0){
-                DebugPrint("move_file: nothing has been moved");
+                DebugPrint("move_file: nothing has been moved for %ws",path);
                 moving_result = DETERMINED_MOVING_FAILURE;
             } else {
-                DebugPrint("move_file: new file disposition differs from desired one");
+                DebugPrint("move_file: new file disposition differs from desired one for %ws",path);
                 DbgPrintBlocksOfFile(new_file_info.disp.blockmap);
                 moving_result = DETERMINED_MOVING_PARTIAL_SUCCESS;
             }
