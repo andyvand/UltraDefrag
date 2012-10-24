@@ -244,12 +244,18 @@ int is_mft(winx_file_info *f,udefrag_job_parameters *jp)
     if(jp->fs_type != FS_NTFS)
         return 0;
     
+    if(is_not_mft_file(f)) return 0;
+    if(is_mft_file(f)) return 1;
+    
     length = wcslen(f->path);
     if(length == 11){
-        if(winx_wcsistr(f->name,mft_name))
+        if(winx_wcsistr(f->name,mft_name)){
+            f->user_defined_flags |= UD_FILE_MFT_FILE;
             return 1;
+        }
     }
     
+    f->user_defined_flags |= UD_FILE_NOT_MFT_FILE;
     return 0;
 }
 
