@@ -155,9 +155,9 @@ static void dbg_print_single_counter(udefrag_job_parameters *jp,ULONGLONG counte
     ip = (unsigned int)(p * 10000);
     s = winx_sprintf("%s %I64ums",buffer,time);
     if(s == NULL){
-        DebugPrint(" - %s %-18s %6I64ums (%u.%02u %%)",name,buffer,time,ip / 100,ip % 100);
+        DebugPrint(" - %s %-18s %6I64ums  %3u.%02u %%",name,buffer,time,ip / 100,ip % 100);
     } else {
-        DebugPrint(" - %s %-25s (%u.%02u %%)",name,s,ip / 100,ip % 100);
+        DebugPrint(" - %s %-25s  %3u.%02u %%",name,s,ip / 100,ip % 100);
         winx_heap_free(s);
     }
 }
