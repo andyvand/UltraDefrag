@@ -114,6 +114,10 @@
 */
 #define UD_FILE_REGION_NOT_FOUND       0x2000
 
+/* These flags are used to speed things up. */
+#define UD_FILE_MFT_FILE               0x4000
+#define UD_FILE_NOT_MFT_FILE           0x8000
+
 #define is_excluded(f)               ((f)->user_defined_flags & UD_FILE_EXCLUDED)
 #define is_over_limit(f)             ((f)->user_defined_flags & UD_FILE_OVER_LIMIT)
 #define is_locked(f)                 ((f)->user_defined_flags & UD_FILE_LOCKED)
@@ -125,6 +129,8 @@
 #define is_excluded_by_path(f)       ((f)->user_defined_flags & UD_FILE_EXCLUDED_BY_PATH)
 #define is_essential_boot_file(f)    ((f)->user_defined_flags & UD_FILE_ESSENTIAL_BOOT_FILE)
 #define is_not_essential_file(f)     ((f)->user_defined_flags & UD_FILE_NOT_ESSENTIAL_FILE)
+#define is_mft_file(f)               ((f)->user_defined_flags & UD_FILE_MFT_FILE)
+#define is_not_mft_file(f)           ((f)->user_defined_flags & UD_FILE_NOT_MFT_FILE)
 
 #define is_block_excluded(b)         ((b)->length == 0)
 
