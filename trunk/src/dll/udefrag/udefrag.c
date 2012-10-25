@@ -423,6 +423,7 @@ int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
     volume_letter = winx_toupper(volume_letter);
     
     memset(&jp,0,sizeof(udefrag_job_parameters));
+    jp.win_version = winx_get_os_version();
     jp.filelist = NULL;
     jp.fragmented_files = NULL;
     jp.free_regions = NULL;
@@ -600,6 +601,9 @@ char *udefrag_get_error_description(int error_code)
     case UDEFRAG_UNKNOWN_ERROR:
         return "Some unknown internal bug or some\n"
                "rarely arising error has been encountered.";
+    case UDEFRAG_W2K_4KB_CLUSTERS:
+        return "NTFS disks with cluster size greater than 4 KB\n"
+               "cannot be defragmented on Windows 2000 and Windows NT 4.0";
     case UDEFRAG_NO_MEM:
         return "Not enough memory.";
     case UDEFRAG_CDROM:

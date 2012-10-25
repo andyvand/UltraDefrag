@@ -60,6 +60,7 @@
 #endif
 
 #define MAX_FILE_SIZE ((ULONGLONG) -1)
+#define MAX_RGN_SIZE  ((ULONGLONG) -1)
 #define DEFAULT_FRAGMENT_SIZE_THRESHOLD (MAX_FILE_SIZE / 2)
 
 /* flags for user_defined_flags member of filelist entries */
@@ -177,6 +178,11 @@ typedef struct _udefrag_fragmented_file {
     winx_file_info *f;
 } udefrag_fragmented_file;
 
+struct _mft_zone {
+    ULONGLONG start;
+    ULONGLONG length;
+};
+
 typedef enum {
     FS_UNKNOWN = 0, /* ext2 and others */
     FS_FAT12,
@@ -256,6 +262,8 @@ typedef struct _udefrag_job_parameters {
     NTSTATUS last_move_status;                  /* status of the last move file operation; zero by default */
     ULONGLONG already_optimized_clusters;       /* number of clusters needing no sorting in optimization */
     int progress_trigger;                       /* a trigger used for debugging purposes */
+    struct _mft_zone mft_zone;                  /* disposition of the mft zone; as it is before the volume processing */
+    int win_version;                            /* Windows version */
 } udefrag_job_parameters;
 
 int get_options(udefrag_job_parameters *jp);
@@ -316,8 +324,10 @@ enum {
     FIND_MATCHING_RGN_BACKWARD,
     FIND_MATCHING_RGN_ANY
 };
-winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,ULONGLONG min_lcn,ULONGLONG min_length);
-winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,ULONGLONG min_lcn,ULONGLONG min_length);
+winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,
+    ULONGLONG min_lcn,ULONGLONG min_length,ULONGLONG *max_length);
+winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,
+    ULONGLONG min_lcn,ULONGLONG min_length,ULONGLONG *max_length);
 winx_volume_region *find_largest_free_region(udefrag_job_parameters *jp);
 /*winx_volume_region *find_matching_free_region(udefrag_job_parameters *jp,
     ULONGLONG start_lcn, ULONGLONG min_length, int preferred_position);
