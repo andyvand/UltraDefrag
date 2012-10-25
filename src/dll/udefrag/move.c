@@ -39,6 +39,10 @@ void release_temp_space_regions(udefrag_job_parameters *jp)
         winx_release_free_volume_regions(jp->free_regions);
         jp->free_regions = winx_get_free_volume_regions(jp->volume_letter,
             WINX_GVR_ALLOW_PARTIAL_SCAN,NULL,(void *)jp);
+        if(jp->win_version < WINDOWS_XP){
+            jp->free_regions = winx_sub_volume_region(jp->free_regions,
+                jp->mft_zone.start,jp->mft_zone.length);
+        }
         jp->p_counters.temp_space_releasing_time += winx_xtime() - time;
     }
 }
@@ -100,6 +104,17 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
     /* avoid infinite loops */
     if(is_moving_failed(f))
         return 0;
+    
+    /* skip not movable mft on nt4/w2k */
+    if(jp->win_version < WINDOWS_XP){
+        if(is_mft(f,jp)) return 0;
+    }
+    
+    /* skip not movable ntfs directories on nt4 */
+    if(jp->win_version < WINDOWS_2K){
+        if(jp->fs_type == FS_NTFS && is_directory(f))
+            return 0;
+    }
     
     /* keep the computer bootable */
     if(is_not_essential_file(f)) return 1;

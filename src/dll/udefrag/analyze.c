@@ -101,6 +101,8 @@ void adjust_move_at_once_parameter(udefrag_job_parameters *jp)
     } else {
         bytes_at_once = _64M;
     }
+    /* nt4 (and maybe w2k) is able to move no more than 256 KB at once */
+    if(jp->win_version < WINDOWS_XP) bytes_at_once = _256K;
     jp->clusters_at_once = bytes_at_once / jp->v_info.bytes_per_cluster;
     if(jp->clusters_at_once == 0)
         jp->clusters_at_once ++;
@@ -119,6 +121,9 @@ int get_volume_information(udefrag_job_parameters *jp)
     char fs_name[MAX_FS_NAME_LENGTH + 1];
     int i;
     
+    /* reset mft zone disposition */
+    memset(&jp->mft_zone,0,sizeof(struct _mft_zone));
+
     /* reset v_info structure */
     memset(&jp->v_info,0,sizeof(winx_volume_information));
     
@@ -242,7 +247,8 @@ int check_region(udefrag_job_parameters *jp,ULONGLONG lcn,ULONGLONG length)
 /**
  * @brief Retrieves mft zones layout.
  * @note Since we have MFT optimization routine, 
- * let's use MFT zone for files placement.
+ * let's use MFT zone for files placement on XP
+ * and more recent Windows editions.
  */
 static void get_mft_zones_layout(udefrag_job_parameters *jp)
 {
@@ -274,6 +280,9 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
     if(check_region(jp,start,length)){
         /* remark space as MFT Zone */
         colorize_map_region(jp,start,length,MFT_ZONE_SPACE,0);
+        if(jp->win_version < WINDOWS_XP)
+            jp->free_regions = winx_sub_volume_region(jp->free_regions,start,length);
+        jp->mft_zone.start = start; jp->mft_zone.length = length;
     }
 
     /* $MFT Mirror */
@@ -812,13 +821,34 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
  */
 static int check_requested_action(udefrag_job_parameters *jp)
 {
+    /*
+    * NTFS volumes with cluster size greater than 4 KB
+    * cannot be defragmented on Windows 2000 and Windows NT 4.0.
+    * This is a well known limitation of Windows Defrag API.
+    */
+    if(jp->job_type != ANALYSIS_JOB \
+      && jp->fs_type == FS_NTFS \
+      && jp->v_info.bytes_per_cluster > 4096 \
+      && jp->win_version <= WINDOWS_2K){
+        DebugPrint("cannot defragment NTFS volumes with clusters bigger than 4KB on nt4/w2k");
+        return UDEFRAG_W2K_4KB_CLUSTERS;
+    }
+
     if(jp->job_type != ANALYSIS_JOB && jp->fs_type == FS_UDF){
         DebugPrint("cannot defragment/optimize UDF volumes,");
         DebugPrint("because the file system driver does not support FSCTL_MOVE_FILE");
         return UDEFRAG_UDF_DEFRAG;
     }
 
-    if(jp->is_fat) DebugPrint("check_requested_action: FAT directories cannot be moved entirely");
+    if(jp->is_fat){
+        DebugPrint("check_requested_action: FAT directories cannot be moved %s",
+            jp->win_version > WINDOWS_2K ? "entirely" : "at all");
+    }
+    if(jp->fs_type == FS_NTFS && jp->win_version < WINDOWS_XP){
+        DebugPrint("check_requested_action: MFT is not movable");
+        if(jp->win_version < WINDOWS_2K)
+            DebugPrint("check_requested_action: directories are not movable");
+    }
     return 0;
 }
 

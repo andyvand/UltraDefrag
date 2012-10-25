@@ -269,6 +269,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
     udefrag_fragmented_file *f, *head, *next;
     winx_volume_region *rgn, *largest_rgn;
     winx_file_info *file;
+    int move_entirely;
     ULONGLONG defragmented_files;
     ULONGLONG defragmented_entirely = 0, defragmented_partially = 0;
     ULONGLONG x, moved_entirely = 0, moved_partially = 0;
@@ -315,10 +316,14 @@ static int defrag_routine(udefrag_job_parameters *jp)
         next = f->next;
         file = f->f; /* f will be destroyed by move_file */
         if(can_defragment(file,jp)){
+            move_entirely = 0;
             if(file->disp.clusters * jp->v_info.bytes_per_cluster \
-              < 2 * jp->udo.fragment_size_threshold){
+              < 2 * jp->udo.fragment_size_threshold) move_entirely = 1;
+            else if(jp->win_version < WINDOWS_XP && jp->fs_type == FS_NTFS)
+                move_entirely = 1; /* keep algorithm simple */
+            if(move_entirely){
                 /* move entire file */
-                rgn = find_first_free_region(jp,0,file->disp.clusters);
+                rgn = find_first_free_region(jp,0,file->disp.clusters,NULL);
                 if(rgn){
                     x = jp->pi.moved_clusters;
                     if(move_file(file,file->disp.blockmap->vcn,
@@ -413,7 +418,7 @@ move_clusters:
                     if(length == 0 || n < 2){
                         min_vcn = max_vcn;
                     } else {
-                        rgn = find_first_free_region(jp,0,length);
+                        rgn = find_first_free_region(jp,0,length,NULL);
                         if(rgn){
                             if(move_file(file,vcn,length,rgn->lcn,jp) >= 0){
                                 if(jp->udo.dbgprint_level >= DBG_DETAILED)
@@ -497,6 +502,10 @@ static int defrag_sequence(udefrag_job_parameters *jp)
         /* defragment a few remaining files on the next pass */
         jp->pi.pass_number ++;
     }
+    
+    /* partial defragmentation is not supported for NTFS under nt4/w2k */
+    if(jp->win_version < WINDOWS_XP && jp->fs_type == FS_NTFS)
+        return overall_result;
     
     /* defragment remaining files partially */
     if(jp->udo.fragment_size_threshold == DEFAULT_FRAGMENT_SIZE_THRESHOLD){

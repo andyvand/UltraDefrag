@@ -44,19 +44,27 @@
  * @param[in] jp job parameters structure.
  * @param[in] min_lcn minimum LCN of region.
  * @param[in] min_length minimum length of region, in clusters.
+ * @param[out] max_length length of the biggest region found.
  * @note In case of termination request returns NULL immediately.
  */
 winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,
-        ULONGLONG min_lcn,ULONGLONG min_length)
+        ULONGLONG min_lcn,ULONGLONG min_length,ULONGLONG *max_length)
 {
     winx_volume_region *rgn;
     ULONGLONG time = winx_xtime();
 
+    if(max_length) *max_length = 0;
     for(rgn = jp->free_regions; rgn; rgn = rgn->next){
         if(jp->termination_router((void *)jp)) break;
-        if(rgn->lcn >= min_lcn && rgn->length >= min_length){
-            jp->p_counters.searching_time += winx_xtime() - time;
-            return rgn;
+        if(rgn->lcn >= min_lcn){
+            if(max_length){
+                if(rgn->length > *max_length)
+                    *max_length = rgn->length;
+            }
+            if(rgn->length >= min_length){
+                jp->p_counters.searching_time += winx_xtime() - time;
+                return rgn;
+            }
         }
         if(rgn->next == jp->free_regions) break;
     }
@@ -69,18 +77,24 @@ winx_volume_region *find_first_free_region(udefrag_job_parameters *jp,
  * @param[in] jp job parameters structure.
  * @param[in] min_lcn minimum LCN of region.
  * @param[in] min_length minimum length of region, in clusters.
+ * @param[out] max_length length of the biggest region found.
  * @note In case of termination request returns NULL immediately.
  */
 winx_volume_region *find_last_free_region(udefrag_job_parameters *jp,
-        ULONGLONG min_lcn,ULONGLONG min_length)
+        ULONGLONG min_lcn,ULONGLONG min_length,ULONGLONG *max_length)
 {
     winx_volume_region *rgn;
     ULONGLONG time = winx_xtime();
 
+    if(max_length) *max_length = 0;
     if(jp->free_regions){
         for(rgn = jp->free_regions->prev; rgn; rgn = rgn->prev){
             if(jp->termination_router((void *)jp)) break;
             if(rgn->lcn < min_lcn) break;
+            if(max_length){
+                if(rgn->length > *max_length)
+                    *max_length = rgn->length;
+            }
             if(rgn->length >= min_length){
                 jp->p_counters.searching_time += winx_xtime() - time;
                 return rgn;
