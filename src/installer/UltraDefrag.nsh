@@ -34,12 +34,17 @@
 *    in the .onInit function.
 */
 
-Var AtLeastXP
-
 !macro LogAndDisplayAbort _Message
 
     ${If} ${Silent}
         Push $R0
+        Push $R1
+        Push $R2
+        Push $R3
+
+        ${WinVerGetMajor} $R1
+        ${WinVerGetMinor} $R2
+        ${WinVerGetBuild} $R3
 
         FileOpen $R0 ${UD_LOG_FILE} w
 
@@ -53,7 +58,8 @@ Var AtLeastXP
             FileWrite $R0 "$\r$\n"
             FileWrite $R0 "Installer Path .... $EXEPATH$\r$\n"
             FileWrite $R0 "Installer Type .... ${ULTRADFGARCH}$\r$\n"
-            FileWrite $R0 "At least XP ....... $AtLeastXP$\r$\n"
+            FileWrite $R0 "$\r$\n"
+            FileWrite $R0 "Windows Version ... $R1.$R2.$R3$\r$\n"
             FileWrite $R0 "$\r$\n"
             FileWrite $R0 "Install Dir ....... $INSTDIR$\r$\n"
             FileWrite $R0 "Output Dir ........ $OUTDIR$\r$\n"
@@ -67,6 +73,9 @@ Var AtLeastXP
             FileClose $R0
         ${EndUnless}
 
+        Pop $R3
+        Pop $R2
+        Pop $R1
         Pop $R0
     ${EndIf}
 
@@ -174,20 +183,17 @@ Var AtLeastXP
 
 !macro CheckWinVersion
 
-    ${If} ${AtLeastWinXP}
-        StrCpy $AtLeastXP 1
-    ${Else}
-        StrCpy $AtLeastXP 0
+    ; we only support Windows NT
+    ${IfNot} ${IsNT}
+        ${LogAndDisplayAbort} \
+            "This program is not supported on Windows 95, 98 and Me!"
+        Abort
     ${EndIf}
 
-    /* release 6.0.0 beta1 is not compatible with Windows 2000 and below,
-       even worse, enabling boot time processing results in an unbootable system */
-    ${If} ${AtMostWin2000}
+    ; we only support Windows NT4 and above
+    ${IfNot} ${AtLeastWinNT4}
         ${LogAndDisplayAbort} \
-            "This program is not supported on Windows 2000 and below!$\n$\n\
-            If you are running Windows XP and higher, then something is wrong.$\n\
-            Please report this problem to the developers.$\n$\n\
-            Wait for v6.0.0 beta2 please if you'd like to use it on NT 4 or Windows 2000."
+            "This program is not supported on Windows versions below NT4!"
         Abort
     ${EndIf}
 
@@ -730,7 +736,7 @@ SkipMove:
     StrCpy $R2 "[--- &Quickly optimize drive with UltraDefrag ---]"
     StrCpy $R3 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -q -v $\"%1$\""
 
-    ${If} $AtLeastXP == "1"
+    ${If} ${AtLeastWinXP}
         WriteRegStr HKCR "Drive\shell\udefrag"                         ""     $2
         WriteRegStr HKCR "Drive\shell\udefrag"                         "Icon" $1
         WriteRegStr HKCR "Drive\shell\udefrag\command"                 ""     $3
