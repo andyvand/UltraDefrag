@@ -556,14 +556,17 @@
  * Special thanks for extensive testing (in alphabetical order):
  *
  * - Andrei Maksimov
+ * - Bear Windows
  * - Brent Jenkins
  * - Fred Schall
  * - Jeff Cubillos
- * - Kalle Koseck, Kerem Gümrükcü
+ * - Kalle Koseck
+ * - Kerem Gümrükcü
  * - Leslie Trenholm
  * - Markus Elfring
  * - Nagy Zsolt
- * - Sachin Kunjikoran, Stefan Pendl
+ * - Sachin Kunjikoran
+ * - Stefan Pendl
  * - Tom Arroyo
  *
  * Also special thanks is going to:
