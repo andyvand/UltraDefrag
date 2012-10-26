@@ -23,7 +23,6 @@
     - icons were redesigned to reach better appearance
       on Windows Vista and above
     - high DPI screens support was improved
-    - Windows NT 4.0 and Windows 2000 support was dropped temporarily
     - Internals: flags field removed from winx_file_disposition structure
     - many zenwinx prototypes changed by replacing short keyword by wchar_t
     - useless fat32_xxx fields removed from winx_volume_information structure
