@@ -234,6 +234,8 @@ void InitFont(void)
  */
 DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
 {
+    OSVERSIONINFO osvi;
+    int is_nt4 = 0;
     HANDLE h;
     DWORD status;
     RECT rc;
@@ -247,6 +249,11 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     int s_minimize_to_system_tray;
     ULONGLONG counter = 0;
     
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+    if(osvi.dwMajorVersion < 5) is_nt4 = 1;
+
     h = FindFirstChangeNotification(".\\options",
             FALSE,FILE_NOTIFY_CHANGE_LAST_WRITE);
     if(h == INVALID_HANDLE_VALUE){
@@ -258,7 +265,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     while(!stop_track_changes){
         status = WaitForSingleObject(h,100);
         if(status == WAIT_OBJECT_0){
-            if(counter % 2 == 0){
+            if(counter % 2 == 0 && !is_nt4){
                 /*
                 * Do nothing, since
                 * "If a change occurs after a call 
