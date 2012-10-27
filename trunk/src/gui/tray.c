@@ -113,8 +113,8 @@ static BOOL InsertContextMenuSeparator(HMENU hMenu,UINT pos)
 {
     MENUITEMINFOW mi;
 
-    memset(&mi,0,sizeof(MENUITEMINFOW));
-    mi.cbSize = sizeof(MENUITEMINFOW);
+    memset(&mi,0,MENUITEMINFOW_SIZE);
+    mi.cbSize = MENUITEMINFOW_SIZE;
     mi.fMask = MIIM_TYPE;
     mi.fType = MFT_SEPARATOR;
     if(!InsertMenuItemW(hMenu,pos,TRUE,&mi)){
@@ -131,8 +131,8 @@ static BOOL InsertContextMenuItem(HMENU hMenu,UINT pos,
     wchar_t *text;
     BOOL result;
 
-    memset(&mi,0,sizeof(MENUITEMINFOW));
-    mi.cbSize = sizeof(MENUITEMINFOW);
+    memset(&mi,0,MENUITEMINFOW_SIZE);
+    mi.cbSize = MENUITEMINFOW_SIZE;
     mi.fMask = MIIM_ID | MIIM_TYPE | MIIM_STATE;
     mi.fType = MFT_STRING;
     mi.wID = id;
