@@ -32,6 +32,7 @@
 #include "main.h"
 
 /* global variables */
+int is_nt4 = 0;
 HINSTANCE hInstance;
 char class_name[64];
 HWND hWindow = NULL;
@@ -1112,8 +1113,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             /* handle language menu */
             if(id > IDM_LANGUAGE && id < IDM_CFG_GUI){
                 /* get name of selected language */
-                memset(&mi,0,sizeof(MENUITEMINFOW));
-                mi.cbSize = sizeof(MENUITEMINFOW);
+                memset(&mi,0,MENUITEMINFOW_SIZE);
+                mi.cbSize = MENUITEMINFOW_SIZE;
                 mi.fMask = MIIM_TYPE;
                 mi.fType = MFT_STRING;
                 mi.dwTypeData = lang_name;
@@ -1370,12 +1371,18 @@ void stop_web_statistics()
  */
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
+    OSVERSIONINFO osvi;
     HMODULE hComCtlDll;
     typedef BOOL (WINAPI *ICCE_PROC)(LPINITCOMMONCONTROLSEX lpInitCtrls);
     ICCE_PROC pInitCommonControlsEx = NULL;
     INITCOMMONCONTROLSEX icce;
     int result;
     
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+    if(osvi.dwMajorVersion < 5) is_nt4 = 1;
+
     WgxSetDbgPrintHandler(udefrag_dbg_print);
     hInstance = GetModuleHandle(NULL);
     
