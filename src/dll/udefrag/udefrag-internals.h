@@ -291,8 +291,11 @@ int optimize_mft(udefrag_job_parameters *jp);
 void destroy_lists(udefrag_job_parameters *jp);
 int check_fragmentation_level(udefrag_job_parameters *jp);
 
+void dbg_print_header(udefrag_job_parameters *jp);
 ULONGLONG start_timing(char *operation_name,udefrag_job_parameters *jp);
 void stop_timing(char *operation_name,ULONGLONG start_time,udefrag_job_parameters *jp);
+void dbg_print_performance_counters(udefrag_job_parameters *jp);
+void dbg_print_footer(udefrag_job_parameters *jp);
 
 int check_region(udefrag_job_parameters *jp,ULONGLONG lcn,ULONGLONG length);
 
