@@ -881,39 +881,6 @@ int check_fragmentation_level(udefrag_job_parameters *jp)
 }
 
 /**
- * @brief Displays message like
- * <b>analysis of c: started</b>
- * and returns the current time
- * (needed for stop_timing).
- */
-ULONGLONG start_timing(char *operation_name,udefrag_job_parameters *jp)
-{
-    winx_dbg_print_header(0,0,"%s of %c: started",operation_name,jp->volume_letter);
-    jp->progress_trigger = 0;
-    return winx_xtime();
-}
-
-/**
- * @brief Displays time needed 
- * for the operation; the second
- * parameter must be obtained from
- * the start_timing procedure.
- */
-void stop_timing(char *operation_name,ULONGLONG start_time,udefrag_job_parameters *jp)
-{
-    ULONGLONG time, seconds;
-    char buffer[32];
-    
-    time = winx_xtime() - start_time;
-    seconds = time / 1000;
-    winx_time2str(seconds,buffer,sizeof(buffer));
-    time -= seconds * 1000;
-    winx_dbg_print_header(0,0,"%s of %c: completed in %s %I64ums",
-        operation_name,jp->volume_letter,buffer,time);
-    jp->progress_trigger = 0;
-}
-
-/**
  * @brief Performs a volume analysis.
  * @return Zero for success, negative value otherwise.
  */
