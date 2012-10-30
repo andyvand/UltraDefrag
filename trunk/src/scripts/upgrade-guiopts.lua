@@ -69,8 +69,8 @@ config_file_contents = [[
 -- of filters, since these files usually take no effect on system performance.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-in_filter = "$orig_in_filter"
-ex_filter = "$orig_ex_filter"
+in_filter = "$in_filter"
+ex_filter = "$ex_filter"
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- The following ..._patterns variables allow to define groups of patterns
@@ -415,10 +415,6 @@ function save_internal_preferences(f)
     f:write(expand(int_config_file_contents))
 end
 
-function pattern(s)
-    return string.gsub(s,"%*","%%%*")
-end
-
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
 -- version numbers 0-99 are reserved for 5.0.x series of the program
@@ -449,7 +445,7 @@ include_video = 0
 exclude_video = 0
 fragment_size_threshold = "20 Mb"
 sizelimit = ""
-optimizer_sizelimit = "20 Mb"
+optimizer_file_size_threshold = "20 Mb"
 fragments_threshold = 0
 fragmentation_threshold = 0
 time_limit = ""
@@ -512,10 +508,6 @@ if upgrade_needed ~= 0 then
         -- sizelimit has been superseded by file_size_threshold
         file_size_threshold = sizelimit
     end
-    if not optimizer_file_size_threshold then
-        -- optimizer_sizelimit has been superseded by optimizer_file_size_threshold
-        optimizer_file_size_threshold = optimizer_sizelimit
-    end
     local path_upgrade_needed = 0
     if old_version < 8 then path_upgrade_needed = 1 end
     if old_version > 99 and old_version < 107 then path_upgrade_needed = 1 end
@@ -523,45 +515,8 @@ if upgrade_needed ~= 0 then
         -- default log is needed for easier bug reporting
         log_file_path = ".\\logs\\ultradefrag.log"
     end
-    if not orig_in_filter then
-        orig_in_filter = in_filter
-        -- subtract patterns
-        if include_archive ~= 0 then
-            orig_in_filter = string.gsub(orig_in_filter, pattern(archive_patterns), "")
-        end
-        if include_audio ~= 0 then
-            orig_in_filter = string.gsub(orig_in_filter, pattern(audio_patterns), "")
-        end
-        if include_disk_image ~= 0 then
-            orig_in_filter = string.gsub(orig_in_filter, pattern(disk_image_patterns), "")
-        end
-        if include_video ~= 0 then
-            orig_in_filter = string.gsub(orig_in_filter, pattern(video_patterns), "")
-        end
-        orig_in_filter = string.gsub(orig_in_filter, ";*$", "")
-    end
-    if not orig_ex_filter then
-        orig_ex_filter = ex_filter
-        -- subtract patterns
-        if exclude_archive ~= 0 then
-            orig_ex_filter = string.gsub(orig_ex_filter, pattern(archive_patterns), "")
-        end
-        if exclude_audio ~= 0 then
-            orig_ex_filter = string.gsub(orig_ex_filter, pattern(audio_patterns), "")
-        end
-        if exclude_disk_image ~= 0 then
-            orig_ex_filter = string.gsub(orig_ex_filter, pattern(disk_image_patterns), "")
-        end
-        if exclude_video ~= 0 then
-            orig_ex_filter = string.gsub(orig_ex_filter, pattern(video_patterns), "")
-        end
-        orig_ex_filter = string.gsub(orig_ex_filter, ";*$", "")
-    end
-    -- convert fragmentation_threshold to number
-    if type(fragmentation_threshold) == "string" then
-        fragmentation_threshold = tonumber(fragmentation_threshold)
-        if not fragmentation_threshold then fragmentation_threshold = 0 end
-    end
+    if orig_in_filter then in_filter = orig_in_filter end
+    if orig_ex_filter then ex_filter = orig_ex_filter end
 
     -- save the upgraded configuration
     f = assert(io.open(path, "w"))
