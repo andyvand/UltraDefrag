@@ -132,10 +132,10 @@ WGX_OPTION internal_options[] = {
 
 /**
  * @brief Cleans up the environment
- * by removing all the variables set
- * by the program.
+ * by removing all the variables
+ * controlling the program behavior.
  */
-void DeleteEnvironmentVariables(void)
+static void CleanupEnvironment(void)
 {
     (void)SetEnvironmentVariable("UD_IN_FILTER",NULL);
     (void)SetEnvironmentVariable("UD_EX_FILTER",NULL);
@@ -174,7 +174,12 @@ static void ValidateGUIOptions(void)
 
 void GetPrefs(void)
 {
-    DeleteEnvironmentVariables();
+    /*
+    * The program should be configurable
+    * through guiopts.lua file only.
+    */
+    CleanupEnvironment();
+    
     ValidateGUIOptions();
     WgxGetOptions(".\\options\\guiopts.lua",read_only_options);
     WgxGetOptions(".\\options\\guiopts-internals.lua",internal_options);

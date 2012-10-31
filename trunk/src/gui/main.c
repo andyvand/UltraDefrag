@@ -1445,7 +1445,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     SavePrefs();
     
     if(InitSynchObjects() < 0){
-        DeleteEnvironmentVariables();
         StopCrashInfoCheck();
         return 1;
     }
@@ -1482,7 +1481,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         release_jobs();
         WgxDestroyResourceTable(i18n_table);
         stop_web_statistics();
-        DeleteEnvironmentVariables();
         if(hWindow){
             /* remove taskbar notification area icon */
             SendMessage(hWindow,WM_DESTROY,0,0);
@@ -1503,7 +1501,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
     /* save settings */
     SavePrefs();
-    DeleteEnvironmentVariables();
     stop_web_statistics();
     StopCrashInfoCheck();
     

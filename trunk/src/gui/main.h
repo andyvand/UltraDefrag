@@ -205,8 +205,7 @@ int  ResizeStatusBar(int bottom, int width);
 
 void GetPrefs(void);
 void SavePrefs(void);
-void DeleteEnvironmentVariables(void);
-int IsBootTimeDefragEnabled(void);
+int  IsBootTimeDefragEnabled(void);
 
 void CheckForTheNewVersion(void);
 
