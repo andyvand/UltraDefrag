@@ -571,12 +571,22 @@ int CreateMainWindow(int nShowCmd)
  */
 void OpenWebPage(char *page, char *anchor)
 {
-    int i,url_length;
+    int i;
+    DWORD url_length;
     wchar_t url[INTERNET_MAX_URL_LENGTH];
     wchar_t path[INTERNET_MAX_URL_LENGTH];
     wchar_t exe[MAX_PATH] = {0};
     char cd[MAX_PATH];
     HINSTANCE hApp;
+    HMODULE hShlwapiDll;
+    typedef HRESULT (WINAPI *URLCANONICALIZEW_PROC)(wchar_t *pszUrl,
+        wchar_t *pszCanonicalized,LPDWORD pcchCanonicalized,DWORD dwFlags);
+    URLCANONICALIZEW_PROC pUrlCanonicalizeW = NULL;
+    
+    hShlwapiDll = LoadLibrary("shlwapi.dll");
+    if(hShlwapiDll){
+        pUrlCanonicalizeW = (URLCANONICALIZEW_PROC)GetProcAddress(hShlwapiDll,"UrlCanonicalizeW");
+    }
 
     (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L".\\handbook\\%hs",page);
 
@@ -595,25 +605,32 @@ void OpenWebPage(char *page, char *anchor)
 
             (void)FindExecutableW(path,NULL,exe);
 
-            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L"file://%hs\\handbook\\%hs#%hs",cd,page,anchor);
+            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
+                L"file://%hs\\handbook\\%hs#%hs",cd,page,anchor);
 
-            // URL-encode spaces
-            url_length = INTERNET_MAX_URL_LENGTH - 1;
-            if (UrlCanonicalizeW(path,url,&url_length,URL_ESCAPE_SPACES_ONLY | URL_DONT_ESCAPE_EXTRA_INFO) == S_OK)
-                (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L"%ls",url);
+            if(pUrlCanonicalizeW){
+                /* URL-encode spaces */
+                url_length = INTERNET_MAX_URL_LENGTH - 1;
+                if(pUrlCanonicalizeW(path,url,&url_length,URL_ESCAPE_SPACES_ONLY | URL_DONT_ESCAPE_EXTRA_INFO) == S_OK)
+                    (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L"%ls",url);
+            }
         }
     }
     path[INTERNET_MAX_URL_LENGTH - 1] = 0;
+    /*WgxDbgPrint("%ws",path);*/
 
     if (anchor != NULL && exe[0] != 0)
         hApp = ShellExecuteW(hWindow,NULL,exe,path,NULL,SW_SHOW);
     else
         hApp = ShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
     if((int)(LONG_PTR)hApp <= 32){
-        if (anchor != NULL)
-            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L"http://ultradefrag.sourceforge.net/handbook/%hs#%hs",page,anchor);
-        else
-            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L"http://ultradefrag.sourceforge.net/handbook/%hs",page);
+        if (anchor != NULL){
+            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
+                L"http://ultradefrag.sourceforge.net/handbook/%hs#%hs",page,anchor);
+        } else {
+            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
+                L"http://ultradefrag.sourceforge.net/handbook/%hs",page);
+        }
         path[INTERNET_MAX_URL_LENGTH - 1] = 0;
         (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
     }
