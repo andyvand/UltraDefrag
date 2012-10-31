@@ -8,7 +8,7 @@ includes = { "gui", "include", "lua5.1", "udefrag", "wgx" }
 
 libs = {
     "kernel32", "user32", "gdi32", "comctl32",
-    "shell32", "msvcrt", "comdlg32", "advapi32", "shlwapi"
+    "shell32", "msvcrt", "comdlg32", "advapi32"
 }
 adlibs = { 
     "$(UDEFRAG_LIB_PATH)\\udefrag", 
