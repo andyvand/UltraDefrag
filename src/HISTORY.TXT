@@ -36,6 +36,8 @@
   Version 5.1.1  2012-11-
   ------------------------------------------------------------------------------
     - added ability to install over an existing portable package
+    - a problem with launching the cluster map legend from the help menu
+      when the path to the HTML file contained spaces is fixed
 
     - the following translations were added:
 
