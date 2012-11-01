@@ -73,8 +73,12 @@ int winx_set_env_variable(wchar_t *name, wchar_t *value)
 
     RtlInitUnicodeString(&n,name);
     if(value){
-        RtlInitUnicodeString(&v,value);
-        status = RtlSetEnvironmentVariable(NULL,&n,&v);
+        if(value[0]){
+            RtlInitUnicodeString(&v,value);
+            status = RtlSetEnvironmentVariable(NULL,&n,&v);
+        } else {
+            status = RtlSetEnvironmentVariable(NULL,&n,NULL);
+        }
     } else {
         status = RtlSetEnvironmentVariable(NULL,&n,NULL);
     }
