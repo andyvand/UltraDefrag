@@ -36,7 +36,10 @@
 #include "../dll/udefrag/udefrag.h"
 #include "../include/ultradfgver.h"
 
-#define settextcolor(c) (void)SetConsoleTextAttribute(hStdOut,c)
+/* sets text color only if -b option is not set */
+#define settextcolor(c)    { if(!b_flag) (void)SetConsoleTextAttribute(hStdOut,c); }
+/* sets text color forcibly even if -b option is set */
+#define settextcolor_fc(c) { (void)SetConsoleTextAttribute(hStdOut,c); }
 
 /* uncomment to test command line parser */
 //#define CMDLINE_PARSER_TEST
