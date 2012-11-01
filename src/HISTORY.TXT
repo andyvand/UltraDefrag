@@ -26,11 +26,11 @@
     - Internals: flags field removed from winx_file_disposition structure
     - many zenwinx prototypes changed by replacing short keyword by wchar_t
     - useless fat32_xxx fields removed from winx_volume_information structure
-    - Windows Server 2003 DDK needs to be patched in order to compile
-      the program; look at rsc/compilation.dox for details
     - device_capacity field added to winx_volume_information structure
     - WgxShowWindow and WgxHideWindow definitions added to wgx.h file
     - WgxSetProcessPriority routine added to wgx library
+    - Windows Server 2003 DDK needs to be patched in order to compile
+      the program; look at rsc/compilation.dox for details
 
 
   Version 5.1.1  2012-11-
