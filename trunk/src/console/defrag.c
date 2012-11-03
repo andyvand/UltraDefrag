@@ -63,8 +63,8 @@ int web_statistics_completed = 0;
 * including terminal zero.
 */
 #define MAX_ENV_VARIABLE_LENGTH 32766
-wchar_t in_filter[MAX_ENV_VARIABLE_LENGTH + 1];
-wchar_t new_in_filter[MAX_ENV_VARIABLE_LENGTH + 1];
+wchar_t orig_cut_filter[MAX_ENV_VARIABLE_LENGTH + 1];
+wchar_t cut_filter[MAX_ENV_VARIABLE_LENGTH + 1];
 wchar_t aux_buffer[MAX_ENV_VARIABLE_LENGTH + 1];
 wchar_t env_buffer[MAX_ENV_VARIABLE_LENGTH + 1];
 
@@ -554,53 +554,53 @@ static int process_volumes(void)
             /* extract drive letter */
             letter = (char)path->path[0];
             
-            /* save %UD_IN_FILTER% */
-            in_filter[0] = 0;
-            if(!GetEnvironmentVariableW(L"UD_IN_FILTER",in_filter,MAX_ENV_VARIABLE_LENGTH + 1)){
+            /* save %UD_CUT_FILTER% */
+            orig_cut_filter[0] = 0;
+            if(!GetEnvironmentVariableW(L"UD_CUT_FILTER",orig_cut_filter,MAX_ENV_VARIABLE_LENGTH + 1)){
                 if(GetLastError() != ERROR_ENVVAR_NOT_FOUND)
-                    display_last_error("process_volumes: cannot get %%UD_IN_FILTER%%!");
+                    display_last_error("process_volumes: cannot get %%UD_CUT_FILTER%%!");
             }
             
             if(shellex_flag && (folder_flag || folder_itself_flag)){
                 if(folder_flag){
                     if(path->path[wcslen(path->path) - 1] == '\\'){
-                        /* set UD_IN_FILTER=c:\* */
-                        n = _snwprintf(new_in_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls*",path->path);
+                        /* set UD_CUT_FILTER=c:\* */
+                        n = _snwprintf(cut_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls*",path->path);
                     } else {
-                        /* set UD_IN_FILTER=c:\test;c:\test\* */
-                        n = _snwprintf(new_in_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls;%ls\\*",path->path,path->path);
+                        /* set UD_CUT_FILTER=c:\test;c:\test\* */
+                        n = _snwprintf(cut_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls;%ls\\*",path->path,path->path);
                     }
                 } else {
-                    /* set UD_IN_FILTER=c:\test */
-                    n = _snwprintf(new_in_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls",path->path);
+                    /* set UD_CUT_FILTER=c:\test */
+                    n = _snwprintf(cut_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls",path->path);
                 }
                 if(n < 0){
-                    display_error("process_volumes: cannot set %%UD_IN_FILTER%% - path is too long!");
-                    wcscpy(new_in_filter,in_filter);
+                    display_error("process_volumes: cannot set %%UD_CUT_FILTER%% - path is too long!");
+                    wcscpy(cut_filter,L"");
                     path_found = 0;
                 } else {
-                    new_in_filter[MAX_ENV_VARIABLE_LENGTH] = 0;
+                    cut_filter[MAX_ENV_VARIABLE_LENGTH] = 0;
                 }
             } else {
-                /* save the current path to %UD_IN_FILTER% */
-                n = _snwprintf(new_in_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls",path->path);
+                /* save the current path to %UD_CUT_FILTER% */
+                n = _snwprintf(cut_filter,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls",path->path);
                 if(n < 0){
-                    display_error("process_volumes: cannot set %%UD_IN_FILTER%% - path is too long!");
-                    wcscpy(new_in_filter,in_filter);
+                    display_error("process_volumes: cannot set %%UD_CUT_FILTER%% - path is too long!");
+                    wcscpy(cut_filter,L"");
                     path_found = 0;
                 } else {
-                    new_in_filter[MAX_ENV_VARIABLE_LENGTH] = 0;
+                    cut_filter[MAX_ENV_VARIABLE_LENGTH] = 0;
                 }
                 
                 /* search for another paths with the same drive letter */
                 for(another_path = path->next; another_path; another_path = another_path->next){
                     if(another_path == paths) break;
                     if(udefrag_toupper(letter) == udefrag_toupper((char)another_path->path[0])){
-                        /* try to append it to %UD_IN_FILTER% */
-                        n = _snwprintf(aux_buffer,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls;%ls",new_in_filter,another_path->path);
+                        /* try to append it to %UD_CUT_FILTER% */
+                        n = _snwprintf(aux_buffer,MAX_ENV_VARIABLE_LENGTH + 1,L"%ls;%ls",cut_filter,another_path->path);
                         if(n >= 0){
                             aux_buffer[MAX_ENV_VARIABLE_LENGTH] = 0;
-                            wcscpy(new_in_filter,aux_buffer);
+                            wcscpy(cut_filter,aux_buffer);
                             path_found = 1;
                             settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
                             WgxPrintUnicodeString(another_path->path,stdout);
@@ -612,19 +612,19 @@ static int process_volumes(void)
                 }
             }
             
-            /* set %UD_IN_FILTER% */
+            /* set %UD_CUT_FILTER% */
             if(stop_flag) return 0;
-            if(!SetEnvironmentVariableW(L"UD_IN_FILTER",new_in_filter)){
-                display_last_error("process_volumes: cannot set %%UD_IN_FILTER%%!");
+            if(!SetEnvironmentVariableW(L"UD_CUT_FILTER",cut_filter)){
+                display_last_error("process_volumes: cannot set %%UD_CUT_FILTER%%!");
             }
             
             /* run the job */
             if(path_found)
                 result = process_single_volume(letter);
             
-            /* restore %UD_IN_FILTER% */
-            if(!SetEnvironmentVariableW(L"UD_IN_FILTER",in_filter)){
-                display_last_error("process_volumes: cannot restore %%UD_IN_FILTER%%!");
+            /* restore %UD_CUT_FILTER% */
+            if(!SetEnvironmentVariableW(L"UD_CUT_FILTER",orig_cut_filter)){
+                display_last_error("process_volumes: cannot restore %%UD_CUT_FILTER%%!");
             }
         }
         if(path->next == paths) break;

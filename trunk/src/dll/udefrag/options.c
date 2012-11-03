@@ -66,6 +66,10 @@ int get_options(udefrag_job_parameters *jp)
         DebugPrint("ex_filter = %ws",buffer);
         winx_patcomp(&jp->udo.ex_filter,buffer,L";\"",WINX_PAT_ICASE);
     }
+    if(winx_query_env_variable(L"UD_CUT_FILTER",buffer,ENV_BUFFER_SIZE) >= 0){
+        DebugPrint("cut_filter = %ws",buffer);
+        winx_patcomp(&jp->udo.cut_filter,buffer,L";\"",WINX_PAT_ICASE);
+    }
 
     /* set fragment size threshold */
     if(winx_query_env_variable(L"UD_FRAGMENT_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
@@ -176,6 +180,11 @@ int get_options(udefrag_job_parameters *jp)
         DebugPrint("ex_filter patterns:");
         for(i = 0; i < jp->udo.ex_filter.count; i++)
             DebugPrint("  - %ws",jp->udo.ex_filter.array[i]);
+    }
+    if(jp->udo.cut_filter.count){
+        DebugPrint("cut_filter patterns:");
+        for(i = 0; i < jp->udo.cut_filter.count; i++)
+            DebugPrint("  + %ws",jp->udo.cut_filter.array[i]);
     }
     it = (unsigned int)(jp->udo.fragmentation_threshold * 100.00);
     DebugPrint("fragmentation threshold                   = %u.%02u %%",it / 100,it % 100);

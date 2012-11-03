@@ -156,6 +156,8 @@
 typedef struct _udefrag_options {
     winx_patlist in_filter;     /* patterns for file inclusion */
     winx_patlist ex_filter;     /* patterns for file exclusion */
+    winx_patlist cut_filter;    /* auxiliary filter used internally to cut off files
+                                   when individual files/directories are to be defragmented */
     ULONGLONG fragment_size_threshold;  /* fragment size threshold */
     ULONGLONG size_limit;       /* file size threshold */
     ULONGLONG optimizer_size_limit; /* file size threshold used in disk optimization */
