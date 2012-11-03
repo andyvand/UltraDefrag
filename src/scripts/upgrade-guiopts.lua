@@ -29,6 +29,9 @@ config_file_contents = [[
 -- To use Unicode characters in filters and other strings, edit this file
 -- in Notepad++ editor (http://www.notepad-plus-plus.org/) and save it in
 -- UTF-8 (without BOM) encoding.
+--
+-- This file is also used to configure the Explorer's context menu handler.
+-- See the IV-th section for details on how to set custom options for it.
 --------------------------------------------------------------------------------
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -334,6 +337,21 @@ free_color_g = $free_color_g
 free_color_b = $free_color_b
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- IV. Explorer's context menu handler configuration
+
+-- To use custom configuration for the Explorer's context menu handler,
+-- put custom definitions into the code block below.
+
+-- For example, to defragment mp3 files only through the Explorer's
+-- context menu add the following line:
+-- in_filter = "*.mp3"
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if shellex_flag then
+    -- put custom options here $shellex_options
+end
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- this number helps to upgrade configuration file correctly, don't change it
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -415,91 +433,64 @@ function save_internal_preferences(f)
     f:write(expand(int_config_file_contents))
 end
 
--- THE MAIN CODE STARTS HERE
--- current version of configuration file
--- version numbers 0-99 are reserved for 5.0.x series of the program
-current_version = 112
-old_version = 0
-upgrade_needed = 1
+function get_preferences()
+    -- version of the old configuration file
+    version = 0
+    
+    -- set defaults
+    in_filter = ""
+    ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*dllcache*;*ServicePackFiles*"
+    archive_patterns = "*.7z;*.7z.*;*.arj;*.bz2;*.bzip2;*.cab;*.cpio;*.deb;*.dmg;*.gz;*.gzip;*.lha;*.lzh;*.lzma"
+    archive_patterns = archive_patterns .. ";*.rar;*.rpm;*.swm;*.tar;*.taz;*.tbz;*.tbz2;*.tgz;*.tpz;*.txz"
+    archive_patterns = archive_patterns .. ";*.xar;*.xz;*.z;*.zip"
+    audio_patterns = "*.aif;*.cda;*.flac;*.iff;*.kpl;*.m3u;*.m4a;*.mid;*.mp3;*.mpa;*.ra;*.wav;*.wma"
+    disk_image_patterns = "*.fat;*.hdd;*.hfs;*.img;*.iso;*.ntfs;*.squashfs;*.vdi;*.vhd;*.vmdk;*.wim"
+    video_patterns = "*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.rm;*.srt;*.swf;*.vob;*.wmv"
+    include_archive = 0
+    exclude_archive = 0
+    include_audio = 0
+    exclude_audio = 0
+    include_disk_image = 0
+    exclude_disk_image = 0
+    include_video = 0
+    exclude_video = 0
+    fragment_size_threshold = "20 Mb"
+    sizelimit = ""
+    optimizer_file_size_threshold = "20 Mb"
+    fragments_threshold = 0
+    fragmentation_threshold = 0
+    time_limit = ""
+    refresh_interval = 100
+    disable_reports = 0
+    dbgprint_level = ""
+    log_file_path = ".\\logs\\ultradefrag.log"
+    dry_run = 0
+    seconds_for_shutdown_rejection = 60
+    disable_latest_version_check = 0
+    scale_by_dpi = 1
+    restore_default_window_size = 0
+    show_menu_icons = 1
+    show_taskbar_icon_overlay = 1
+    minimize_to_system_tray = 0
+    map_block_size = 4
+    grid_line_width = 1
+    grid_color_r = 0
+    grid_color_g = 0
+    grid_color_b = 0
+    free_color_r = 255
+    free_color_g = 255
+    free_color_b = 255
 
--- parse command line
-instdir = arg[1]
-assert(instdir, "upgrade-guiopts.lua: the first argument is missing")
-
--- set defaults
-in_filter = ""
-ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*dllcache*;*ServicePackFiles*"
-archive_patterns = "*.7z;*.7z.*;*.arj;*.bz2;*.bzip2;*.cab;*.cpio;*.deb;*.dmg;*.gz;*.gzip;*.lha;*.lzh;*.lzma"
-archive_patterns = archive_patterns .. ";*.rar;*.rpm;*.swm;*.tar;*.taz;*.tbz;*.tbz2;*.tgz;*.tpz;*.txz"
-archive_patterns = archive_patterns .. ";*.xar;*.xz;*.z;*.zip"
-audio_patterns = "*.aif;*.cda;*.flac;*.iff;*.kpl;*.m3u;*.m4a;*.mid;*.mp3;*.mpa;*.ra;*.wav;*.wma"
-disk_image_patterns = "*.fat;*.hdd;*.hfs;*.img;*.iso;*.ntfs;*.squashfs;*.vdi;*.vhd;*.vmdk;*.wim"
-video_patterns = "*.3g2;*.3gp;*.asf;*.asx;*.avi;*.flv;*.mov;*.mp4;*.mpg;*.rm;*.srt;*.swf;*.vob;*.wmv"
-include_archive = 0
-exclude_archive = 0
-include_audio = 0
-exclude_audio = 0
-include_disk_image = 0
-exclude_disk_image = 0
-include_video = 0
-exclude_video = 0
-fragment_size_threshold = "20 Mb"
-sizelimit = ""
-optimizer_file_size_threshold = "20 Mb"
-fragments_threshold = 0
-fragmentation_threshold = 0
-time_limit = ""
-refresh_interval = 100
-disable_reports = 0
-dbgprint_level = ""
-log_file_path = ".\\logs\\ultradefrag.log"
-dry_run = 0
-seconds_for_shutdown_rejection = 60
-disable_latest_version_check = 0
-scale_by_dpi = 1
-restore_default_window_size = 0
-show_menu_icons = 1
-show_taskbar_icon_overlay = 1
-minimize_to_system_tray = 0
-map_block_size = 4
-grid_line_width = 1
-grid_color_r = 0
-grid_color_g = 0
-grid_color_b = 0
-free_color_r = 255
-free_color_g = 255
-free_color_b = 255
-
--- get user preferences
-path = instdir .. "\\options\\guiopts.lua"
-f = io.open(path, "r")
-if f then
-    f:close()
-    dofile(path)
-end
-
--- if version of configuration file is greater or equal than the current one, do nothing
-if version then
-    old_version = version
-    if version >= current_version then
-        upgrade_needed = 0
-    end
-end
-
--- upgrade the file
-if upgrade_needed ~= 0 then
-    -- make a backup copy
+    -- get user preferences
+    path = instdir .. "\\options\\guiopts.lua"
     f = io.open(path, "r")
     if f then
-        contents = f:read("*all")
         f:close()
-        f = assert(io.open(path .. ".old", "w"))
-        f:write(contents)
-        f:close()
+        dofile(path)
     end
-
-    -- RULES OF UPGRADE TO THE CURRENT VERSION
-    if old_version == 0 then
+    
+    -- upgrade preferences
+    if version == 0 then
         -- upgrade filters, now they should include wildcards
         in_filter = ""
         ex_filter = "*system volume information*;*temp*;*tmp*;*recycle*;*dllcache*;*ServicePackFiles*"
@@ -509,14 +500,70 @@ if upgrade_needed ~= 0 then
         file_size_threshold = sizelimit
     end
     local path_upgrade_needed = 0
-    if old_version < 8 then path_upgrade_needed = 1 end
-    if old_version > 99 and old_version < 107 then path_upgrade_needed = 1 end
+    if version < 8 then path_upgrade_needed = 1 end
+    if version > 99 and version < 107 then path_upgrade_needed = 1 end
     if path_upgrade_needed ~= 0 and log_file_path == "" then
         -- default log is needed for easier bug reporting
         log_file_path = ".\\logs\\ultradefrag.log"
     end
     if orig_in_filter then in_filter = orig_in_filter end
     if orig_ex_filter then ex_filter = orig_ex_filter end
+end
+
+-- THE MAIN CODE STARTS HERE
+-- current version of configuration file
+current_version = 114
+shellex_options = ""
+_G_copy = {}
+
+-- parse command line
+instdir = arg[1]
+assert(instdir, "upgrade-guiopts.lua: the first argument is missing")
+
+-- get preferences for Explorer's context menu handler
+shellex_flag = 1
+get_preferences()
+for k,v in pairs(_G) do _G_copy[k] = v end
+
+-- get preferences for GUI
+shellex_flag = nil
+get_preferences()
+
+-- shellex_options = difference between two sets of preferences
+for k,v in pairs(_G) do
+    local t = type(v)
+    if t == 'string' or t == 'number' or t == 'boolean' then
+        if _G_copy[k] ~= _G[k] and k ~= 'shellex_options' then
+            shellex_options = shellex_options .. '\n    ' .. k .. ' = '
+            if t == 'string' then shellex_options = shellex_options .. '\"' end
+            shellex_options = shellex_options .. _G_copy[k]
+            if t == 'string' then shellex_options = shellex_options .. '\"' end
+        end
+    end
+end
+-- initially custom options should redefine the log path
+if version < 114 then
+    shellex_options = '\n    log_file_path = \"'
+    if os.getenv('UD_INSTALL_DIR') then
+        shellex_options = shellex_options .. os.getenv('UD_INSTALL_DIR') .. '\\logs\\'
+    else
+        shellex_options = shellex_options .. os.getenv('TMP') .. '\\UltraDefrag_Logs\\'
+    end
+    shellex_options = shellex_options .. 'udefrag-shellex.log\"'
+end
+
+-- upgrade configuration file when needed
+if version < current_version then
+    path = instdir .. "\\options\\guiopts.lua"
+    -- make a backup copy
+    f = io.open(path, "r")
+    if f then
+        contents = f:read("*all")
+        f:close()
+        f = assert(io.open(path .. ".old", "w"))
+        f:write(contents)
+        f:close()
+    end
 
     -- save the upgraded configuration
     f = assert(io.open(path, "w"))

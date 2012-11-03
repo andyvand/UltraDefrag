@@ -25,7 +25,8 @@
 #include "../share/getopt.h"
 
 /* forward declarations */
-void search_for_paths(void);
+static int ReadShellExOptions(void);
+static void search_for_paths(void);
 
 int printf_stub(const char *format,...)
 {
@@ -213,6 +214,11 @@ void show_help(void)
         "                                      This allows testing the algorithm without\n"
         "                                      changing the content of the disk.\n"
         "\n"
+        "Note:\n"
+        "  All the environment variables are ignored when the --shellex switch is\n"
+        "  on the command line. Instead of taking environment variables into account\n"
+        "  the program interpretes the %UD_INSTALL_DIR%\\options\\guiopts.lua file.\n"
+        "\n"
         "Examples:\n"
         "  set UD_IN_FILTER=*windows*;*winnt*  include only paths, which include either\n"
         "                                      'windows' or 'winnt' words.\n"
@@ -309,7 +315,7 @@ static struct option long_options_[] = {
 char short_options_[] = "aoql::rpvmbh?iesd";
 
 /* new code based on GNU getopt() function */
-void parse_cmdline(int argc, char **argv)
+int parse_cmdline(int argc, char **argv)
 {
     int c;
     int option_index = 0;
@@ -320,6 +326,7 @@ void parse_cmdline(int argc, char **argv)
     int letter_index;
     char ch;
     int length;
+    int result;
     
     memset(&letters,0,sizeof(letters));
     letter_index = 0;
@@ -493,6 +500,102 @@ void parse_cmdline(int argc, char **argv)
     
     /* calculate map dimensions if --use-entire-window flag is set */
     if(use_entire_window) CalculateClusterMapDimensions();
+
+    if(shellex_flag){
+        result = ReadShellExOptions();
+        (void)udefrag_set_log_file_path();
+        if(result < 0)
+            return result;
+    }
+    
+    return 0;
+}
+
+/**
+ * @brief Cleans up the environment
+ * by removing all the variables
+ * controlling the program behavior.
+ */
+static void CleanupEnvironment(void)
+{
+    (void)SetEnvironmentVariable("UD_IN_FILTER",NULL);
+    (void)SetEnvironmentVariable("UD_EX_FILTER",NULL);
+    (void)SetEnvironmentVariable("UD_FRAGMENT_SIZE_THRESHOLD",NULL);
+    (void)SetEnvironmentVariable("UD_FILE_SIZE_THRESHOLD",NULL);
+    (void)SetEnvironmentVariable("UD_OPTIMIZER_FILE_SIZE_THRESHOLD",NULL);
+    (void)SetEnvironmentVariable("UD_FRAGMENTS_THRESHOLD",NULL);
+    (void)SetEnvironmentVariable("UD_FRAGMENTATION_THRESHOLD",NULL);
+    (void)SetEnvironmentVariable("UD_REFRESH_INTERVAL",NULL);
+    (void)SetEnvironmentVariable("UD_DISABLE_REPORTS",NULL);
+    (void)SetEnvironmentVariable("UD_DBGPRINT_LEVEL",NULL);
+    (void)SetEnvironmentVariable("UD_LOG_FILE_PATH",NULL);
+    (void)SetEnvironmentVariable("UD_TIME_LIMIT",NULL);
+    (void)SetEnvironmentVariable("UD_DRY_RUN",NULL);
+    (void)SetEnvironmentVariable("UD_SORTING",NULL);
+    (void)SetEnvironmentVariable("UD_SORTING_ORDER",NULL);
+}
+
+/**
+ * @brief Reads options specific for
+ * the Explorer's context menu handler.
+ * @return Zero for success, negative
+ * value otherwise.
+ */
+static int ReadShellExOptions(void)
+{
+    char instdir[MAX_PATH + 1];
+    char path[MAX_PATH + 1];
+    lua_State *L;
+    int status;
+    const char *msg;
+    
+    /*
+    * Explorer's context menu handler should be
+    * configurable through guiopts.lua file only.
+    */
+    CleanupEnvironment();
+    
+    /* interprete guiopts.lua file */
+    if(!GetEnvironmentVariable("UD_INSTALL_DIR",instdir,MAX_PATH + 1)){
+        display_last_error("Cannot query UD_INSTALL_DIR environment variable!");
+        return (-1);
+    } else {
+        _snprintf(path,MAX_PATH + 1,"%s\\options\\guiopts.lua",instdir);
+        path[MAX_PATH] = 0;
+    }
+    
+    L = lua_open();
+    if(L == NULL){
+        display_error("Cannot initialize Lua library!\n\n");
+        return (-1);
+    }
+
+    /* stop collector during initialization */
+    lua_gc(L, LUA_GCSTOP, 0);
+    luaL_openlibs(L);
+    lua_gc(L, LUA_GCRESTART, 0);
+
+    lua_pushnumber(L, 1);
+    lua_setglobal(L, "shellex_flag");
+    status = luaL_dofile(L,path);
+    if(status != 0){
+        settextcolor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+        fprintf(stderr,"Cannot interprete %s\n",path);
+        if(!lua_isnil(L, -1)){
+            msg = lua_tostring(L, -1);
+            if(msg == NULL) msg = "(error object is not a string)";
+            fprintf(stderr,"%s\n\n",msg);
+            lua_pop(L, 1);
+        } else {
+            fprintf(stderr,"\n");
+        }
+        settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+        lua_close(L);
+        return (-1);
+    }
+    
+    lua_close(L);
+    return 0;
 }
 
 typedef DWORD (WINAPI *GET_LONG_PATH_NAME_W_PROC)(LPCWSTR,LPWSTR,DWORD);
@@ -504,7 +607,7 @@ wchar_t full_path[MAX_LONG_PATH + 1];
 * either ANSI or Unicode, either full or relative.
 * This is not safe to assume something concrete.
 */
-void search_for_paths(void)
+static void search_for_paths(void)
 {
     wchar_t *cmdline, *cmdline_copy;
     wchar_t **xargv;
