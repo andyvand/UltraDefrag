@@ -175,7 +175,6 @@ static void init_console(void)
 {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
 
-    hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
     /* save default color */
     if(GetConsoleScreenBufferInfo(hStdOut,&csbi))
         default_color = csbi.wAttributes;
@@ -744,6 +743,7 @@ void test(void)
  */
 int __cdecl main(int argc, char **argv)
 {
+    int parse_cmdline_result;
     int result, pause_result;
     
     /*test();
@@ -752,8 +752,9 @@ int __cdecl main(int argc, char **argv)
     */
 
     /* initialize the program */
+    hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
     WgxSetDbgPrintHandler(udefrag_dbg_print);
-    parse_cmdline(argc,argv);
+    parse_cmdline_result = parse_cmdline(argc,argv);
     init_console();
     
     /* handle help request */
@@ -790,6 +791,7 @@ int __cdecl main(int argc, char **argv)
     if(l_flag) terminate_console(show_vollist());
     
     /* run disk defragmentation job */
+    if(parse_cmdline_result < 0) goto done;
     if(!SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,TRUE))
         display_last_error("Cannot set Ctrl + C handler!");
     
@@ -803,7 +805,8 @@ int __cdecl main(int argc, char **argv)
     end_synchronization();
     
     (void)SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,FALSE);
-    
+
+done:    
     /* display prompt to hit any key in case of context menu handler */
     if(shellex_flag){
         settextcolor(default_color);

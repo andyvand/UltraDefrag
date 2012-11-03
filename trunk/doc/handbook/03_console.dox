@@ -100,6 +100,11 @@
  * to hit any key after a job completion. It is intended for use 
  * in Explorer's context menu handler.
  *
+ * @note
+ * All the environment variables listed below are ignored when the --shellex switch
+ * is on the command line. Instead of taking environment variables into account
+ * the program interpretes the \%UD_INSTALL_DIR\%\\options\\guiopts.lua file.
+ *
  * Drive letter:
  * <ul>
  * <li>Specifying just the drive letter will cause UltraDefrag to defragment the disk.</li>
@@ -358,10 +363,8 @@
  * To stop the defragmentation press Ctrl+C keys or close
  * the command prompt.
  *
- * @note
- * Both UD_IN_FILTER and UD_EX_FILTER environment variables
- * are ignored by the context menu handler. It is intended to defragment
- * exactly what is selected.
+ * To configure the context menu handler edit the IV-th section of the 
+ * <b>\%UD_INSTALL_DIR\%\\options\\guiopts.lua</b> file.
  *
  * Currently the context menu handler is not available in the portable
  * version of the program.
