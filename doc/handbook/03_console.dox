@@ -261,7 +261,7 @@
  *
  * @par process only disks with fragmentation level above 10%
  * @code
- * set UD_FRAGMENTATION_THRESHOLD=10%
+ * set UD_FRAGMENTATION_THRESHOLD=10
  * @endcode
  *
  * @par terminate processing after 6 hours and 30 minutes
