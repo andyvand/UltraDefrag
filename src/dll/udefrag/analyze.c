@@ -384,14 +384,16 @@ int exclude_by_path(winx_file_info *f,udefrag_job_parameters *jp)
     if(wcslen(f->path) < 0x4)
         return 1; /* path is invalid */
     
-    /* ignore ex_filter in context menu handler */
-    if(!(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER)){
-        if(jp->udo.ex_filter.count){
-            if(winx_patcmp(f->path + 0x4,&jp->udo.ex_filter))
-                return 1;
-        }
+    if(jp->udo.ex_filter.count){
+        if(winx_patcmp(f->path + 0x4,&jp->udo.ex_filter))
+            return 1;
     }
     
+    if(jp->udo.cut_filter.count){
+        if(!winx_patcmp(f->path + 0x4,&jp->udo.cut_filter))
+            return 1;
+    }
+
     if(jp->udo.in_filter.count == 0) return 0;
     return !winx_patcmp(f->path + 0x4,&jp->udo.in_filter);
 }
@@ -571,8 +573,8 @@ static int find_files(udefrag_job_parameters *jp)
     
     /* check for context menu handler */
     if(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER){
-        if(jp->udo.in_filter.count > 0){
-            if(wcslen(jp->udo.in_filter.array[0]) >= wcslen(L"C:\\"))
+        if(jp->udo.cut_filter.count > 0){
+            if(wcslen(jp->udo.cut_filter.array[0]) >= wcslen(L"C:\\"))
                 context_menu_handler = 1;
         }
     }
@@ -580,14 +582,14 @@ static int find_files(udefrag_job_parameters *jp)
     /* speed up the context menu handler */
     if(jp->fs_type != FS_NTFS && context_menu_handler){
         /* in case of c:\* or c:\ scan entire disk */
-        c = jp->udo.in_filter.array[0][3];
+        c = jp->udo.cut_filter.array[0][3];
         if(c == 0 || c == '*')
             goto scan_entire_disk;
         /* in case of c:\test;c:\test\* scan parent directory recursively */
-        if(jp->udo.in_filter.count > 1)
+        if(jp->udo.cut_filter.count > 1)
             flags = WINX_FTW_RECURSIVE;
         /* in case of c:\test scan parent directory, not recursively */
-        _snwprintf(parent_directory, MAX_PATH, L"\\??\\%ws", jp->udo.in_filter.array[0]);
+        _snwprintf(parent_directory, MAX_PATH, L"\\??\\%ws", jp->udo.cut_filter.array[0]);
         parent_directory[MAX_PATH] = 0;
         p = wcsrchr(parent_directory,'\\');
         if(p) *p = 0;
