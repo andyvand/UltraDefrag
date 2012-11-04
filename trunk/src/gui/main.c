@@ -638,6 +638,7 @@ void OpenWebPage(char *page, char *anchor)
 
 /**
  * @brief Opens a page of the translation wiki.
+ * @param[in] page name of the page
  * @param[in] islang 1 indicates a language page, 0 not
  */
 void OpenTranslationWebPage(wchar_t *page, int islang)
