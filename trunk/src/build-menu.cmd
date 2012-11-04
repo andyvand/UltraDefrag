@@ -39,21 +39,23 @@ echo      4 ... Build Release
 echo.
 echo      5 ... Build .................. using WinDDK, no IA64
 echo      6 ... Build Portable ......... using WinDDK, no IA64
+echo.
 echo      7 ... Build Docs
 echo      8 ... Build only Handbook
+echo      9 ... Build internal docs
 echo.
-echo      9 ... Build .................. with Custom Switches
-echo     10 ... Build Portable ......... with Custom Switches
+echo     10 ... Build .................. with Custom Switches
+echo     11 ... Build Portable ......... with Custom Switches
 echo.
-echo     11 ... Build Test Release for Stefan
-echo     12 ... Build Test Installation for Stefan
-echo     13 ... Build Test AMD64 for Stefan
-echo     14 ... Build Test x86 for Stefan
+echo     12 ... Build Test Release for Stefan
+echo     13 ... Build Test Installation for Stefan
+echo     14 ... Build Test AMD64 for Stefan
+echo     15 ... Build Test x86 for Stefan
 echo.
 echo      0 ... EXIT
 
 :: this value holds the number of the last menu entry
-set UD_BLD_MENU_MAX_ENTRIES=14
+set UD_BLD_MENU_MAX_ENTRIES=15
 
 :AskSelection
 echo.
@@ -114,6 +116,12 @@ call build-docs.cmd --no-dev
 goto finished
 
 :9
+title Build internal docs
+call build.cmd --clean
+call build-docs.cmd --internal-doc
+goto finished
+
+:10
 title Build .................. with Custom Switches
 cls
 echo.
@@ -126,7 +134,7 @@ echo.
 call build.cmd %UD_BLD_MENU_SWITCH%
 goto finished
 
-:10
+:11
 title Build Portable ......... with Custom Switches
 cls
 echo.
@@ -139,7 +147,7 @@ echo.
 call build.cmd --portable %UD_BLD_MENU_SWITCH%
 goto finished
 
-:11
+:12
 title Build Test Release for Stefan
 echo.
 call build.cmd --use-winddk --no-ia64 --no-pdf --no-dev
@@ -147,7 +155,7 @@ echo.
 call :CopyInstallers -zip
 goto finished
 
-:12
+:13
 title Build Test Installation for Stefan
 echo.
 if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winddk --no-ia64 --no-x86 --install --no-pdf --no-dev
@@ -155,7 +163,7 @@ if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winddk --no-ia64 --no-am
 echo.
 goto finished
 
-:13
+:14
 title Build Test AMD64 for Stefan
 echo.
 call build.cmd --use-winddk --no-ia64 --no-x86 --no-pdf --no-dev
@@ -163,7 +171,7 @@ echo.
 call :CopyInstallers
 goto finished
 
-:14
+:15
 title Build Test x86 for Stefan
 echo.
 call build.cmd --use-winddk --no-ia64 --no-amd64 --no-pdf --no-dev
