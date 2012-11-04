@@ -100,9 +100,16 @@
  *
  * <h1>Fragmentation level</h1>
  * The fragmentation level or percentage is calculated as follows:
- * @code
+ * @htmlonly
+ * <div class="fragment">
+ *     <div class="line">fragmentation = number of fragmented file fragments / number of all file fragments</div>
+ * </div>
+ * @endhtmlonly
+ * @latexonly
+ * \begin{DoxyCode}
  * fragmentation = number of fragmented file fragments / number of all file fragments
- * @endcode
+ * \end{DoxyCode}
+ * @endlatexonly
  *
  * <h1>Processing algorithms</h1>
  *

@@ -98,11 +98,13 @@ rem Example:  call :compile_pdf ..\doc\handbook letter UltraDefrag_Handbook
         echo GENERATE_LATEX         = YES
         echo LATEX_OUTPUT           = latex_%2
         echo PAPER_TYPE             = %2
+        echo LATEX_HEADER           = ./rsc/custom_header_%2.tex
     ) >>Doxyfile_%2
     
     doxygen Doxyfile_%2 || goto compilation_failed
 
     copy /Y .\rsc\*.png .\doxy-doc\latex_%2
+    copy /Y .\rsc\*.sty .\doxy-doc\latex_%2
 
     :compilation_succeeded
     pushd doxy-doc\latex_%2
