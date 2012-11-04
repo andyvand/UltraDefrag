@@ -155,7 +155,7 @@ Type 'help' for list of supported commands.
  * To specify multiple paths separate them by spaces.<br/><br/>
  * Example:
  * @code
- * udefrag "C:\Documents and Settings" C:\\WINDOWS\\WindowsUpdate.log
+ * udefrag "C:\Documents and Settings" C:\WINDOWS\WindowsUpdate.log
  * @endcode
  * <br/>
  * For further information about the command switches and variables consult the @ref Console page.
