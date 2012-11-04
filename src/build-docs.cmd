@@ -41,8 +41,18 @@ if "%UD_BLD_FLG_BUILD_DEV%" == "1" (
     call :compile_docs .\dll\zenwinx                     || goto fail
 )
 
-call :compile_docs ..\doc\handbook || goto fail
-copy /Y ..\doc\handbook\doxy-doc\html\*.* "%~dp0\..\..\web\handbook" || goto fail
+if "%UD_BLD_FLG_BUILD_INT%" == "1" (
+    rd /s /q "%~dp0\internal-doc\%ULTRADFGVER%"
+    md "%~dp0\internal-doc\%ULTRADFGVER%"
+
+    call :compile_int .\dll\udefrag        udefrag.dll  || goto fail
+    call :compile_int .\dll\wgx            wgx          || goto fail
+    call :compile_int .\dll\zenwinx        zenwinx      || goto fail
+    call :compile_int .\gui                gui          || goto fail
+) else (
+    call :compile_docs ..\doc\handbook || goto fail
+    copy /Y ..\doc\handbook\doxy-doc\html\*.* "%~dp0\..\..\web\handbook" || goto fail
+)
 
 :: compile PDF documentation if MiKTeX is installed
 if "%UD_BLD_FLG_BUILD_PDF%" == "1" (
@@ -120,6 +130,50 @@ rem Example:  call :compile_pdf ..\doc\handbook letter UltraDefrag_Handbook
     :compilation_failed
     popd
     del /f /q Doxyfile_%2
+    popd
+    exit /B 1
+goto :EOF
+
+rem Synopsis: call :compile_int {path} {name}
+rem Example:  call :compile_int .\dll\zenwinx zenwinx
+:compile_int
+    pushd %1
+
+    (
+        echo PROJECT_NAME           = %2
+        echo PROJECT_NUMBER         = %ULTRADFGVER%
+        echo OUTPUT_DIRECTORY       = "%~dp0\internal-doc\%ULTRADFGVER%"
+        echo FULL_PATH_NAMES        = NO
+        echo INHERIT_DOCS           = NO
+        echo OPTIMIZE_OUTPUT_FOR_C  = YES
+        echo EXTRACT_LOCAL_CLASSES  = NO
+        echo HIDE_UNDOC_MEMBERS     = YES
+        echo HIDE_UNDOC_CLASSES     = YES
+        echo INTERNAL_DOCS          = YES
+        echo CASE_SENSE_NAMES       = YES
+        echo SORT_MEMBER_DOCS       = NO
+        echo INPUT                  = .
+        echo FILE_PATTERNS          = *.c *.dox
+        echo SOURCE_BROWSER         = YES
+        echo REFERENCED_BY_RELATION = YES
+        echo REFERENCES_RELATION    = YES
+        echo VERBATIM_HEADERS       = NO
+        echo HTML_OUTPUT            = %2
+        echo HTML_TIMESTAMP         = NO
+        echo GENERATE_TREEVIEW      = YES
+        echo GENERATE_LATEX         = NO
+        echo ENABLE_PREPROCESSING   = NO
+        echo INCLUDE_FILE_PATTERNS  = *.h
+    ) >Doxyfile_internal
+    
+    doxygen Doxyfile_internal || goto compilation_failed
+
+    :compilation_succeeded
+    del /f /q Doxyfile_internal
+    popd
+    exit /B 0
+    :compilation_failed
+    del /f /q Doxyfile_internal
     popd
     exit /B 1
 goto :EOF

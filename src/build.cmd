@@ -280,6 +280,7 @@ rem Displays usage information.
     echo --clean         perform full cleanup instead of the build
     echo --no-pdf        skip building of PDF documentation
     echo --no-dev        skip building of development documentation
+    echo --internal-doc  build only internal development documentation
     echo.
     echo Compiler:
     echo --use-mingw     (default)
