@@ -57,7 +57,7 @@
 
     - the following translations were updated:
 
-      Czech, Greek, Iloko, Javanese, Latvian
+      Czech, Greek, Hungarian, Iloko, Javanese, Latvian
 
     - Internals:
 
