@@ -35,7 +35,7 @@
  * @param[in] size the size of the item to be inserted, in bytes.
  * @return Pointer to the inserted list item. NULL indicates failure.
  */
-list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size)
+list_entry *winx_list_insert(list_entry **phead,list_entry *prev,long size)
 {
     list_entry *new_item;
     
@@ -77,7 +77,7 @@ list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size)
  * @param[in,out] phead pointer to a variable pointing to the list head.
  * @param[in] item pointer to the item which must be removed.
  */
-void winx_list_remove_item(list_entry **phead,list_entry *item)
+void winx_list_remove(list_entry **phead,list_entry *item)
 {
     /*
     * Avoid winx_dbg_xxx calls here

@@ -97,7 +97,7 @@ static void add_dbg_log_entry(char *msg)
         if(logging_enabled){
             if(dbg_log)
                 last_log_entry = dbg_log->prev;
-                new_log_entry = (winx_dbg_log_entry *)winx_list_insert_item((list_entry **)(void *)&dbg_log,
+                new_log_entry = (winx_dbg_log_entry *)winx_list_insert((list_entry **)(void *)&dbg_log,
                     (list_entry *)last_log_entry,sizeof(winx_dbg_log_entry));
             if(new_log_entry == NULL){
                 /* not enough memory */
@@ -105,7 +105,7 @@ static void add_dbg_log_entry(char *msg)
                 new_log_entry->buffer = winx_strdup(msg);
                 if(new_log_entry->buffer == NULL){
                     /* not enough memory */
-                    winx_list_remove_item((list_entry **)(void *)&dbg_log,(list_entry *)new_log_entry);
+                    winx_list_remove((list_entry **)(void *)&dbg_log,(list_entry *)new_log_entry);
                 } else {
                     memset(&new_log_entry->time_stamp,0,sizeof(winx_time));
                     (void)winx_get_local_time(&new_log_entry->time_stamp);

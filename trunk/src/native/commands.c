@@ -215,7 +215,7 @@ static int help_handler(int argc,wchar_t **argv,wchar_t **envp)
     if(argc > 1)
         return man_handler(argc,argv,envp);
     
-    return winx_print_array_of_strings(help_message,
+    return winx_print_strings(help_message,
         MAX_LINE_WIDTH,MAX_DISPLAY_ROWS,
         DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,
         scripting_mode ? 0 : 1);
@@ -257,7 +257,7 @@ static int history_handler(int argc,wchar_t **argv,wchar_t **envp)
     
     winx_printf("\n");
 
-    result = winx_print_array_of_strings(strings,
+    result = winx_print_strings(strings,
         MAX_LINE_WIDTH,MAX_DISPLAY_ROWS,
         DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,1);
 
@@ -385,13 +385,13 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
         (void)_snprintf(second_buffer,filesize + 1,"%ws",(wchar_t *)(buffer + 2));
         second_buffer[filesize] = 0;
         strings[0] = second_buffer;
-        result = winx_print_array_of_strings(strings,MAX_LINE_WIDTH,
+        result = winx_print_strings(strings,MAX_LINE_WIDTH,
             MAX_DISPLAY_ROWS,DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,
             scripting_mode ? 0 : 1);
         winx_free(second_buffer);
     } else {
         strings[0] = buffer;
-        result = winx_print_array_of_strings(strings,MAX_LINE_WIDTH,
+        result = winx_print_strings(strings,MAX_LINE_WIDTH,
             MAX_DISPLAY_ROWS,DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,
             scripting_mode ? 0 : 1);
     }
@@ -585,7 +585,7 @@ static int list_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
         j++;
     }
     /* print strings */
-    result = winx_print_array_of_strings(strings,MAX_LINE_WIDTH,
+    result = winx_print_strings(strings,MAX_LINE_WIDTH,
         MAX_DISPLAY_ROWS,DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,
         scripting_mode ? 0 : 1);
     /* cleanup */

@@ -590,7 +590,7 @@ static void add_path(wchar_t *buffer)
 
     if(buffer[0]){
         if(paths) last_item = paths->prev;
-        new_item = (object_path *)winx_list_insert_item((list_entry **)(void *)&paths,
+        new_item = (object_path *)winx_list_insert((list_entry **)(void *)&paths,
             (list_entry *)last_item,sizeof(object_path));
         if(new_item == NULL){
             winx_printf("add_path: not enough memory!\n");

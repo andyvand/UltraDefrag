@@ -210,7 +210,7 @@ int winx_ftw_dump_file(winx_file_info *f,
                 goto dump_failed;
             }
             
-            block = (winx_blockmap *)winx_list_insert_item((list_entry **)&f->disp.blockmap,
+            block = (winx_blockmap *)winx_list_insert((list_entry **)&f->disp.blockmap,
                 (list_entry *)block,sizeof(winx_blockmap));
             if(block == NULL)
                 goto dump_failed;
@@ -284,7 +284,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     }
     
     /* insert new item to the file list */
-    f = (winx_file_info *)winx_list_insert_item((list_entry **)(void *)filelist,
+    f = (winx_file_info *)winx_list_insert((list_entry **)(void *)filelist,
         NULL,sizeof(winx_file_info));
     if(f == NULL)
         return f;
@@ -294,7 +294,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     if(f->name == NULL){
         DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
             file_entry->FileNameLength + sizeof(wchar_t));
-        winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+        winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
         return NULL;
     }
     memset(f->name,0,file_entry->FileNameLength + sizeof(wchar_t));
@@ -314,7 +314,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
         DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
             length * sizeof(wchar_t));
         winx_free(f->name);
-        winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+        winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
         return NULL;
     }
     if(is_rootdir)
@@ -345,7 +345,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
         if(winx_ftw_dump_file(f,t,user_defined_data) < 0){
             winx_free(f->name);
             winx_free(f->path);
-            winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+            winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
             return NULL;
         }
     }    
@@ -379,7 +379,7 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     }
     
     /* insert new item to the file list */
-    f = (winx_file_info *)winx_list_insert_item((list_entry **)(void *)filelist,
+    f = (winx_file_info *)winx_list_insert((list_entry **)(void *)filelist,
         NULL,sizeof(winx_file_info));
     if(f == NULL)
         return (-1);
@@ -390,7 +390,7 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     if(f->path == NULL){
         DebugPrint("ftw_add_root_directory: cannot allocate %u bytes of memory",
             length * sizeof(wchar_t));
-        winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+        winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
         return (-1);
     }
     wcscpy(f->path,path);
@@ -399,7 +399,7 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     f->name = winx_malloc(2 * sizeof(wchar_t));
     if(f->name == NULL){
         winx_free(f->path);
-        winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+        winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
         return (-1);
     }
     f->name[0] = '.';
@@ -444,7 +444,7 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
         if(winx_ftw_dump_file(f,t,user_defined_data) < 0){
             winx_free(f->name);
             winx_free(f->path);
-            winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+            winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
             return (-1);
         }
     }
@@ -629,7 +629,7 @@ static void ftw_remove_resident_streams(winx_file_info **filelist)
             winx_free(f->name);
             winx_free(f->path);
             winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
-            winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+            winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
         }
         if(*filelist == NULL) break;
         if(next == head) break;
@@ -658,7 +658,7 @@ static void ftw_remove_invalid_streams(winx_file_info **filelist)
             winx_free(f->name);
             winx_free(f->path);
             winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
-            winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
+            winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
         }
         if(*filelist == NULL) break;
         if(next == head) break;

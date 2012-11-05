@@ -119,7 +119,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
     int init_result;
     /*
     * No longer than MAX_LINE_WIDTH to ensure that escape and backspace
-    * keys will work properly with winx_prompt() function.
+    * keys will work properly with winx_prompt_ex() function.
     */
     char buffer[MAX_LINE_WIDTH + 1];
     wchar_t wbuffer[MAX_LINE_WIDTH + 1];

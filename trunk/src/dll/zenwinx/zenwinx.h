@@ -230,8 +230,8 @@ typedef struct _list_entry {
     struct _list_entry *prev; /* pointer to previous entry */
 } list_entry;
 
-list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size);
-void winx_list_remove_item(list_entry **phead,list_entry *item);
+list_entry *winx_list_insert(list_entry **phead,list_entry *prev,long size);
+void winx_list_remove(list_entry **phead,list_entry *item);
 void winx_list_destroy(list_entry **phead);
 
 /* lock.c */
@@ -325,9 +325,9 @@ void winx_init_history(winx_history *h);
 void winx_destroy_history(winx_history *h);
 
 int winx_prompt_ex(char *prompt,char *string,int n,winx_history *h);
-int winx_prompt(char *prompt,char *string,int n);
 
-int winx_print_array_of_strings(char **strings,int line_width,int max_rows,char *prompt,int divide_to_pages);
+int winx_print_strings(char **strings,int line_width,
+    int max_rows,char *prompt,int divide_to_pages);
 
 /* string.c */
 /* reliable _toupper and _tolower analogs */

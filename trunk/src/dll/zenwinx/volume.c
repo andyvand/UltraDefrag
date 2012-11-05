@@ -561,7 +561,7 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
                 /* cluster isn't free */
                 if(free_rgn_start != LLINVALID){
                     /* add free region to the list */
-                    rgn = (winx_volume_region *)winx_list_insert_item((list_entry **)(void *)&rlist,
+                    rgn = (winx_volume_region *)winx_list_insert((list_entry **)(void *)&rlist,
                         (list_entry *)rgn,sizeof(winx_volume_region));
                     if(rgn == NULL){
                         /* return if partial results aren't allowed */
@@ -586,7 +586,7 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
 
     if(free_rgn_start != LLINVALID){
         /* add free region to the list */
-        rgn = (winx_volume_region *)winx_list_insert_item((list_entry **)(void *)&rlist,
+        rgn = (winx_volume_region *)winx_list_insert((list_entry **)(void *)&rlist,
             (list_entry *)rgn,sizeof(winx_volume_region));
         if(rgn == NULL){
             /* return if partial results aren't allowed */
@@ -650,7 +650,7 @@ winx_volume_region *winx_add_volume_region(winx_volume_region *rlist,
             rprev->length += length;
             if(rprev->lcn + rprev->length == rprev->next->lcn){
                 rprev->length += rprev->next->length;
-                winx_list_remove_item((list_entry **)(void *)&rlist,
+                winx_list_remove((list_entry **)(void *)&rlist,
                     (list_entry *)rprev->next);
             }
             return rlist;
@@ -668,7 +668,7 @@ winx_volume_region *winx_add_volume_region(winx_volume_region *rlist,
         }
     }
     
-    r = (winx_volume_region *)winx_list_insert_item((list_entry **)(void *)&rlist,
+    r = (winx_volume_region *)winx_list_insert((list_entry **)(void *)&rlist,
         (list_entry *)rprev,sizeof(winx_volume_region));
     if(r == NULL)
         return rlist;
@@ -706,7 +706,7 @@ winx_volume_region *winx_sub_volume_region(winx_volume_region *rlist,
                 *        |-r-|
                 */
                 remaining_clusters -= r->length;
-                winx_list_remove_item((list_entry **)(void *)&rlist,
+                winx_list_remove((list_entry **)(void *)&rlist,
                     (list_entry *)r);
                 goto next_region;
             }
@@ -728,7 +728,7 @@ winx_volume_region *winx_sub_volume_region(winx_volume_region *rlist,
                 */
                 new_lcn = lcn + length;
                 new_length = r->lcn + r->length - (lcn + length);
-                winx_list_remove_item((list_entry **)(void *)&rlist,
+                winx_list_remove((list_entry **)(void *)&rlist,
                     (list_entry *)r);
                 rlist = winx_add_volume_region(rlist,new_lcn,new_length);
                 goto next_region;

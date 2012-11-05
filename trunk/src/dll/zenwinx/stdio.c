@@ -287,7 +287,7 @@ static void winx_add_history_entry(winx_history *h,char *string)
     if(h == NULL || string == NULL) return;
     
     if(h->head) last_entry = h->head->prev;
-    entry = (winx_history_entry *)winx_list_insert_item((list_entry **)(void *)&h->head,
+    entry = (winx_history_entry *)winx_list_insert((list_entry **)(void *)&h->head,
         (list_entry *)last_entry,sizeof(winx_history_entry));
     if(entry == NULL)
         return;
@@ -297,7 +297,7 @@ static void winx_add_history_entry(winx_history *h,char *string)
         length = strlen(string) + 1;
         DebugPrint("winx_add_winx_history_entry: cannot allocate %u bytes of memory",length);
         winx_printf("\nCannot allocate %u bytes of memory for winx_add_winx_history_entry()!\n",length);
-        winx_list_remove_item((list_entry **)(void *)&h->head,(list_entry *)entry);
+        winx_list_remove((list_entry **)(void *)&h->head,(list_entry *)entry);
     } else {
         h->n_entries ++;
         h->current = entry;
@@ -476,16 +476,6 @@ fail:
     return (-1);
 }
 
-/**
- * @brief A simplified analog of winx_prompt_ex() call.
- * Has no support of commands history.
- * @note Does not recognize tabulation.
- */
-int winx_prompt(char *prompt,char *string,int n)
-{
-    return winx_prompt_ex(prompt,string,n,NULL);
-}
-
 /* returns 1 if break or escape was pressed, zero otherwise */
 static int print_line(char *line_buffer,
     char *prompt,int max_rows,int *rows_printed,
@@ -549,9 +539,8 @@ static int print_line(char *line_buffer,
  * value otherwise.
  * @note Does not recognize \\b character.
  */
-int winx_print_array_of_strings(char **strings,
-    int line_width,int max_rows,char *prompt,
-    int divide_to_pages)
+int winx_print_strings(char **strings,int line_width,
+    int max_rows,char *prompt,int divide_to_pages)
 {
     int i, j, k, index, length;
     char *line_buffer, *second_buffer;
@@ -560,7 +549,7 @@ int winx_print_array_of_strings(char **strings,
     
     /* check the main parameter for correctness */
     if(!strings){
-        DebugPrint("winx_print_array_of_strings: strings = NULL!");
+        DebugPrint("winx_print_strings: strings = NULL!");
         return (-1);
     }
     
@@ -573,11 +562,11 @@ int winx_print_array_of_strings(char **strings,
 
     /* check other parameters */
     if(!line_width){
-        DebugPrint("winx_print_array_of_strings: line_width = 0!");
+        DebugPrint("winx_print_strings: line_width = 0!");
         return (-1);
     }
     if(!max_rows){
-        DebugPrint("winx_print_array_of_strings: max_rows = 0!");
+        DebugPrint("winx_print_strings: max_rows = 0!");
         return (-1);
     }
     if(prompt == NULL) prompt = DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY;
@@ -588,14 +577,14 @@ int winx_print_array_of_strings(char **strings,
     /* allocate memory for line buffer */
     line_buffer = winx_malloc(line_width + 1);
     if(!line_buffer){
-        DebugPrint("winx_print_array_of_strings: cannot allocate %u bytes of memory",
+        DebugPrint("winx_print_strings: cannot allocate %u bytes of memory",
             line_width + 1);
         return (-1);
     }
     /* allocate memory for second ancillary buffer */
     second_buffer = winx_malloc(line_width + 1);
     if(!second_buffer){
-        DebugPrint("winx_print_array_of_strings: cannot allocate %u bytes of memory",
+        DebugPrint("winx_print_strings: cannot allocate %u bytes of memory",
             line_width + 1);
         winx_free(line_buffer);
         return (-1);

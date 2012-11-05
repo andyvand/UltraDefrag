@@ -1046,7 +1046,7 @@ static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_paramete
         if(f->next == *sp->filelist) break;
     }
     
-    f = (winx_file_info *)winx_list_insert_item((list_entry **)(void *)sp->filelist,NULL,sizeof(winx_file_info));
+    f = (winx_file_info *)winx_list_insert((list_entry **)(void *)sp->filelist,NULL,sizeof(winx_file_info));
     if(f == NULL){
         sp->errors ++;
         return NULL;
@@ -1057,7 +1057,7 @@ static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_paramete
     if(f->name == NULL){
         DebugPrint("find_filelist_entry: cannot allocate %u bytes of memory",
             (wcslen(attr_name) + 1) * sizeof(wchar_t));
-        winx_list_remove_item((list_entry **)(void *)sp->filelist,(list_entry *)f);
+        winx_list_remove((list_entry **)(void *)sp->filelist,(list_entry *)f);
         sp->errors ++;
         return NULL;
     }
@@ -1080,7 +1080,7 @@ static void process_run(winx_file_info *f,ULONGLONG vcn,ULONGLONG lcn,ULONGLONG 
     
     /* add information to f->disp */
     if(f->disp.blockmap) prev_block = f->disp.blockmap->prev;
-    block = (winx_blockmap *)winx_list_insert_item((list_entry **)&f->disp.blockmap,
+    block = (winx_blockmap *)winx_list_insert((list_entry **)&f->disp.blockmap,
         (list_entry *)prev_block,sizeof(winx_blockmap));
     if(block == NULL){
         sp->errors ++;
@@ -1376,7 +1376,7 @@ static void analyze_file_record(NTFS_FILE_RECORD_OUTPUT_BUFFER *nfrob,
             f->internal.ParentDirectoryMftId = sp->mfi.ParentDirectoryMftId;
             /* add filename to the name of the stream */
             if(update_stream_name(f,sp) < 0){
-                winx_list_remove_item((list_entry **)(void *)sp->filelist,(list_entry *)f);
+                winx_list_remove((list_entry **)(void *)sp->filelist,(list_entry *)f);
                 if(*sp->filelist == NULL) break;
                 if(*sp->filelist != head){
                     head = *sp->filelist;

@@ -13,11 +13,10 @@ EXPORTS
     winx_getch
     winx_getche
     winx_gets
-    winx_prompt
     winx_prompt_ex
     winx_init_history
     winx_destroy_history
-    winx_print_array_of_strings
+    winx_print_strings
     winx_kbhit
     winx_breakhit
     winx_kb_init
@@ -81,8 +80,8 @@ EXPORTS
     winx_xtime
     winx_get_system_time
     winx_get_local_time
-    winx_list_insert_item
-    winx_list_remove_item
+    winx_list_insert
+    winx_list_remove
     winx_list_destroy
     winx_get_windows_boot_options
     winx_windows_in_safe_mode
