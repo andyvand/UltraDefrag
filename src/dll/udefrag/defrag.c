@@ -162,7 +162,7 @@ static winx_blockmap *add_fragment(winx_blockmap **fragments,
 {
     winx_blockmap *fragment;
     
-    fragment = (winx_blockmap *)winx_list_insert_item((list_entry **)(void *)fragments,
+    fragment = (winx_blockmap *)winx_list_insert((list_entry **)(void *)fragments,
         (list_entry *)*prev_fragment,sizeof(winx_blockmap));
     if(fragment == NULL){
         release_fragments_list(fragments);
@@ -354,7 +354,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
                         head_fr = fragments;
                         next_fr = fr->next;
                         if(fr->vcn < min_vcn || (fr->vcn + fr->length > max_vcn))
-                            winx_list_remove_item((list_entry **)(void *)&fragments,(list_entry *)(void *)fr);
+                            winx_list_remove((list_entry **)(void *)&fragments,(list_entry *)(void *)fr);
                         if(fragments == NULL) goto completed;
                         if(next_fr == head_fr) break;
                     }

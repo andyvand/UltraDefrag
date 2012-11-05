@@ -29,7 +29,7 @@
 
 /*
 * This delay affects primarily text typing
-* speed when winx_prompt() is used to get
+* speed when winx_prompt_ex() is used to get
 * user input.
 */
 #define MAX_TYPING_DELAY 10 /* msec */

@@ -314,7 +314,7 @@ static winx_blockmap *add_new_block(winx_blockmap **head,ULONGLONG vcn,ULONGLONG
     if(*head != NULL)
         last_block = (*head)->prev;
     
-    block = (winx_blockmap *)winx_list_insert_item((list_entry **)head,
+    block = (winx_blockmap *)winx_list_insert((list_entry **)head,
                 (list_entry *)last_block,sizeof(winx_blockmap));
     if(block != NULL){
         block->vcn = vcn;

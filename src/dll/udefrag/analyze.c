@@ -770,7 +770,7 @@ int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
         }
     }
     
-    ff = (udefrag_fragmented_file *)winx_list_insert_item((list_entry **)(void *)&jp->fragmented_files,
+    ff = (udefrag_fragmented_file *)winx_list_insert((list_entry **)(void *)&jp->fragmented_files,
             (list_entry *)ffprev,sizeof(udefrag_fragmented_file));
     if(ff == NULL)
         return UDEFRAG_NO_MEM;
@@ -788,7 +788,7 @@ void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp
     
     for(ff = jp->fragmented_files; ff; ff = ff->next){
         if(ff->f == f){
-            winx_list_remove_item((list_entry **)(void *)&jp->fragmented_files,(list_entry *)ff);
+            winx_list_remove((list_entry **)(void *)&jp->fragmented_files,(list_entry *)ff);
             break;
         }
         if(ff->next == jp->fragmented_files) break;
