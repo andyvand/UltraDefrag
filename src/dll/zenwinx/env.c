@@ -28,8 +28,8 @@
 
 /**
  * @brief Queries an environment variable.
- * @param[in] name the name of environment variable.
- * @param[out] buffer pointer to the buffer to receive
+ * @param[in] name the environment variable name.
+ * @param[out] buffer pointer to the buffer receiving
  * the null-terminated value string.
  * @param[in] length the length of the buffer, in characters.
  * @return Zero for success, negative value otherwise.
@@ -47,7 +47,7 @@ int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length)
     v.MaximumLength = length * sizeof(wchar_t);
     Status = RtlQueryEnvironmentVariable_U(NULL,&n,&v);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"cannot query %ws environment variable",name);
+        DebugPrintEx(Status,"winx_query_env_variable: cannot query %ws",name);
         return (-1);
     }
     return 0;
@@ -55,7 +55,7 @@ int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length)
 
 /**
  * @brief Sets an environment variable.
- * @param[in] name the name of the environment variable.
+ * @param[in] name the environment variable name.
  * @param[in] value the null-terminated value string.
  * NULL pointer causes a variable deletion.
  * @return Zero for success, negative value otherwise.
@@ -83,7 +83,7 @@ int winx_set_env_variable(wchar_t *name, wchar_t *value)
         status = RtlSetEnvironmentVariable(NULL,&n,NULL);
     }
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,"cannot set %ws environment variable",name);
+        DebugPrintEx(status,"winx_set_env_variable: cannot set %ws",name);
         return (-1);
     }
     return 0;

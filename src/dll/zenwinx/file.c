@@ -89,7 +89,7 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
         DebugPrintEx(status,"winx_fopen: cannot open %s",filename);
         return NULL;
     }
-    f = (WINX_FILE *)winx_heap_alloc(sizeof(WINX_FILE));
+    f = (WINX_FILE *)winx_malloc(sizeof(WINX_FILE));
     if(!f){
         NtClose(hFile);
         DebugPrint("winx_fopen: cannot open %s: not enough memory",filename);
@@ -107,7 +107,7 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
 
 /**
  * @brief winx_fopen analog, but
- * allocates a buffer to speedup
+ * allocates a buffer to speed up
  * sequential write requests.
  * @details The last parameter specifies
  * the buffer size, in bytes. Returns
@@ -126,7 +126,7 @@ WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size)
         return f;
     
     /* allocate memory */
-    f->io_buffer = winx_heap_alloc(buffer_size);
+    f->io_buffer = winx_malloc(buffer_size);
     if(f->io_buffer == NULL){
         DebugPrint("winx_fbopen: cannot allocate %u bytes of memory",buffer_size);
         winx_fclose(f);
@@ -333,7 +333,7 @@ int winx_fflush(WINX_FILE *f)
 }
 
 /**
- * @brief Retrieves the size of the file.
+ * @brief Retrieves the size of a file.
  * @param[in] f pointer to structure returned
  * by winx_fopen() call.
  * @return The size of the file, in bytes.
@@ -369,11 +369,11 @@ void winx_fclose(WINX_FILE *f)
         /* write the rest of the data */
         if(f->io_buffer_offset)
             winx_fwrite_helper(f->io_buffer,1,f->io_buffer_offset,f);
-        winx_heap_free(f->io_buffer);
+        winx_free(f->io_buffer);
     }
 
     if(f->hFile) NtClose(f->hFile);
-    winx_heap_free(f);
+    winx_free(f);
 }
 
 /**
@@ -455,13 +455,13 @@ int winx_delete_file(const char *filename)
 }
 
 /**
- * @brief Reads file entirely and returns
- * pointer to data read.
+ * @brief Reads a file entirely and returns
+ * pointer to the data read.
  * @param[in] filename the native path to the file.
  * @param[out] bytes_read number of bytes read.
- * @return Pointer to data, NULL indicates failure.
- * @note Returned buffer is two bytes larger than
- * the file contents. This allows to add terminal
+ * @return Pointer to the data, NULL indicates failure.
+ * @note The returned buffer is two bytes larger than
+ * the file contents. This allows to add the terminal
  * zero easily.
  */
 void *winx_get_file_contents(const char *filename,size_t *bytes_read)
@@ -497,7 +497,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
 #endif
     length = (size_t)size;
     
-    contents = winx_heap_alloc(length + 2);
+    contents = winx_malloc(length + 2);
     if(contents == NULL){
         winx_printf("\n%s: Cannot allocate %u bytes of memory!\n\n",
             filename,length + 2);
@@ -507,7 +507,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
     
     n_read = winx_fread(contents,1,length,f);
     if(n_read == 0 || n_read > length){
-        winx_heap_free(contents);
+        winx_free(contents);
         winx_fclose(f);
         return NULL;
     }
@@ -523,7 +523,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
  */
 void winx_release_file_contents(void *contents)
 {
-    if(contents) winx_heap_free(contents);
+    winx_free(contents);
 }
 
 /**
@@ -555,14 +555,14 @@ struct names_pair special_file_names[] = {
 };
 
 /**
- * @brief Opens the file for defragmentation related actions.
+ * @brief Opens a file for defragmentation related actions.
  * @param[in] f pointer to structure containing the file information.
  * @param[in] action one of the WINX_OPEN_XXX constants
- * indicating an action file needs to be opened for:
+ * indicating the action file needs to be opened for:
  * - WINX_OPEN_FOR_DUMP - open for FSCTL_GET_RETRIEVAL_POINTERS
  * - WINX_OPEN_FOR_BASIC_INFO - open for NtQueryInformationFile(FILE_BASIC_INFORMATION)
  * - WINX_OPEN_FOR_MOVE - open for FSCTL_MOVE_FILE
- * @param[out] phandle pointer to variable receiving file handle.
+ * @param[out] phandle pointer to variable receiving the file handle.
  * @return NTSTATUS code.
  */
 NTSTATUS winx_defrag_fopen(winx_file_info *f,int action,HANDLE *phandle)

@@ -443,7 +443,7 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
     unsigned int ip, ifr;
     
     /* allocate memory */
-    msg = winx_heap_alloc(MSG_LENGTH + 1);
+    msg = winx_malloc(MSG_LENGTH + 1);
     if(msg == NULL)
         return msg;
 
@@ -486,8 +486,7 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
  */
 void udefrag_release_default_formatted_results(char *results)
 {
-    if(results)
-        winx_heap_free(results);
+    winx_free(results);
 }
 
 /**
@@ -585,12 +584,12 @@ int udefrag_set_log_file_path(void)
         wchar_t *lpFileName,DWORD nBufferLength,
         wchar_t *lpBuffer,wchar_t **lpFilePart) = NULL;
     
-    path = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
+    path = winx_malloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
     if(path == NULL)
         return UDEFRAG_NO_MEM;
-    buffer = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
+    buffer = winx_malloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
     if(buffer == NULL){
-        winx_heap_free(path);
+        winx_free(path);
         return UDEFRAG_NO_MEM;
     }
     
@@ -598,8 +597,8 @@ int udefrag_set_log_file_path(void)
     if(result < 0 || path[0] == 0){
         /* empty variable forces to disable log */
         winx_disable_dbg_log();
-        winx_heap_free(path);
-        winx_heap_free(buffer);
+        winx_free(path);
+        winx_free(buffer);
         return 0;
     }
     
@@ -637,8 +636,8 @@ int udefrag_set_log_file_path(void)
     native_path = winx_sprintf("\\??\\%ws",path);
     if(native_path == NULL){
         DebugPrint("udefrag_set_log_file_path: cannot build native path");
-        winx_heap_free(path);
-        winx_heap_free(buffer);
+        winx_free(path);
+        winx_free(buffer);
         return (-1);
     }
     
@@ -653,7 +652,7 @@ int udefrag_set_log_file_path(void)
     } else {
         winx_path_remove_filename(path_copy);
         result = winx_create_path(path_copy);
-        winx_heap_free(path_copy);
+        winx_free(path_copy);
     }
     
     /* if target path cannot be created, use %tmp%\UltraDefrag_Logs */
@@ -667,7 +666,7 @@ int udefrag_set_log_file_path(void)
                 DebugPrint("udefrag_set_log_file_path: cannot allocate memory for filename");
             } else {
                 winx_path_extract_filename(filename);
-                winx_heap_free(native_path);
+                winx_free(native_path);
                 native_path = winx_sprintf("\\??\\%ws\\UltraDefrag_Logs\\%s",path,filename);
                 if(native_path == NULL){
                     DebugPrint("udefrag_set_log_file_path: cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
@@ -675,7 +674,7 @@ int udefrag_set_log_file_path(void)
                     /* delete old logfile from the temporary folder */
                     winx_delete_file(native_path);
                 }
-                winx_heap_free(filename);
+                winx_free(filename);
             }
         }
     }
@@ -687,9 +686,9 @@ int udefrag_set_log_file_path(void)
         winx_enable_dbg_log(native_path);
     }
     
-    winx_heap_free(native_path);
-    winx_heap_free(path);
-    winx_heap_free(buffer);
+    winx_free(native_path);
+    winx_free(path);
+    winx_free(buffer);
     return 0;
 }
 

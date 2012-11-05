@@ -28,8 +28,8 @@
 
 /**
  * @brief Creates a named mutex.
- * @param[in] name the name of the mutex.
- * @param[out] phandle pointer to the handle of the mutex.
+ * @param[in] name the mutex name.
+ * @param[out] phandle pointer to the mutex handle.
  * @return Zero for success, negative value otherwise.
  * @par Example:
  * @code
@@ -48,14 +48,14 @@ int winx_create_mutex(wchar_t *name,HANDLE *phandle)
 
     RtlInitUnicodeString(&us,name);
     InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
-    Status = NtCreateMutant(phandle,MUTEX_ALL_ACCESS,&oa,0/*FALSE*/);
+    Status = NtCreateMutant(phandle,MUTEX_ALL_ACCESS,&oa,0);
     if(Status == STATUS_OBJECT_NAME_COLLISION){
         DebugPrint("winx_create_mutex: %ws already exists",name);
         Status = NtOpenMutant(phandle,MUTEX_ALL_ACCESS,&oa);
     }
     if(!NT_SUCCESS(Status)){
         *phandle = NULL;
-        DebugPrintEx(Status,"cannot create/open %ws mutex",name);
+        DebugPrintEx(Status,"winx_create_mutex: cannot create/open %ws",name);
         return (-1);
     }
     return 0;
@@ -63,8 +63,8 @@ int winx_create_mutex(wchar_t *name,HANDLE *phandle)
 
 /**
  * @brief Opens a named mutex.
- * @param[in] name the name of the mutex.
- * @param[out] phandle pointer to the handle of the mutex.
+ * @param[in] name the mutex name.
+ * @param[out] phandle pointer to the mutex handle.
  * @return Zero for success, negative value otherwise.
  * @par Example:
  * @code
@@ -86,7 +86,7 @@ int winx_open_mutex(wchar_t *name,HANDLE *phandle)
     Status = NtOpenMutant(phandle,MUTEX_ALL_ACCESS,&oa);
     if(!NT_SUCCESS(Status)){
         *phandle = NULL;
-        DebugPrintEx(Status,"cannot open %ws mutex",name);
+        DebugPrintEx(Status,"winx_open_mutex: cannot open %ws",name);
         return (-1);
     }
     return 0;
@@ -94,7 +94,7 @@ int winx_open_mutex(wchar_t *name,HANDLE *phandle)
 
 /**
  * @brief Releases a mutex.
- * @param[in] h the handle of the mutex.
+ * @param[in] h the mutex handle.
  * @return Zero for success, 
  * negative value otherwise.
  */
@@ -106,7 +106,8 @@ int winx_release_mutex(HANDLE h)
     
     Status = NtReleaseMutant(h,NULL);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"cannot release mutex");
+        DebugPrintEx(Status,"winx_release_mutex: "
+            "cannot release mutex");
         return (-1);
     }
     return 0;
@@ -114,10 +115,10 @@ int winx_release_mutex(HANDLE h)
 
 /**
  * @brief Destroys a mutex.
- * @details Closes handle of a named mutex
+ * @details Closes the handle of a named mutex
  * created/opened by winx_create_mutex() or 
  * winx_open_mutex().
- * @param[in] h the handle of the mutex.
+ * @param[in] h the mutex handle.
  */
 void winx_destroy_mutex(HANDLE h)
 {

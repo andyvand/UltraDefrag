@@ -237,7 +237,7 @@ static int history_handler(int argc,wchar_t **argv,wchar_t **envp)
         return 0;
     
     /* convert list of strings to array */
-    strings = winx_heap_alloc((history.n_entries + 3) * sizeof(char *));
+    strings = winx_malloc((history.n_entries + 3) * sizeof(char *));
     if(strings == NULL){
         winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
             argv[0],(history.n_entries + 3) * sizeof(char *));
@@ -261,7 +261,7 @@ static int history_handler(int argc,wchar_t **argv,wchar_t **envp)
         MAX_LINE_WIDTH,MAX_DISPLAY_ROWS,
         DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,1);
 
-    winx_heap_free(strings);
+    winx_free(strings);
     return result;
 }
 
@@ -340,7 +340,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
         length = 0;
         for(i = 1; i < argc; i++)
             length += wcslen(argv[i]) + 1;
-        filename = winx_heap_alloc(length * sizeof(wchar_t));
+        filename = winx_malloc(length * sizeof(wchar_t));
         if(filename == NULL){
             winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
                 argv[0],length * sizeof(wchar_t));
@@ -354,7 +354,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
         }
         (void)_snprintf(path,MAX_PATH - 1,"\\??\\%ws",filename);
         path[MAX_PATH - 1] = 0;
-        winx_heap_free(filename);
+        winx_free(filename);
     }
     (void)filename;
 
@@ -375,7 +375,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
 
     /* print file contents */
     if(unicode_detected){
-        second_buffer = winx_heap_alloc(filesize + 1);
+        second_buffer = winx_malloc(filesize + 1);
         if(second_buffer == NULL){
             winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
                 argv[0],filesize + 1);
@@ -388,7 +388,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
         result = winx_print_array_of_strings(strings,MAX_LINE_WIDTH,
             MAX_DISPLAY_ROWS,DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,
             scripting_mode ? 0 : 1);
-        winx_heap_free(second_buffer);
+        winx_free(second_buffer);
     } else {
         strings[0] = buffer;
         result = winx_print_array_of_strings(strings,MAX_LINE_WIDTH,
@@ -435,7 +435,7 @@ static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
     length = 0;
     for(i = 1; i < argc; i++)
         length += wcslen(argv[i]) + 1;
-    filename = winx_heap_alloc(length * sizeof(wchar_t));
+    filename = winx_malloc(length * sizeof(wchar_t));
     if(filename == NULL){
         winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
             argv[0],length * sizeof(wchar_t));
@@ -449,7 +449,7 @@ static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
     }
     (void)_snprintf(path,MAX_PATH - 1,"\\??\\%ws",filename);
     path[MAX_PATH - 1] = 0;
-    winx_heap_free(filename);
+    winx_free(filename);
     
     /* open the file */
     f = winx_fopen(path,"r");
@@ -563,7 +563,7 @@ static int list_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
     
     /* convert envp to array of ANSI strings */
     for(n = 0; envp[n] != NULL; n++) {}
-    strings = winx_heap_alloc((n + 1) * sizeof(char *));
+    strings = winx_malloc((n + 1) * sizeof(char *));
     if(strings == NULL){
         winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
             argv[0],(n + 1) * sizeof(char *));
@@ -574,7 +574,7 @@ static int list_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
         if(filter_strings && winx_wcsistr(envp[i],argv[1]) != (wchar_t *)envp[i])
             continue;
         length = wcslen(envp[i]);
-        strings[j] = winx_heap_alloc((length + 1) * sizeof(char));
+        strings[j] = winx_malloc((length + 1) * sizeof(char));
         if(strings[j] == NULL){
             winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
                 argv[0],(length + 1) * sizeof(char));
@@ -589,19 +589,15 @@ static int list_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
         MAX_DISPLAY_ROWS,DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY,
         scripting_mode ? 0 : 1);
     /* cleanup */
-    for(i = 0; i < n; i++){
-        if(strings[i])
-            winx_heap_free(strings[i]);
-    }
-    winx_heap_free(strings);
+    for(i = 0; i < n; i++)
+        winx_free(strings[i]);
+    winx_free(strings);
     return result;
 
 fail:
-    for(i = 0; i < n; i++){
-        if(strings[i])
-            winx_heap_free(strings[i]);
-    }
-    winx_heap_free(strings);
+    for(i = 0; i < n; i++)
+        winx_free(strings[i]);
+    winx_free(strings);
     return (-1);
 }
 
@@ -651,18 +647,18 @@ static int set_handler(int argc,wchar_t **argv,wchar_t **envp)
         for(i = 2; i < argc; i++)
             value_length += 1 + wcslen(argv[i]);
         /* allocate memory */
-        name = winx_heap_alloc((name_length + 1) * sizeof(wchar_t));
+        name = winx_malloc((name_length + 1) * sizeof(wchar_t));
         if(name == NULL){
             winx_printf("\n%ws: cannot allocate %u bytes of memory\n",
                 argv[0],(name_length + 1) * sizeof(wchar_t));
             return (-1);
         }
         if(value_length){
-            value = winx_heap_alloc((value_length + 1) * sizeof(wchar_t));
+            value = winx_malloc((value_length + 1) * sizeof(wchar_t));
             if(value == NULL){
                 winx_printf("\n%ws: cannot allocate %u bytes of memory\n",
                     argv[0],(value_length + 1) * sizeof(wchar_t));
-                winx_heap_free(name);
+                winx_free(name);
                 return (-1);
             }
         }
@@ -687,7 +683,7 @@ static int set_handler(int argc,wchar_t **argv,wchar_t **envp)
         if(value_length){
             /* set environment variable */
             result = winx_set_env_variable(name,value);
-            winx_heap_free(value);
+            winx_free(value);
         } else {
             /* clear environment variable */
             result = winx_set_env_variable(name,NULL);
@@ -697,7 +693,7 @@ static int set_handler(int argc,wchar_t **argv,wchar_t **envp)
             if(udefrag_set_log_file_path() < 0)
                 winx_printf("\n%ws: udefrag_set_log_file_path failed\n");
         }
-        winx_heap_free(name);
+        winx_free(name);
         return result;
     }
     
@@ -882,7 +878,7 @@ static int call_handler(int argc,wchar_t **argv,wchar_t **envp)
         length = 0;
         for(i = 1; i < argc; i++)
             length += wcslen(argv[i]) + 1;
-        filename = winx_heap_alloc(length * sizeof(wchar_t));
+        filename = winx_malloc(length * sizeof(wchar_t));
         if(filename == NULL){
             winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
                 argv[0],length * sizeof(wchar_t));
@@ -895,7 +891,7 @@ static int call_handler(int argc,wchar_t **argv,wchar_t **envp)
                 wcscat(filename,L" ");
         }
         result = ProcessScript(filename);
-        winx_heap_free(filename);
+        winx_free(filename);
     }
 
     scripting_mode = old_scripting_mode;
@@ -958,7 +954,7 @@ static wchar_t *expand_environment_variables(wchar_t *command)
     number_of_bytes = 0;
     status = RtlExpandEnvironmentStrings_U(NULL,
         &in,&out,&number_of_bytes);
-    expanded_string = winx_heap_alloc(number_of_bytes + sizeof(wchar_t));
+    expanded_string = winx_malloc(number_of_bytes + sizeof(wchar_t));
     length = (number_of_bytes + sizeof(wchar_t)) / sizeof(wchar_t);
     if(expanded_string){
         RtlInitUnicodeString(&in,command);
@@ -971,7 +967,7 @@ static wchar_t *expand_environment_variables(wchar_t *command)
         } else {
             winx_dbg_print_ex(status,"expand_environment_variables failed");
             winx_printf("\ncannot expand environment variables\n\n");
-            winx_heap_free(expanded_string);
+            winx_free(expanded_string);
             expanded_string = NULL;
         }
     } else {
@@ -1090,11 +1086,11 @@ int parse_command(wchar_t *cmdline)
         }
     }
     /* c. allocate memory for argv array */
-    argv = winx_heap_alloc(sizeof(wchar_t *) * argc);
+    argv = winx_malloc(sizeof(wchar_t *) * argc);
     if(argv == NULL){
         winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
             cmdline,sizeof(wchar_t *) * argc);
-        winx_heap_free(cmdline_copy);
+        winx_free(cmdline_copy);
         return (-1);
     }
     /* d. fill argv array */
@@ -1124,7 +1120,7 @@ int parse_command(wchar_t *cmdline)
                     string += length + 1;
                 }
                 if(n > 0){
-                    envp = winx_heap_alloc((n + 1) * sizeof(wchar_t *));
+                    envp = winx_malloc((n + 1) * sizeof(wchar_t *));
                     if(envp == NULL){
                         winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
                             cmdline,(n + 1) * sizeof(wchar_t *));
@@ -1167,9 +1163,9 @@ int parse_command(wchar_t *cmdline)
     if(cmd_table[i].cmd_handler == NULL){
         winx_printf("\nUnknown command: %ws!\n\n",full_cmdline);
         DebugPrint("Unknown command: %ws!",full_cmdline);
-        winx_heap_free(argv);
-        if(envp) winx_heap_free(envp);
-        winx_heap_free(cmdline_copy);
+        winx_free(argv);
+        winx_free(envp);
+        winx_free(cmdline_copy);
         return 0;
     }
     
@@ -1177,8 +1173,8 @@ int parse_command(wchar_t *cmdline)
     * Handle the command.
     */
     result = cmd_table[i].cmd_handler(argc,argv,envp);
-    winx_heap_free(argv);
-    if(envp) winx_heap_free(envp);
-    winx_heap_free(cmdline_copy);
+    winx_free(argv);
+    winx_free(envp);
+    winx_free(cmdline_copy);
     return result;
 }

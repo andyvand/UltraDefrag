@@ -29,10 +29,10 @@
 /**
  * @brief Retrieves the address of an exported function
  * or variable from the specified dynamic-link library (DLL).
- * @param[in] libname the name of the library.
- * @param[in] funcname the name of the function or variable.
+ * @param[in] libname the library name.
+ * @param[in] funcname the function or variable name.
  * @param[out] proc_addr the address of memory
- * to store retrieved address into.
+ * to store the retrieved address into.
  * @return Zero for success, negative value otherwise.
  * @note The specified dynamic-link library 
  * must be loaded before this call.

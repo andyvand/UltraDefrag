@@ -28,15 +28,15 @@
 
 /**
  * @brief Creates a named event.
- * @param[in] name the name of the event.
- * @param[in] type the type of the event:
+ * @param[in] name the event name.
+ * @param[in] type the event type:
  * SynchronizationEvent or NotificationEvent.
- * @param[out] phandle pointer to the handle of the event.
+ * @param[out] phandle pointer to the event handle.
  * @return Zero for success, negative value otherwise.
  * @note
  * - The initial state of the successfully created
  *   event is signaled.
- * - If an event already exists this function returns
+ * - If the event already exists this function returns
  *   STATUS_OBJECT_NAME_COLLISION defined in ntndk.h file.
  */
 int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
@@ -51,7 +51,7 @@ int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
 
     RtlInitUnicodeString(&us,name);
     InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
-    Status = NtCreateEvent(phandle,STANDARD_RIGHTS_ALL | 0x1ff,&oa,type,1/*TRUE*/);
+    Status = NtCreateEvent(phandle,STANDARD_RIGHTS_ALL | 0x1ff,&oa,type,1);
     if(Status == STATUS_OBJECT_NAME_COLLISION){
         *phandle = NULL;
         DebugPrint("winx_create_event: %ws already exists",name);
@@ -60,7 +60,7 @@ int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
     }
     if(!NT_SUCCESS(Status)){
         *phandle = NULL;
-        DebugPrintEx(Status,"cannot create %ws event",name);
+        DebugPrintEx(Status,"winx_create_event: cannot create %ws",name);
         return (-1);
     }
     return 0;
@@ -68,10 +68,10 @@ int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
 
 /**
  * @brief Opens a named event.
- * @param[in] name the name of the event.
+ * @param[in] name the event name.
  * @param[in] flags the same flags as in Win32
  * OpenEvent() call's dwDesiredAccess parameter.
- * @param[out] phandle pointer to the handle of the event.
+ * @param[out] phandle pointer to the event handle.
  * @return Zero for success, negative value otherwise.
  */
 int winx_open_event(wchar_t *name,int flags,HANDLE *phandle)
@@ -88,7 +88,7 @@ int winx_open_event(wchar_t *name,int flags,HANDLE *phandle)
     Status = NtOpenEvent(phandle,flags,&oa);
     if(!NT_SUCCESS(Status)){
         *phandle = NULL;
-        DebugPrintEx(Status,"cannot open %ws event",name);
+        DebugPrintEx(Status,"winx_open_event: cannot open %ws",name);
         return (-1);
     }
     return 0;
@@ -96,8 +96,9 @@ int winx_open_event(wchar_t *name,int flags,HANDLE *phandle)
 
 /**
  * @brief Destroys an event.
- * @details Destroys named event created by winx_create_event().
- * @param[in] h the handle of the event.
+ * @details Destroys named event
+ * created by winx_create_event().
+ * @param[in] h the event handle.
  */
 void winx_destroy_event(HANDLE h)
 {

@@ -167,7 +167,7 @@ char *winx_strdup(const char *s)
         return NULL;
     
     length = strlen(s);
-    cp = winx_heap_alloc((length + 1) * sizeof(char));
+    cp = winx_malloc((length + 1) * sizeof(char));
     if(cp) strcpy(cp,s);
     return cp;
 }
@@ -184,7 +184,7 @@ wchar_t *winx_wcsdup(const wchar_t *s)
         return NULL;
     
     length = wcslen(s);
-    cp = winx_heap_alloc((length + 1) * sizeof(wchar_t));
+    cp = winx_malloc((length + 1) * sizeof(wchar_t));
     if(cp) wcscpy(cp,s);
     return cp;
 }
@@ -376,12 +376,12 @@ int winx_wcsmatch(wchar_t *string, wchar_t *mask, int flags)
 }
 
 /**
- * @brief Robust and flexible alternative to _vsnprintf.
+ * @brief A robust and flexible alternative to _vsnprintf.
  * @param[in] format the format specification.
- * @param[in] arg pointer to list of arguments.
+ * @param[in] arg pointer to the list of arguments.
  * @return Pointer to the formatted string, NULL
  * indicates failure. The string must be deallocated
- * by winx_heap_free after its use.
+ * by winx_free after its use.
  * @note Optimized for speed, can allocate more memory than needed.
  */
 char *winx_vsprintf(const char *format,va_list arg)
@@ -398,10 +398,10 @@ char *winx_vsprintf(const char *format,va_list arg)
     if(format == NULL)
         return NULL;
     
-    /* set an initial buffer size */
+    /* set the initial buffer size */
     size = WINX_VSPRINTF_BUFFER_SIZE;
     do {
-        buffer = winx_heap_alloc(size);
+        buffer = winx_malloc(size);
         if(buffer == NULL)
             return NULL;
         memset(buffer,0,size); /* needed for _vsnprintf */
@@ -409,7 +409,7 @@ char *winx_vsprintf(const char *format,va_list arg)
         if(result != -1 && result != size)
             return buffer;
         /* buffer is too small; try to allocate two times larger */
-        winx_heap_free(buffer);
+        winx_free(buffer);
         size <<= 1;
         if(size <= 0)
             return NULL;
@@ -419,12 +419,12 @@ char *winx_vsprintf(const char *format,va_list arg)
 }
 
 /**
- * @brief Robust and flexible alternative to _snprintf.
+ * @brief A robust and flexible alternative to _snprintf.
  * @param[in] format the format specification.
  * @param[in] ... the arguments.
  * @return Pointer to the formatted string, NULL
  * indicates failure. The string must be deallocated
- * by winx_heap_free after its use.
+ * by winx_free after its use.
  * @note Optimized for speed, can allocate more memory than needed.
  */
 char *winx_sprintf(const char *format, ...)
@@ -440,18 +440,18 @@ char *winx_sprintf(const char *format, ...)
 }
 
 /*
-* Lightweight alternative for regular expressions.
+* A lightweight alternative for regular expressions.
 */
 
 /**
- * @brief Compiles string of patterns
- * to internal representation.
- * @param[out] patterns pointer to storage
+ * @brief Compiles a string of patterns
+ * to an internal representation.
+ * @param[out] patterns pointer to the storage
  * for a single winx_patlist structure.
  * @param[in] string the string of patterns.
  * @param[in] delim the list of delimiters
  * to be used to split string to individual patterns.
- * @param[in] flags combination of WINX_PAT_xxx flags.
+ * @param[in] flags the combination of WINX_PAT_xxx flags.
  * @return Zero for success, negative value otherwise.
  */
 int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags)
@@ -500,11 +500,11 @@ int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags
     }
     
     /* build array of patterns */
-    patterns->array = winx_heap_alloc(patterns->count * sizeof(wchar_t *));
+    patterns->array = winx_malloc(patterns->count * sizeof(wchar_t *));
     if(patterns->array == NULL){
         DebugPrint("winx_patcomp: cannot allocate %u bytes of memory",
             patterns->count * sizeof(wchar_t *));
-        winx_heap_free(s);
+        winx_free(s);
         patterns->count = 0;
         return (-1);
     }
@@ -526,7 +526,7 @@ int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags
 }
 
 /**
- * @brief Searches for patterns in a string.
+ * @brief Searches for a patterns in a string.
  * @param[in] string the string to search in.
  * @param[in] patterns the list of patterns
  * to be searched for.
@@ -554,7 +554,7 @@ int winx_patfind(wchar_t *string,winx_patlist *patterns)
 }
 
 /**
- * @brief Compares a string with patterns.
+ * @brief Compares a string with a patterns.
  * @details Supports <b>?</b> and <b>*</b> wildcards.
  * @param[in] string the string to compare patterns with.
  * @param[in] patterns the list of patterns
@@ -587,10 +587,8 @@ void winx_patfree(winx_patlist *patterns)
         return;
     
     /* free allocated memory */
-    if(patterns->string)
-        winx_heap_free(patterns->string);
-    if(patterns->array)
-        winx_heap_free(patterns->array);
+    winx_free(patterns->string);
+    winx_free(patterns->array);
     
     /* reset all fields of the structure */
     patterns->flags = 0;
@@ -600,7 +598,7 @@ void winx_patfree(winx_patlist *patterns)
 }
 
 /*
-* End of lightweight alternative for regular expressions.
+* End of a lightweight alternative for regular expressions.
 */
 
 /**
@@ -609,12 +607,12 @@ void winx_patfree(winx_patlist *patterns)
  * @param[in] bytes number of bytes.
  * @param[in] digits number of digits after a dot.
  * @param[out] buffer pointer to string receiving
- * converted number of bytes.
+ * the converted number of bytes.
  * @param[in] length the length of the buffer, in characters.
- * @return A number of characters stored, not counting the 
+ * @return The number of characters stored, not counting the 
  * terminating null character. If the number of characters
  * required to store the data exceeds length, then length 
- * characters are stored in buffer and a negative value is returned.
+ * characters are stored in the buffer and a negative value is returned.
  * @todo Investigate how many digits can be successfully calculated.
  * @bug _ftol2 unresolved symbol error with WDK 7 for WinXP build
  */
@@ -654,7 +652,7 @@ int winx_bytes_to_hr(ULONGLONG bytes, int digits, char *buffer, int length)
 }
 
 /**
- * @brief Converts human readable
+ * @brief Converts a human readable
  * string to number of bytes.
  * @details Supported suffixes:
  * B, KB, MB, GB, TB, PB, EB, ZB, YB.
@@ -703,7 +701,7 @@ ULONGLONG winx_hr_to_bytes(char *string)
 /**
  * @brief Converts a string to UTF-8 encoding.
  * @param[out] dst the destination buffer.
- * @param[in] size size of the destination buffer.
+ * @param[in] size the size of the destination buffer.
  * @param[in] src the source string.
  * @note Each converted character needs maximum
  * three bytes to be stored. So destination buffer

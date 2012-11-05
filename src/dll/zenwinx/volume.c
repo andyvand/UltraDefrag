@@ -57,9 +57,9 @@ static HANDLE OpenRootDirectory(unsigned char volume_letter)
 }
 
 /**
- * @brief Win32 GetDriveType() native equivalent.
+ * @brief A Win32 GetDriveType() native equivalent.
  * @param[in] letter the volume letter
- * @return Drive type, negative value indicates failure.
+ * @return The drive type, negative value indicates failure.
  */
 int winx_get_drive_type(char letter)
 {
@@ -73,7 +73,7 @@ int winx_get_drive_type(char letter)
     int drive_type;
     HANDLE hRoot;
 
-    /* An additional checks for DFS were suggested by Stefan Pendl (pendl2megabit@yahoo.de). */
+    /* The additional checks for DFS were suggested by Stefan Pendl (pendl2megabit@yahoo.de). */
     /* DFS shares have DRIVE_NO_ROOT_DIR type though they are actually remote. */
 
     letter = winx_toupper(letter); /* possibly required for w2k */
@@ -95,7 +95,7 @@ int winx_get_drive_type(char letter)
     if(wcsstr(link_target,L"Floppy"))
         return DRIVE_REMOVABLE;
     
-    /* try to define exactly which type has a specified drive (w2k+) */
+    /* try to define exactly which type has the specified drive (w2k+) */
     RtlZeroMemory(&pdi,sizeof(PROCESS_DEVICEMAP_INFORMATION));
     Status = NtQueryInformationProcess(NtCurrentProcess(),
                     ProcessDeviceMap,&pdi,
@@ -123,7 +123,7 @@ int winx_get_drive_type(char letter)
         }
     }
     
-    /* try to define exactly again which type has a specified drive (nt4+) */
+    /* try to define exactly again which type has the specified drive (nt4+) */
     /* note that the drive motor can be powered on during this check */
     hRoot = OpenRootDirectory(letter);
     if(hRoot == NULL)
@@ -179,11 +179,11 @@ int winx_get_drive_type(char letter)
 
 /**
  * @internal
- * @brief Retrieves drive geometry.
+ * @brief Retrieves the drive geometry.
  * @param[in] hRoot handle to the
  * root directory.
  * @param[out] pointer to the structure
- * receiving drive geometry.
+ * receiving the drive geometry.
  * @return Zero for success, negative
  * value otherwise.
  */
@@ -241,7 +241,7 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
  * the filesystem name.
  * @return Zero for success, negative value otherwise.
  * @note We could analyze the first sector of the 
- * partition directly, but this method is not so good
+ * partition directly, but this method is not so swift
  * as it accesses the disk physically.
  */
 static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
@@ -254,7 +254,7 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     int length;
 
     fs_attr_info_size = MAX_PATH * sizeof(WCHAR) + sizeof(FILE_FS_ATTRIBUTE_INFORMATION);
-    pfa = winx_heap_alloc(fs_attr_info_size);
+    pfa = winx_malloc(fs_attr_info_size);
     if(pfa == NULL)
         return(-1);
     
@@ -264,7 +264,7 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     if(!NT_SUCCESS(Status)){
         DebugPrintEx(Status,"winx_get_volume_information: cannot get file system name of drive %c:",
             v->volume_letter);
-        winx_heap_free(pfa);
+        winx_free(pfa);
         return (-1);
     }
     
@@ -280,13 +280,13 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     v->fs_name[MAX_FS_NAME_LENGTH] = 0;
 
     /* cleanup */
-    winx_heap_free(pfa);
+    winx_free(pfa);
     return 0;
 }
 
 /**
  * @internal
- * @brief Retrieves NTFS data for the filesystem.
+ * @brief Retrieves the NTFS data for the filesystem.
  * @param[out] pointer to the structure
  * receiving the information.
  * @return Zero for success, negative value otherwise.
@@ -311,7 +311,7 @@ static int get_ntfs_data(winx_volume_information *v)
 
 /**
  * @internal
- * @brief Retrieves volume label.
+ * @brief Retrieves the volume label.
  * @param[in] hRoot handle to the
  * root directory.
  * @param[out] pointer to the structure
@@ -329,7 +329,7 @@ static void get_volume_label(HANDLE hRoot,winx_volume_information *v)
     
     /* allocate memory */
     buffer_size = (sizeof(FILE_FS_VOLUME_INFORMATION) - sizeof(wchar_t)) + (MAX_PATH + 1) * sizeof(wchar_t);
-    ffvi = winx_heap_alloc(buffer_size);
+    ffvi = winx_malloc(buffer_size);
     if(ffvi == NULL)
         return;
     
@@ -340,12 +340,12 @@ static void get_volume_label(HANDLE hRoot,winx_volume_information *v)
     if(!NT_SUCCESS(Status)){
         DebugPrintEx(Status,"get_volume_label: cannot get volume label of drive %c:",
             v->volume_letter);
-        winx_heap_free(ffvi);
+        winx_free(ffvi);
         return;
     }
     wcsncpy(v->label,ffvi->VolumeLabel,MAX_PATH);
     v->label[MAX_PATH] = 0;
-    winx_heap_free(ffvi);
+    winx_free(ffvi);
 }
 
 /**
@@ -377,7 +377,7 @@ static void get_volume_dirty_flag(winx_volume_information *v)
 }
 
 /**
- * @brief Retrieves detailed information
+ * @brief Retrieves the detailed information
  * about a disk volume.
  * @param[in] volume_letter the volume letter.
  * @param[in,out] v pointer to structure
@@ -478,22 +478,22 @@ int winx_vflush(char volume_letter)
 }
 
 /**
- * @brief Retrieves list of free regions on the volume.
+ * @brief Retrieves the list of free regions on the volume.
  * @param[in] volume_letter the volume letter.
- * @param[in] flags combination of WINX_GVR_xxx flags.
- * @param[in] cb address of procedure to be called
+ * @param[in] flags the combination of WINX_GVR_xxx flags.
+ * @param[in] cb the address of the procedure to be called
  * each time when the free region is found on the volume.
- * If callback procedure returns nonzero value,
+ * If the callback procedure returns nonzero value,
  * the scan terminates immediately.
- * @param[in] user_defined_data pointer to data
+ * @param[in] user_defined_data pointer to the data
  * passed to the registered callback.
- * @return List of free regions, NULL indicates that
+ * @return List of the free regions, NULL indicates that
  * either disk is full (unlikely) or some error occured.
  * @note
  * - It is possible to scan disk partially by
  * requesting the scan termination through the callback
  * procedure.
- * - Callback procedure should complete as quickly
+ * - The callback procedure should complete as quickly
  * as possible to avoid slowdown of the scan.
  */
 winx_volume_region *winx_get_free_volume_regions(char volume_letter,
@@ -515,14 +515,14 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
     volume_letter = winx_toupper(volume_letter);
     
     /* allocate memory */
-    bitmap = winx_heap_alloc(BITMAPSIZE);
+    bitmap = winx_malloc(BITMAPSIZE);
     if(bitmap == NULL)
         return NULL;
     
     /* open volume */
     f = winx_vopen(volume_letter);
     if(f == NULL){
-        winx_heap_free(bitmap);
+        winx_free(bitmap);
         return NULL;
     }
     
@@ -541,7 +541,7 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
         if(status != STATUS_SUCCESS && status != STATUS_BUFFER_OVERFLOW){
             DebugPrintEx(status,"winx_get_free_volume_regions: cannot get volume bitmap");
             winx_fclose(f);
-            winx_heap_free(bitmap);
+            winx_free(bitmap);
             if(flags & WINX_GVR_ALLOW_PARTIAL_SCAN){
                 return rlist;
             } else {
@@ -606,12 +606,12 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
 done:    
     /* cleanup */
     winx_fclose(f);
-    winx_heap_free(bitmap);
+    winx_free(bitmap);
     return rlist;
     
 fail:
     winx_fclose(f);
-    winx_heap_free(bitmap);
+    winx_free(bitmap);
     winx_list_destroy((list_entry **)(void *)&rlist);
     return NULL;
 }

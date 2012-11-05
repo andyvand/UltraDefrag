@@ -67,7 +67,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     #define MAX_UTF8_PATH_LENGTH (256 * 1024)
     char *utf8_path;
     
-    utf8_path = winx_heap_alloc(MAX_UTF8_PATH_LENGTH);
+    utf8_path = winx_malloc(MAX_UTF8_PATH_LENGTH);
     if(utf8_path == NULL){
         DebugPrint("save_lua_report: not enough memory");
         return (-1);
@@ -78,7 +78,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     if(f == NULL){
         f = winx_fopen(path,"w");
         if(f == NULL){
-            winx_heap_free(utf8_path);
+            winx_free(utf8_path);
             return (-1);
         }
     }
@@ -170,7 +170,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
 
     DebugPrint("report saved to %s",path);
     winx_fclose(f);
-    winx_heap_free(utf8_path);
+    winx_free(utf8_path);
     return 0;
 }
 

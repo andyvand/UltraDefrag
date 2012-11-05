@@ -237,11 +237,11 @@ void ProcessVolume(char letter)
         break;
     }
     /* display the time limit if possible */
-    buffer = winx_heap_alloc(MAX_ENV_VARIABLE_LENGTH * sizeof(wchar_t));
+    buffer = winx_malloc(MAX_ENV_VARIABLE_LENGTH * sizeof(wchar_t));
     if(buffer != NULL){
         if(winx_query_env_variable(L"UD_TIME_LIMIT",buffer,MAX_ENV_VARIABLE_LENGTH) >= 0)
             winx_printf("\nProcess will be terminated in %ws automatically.\n",buffer);
-        winx_heap_free(buffer);
+        winx_free(buffer);
     }
     
     winx_printf(BREAK_MESSAGE);

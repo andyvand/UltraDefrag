@@ -29,8 +29,8 @@
 /**
  * @brief Creates a thread and starts them.
  * @param[in] start_addr the starting address of the thread.
- * @param[in] parameter pointer to data passed to thread routine.
- * @param[out] phandle the thread handle pointer. May be NULL.
+ * @param[in] parameter pointer to the data passed to the thread routine.
+ * @param[out] phandle pointer to the thread handle. May be NULL.
  * @return Zero for success, negative value otherwise.
  * @note Look at the following example for the thread function prototype.
  * @par Example:
@@ -53,8 +53,8 @@ int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter,HANDLE *
     DbgCheck1(start_addr,"winx_create_thread",-1);
 
     /*
-    * Implementation is very easy, because we have required call
-    * on all of the supported versions of Windows.
+    * Implementation is very easy, because we have the required
+    * call on all of the supported versions of Windows.
     */
     if(phandle) ph = phandle;
     else ph = &hThread;
