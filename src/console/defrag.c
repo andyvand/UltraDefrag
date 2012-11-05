@@ -744,7 +744,7 @@ void test(void)
 int __cdecl main(int argc, char **argv)
 {
     int parse_cmdline_result;
-    int result, pause_result;
+    int result = 1, pause_result;
     
     /*test();
     getch();
