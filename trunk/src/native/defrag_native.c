@@ -233,7 +233,7 @@ static void set_dbg_log(char *name)
     }
     
     length = strlen(logpath);
-    unicode_path = winx_heap_alloc((length + 1) * sizeof(wchar_t));
+    unicode_path = winx_malloc((length + 1) * sizeof(wchar_t));
     if(unicode_path == NULL){
         winx_printf("\nset_dbg_log: cannot allocate %u bytes of memory",
             (length + 1) * sizeof(wchar_t));
@@ -255,8 +255,6 @@ static void set_dbg_log(char *name)
         winx_printf("\nset_dbg_log: udefrag_set_log_file_path failed\n\n");
 
 done:
-    if(logpath)
-        winx_heap_free(logpath);
-    if(unicode_path)
-        winx_heap_free(unicode_path);
+    winx_free(logpath);
+    winx_free(unicode_path);
 }

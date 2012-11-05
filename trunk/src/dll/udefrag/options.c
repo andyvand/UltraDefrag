@@ -53,7 +53,7 @@ int get_options(udefrag_job_parameters *jp)
     jp->udo.refresh_interval = DEFAULT_REFRESH_INTERVAL;
     
     /* allocate memory */
-    buffer = winx_heap_alloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
+    buffer = winx_malloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
     if(buffer == NULL)
         return UDEFRAG_NO_MEM;
     
@@ -213,7 +213,7 @@ int get_options(udefrag_job_parameters *jp)
     }
 
     /* cleanup */
-    winx_heap_free(buffer);
+    winx_free(buffer);
     return 0;
 }
 

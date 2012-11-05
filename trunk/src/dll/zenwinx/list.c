@@ -19,7 +19,7 @@
 
 /**
  * @file list.c
- * @brief Generic double linked lists.
+ * @brief Double linked lists.
  * @addtogroup Lists
  * @{
  */
@@ -27,12 +27,12 @@
 #include "zenwinx.h"
 
 /**
- * @brief Inserts an item to double linked list.
- * @details Allocates memory for an item to be inserted.
+ * @brief Inserts an item to a double linked list.
+ * @details Allocates memory for the item to be inserted.
  * @param[in,out] phead pointer to a variable pointing to the list head.
- * @param[in] prev pointer to an item  preceeding to the new item.
+ * @param[in] prev pointer to an item preceeding to the new item.
  * If this parameter is NULL, the new head will be inserted.
- * @param[in] size the size of an item to be inserted, in bytes.
+ * @param[in] size the size of the item to be inserted, in bytes.
  * @return Pointer to the inserted list item. NULL indicates failure.
  */
 list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size)
@@ -47,7 +47,7 @@ list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size)
     if(size < sizeof(list_entry))
         return NULL;
 
-    new_item = (list_entry *)winx_heap_alloc(size);
+    new_item = (list_entry *)winx_malloc(size);
     if(new_item == NULL) return NULL;
 
     /* is list empty? */
@@ -57,13 +57,13 @@ list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size)
         return new_item;
     }
 
-    /* insert as a new head? */
+    /* insert as the new head? */
     if(prev == NULL){
         prev = (*phead)->prev;
         *phead = new_item;
     }
 
-    /* insert after an item specified by prev argument */
+    /* insert after the item specified by prev argument */
     new_item->prev = prev;
     new_item->next = prev->next;
     new_item->prev->next = new_item;
@@ -72,10 +72,10 @@ list_entry *winx_list_insert_item(list_entry **phead,list_entry *prev,long size)
 }
 
 /**
- * @brief Removes an item from double linked list.
- * @details Frees memory allocated for an item to be removed.
+ * @brief Removes an item from a double linked list.
+ * @details Frees memory allocated for the item to be removed.
  * @param[in,out] phead pointer to a variable pointing to the list head.
- * @param[in] item pointer to an item which must be removed.
+ * @param[in] item pointer to the item which must be removed.
  */
 void winx_list_remove_item(list_entry **phead,list_entry *item)
 {
@@ -84,7 +84,7 @@ void winx_list_remove_item(list_entry **phead,list_entry *item)
     * to avoid recursion.
     */
 
-    /* validate an item */
+    /* validate the item */
     if(item == NULL) return;
     
     /* is list empty? */
@@ -92,7 +92,7 @@ void winx_list_remove_item(list_entry **phead,list_entry *item)
 
     /* remove alone first item? */
     if(item == *phead && item->next == *phead){
-        winx_heap_free(item);
+        winx_free(item);
         *phead = NULL;
         return;
     }
@@ -103,7 +103,7 @@ void winx_list_remove_item(list_entry **phead,list_entry *item)
     }
     item->prev->next = item->next;
     item->next->prev = item->prev;
-    winx_heap_free(item);
+    winx_free(item);
 }
 
 /**
@@ -124,7 +124,7 @@ void winx_list_destroy(list_entry **phead)
 
     do {
         next = item->next;
-        winx_heap_free(item);
+        winx_free(item);
         item = next;
     } while (next != head);
 

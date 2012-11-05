@@ -214,7 +214,7 @@ static int blocks_compare(const void *prb_a, const void *prb_b, void *prb_param)
 static void free_item (void *prb_item, void *prb_param)
 {
     struct file_block *item = (struct file_block *)prb_item;
-    winx_heap_free(item);
+    winx_free(item);
 }
 
 /**
@@ -263,7 +263,7 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     if(jp->file_blocks == NULL)
         return (-1);
 
-    fb = winx_heap_alloc(sizeof *fb);
+    fb = winx_malloc(sizeof *fb);
     if(fb == NULL){
         destroy_file_blocks_tree(jp);
         return UDEFRAG_NO_MEM;
@@ -273,14 +273,14 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     fb->block = block;
     p = prb_probe(jp->file_blocks,(void *)fb);
     if(p == NULL){
-        winx_heap_free(fb);
+        winx_free(fb);
         destroy_file_blocks_tree(jp);
         return UDEFRAG_NO_MEM;
     }
     /* if a duplicate item exists... */
     if(*p != fb){
         DebugPrint("add_block_to_file_blocks_tree: a duplicate found");
-        winx_heap_free(fb);
+        winx_free(fb);
     }
     return 0;
 }
@@ -314,7 +314,7 @@ int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap
         /* if block does not exist in tree, we have nothing to cleanup */
         return 0;
     }
-    winx_heap_free(fb);
+    winx_free(fb);
     return 0;
 }
 

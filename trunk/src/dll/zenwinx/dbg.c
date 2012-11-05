@@ -133,7 +133,7 @@ typedef struct _DBG_OUTPUT_DEBUG_STRING_BUFFER {
  * @brief Low-level routine for delivering
  * of debugging messages to the Debug View program.
  * @details OutputDebugString is not safe - being called
- * from DllMain it may crash the application (confirmed on w2k).
+ * from DllMain it might crash the application (confirmed on w2k).
  * Because of that we're maintaining this routine.
  */
 static void deliver_message(char *string)
@@ -231,7 +231,7 @@ enum {
  * The buffer length must be equal
  * to <b>DBG_OUT_BUFFER_SIZE</b>.
  * @note Returned string should be
- * freed by winx_heap_free call.
+ * freed by winx_free call.
  */
 static void *get_description(ULONG error,int *encoding)
 {
@@ -330,7 +330,7 @@ void winx_dbg_print(char *format, ...)
             } else {
                 length = (wcslen((wchar_t *)err_msg) + 1) * sizeof(wchar_t);
                 length *= 2; /* enough to hold UTF-8 string */
-                cnv_msg = winx_heap_alloc(length);
+                cnv_msg = winx_malloc(length);
                 if(cnv_msg){
                     /* write message to log in UTF-8 encoding */
                     winx_to_utf8(cnv_msg,length,(wchar_t *)err_msg);
@@ -338,7 +338,7 @@ void winx_dbg_print(char *format, ...)
                          msg,ns_flag ? (UINT)status : (UINT)error,
                          ns_flag ? "status" : "error",cnv_msg);
                     add_dbg_log_entry(ext_msg ? ext_msg : msg);
-                    winx_heap_free(ext_msg); ext_msg = NULL;
+                    winx_free(ext_msg); ext_msg = NULL;
                     /* send message to debugger in ANSI encoding */
                     _snprintf(cnv_msg,length,"%ls",(wchar_t *)err_msg);
                     cnv_msg[length - 1] = 0;
@@ -364,9 +364,9 @@ no_description:
     }
     
     /* cleanup */
-    winx_heap_free(msg);
-    winx_heap_free(ext_msg);
-    winx_heap_free(cnv_msg);
+    winx_free(msg);
+    winx_free(ext_msg);
+    winx_free(cnv_msg);
 }
 
 /**
@@ -396,7 +396,7 @@ void winx_dbg_print_ex(unsigned long status,char *format, ...)
         if(msg){
             NtCurrentTeb()->LastStatusValue = status;
             winx_dbg_print("%s: $NS",msg);
-            winx_heap_free(msg);
+            winx_free(msg);
         }
         va_end(arg);
     }
@@ -437,7 +437,7 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
                 winx_dbg_print("%s",string);
             } else {
                 /* allocate buffer for entire string */
-                buffer = winx_heap_alloc(width + 1);
+                buffer = winx_malloc(width + 1);
                 if(buffer == NULL){
                     /* print string not decorated */
                     winx_dbg_print("%s",string);
@@ -454,10 +454,10 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
                     buffer[left + 1 + length] = 0x20;
                     /* print decorated string */
                     winx_dbg_print("%s",buffer);
-                    winx_heap_free(buffer);
+                    winx_free(buffer);
                 }
             }
-            winx_heap_free(string);
+            winx_free(string);
         }
         va_end(arg);
     }
@@ -627,7 +627,7 @@ static void flush_dbg_log(int already_synchronized)
                         log_entry->time_stamp.milliseconds);
                     if(time_stamp){
                         (void)winx_fwrite(time_stamp,sizeof(char),strlen(time_stamp),f);
-                        winx_heap_free(time_stamp);
+                        winx_free(time_stamp);
                     }
                     (void)winx_fwrite(log_entry->buffer,sizeof(char),length,f);
                     /* add a proper newline characters */
@@ -687,7 +687,7 @@ void winx_enable_dbg_log(char *path)
     
     /* set new log path */
     if(log_path){
-        winx_heap_free(log_path);
+        winx_free(log_path);
         log_path = NULL;
     }
     if(logging_enabled){
@@ -720,7 +720,7 @@ static void close_dbg_log(void)
 {
     winx_flush_dbg_log();
     if(log_path){
-        winx_heap_free(log_path);
+        winx_free(log_path);
         log_path = NULL;
     }
     winx_destroy_spin_lock(path_lock);

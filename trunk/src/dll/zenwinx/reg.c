@@ -46,10 +46,10 @@ static void flush_smss_key(HANDLE hKey);
 */
 
 /**
- * @brief Registers command to be executed
+ * @brief Registers a command to be executed
  * during the Windows boot process.
  * @param[in] command the name of the command's
- * executable, without an extension.
+ * executable, without the extension.
  * @return Zero for success, negative value otherwise.
  * @note Command's executable must be placed inside 
  * a system32 directory to be executed successfully.
@@ -74,7 +74,7 @@ int winx_register_boot_exec_command(wchar_t *command)
     if(data->Type != REG_MULTI_SZ){
         DebugPrint("winx_register_boot_exec_command: BootExecute value has wrong type 0x%x",
                 data->Type);
-        winx_heap_free((void *)data);
+        winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
     }
@@ -95,23 +95,23 @@ int winx_register_boot_exec_command(wchar_t *command)
 
     value_size = (i + wcslen(command) + 1 + 1) * sizeof(wchar_t);
     if(write_boot_exec_value(hKey,(void *)(data->Data),value_size) < 0){
-        winx_heap_free((void *)data);
+        winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
     }
 
 done:    
-    winx_heap_free((void *)data);
+    winx_free((void *)data);
     flush_smss_key(hKey);
     NtCloseSafe(hKey);
     return 0;
 }
 
 /**
- * @brief Deregisters command from being executed
+ * @brief Deregisters a command from being executed
  * during the Windows boot process.
  * @param[in] command the name of the command's
- * executable, without an extension.
+ * executable, without the extension.
  * @return Zero for success, negative value otherwise.
  */
 int winx_unregister_boot_exec_command(wchar_t *command)
@@ -137,7 +137,7 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     if(data->Type != REG_MULTI_SZ){
         DebugPrint("winx_unregister_boot_exec_command: BootExecute value has wrong type 0x%x",
                 data->Type);
-        winx_heap_free((void *)data);
+        winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
     }
@@ -146,11 +146,11 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     length = (data->DataLength >> 1) - 1;
     
     new_value_size = (length + 1) << 1;
-    new_value = winx_heap_alloc(new_value_size);
+    new_value = winx_malloc(new_value_size);
     if(!new_value){
         DebugPrint("winx_unregister_boot_exec_command: cannot allocate %u bytes of memory"
             "for the new BootExecute value",new_value_size);
-        winx_heap_free((void *)data);
+        winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
     }
@@ -171,14 +171,14 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     
     if(write_boot_exec_value(hKey,(void *)new_value,
       (new_length + 1) * sizeof(wchar_t)) < 0){
-        winx_heap_free((void *)new_value);
-        winx_heap_free((void *)data);
+        winx_free((void *)new_value);
+        winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
     }
 
-    winx_heap_free((void *)new_value);
-    winx_heap_free((void *)data);
+    winx_free((void *)new_value);
+    winx_free((void *)data);
     flush_smss_key(hKey);
     NtCloseSafe(hKey);
     return 0;
@@ -236,7 +236,7 @@ static int read_boot_exec_value(HANDLE hKey,void **data,DWORD *size)
         return (-1);
     }
     data_size += additional_space_size;
-    data_buffer = winx_heap_alloc(data_size);
+    data_buffer = winx_malloc(data_size);
     if(data_buffer == NULL){
         DebugPrint("read_boot_exec_value: cannot allocate %u bytes of memory",data_size);
         return (-1);
@@ -247,7 +247,7 @@ static int read_boot_exec_value(HANDLE hKey,void **data,DWORD *size)
             data_buffer,data_size,&data_size2);
     if(status != STATUS_SUCCESS){
         DebugPrintEx(status,"read_boot_exec_value: cannot query BootExecute value");
-        winx_heap_free(data_buffer);
+        winx_free(data_buffer);
         return (-1);
     }
     
@@ -283,11 +283,11 @@ static int write_boot_exec_value(HANDLE hKey,void *data,DWORD size)
  * @internal
  * @brief Compares two boot execute commands.
  * @details Treats 'command' and 'autocheck command' as the same.
- * @param[in] reg_cmd command read from registry.
- * @param[in] cmd command to be searched for.
- * @return Positive value indicates that commands are equal,
+ * @param[in] reg_cmd the command read from the registry.
+ * @param[in] cmd the command to be searched for.
+ * @return Positive value indicates that the commands are equal,
  * zero indicates that they're different, negative value
- * indicates failure of comparison.
+ * indicates a failure of the comparison.
  */
 static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
 {
@@ -316,7 +316,7 @@ static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
         goto done;
     }
     length = (wcslen(cmd) + wcslen(autocheck) + 1) * sizeof(wchar_t);
-    long_cmd = winx_heap_alloc(length);
+    long_cmd = winx_malloc(length);
     if(long_cmd == NULL){
         DebugPrint("cmd_compare: cannot allocate %u bytes of memory",length);
         goto done;
@@ -338,9 +338,9 @@ static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
     result = 0;
     
 done:
-    if(reg_cmd_copy) winx_heap_free(reg_cmd_copy);
-    if(cmd_copy) winx_heap_free(cmd_copy);
-    if(long_cmd) winx_heap_free(long_cmd);
+    winx_free(reg_cmd_copy);
+    winx_free(cmd_copy);
+    winx_free(long_cmd);
     return result;
 }
 

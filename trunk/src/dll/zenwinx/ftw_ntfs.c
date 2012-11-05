@@ -332,7 +332,7 @@ static wchar_t * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
     }
     
     /* allocate memory */
-    attr_name = winx_heap_alloc((MAX_PATH + 1) * sizeof(wchar_t));
+    attr_name = winx_malloc((MAX_PATH + 1) * sizeof(wchar_t));
     if(attr_name == NULL){
         sp->errors ++;
         return NULL;
@@ -400,7 +400,7 @@ static int get_number_of_file_records(mft_scan_parameters *sp)
     sp->ml.number_of_file_records = 0;
     
     /* allocate memory */
-    nfrob = winx_heap_alloc(sp->ml.file_record_buffer_size);
+    nfrob = winx_malloc(sp->ml.file_record_buffer_size);
     if(nfrob == NULL){
         DebugPrint("get_number_of_file_records: cannot allocate %u bytes of memory",
             sp->ml.file_record_buffer_size);
@@ -411,12 +411,12 @@ static int get_number_of_file_records(mft_scan_parameters *sp)
     status = get_file_record(FILE_MFT,nfrob,sp);
     if(!NT_SUCCESS(status)){
         DebugPrintEx(status,"get_number_of_file_records: cannot read $Mft file record");
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return (-1);
     }
     if(GetMftIdFromFRN(nfrob->FileReferenceNumber) != FILE_MFT){
         DebugPrint("get_number_of_file_records: cannot get $Mft file record");
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return (-1);
     }
     
@@ -425,12 +425,12 @@ static int get_number_of_file_records(mft_scan_parameters *sp)
     if(!is_file_record(frh)){
         DebugPrint("get_number_of_file_records: $Mft file record has invalid type %u",
             frh->Ntfs.Type);
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return (-1);
     }
     if(!(frh->Flags & 0x1)){
         DebugPrint("get_number_of_file_records: $Mft file record is marked as free");
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return (-1);
     }
     
@@ -438,7 +438,7 @@ static int get_number_of_file_records(mft_scan_parameters *sp)
     enumerate_attributes(frh,get_number_of_file_records_callback,sp);
     
     /* free memory */
-    winx_heap_free(nfrob);
+    winx_free(nfrob);
     
     /* validate number of mft entries */
     if(sp->ml.number_of_file_records == 0){
@@ -466,7 +466,7 @@ static int get_mft_layout(mft_scan_parameters *sp)
     memset(&sp->ml,0,sizeof(mft_layout));
 
     /* allocate memory */
-    ntfs_data = winx_heap_alloc(sizeof(NTFS_DATA));
+    ntfs_data = winx_malloc(sizeof(NTFS_DATA));
     if(ntfs_data == NULL)
         return (-1);
 
@@ -474,7 +474,7 @@ static int get_mft_layout(mft_scan_parameters *sp)
     if(winx_ioctl(sp->f_volume,FSCTL_GET_NTFS_VOLUME_DATA,
       "get_mft_layout: ntfs data request",
       NULL,0,ntfs_data,sizeof(NTFS_DATA),&length) < 0){
-        winx_heap_free(ntfs_data);
+        winx_free(ntfs_data);
         return (-1);
     }
     if(length){
@@ -493,7 +493,7 @@ static int get_mft_layout(mft_scan_parameters *sp)
     if(sp->ml.sector_size){
         sp->ml.sectors_per_cluster = ntfs_data->BytesPerCluster / sp->ml.sector_size;
     } else {
-        winx_heap_free(ntfs_data);
+        winx_free(ntfs_data);
         DebugPrint("get_mft_layout: invalid sector size (zero)");
         return (-1);
     }
@@ -502,7 +502,7 @@ static int get_mft_layout(mft_scan_parameters *sp)
     DebugPrint("get_mft_layout: cluster size = %I64u",sp->ml.cluster_size);
     DebugPrint("get_mft_layout: sector size = %u",sp->ml.sector_size);
     DebugPrint("get_mft_layout: each cluster consists of %u sectors",sp->ml.sectors_per_cluster);
-    winx_heap_free(ntfs_data);
+    winx_free(ntfs_data);
     
     if(sp->ml.file_record_size == 0){
         DebugPrint("get_mft_layout: mft record size equal to zero is invalid");
@@ -633,7 +633,7 @@ static void analyze_attribute_from_mft_record(ULONGLONG mft_id,ATTRIBUTE_TYPE at
     }
     
     /* allocate memory for a single mft record */
-    nfrob = winx_heap_alloc(sp->ml.file_record_buffer_size);
+    nfrob = winx_malloc(sp->ml.file_record_buffer_size);
     if(nfrob == NULL){
         DebugPrint("analyse_attribute_from_mft_record: cannot allocate %u bytes of memory",
             sp->ml.file_record_buffer_size);
@@ -645,14 +645,14 @@ static void analyze_attribute_from_mft_record(ULONGLONG mft_id,ATTRIBUTE_TYPE at
     status = get_file_record(mft_id,nfrob,sp);
     if(!NT_SUCCESS(status)){
         DebugPrintEx(status,"analyse_attribute_from_mft_record: cannot read %I64u file record",mft_id);
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         /* file record index seems to be invalid itself */
         /*sp->errors ++;*/
         return;
     }
     if(GetMftIdFromFRN(nfrob->FileReferenceNumber) != mft_id){
         DebugPrint("analyse_attribute_from_mft_record: cannot get %I64u file record",mft_id);
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         /*sp->errors ++;*/
         return;
     }
@@ -662,18 +662,18 @@ static void analyze_attribute_from_mft_record(ULONGLONG mft_id,ATTRIBUTE_TYPE at
     if(!is_file_record(frh)){
         DebugPrint("analyse_attribute_from_mft_record: %I64u file record has invalid type %u",
             mft_id,frh->Ntfs.Type);
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return;
     }
     if(!(frh->Flags & 0x1)){
         DebugPrint("analyse_attribute_from_mft_record: %I64u file record is marked as free",mft_id);
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return;
     }
 
     if(frh->BaseFileRecord == 0){
         DebugPrint("analyse_attribute_from_mft_record: %I64u is not a child record",mft_id);
-        winx_heap_free(nfrob);
+        winx_free(nfrob);
         return;
     }
 
@@ -681,7 +681,7 @@ static void analyze_attribute_from_mft_record(ULONGLONG mft_id,ATTRIBUTE_TYPE at
     analyze_single_attribute(mft_id,frh,attr_type,attr_name,attr_number,sp);
 
     /* free allocated memory */
-    winx_heap_free(nfrob);
+    winx_free(nfrob);
 }
 
 static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entry,mft_scan_parameters *sp)
@@ -713,7 +713,7 @@ static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entr
         empty_name = 1; /* name is empty */
     
     if(!empty_name){
-        attr_name = winx_heap_alloc((length + 1) * sizeof(wchar_t));
+        attr_name = winx_malloc((length + 1) * sizeof(wchar_t));
         if(attr_name == NULL){
             DebugPrint("analyze_attribute_from_attribute_list: cannot allocate %u bytes of memory",
                 (length + 1) * sizeof(wchar_t));
@@ -739,7 +739,7 @@ static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entr
     analyze_attribute_from_mft_record(child_record_mft_id,attr_type,attr_name,attr_number,sp);
     
     /* 6. free resources */
-    if(attr_name) winx_heap_free(attr_name);
+    winx_free(attr_name);
 }
 
 static void analyze_resident_attribute_list(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_parameters *sp)
@@ -888,7 +888,7 @@ static void analyze_resident_stream(PRESIDENT_ATTRIBUTE pr_attr,mft_scan_paramet
     attr_name = get_attribute_name(&pr_attr->Attribute,sp);
     if(attr_name){
         (void)find_filelist_entry(attr_name,sp);
-        winx_heap_free(attr_name);
+        winx_free(attr_name);
     }
     
     if(pr_attr->ValueOffset == 0 || pr_attr->ValueLength == 0){
@@ -955,7 +955,7 @@ static void analyze_non_resident_attribute_list(winx_file_info *f,ULONGLONG list
     clusters_to_read = list_size / cluster_size;
     /* the following check is a little bit complicated, because _aulldvrm() call is missing on w2k */
     if(list_size - clusters_to_read * cluster_size/*list_size % cluster_size*/) clusters_to_read ++;
-    cluster = (char *)winx_heap_alloc((SIZE_T)(cluster_size * clusters_to_read));
+    cluster = (char *)winx_malloc((SIZE_T)(cluster_size * clusters_to_read));
     if(!cluster){
         DebugPrint("analyze_non_resident_attribute_list: cannot allocate %I64u bytes of memory",
             cluster_size * clusters_to_read);
@@ -1016,7 +1016,7 @@ analyze_list:
 
 scan_done:    
     /* free allocated resources */
-    winx_heap_free(cluster);
+    winx_free(cluster);
 }
 
 /*
@@ -1231,7 +1231,7 @@ static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan
     process_run_list(attr_name,pnr_attr,sp,NonResidentAttrListFound);
 
     /* free allocated memory */
-    winx_heap_free(attr_name);
+    winx_free(attr_name);
 }
 
 /*
@@ -1246,7 +1246,7 @@ static int update_stream_name(winx_file_info *f,mft_scan_parameters *sp)
     int length;
     
     length = wcslen(f->name) + wcslen(sp->mfi.Name) + 1;
-    new_name = winx_heap_alloc((length + 1) * sizeof(wchar_t));
+    new_name = winx_malloc((length + 1) * sizeof(wchar_t));
     if(new_name == NULL){
         DebugPrint("update_stream_name: cannot allocate %u bytes of memory",
             (length + 1) * sizeof(wchar_t));
@@ -1260,7 +1260,7 @@ static int update_stream_name(winx_file_info *f,mft_scan_parameters *sp)
         wcsncpy(new_name,sp->mfi.Name,length);
     new_name[length] = 0;
     
-    winx_heap_free(f->name);
+    winx_free(f->name);
     f->name = new_name;
     return 0;
 }
@@ -1557,7 +1557,7 @@ static int build_full_paths(mft_scan_parameters *sp)
     time = winx_xtime();
     
     /* allocate memory */
-    p = winx_heap_alloc(sizeof(path_parts));
+    p = winx_malloc(sizeof(path_parts));
     if(p == NULL)
         return (-1);
 
@@ -1568,7 +1568,7 @@ static int build_full_paths(mft_scan_parameters *sp)
     }
 
     if(n_entries){
-        f_array = winx_heap_alloc(n_entries * sizeof(file_entry));
+        f_array = winx_malloc(n_entries * sizeof(file_entry));
         if(f_array == NULL){
             DebugPrint("build_full_paths: cannot allocate %u bytes of memory",
                 n_entries * sizeof(file_entry));
@@ -1601,9 +1601,8 @@ static int build_full_paths(mft_scan_parameters *sp)
     }
     
     /* free allocated resources */
-    if(f_array)
-        winx_heap_free(f_array);
-    winx_heap_free(p);
+    winx_free(f_array);
+    winx_free(p);
     DebugPrint("build_full_paths completed in %I64u ms",winx_xtime() - time);
     return 0;
 }
@@ -1645,7 +1644,7 @@ fail:
     }
 
     /* allocate memory */
-    nfrob = winx_heap_alloc(sp->ml.file_record_buffer_size);
+    nfrob = winx_malloc(sp->ml.file_record_buffer_size);
     if(nfrob == NULL){
         DebugPrint("scan_mft: cannot allocate %u bytes of memory",
             sp->ml.file_record_buffer_size);
@@ -1660,7 +1659,7 @@ fail:
         if(!NT_SUCCESS(status)){
             if(mft_id == 0){
                 DebugPrintEx(status,"scan_mft: get_file_record for $Mft failed");
-                winx_heap_free(nfrob);
+                winx_free(nfrob);
                 goto fail;
             }
             /* it returns 0xc000000d (invalid parameter) for non existing records */
@@ -1693,7 +1692,7 @@ fail:
     /* build full paths */
     result = build_full_paths(sp);
 
-    winx_heap_free(nfrob);
+    winx_free(nfrob);
 
 #ifdef TEST_NTFS_SCANNER
     DebugPrint("NTFS SCANNER TEST PASSED");

@@ -4,10 +4,8 @@ EXPORTS
     winx_exit
     winx_reboot
     winx_shutdown
-    winx_virtual_alloc
-    winx_virtual_free
-    winx_heap_alloc_ex
-    winx_heap_free
+    winx_malloc_ex
+    winx_free
     winx_putch
     winx_puts
     winx_print
@@ -29,8 +27,6 @@ EXPORTS
     winx_get_windows_directory
     winx_get_proc_address
     winx_set_system_error_mode
-    winx_load_driver
-    winx_unload_driver
     winx_create_thread
     winx_exit_thread
     winx_enable_privilege

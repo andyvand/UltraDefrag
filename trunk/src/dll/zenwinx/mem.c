@@ -29,42 +29,13 @@
 HANDLE hGlobalHeap = NULL;
 
 /**
- * @brief Allocates a block of virtual memory.
- * @param[in] size the size of the block to be allocated, in bytes.
- * Note that the allocated block may be bigger than the requested size.
- * @return A pointer to the allocated block. NULL indicates failure.
- * @note
- * - Allocated memory is automatically initialized to zero.
- * - Memory protection for the allocated pages is PAGE_READWRITE.
- */
-void *winx_virtual_alloc(SIZE_T size)
-{
-    void *addr = NULL;
-    NTSTATUS Status;
-
-    Status = NtAllocateVirtualMemory(NtCurrentProcess(),&addr,0,
-        &size,MEM_COMMIT | MEM_RESERVE,PAGE_READWRITE);
-    return (NT_SUCCESS(Status)) ? addr : NULL;
-}
-
-/**
- * @brief Releases a block of virtual memory.
- * @param[in] addr address of the memory block.
- * @param[in] size the size of the block to be released, in bytes.
- */
-void winx_virtual_free(void *addr,SIZE_T size)
-{
-    (void)NtFreeVirtualMemory(NtCurrentProcess(),&addr,&size,MEM_RELEASE);
-}
-
-/**
  * @brief Allocates a block of memory from the global growable heap.
  * @param size the size of the block to be allocated, in bytes.
  * Note that the allocated block may be bigger than the requested size.
  * @param flags HEAP_ZERO_MEMORY to initialize memory to zero, zero otherwise.
  * @return A pointer to the allocated block. NULL indicates failure.
  */
-void *winx_heap_alloc_ex(SIZE_T size,SIZE_T flags)
+void *winx_malloc_ex(SIZE_T size,SIZE_T flags)
 {
     /*
     * Avoid winx_dbg_xxx calls here
@@ -75,16 +46,17 @@ void *winx_heap_alloc_ex(SIZE_T size,SIZE_T flags)
 }
 
 /**
- * @brief Frees memory allocated by winx_heap_alloc_ex.
- * @param[in] addr address of the memory block.
+ * @brief Frees memory allocated by winx_malloc_ex.
+ * @param[in] addr the address of the memory block.
  */
-void winx_heap_free(void *addr)
+void winx_free(void *addr)
 {
     /*
     * Avoid winx_dbg_xxx calls here
     * to avoid recursion.
     */
-    if(hGlobalHeap && addr) (void)RtlFreeHeap(hGlobalHeap,0,addr);
+    if(hGlobalHeap && addr)
+        (void)RtlFreeHeap(hGlobalHeap,0,addr);
 }
 
 /**
@@ -94,7 +66,7 @@ void winx_heap_free(void *addr)
  */
 int winx_create_global_heap(void)
 {
-    /* create growable heap with initial size of 100 kb */
+    /* create growable heap with initial size of 100 KB */
     if(hGlobalHeap == NULL){
         hGlobalHeap = RtlCreateHeap(HEAP_GROWABLE,NULL,0,100 * 1024,NULL,NULL);
     }

@@ -52,9 +52,9 @@
 *    NtQueryDirectoryFile         (?)
 *    NtQuerySystemInformation     (!?)
 *
-*    Otherwise Windows may trash stack during these calls.
+*    Otherwise Windows might trash stack during these calls.
 *
-* 3. If you are waiting on file handle for NtWriteFile request completion,
+* 3. If you are waiting on a file handle for NtWriteFile request completion,
 *    don't check for STATUS_PENDING code. Instead of that wait immediately.
 *    ReactOS has wrong implementation of WriteFile() function, the following
 *    works much better:
@@ -67,13 +67,13 @@
 *
 *    If you wait only in case when STATUS_PENDING is returned, NtWriteFile()
 *    returns immediately and than, when memory allocated for IoStatusBlock() is 
-*    reallocated for something else, Windows may decide to write there. Therefore 
-*    stack will be corrupted.
+*    reallocated for something else, Windows might decide to write there. Therefore 
+*    the stack will be corrupted.
 *
 *    http://blogs.msdn.com/johnsheehan/archive/2007/12/19/when-idle-threads-bugcheck.aspx
 *
-* 4. When you are using _vsnprintf() don't forget to fill buffer 
-*    passed as first parameter by zeros before the call. Otherwise
+* 4. When you are using _vsnprintf() don't forget to fill the buffer 
+*    passed as the first parameter by zeros before the call. Otherwise
 *    it will fail.
 */
 

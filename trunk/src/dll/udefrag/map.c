@@ -82,18 +82,18 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
         return (-1);
 
     /* allocate memory */
-    jp->pi.cluster_map = winx_heap_alloc(map_size);
+    jp->pi.cluster_map = winx_malloc(map_size);
     if(jp->pi.cluster_map == NULL){
         DebugPrint("allocate_map: cannot allocate %u bytes of memory",
             map_size);
         return UDEFRAG_NO_MEM;
     }
     array_size = map_size * NUM_OF_SPACE_STATES * sizeof(ULONGLONG);
-    jp->cluster_map.array = winx_heap_alloc(array_size);
+    jp->cluster_map.array = winx_malloc(array_size);
     if(jp->cluster_map.array == NULL){
         DebugPrint("allocate_map: cannot allocate %u bytes of memory",
             array_size);
-        winx_heap_free(jp->pi.cluster_map);
+        winx_free(jp->pi.cluster_map);
         jp->pi.cluster_map = NULL;
         return UDEFRAG_NO_MEM;
     }
@@ -321,10 +321,8 @@ void colorize_file(udefrag_job_parameters *jp, winx_file_info *f, int old_color)
 void free_map(udefrag_job_parameters *jp)
 {
     if(jp != NULL){
-        if(jp->pi.cluster_map)
-            winx_heap_free(jp->pi.cluster_map);
-        if(jp->cluster_map.array)
-            winx_heap_free(jp->cluster_map.array);
+        winx_free(jp->pi.cluster_map);
+        winx_free(jp->cluster_map.array);
         jp->pi.cluster_map = NULL;
         jp->pi.cluster_map_size = 0;
         memset(&jp->cluster_map,0,sizeof(cmap));

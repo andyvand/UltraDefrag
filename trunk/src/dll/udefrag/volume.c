@@ -60,13 +60,13 @@ volume_info *udefrag_get_vollist(int skip_removable)
     char letter;
     
     /* allocate memory */
-    v = winx_heap_alloc((MAX_DOS_DRIVES + 1) * sizeof(volume_info));
+    v = winx_malloc((MAX_DOS_DRIVES + 1) * sizeof(volume_info));
     if(v == NULL)
         return v;
 
     /* set error mode to ignore missing removable drives */
     if(winx_set_system_error_mode(INTERNAL_SEM_FAILCRITICALERRORS) < 0){
-        winx_heap_free(v);
+        winx_free(v);
         return NULL;
     }
 
@@ -89,7 +89,7 @@ volume_info *udefrag_get_vollist(int skip_removable)
  */
 void udefrag_release_vollist(volume_info *v)
 {
-    if(v) winx_heap_free(v);
+    winx_free(v);
 }
 
 /**

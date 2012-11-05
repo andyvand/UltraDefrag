@@ -245,12 +245,10 @@ int winx_release_spin_lock(winx_spin_lock *sl);
 void winx_destroy_spin_lock(winx_spin_lock *sl);
 
 /* mem.c */
-void *winx_virtual_alloc(SIZE_T size);
-void winx_virtual_free(void *addr,SIZE_T size);
-void *winx_heap_alloc_ex(SIZE_T size,SIZE_T flags);
-#define winx_heap_alloc(n)      winx_heap_alloc_ex(n,0)
-#define winx_heap_alloc_zero(n) winx_heap_alloc_ex(n,HEAP_ZERO_MEMORY)
-void winx_heap_free(void *addr);
+void *winx_malloc_ex(SIZE_T size,SIZE_T flags);
+#define winx_malloc(n)      winx_malloc_ex(n,0)
+#define winx_malloc_zero(n) winx_malloc_ex(n,HEAP_ZERO_MEMORY)
+void winx_free(void *addr);
 
 /* misc.c */
 void winx_sleep(int msec);
@@ -269,9 +267,6 @@ int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length);
 /* process mode constants */
 #define INTERNAL_SEM_FAILCRITICALERRORS 0
 int winx_set_system_error_mode(unsigned int mode);
-
-int winx_load_driver(wchar_t *driver_name);
-int winx_unload_driver(wchar_t *driver_name);
 
 wchar_t *winx_get_windows_boot_options(void);
 int winx_windows_in_safe_mode(void);

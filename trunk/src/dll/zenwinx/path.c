@@ -162,7 +162,7 @@ void winx_get_module_filename(char *path)
 }
 
 /**
- * @brief Creates directory tree.
+ * @brief Creates a directory tree.
  * @param[in] path the native path.
  * @return Zero for success,
  * negative value otherwise.

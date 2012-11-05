@@ -100,7 +100,7 @@ int winx_get_windows_directory(char *buffer, int length)
 
 /**
  * @brief Queries a symbolic link.
- * @param[in] name the name of symbolic link.
+ * @param[in] name the symbolic link name.
  * @param[out] buffer pointer to the buffer
  * receiving the null-terminated target.
  * @param[in] length of the buffer, in characters.
@@ -147,7 +147,7 @@ int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length)
  * @param[in] mode the process error mode.
  * @return Zero for success, negative value otherwise.
  * @note 
- * - Mode constants aren't the same as in Win32 SetErrorMode() call.
+ * - The mode constants aren't the same as in Win32 SetErrorMode() call.
  * - Use INTERNAL_SEM_FAILCRITICALERRORS constant to 
  *   disable the critical-error-handler message box. After that
  *   you can for example try to read a missing floppy disk without 
@@ -178,65 +178,11 @@ int winx_set_system_error_mode(unsigned int mode)
 }
 
 /**
- * @brief Loads a driver.
- * @param[in] driver_name the name of the driver,
- * exactly as written in system registry.
- * @return Zero for success, negative value otherwise.
- * @note When the driver is already loaded this function
- * completes successfully.
- */
-int winx_load_driver(wchar_t *driver_name)
-{
-    UNICODE_STRING us;
-    wchar_t driver_key[MAX_PATH];
-    NTSTATUS Status;
-
-    DbgCheck1(driver_name,"winx_load_driver",-1);
-
-    (void)_snwprintf(driver_key,MAX_PATH,L"%ls%ls",
-            L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\",driver_name);
-    driver_key[MAX_PATH - 1] = 0;
-    RtlInitUnicodeString(&us,driver_key);
-    Status = NtLoadDriver(&us);
-    if(!NT_SUCCESS(Status) && Status != STATUS_IMAGE_ALREADY_LOADED){
-        DebugPrintEx(Status,"winx_load_driver: cannot load %ws",driver_name);
-        return (-1);
-    }
-    return 0;
-}
-
-/**
- * @brief Unloads a driver.
- * @param[in] driver_name the name of the driver,
- * exactly as written in system registry.
- * @return Zero for success, negative value otherwise.
- */
-int winx_unload_driver(wchar_t *driver_name)
-{
-    UNICODE_STRING us;
-    wchar_t driver_key[MAX_PATH];
-    NTSTATUS Status;
-
-    DbgCheck1(driver_name,"winx_unload_driver",-1);
-
-    (void)_snwprintf(driver_key,MAX_PATH,L"%ls%ls",
-            L"\\Registry\\Machine\\System\\CurrentControlSet\\Services\\",driver_name);
-    driver_key[MAX_PATH - 1] = 0;
-    RtlInitUnicodeString(&us,driver_key);
-    Status = NtUnloadDriver(&us);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"winx_unload_driver: cannot unload %ws",driver_name);
-        return (-1);
-    }
-    return 0;
-}
-
-/**
  * @brief Retrieves the Windows boot options.
  * @return Pointer to Unicode string containing all Windows
  * boot options. NULL indicates failure.
- * @note After a use of returned string it should be freed
- * by winx_heap_free() call.
+ * @note After a use of the returned string it should be freed
+ * by winx_free() call.
  */
 wchar_t *winx_get_windows_boot_options(void)
 {
@@ -274,7 +220,7 @@ wchar_t *winx_get_windows_boot_options(void)
         return NULL;
     }
     data_size += sizeof(wchar_t);
-    data = winx_heap_alloc(data_size);
+    data = winx_malloc(data_size);
     if(data == NULL){
         DebugPrint("winx_get_windows_boot_options: cannot allocate %u bytes of memory",data_size);
         winx_printf("winx_get_windows_boot_options: cannot allocate %u bytes of memory\n\n",data_size);
@@ -287,7 +233,7 @@ wchar_t *winx_get_windows_boot_options(void)
     if(status != STATUS_SUCCESS){
         DebugPrintEx(status,"winx_get_windows_boot_options: cannot query SystemStartOptions value");
         winx_printf("winx_get_windows_boot_options: cannot query SystemStartOptions value: %x\n\n",(UINT)status);
-        winx_heap_free(data);
+        winx_free(data);
         return NULL;
     }
     data_buffer = (wchar_t *)(data->Data);
@@ -301,11 +247,11 @@ wchar_t *winx_get_windows_boot_options(void)
         buffer_size = 1 * sizeof(wchar_t);
     }
 
-    boot_options = winx_heap_alloc(buffer_size);
+    boot_options = winx_malloc(buffer_size);
     if(!boot_options){
         DebugPrint("winx_get_windows_boot_options: cannot allocate %u bytes of memory",buffer_size);
         winx_printf("winx_get_windows_boot_options: cannot allocate %u bytes of memory\n\n",buffer_size);
-        winx_heap_free(data);
+        winx_free(data);
         return NULL;
     }
 
@@ -317,7 +263,7 @@ wchar_t *winx_get_windows_boot_options(void)
         boot_options[0] = 0;
     }
     
-    winx_heap_free(data);
+    winx_free(data);
     return boot_options;
 }
 
@@ -325,7 +271,7 @@ wchar_t *winx_get_windows_boot_options(void)
  * @brief Determines whether Windows is in Safe Mode or not.
  * @return Positive value indicates the presence of the Safe Mode.
  * Zero value indicates a normal boot. Negative value indicates
- * indeterminism caused by impossibility of an appropriate check.
+ * indeterminism caused by impossibility of the appropriate check.
  */
 int winx_windows_in_safe_mode(void)
 {
@@ -338,7 +284,7 @@ int winx_windows_in_safe_mode(void)
     /* search for SAFEBOOT */
     _wcsupr(boot_options);
     if(wcsstr(boot_options,L"SAFEBOOT")) safe_boot = 1;
-    winx_heap_free(boot_options);
+    winx_free(boot_options);
 
     return safe_boot;
 }
@@ -357,7 +303,7 @@ void MarkWindowsBootAsSuccessful(void)
     char boot_success_flag = 1;
     
     /*
-    * We have decided to avoid the use of related RtlXxx calls,
+    * We have decided to avoid the use of the related RtlXxx calls,
     * since they're undocumented (as usually), therefore may
     * bring us a lot of surprises.
     */

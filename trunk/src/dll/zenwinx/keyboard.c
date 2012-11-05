@@ -431,7 +431,7 @@ static int kb_open_internal(int device_number, int kbd_count)
 
 /**
  * @internal
- * @brief Light up the keyboard indicators.
+ * @brief Lights up the keyboard indicators.
  * @param[in] hKbDevice the handle of the keyboard device.
  * @param[in] LedFlags the flags specifying
  * which indicators must be lighten up.
@@ -460,7 +460,7 @@ static int kb_light_up_indicators(HANDLE hKbDevice,USHORT LedFlags)
 
 /**
  * @internal
- * @brief Checks the keyboard for an existence.
+ * @brief Checks the keyboard for existence.
  * @param[in] hKbDevice the handle of the keyboard device.
  * @return Zero for success, negative value otherwise.
  */
@@ -532,7 +532,7 @@ static int query_keyboard_count(void)
         NtCloseSafe(hKey);
         return kbdCount;
     }
-    data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_heap_alloc(data_size);
+    data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
     if(data_buffer == NULL){
         DebugPrint("query_keyboard_count: cannot allocate %u bytes of memory",data_size);
         NtCloseSafe(hKey);
@@ -544,7 +544,7 @@ static int query_keyboard_count(void)
             data_buffer,data_size,&data_size2);
     if(status != STATUS_SUCCESS){
         DebugPrintEx(status,"query_keyboard_count: cannot query Count value");
-        winx_heap_free(data_buffer);
+        winx_free(data_buffer);
         NtCloseSafe(hKey);
         return kbdCount;
     }
@@ -552,7 +552,7 @@ static int query_keyboard_count(void)
     if(data_buffer->Type != REG_DWORD){
         DebugPrint("query_keyboard_count: Count value has wrong type 0x%x",
                 data_buffer->Type);
-        winx_heap_free(data_buffer);
+        winx_free(data_buffer);
         NtCloseSafe(hKey);
         return kbdCount;
     }
@@ -560,7 +560,7 @@ static int query_keyboard_count(void)
     kbdCount = (int)*(DWORD *)data_buffer->Data;
     DebugPrint("query_keyboard_count: keyboard count is %u",kbdCount);
 
-    winx_heap_free(data_buffer);
+    winx_free(data_buffer);
     NtCloseSafe(hKey);
 
     return kbdCount;

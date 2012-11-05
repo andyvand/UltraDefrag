@@ -36,8 +36,8 @@
 
 /**
  * @brief Initializes a spin lock.
- * @param[in] name the name of the spin lock.
- * @return Pointer to intialized spin lock.
+ * @param[in] name the spin lock name.
+ * @return Pointer to the intialized spin lock.
  * NULL indicates failure.
  */
 winx_spin_lock *winx_init_spin_lock(char *name)
@@ -56,41 +56,41 @@ winx_spin_lock *winx_init_spin_lock(char *name)
     }
 
     length = strlen(buffer);
-    fullname = winx_heap_alloc((length + 1) * sizeof(wchar_t));
+    fullname = winx_malloc((length + 1) * sizeof(wchar_t));
     if(fullname == NULL){
         DebugPrint("winx_init_spin_lock: not enough memory for unicode full name");
-        winx_heap_free(buffer);
+        winx_free(buffer);
         return NULL;
     }
     
     if(_snwprintf(fullname,length + 1,L"%hs",buffer) < 0){
         DebugPrint("winx_init_spin_lock: full name conversion to unicode failed");
-        winx_heap_free(buffer);
+        winx_free(buffer);
         return NULL;
     }
     
     fullname[length] = 0;
-    winx_heap_free(buffer);
+    winx_free(buffer);
     
-    sl = winx_heap_alloc(sizeof(winx_spin_lock));
+    sl = winx_malloc(sizeof(winx_spin_lock));
     if(sl == NULL){
         DebugPrint("winx_init_spin_lock: cannot allocate memory for %s",name);
-        winx_heap_free(fullname);
+        winx_free(fullname);
         return NULL;
     }
     
     if(winx_create_event(fullname,SynchronizationEvent,&sl->hEvent) < 0){
         DebugPrint("winx_init_spin_lock: cannot create synchronization event");
-        winx_heap_free(sl);
-        winx_heap_free(fullname);
+        winx_free(sl);
+        winx_free(fullname);
         return NULL;
     }
     
-    winx_heap_free(fullname);
+    winx_free(fullname);
     
     if(winx_release_spin_lock(sl) < 0){
         winx_destroy_event(sl->hEvent);
-        winx_heap_free(sl);
+        winx_free(sl);
         return NULL;
     }
     
@@ -158,7 +158,7 @@ void winx_destroy_spin_lock(winx_spin_lock *sl)
     if(sl){
         if(sl->hEvent)
             winx_destroy_event(sl->hEvent);
-        winx_heap_free(sl);
+        winx_free(sl);
     }
 }
 

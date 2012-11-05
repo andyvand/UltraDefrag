@@ -70,7 +70,7 @@ static int ftw_check_for_termination(ftw_terminator t,void *user_defined_data)
 
 /**
  * @internal
- * @brief Validates map of file blocks,
+ * @brief Validates a map of file blocks,
  * destroys it in case of errors found.
  */
 void validate_blockmap(winx_file_info *f)
@@ -109,21 +109,21 @@ void validate_blockmap(winx_file_info *f)
 }
 
 /**
- * @brief Retrieves information
- * about the file disposition.
+ * @brief Retrieves the information
+ * on the file disposition.
  * @param[out] f pointer to
  * structure receiving the information.
  * @param[in] t address of procedure to be called
  * each time when winx_ftw_dump_file would like
  * to know whether it must be terminated or not.
  * Nonzero value, returned by terminator,
- * forces file dump to be terminated.
+ * forces the file dump to be terminated.
  * @param[in] user_defined_data pointer to data
  * passed to the registered terminator.
  * @return Zero for success,
  * negative value otherwise.
  * @note 
- * - Callback procedure should complete as quickly
+ * - The callback procedure should complete as quickly
  * as possible to avoid slowdown of the scan.
  * - For resident NTFS streams (small files and
  * directories located inside MFT) this function resets
@@ -157,7 +157,7 @@ int winx_ftw_dump_file(winx_file_info *f,
     }
     
     /* allocate memory */
-    filemap = winx_heap_alloc(FILE_MAP_SIZE);
+    filemap = winx_malloc(FILE_MAP_SIZE);
     if(filemap == NULL){
         winx_defrag_fclose(hFile);
         return (-1);
@@ -237,7 +237,7 @@ int winx_ftw_dump_file(winx_file_info *f,
 
     /* the dump is completed */
     validate_blockmap(f);
-    winx_heap_free(filemap);
+    winx_free(filemap);
     winx_defrag_fclose(hFile);
     return 0;
     
@@ -246,7 +246,7 @@ empty_map_detected:
     f->disp.clusters = 0;
     f->disp.fragments = 0;
     winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
-    winx_heap_free(filemap);
+    winx_free(filemap);
     winx_defrag_fclose(hFile);
     return 0;
 
@@ -254,7 +254,7 @@ dump_failed:
     f->disp.clusters = 0;
     f->disp.fragments = 0;
     winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
-    winx_heap_free(filemap);
+    winx_free(filemap);
     winx_defrag_fclose(hFile);
     return (-1);
 }
@@ -290,7 +290,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
         return f;
     
     /* extract filename */
-    f->name = winx_heap_alloc(file_entry->FileNameLength + sizeof(wchar_t));
+    f->name = winx_malloc(file_entry->FileNameLength + sizeof(wchar_t));
     if(f->name == NULL){
         DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
             file_entry->FileNameLength + sizeof(wchar_t));
@@ -309,11 +309,11 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     length += wcslen(f->name) + 1;
     if(!is_rootdir)
         length ++;
-    f->path = winx_heap_alloc(length * sizeof(wchar_t));
+    f->path = winx_malloc(length * sizeof(wchar_t));
     if(f->path == NULL){
         DebugPrint("ftw_add_entry_to_filelist: cannot allocate %u bytes of memory",
             length * sizeof(wchar_t));
-        winx_heap_free(f->name);
+        winx_free(f->name);
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return NULL;
     }
@@ -343,8 +343,8 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     /* get file disposition if requested */
     if(flags & WINX_FTW_DUMP_FILES){
         if(winx_ftw_dump_file(f,t,user_defined_data) < 0){
-            winx_heap_free(f->name);
-            winx_heap_free(f->path);
+            winx_free(f->name);
+            winx_free(f->path);
             winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
             return NULL;
         }
@@ -386,7 +386,7 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     
     /* build path */
     length = wcslen(path) + 1;
-    f->path = winx_heap_alloc(length * sizeof(wchar_t));
+    f->path = winx_malloc(length * sizeof(wchar_t));
     if(f->path == NULL){
         DebugPrint("ftw_add_root_directory: cannot allocate %u bytes of memory",
             length * sizeof(wchar_t));
@@ -396,9 +396,9 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     wcscpy(f->path,path);
     
     /* save . filename */
-    f->name = winx_heap_alloc(2 * sizeof(wchar_t));
+    f->name = winx_malloc(2 * sizeof(wchar_t));
     if(f->name == NULL){
-        winx_heap_free(f->path);
+        winx_free(f->path);
         winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         return (-1);
     }
@@ -442,8 +442,8 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     /* get file disposition if requested */
     if(flags & WINX_FTW_DUMP_FILES){
         if(winx_ftw_dump_file(f,t,user_defined_data) < 0){
-            winx_heap_free(f->name);
-            winx_heap_free(f->path);
+            winx_free(f->name);
+            winx_free(f->path);
             winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
             return (-1);
         }
@@ -515,7 +515,7 @@ static int ftw_helper(wchar_t *path, int flags,
         return 0; /* directory is locked by system, skip it */
     
     /* allocate memory */
-    file_listing = winx_heap_alloc(FILE_LISTING_SIZE);
+    file_listing = winx_malloc(FILE_LISTING_SIZE);
     if(file_listing == NULL){
         NtClose(hDir);
         return (-1);
@@ -546,7 +546,7 @@ static int ftw_helper(wchar_t *path, int flags,
                 if(status != STATUS_NO_MORE_FILES)
                     DebugPrintEx(status,"ftw_helper failed");
                 /* no more entries to read */
-                winx_heap_free(file_listing);
+                winx_free(file_listing);
                 NtClose(hDir);
                 return 0;
             }
@@ -571,7 +571,7 @@ static int ftw_helper(wchar_t *path, int flags,
         f = ftw_add_entry_to_filelist(path,flags,fcb,pcb,t,
                 user_defined_data,filelist,file_entry);
         if(f == NULL){
-            winx_heap_free(file_listing);
+            winx_free(file_listing);
             NtClose(hDir);
             return (-1);
         }
@@ -581,7 +581,7 @@ static int ftw_helper(wchar_t *path, int flags,
         /* check for termination */
         if(ftw_check_for_termination(t,user_defined_data)){
             DebugPrint("ftw_helper: terminated by user");
-            winx_heap_free(file_listing);
+            winx_free(file_listing);
             NtClose(hDir);
             return (-2);
         }
@@ -600,7 +600,7 @@ static int ftw_helper(wchar_t *path, int flags,
             if(!is_reparse_point(f)){
                 result = ftw_helper(f->path,flags,fcb,pcb,t,user_defined_data,filelist);
                 if(result < 0){
-                    winx_heap_free(file_listing);
+                    winx_free(file_listing);
                     NtClose(hDir);
                     return result;
                 }
@@ -609,7 +609,7 @@ static int ftw_helper(wchar_t *path, int flags,
     }
     
     /* terminated */
-    winx_heap_free(file_listing);
+    winx_free(file_listing);
     NtClose(hDir);
     return (-2);
 }
@@ -626,8 +626,8 @@ static void ftw_remove_resident_streams(winx_file_info **filelist)
         head = *filelist;
         next = f->next;
         if(f->disp.fragments == 0){
-            winx_heap_free(f->name);
-            winx_heap_free(f->path);
+            winx_free(f->name);
+            winx_free(f->path);
             winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
             winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         }
@@ -655,8 +655,8 @@ static void ftw_remove_invalid_streams(winx_file_info **filelist)
             invalid_entry = 1;
         }
         if(invalid_entry){
-            winx_heap_free(f->name);
-            winx_heap_free(f->path);
+            winx_free(f->name);
+            winx_free(f->path);
             winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
             winx_list_remove_item((list_entry **)(void *)filelist,(list_entry *)f);
         }
@@ -667,20 +667,20 @@ static void ftw_remove_invalid_streams(winx_file_info **filelist)
 
 /**
  * @brief Returns list of files contained
- * in directory, and all its subdirectories
+ * in a directory, and all its subdirectories
  * if WINX_FTW_RECURSIVE flag is passed.
  * @param[in] path the native path of the
  * directory to be scanned.
- * @param[in] flags combination
+ * @param[in] flags the combination
  * of WINX_FTW_xxx flags, defined in zenwinx.h
- * @param[in] fcb address of callback routine
+ * @param[in] fcb the address of the callback routine
  * to be called for each file; if it returns
- * nonzero value, all file's children will be
- * skipped. Zero value forces to continue
+ * nonzero value, all the file's children will be
+ * skipped. Zero value forces to continue the 
  * subdirectory scan. Note that the filter callback
  * is called when the complete information is gathered
  * for the file.
- * @param[in] pcb address of callback routine
+ * @param[in] pcb the address of the callback routine
  * to be called for each file to update progress
  * information specific for the caller. Note that the
  * progress callback may be called when all the file
@@ -688,13 +688,13 @@ static void ftw_remove_invalid_streams(winx_file_info **filelist)
  * If WINX_FTW_SKIP_RESIDENT_STREAMS flag is set, the progress
  * callback will never be called for files of zero length
  * and resident NTFS streams.
- * @param[in] t address of procedure to be called
+ * @param[in] t the address of the procedure to be called
  * each time when winx_ftw would like to know
  * whether it must be terminated or not.
- * Nonzero value, returned by terminator,
- * forces file tree walk to be terminated.
+ * Nonzero value, returned by the terminator,
+ * forces the file tree walk to be terminated.
  * @param[in] user_defined_data pointer to data
- * passed to all registered callbacks.
+ * passed to all the registered callbacks.
  * @return List of files, NULL indicates failure.
  * @note 
  * - Optimized for little directories scan.
@@ -703,7 +703,7 @@ static void ftw_remove_invalid_streams(winx_file_info **filelist)
  * - fcb parameter may be equal to NULL if no
  *   filtering is needed.
  * - pcb parameter may be equal to NULL.
- * - Callback procedures should complete as quickly
+ * - The callback procedures should complete as quickly
  *   as possible to avoid slowdown of the scan.
  * - Does not recognize additional NTFS data streams.
  * - For resident NTFS streams (small files and
@@ -866,10 +866,8 @@ void winx_ftw_release(winx_file_info *filelist)
 
     /* walk through list of files and free allocated memory */
     for(f = filelist; f != NULL; f = f->next){
-        if(f->name)
-            winx_heap_free(f->name);
-        if(f->path)
-            winx_heap_free(f->path);
+        winx_free(f->name);
+        winx_free(f->path);
         winx_list_destroy((list_entry **)(void *)&f->disp.blockmap);
         if(f->next == filelist) break;
     }

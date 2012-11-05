@@ -28,7 +28,7 @@
 
 /**
  * @brief Enables a user privilege for the current process.
- * @param[in] luid identifier of the requested privilege, 
+ * @param[in] luid the identifier of the requested privilege, 
  * ntndk.h file contains definitions of various privileges.
  * @return Zero for success, negative value otherwise.
  * @par Example:
@@ -39,7 +39,7 @@
 int winx_enable_privilege(unsigned long luid)
 {
     NTSTATUS Status;
-    SIZE_T WasEnabled; /* boolean value receiving a previous state */
+    SIZE_T WasEnabled; /* boolean value receiving the previous state */
     
     Status = RtlAdjustPrivilege((SIZE_T)luid, TRUE, FALSE, &WasEnabled);
     if(!NT_SUCCESS(Status)){

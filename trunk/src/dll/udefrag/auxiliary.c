@@ -135,7 +135,7 @@ static void dbg_print_single_counter(udefrag_job_parameters *jp,ULONGLONG counte
         DebugPrint(" - %s %-18s %6I64ums  %3u.%02u %%",name,buffer,time,ip / 100,ip % 100);
     } else {
         DebugPrint(" - %s %-25s  %3u.%02u %%",name,s,ip / 100,ip % 100);
-        winx_heap_free(s);
+        winx_free(s);
     }
 }
 
