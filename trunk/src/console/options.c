@@ -217,7 +217,7 @@ void show_help(void)
         "Note:\n"
         "  All the environment variables are ignored when the --shellex switch is\n"
         "  on the command line. Instead of taking environment variables into account\n"
-        "  the program interpretes the %UD_INSTALL_DIR%\\options\\guiopts.lua file.\n"
+        "  the program interpretes the %%UD_INSTALL_DIR%%\\options\\guiopts.lua file.\n"
         "\n"
         "Examples:\n"
         "  set UD_IN_FILTER=*windows*;*winnt*  include only paths, which include either\n"
