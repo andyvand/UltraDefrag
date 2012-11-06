@@ -22,14 +22,12 @@
  * to generate HTML and plain text reports from.
  * You can configure the generated report type through the
  * udreportopts.lua file described below.
- * Plain text reports are used to ensure that the report will 
- * be accessible even on machines without any web browser installed.
  *
- * UltraDefrag saves all reports to the root directories of
- * the processed disks. To open LuaReport click the fraglist.luar
- * file in Explorer or simply click the Report button in the
- * UltraDefrag GUI after a disk processing/analysis job has
- * completed.
+ * UltraDefrag saves all reports to the /reports sub-folder
+ * of the program's directory. To open LuaReport click the 
+ * fraglist_{drive}.luar file in Explorer or simply click
+ * the Report button in the UltraDefrag GUI after the disk
+ * processing/analysis job has been completed.
  *
  * To distinguish between old and new reports, the date and time is
  * included in the header of the report.
