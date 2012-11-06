@@ -19,6 +19,8 @@
       winx_print_strings, winx_getenv, winx_setenv calls
     - winx_get_proc_address, winx_create_thread, winx_get_windows_directory,
       winx_prompt prototypes changed
+    - WgxSetTaskbarProgressState and WgxSetTaskbarProgressValue routines
+      added to wgx library
 
     beta1:
     - all the disk processing algorithms were reimplemented

@@ -54,19 +54,11 @@
 #define LR_VGACOLOR         0x0080
 #endif
 
-/* wgx structures */
-typedef struct _WGX_I18N_RESOURCE_ENTRY {
-    int ControlID;
-    char *Key;
-    wchar_t *DefaultString;
-    wchar_t *LoadedString;
-} WGX_I18N_RESOURCE_ENTRY, *PWGX_I18N_RESOURCE_ENTRY;
+/* wgx routines prototypes */
+/* accel.c */
+BOOL WgxAddAccelerators(HINSTANCE hInstance,HWND hWindow,UINT AccelId);
 
-typedef struct _WGX_FONT {
-    LOGFONT lf;
-    HFONT hFont;
-} WGX_FONT, *PWGX_FONT;
-
+/* config.c */
 enum {
     WGX_CFG_EMPTY,
     WGX_CFG_COMMENT,
@@ -82,6 +74,52 @@ typedef struct _WGX_OPTION {
     void *default_value;  /* default value */
 } WGX_OPTION, *PWGX_OPTION;
 
+typedef void (*WGX_SAVE_OPTIONS_CALLBACK)(char *error);
+BOOL WgxGetOptions(char *path,WGX_OPTION *table);
+BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb);
+
+/* console.c */
+void WgxPrintUnicodeString(wchar_t *string,FILE *f);
+
+/* dbg.c */
+typedef void (*WGX_DBG_PRINT_HANDLER)(char *format, ...);
+void WgxSetDbgPrintHandler(WGX_DBG_PRINT_HANDLER h);
+void WgxDbgPrint(char *format, ...);
+void WgxDbgPrintLastError(char *format, ...);
+int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...);
+
+/* exec.c */
+BOOL WgxCreateProcess(char *cmd,char *args);
+BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param);
+BOOL WgxSetProcessPriority(DWORD priority_class);
+BOOL WgxCheckAdminRights(void);
+
+/* font.c */
+typedef struct _WGX_FONT {
+    LOGFONT lf;
+    HFONT hFont;
+} WGX_FONT, *PWGX_FONT;
+
+BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont);
+void WgxSetFont(HWND hWnd, PWGX_FONT pFont);
+void WgxDestroyFont(PWGX_FONT pFont);
+BOOL WgxSaveFont(char *wgx_font_path,PWGX_FONT pFont);
+
+/* i18n.c */
+typedef struct _WGX_I18N_RESOURCE_ENTRY {
+    int ControlID;
+    char *Key;
+    wchar_t *DefaultString;
+    wchar_t *LoadedString;
+} WGX_I18N_RESOURCE_ENTRY, *PWGX_I18N_RESOURCE_ENTRY;
+
+BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path);
+void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow);
+void WgxSetText(HWND hWnd, PWGX_I18N_RESOURCE_ENTRY table, char *key);
+wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key);
+void WgxDestroyResourceTable(PWGX_I18N_RESOURCE_ENTRY table);
+
+/* menu.c */
 typedef struct _WGX_MENU {
     UINT flags;                 /* combination of MF_xxx flags (see MSDN for details) */
     UINT id;                    /* menu item identifier */
@@ -90,20 +128,11 @@ typedef struct _WGX_MENU {
     int toolbar_image_id;       /* position of the image on the toolbar ( -1 if not used, ignored for separators) */
 } WGX_MENU, *PWGX_MENU;
 
-/* wgx routines prototypes */
-BOOL WgxAddAccelerators(HINSTANCE hInstance,HWND hWindow,UINT AccelId);
-
 HMENU WgxBuildMenu(WGX_MENU *menu_table,HBITMAP bitmap);
 HMENU WgxBuildPopupMenu(WGX_MENU *menu_table,HBITMAP bitmap);
-
 HBITMAP WgxCreateMenuBitmapMasked(HBITMAP hSrc,COLORREF crTransparent);
 
-BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path);
-void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow);
-void WgxSetText(HWND hWnd, PWGX_I18N_RESOURCE_ENTRY table, char *key);
-wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key);
-void WgxDestroyResourceTable(PWGX_I18N_RESOURCE_ENTRY table);
-
+/* misc.c */
 void WgxEnableWindows(HANDLE hMainWindow, ...);
 void WgxDisableWindows(HANDLE hMainWindow, ...);
 BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon);
@@ -114,36 +143,28 @@ BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *p
 WNDPROC WgxSafeSubclassWindow(HWND hwnd,WNDPROC NewProc);
 LRESULT WgxSafeCallWndProc(WNDPROC OldProc,HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
 
+/* shell.c */
 BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
     LPCWSTR lpParameters,LPCWSTR lpDirectory,INT nShowCmd);
 
-BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont);
-void WgxSetFont(HWND hWnd, PWGX_FONT pFont);
-void WgxDestroyFont(PWGX_FONT pFont);
-BOOL WgxSaveFont(char *wgx_font_path,PWGX_FONT pFont);
+/* taskbar.c */
+typedef enum {
+    TBPF_NOPROGRESS	= 0,
+    TBPF_INDETERMINATE	= 0x1,
+    TBPF_NORMAL	= 0x2,
+    TBPF_ERROR	= 0x4,
+    TBPF_PAUSED	= 0x8
+} TBPFLAG;
 
-BOOL IncreaseGoogleAnalyticsCounter(char *hostname,char *path,char *account);
-
-typedef void (*WGX_DBG_PRINT_HANDLER)(char *format, ...);
-void WgxSetDbgPrintHandler(WGX_DBG_PRINT_HANDLER h);
-void WgxDbgPrint(char *format, ...);
-void WgxDbgPrintLastError(char *format, ...);
-int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...);
-
-typedef void (*WGX_SAVE_OPTIONS_CALLBACK)(char *error);
-
-BOOL WgxGetOptions(char *path,WGX_OPTION *table);
-BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb);
-
-BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, wchar_t *description);
+BOOL WgxSetTaskbarIconOverlay(HWND hWindow,
+    HINSTANCE hInstance,int resource_id,
+    wchar_t *description);
 BOOL WgxRemoveTaskbarIconOverlay(HWND hWindow);
+BOOL WgxSetTaskbarProgressState(HWND hWindow,TBPFLAG flag);
+BOOL WgxSetTaskbarProgressValue(HWND hWindow,ULONGLONG completed,ULONGLONG total);
 
-BOOL WgxCreateProcess(char *cmd,char *args);
-BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param);
-BOOL WgxSetProcessPriority(DWORD priority_class);
-BOOL WgxCheckAdminRights(void);
-
-void WgxPrintUnicodeString(wchar_t *string,FILE *f);
+/* web-analytics.c */
+BOOL IncreaseGoogleAnalyticsCounter(char *hostname,char *path,char *account);
 
 /* wgx macro definitions */
 
