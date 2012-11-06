@@ -656,13 +656,14 @@ void winx_flush_dbg_log(void)
 }
 
 /**
- * @brief Enables debug logging to the file.
+ * @brief Enables or disables
+ * debug logging to the file.
  * @param[in] path the path to the logfile.
  * NULL or an empty string forces to flush
  * all collected data to the disk and disable
  * logging to the file.
  */
-void winx_enable_dbg_log(char *path)
+void winx_set_dbg_log(char *path)
 {
     if(path == NULL){
         logging_enabled = 0;
@@ -702,14 +703,6 @@ void winx_enable_dbg_log(char *path)
     
     /* end of synchronization */
     winx_release_spin_lock(path_lock);
-}
-
-/**
- * @brief Disables debug logging to the file.
- */
-void winx_disable_dbg_log(void)
-{
-    winx_enable_dbg_log(NULL);
 }
 
 /**
