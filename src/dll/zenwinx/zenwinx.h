@@ -93,8 +93,9 @@ typedef struct _WINX_FILE {
 #define DEFAULT_DBG_PRINT_DECORATION_CHAR  '-'
 #define DEFAULT_DBG_PRINT_HEADER_WIDTH     64
 
-void winx_enable_dbg_log(char *path);
-void winx_disable_dbg_log(void);
+void winx_set_dbg_log(char *path);
+#define winx_enable_dbg_log(path) winx_set_dbg_log(path)
+#define winx_disable_dbg_log()    winx_set_dbg_log(NULL)
 void winx_flush_dbg_log(void);
 void winx_dbg_print(char *format, ...);
 void winx_dbg_print_ex(unsigned long status,char *format, ...);

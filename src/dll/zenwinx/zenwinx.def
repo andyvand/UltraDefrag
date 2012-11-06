@@ -41,8 +41,6 @@ EXPORTS
     winx_destroy_history
     winx_destroy_mutex
     winx_destroy_spin_lock
-    winx_disable_dbg_log
-    winx_enable_dbg_log
     winx_enable_privilege
     winx_exit
     winx_exit_thread
@@ -110,6 +108,7 @@ EXPORTS
     winx_release_spin_lock
     winx_scan_disk
     winx_setenv
+    winx_set_dbg_log
     winx_set_system_error_mode
     winx_shutdown
     winx_sleep
