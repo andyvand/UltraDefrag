@@ -3,6 +3,8 @@
   Version 6.0.0 2012-01-
   ------------------------------------------------------------------------------
     beta2:
+    - file fragmentation reports moved from the root directories of
+      the drives to the /reports sub-folder of the program's directory
     - added ability to configure the Explorer's context menu handler;
       an appropriate section added to guiopts.lua file
     - bug fix: UD_IN_FILTER forced to be not ignored when individual

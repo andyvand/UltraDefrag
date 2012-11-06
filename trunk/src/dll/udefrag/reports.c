@@ -52,10 +52,59 @@ static void convert_to_utf8_path(char *dst,int size,wchar_t *src)
     }
 }
 
+static char *get_report_path(udefrag_job_parameters *jp)
+{
+    wchar_t *instdir;
+    char *path = NULL;
+    char buffer[MAX_PATH];
+
+    instdir = winx_getenv(L"UD_INSTALL_DIR");
+    if(instdir == NULL){
+        /* portable version? */
+        winx_get_module_filename(buffer);
+        if(buffer[0] == 0){
+            DebugPrint("get_report_path: cannot get program\'s path");
+        } else {
+            winx_path_remove_filename(buffer);
+            path = winx_sprintf("%ws\\reports",buffer);
+            if(path == NULL){
+                DebugPrint("get_report_path: not enough memory (case 1)");
+            } else {
+                (void)winx_create_directory(path);
+                winx_free(path);
+            }
+            path = winx_sprintf("%ws\\reports\\fraglist_%c.luar",
+                buffer,winx_tolower(jp->volume_letter));
+            if(path == NULL){
+                DebugPrint("get_report_path: not enough memory (case 2)");
+            }
+        }
+    } else {
+        /* regular installation */
+        path = winx_sprintf("\\??\\%ws\\reports",instdir);
+        if(path == NULL){
+            DebugPrint("get_report_path: not enough memory (case 3)");
+        } else {
+            (void)winx_create_directory(path);
+            winx_free(path);
+        }
+        path = winx_sprintf("\\??\\%ws\\reports\\fraglist_%c.luar",
+            instdir,winx_tolower(jp->volume_letter));
+        if(path == NULL){
+            DebugPrint("get_report_path: not enough memory (case 4)");
+        }
+        winx_free(instdir);
+    }
+    return path;
+}
+
 static int save_lua_report(udefrag_job_parameters *jp)
 {
-    char path[] = "\\??\\A:\\fraglist.luar";
+    char *path = NULL;
     WINX_FILE *f;
+    wchar_t *cn;
+    wchar_t compname[MAX_COMPUTERNAME_LENGTH + 1];
+    char utf8_compname[(MAX_COMPUTERNAME_LENGTH + 1) * 4];
     char buffer[512];
     udefrag_fragmented_file *file;
     char *comment;
@@ -73,23 +122,37 @@ static int save_lua_report(udefrag_job_parameters *jp)
         return (-1);
     }
     
-    path[4] = jp->volume_letter;
+    path = get_report_path(jp);
+    if(path == NULL)
+        return UDEFRAG_NO_MEM;
+    
     f = winx_fbopen(path,"w",RSB_SIZE);
     if(f == NULL){
         f = winx_fopen(path,"w");
         if(f == NULL){
+            winx_free(path);
             winx_free(utf8_path);
             return (-1);
         }
     }
 
     /* print header */
+    cn = winx_getenv(L"COMPUTERNAME");
+    if(cn){
+        wcsncpy(compname,cn,MAX_COMPUTERNAME_LENGTH + 1);
+        compname[MAX_COMPUTERNAME_LENGTH] = 0;
+        winx_free(cn);
+    } else {
+        wcscpy(compname,L"nil");
+    }
+    winx_to_utf8(utf8_compname,sizeof(utf8_compname),compname);
     memset(&t,0,sizeof(winx_time));
     (void)winx_get_local_time(&t);
     (void)_snprintf(buffer,sizeof(buffer),
         "-- UltraDefrag report for disk %c:\r\n\r\n"
-        "format_version = 6\r\n\r\n"
+        "format_version = 7\r\n\r\n"
         "volume_letter = \"%c\"\r\n"
+        "computer_name = \"%hs\"\r\n\r\n"
         "current_time = {\r\n"
         "\tyear = %04i,\r\n"
         "\tmonth = %02i,\r\n"
@@ -100,7 +163,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
         "\tisdst = false\r\n"
         "}\r\n\r\n"
         "files = {\r\n",
-        jp->volume_letter, jp->volume_letter,
+        jp->volume_letter, jp->volume_letter,utf8_compname,
         (int)t.year,(int)t.month,(int)t.day,
         (int)t.hour,(int)t.minute,(int)t.second
         );
@@ -170,6 +233,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
 
     DebugPrint("report saved to %s",path);
     winx_fclose(f);
+    winx_free(path);
     winx_free(utf8_path);
     return 0;
 }
@@ -214,14 +278,34 @@ void remove_fragmentation_report(udefrag_job_parameters *jp)
         NULL
     };
     char path[64];
+    char *new_path, *ext_path;
     int i;
     
     winx_dbg_print_header(0,0,"*");
     
+    /* remove old reports from the root directory */
     for(i = 0; paths[i]; i++){
         _snprintf(path,64,paths[i],jp->volume_letter);
         path[63] = 0;
         (void)winx_delete_file(path);
+    }
+    
+    /* remove reports from the reports directory */
+    new_path = get_report_path(jp);
+    if(new_path){
+        (void)winx_delete_file(new_path);
+        winx_path_remove_extension(new_path);
+        ext_path = winx_sprintf("%hs.txt",new_path);
+        if(ext_path){
+            (void)winx_delete_file(ext_path);
+            winx_free(ext_path);
+        }
+        ext_path = winx_sprintf("%hs.html",new_path);
+        if(ext_path){
+            (void)winx_delete_file(ext_path);
+            winx_free(ext_path);
+        }
+        winx_free(new_path);
     }
 }
 
