@@ -119,7 +119,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
     int init_result;
     /*
     * No longer than MAX_LINE_WIDTH to ensure that escape and backspace
-    * keys will work properly with winx_prompt_ex() function.
+    * keys will work properly with winx_prompt() function.
     */
     char buffer[MAX_LINE_WIDTH + 1];
     wchar_t wbuffer[MAX_LINE_WIDTH + 1];
@@ -188,7 +188,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
     scripting_mode = 0;
     abort_flag = 0;
     winx_init_history(&history);
-    while(winx_prompt_ex("# ",buffer,MAX_LINE_WIDTH,&history) >= 0){
+    while(winx_prompt("# ",buffer,MAX_LINE_WIDTH,&history) >= 0){
         /* convert command to unicode */
         if(_snwprintf(wbuffer,MAX_LINE_WIDTH,L"%hs",buffer) < 0){
             winx_printf("Command line is too long!\n");
@@ -204,7 +204,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
             return;
     }
 
-    /* break on winx_prompt_ex() errors */
+    /* break on winx_prompt() errors */
     exit_handler(0,NULL,NULL);
 }
 
@@ -216,17 +216,19 @@ void __stdcall NtProcessStartup(PPEB Peb)
  */
 static void set_dbg_log(char *name)
 {
-    wchar_t instdir[MAX_PATH];
+    wchar_t *instdir;
     char *logpath = NULL;
     int length;
     wchar_t *unicode_path = NULL;
-    
-    if(winx_query_env_variable(L"UD_INSTALL_DIR",instdir,MAX_PATH) < 0){
+
+    instdir = winx_getenv(L"UD_INSTALL_DIR");
+    if(instdir == NULL){
         winx_printf("\nset_dbg_log: cannot get %%ud_install_dir%% path\n\n");
         return;
     }
     
     logpath = winx_sprintf("%ws\\logs\\boot-%s.log",instdir,name);
+    winx_free(instdir);
     if(logpath == NULL){
         winx_printf("\nset_dbg_log: cannot build log path\n\n");
         return;
@@ -246,7 +248,7 @@ static void set_dbg_log(char *name)
     }
     
     unicode_path[length] = 0;
-    if(winx_set_env_variable(L"UD_LOG_FILE_PATH",unicode_path) < 0){
+    if(winx_setenv(L"UD_LOG_FILE_PATH",unicode_path) < 0){
         winx_printf("\nset_dbg_log: cannot set %%UD_LOG_FILE_PATH%%\n\n");
         goto done;
     }

@@ -61,15 +61,16 @@ static void add_path(wchar_t *buffer);
 int GetDebugLevel()
 {
     int result = DBG_NORMAL;
-    wchar_t buffer[128];
+    wchar_t *buffer;
     
-    if(winx_query_env_variable(L"UD_DBGPRINT_LEVEL",
-      buffer,sizeof(buffer) / sizeof(wchar_t)) >= 0){
+    buffer = winx_getenv(L"UD_DBGPRINT_LEVEL");
+    if(buffer){
         (void)_wcsupr(buffer);
         if(!wcscmp(buffer,L"DETAILED"))
             result = DBG_DETAILED;
         else if(!wcscmp(buffer,L"PARANOID"))
             result = DBG_PARANOID;
+        winx_free(buffer);
     }
     return result;
 }
@@ -237,10 +238,9 @@ void ProcessVolume(char letter)
         break;
     }
     /* display the time limit if possible */
-    buffer = winx_malloc(MAX_ENV_VARIABLE_LENGTH * sizeof(wchar_t));
-    if(buffer != NULL){
-        if(winx_query_env_variable(L"UD_TIME_LIMIT",buffer,MAX_ENV_VARIABLE_LENGTH) >= 0)
-            winx_printf("\nProcess will be terminated in %ws automatically.\n",buffer);
+    buffer = winx_getenv(L"UD_TIME_LIMIT");
+    if(buffer){
+        winx_printf("\nProcess will be terminated in %ws automatically.\n",buffer);
         winx_free(buffer);
     }
     
@@ -297,6 +297,7 @@ int udefrag_handler(int argc,wchar_t **argv,wchar_t **envp)
     object_path *path, *another_path;
     int n, path_found;
     int result;
+    wchar_t *cf;
     
     if(argc < 2){
         winx_printf("\nNo drive letter specified!\n\n");
@@ -419,10 +420,11 @@ int udefrag_handler(int argc,wchar_t **argv,wchar_t **envp)
             
             /* save %UD_CUT_FILTER% */
             orig_cut_filter[0] = 0;
-            if(winx_query_env_variable(L"UD_CUT_FILTER",orig_cut_filter,MAX_ENV_VARIABLE_LENGTH + 1) < 0){
-                /*if(GetLastError() != ERROR_ENVVAR_NOT_FOUND)
-                    winx_printf("udefrag_handler: cannot get %%UD_CUT_FILTER%%!");
-                */
+            cf = winx_getenv(L"UD_CUT_FILTER");
+            if(cf){
+                wcsncpy(orig_cut_filter,cf,MAX_ENV_VARIABLE_LENGTH + 1);
+                orig_cut_filter[MAX_ENV_VARIABLE_LENGTH] = 0;
+                winx_free(cf);
             }
             
             /* save the current path to %UD_CUT_FILTER% */
@@ -453,7 +455,7 @@ int udefrag_handler(int argc,wchar_t **argv,wchar_t **envp)
             
             /* set %UD_CUT_FILTER% */
             if(abort_flag) goto done;
-            if(winx_set_env_variable(L"UD_CUT_FILTER",cut_filter) < 0){
+            if(winx_setenv(L"UD_CUT_FILTER",cut_filter) < 0){
                 winx_printf("Cannot set %%UD_CUT_FILTER%%!\n");
             }
             
@@ -464,7 +466,7 @@ int udefrag_handler(int argc,wchar_t **argv,wchar_t **envp)
             }
             
             /* restore %UD_CUT_FILTER% */
-            result = winx_set_env_variable(L"UD_CUT_FILTER",orig_cut_filter);
+            result = winx_setenv(L"UD_CUT_FILTER",orig_cut_filter);
             if(result < 0){
                 winx_printf("Cannot restore %%UD_CUT_FILTER%%!\n");
             }

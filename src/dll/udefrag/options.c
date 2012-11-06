@@ -52,58 +52,69 @@ int get_options(udefrag_job_parameters *jp)
     memset(&jp->udo,0,sizeof(udefrag_options));
     jp->udo.refresh_interval = DEFAULT_REFRESH_INTERVAL;
     
-    /* allocate memory */
-    buffer = winx_malloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
-    if(buffer == NULL)
-        return UDEFRAG_NO_MEM;
-    
     /* set filters */
-    if(winx_query_env_variable(L"UD_IN_FILTER",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_IN_FILTER");
+    if(buffer){
         DebugPrint("in_filter = %ws",buffer);
         winx_patcomp(&jp->udo.in_filter,buffer,L";\"",WINX_PAT_ICASE);
+        winx_free(buffer);
     }
-    if(winx_query_env_variable(L"UD_EX_FILTER",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_EX_FILTER");
+    if(buffer){
         DebugPrint("ex_filter = %ws",buffer);
         winx_patcomp(&jp->udo.ex_filter,buffer,L";\"",WINX_PAT_ICASE);
+        winx_free(buffer);
     }
-    if(winx_query_env_variable(L"UD_CUT_FILTER",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_CUT_FILTER");
+    if(buffer){
         DebugPrint("cut_filter = %ws",buffer);
         winx_patcomp(&jp->udo.cut_filter,buffer,L";\"",WINX_PAT_ICASE);
+        winx_free(buffer);
     }
 
     /* set fragment size threshold */
-    if(winx_query_env_variable(L"UD_FRAGMENT_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_FRAGMENT_SIZE_THRESHOLD");
+    if(buffer){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
         jp->udo.fragment_size_threshold = winx_hr_to_bytes(buf);
+        winx_free(buffer);
     }
     /* if theshold isn't set, assign maximum value to it */
     if(jp->udo.fragment_size_threshold == 0)
         jp->udo.fragment_size_threshold = DEFAULT_FRAGMENT_SIZE_THRESHOLD;
 
     /* set file size threshold */
-    if(winx_query_env_variable(L"UD_FILE_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_FILE_SIZE_THRESHOLD");
+    if(buffer){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
         jp->udo.size_limit = winx_hr_to_bytes(buf);
+        winx_free(buffer);
     }
     if(jp->udo.size_limit == 0)
         jp->udo.size_limit = MAX_FILE_SIZE;
-    if(winx_query_env_variable(L"UD_OPTIMIZER_FILE_SIZE_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_OPTIMIZER_FILE_SIZE_THRESHOLD");
+    if(buffer){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
         jp->udo.optimizer_size_limit = winx_hr_to_bytes(buf);
+        winx_free(buffer);
     }
     /* if optimizer's threshold isn't set, assign default value to it */
     if(jp->udo.optimizer_size_limit == 0)
         jp->udo.optimizer_size_limit = OPTIMIZER_MAGIC_CONSTANT;
 
     /* set file fragments threshold */
-    if(winx_query_env_variable(L"UD_FRAGMENTS_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0)
+    buffer = winx_getenv(L"UD_FRAGMENTS_THRESHOLD");
+    if(buffer){
         jp->udo.fragments_limit = (ULONGLONG)_wtol(buffer);
+        winx_free(buffer);
+    }
     
     /* set file sorting options */
-    if(winx_query_env_variable(L"UD_SORTING",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_SORTING");
+    if(buffer){
         (void)_wcslwr(buffer);
         if(!wcscmp(buffer,L"path"))
             index = 1, jp->udo.sorting_flags |= UD_SORT_BY_PATH;
@@ -115,50 +126,65 @@ int get_options(udefrag_job_parameters *jp)
             index = 4, jp->udo.sorting_flags |= UD_SORT_BY_MODIFICATION_TIME;
         else if(!wcscmp(buffer,L"a_time"))
             index = 5, jp->udo.sorting_flags |= UD_SORT_BY_ACCESS_TIME;
+        winx_free(buffer);
     }
-    if(winx_query_env_variable(L"UD_SORTING_ORDER",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_SORTING_ORDER");
+    if(buffer){
         (void)_wcslwr(buffer);
         if(wcsstr(buffer,L"desc"))
             jp->udo.sorting_flags |= UD_SORT_DESCENDING;
+        winx_free(buffer);
     }
     
     /* set time limit */
-    if(winx_query_env_variable(L"UD_TIME_LIMIT",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_TIME_LIMIT");
+    if(buffer){
         (void)_snprintf(buf,sizeof(buf) - 1,"%ws",buffer);
         buf[sizeof(buf) - 1] = 0;
         jp->udo.time_limit = winx_str2time(buf);
+        winx_free(buffer);
     }
 
     /* set progress refresh interval */
-    if(winx_query_env_variable(L"UD_REFRESH_INTERVAL",buffer,ENV_BUFFER_SIZE) >= 0)
+    buffer = winx_getenv(L"UD_REFRESH_INTERVAL");
+    if(buffer){
         jp->udo.refresh_interval = _wtoi(buffer);
+        winx_free(buffer);
+    }
 
     /* check for disable_reports option */
-    if(winx_query_env_variable(L"UD_DISABLE_REPORTS",buffer,ENV_BUFFER_SIZE) >= 0) {
+    buffer = winx_getenv(L"UD_DISABLE_REPORTS");
+    if(buffer){
         if(!wcscmp(buffer,L"1"))
             jp->udo.disable_reports = 1;
+        winx_free(buffer);
     }
 
     /* set debug print level */
-    if(winx_query_env_variable(L"UD_DBGPRINT_LEVEL",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_DBGPRINT_LEVEL");
+    if(buffer){
         (void)_wcsupr(buffer);
         if(!wcscmp(buffer,L"DETAILED"))
             jp->udo.dbgprint_level = DBG_DETAILED;
         else if(!wcscmp(buffer,L"PARANOID"))
             jp->udo.dbgprint_level = DBG_PARANOID;
+        winx_free(buffer);
     }
     
     /* set dry_run variable */
-    if(winx_query_env_variable(L"UD_DRY_RUN",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_DRY_RUN");
+    if(buffer){
         if(!wcscmp(buffer,L"1")){
             DebugPrint("%%UD_DRY_RUN%% environment variable is set to 1,");
             DebugPrint("therefore no actual data moves will be performed on disk");
             jp->udo.dry_run = 1;
         }
+        winx_free(buffer);
     }
     
     /* set fragmentation threshold */
-    if(winx_query_env_variable(L"UD_FRAGMENTATION_THRESHOLD",buffer,ENV_BUFFER_SIZE) >= 0){
+    buffer = winx_getenv(L"UD_FRAGMENTATION_THRESHOLD");
+    if(buffer){
         jp->udo.fragmentation_threshold = (double)_wtoi(buffer);
         dp = wcschr(buffer,'.');
         if(dp != NULL){
@@ -167,6 +193,7 @@ int get_options(udefrag_job_parameters *jp)
             r *= pow(10, -z);
             jp->udo.fragmentation_threshold += r;
         }
+        winx_free(buffer);
     }
     
     /* print all options */
@@ -211,9 +238,6 @@ int get_options(udefrag_job_parameters *jp)
     default:
         DebugPrint("normal debug level set");
     }
-
-    /* cleanup */
-    winx_free(buffer);
     return 0;
 }
 

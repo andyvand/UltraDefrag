@@ -30,7 +30,6 @@
  * @brief Creates a thread and starts them.
  * @param[in] start_addr the starting address of the thread.
  * @param[in] parameter pointer to the data passed to the thread routine.
- * @param[out] phandle pointer to the thread handle. May be NULL.
  * @return Zero for success, negative value otherwise.
  * @note Look at the following example for the thread function prototype.
  * @par Example:
@@ -44,27 +43,20 @@
  * winx_create_thread(thread_proc,NULL);
  * @endcode
  */
-int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter,HANDLE *phandle)
+int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter)
 {
     NTSTATUS Status;
     HANDLE hThread;
-    HANDLE *ph;
 
     DbgCheck1(start_addr,"winx_create_thread",-1);
 
-    /*
-    * Implementation is very easy, because we have the required
-    * call on all of the supported versions of Windows.
-    */
-    if(phandle) ph = phandle;
-    else ph = &hThread;
     Status = RtlCreateUserThread(NtCurrentProcess(),NULL,
-                    0,0,0,0,start_addr,parameter,ph,NULL);
+                    0,0,0,0,start_addr,parameter,&hThread,NULL);
     if(!NT_SUCCESS(Status)){
         DebugPrintEx(Status,"winx_create_thread: cannot create thread");
         return (-1);
     }
-    if(phandle == NULL) NtCloseSafe(*ph);
+    NtCloseSafe(hThread);
     return 0;
 }
 

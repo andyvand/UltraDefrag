@@ -7,12 +7,16 @@
       an appropriate section added to guiopts.lua file
     - bug fix: UD_IN_FILTER forced to be not ignored when individual
       files/directories are specified on the command line
-    - Internals: obsolete winx_virtual_alloc, winx_virtual_free, winx_prompt,
+
+    - Internals: obsolete winx_virtual_alloc, winx_virtual_free, winx_prompt_ex,
       winx_load_driver, winx_unload_driver calls removed from zenwinx library
     - winx_heap_alloc, winx_heap_free, winx_list_insert_item, 
-      winx_list_remove_item, winx_print_array_of_strings calls superseded
-      by winx_malloc, winx_free, winx_list_insert, winx_list_remove,
-      winx_print_strings calls
+      winx_list_remove_item, winx_print_array_of_strings,
+      winx_get_environment_variable, winx_set_environment_variable calls
+      superseded by winx_malloc, winx_free, winx_list_insert, winx_list_remove,
+      winx_print_strings, winx_getenv, winx_setenv calls
+    - winx_get_proc_address, winx_create_thread, winx_get_windows_directory,
+      winx_prompt prototypes changed
 
     beta1:
     - all the disk processing algorithms were reimplemented

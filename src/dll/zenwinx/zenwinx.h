@@ -101,8 +101,8 @@ void winx_dbg_print_ex(unsigned long status,char *format, ...);
 void winx_dbg_print_header(char ch, int width, char *format, ...);
 
 /* env.c */
-int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length);
-int winx_set_env_variable(wchar_t *name, wchar_t *value);
+wchar_t *winx_getenv(wchar_t *name);
+int winx_setenv(wchar_t *name, wchar_t *value);
 
 /* event.c */
 int winx_create_event(wchar_t *name,int type,HANDLE *phandle);
@@ -219,7 +219,7 @@ int winx_kb_init(void);
 
 /* keytrans.c */
 /* ldr.c */
-int winx_get_proc_address(wchar_t *libname,char *funcname,PVOID *proc_addr);
+void *winx_get_proc_address(wchar_t *libname,char *funcname);
 
 /* list.c */
 /**
@@ -261,7 +261,7 @@ void winx_sleep(int msec);
 #define WINDOWS_7      61 /* and Server 2008 R2 */
 int winx_get_os_version(void);
 
-int winx_get_windows_directory(char *buffer, int length);
+char *winx_get_windows_directory(void);
 int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length);
 
 /* process mode constants */
@@ -324,7 +324,7 @@ typedef struct _winx_history {
 void winx_init_history(winx_history *h);
 void winx_destroy_history(winx_history *h);
 
-int winx_prompt_ex(char *prompt,char *string,int n,winx_history *h);
+int winx_prompt(char *prompt,char *string,int n,winx_history *h);
 
 int winx_print_strings(char **strings,int line_width,
     int max_rows,char *prompt,int divide_to_pages);
@@ -369,7 +369,7 @@ ULONGLONG winx_hr_to_bytes(char *string);
 void winx_to_utf8(char *dst,int size,wchar_t *src);
 
 /* thread.c */
-int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter,HANDLE *phandle);
+int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter);
 void winx_exit_thread(NTSTATUS status);
 
 /* time.c */

@@ -100,7 +100,7 @@ static int man_listing_terminator(void *user_defined_parameter)
 
 static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
 {
-    wchar_t instdir[MAX_PATH + 1];
+    wchar_t *instdir;
     char path[MAX_PATH + 1];
     wchar_t wpath[MAX_PATH + 1];
     winx_file_info *file, *filelist;
@@ -112,7 +112,8 @@ static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
         return (-1);
 
     /* get %UD_INSTALL_DIR% path */
-    if(winx_query_env_variable(L"UD_INSTALL_DIR",instdir,MAX_PATH) < 0){
+    instdir = winx_getenv(L"UD_INSTALL_DIR");
+    if(instdir == NULL){
         winx_printf("\n%ws: cannot get %%ud_install_dir%% path\n\n",argv[0]);
         return (-1);
     }
@@ -163,6 +164,7 @@ static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
         winx_printf("%-15s\n","variables.man");
     }
 
+    winx_free(instdir);
     return 0;
 }
 
@@ -172,7 +174,7 @@ static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
 static int man_handler(int argc,wchar_t **argv,wchar_t **envp)
 {
     wchar_t *type_argv[2];
-    wchar_t instdir[MAX_PATH + 1];
+    wchar_t *instdir;
     wchar_t wpath[MAX_PATH + 1];
     size_t native_prefix_length;
     
@@ -185,12 +187,14 @@ static int man_handler(int argc,wchar_t **argv,wchar_t **envp)
     }
     
     /* build path to requested manual page */
-    if(winx_query_env_variable(L"UD_INSTALL_DIR",instdir,MAX_PATH) < 0){
+    instdir = winx_getenv(L"UD_INSTALL_DIR");
+    if(instdir == NULL){
         winx_printf("\n%ws: cannot get %%ud_install_dir%% path\n\n",argv[0]);
         return (-1);
     }
     _snwprintf(wpath,MAX_PATH,L"%ws\\man\\%ws.man",instdir,argv[1]);
     wpath[MAX_PATH] = 0;
+    winx_free(instdir);
 
     /* build argv for type command handler */
     type_argv[0] = L"man";
@@ -316,6 +320,7 @@ static int echo_handler(int argc,wchar_t **argv,wchar_t **envp)
  */
 static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
 {
+    char *windir;
     char path[MAX_PATH];
     wchar_t *filename;
     int i, length;
@@ -330,12 +335,14 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
 
     /* display boot time script if filename is missing */
     if(argc < 2){
-        if(winx_get_windows_directory(path,MAX_PATH) < 0){
+        windir = winx_get_windows_directory();
+        if(windir == NULL){
             winx_printf("\n%ws: cannot get %%windir%% path\n\n",argv[0]);
             return (-1);
         }
-        (void)strncat(path,"\\system32\\ud-boot-time.cmd",
-                MAX_PATH - strlen(path) - 1);
+        (void)_snprintf(path,MAX_PATH - 1,"%hs\\system32\\ud-boot-time.cmd",windir);
+        path[MAX_PATH - 1] = 0;
+        winx_free(windir);
     } else {
         length = 0;
         for(i = 1; i < argc; i++)
@@ -682,11 +689,11 @@ static int set_handler(int argc,wchar_t **argv,wchar_t **envp)
         }
         if(value_length){
             /* set environment variable */
-            result = winx_set_env_variable(name,value);
+            result = winx_setenv(name,value);
             winx_free(value);
         } else {
             /* clear environment variable */
-            result = winx_set_env_variable(name,NULL);
+            result = winx_setenv(name,NULL);
         }
         /* handle a special case of %UD_LOG_FILE_PATH% */
         if(wcscmp(_wcsupr(name),L"UD_LOG_FILE_PATH") == 0){
@@ -731,17 +738,20 @@ static int pause_handler(int argc,wchar_t **argv,wchar_t **envp)
  */
 int ExecPendingBootOff(void)
 {
+    char *windir;
     char path[MAX_PATH];
     WINX_FILE *f;
 
-    if(winx_get_windows_directory(path,MAX_PATH) < 0){
+    windir = winx_get_windows_directory();
+    if(windir == NULL){
         DebugPrint("ExecPendingBootOff: cannot get %%windir%% path");
         winx_printf("\nExecPendingBootOff: cannot get %%windir%% path\n\n");
         short_dbg_delay();
         return 0;
     }
-    (void)strncat(path,"\\pending-boot-off",
-            MAX_PATH - strlen(path) - 1);
+    (void)_snprintf(path,MAX_PATH,"%hs\\pending-boot-off",windir);
+    path[MAX_PATH - 1] = 0;
+    winx_free(windir);
 
     f = winx_fopen(path,"r");
     if(f == NULL) return 0;
@@ -761,20 +771,23 @@ int ExecPendingBootOff(void)
 
 static void SavePendingBootOffState(void)
 {
+    char *windir;
     char path[MAX_PATH];
     WINX_FILE *f;
     char *comment = "UltraDefrag boot-off command is pending.";
     
     if(!pending_boot_off) return;
 
-    if(winx_get_windows_directory(path,MAX_PATH) < 0){
+    windir = winx_get_windows_directory();
+    if(windir == NULL){
         DebugPrint("SavePendingBootOffState: cannot get %%windir%% path");
         winx_printf("\nSavePendingBootOffState: cannot get %%windir%% path\n\n");
         short_dbg_delay();
         return;
     }
-    (void)strncat(path,"\\pending-boot-off",
-            MAX_PATH - strlen(path) - 1);
+    (void)_snprintf(path,MAX_PATH,"%hs\\pending-boot-off",windir);
+    path[MAX_PATH - 1] = 0;
+    winx_free(windir);
     f = winx_fopen(path,"w");
     if(f == NULL){
         DebugPrint("%%windir%%\\pending-boot-off file creation failed");
@@ -935,14 +948,14 @@ static wchar_t *expand_environment_variables(wchar_t *command)
     _snwprintf(buffer,sizeof(buffer)/sizeof(wchar_t),
         L"%04i-%02i-%02i",(int)t.year,(int)t.month,(int)t.day);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
-    if(winx_set_env_variable(L"DATE",buffer) < 0){
+    if(winx_setenv(L"DATE",buffer) < 0){
         DebugPrint("expand_environment_variables: cannot set %DATE% environment variable");
         winx_printf("\ncannot set %DATE% environment variable\n\n");
     }
     _snwprintf(buffer,sizeof(buffer)/sizeof(wchar_t),
         L"%02i-%02i",(int)t.hour,(int)t.minute);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
-    if(winx_set_env_variable(L"TIME",buffer) < 0){
+    if(winx_setenv(L"TIME",buffer) < 0){
         DebugPrint("expand_environment_variables: cannot set %TIME% environment variable");
         winx_printf("\ncannot set %TIME% environment variable\n\n");
     }
@@ -978,8 +991,8 @@ static wchar_t *expand_environment_variables(wchar_t *command)
     }
     
     /* clear %DATE% and %TIME% */
-    (void)winx_set_env_variable(L"DATE",NULL);
-    (void)winx_set_env_variable(L"TIME",NULL);
+    (void)winx_setenv(L"DATE",NULL);
+    (void)winx_setenv(L"TIME",NULL);
     return expanded_string;
 }
 
@@ -1031,7 +1044,7 @@ int parse_command(wchar_t *cmdline)
     /* disable default logging before the first command parsing */
     if(first_command){
         winx_disable_dbg_log();
-        (void)winx_set_env_variable(L"UD_LOG_FILE_PATH",NULL);
+        (void)winx_setenv(L"UD_LOG_FILE_PATH",NULL);
         first_command = 0;
     }
     
