@@ -232,7 +232,7 @@ int winx_kb_init(void)
     kb_wait_for_input_threads = 0;
     for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
         if(kb[i].hKbDevice == NULL) break;
-        if(winx_create_thread(kb_wait_for_input,(LPVOID)&kb[i],NULL) < 0){
+        if(winx_create_thread(kb_wait_for_input,(LPVOID)&kb[i]) < 0){
             winx_printf("\nCannot create thread gathering input from \\Device\\KeyboardClass%u\n\n",
                 kb[i].device_number);
             /* stop all threads */

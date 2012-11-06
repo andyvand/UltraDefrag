@@ -232,7 +232,7 @@ int winx_getche(void)
  */
 int winx_gets(char *string,int n)
 {
-    return winx_prompt_ex(NULL,string,n,NULL);
+    return winx_prompt(NULL,string,n,NULL);
 }
 
 /**
@@ -323,7 +323,7 @@ static void winx_add_history_entry(winx_history *h,char *string)
  * - Recognizes arrow keys to walk through commands history.
  * @note Does not recognize tabulation.
  */
-int winx_prompt_ex(char *prompt,char *string,int n,winx_history *h)
+int winx_prompt(char *prompt,char *string,int n,winx_history *h)
 {
     KEYBOARD_INPUT_DATA kbd;
     KBD_RECORD kbd_rec;
@@ -334,11 +334,11 @@ int winx_prompt_ex(char *prompt,char *string,int n,winx_history *h)
     int history_listed_to_the_last_entry = 0;
 
     if(!string){
-        winx_printf("\nwinx_prompt_ex: invalid string!\n");
+        winx_printf("\nwinx_prompt: invalid string!\n");
         return (-1);
     }
     if(n <= 0){
-        winx_printf("\nwinx_prompt_ex: invalid string length %d!\n",n);
+        winx_printf("\nwinx_prompt: invalid string length %d!\n",n);
         return (-1);
     }
     
@@ -346,7 +346,7 @@ int winx_prompt_ex(char *prompt,char *string,int n,winx_history *h)
     buffer_length = strlen(prompt) + n;
     buffer = winx_malloc(buffer_length);
     if(buffer == NULL){
-        winx_printf("\nNot enough memory for winx_prompt_ex()!\n");
+        winx_printf("\nNot enough memory for winx_prompt()!\n");
         return (-1);
     }
     
@@ -461,7 +461,7 @@ int winx_prompt_ex(char *prompt,char *string,int n,winx_history *h)
         /* clear the flag in case of ordinary characters typed */
         history_listed_to_the_last_entry = 0;
     }
-    winx_printf("\nwinx_prompt_ex: buffer overflow!\n");
+    winx_printf("\nwinx_prompt: buffer overflow!\n");
 
 done:
     winx_free(buffer);

@@ -26,31 +26,50 @@
 
 #include "zenwinx.h"
 
+/*
+* MSDN states that environment variables
+* are limited by 32767 characters,
+* including terminal zero.
+*/
+#define MAX_ENV_VALUE_LENGTH 32767
+
 /**
  * @brief Queries an environment variable.
  * @param[in] name the environment variable name.
- * @param[out] buffer pointer to the buffer receiving
- * the null-terminated value string.
- * @param[in] length the length of the buffer, in characters.
- * @return Zero for success, negative value otherwise.
+ * @return The value of the environment variable.
+ * NULL indicates failure.
+ * @note The returned string should be freed
+ * by the winx_free call after its use.
  */
-int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length)
+wchar_t *winx_getenv(wchar_t *name)
 {
+    wchar_t *value;
     UNICODE_STRING n, v;
     NTSTATUS Status;
     
-    DbgCheck3(name,buffer,(length > 0),"winx_query_env_variable",-1);
+    DbgCheck1(name,"winx_getenv",NULL);
+    
+    value = winx_malloc(MAX_ENV_VALUE_LENGTH * sizeof(wchar_t));
+    if(value == NULL){
+        DebugPrint("winx_getenv: not enough memory for %ws",name);
+        return NULL;
+    }
 
     RtlInitUnicodeString(&n,name);
-    v.Buffer = buffer;
+    v.Buffer = value;
     v.Length = 0;
-    v.MaximumLength = length * sizeof(wchar_t);
+    v.MaximumLength = MAX_ENV_VALUE_LENGTH * sizeof(wchar_t);
     Status = RtlQueryEnvironmentVariable_U(NULL,&n,&v);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"winx_query_env_variable: cannot query %ws",name);
-        return (-1);
+        DebugPrintEx(Status,"winx_getenv: cannot query %ws",name);
+        winx_free(value);
+        return NULL;
     }
-    return 0;
+    if(value[0] == 0){
+        winx_free(value);
+        return NULL;
+    }
+    return value;
 }
 
 /**
@@ -64,12 +83,12 @@ int winx_query_env_variable(wchar_t *name, wchar_t *buffer, int length)
  * because unsigned short data type can hold numbers
  * less than or equal to 32767.
  */
-int winx_set_env_variable(wchar_t *name, wchar_t *value)
+int winx_setenv(wchar_t *name, wchar_t *value)
 {
     UNICODE_STRING n, v;
     NTSTATUS status;
 
-    DbgCheck1(name,"winx_set_env_variable",-1);
+    DbgCheck1(name,"winx_setenv",-1);
 
     RtlInitUnicodeString(&n,name);
     if(value){
@@ -83,7 +102,7 @@ int winx_set_env_variable(wchar_t *name, wchar_t *value)
         status = RtlSetEnvironmentVariable(NULL,&n,NULL);
     }
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,"winx_set_env_variable: cannot set %ws",name);
+        DebugPrintEx(status,"winx_setenv: cannot set %ws",name);
         return (-1);
     }
     return 0;

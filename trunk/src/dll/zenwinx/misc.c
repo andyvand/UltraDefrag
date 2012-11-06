@@ -64,38 +64,42 @@ void winx_sleep(int msec)
  */
 int winx_get_os_version(void)
 {
-    /*NTSTATUS (__stdcall *func_RtlGetVersion)(PRTL_OSVERSIONINFOW lpVersionInformation);*/
-    NTSTATUS (__stdcall *func_RtlGetVersion)(OSVERSIONINFOW *version_info);
+    typedef NTSTATUS (__stdcall *RTLGETVERSION_PROC)(OSVERSIONINFOW *version_info);
+    RTLGETVERSION_PROC pRtlGetVersion;
     OSVERSIONINFOW ver;
     
     ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOW);
 
-    if(winx_get_proc_address(L"ntdll.dll","RtlGetVersion",
-      (void *)&func_RtlGetVersion) < 0) return 40;
+    pRtlGetVersion = (RTLGETVERSION_PROC)winx_get_proc_address(L"ntdll.dll","RtlGetVersion");
+    if(pRtlGetVersion == NULL) return 40;
     /* it seems to be impossible for it to fail */
-    (void)func_RtlGetVersion(&ver);
+    (void)pRtlGetVersion(&ver);
     return (ver.dwMajorVersion * 10 + ver.dwMinorVersion);
 }
 
 /**
  * @brief Retrieves the path of the Windows directory.
- * @param[out] buffer pointer to the buffer
- * receiving the null-terminated path.
- * @param[in] length the length of the buffer, in characters.
- * @return Zero for success, negative value otherwise.
- * @note This function retrieves a native path, like this 
+ * @return The native path of the Windows directory.
+ * NULL indicates failure.
+ * @note 
+ * - This function retrieves the native path, like this 
  *       \\??\\C:\\WINDOWS
+ * - The returned string should be freed by the winx_free
+ * call after its use.
  */
-int winx_get_windows_directory(char *buffer, int length)
+char *winx_get_windows_directory(void)
 {
-    wchar_t buf[MAX_PATH + 1];
+    wchar_t *windir;
+    char *path = NULL;
 
-    DbgCheck2(buffer,(length > 0),"winx_get_windows_directory",-1);
-    
-    if(winx_query_env_variable(L"SystemRoot",buf,MAX_PATH) < 0) return (-1);
-    (void)_snprintf(buffer,length - 1,"\\??\\%ws",buf);
-    buffer[length - 1] = 0;
-    return 0;
+    windir = winx_getenv(L"SystemRoot");
+    if(windir){
+        path = winx_sprintf("\\??\\%ws",windir);
+        if(path == NULL)
+            DebugPrint("winx_get_windows_directory: not enough memory");
+        winx_free(windir);
+    }
+    return path;
 }
 
 /**
@@ -298,8 +302,9 @@ int winx_windows_in_safe_mode(void)
  */
 void MarkWindowsBootAsSuccessful(void)
 {
-    char bootstat_file_path[MAX_PATH];
-    WINX_FILE *f_bootstat;
+    char *windir;
+    char *path;
+    WINX_FILE *f;
     char boot_success_flag = 1;
     
     /*
@@ -307,28 +312,38 @@ void MarkWindowsBootAsSuccessful(void)
     * since they're undocumented (as usually), therefore may
     * bring us a lot of surprises.
     */
-    if(winx_get_windows_directory(bootstat_file_path,MAX_PATH) < 0){
-        DebugPrint("MarkWindowsBootAsSuccessful(): cannot retrieve the Windows directory path");
-        winx_printf("\nMarkWindowsBootAsSuccessful(): cannot retrieve the Windows directory path\n\n");
+    windir = winx_get_windows_directory();
+    if(windir == NULL){
+        DebugPrint("MarkWindowsBootAsSuccessful: "
+            "cannot retrieve the Windows directory path");
+        winx_printf("\nMarkWindowsBootAsSuccessful: "
+            "cannot retrieve the Windows directory path\n\n");
         winx_sleep(3000);
         return;
     }
-    (void)strncat(bootstat_file_path,"\\bootstat.dat",
-            MAX_PATH - strlen(bootstat_file_path) - 1);
-
-    /* open the bootstat.dat file */
-    f_bootstat = winx_fopen(bootstat_file_path,"r+");
-    if(f_bootstat == NULL){
-        /* it seems that we have system prior to XP */
+    path = winx_sprintf("%hs\\bootstat.dat",windir);
+    winx_free(windir);
+    if(path == NULL){
+        DebugPrint("MarkWindowsBootAsSuccessful: not enough memory");
+        winx_printf("\nMarkWindowsBootAsSuccessful: not enough memory\n\n");
+        winx_sleep(3000);
         return;
     }
 
-    /* set BootSuccessFlag to 0x1 (look at BOOT_STATUS_DATA definition in ntndk.h for details) */
-    f_bootstat->woffset.QuadPart = 0xa;
-    (void)winx_fwrite(&boot_success_flag,sizeof(char),1,f_bootstat);
-    
-    /* close the file */
-    winx_fclose(f_bootstat);
+    /*
+    * Set BootSuccessFlag to 0x1 (look at 
+    * BOOT_STATUS_DATA definition in ntndk.h
+    * file for details).
+    */
+    f = winx_fopen(path,"r+");
+    winx_free(path);
+    if(f != NULL){
+        f->woffset.QuadPart = 0xa;
+        (void)winx_fwrite(&boot_success_flag,sizeof(char),1,f);
+        winx_fclose(f);
+    } else {
+        /* It seems that we have system prior to XP. */
+    }
 }
 
 /** @} */

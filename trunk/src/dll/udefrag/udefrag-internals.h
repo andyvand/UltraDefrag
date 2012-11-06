@@ -136,13 +136,6 @@
 #define is_block_excluded(b)         ((b)->length == 0)
 
 /*
-* MSDN states that environment variables
-* are limited by 32767 characters,
-* including terminal zero.
-*/
-#define ENV_BUFFER_SIZE 32767
-
-/*
 * The UD_SORT_BY_xxx flags
 * are mutually exclusive.
 */

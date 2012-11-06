@@ -366,7 +366,7 @@ int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
     }
     
     /* run the job in separate thread */
-    if(winx_create_thread(start_job,(PVOID)&jp,NULL) < 0){
+    if(winx_create_thread(start_job,(PVOID)&jp) < 0){
         free_map(&jp);
         release_options(&jp);
         goto done;
@@ -574,70 +574,88 @@ static void write_log_file_header(char *path)
  */
 int udefrag_set_log_file_path(void)
 {
-    wchar_t *path, *buffer;
+    wchar_t *path, *longpath, *fullpath;
+    int conversion_result;
     char *native_path, *path_copy, *filename;
     int result;
-    DWORD (__stdcall *func_GetLongPathNameW)(
+
+    typedef DWORD (__stdcall *GETLONGPATHNAME_PROC)(
         wchar_t *lpszShortPath,wchar_t *lpszLongPath,
-        DWORD cchBuffer) = NULL;
-    DWORD (__stdcall *func_GetFullPathNameW)(
+        DWORD cchBuffer);
+    GETLONGPATHNAME_PROC pGetLongPathNameW = NULL;
+    typedef DWORD (__stdcall *GETFULLPATHNAME_PROC)(
         wchar_t *lpFileName,DWORD nBufferLength,
-        wchar_t *lpBuffer,wchar_t **lpFilePart) = NULL;
+        wchar_t *lpBuffer,wchar_t **lpFilePart);
+    GETFULLPATHNAME_PROC pGetFullPathNameW = NULL;
     
-    path = winx_malloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
-    if(path == NULL)
-        return UDEFRAG_NO_MEM;
-    buffer = winx_malloc(ENV_BUFFER_SIZE * sizeof(wchar_t));
-    if(buffer == NULL){
-        winx_free(path);
-        return UDEFRAG_NO_MEM;
-    }
-    
-    result = winx_query_env_variable(L"UD_LOG_FILE_PATH",path,ENV_BUFFER_SIZE);
-    if(result < 0 || path[0] == 0){
+    path = winx_getenv(L"UD_LOG_FILE_PATH");
+    if(path == NULL){
         /* empty variable forces to disable log */
         winx_disable_dbg_log();
-        winx_free(path);
-        winx_free(buffer);
         return 0;
     }
     
+    longpath = winx_malloc((MAX_PATH + 1) * sizeof(wchar_t));
+    if(longpath == NULL){
+        winx_free(path);
+        return UDEFRAG_NO_MEM;
+    }
+
+    fullpath = winx_malloc((MAX_PATH + 1) * sizeof(wchar_t));
+    if(fullpath == NULL){
+        winx_free(longpath);
+        winx_free(path);
+        return UDEFRAG_NO_MEM;
+    }
+    
     /* convert to the full path whenever possible */
-    winx_get_proc_address(L"kernel32.dll",
-        "GetLongPathNameW",
-        (void *)&func_GetLongPathNameW);
-    winx_get_proc_address(L"kernel32.dll",
-        "GetFullPathNameW",
-        (void *)&func_GetFullPathNameW);
-    if(func_GetLongPathNameW){
-        result = func_GetLongPathNameW(path,buffer,ENV_BUFFER_SIZE);
+    pGetLongPathNameW = (GETLONGPATHNAME_PROC)
+        winx_get_proc_address(L"kernel32.dll",
+        "GetLongPathNameW");
+    conversion_result = -1;
+    if(pGetLongPathNameW){
+        result = pGetLongPathNameW(path,longpath,MAX_PATH + 1);
         if(result == 0){
             DebugPrint("udefrag_set_log_file_path: GetLongPathNameW failed");
-        } else if(result > ENV_BUFFER_SIZE){
+        } else if(result > MAX_PATH + 1){
             DebugPrint("udefrag_set_log_file_path: path %ws is too long",path);
         } else {
-            buffer[ENV_BUFFER_SIZE - 1] = 0;
-            wcscpy(path,buffer);
+            longpath[MAX_PATH] = 0;
+            conversion_result = 0;
         }
     }
-    if(func_GetFullPathNameW){
-        result = func_GetFullPathNameW(path,ENV_BUFFER_SIZE,buffer,NULL);
+    if(conversion_result < 0){
+        wcsncpy(longpath,path,MAX_PATH);
+        longpath[MAX_PATH] = 0;
+    }
+
+    pGetFullPathNameW = (GETFULLPATHNAME_PROC)
+        winx_get_proc_address(L"kernel32.dll",
+        "GetFullPathNameW");
+    conversion_result = -1;
+    if(pGetFullPathNameW){
+        result = pGetFullPathNameW(longpath,MAX_PATH + 1,fullpath,NULL);
         if(result == 0){
             DebugPrint("udefrag_set_log_file_path: GetFullPathNameW failed");
-        } else if(result > ENV_BUFFER_SIZE){
+        } else if(result > MAX_PATH + 1){
             DebugPrint("udefrag_set_log_file_path: path %ws is too long",path);
         } else {
-            buffer[ENV_BUFFER_SIZE - 1] = 0;
-            wcscpy(path,buffer);
+            fullpath[MAX_PATH] = 0;
+            conversion_result = 0;
         }
+    }
+    if(conversion_result < 0){
+        wcsncpy(fullpath,longpath,MAX_PATH);
+        fullpath[MAX_PATH] = 0;
     }
     
     /* convert to native path */
-    native_path = winx_sprintf("\\??\\%ws",path);
+    native_path = winx_sprintf("\\??\\%ws",fullpath);
+    winx_free(fullpath);
+    winx_free(longpath);
+    winx_free(path);
     if(native_path == NULL){
         DebugPrint("udefrag_set_log_file_path: cannot build native path");
-        winx_free(path);
-        winx_free(buffer);
         return (-1);
     }
     
@@ -657,8 +675,8 @@ int udefrag_set_log_file_path(void)
     
     /* if target path cannot be created, use %tmp%\UltraDefrag_Logs */
     if(result < 0){
-        result = winx_query_env_variable(L"TMP",path,ENV_BUFFER_SIZE);
-        if(result < 0 || path[0] == 0){
+        path = winx_getenv(L"TMP");
+        if(path == NULL){
             DebugPrint("udefrag_set_log_file_path: failed to query %%TMP%%");
         } else {
             filename = winx_strdup(native_path);
@@ -676,6 +694,7 @@ int udefrag_set_log_file_path(void)
                 }
                 winx_free(filename);
             }
+            winx_free(path);
         }
     }
     
@@ -684,11 +703,8 @@ int udefrag_set_log_file_path(void)
         write_log_file_header(native_path);
         /* allow debugging output to be appended */
         winx_enable_dbg_log(native_path);
+        winx_free(native_path);
     }
-    
-    winx_free(native_path);
-    winx_free(path);
-    winx_free(buffer);
     return 0;
 }
 
