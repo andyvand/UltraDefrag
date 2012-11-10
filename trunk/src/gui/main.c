@@ -896,8 +896,12 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
                 WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
             } else {
-                if(job_is_running)
-                    SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
+                if(job_is_running){
+                    if(pause_flag)
+                        SetTaskbarIconOverlay(IDI_PAUSED,"JOB_IS_PAUSED");
+                    else
+                        SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
+                }
                 SetEvent(hTaskbarIconEvent);
             }
         }

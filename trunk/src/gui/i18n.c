@@ -333,8 +333,12 @@ void ApplyLanguagePack(void)
             WgxDbgPrintLastError("ApplyLanguagePack: wait on hTaskbarIconEvent failed");
         } else {
             RemoveTaskbarIconOverlay();
-            if(job_is_running)
-                SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
+            if(job_is_running){
+                if(pause_flag)
+                    SetTaskbarIconOverlay(IDI_PAUSED,"JOB_IS_PAUSED");
+                else
+                    SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
+            }
             SetEvent(hTaskbarIconEvent);
         }
     }
