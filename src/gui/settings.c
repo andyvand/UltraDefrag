@@ -41,6 +41,7 @@ int list_height = 0;
 int repeat_action = FALSE;
 int show_menu_icons = 1;
 int show_taskbar_icon_overlay = 1;
+int show_progress_in_taskbar = 1;
 int minimize_to_system_tray = 0;
 
 int rx = UNDEFINED_COORD;
@@ -87,12 +88,13 @@ WGX_OPTION read_only_options[] = {
     {WGX_CFG_INT,     0, "free_color_r", &free_color_r, (void *)255},
     {WGX_CFG_INT,     0, "free_color_g", &free_color_g, (void *)255},
     {WGX_CFG_INT,     0, "free_color_b", &free_color_b, (void *)255},
-    {WGX_CFG_INT,     0, "disable_latest_version_check", &disable_latest_version_check, 0},
+    {WGX_CFG_INT,     0, "disable_latest_version_check", &disable_latest_version_check, (void *)0},
     {WGX_CFG_INT,     0, "scale_by_dpi", &scale_by_dpi, (void *)1},
-    {WGX_CFG_INT,     0, "restore_default_window_size", &restore_default_window_size, 0},
-    {WGX_CFG_INT,     0, "show_menu_icons", &show_menu_icons, 0},
-    {WGX_CFG_INT,     0, "show_taskbar_icon_overlay", &show_taskbar_icon_overlay, 0},
-    {WGX_CFG_INT,     0, "minimize_to_system_tray", &minimize_to_system_tray, 0},
+    {WGX_CFG_INT,     0, "restore_default_window_size", &restore_default_window_size, (void *)0},
+    {WGX_CFG_INT,     0, "show_menu_icons", &show_menu_icons, (void *)1},
+    {WGX_CFG_INT,     0, "show_taskbar_icon_overlay", &show_taskbar_icon_overlay, (void *)1},
+    {WGX_CFG_INT,     0, "show_progress_in_taskbar", &show_progress_in_taskbar, (void *)1},
+    {WGX_CFG_INT,     0, "minimize_to_system_tray", &minimize_to_system_tray, (void *)0},
     
     {0,               0, NULL, NULL, NULL}
 };
@@ -107,7 +109,7 @@ WGX_OPTION internal_options[] = {
     {WGX_CFG_INT,     0, "ry", &ry, (void *)UNDEFINED_COORD},
     {WGX_CFG_INT,     0, "rwidth",  &rwidth,  (void *)DEFAULT_WIDTH},
     {WGX_CFG_INT,     0, "rheight", &rheight, (void *)DEFAULT_HEIGHT}, 
-    {WGX_CFG_INT,     0, "maximized", &maximized_window, 0},
+    {WGX_CFG_INT,     0, "maximized", &maximized_window, (void *)0},
     {WGX_CFG_EMPTY,   0, "", NULL, ""},
 
     {WGX_CFG_INT,     0, "skip_removable", &skip_removable, (void *)1},
