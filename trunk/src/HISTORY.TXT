@@ -3,6 +3,9 @@
   Version 6.0.0 2012-01-
   ------------------------------------------------------------------------------
     beta2:
+    - added progress indication to the taskbar button for Windows 7
+      and more recent Windows editions; it can be turned on/off by 
+      show_progress_in_taskbar GUI option
     - file fragmentation reports moved from the root directories of
       the drives to the /reports sub-folder of the program's directory
     - added ability to configure the Explorer's context menu handler;

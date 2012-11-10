@@ -282,6 +282,7 @@ extern int sorting_flags;
 extern int repeat_action;
 extern int show_menu_icons;
 extern int show_taskbar_icon_overlay;
+extern int show_progress_in_taskbar;
 extern int minimize_to_system_tray;
 
 /*

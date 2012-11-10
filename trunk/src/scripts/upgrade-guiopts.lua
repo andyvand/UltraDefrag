@@ -296,6 +296,13 @@ show_menu_icons = $show_menu_icons
 show_taskbar_icon_overlay = $show_taskbar_icon_overlay
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Set show_progress_in_taskbar parameter to 1 to enable the progress indication
+-- inside of the taskbar button on Windows 7 and more recent Windows editions.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+show_progress_in_taskbar = $show_progress_in_taskbar
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Set minimize_to_system_tray parameter to 1 to minimize the application's
 -- window to the taskbar notification area (system tray).
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -471,6 +478,7 @@ function get_preferences()
     restore_default_window_size = 0
     show_menu_icons = 1
     show_taskbar_icon_overlay = 1
+    show_progress_in_taskbar = 1
     minimize_to_system_tray = 0
     map_block_size = 4
     grid_line_width = 1
@@ -512,7 +520,7 @@ end
 
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
-current_version = 114
+current_version = 115
 shellex_options = ""
 _G_copy = {}
 

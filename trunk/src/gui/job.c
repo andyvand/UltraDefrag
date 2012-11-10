@@ -176,20 +176,23 @@ static void update_progress(udefrag_progress_info *pi, void *p)
         RedrawMap(job,1);
     
     /* set overall progress */
-    if(show_taskbar_icon_overlay \
-      && (current_job->job_type == ANALYSIS_JOB \
-      || pi->current_operation != VOLUME_ANALYSIS)){
+    if(current_job->job_type == ANALYSIS_JOB \
+      || pi->current_operation != VOLUME_ANALYSIS){
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
             WgxDbgPrintLastError("ProcessSingleVolume: wait on hTaskbarIconEvent failed");
         } else {
-            WgxSetTaskbarProgressState(hWindow,TBPF_NORMAL);
-            if(pi->clusters_to_process){
-                WgxSetTaskbarProgressValue(hWindow,
-                    (pi->clusters_to_process / selected_volumes) * processed_volumes + \
-                    pi->processed_clusters / selected_volumes,
-                    pi->clusters_to_process);
+            if(show_progress_in_taskbar){
+                WgxSetTaskbarProgressState(hWindow,TBPF_NORMAL);
+                if(pi->clusters_to_process){
+                    WgxSetTaskbarProgressValue(hWindow,
+                        (pi->clusters_to_process / selected_volumes) * processed_volumes + \
+                        pi->processed_clusters / selected_volumes,
+                        pi->clusters_to_process);
+                } else {
+                    WgxSetTaskbarProgressValue(hWindow,0,1);
+                }
             } else {
-                WgxSetTaskbarProgressValue(hWindow,0,1);
+                WgxSetTaskbarProgressState(hWindow,TBPF_NOPROGRESS);
             }
             SetEvent(hTaskbarIconEvent);
         }
@@ -424,7 +427,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     } else {
         SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
         /* set overall progress: normal 0% */
-        if(show_taskbar_icon_overlay){
+        if(show_progress_in_taskbar){
             WgxSetTaskbarProgressValue(hWindow,0,1);
             WgxSetTaskbarProgressState(hWindow,TBPF_NORMAL);
         }
@@ -441,6 +444,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
         selected_volumes ++;
         index = (int)SelectedItem;
     }
+    /* avoid division by zero error in update_progress */
     if(selected_volumes == 0)
         selected_volumes ++;
 
@@ -467,9 +471,11 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
             WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
         } else {
-            if(show_taskbar_icon_overlay){
+            if(show_progress_in_taskbar){
                 WgxSetTaskbarProgressState(hWindow,TBPF_NORMAL);
                 WgxSetTaskbarProgressValue(hWindow,processed_volumes,selected_volumes);
+            } else {
+                WgxSetTaskbarProgressState(hWindow,TBPF_NOPROGRESS);
             }
             SetEvent(hTaskbarIconEvent);
         }
@@ -513,9 +519,8 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     } else {
         job_is_running = 0;
         RemoveTaskbarIconOverlay();
-        /* reset overall progress */
-        if(show_taskbar_icon_overlay)
-            WgxSetTaskbarProgressState(hWindow,TBPF_NOPROGRESS);
+        /* remove the taskbar progress indicator */
+        WgxSetTaskbarProgressState(hWindow,TBPF_NOPROGRESS);
         ShowSystemTrayIcon(NIM_MODIFY);
         SetEvent(hTaskbarIconEvent);
     }
