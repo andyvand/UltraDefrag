@@ -341,10 +341,14 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                         WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
                     } else {
                         if(show_taskbar_icon_overlay != s_show_taskbar_icon_overlay){
-                            if(show_taskbar_icon_overlay && job_is_running)
-                                SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
-                            else
+                            if(show_taskbar_icon_overlay && job_is_running){
+                                if(pause_flag)
+                                    SetTaskbarIconOverlay(IDI_PAUSED,"JOB_IS_PAUSED");
+                                else
+                                    SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
+                            } else {
                                 RemoveTaskbarIconOverlay();
+                            }
                         }
                         if(minimize_to_system_tray != s_minimize_to_system_tray){
                             if(IsIconic(hWindow)){
