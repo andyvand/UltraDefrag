@@ -56,21 +56,15 @@
       the program; look at rsc/compilation.dox for details
 
 
-  Version 5.1.1  2012-11-
+  Version 5.1.1  2012-11-11
   ------------------------------------------------------------------------------
-    - added ability to install over an existing portable package
-    - a problem with launching the cluster map legend from the help menu
-      when the path to the HTML file contained spaces is fixed
-
-    - the following translations were added:
-
-      
+    - it is now supported to install over an existing portable package
+    - a problem with launching the cluster map legend from the help menu,
+      if the path to the HTML file contained spaces, is fixed
 
     - the following translations were updated:
 
       Czech, Greek, Hungarian, Iloko, Javanese, Latvian, Tamil
-
-    - Internals:
 
 
   Version 5.1.0  2012-10-18
