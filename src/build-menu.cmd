@@ -190,14 +190,7 @@ if not exist "%USERPROFILE%\Downloads\UltraDefrag" mkdir "%USERPROFILE%\Download
 cd /d "%USERPROFILE%\Downloads\UltraDefrag"
 echo.
 copy /b /y /v "%UD_BLD_MENU_DIR%\bin\ultradefrag-%UDVERSION_SUFFIX%.bin.i386.exe"        .
-copy /b /y /v "%UD_BLD_MENU_DIR%\bin\ia64\ultradefrag-%UDVERSION_SUFFIX%.bin.ia64.exe"   .
 copy /b /y /v "%UD_BLD_MENU_DIR%\bin\amd64\ultradefrag-%UDVERSION_SUFFIX%.bin.amd64.exe" .
-set old_file=X
-for %%F in ( "%UD_BLD_MENU_DIR%\bin\ultradefrag-%UDVERSION_SUFFIX%.bin.i386.exe" ) do set old_file=%%~nxF
-if "%old_file%" == "X" goto :noRename
-set new_file=%old_file:i386=x86%
-move /y "%old_file%" "%new_file%"
-:noRename
 echo.
 if "%~1" == "" goto :noZip
 del /f /q "ultradefrag-%UDVERSION_SUFFIX%.7z"
