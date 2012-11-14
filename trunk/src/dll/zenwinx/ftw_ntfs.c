@@ -35,6 +35,13 @@
 */
 //#define TEST_NTFS_SCANNER
 
+/*
+* Uncomment this definition to show
+* extra infomation on attribute lists
+* analysis.
+*/
+//#define SHOW_ATTR_LISTS_INFO
+
 /* internal structures */
 typedef struct _mft_layout {
     unsigned long file_record_size;         /* size of mft file record, in bytes */
@@ -943,8 +950,10 @@ static void analyze_non_resident_attribute_list(winx_file_info *f,ULONGLONG list
     PATTRIBUTE_LIST attr_list_entry;
     int i;
     USHORT length;
-    
+
+#ifdef SHOW_ATTR_LISTS_INFO
     DebugPrint("allocated size = %I64u bytes",list_size);
+#endif
     if(list_size == 0){
         DebugPrint("empty nonresident attribute list found");
         return;
@@ -996,7 +1005,9 @@ analyze_list:
         goto scan_done;
     }
 
+#ifdef SHOW_ATTR_LISTS_INFO
     DebugPrint("attribute list analysis started...");
+#endif
     attr_list_entry = (PATTRIBUTE_LIST)cluster;
 
     while(!ftw_ntfs_check_for_termination(sp)){
@@ -1012,7 +1023,9 @@ analyze_list:
         length = attr_list_entry->Length;
         attr_list_entry = (PATTRIBUTE_LIST)((char *)attr_list_entry + length);
     }
+#ifdef SHOW_ATTR_LISTS_INFO
     DebugPrint("attribute list analysis completed");
+#endif
 
 scan_done:    
     /* free allocated resources */
@@ -1214,7 +1227,9 @@ static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan
     /* handle the type of the attribute */
     attr_type = pnr_attr->Attribute.AttributeType;
     if(attr_type == AttributeAttributeList){
+#ifdef SHOW_ATTR_LISTS_INFO
         DebugPrint("nonresident attribute list found");
+#endif
         NonResidentAttrListFound = TRUE;
     }
 
@@ -1225,9 +1240,11 @@ static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan
     if(attr_name == NULL)
         return;
     
+#ifdef SHOW_ATTR_LISTS_INFO
     if(NonResidentAttrListFound)
         DebugPrint("%ws:%ws",sp->mfi.Name,attr_name);
-    
+#endif
+
     process_run_list(attr_name,pnr_attr,sp,NonResidentAttrListFound);
 
     /* free allocated memory */
