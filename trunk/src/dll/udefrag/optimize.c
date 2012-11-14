@@ -1130,6 +1130,7 @@ int optimize_mft(udefrag_job_parameters *jp)
 
     /* mft optimization is NTFS specific task */
     if(jp->fs_type != FS_NTFS){
+        DebugPrint("MFT can be optimized on NTFS disks only");
         jp->pi.processed_clusters = 0;
         jp->pi.clusters_to_process = 1;
         jp->pi.current_operation = VOLUME_OPTIMIZATION;
