@@ -279,7 +279,6 @@ static int defrag_routine(udefrag_job_parameters *jp)
     ULONGLONG cut_length;
     int defrag_succeeded;
     char buffer[32];
-    ULONGLONG time;
 
     jp->pi.current_operation = VOLUME_DEFRAGMENTATION;
     jp->pi.moved_clusters = 0;
@@ -294,8 +293,6 @@ static int defrag_routine(udefrag_job_parameters *jp)
     jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
     if(jp->fVolume == NULL)
         return (-1);
-
-    time = start_timing("defragmentation",jp);
 
     jp->pi.clusters_to_process = \
         jp->pi.processed_clusters + defrag_cc_routine(jp);
@@ -468,8 +465,6 @@ completed:
     winx_bytes_to_hr(moved_partially * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
     DebugPrint("  %s moved",buffer);
     
-    stop_timing("defragmentation",time,jp);
-
     /* cleanup */
     clear_currently_excluded_flag(jp);
     winx_fclose(jp->fVolume);
@@ -485,6 +480,8 @@ static int defrag_sequence(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
     
+    if(jp->pi.fragmented == 0) return 0;
+    
     while(!jp->termination_router((void *)jp)){
         winx_dbg_print_header(0,0,"defragmentation pass #%u",jp->pi.pass_number);
         result = defrag_routine(jp);
@@ -499,6 +496,9 @@ static int defrag_sequence(udefrag_job_parameters *jp)
         /* break if no repeat allowed */
         if(!(jp->udo.job_flags & UD_JOB_REPEAT)) break;
         
+        /* break if no more fragmented files exist */
+        if(jp->pi.fragmented == 0) break;
+        
         /* defragment a few remaining files on the next pass */
         jp->pi.pass_number ++;
     }
@@ -506,6 +506,8 @@ static int defrag_sequence(udefrag_job_parameters *jp)
     /* partial defragmentation is not supported for NTFS under nt4/w2k */
     if(jp->win_version < WINDOWS_XP && jp->fs_type == FS_NTFS)
         return overall_result;
+    
+    if(jp->pi.fragmented == 0) return overall_result;
     
     /* defragment remaining files partially */
     if(jp->udo.fragment_size_threshold == DEFAULT_FRAGMENT_SIZE_THRESHOLD){
@@ -527,6 +529,9 @@ static int defrag_sequence(udefrag_job_parameters *jp)
             
             /* break if no repeat allowed */
             if(!(jp->udo.job_flags & UD_JOB_REPEAT)) break;
+
+            /* break if no more fragmented files exist */
+            if(jp->pi.fragmented == 0) break;
 
             /* defragment a few remaining files on the next pass */
             jp->pi.pass_number ++;
@@ -553,6 +558,8 @@ int defragment(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
     udefrag_fragmented_file *f;
+    int second_attempt = 0;
+    ULONGLONG time;
     
     if(jp->job_type == DEFRAGMENTATION_JOB){
         /* perform volume analysis */
@@ -570,6 +577,8 @@ int defragment(udefrag_job_parameters *jp)
         jp->pi.clusters_to_process = 0;
     }
     
+    time = start_timing("defragmentation",jp);
+
     /* do the job */
     jp->pi.pass_number = 0;
     result = defrag_sequence(jp);
@@ -584,15 +593,22 @@ int defragment(udefrag_job_parameters *jp)
     * So, let's give them another chance.
     */
     for(f = jp->fragmented_files; f; f = f->next){
-        f->f->user_defined_flags &= ~UD_FILE_MOVING_FAILED;
+        if(is_moving_failed(f->f)){
+            second_attempt = 1;
+            f->f->user_defined_flags &= ~UD_FILE_MOVING_FAILED;
+        }
         if(f->next == jp->fragmented_files) break;
     }
-    result = defrag_sequence(jp);
-    if(result == 0){
-        /* defragmentation succeeded at least once */
-        overall_result = 0;
+    if(second_attempt){
+        jp->pi.pass_number ++;
+        result = defrag_sequence(jp);
+        if(result == 0){
+            /* defragmentation succeeded at least once */
+            overall_result = 0;
+        }
     }
     
+    stop_timing("defragmentation",time,jp);
     return (jp->termination_router((void *)jp)) ? 0 : overall_result;
 }
 
