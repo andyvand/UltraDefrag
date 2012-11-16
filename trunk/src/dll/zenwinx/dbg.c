@@ -260,6 +260,24 @@ static void *get_description(ULONG error,int *encoding)
 }
 
 /**
+ * @brief Replaces CR and LF
+ * characters in a string by spaces.
+ * @details Intended for use in winx_dbg_print
+ * routine to keep logging as clean as possible.
+ */
+static void remove_crlf(char *s)
+{
+    int i;
+    
+    if(s){
+        for(i = 0; s[i]; i++){
+            if(s[i] == '\r' || s[i] == '\n')
+                s[i] = ' ';
+        }
+    }
+}
+
+/**
  * @brief Delivers a message to the Debug View
  * program and appends it to the log file as well.
  * @note
@@ -325,6 +343,7 @@ void winx_dbg_print(char *format, ...)
                 ext_msg = winx_sprintf("%s: 0x%x %s: %s",
                      msg,ns_flag ? (UINT)status : (UINT)error,
                      ns_flag ? "status" : "error",err_msg);
+                remove_crlf(ext_msg);
                 add_dbg_log_entry(ext_msg ? ext_msg : msg);
                 deliver_message(ext_msg ? ext_msg : msg);
             } else {
@@ -337,6 +356,7 @@ void winx_dbg_print(char *format, ...)
                     ext_msg = winx_sprintf("%s: 0x%x %s: %s",
                          msg,ns_flag ? (UINT)status : (UINT)error,
                          ns_flag ? "status" : "error",cnv_msg);
+                    remove_crlf(ext_msg);
                     add_dbg_log_entry(ext_msg ? ext_msg : msg);
                     winx_free(ext_msg); ext_msg = NULL;
                     /* send message to debugger in ANSI encoding */
@@ -345,6 +365,7 @@ void winx_dbg_print(char *format, ...)
                     ext_msg = winx_sprintf("%s: 0x%x %s: %s",
                          msg,ns_flag ? (UINT)status : (UINT)error,
                          ns_flag ? "status" : "error",cnv_msg);
+                    remove_crlf(ext_msg);
                     deliver_message(ext_msg ? ext_msg : msg);
                 } else {
                     goto no_description;
