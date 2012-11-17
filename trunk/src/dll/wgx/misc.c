@@ -96,6 +96,14 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
     int is_standard_icon_size = 0;
     int lims = 0;
     HICON ScaledIcon;
+    OSVERSIONINFO osvi;
+    int vista_and_above = 0;
+    
+    memset(&osvi,0,sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    (void)GetVersionEx(&osvi);
+    if(osvi.dwMajorVersion >= 6)
+        vista_and_above = 1;
 
     /* validate parameters */
     if(size == 0 || phIcon == NULL) return FALSE;
@@ -120,7 +128,10 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
         } else {
             pLoadIconMetric = (LOAD_ICON_METRIC_PROC)GetProcAddress(hLib,"LoadIconMetric");
             if(pLoadIconMetric == NULL){
-                WgxDbgPrintLastError("WgxLoadIcon: LoadIconMetric procedure not found in comctl32.dll library");
+                if(vista_and_above){
+                    WgxDbgPrintLastError("WgxLoadIcon: LoadIconMetric "
+                        "procedure not found in comctl32.dll library");
+                }
             } else {
                 hr = pLoadIconMetric(hInstance,MAKEINTRESOURCEW(IconID),lims,phIcon);
                 if(hr != S_OK || *phIcon == NULL){

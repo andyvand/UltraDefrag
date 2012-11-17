@@ -226,7 +226,7 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
             v->device_capacity = dg.Cylinders.QuadPart * \
                 dg.TracksPerCylinder * dg.SectorsPerTrack * dg.BytesPerSector;
             winx_bytes_to_hr(v->device_capacity,1,buffer,sizeof(buffer));
-            DebugPrint(I"get_drive_geometry: device capacity = %s",buffer);
+            DebugPrint(I"get_drive_geometry: %c: device capacity = %s",v->volume_letter,buffer);
         }
         winx_fclose(f);
     }
