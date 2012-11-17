@@ -54,13 +54,13 @@ int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
     Status = NtCreateEvent(phandle,STANDARD_RIGHTS_ALL | 0x1ff,&oa,type,1);
     if(Status == STATUS_OBJECT_NAME_COLLISION){
         *phandle = NULL;
-        DebugPrint("winx_create_event: %ws already exists",name);
+        DebugPrint(D"winx_create_event: %ws already exists",name);
         /* useful for allowing a single instance of the program */
         return (int)STATUS_OBJECT_NAME_COLLISION;
     }
     if(!NT_SUCCESS(Status)){
         *phandle = NULL;
-        DebugPrintEx(Status,"winx_create_event: cannot create %ws",name);
+        DebugPrintEx(Status,E"winx_create_event: cannot create %ws",name);
         return (-1);
     }
     return 0;
@@ -88,7 +88,7 @@ int winx_open_event(wchar_t *name,int flags,HANDLE *phandle)
     Status = NtOpenEvent(phandle,flags,&oa);
     if(!NT_SUCCESS(Status)){
         *phandle = NULL;
-        DebugPrintEx(Status,"winx_open_event: cannot open %ws",name);
+        DebugPrintEx(Status,E"winx_open_event: cannot open %ws",name);
         return (-1);
     }
     return 0;

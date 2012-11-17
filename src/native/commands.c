@@ -744,7 +744,7 @@ int ExecPendingBootOff(void)
 
     windir = winx_get_windows_directory();
     if(windir == NULL){
-        DebugPrint("ExecPendingBootOff: cannot get %%windir%% path");
+        DebugPrint(E"ExecPendingBootOff: cannot get %%windir%% path");
         winx_printf("\nExecPendingBootOff: cannot get %%windir%% path\n\n");
         short_dbg_delay();
         return 0;
@@ -761,7 +761,7 @@ int ExecPendingBootOff(void)
         short_dbg_delay();
     }
     if(winx_delete_file(path) < 0){
-        DebugPrint("ExecPendingBootOff: cannot delete %%windir%%\\pending-boot-off file");
+        DebugPrint(E"ExecPendingBootOff: cannot delete %%windir%%\\pending-boot-off file");
         winx_printf("\nExecPendingBootOff: cannot delete %%windir%%\\pending-boot-off file\n\n");
         short_dbg_delay();
     }
@@ -780,7 +780,7 @@ static void SavePendingBootOffState(void)
 
     windir = winx_get_windows_directory();
     if(windir == NULL){
-        DebugPrint("SavePendingBootOffState: cannot get %%windir%% path");
+        DebugPrint(E"SavePendingBootOffState: cannot get %%windir%% path");
         winx_printf("\nSavePendingBootOffState: cannot get %%windir%% path\n\n");
         short_dbg_delay();
         return;
@@ -790,7 +790,7 @@ static void SavePendingBootOffState(void)
     winx_free(windir);
     f = winx_fopen(path,"w");
     if(f == NULL){
-        DebugPrint("%%windir%%\\pending-boot-off file creation failed");
+        DebugPrint(E"%%windir%%\\pending-boot-off file creation failed");
         winx_printf("\n%%windir%%\\pending-boot-off file creation failed\n\n");
         short_dbg_delay();
         return;
@@ -949,14 +949,14 @@ static wchar_t *expand_environment_variables(wchar_t *command)
         L"%04i-%02i-%02i",(int)t.year,(int)t.month,(int)t.day);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
     if(winx_setenv(L"DATE",buffer) < 0){
-        DebugPrint("expand_environment_variables: cannot set %DATE% environment variable");
+        DebugPrint(E"expand_environment_variables: cannot set %DATE% environment variable");
         winx_printf("\ncannot set %DATE% environment variable\n\n");
     }
     _snwprintf(buffer,sizeof(buffer)/sizeof(wchar_t),
         L"%02i-%02i",(int)t.hour,(int)t.minute);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
     if(winx_setenv(L"TIME",buffer) < 0){
-        DebugPrint("expand_environment_variables: cannot set %TIME% environment variable");
+        DebugPrint(E"expand_environment_variables: cannot set %TIME% environment variable");
         winx_printf("\ncannot set %TIME% environment variable\n\n");
     }
 
@@ -978,13 +978,13 @@ static wchar_t *expand_environment_variables(wchar_t *command)
         if(NT_SUCCESS(status)){
             expanded_string[length - 1] = 0;
         } else {
-            winx_dbg_print_ex(status,"expand_environment_variables failed");
+            winx_dbg_print_ex(status,E"expand_environment_variables failed");
             winx_printf("\ncannot expand environment variables\n\n");
             winx_free(expanded_string);
             expanded_string = NULL;
         }
     } else {
-        DebugPrint("expand_environment_variables: cannot allocate %u bytes of memory",
+        DebugPrint(E"expand_environment_variables: cannot allocate %u bytes of memory",
             number_of_bytes + sizeof(wchar_t));
         winx_printf("\ncannot allocate %u bytes of memory\n\n",
             number_of_bytes + sizeof(wchar_t));
@@ -1175,7 +1175,7 @@ int parse_command(wchar_t *cmdline)
     */
     if(cmd_table[i].cmd_handler == NULL){
         winx_printf("\nUnknown command: %ws!\n\n",full_cmdline);
-        DebugPrint("Unknown command: %ws!",full_cmdline);
+        DebugPrint(E"Unknown command: %ws!",full_cmdline);
         winx_free(argv);
         winx_free(envp);
         winx_free(cmdline_copy);

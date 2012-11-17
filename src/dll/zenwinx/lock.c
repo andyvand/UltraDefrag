@@ -51,20 +51,20 @@ winx_spin_lock *winx_init_spin_lock(char *name)
     buffer = winx_sprintf("\\%s_%u",name,
         (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess));
     if(buffer == NULL){
-        DebugPrint("winx_init_spin_lock: not enough memory for ansi full name");
+        DebugPrint(E"winx_init_spin_lock: not enough memory for ansi full name");
         return NULL;
     }
 
     length = strlen(buffer);
     fullname = winx_malloc((length + 1) * sizeof(wchar_t));
     if(fullname == NULL){
-        DebugPrint("winx_init_spin_lock: not enough memory for unicode full name");
+        DebugPrint(E"winx_init_spin_lock: not enough memory for unicode full name");
         winx_free(buffer);
         return NULL;
     }
     
     if(_snwprintf(fullname,length + 1,L"%hs",buffer) < 0){
-        DebugPrint("winx_init_spin_lock: full name conversion to unicode failed");
+        DebugPrint(E"winx_init_spin_lock: full name conversion to unicode failed");
         winx_free(buffer);
         return NULL;
     }
@@ -74,13 +74,13 @@ winx_spin_lock *winx_init_spin_lock(char *name)
     
     sl = winx_malloc(sizeof(winx_spin_lock));
     if(sl == NULL){
-        DebugPrint("winx_init_spin_lock: cannot allocate memory for %s",name);
+        DebugPrint(E"winx_init_spin_lock: cannot allocate memory for %s",name);
         winx_free(fullname);
         return NULL;
     }
     
     if(winx_create_event(fullname,SynchronizationEvent,&sl->hEvent) < 0){
-        DebugPrint("winx_init_spin_lock: cannot create synchronization event");
+        DebugPrint(E"winx_init_spin_lock: cannot create synchronization event");
         winx_free(sl);
         winx_free(fullname);
         return NULL;

@@ -124,7 +124,7 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
             } else {
                 hr = pLoadIconMetric(hInstance,MAKEINTRESOURCEW(IconID),lims,phIcon);
                 if(hr != S_OK || *phIcon == NULL){
-                    WgxDbgPrint("WgxLoadIcon: LoadIconMetric failed with code 0x%x",(UINT)hr);
+                    WgxDbgPrint(E"WgxLoadIcon: LoadIconMetric failed with code 0x%x",(UINT)hr);
                 } else {
                     return TRUE;
                 }

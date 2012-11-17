@@ -48,21 +48,21 @@ void dbg_print_header(udefrag_job_parameters *jp)
     int result;
 
     /* print driver version */
-    winx_dbg_print_header(0,0,"*");
-    winx_dbg_print_header(0x20,0,"%s",VERSIONINTITLE);
+    winx_dbg_print_header(0,0,I"*");
+    winx_dbg_print_header(0x20,0,I"%s",VERSIONINTITLE);
 
     /* print windows version */
     os_version = winx_get_os_version();
     mj = os_version / 10;
     mn = os_version % 10;
-    winx_dbg_print_header(0x20,0,"Windows NT %u.%u",mj,mn);
+    winx_dbg_print_header(0x20,0,I"Windows NT %u.%u",mj,mn);
     
     /* print date and time */
     memset(&t,0,sizeof(winx_time));
     (void)winx_get_local_time(&t);
-    winx_dbg_print_header(0x20,0,"[%02i.%02i.%04i at %02i:%02i]",
+    winx_dbg_print_header(0x20,0,I"[%02i.%02i.%04i at %02i:%02i]",
         (int)t.day,(int)t.month,(int)t.year,(int)t.hour,(int)t.minute);
-    winx_dbg_print_header(0,0,"*");
+    winx_dbg_print_header(0,0,I"*");
     
     /* force MinGW to export general purpose udefrag_xxx routines */
     ch = 'a'; ch = winx_tolower(ch) - winx_toupper(ch);
@@ -80,7 +80,7 @@ void dbg_print_header(udefrag_job_parameters *jp)
  */
 ULONGLONG start_timing(char *operation_name,udefrag_job_parameters *jp)
 {
-    winx_dbg_print_header(0,0,"%s of %c: started",operation_name,jp->volume_letter);
+    winx_dbg_print_header(0,0,I"%s of %c: started",operation_name,jp->volume_letter);
     jp->progress_trigger = 0;
     return winx_xtime();
 }
@@ -100,7 +100,7 @@ void stop_timing(char *operation_name,ULONGLONG start_time,udefrag_job_parameter
     seconds = time / 1000;
     winx_time2str(seconds,buffer,sizeof(buffer));
     time -= seconds * 1000;
-    winx_dbg_print_header(0,0,"%s of %c: completed in %s %I64ums",
+    winx_dbg_print_header(0,0,I"%s of %c: completed in %s %I64ums",
         operation_name,jp->volume_letter,buffer,time);
     jp->progress_trigger = 0;
 }
@@ -132,9 +132,9 @@ static void dbg_print_single_counter(udefrag_job_parameters *jp,ULONGLONG counte
     ip = (unsigned int)(p * 10000);
     s = winx_sprintf("%s %I64ums",buffer,time);
     if(s == NULL){
-        DebugPrint(" - %s %-18s %6I64ums  %3u.%02u %%",name,buffer,time,ip / 100,ip % 100);
+        DebugPrint(I" - %s %-18s %6I64ums  %3u.%02u %%",name,buffer,time,ip / 100,ip % 100);
     } else {
-        DebugPrint(" - %s %-25s  %3u.%02u %%",name,s,ip / 100,ip % 100);
+        DebugPrint(I" - %s %-25s  %3u.%02u %%",name,s,ip / 100,ip % 100);
         winx_free(s);
     }
 }
@@ -148,13 +148,13 @@ void dbg_print_performance_counters(udefrag_job_parameters *jp)
     ULONGLONG time, seconds;
     char buffer[32];
     
-    winx_dbg_print_header(0,0,"*");
+    winx_dbg_print_header(0,0,I"*");
 
     time = jp->p_counters.overall_time;
     seconds = time / 1000;
     winx_time2str(seconds,buffer,sizeof(buffer));
     time -= seconds * 1000;
-    DebugPrint("volume processing completed in %s %I64ums:",buffer,time);
+    DebugPrint(I"volume processing completed in %s %I64ums:",buffer,time);
     dbg_print_single_counter(jp,jp->p_counters.analysis_time,             "analysis ...............");
     dbg_print_single_counter(jp,jp->p_counters.searching_time,            "searching ..............");
     dbg_print_single_counter(jp,jp->p_counters.moving_time,               "moving .................");
@@ -168,10 +168,10 @@ void dbg_print_performance_counters(udefrag_job_parameters *jp)
  */
 void dbg_print_footer(udefrag_job_parameters *jp)
 {
-    winx_dbg_print_header(0,0,"*");
-    winx_dbg_print_header(0,0,"Processing of %c: %s",
+    winx_dbg_print_header(0,0,I"*");
+    winx_dbg_print_header(0,0,I"Processing of %c: %s",
         jp->volume_letter, (jp->pi.completion_status > 0) ? "succeeded" : "failed");
-    winx_dbg_print_header(0,0,"*");
+    winx_dbg_print_header(0,0,I"*");
 }
 
 /** @} */

@@ -48,7 +48,7 @@ void WgxInitSynchObjects(void)
     hSynchEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hSynchEvent == NULL){
         WgxDbgPrintLastError("WgxInitSynchObjects: event creation failed");
-        WgxDbgPrint("Internationalization routines will not work therefore");
+        WgxDbgPrint(E"Internationalization routines will not work therefore");
     }
 }
 
@@ -94,7 +94,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
 
     L = lua_open();
     if(L == NULL){
-        WgxDbgPrint("WgxBuildResourceTable: cannot initialize Lua library");
+        WgxDbgPrint(E"WgxBuildResourceTable: cannot initialize Lua library");
         return FALSE;
     }
     
@@ -107,7 +107,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     length = strlen(sctemplate) + strlen(path) + 1;
     script = malloc(length);
     if(script == NULL){
-        WgxDbgPrint("WgxBuildResourceTable: not enough memory");
+        WgxDbgPrint(E"WgxBuildResourceTable: not enough memory");
         lua_close(L);
         return FALSE;
     }
@@ -117,11 +117,11 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     /* extract strings from the file */
     status = luaL_dostring(L, script);
     if(status){
-        WgxDbgPrint("WgxBuildResourceTable: script execution failed");
+        WgxDbgPrint(E"WgxBuildResourceTable: script execution failed");
         if(!lua_isnil(L, -1)){
             msg = lua_tostring(L, -1);
             if(msg == NULL) msg = "(error object is not a string)";
-            WgxDbgPrint("WgxBuildResourceTable: %s",msg);
+            WgxDbgPrint(E"WgxBuildResourceTable: %s",msg);
             lua_pop(L, 1);
         }
         lua_close(L);
@@ -142,7 +142,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
                         length = strlen(value);
                         table[i].LoadedString = malloc((length + 1) * 2);
                         if(table[i].LoadedString == NULL){
-                            WgxDbgPrint("WgxBuildResourceTable: not enough memory");
+                            WgxDbgPrint(E"WgxBuildResourceTable: not enough memory");
                         } else {
                             if(!MultiByteToWideChar(CP_UTF8,0,value,-1,table[i].LoadedString,length + 1)){
                                 WgxDbgPrintLastError("WgxBuildResourceTable: MultiByteToWideChar failed");
@@ -187,7 +187,7 @@ void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow)
                 if(table[i].LoadedString){
                     text = _wcsdup(table[i].LoadedString);
                     if(text == NULL)
-                        WgxDbgPrint("WgxApplyResourceTable: cannot allocate memory");
+                        WgxDbgPrint(E"WgxApplyResourceTable: not enough memory");
                 }
                 /* end of synchronization */
                 SetEvent(hSynchEvent);
@@ -196,7 +196,7 @@ void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow)
         if(text == NULL){
             text = _wcsdup(table[i].DefaultString);
             if(text == NULL)
-                WgxDbgPrint("WgxApplyResourceTable: cannot allocate memory");
+                WgxDbgPrint(E"WgxApplyResourceTable: not enough memory");
         }
         if(text){
             (void)SetWindowTextW(hChild,text);
@@ -249,7 +249,7 @@ wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key)
                     else
                         text = _wcsdup(table[i].DefaultString);
                     if(text == NULL)
-                        WgxDbgPrint("WgxGetResourceString: cannot allocate memory");
+                        WgxDbgPrint(E"WgxGetResourceString: not enough memory");
                     break;
                 }
             }
@@ -262,7 +262,7 @@ synch_failed:
             if(!strcmp(table[i].Key,key)){
                 text = _wcsdup(table[i].DefaultString);
                 if(text == NULL)
-                    WgxDbgPrint("WgxGetResourceString: cannot allocate memory");
+                    WgxDbgPrint(E"WgxGetResourceString: not enough memory");
                 break;
             }
         }

@@ -97,13 +97,13 @@ BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, 
         if(SUCCEEDED(hr)){
             result = TRUE;
         } else {
-            WgxDbgPrint("ITaskbarList3_SetOverlayIcon failed with code 0x%x",(UINT)hr);
+            WgxDbgPrint(E"ITaskbarList3_SetOverlayIcon failed with code 0x%x",(UINT)hr);
         }
         /* cleanup */
         DestroyIcon(hIcon);
         ITaskbarList3_Release(iTBL);
     } else {
-        WgxDbgPrint("WgxSetTaskbarIconOverlay failed with code 0x%x",(UINT)hr);
+        WgxDbgPrint(E"WgxSetTaskbarIconOverlay failed with code 0x%x",(UINT)hr);
     }
     CoUninitialize();
     return result;
@@ -151,12 +151,12 @@ BOOL WgxSetTaskbarProgressState(HWND hWindow,TBPFLAG flag)
         if(SUCCEEDED(hr)){
             result = TRUE;
         } else {
-            WgxDbgPrint("ITaskbarList3_SetProgressState failed with code 0x%x",(UINT)hr);
+            WgxDbgPrint(E"ITaskbarList3_SetProgressState failed with code 0x%x",(UINT)hr);
         }
         /* cleanup */
         ITaskbarList3_Release(iTBL);
     } else {
-        WgxDbgPrint("WgxSetTaskbarProgressState failed with code 0x%x",(UINT)hr);
+        WgxDbgPrint(E"WgxSetTaskbarProgressState failed with code 0x%x",(UINT)hr);
     }
     CoUninitialize();
     return result;
@@ -192,12 +192,12 @@ BOOL WgxSetTaskbarProgressValue(HWND hWindow,ULONGLONG completed,ULONGLONG total
         if(SUCCEEDED(hr)){
             result = TRUE;
         } else {
-            WgxDbgPrint("ITaskbarList3_SetProgressValue failed with code 0x%x",(UINT)hr);
+            WgxDbgPrint(E"ITaskbarList3_SetProgressValue failed with code 0x%x",(UINT)hr);
         }
         /* cleanup */
         ITaskbarList3_Release(iTBL);
     } else {
-        WgxDbgPrint("WgxSetTaskbarProgressValue failed with code 0x%x",(UINT)hr);
+        WgxDbgPrint(E"WgxSetTaskbarProgressValue failed with code 0x%x",(UINT)hr);
     }
     CoUninitialize();
     return result;

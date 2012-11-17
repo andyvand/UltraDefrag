@@ -159,9 +159,9 @@ int CreateMainMenu(void)
     OSVERSIONINFO osvi;
     int cx, id;
 
-    WgxDbgPrint("Menu row height ........ %d",GetSystemMetrics(SM_CYMENU));
-    WgxDbgPrint("Menu button size ....... %d x %d",GetSystemMetrics(SM_CXMENUSIZE),GetSystemMetrics(SM_CYMENUSIZE));
-    WgxDbgPrint("Menu check-mark size ... %d x %d",GetSystemMetrics(SM_CXMENUCHECK),GetSystemMetrics(SM_CYMENUCHECK));
+    WgxDbgPrint(I"Menu row height ........ %d",GetSystemMetrics(SM_CYMENU));
+    WgxDbgPrint(I"Menu button size ....... %d x %d",GetSystemMetrics(SM_CXMENUSIZE),GetSystemMetrics(SM_CYMENUSIZE));
+    WgxDbgPrint(I"Menu check-mark size ... %d x %d",GetSystemMetrics(SM_CXMENUCHECK),GetSystemMetrics(SM_CYMENUCHECK));
 
     ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);

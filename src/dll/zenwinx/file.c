@@ -46,7 +46,7 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
 
     RtlInitAnsiString(&as,filename);
     if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        DebugPrint("winx_fopen: cannot open %s: not enough memory",filename);
+        DebugPrint(E"winx_fopen: cannot open %s: not enough memory",filename);
         return NULL;
     }
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
@@ -86,13 +86,13 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
             );
     RtlFreeUnicodeString(&us);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,"winx_fopen: cannot open %s",filename);
+        DebugPrintEx(status,E"winx_fopen: cannot open %s",filename);
         return NULL;
     }
     f = (WINX_FILE *)winx_malloc(sizeof(WINX_FILE));
     if(!f){
         NtClose(hFile);
-        DebugPrint("winx_fopen: cannot open %s: not enough memory",filename);
+        DebugPrint(E"winx_fopen: cannot open %s: not enough memory",filename);
         return NULL;
     }
     f->hFile = hFile;
@@ -128,7 +128,7 @@ WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size)
     /* allocate memory */
     f->io_buffer = winx_malloc(buffer_size);
     if(f->io_buffer == NULL){
-        DebugPrint("winx_fbopen: cannot allocate %u bytes of memory",buffer_size);
+        DebugPrint(E"winx_fbopen: cannot allocate %u bytes of memory",buffer_size);
         winx_fclose(f);
         return NULL;
     }
@@ -154,7 +154,7 @@ size_t winx_fread(void *buffer,size_t size,size_t count,WINX_FILE *f)
         if(NT_SUCCESS(status)) status = iosb.Status;
     }
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,"winx_fread: cannot read from a file");
+        DebugPrintEx(status,E"winx_fread: cannot read from a file");
         return 0;
     }
     if(iosb.Information == 0){ /* encountered on x64 XP */
@@ -182,13 +182,13 @@ static size_t winx_fwrite_helper(const void *buffer,size_t size,size_t count,WIN
     status = NtWriteFile(f->hFile,NULL,NULL,NULL,&iosb,
              (void *)buffer,size * count,&f->woffset,NULL);
     if(NT_SUCCESS(status)){
-        /*DebugPrint("waiting for %p at %I64u started",f,f->woffset.QuadPart);*/
+        /*DebugPrint(D"waiting for %p at %I64u started",f,f->woffset.QuadPart);*/
         status = NtWaitForSingleObject(f->hFile,FALSE,NULL);
-        /*DebugPrint("waiting for %p at %I64u completed",f,f->woffset.QuadPart);*/
+        /*DebugPrint(D"waiting for %p at %I64u completed",f,f->woffset.QuadPart);*/
         if(NT_SUCCESS(status)) status = iosb.Status;
     }
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,"winx_fwrite_helper: cannot write to a file");
+        DebugPrintEx(status,E"winx_fwrite_helper: cannot write to a file");
         return 0;
     }
     if(iosb.Information == 0){ /* encountered on x64 XP */
@@ -304,9 +304,9 @@ int winx_ioctl(WINX_FILE *f,
     }
     if(!NT_SUCCESS(Status)){
         if(description)
-            DebugPrintEx(Status,"winx_ioctl: %s failed",description);
+            DebugPrintEx(Status,E"winx_ioctl: %s failed",description);
         else
-            DebugPrintEx(Status,"winx_ioctl: IOCTL %u failed",code);
+            DebugPrintEx(Status,E"winx_ioctl: IOCTL %u failed",code);
         return (-1);
     }
     if(pbytes_returned) *pbytes_returned = (int)iosb.Information;
@@ -326,7 +326,7 @@ int winx_fflush(WINX_FILE *f)
 
     Status = NtFlushBuffersFile(f->hFile,&iosb);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"winx_fflush: NtFlushBuffersFile failed");
+        DebugPrintEx(Status,E"winx_fflush: NtFlushBuffersFile failed");
         return (-1);
     }
     return 0;
@@ -351,7 +351,7 @@ ULONGLONG winx_fsize(WINX_FILE *f)
         &fsi,sizeof(FILE_STANDARD_INFORMATION),
         FileStandardInformation);
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,"winx_fsize: NtQueryInformationFile(FileStandardInformation) failed");
+        DebugPrintEx(status,E"winx_fsize: NtQueryInformationFile(FileStandardInformation) failed");
         return 0;
     }
     return fsi.EndOfFile.QuadPart;
@@ -396,7 +396,7 @@ int winx_create_directory(const char *path)
 
     RtlInitAnsiString(&as,path);
     if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        DebugPrint("winx_create_directory: cannot create %s: not enough memory",path);
+        DebugPrint(E"winx_create_directory: cannot create %s: not enough memory",path);
         return (-1);
     }
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
@@ -420,7 +420,7 @@ int winx_create_directory(const char *path)
     }
     /* if it already exists then return success */
     if(status == STATUS_OBJECT_NAME_COLLISION) return 0;
-    DebugPrintEx(status,"winx_create_directory: cannot create %s",path);
+    DebugPrintEx(status,E"winx_create_directory: cannot create %s",path);
     return (-1);
 }
 
@@ -440,7 +440,7 @@ int winx_delete_file(const char *filename)
 
     RtlInitAnsiString(&as,filename);
     if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        DebugPrint("winx_delete_file: cannot delete %s: not enough memory",filename);
+        DebugPrint(E"winx_delete_file: cannot delete %s: not enough memory",filename);
         return (-1);
     }
 
@@ -448,7 +448,7 @@ int winx_delete_file(const char *filename)
     status = NtDeleteFile(&oa);
     RtlFreeUnicodeString(&us);
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,"winx_delete_file: cannot delete %s",filename);
+        DebugPrintEx(status,E"winx_delete_file: cannot delete %s",filename);
         return (-1);
     }
     return 0;
@@ -665,7 +665,7 @@ NTSTATUS winx_defrag_fopen(winx_file_info *f,int action,HANDLE *phandle)
                             special_file_names[i].accepted_name);
                         buffer[MAX_PATH] = 0;
                         path = buffer;
-                        DebugPrint("winx_defrag_fopen: %ws used instead of %ws",path,f->path);
+                        DebugPrint(I"winx_defrag_fopen: %ws used instead of %ws",path,f->path);
                         break;
                     }
                 }

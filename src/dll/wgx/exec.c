@@ -49,7 +49,7 @@ BOOL WgxCreateProcess(char *cmd,char *args)
     /* validate arguments */
     if(cmd == NULL){
         error = ERROR_INVALID_PARAMETER;
-        WgxDbgPrint("WgxCreateProcess: cmd == NULL");
+        WgxDbgPrint(E"WgxCreateProcess: cmd == NULL");
         goto done;
     }
     if(args == NULL)
@@ -60,7 +60,7 @@ BOOL WgxCreateProcess(char *cmd,char *args)
     cmdline = malloc(MAX_CMD_LENGTH);
     if(command == NULL || cmdline == NULL){
         error = ERROR_NOT_ENOUGH_MEMORY;
-        WgxDbgPrint("WgxCreateProcess: not enough memory for %s",cmd);
+        WgxDbgPrint(E"WgxCreateProcess: not enough memory for %s",cmd);
         goto done;
     }
     
@@ -186,7 +186,7 @@ BOOL WgxCheckAdminRights(void)
             goto done;
         }
         if(!IsMember){
-            WgxDbgPrint("WgxCheckAdminRights: the user is not a member of administrators group");
+            WgxDbgPrint(I"WgxCheckAdminRights: the user is not a member of administrators group");
             goto done;
         }
     } else {
@@ -201,14 +201,14 @@ BOOL WgxCheckAdminRights(void)
             if(!api_result){
                 if(bytes_needed <= bytes_allocated){
                     /* the call needs smaller buffer?? */
-                    WgxDbgPrint("WgxCheckAdminRights: GetTokenInformation failed (requested smaller buffer)");
+                    WgxDbgPrint(E"WgxCheckAdminRights: GetTokenInformation failed (requested smaller buffer)");
                     goto done;
                 }
                 /* the call needs larger buffer */
                 free(ptg);
                 ptg = malloc(bytes_needed);
                 if(ptg == NULL){
-                    WgxDbgPrint("WgxCheckAdminRights: not enough memory");
+                    WgxDbgPrint(E"WgxCheckAdminRights: not enough memory");
                     goto done;
                 }
                 bytes_allocated = bytes_needed;
@@ -217,7 +217,7 @@ BOOL WgxCheckAdminRights(void)
             break;
         } while(1);
         if(ptg == NULL){
-            WgxDbgPrint("WgxCheckAdminRights: GetTokenInformation failed (requested no buffer)");
+            WgxDbgPrint(E"WgxCheckAdminRights: GetTokenInformation failed (requested no buffer)");
             goto done;
         }
         for(j = 0; j < ptg->GroupCount; j++){
@@ -226,7 +226,7 @@ BOOL WgxCheckAdminRights(void)
                 goto done;
             }
         }
-        WgxDbgPrint("WgxCheckAdminRights: the user is not a member of administrators group");
+        WgxDbgPrint(I"WgxCheckAdminRights: the user is not a member of administrators group");
         goto done;
     }
     

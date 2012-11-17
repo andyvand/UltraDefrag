@@ -24,6 +24,11 @@
  * in contrary to OutputDebugString which cannot
  * be called safely from DllMain - it may crash
  * the application in some cases (confirmed on w2k).
+ * @note A few prefixes are defined for the debugging
+ * messages. They're listed in ../../include/dbg-prefixes.h
+ * file and are intended for easier analysis of logs. To keep
+ * logs clean always use one of those prefixes with messages
+ * passed to WgxDbgPrint routine.
  * @addtogroup Debug
  * @{
  */
@@ -69,7 +74,7 @@ void WgxDbgPrint(char *format, ...)
 
     msg = malloc(DBG_BUFFER_SIZE);
     if(msg == NULL){
-        DbgPrintHandler("Cannot allocate memory for WgxDbgPrint!");
+        DbgPrintHandler(E"Not enough memory for WgxDbgPrint!");
         return;
     }
 
@@ -102,7 +107,7 @@ void WgxDbgPrintLastError(char *format, ...)
 
     msg = malloc(DBG_BUFFER_SIZE);
     if(msg == NULL){
-        DbgPrintHandler("Cannot allocate memory for WgxDbgPrintLastError!");
+        DbgPrintHandler(E"Not enough memory for WgxDbgPrintLastError!");
         return;
     }
 
@@ -122,7 +127,7 @@ void WgxDbgPrintLastError(char *format, ...)
 
     /* send formatted string to the debugger */
     SetLastError(error);
-    DbgPrintHandler("%s",msg);
+    DbgPrintHandler(E"%s",msg);
     free(msg);
 }
 
@@ -153,7 +158,7 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
     msg = malloc(DBG_BUFFER_SIZE);
     if(msg == NULL){
         if(DbgPrintHandler)
-            DbgPrintHandler("Cannot allocate memory for WgxDisplayLastError (case 1)!");
+            DbgPrintHandler(E"Not enough memory for WgxDisplayLastError (case 1)!");
         return 0;
     }
 
@@ -172,7 +177,7 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
             strcat(msg,seq);
         }
         SetLastError(error);
-        DbgPrintHandler("%s",msg);
+        DbgPrintHandler(E"%s",msg);
         msg[length] = 0;
     }    
     
@@ -180,7 +185,7 @@ int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...)
     umsg = malloc(DBG_BUFFER_SIZE * sizeof(wchar_t));
     if(umsg == NULL){
         if(DbgPrintHandler)
-            DbgPrintHandler("Cannot allocate memory for WgxDisplayLastError (case 2)!");
+            DbgPrintHandler(E"Not enough memory for WgxDisplayLastError (case 2)!");
         free(msg);
         return 0;
     }

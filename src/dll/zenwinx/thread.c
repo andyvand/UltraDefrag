@@ -53,7 +53,7 @@ int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter)
     Status = RtlCreateUserThread(NtCurrentProcess(),NULL,
                     0,0,0,0,start_addr,parameter,&hThread,NULL);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"winx_create_thread: cannot create thread");
+        DebugPrintEx(Status,E"winx_create_thread: cannot create thread");
         return (-1);
     }
     NtCloseSafe(hThread);
@@ -74,7 +74,7 @@ void winx_exit_thread(NTSTATUS status)
 {
     NTSTATUS Status = ZwTerminateThread(NtCurrentThread(),status);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"winx_exit_thread: cannot terminate thread");
+        DebugPrintEx(Status,E"winx_exit_thread: cannot terminate thread");
     }
 }
 

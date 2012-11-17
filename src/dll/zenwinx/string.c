@@ -475,7 +475,7 @@ int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags
     /* make a copy of the string */
     s = winx_wcsdup(string);
     if(s == NULL){
-        DebugPrint("winx_patcomp: cannot allocate %u bytes of memory",
+        DebugPrint(E"winx_patcomp: cannot allocate %u bytes of memory",
             (wcslen(string) + 1) * sizeof(wchar_t));
         return (-1);
     }
@@ -502,7 +502,7 @@ int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags
     /* build array of patterns */
     patterns->array = winx_malloc(patterns->count * sizeof(wchar_t *));
     if(patterns->array == NULL){
-        DebugPrint("winx_patcomp: cannot allocate %u bytes of memory",
+        DebugPrint(E"winx_patcomp: cannot allocate %u bytes of memory",
             patterns->count * sizeof(wchar_t *));
         winx_free(s);
         patterns->count = 0;

@@ -63,12 +63,12 @@ static char *get_report_path(udefrag_job_parameters *jp)
         /* portable version? */
         winx_get_module_filename(buffer);
         if(buffer[0] == 0){
-            DebugPrint("get_report_path: cannot get program\'s path");
+            DebugPrint(E"get_report_path: cannot get program\'s path");
         } else {
             winx_path_remove_filename(buffer);
             path = winx_sprintf("%ws\\reports",buffer);
             if(path == NULL){
-                DebugPrint("get_report_path: not enough memory (case 1)");
+                DebugPrint(E"get_report_path: not enough memory (case 1)");
             } else {
                 (void)winx_create_directory(path);
                 winx_free(path);
@@ -76,14 +76,14 @@ static char *get_report_path(udefrag_job_parameters *jp)
             path = winx_sprintf("%ws\\reports\\fraglist_%c.luar",
                 buffer,winx_tolower(jp->volume_letter));
             if(path == NULL){
-                DebugPrint("get_report_path: not enough memory (case 2)");
+                DebugPrint(E"get_report_path: not enough memory (case 2)");
             }
         }
     } else {
         /* regular installation */
         path = winx_sprintf("\\??\\%ws\\reports",instdir);
         if(path == NULL){
-            DebugPrint("get_report_path: not enough memory (case 3)");
+            DebugPrint(E"get_report_path: not enough memory (case 3)");
         } else {
             (void)winx_create_directory(path);
             winx_free(path);
@@ -91,7 +91,7 @@ static char *get_report_path(udefrag_job_parameters *jp)
         path = winx_sprintf("\\??\\%ws\\reports\\fraglist_%c.luar",
             instdir,winx_tolower(jp->volume_letter));
         if(path == NULL){
-            DebugPrint("get_report_path: not enough memory (case 4)");
+            DebugPrint(E"get_report_path: not enough memory (case 4)");
         }
         winx_free(instdir);
     }
@@ -118,7 +118,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     
     utf8_path = winx_malloc(MAX_UTF8_PATH_LENGTH);
     if(utf8_path == NULL){
-        DebugPrint("save_lua_report: not enough memory");
+        DebugPrint(E"save_lua_report: not enough memory");
         return (-1);
     }
     
@@ -231,7 +231,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     (void)strcpy(buffer,"}\r\n");
     (void)winx_fwrite(buffer,1,strlen(buffer),f);
 
-    DebugPrint("report saved to %s",path);
+    DebugPrint(I"report saved to %s",path);
     winx_fclose(f);
     winx_free(path);
     winx_free(utf8_path);
@@ -247,20 +247,20 @@ int save_fragmentation_report(udefrag_job_parameters *jp)
     int result = 0;
     ULONGLONG time;
 
-    winx_dbg_print_header(0,0,"*");
+    winx_dbg_print_header(0,0,I"*");
     if(jp->job_type != ANALYSIS_JOB)
         dbg_print_file_counters(jp);
     
     if(jp->udo.disable_reports)
         return 0;
     
-    winx_dbg_print_header(0,0,"*");
-    winx_dbg_print_header(0,0,"report saving started");
+    winx_dbg_print_header(0,0,I"*");
+    winx_dbg_print_header(0,0,I"report saving started");
     time = winx_xtime();
 
     result = save_lua_report(jp);
     
-    winx_dbg_print_header(0,0,"report saved in %I64u ms",
+    winx_dbg_print_header(0,0,I"report saved in %I64u ms",
         winx_xtime() - time);
     return result;
 }
@@ -281,7 +281,7 @@ void remove_fragmentation_report(udefrag_job_parameters *jp)
     char *new_path, *ext_path;
     int i;
     
-    winx_dbg_print_header(0,0,"*");
+    winx_dbg_print_header(0,0,I"*");
     
     /* remove old reports from the root directory */
     for(i = 0; paths[i]; i++){

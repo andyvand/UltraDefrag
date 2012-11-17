@@ -122,7 +122,7 @@ static ULONGLONG advance_vcn(winx_file_info *f,ULONGLONG vcn,ULONGLONG n)
         }
         if(block->next == f->disp.blockmap) break;
     }
-    DebugPrint("advance_vcn: vcn calculation failed for %ws",f->path);
+    DebugPrint(E"advance_vcn: vcn calculation failed for %ws",f->path);
     return 0;
 }
 
@@ -365,10 +365,10 @@ static int optimize_directories(udefrag_job_parameters *jp)
     }
     
     /* display amount of moved data and number of optimized directories */
-    DebugPrint("%I64u directories optimized",optimized_dirs);
-    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    DebugPrint(I"%I64u directories optimized",optimized_dirs);
+    DebugPrint(I"%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s moved",buffer);
+    DebugPrint(I"%s moved",buffer);
     stop_timing("directories optimization",time,jp);
 
     /* cleanup */
@@ -387,7 +387,7 @@ static void list_mft_blocks(winx_file_info *mft_file)
     ULONGLONG i;
 
     for(block = mft_file->disp.blockmap, i = 0; block; block = block->next, i++){
-        DebugPrint("mft part #%I64u start: %I64u, length: %I64u",
+        DebugPrint(I"mft part #%I64u start: %I64u, length: %I64u",
             i,block->lcn,block->length);
         if(block->next == mft_file->disp.blockmap) break;
     }
@@ -452,23 +452,23 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
     
     /* do the job */
     if(mft_file == NULL){
-        DebugPrint("optimize_mft_routine: cannot find $mft file");
+        DebugPrint(E"optimize_mft_routine: cannot find $mft file");
         result = -1;
     } else {
-        DebugPrint("optimize_mft: initial $mft map:");
+        DebugPrint(I"optimize_mft: initial $mft map:");
         list_mft_blocks(mft_file);
 
         (void)optimize_file(mft_file,jp);
         result = 0;
 
-        DebugPrint("optimize_mft: final $mft map:");
+        DebugPrint(I"optimize_mft: final $mft map:");
         list_mft_blocks(mft_file);
     }
 
     /* display amount of moved data */
-    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    DebugPrint(I"%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s moved",buffer);
+    DebugPrint(I"%s moved",buffer);
     stop_timing("mft optimization",time,jp);
 
     /* cleanup */
@@ -602,9 +602,9 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     }
     
     /* display amount of moved data */
-    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    DebugPrint(I"%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s moved",buffer);
+    DebugPrint(I"%s moved",buffer);
     stop_timing("file moving to front",time,jp);
 }
 
@@ -738,9 +738,9 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
 
 done:
     /* display amount of moved data */
-    DebugPrint("%I64u clusters moved",jp->pi.moved_clusters);
+    DebugPrint(I"%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s moved",buffer);
+    DebugPrint(I"%s moved",buffer);
     stop_timing("file moving to end",time,jp);
 }
 
@@ -772,7 +772,7 @@ static void cut_off_group_of_files(udefrag_job_parameters *jp,
         file = prb_t_next(&t);
     }
     if(n > 0){
-        DebugPrint("cut_off_group_of_files: cannot find file in tree");
+        DebugPrint(E"cut_off_group_of_files: cannot find file in tree");
     }
 }
 
@@ -888,9 +888,9 @@ static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table
     }
 
 done:
-    DebugPrint("%I64u clusters skipped",jp->already_optimized_clusters);
+    DebugPrint(I"%I64u clusters skipped",jp->already_optimized_clusters);
     winx_bytes_to_hr(jp->already_optimized_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("%s skipped",buffer);
+    DebugPrint(I"%s skipped",buffer);
     stop_timing("cutting off sorted out files",time,jp);
 }
 
@@ -973,7 +973,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
     /* build tree of files sorted by the requested criteria */
     pt = prb_create(files_compare,(void *)jp,NULL);
     if(pt == NULL){
-        DebugPrint("optimize_routine: cannot create binary tree");
+        DebugPrint(E"optimize_routine: cannot create binary tree");
         result = UDEFRAG_NO_MEM;
         goto done;
     }
@@ -983,12 +983,12 @@ static int optimize_routine(udefrag_job_parameters *jp)
             if(can_move_entirely(f,jp)){
                 p = prb_probe(pt,(void *)f);
                 if(p == NULL){
-                    DebugPrint("optimize_routine: cannot add file to the tree");
+                    DebugPrint(E"optimize_routine: cannot add file to the tree");
                     result = UDEFRAG_NO_MEM;
                     goto done;
                 }
                 if(*p != f){
-                    DebugPrint("optimize_routine: a duplicate found for %ws",f->path);
+                    DebugPrint(E"optimize_routine: a duplicate found for %ws",f->path);
                 }
             }
         }
@@ -1005,7 +1005,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
     if(prb_t_first(&t,pt) == NULL) goto done;
     jp->pi.pass_number = 0; start_lcn = end_lcn = 0;
     while(!jp->termination_router((void *)jp)){
-        winx_dbg_print_header(0,0,"volume optimization pass #%u",jp->pi.pass_number);
+        winx_dbg_print_header(0,0,I"volume optimization pass #%u",jp->pi.pass_number);
         jp->pi.clusters_to_process = \
             jp->pi.processed_clusters \
             + count_clusters(jp,start_lcn) \
@@ -1130,7 +1130,7 @@ int optimize_mft(udefrag_job_parameters *jp)
 
     /* mft optimization is NTFS specific task */
     if(jp->fs_type != FS_NTFS){
-        DebugPrint("MFT can be optimized on NTFS disks only");
+        DebugPrint(E"MFT can be optimized on NTFS disks only");
         jp->pi.processed_clusters = 0;
         jp->pi.clusters_to_process = 1;
         jp->pi.current_operation = VOLUME_OPTIMIZATION;

@@ -106,8 +106,8 @@ static int InitSynchObjects(void)
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot create taskbar icon synchronization event!");
         WgxDbgPrintLastError("InitSynchObjects: taskbar icon event creation failed");
-        WgxDbgPrint("no taskbar icon overlays will be shown");
-        WgxDbgPrint("and no system tray icon will be shown");
+        WgxDbgPrint(I"no taskbar icon overlays will be shown");
+        WgxDbgPrint(I"and no system tray icon will be shown");
         DestroySynchObjects();
         return (-1);
     }
@@ -227,11 +227,11 @@ static int IsPortable(void)
     }
     
     if(udefrag_wcsicmp(path,cd) == 0){
-        WgxDbgPrint("Install location \"%ws\" matches \"%ws\", so it isn't portable\n",path,cd);
+        WgxDbgPrint(I"Install location \"%ws\" matches \"%ws\", so it isn't portable\n",path,cd);
         return 0;
     }
     
-    WgxDbgPrint("Install location \"%ws\" differs from \"%ws\", so it is portable\n",path,cd);
+    WgxDbgPrint(I"Install location \"%ws\" differs from \"%ws\", so it is portable\n",path,cd);
     return 1;
 }
 
@@ -255,7 +255,7 @@ static int IsBtdInstalled(void)
 
     f = fopen(path,"rb");
     if(f == NULL){
-        WgxDbgPrint("Cannot open %s => the boot time defragmenter is not installed\n",path);
+        WgxDbgPrint(I"Cannot open %s => the boot time defragmenter is not installed\n",path);
         return 0;
     }
     
@@ -364,7 +364,7 @@ void ResizeMainWindow(int force)
         return; /* this happens on early stages of window initialization */
     
     if(!GetClientRect(hWindow,&rc)){
-        WgxDbgPrint("GetClientRect failed in RepositionMainWindowControls()!\n");
+        WgxDbgPrintLastError("RepositionMainWindowControls: GetClientRect failed");
         return;
     }
     
@@ -439,7 +439,7 @@ int CreateMainWindow(int nShowCmd)
         WgxDbgPrintLastError("CreateMainWindow: cannot register TaskbarCreated message");
         /* turn off minimize to tray option */
         minimize_to_system_tray = 0;
-        WgxDbgPrint("CreateMainWindow: minimize_to_system_tray option turned off");
+        WgxDbgPrint(I"CreateMainWindow: minimize_to_system_tray option turned off");
     }
 
     if(dry_run == 0){
@@ -617,7 +617,7 @@ void OpenWebPage(char *page, char *anchor)
         }
     }
     path[INTERNET_MAX_URL_LENGTH - 1] = 0;
-    /*WgxDbgPrint("%ws",path);*/
+    /*WgxDbgPrint(D"%ws",path);*/
 
     if (anchor != NULL && exe[0] != 0)
         hApp = ShellExecuteW(hWindow,NULL,exe,path,NULL,SW_SHOW);
@@ -1266,7 +1266,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                 memcpy((void *)&r_rc,(void *)&win_rc,sizeof(RECT));
             ResizeMainWindow(0);
         } else {
-            WgxDbgPrint("Wrong window dimensions on WM_SIZE message!\n");
+            WgxDbgPrint(E"Wrong window dimensions on WM_SIZE message!\n");
         }
         /* hide window on minimization when minimize_to_system_tray is turned on */
         if(wParam == SIZE_MINIMIZED && minimize_to_system_tray){

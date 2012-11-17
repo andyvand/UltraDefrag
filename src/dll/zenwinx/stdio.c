@@ -243,7 +243,7 @@ int winx_gets(char *string,int n)
 void winx_init_history(winx_history *h)
 {
     if(h == NULL){
-        DebugPrint("winx_init_history: h = NULL!");
+        DebugPrint(E"winx_init_history: h = NULL!");
         return;
     }
     h->head = h->current = NULL;
@@ -262,7 +262,7 @@ void winx_destroy_history(winx_history *h)
     winx_history_entry *entry;
     
     if(h == NULL){
-        DebugPrint("winx_destroy_history: h = NULL!");
+        DebugPrint(E"winx_destroy_history: h = NULL!");
         return;
     }
 
@@ -295,7 +295,7 @@ static void winx_add_history_entry(winx_history *h,char *string)
     entry->string = winx_strdup(string);
     if(entry->string == NULL){
         length = strlen(string) + 1;
-        DebugPrint("winx_add_winx_history_entry: cannot allocate %u bytes of memory",length);
+        DebugPrint(E"winx_add_winx_history_entry: cannot allocate %u bytes of memory",length);
         winx_printf("\nCannot allocate %u bytes of memory for winx_add_winx_history_entry()!\n",length);
         winx_list_remove((list_entry **)(void *)&h->head,(list_entry *)entry);
     } else {
@@ -549,7 +549,7 @@ int winx_print_strings(char **strings,int line_width,
     
     /* check the main parameter for correctness */
     if(!strings){
-        DebugPrint("winx_print_strings: strings = NULL!");
+        DebugPrint(E"winx_print_strings: strings = NULL!");
         return (-1);
     }
     
@@ -562,11 +562,11 @@ int winx_print_strings(char **strings,int line_width,
 
     /* check other parameters */
     if(!line_width){
-        DebugPrint("winx_print_strings: line_width = 0!");
+        DebugPrint(E"winx_print_strings: line_width = 0!");
         return (-1);
     }
     if(!max_rows){
-        DebugPrint("winx_print_strings: max_rows = 0!");
+        DebugPrint(E"winx_print_strings: max_rows = 0!");
         return (-1);
     }
     if(prompt == NULL) prompt = DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY;
@@ -577,14 +577,14 @@ int winx_print_strings(char **strings,int line_width,
     /* allocate memory for line buffer */
     line_buffer = winx_malloc(line_width + 1);
     if(!line_buffer){
-        DebugPrint("winx_print_strings: cannot allocate %u bytes of memory",
+        DebugPrint(E"winx_print_strings: cannot allocate %u bytes of memory",
             line_width + 1);
         return (-1);
     }
     /* allocate memory for second ancillary buffer */
     second_buffer = winx_malloc(line_width + 1);
     if(!second_buffer){
-        DebugPrint("winx_print_strings: cannot allocate %u bytes of memory",
+        DebugPrint(E"winx_print_strings: cannot allocate %u bytes of memory",
             line_width + 1);
         winx_free(line_buffer);
         return (-1);
