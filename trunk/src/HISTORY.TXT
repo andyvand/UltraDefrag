@@ -12,6 +12,9 @@
       an appropriate section added to guiopts.lua file
     - bug fix: UD_IN_FILTER forced to be not ignored when individual
       files/directories are specified on the command line
+    - bug fix: UD_SORTING and UD_SORTING_ORDER environment variables
+      forced to be set properly on GUI startup according to the Preview
+      menu selections
     - added prefixes for all the debugging messages for easier analysis of logs
 
     - Internals: obsolete winx_virtual_alloc, winx_virtual_free, winx_prompt_ex,

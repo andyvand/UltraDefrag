@@ -226,20 +226,29 @@ int CreateMainMenu(void)
         EnableMenuItem(hMainMenu,IDM_CFG_BOOT_SCRIPT,MF_BYCOMMAND | MF_GRAYED);
     }
     
-    if(sorting_flags & SORT_BY_PATH)
+    if(sorting_flags & SORT_BY_PATH){
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_CHECKED);
-    else if(sorting_flags & SORT_BY_SIZE)
+        (void)SetEnvironmentVariable("UD_SORTING","path");
+    } else if(sorting_flags & SORT_BY_SIZE){
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_CHECKED);
-    else if(sorting_flags & SORT_BY_CREATION_TIME)
+        (void)SetEnvironmentVariable("UD_SORTING","size");
+    } else if(sorting_flags & SORT_BY_CREATION_TIME){
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_CHECKED);
-    else if(sorting_flags & SORT_BY_MODIFICATION_TIME)
+        (void)SetEnvironmentVariable("UD_SORTING","c_time");
+    } else if(sorting_flags & SORT_BY_MODIFICATION_TIME){
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_CHECKED);
-    else if(sorting_flags & SORT_BY_ACCESS_TIME)
+        (void)SetEnvironmentVariable("UD_SORTING","m_time");
+    } else if(sorting_flags & SORT_BY_ACCESS_TIME){
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_CHECKED);
-    if(sorting_flags & SORT_ASCENDING)
+        (void)SetEnvironmentVariable("UD_SORTING","a_time");
+    }
+    if(sorting_flags & SORT_ASCENDING){
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_ASCENDING,MF_BYCOMMAND | MF_CHECKED);
-    else
+        (void)SetEnvironmentVariable("UD_SORTING_ORDER","asc");
+    } else {
         CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_DESCENDING,MF_BYCOMMAND | MF_CHECKED);
+        (void)SetEnvironmentVariable("UD_SORTING_ORDER","desc");
+    }
 
     if(!DrawMenuBar(hWindow))
         WgxDbgPrintLastError("Cannot redraw main menu");
