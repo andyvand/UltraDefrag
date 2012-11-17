@@ -26,6 +26,10 @@
  * Size of the log is limited by available memory. This
  * technique prevents the log file update on disk, thus
  * it makes the disk defragmentation more efficient.
+ * @note A few prefixes are defined for the debugging
+ * messages. They're listed in ../../include/dbg-prefixes.h
+ * file and are intended for easier analysis of logs. To keep
+ * logs clean always use one of those prefixes.
  * @addtogroup Debug
  * @{
  */
@@ -402,7 +406,7 @@ no_description:
  * @code
  * NTSTATUS Status = NtCreateFile(...);
  * if(!NT_SUCCESS(Status)){
- *     winx_dbg_print_ex(Status,"Cannot create %s file",filename);
+ *     winx_dbg_print_ex(Status,E"Cannot create %s file",filename);
  * }
  * @endcode
  */
@@ -439,6 +443,8 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
 {
     va_list arg;
     char *string;
+    char *prefix;
+    char *body;
     int length;
     char *buffer;
     int left;
@@ -452,7 +458,16 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
         va_start(arg,format);
         string = winx_vsprintf(format,arg);
         if(string){
-            length = strlen(string);
+            /* print prefix before decorated body */
+            prefix = ""; body = string;
+            if(strstr(string,I) == string){
+                prefix = I; body += strlen(I);
+            } else if(strstr(string,E) == string){
+                prefix = E; body += strlen(E);
+            } else if(strstr(string,D) == string){
+                prefix = D; body += strlen(D);
+            }
+            length = strlen(body);
             if(length > (width - 4)){
                 /* print string not decorated */
                 winx_dbg_print("%s",string);
@@ -470,11 +485,11 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
                     left = (width - length - 2) / 2;
                     buffer[left] = 0x20;
                     /* paste string */
-                    memcpy(buffer + left + 1,string,length);
+                    memcpy(buffer + left + 1,body,length);
                     /* paste closing space */
                     buffer[left + 1 + length] = 0x20;
                     /* print decorated string */
-                    winx_dbg_print("%s",buffer);
+                    winx_dbg_print("%s%s",prefix,buffer);
                     winx_free(buffer);
                 }
             }
@@ -594,7 +609,7 @@ static void flush_dbg_log(int already_synchronized)
     /* synchronize with other threads */
     if(!already_synchronized){
         if(winx_acquire_spin_lock(path_lock,INFINITE) < 0){
-            DebugPrint("flush_dbg_log: synchronization failed");
+            DebugPrint(E"flush_dbg_log: synchronization failed");
             winx_print("\nflush_dbg_log: synchronization failed!\n");
             return;
         }
@@ -623,7 +638,7 @@ static void flush_dbg_log(int already_synchronized)
         lb = strrchr(log_path,'\\');
         if(lb) *lb = 0;
         if(winx_create_path(log_path) < 0){
-            DebugPrint("flush_old_dbg_log: cannot create directory tree for log path");
+            DebugPrint(E"flush_old_dbg_log: cannot create directory tree for log path");
             winx_print("\nflush_old_dbg_log: cannot create directory tree for log path\n");
         }
         if(lb) *lb = '\\';
@@ -694,7 +709,7 @@ void winx_set_dbg_log(char *path)
     
     /* synchronize with other threads */
     if(winx_acquire_spin_lock(path_lock,INFINITE) < 0){
-        DebugPrint("winx_enable_dbg_log: synchronization failed");
+        DebugPrint(E"winx_enable_dbg_log: synchronization failed");
         winx_print("\nwinx_enable_dbg_log: synchronization failed!\n");
         return;
     }
@@ -713,11 +728,11 @@ void winx_set_dbg_log(char *path)
         log_path = NULL;
     }
     if(logging_enabled){
-        DebugPrint("winx_enable_dbg_log: log_path = %s",path);
+        DebugPrint(I"winx_enable_dbg_log: log_path = %s",path);
         winx_printf("\nUsing log file \"%s\" ...\n",&path[4]);
         log_path = winx_strdup(path);
         if(log_path == NULL){
-            DebugPrint("winx_enable_dbg_log: cannot allocate memory for log path");
+            DebugPrint(E"winx_enable_dbg_log: cannot allocate memory for log path");
             winx_print("\nCannot allocate memory for log path!\n");
         }
     }

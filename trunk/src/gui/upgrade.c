@@ -85,16 +85,16 @@ static char *GetLatestVersion(void)
     version_ini_path[MAX_PATH] = 0;
     if(result != S_OK){
         if(result == E_OUTOFMEMORY)
-            WgxDbgPrint("GetLatestVersion: not enough memory for URLDownloadToCacheFile\n");
+            WgxDbgPrint(E"GetLatestVersion: not enough memory for URLDownloadToCacheFile\n");
         else
-            WgxDbgPrint("GetLatestVersion: URLDownloadToCacheFile failed\n");
+            WgxDbgPrint(E"GetLatestVersion: URLDownloadToCacheFile failed\n");
         return NULL;
     }
     
     /* open the file */
     f = fopen(version_ini_path,"rb");
     if(f == NULL){
-        WgxDbgPrint("GetLatestVersion: cannot open %s: %s\n",
+        WgxDbgPrint(E"GetLatestVersion: cannot open %s: %s\n",
             version_ini_path,_strerror(NULL));
         return NULL;
     }
@@ -105,9 +105,9 @@ static char *GetLatestVersion(void)
     /* remove cached data, otherwise it may not be loaded next time */
     (void)remove(version_ini_path);
     if(res == 0){
-        WgxDbgPrint("GetLatestVersion: cannot read %s\n",version_ini_path);
+        WgxDbgPrint(E"GetLatestVersion: cannot read %s\n",version_ini_path);
         if(feof(f))
-            WgxDbgPrint("File seems to be empty\n");
+            WgxDbgPrint(E"File seems to be empty\n");
         return NULL;
     }
     
@@ -145,12 +145,12 @@ static wchar_t *GetNewVersionAnnouncement(void)
     /*lv[2] = '4';*/
     res = sscanf(lv,"%u.%u.%u",&lmj,&lmn,&li);
     if(res != 3){
-        WgxDbgPrint("GetNewVersionAnnouncement: the first sscanf call returned %u\n",res);
+        WgxDbgPrint(E"GetNewVersionAnnouncement: the first sscanf call returned %u\n",res);
         return NULL;
     }
     res = sscanf(cv,"UltraDefrag %u.%u.%u",&cmj,&cmn,&ci);
     if(res != 3){
-        WgxDbgPrint("GetNewVersionAnnouncement: the second sscanf call returned %u\n",res);
+        WgxDbgPrint(E"GetNewVersionAnnouncement: the second sscanf call returned %u\n",res);
         return NULL;
     }
     string = _strdup(cv);
@@ -174,7 +174,7 @@ static wchar_t *GetNewVersionAnnouncement(void)
         announcement[MAX_ANNOUNCEMENT_LEN - 1] = 0;
         free(text);
         
-        WgxDbgPrint("GetNewVersionAnnouncement: upgrade to %s\n",lv);
+        WgxDbgPrint(I"GetNewVersionAnnouncement: upgrade to %s\n",lv);
         return announcement;
     }
     

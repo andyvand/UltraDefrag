@@ -55,11 +55,11 @@ static BOOL SendWebAnalyticsRequest(char *url)
     char path[MAX_PATH + 1] = {0};
     
     if(url == NULL){
-        WgxDbgPrint("SendWebAnalyticsRequest: URL = NULL\n");
+        WgxDbgPrint(E"SendWebAnalyticsRequest: URL = NULL\n");
         goto fail;
     }
     
-    WgxDbgPrint("SendWebAnalyticsRequest: URL = %s\n",url);
+    WgxDbgPrint(I"SendWebAnalyticsRequest: URL = %s\n",url);
     
     /* load urlmon.dll library */
     hUrlmonDLL = LoadLibrary("urlmon.dll");
@@ -80,9 +80,9 @@ static BOOL SendWebAnalyticsRequest(char *url)
     path[MAX_PATH] = 0;
     if(result != S_OK){
         if(result == E_OUTOFMEMORY)
-            WgxDbgPrint("SendWebAnalyticsRequest: not enough memory\n");
+            WgxDbgPrint(E"SendWebAnalyticsRequest: not enough memory\n");
         else
-            WgxDbgPrint("SendWebAnalyticsRequest: URLDownloadToCacheFile failed\n");
+            WgxDbgPrint(E"SendWebAnalyticsRequest: URLDownloadToCacheFile failed\n");
         goto fail;
     }
     
@@ -111,7 +111,7 @@ static char *build_ga_request(char *hostname,char *path,char *account)
     
     ga_request = malloc(MAX_GA_REQUEST_LENGTH);
     if(ga_request == NULL){
-        WgxDbgPrint("build_ga_request: cannot allocate memory");
+        WgxDbgPrint(E"build_ga_request: not enough memory\n");
         return NULL;
     }
     

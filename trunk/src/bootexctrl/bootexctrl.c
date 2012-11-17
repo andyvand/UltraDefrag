@@ -54,6 +54,35 @@ void show_help(void)
         );
 }
 
+void dbg_print(char *format, ...)
+{
+    va_list arg;
+    char *buffer;
+    int size, result;
+    
+    if(format){
+        va_start(arg,format);
+        size = 128; /* set initial buffer size */
+        do {
+            buffer = malloc(size);
+            if(buffer == NULL) break;
+            memset(buffer,0,size); /* needed for _vsnprintf */
+            result = _vsnprintf(buffer,size,format,arg);
+            if(result != -1 && result != size){
+                OutputDebugString(buffer);
+                OutputDebugString("\n");
+                free(buffer);
+                break;
+            }
+            /* buffer is too small; try to allocate two times larger */
+            free(buffer);
+            size <<= 1;
+            if(size <= 0) break;
+        } while(1);
+        va_end(arg);
+    }
+}
+
 void DisplayLastError(wchar_t *caption)
 {
     wchar_t *msg;
@@ -397,6 +426,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 {
     /* strongly required! to be compatible with manifest */
     InitCommonControls();
+
+    WgxSetDbgPrintHandler(dbg_print);
 
     parse_cmdline();
 

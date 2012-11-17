@@ -162,7 +162,7 @@ static void update_progress(udefrag_progress_info *pi, void *p)
             job->map.buffer = malloc(pi->cluster_map_size);
         }
         if(job->map.buffer == NULL){
-            WgxDbgPrint("update_progress: cannot allocate %u bytes of memory\n",
+            WgxDbgPrint(E"update_progress: cannot allocate %u bytes of memory\n",
                 pi->cluster_map_size);
             job->map.size = 0;
         } else {
@@ -640,7 +640,7 @@ void RepairSelectedVolumes(void)
     buffer[MAX_CMD_LENGTH - 1] = 0;
     strcpy(args,buffer);
     
-    WgxDbgPrint("Command Line: %s", args);
+    WgxDbgPrint(I"Command Line: %s", args);
 
     if(!WgxCreateProcess("%windir%\\system32\\cmd.exe",args)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,

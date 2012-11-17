@@ -379,7 +379,7 @@ static int kb_open_internal(int device_number, int kbd_count)
                 0,FILE_OPEN/*1*/,FILE_DIRECTORY_FILE/*1*/,NULL,0);
     if(!NT_SUCCESS(Status)){
         if(device_number < kbd_count){
-            DebugPrintEx(Status,"Cannot open the keyboard %ws",device_name);
+            DebugPrintEx(Status,E"Cannot open the keyboard %ws",device_name);
             winx_printf("\nCannot open the keyboard %ws: %x!\n",
                 device_name,(UINT)Status);
             winx_printf("%s\n",winx_get_error_description((ULONG)Status));
@@ -389,7 +389,7 @@ static int kb_open_internal(int device_number, int kbd_count)
     
     /* ensure that we have opened a really connected keyboard */
     if(kb_check(hKbDevice) < 0){
-        DebugPrintEx(Status,"Invalid keyboard device %ws",device_name);
+        DebugPrintEx(Status,E"Invalid keyboard device %ws",device_name);
         winx_printf("\nInvalid keyboard device %ws: %x!\n",device_name,(UINT)Status);
         winx_printf("%s\n",winx_get_error_description((ULONG)Status));
         NtCloseSafe(hKbDevice);
@@ -405,7 +405,7 @@ static int kb_open_internal(int device_number, int kbd_count)
         &ObjectAttributes,SynchronizationEvent,0/*FALSE*/);
     if(!NT_SUCCESS(Status)){
         NtCloseSafe(hKbDevice);
-        DebugPrintEx(Status,"Cannot create kb_event%u",device_number);
+        DebugPrintEx(Status,E"Cannot create kb_event%u",device_number);
         winx_printf("\nCannot create kb_event%u: %x!\n",device_number,(UINT)Status);
         winx_printf("%s\n",winx_get_error_description((ULONG)Status));
         return (-1);
@@ -520,7 +520,7 @@ static int query_keyboard_count(void)
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtOpenKey(&hKey,KEY_QUERY_VALUE,&oa);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,"query_keyboard_count: cannot open %ws",us.Buffer);
+        DebugPrintEx(status,E"query_keyboard_count: cannot open %ws",us.Buffer);
         return kbdCount;
     }
 
@@ -528,13 +528,13 @@ static int query_keyboard_count(void)
     status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
             NULL,0,&data_size);
     if(status != STATUS_BUFFER_TOO_SMALL){
-        DebugPrintEx(status,"query_keyboard_count: cannot query Count value size");
+        DebugPrintEx(status,E"query_keyboard_count: cannot query Count value size");
         NtCloseSafe(hKey);
         return kbdCount;
     }
     data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
     if(data_buffer == NULL){
-        DebugPrint("query_keyboard_count: cannot allocate %u bytes of memory",data_size);
+        DebugPrint(E"query_keyboard_count: cannot allocate %u bytes of memory",data_size);
         NtCloseSafe(hKey);
         return kbdCount;
     }
@@ -543,14 +543,14 @@ static int query_keyboard_count(void)
     status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
             data_buffer,data_size,&data_size2);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,"query_keyboard_count: cannot query Count value");
+        DebugPrintEx(status,E"query_keyboard_count: cannot query Count value");
         winx_free(data_buffer);
         NtCloseSafe(hKey);
         return kbdCount;
     }
 
     if(data_buffer->Type != REG_DWORD){
-        DebugPrint("query_keyboard_count: Count value has wrong type 0x%x",
+        DebugPrint(E"query_keyboard_count: Count value has wrong type 0x%x",
                 data_buffer->Type);
         winx_free(data_buffer);
         NtCloseSafe(hKey);
@@ -558,7 +558,7 @@ static int query_keyboard_count(void)
     }
 
     kbdCount = (int)*(DWORD *)data_buffer->Data;
-    DebugPrint("query_keyboard_count: keyboard count is %u",kbdCount);
+    DebugPrint(I"query_keyboard_count: keyboard count is %u",kbdCount);
 
     winx_free(data_buffer);
     NtCloseSafe(hKey);

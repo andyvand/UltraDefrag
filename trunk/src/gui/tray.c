@@ -84,7 +84,7 @@ fail:
         WgxShowWindow(hWindow);
         /* turn off minimize to tray option */
         minimize_to_system_tray = 0;
-        WgxDbgPrint("ShowSystemTrayIcon: minimize_to_system_tray option turned off");
+        WgxDbgPrint(I"ShowSystemTrayIcon: minimize_to_system_tray option turned off");
     }
     return FALSE;
 }

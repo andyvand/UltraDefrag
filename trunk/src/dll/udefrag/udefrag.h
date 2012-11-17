@@ -24,6 +24,8 @@
 #ifndef _UDEFRAG_H_
 #define _UDEFRAG_H_
 
+#include "../../include/dbg-prefixes.h"
+
 /* debug print levels */
 #define DBG_NORMAL     0
 #define DBG_DETAILED   1
@@ -171,6 +173,10 @@ void udefrag_flush_dbg_log(void);
  * description.
  * - Not all system API set last status code.
  * Use winx_dbg_print_ex to catch the status for sure.
+ * - A few prefixes are defined for the debugging
+ * messages. They're listed in ../../include/dbg-prefixes.h
+ * file and are intended for easier analysis of logs. To keep
+ * logs clean always use one of those prefixes.
  */
 void udefrag_dbg_print(char *format, ...);
 

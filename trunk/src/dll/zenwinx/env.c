@@ -51,7 +51,7 @@ wchar_t *winx_getenv(wchar_t *name)
     
     value = winx_malloc(MAX_ENV_VALUE_LENGTH * sizeof(wchar_t));
     if(value == NULL){
-        DebugPrint("winx_getenv: not enough memory for %ws",name);
+        DebugPrint(E"winx_getenv: not enough memory for %ws",name);
         return NULL;
     }
 
@@ -61,7 +61,7 @@ wchar_t *winx_getenv(wchar_t *name)
     v.MaximumLength = MAX_ENV_VALUE_LENGTH * sizeof(wchar_t);
     Status = RtlQueryEnvironmentVariable_U(NULL,&n,&v);
     if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,"winx_getenv: cannot query %ws",name);
+        DebugPrintEx(Status,E"winx_getenv: cannot query %ws",name);
         winx_free(value);
         return NULL;
     }
@@ -102,7 +102,7 @@ int winx_setenv(wchar_t *name, wchar_t *value)
         status = RtlSetEnvironmentVariable(NULL,&n,NULL);
     }
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,"winx_setenv: cannot set %ws",name);
+        DebugPrintEx(status,E"winx_setenv: cannot set %ws",name);
         return (-1);
     }
     return 0;

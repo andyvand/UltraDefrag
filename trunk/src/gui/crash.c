@@ -143,7 +143,7 @@ static void CollectCrashInfo(void)
     bytes_to_read = EVENT_BUFFER_SIZE;
     buffer = malloc(bytes_to_read);
     if(buffer == NULL){
-        WgxDbgPrint("CollectCrashInfo: cannot allocate memory");
+        WgxDbgPrint(E"CollectCrashInfo: not enough memory");
         goto done;
     }
     
@@ -162,12 +162,12 @@ static void CollectCrashInfo(void)
             error = GetLastError();
             switch(error){
             case ERROR_INSUFFICIENT_BUFFER:
-                WgxDbgPrint("CollectCrashInfo: larger buffer of %u bytes is needed",bytes_needed);
+                WgxDbgPrint(I"CollectCrashInfo: larger buffer of %u bytes is needed",bytes_needed);
                 bytes_to_read = bytes_needed;
                 free(buffer);
                 buffer = malloc(bytes_to_read);
                 if(buffer == NULL){
-                    WgxDbgPrint("CollectCrashInfo: cannot allocate memory");
+                    WgxDbgPrint(E"CollectCrashInfo: not enough memory");
                     goto done;
                 }
                 break;
@@ -189,13 +189,13 @@ static void CollectCrashInfo(void)
                     if(rec->DataLength > 0){
                         data = malloc(rec->DataLength + 1);
                         if(data == NULL){
-                            WgxDbgPrint("CollectCrashInfo: cannot allocate memory for event data");
+                            WgxDbgPrint(E"CollectCrashInfo: not enough memory for event data");
                         } else {
                             memcpy(data,(char *)rec + rec->DataOffset,rec->DataLength);
                             data[rec->DataLength] = 0;
                             /* handle UltraDefrag GUI and command line tool crashes only */
                             if(strstr(data,"ultradefrag.exe") || strstr(data,"udefrag.exe")){
-                                WgxDbgPrint("Crashed in the past: %s",data);
+                                WgxDbgPrint(I"Crashed in the past: %s",data);
                                 if(!WriteFile(hLogFile,data,rec->DataLength,&bytes_written,NULL)){
                                     WgxDbgPrintLastError("CollectCrashInfo: cannot write to crash-info.log file");
                                 } else {

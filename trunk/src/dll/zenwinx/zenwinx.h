@@ -29,8 +29,7 @@
 #include "ntndk.h"
 #endif /* !WINX_CUSTOM_NTNDK_H */
 
-#define DEFAULT_TAB_WIDTH 2
-#define DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY "      Hit any key to display next page,\n          ESC or Break to abort..."
+#include "../../include/dbg-prefixes.h"
 
 #ifndef max
 #define max(a,b) ((a)>(b)?(a):(b))
@@ -40,12 +39,16 @@
 #endif
 
 #define NtCloseSafe(h) { if(h) { NtClose(h); h = NULL; } }
+
+#define DEFAULT_TAB_WIDTH 2
+#define DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY "      Hit any key to display next page,\n          ESC or Break to abort..."
+
 #define DebugPrint winx_dbg_print
 #define DebugPrintEx winx_dbg_print_ex
 
-#define TraceEnter  { DebugPrint("Inside function '%s'...",__FUNCTION__); }
-#define TraceExit   { DebugPrint("Leaving function '%s'...",__FUNCTION__); }
-#define TraceSource { DebugPrint("Source file '%s' at line %d ...",__FILE__,__LINE__); }
+#define TraceEnter  { DebugPrint(D"Inside function '%s'...",__FUNCTION__); }
+#define TraceExit   { DebugPrint(D"Leaving function '%s'...",__FUNCTION__); }
+#define TraceSource { DebugPrint(D"Source file '%s' at line %d ...",__FILE__,__LINE__); }
 
 /*
 * DbgCheckN macro definitions are used
@@ -54,7 +57,7 @@
 */
 #define DbgCheck1(c,f,r) { \
     if(!(c)) {           \
-        DebugPrint("first parameter of %s is invalid",f); \
+        DebugPrint(E"first parameter of %s is invalid",f); \
         return (r);      \
     }                    \
 }
@@ -62,7 +65,7 @@
 #define DbgCheck2(c1,c2,f,r) { \
     DbgCheck1(c1,f,r)        \
     if(!(c2)) {              \
-        DebugPrint("second parameter of %s is invalid",f); \
+        DebugPrint(E"second parameter of %s is invalid",f); \
         return (r);          \
     }                        \
 }
@@ -70,22 +73,10 @@
 #define DbgCheck3(c1,c2,c3,f,r) { \
     DbgCheck2(c1,c2,f,r)        \
     if(!(c3)) {              \
-        DebugPrint("third parameter of %s is invalid",f); \
+        DebugPrint(E"third parameter of %s is invalid",f); \
         return (r);          \
     }                        \
 }
-
-typedef struct _WINX_FILE {
-    HANDLE hFile;             /* file handle */
-    LARGE_INTEGER roffset;    /* offset for read requests */
-    LARGE_INTEGER woffset;    /* offset for write requests */
-    void *io_buffer;          /* for buffered i/o */
-    size_t io_buffer_size;    /* size of the buffer, in bytes */
-    size_t io_buffer_offset;  /* current offset inside io_buffer */
-    LARGE_INTEGER wboffset;   /* offset for write requests in buffered mode */
-} WINX_FILE, *PWINX_FILE;
-
-#define winx_fileno(f) ((f)->hFile)
 
 /* zenwinx functions prototypes */
 
@@ -111,6 +102,18 @@ int winx_open_event(wchar_t *name,int flags,HANDLE *phandle);
 void winx_destroy_event(HANDLE h);
 
 /* file.c */
+typedef struct _WINX_FILE {
+    HANDLE hFile;             /* file handle */
+    LARGE_INTEGER roffset;    /* offset for read requests */
+    LARGE_INTEGER woffset;    /* offset for write requests */
+    void *io_buffer;          /* for buffered i/o */
+    size_t io_buffer_size;    /* size of the buffer, in bytes */
+    size_t io_buffer_offset;  /* current offset inside io_buffer */
+    LARGE_INTEGER wboffset;   /* offset for write requests in buffered mode */
+} WINX_FILE, *PWINX_FILE;
+
+#define winx_fileno(f) ((f)->hFile)
+
 WINX_FILE *winx_fopen(const char *filename,const char *mode);
 WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size);
 size_t winx_fread(void *buffer,size_t size,size_t count,WINX_FILE *f);

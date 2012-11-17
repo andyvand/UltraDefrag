@@ -243,7 +243,7 @@ void ApplyLanguagePack(void)
     /* read lang.ini file */
     GetPrivateProfileString("Language","Selected","",lang_name,MAX_PATH,".\\lang.ini");
     if(lang_name[0] == 0){
-        WgxDbgPrint("Selected language name not found in lang.ini file\n");
+        WgxDbgPrint(E"Selected language name not found in lang.ini file\n");
         /* assign default strings to the toolbar tooltips */
         UpdateToolbarTooltips();
         return;
@@ -474,7 +474,7 @@ void BuildLanguageMenu(void)
     
     h = _wfindfirst(L".\\i18n\\*.lng",&lng_file);
     if(h == -1){
-        WgxDbgPrint("BuildLanguageMenu: no language packs found\n");
+        WgxDbgPrint(E"BuildLanguageMenu: no language packs found\n");
 no_files_found:
         /* add default US English */
         if(!AppendMenu(hLangMenu,MF_STRING | MF_ENABLED | MF_CHECKED,IDM_LANGUAGE + 0x1,"English (US)")){
@@ -488,7 +488,7 @@ no_files_found:
         pt = prb_create(names_compare,NULL,NULL);
         if(pt == NULL){
             /* this case is extraordinary */
-            WgxDbgPrint("BuildLanguageMenu: prb_create failed!");
+            WgxDbgPrint(E"BuildLanguageMenu: prb_create failed!");
             _findclose(h);
             goto no_files_found;
         }
@@ -499,10 +499,10 @@ no_files_found:
             filename[length - 4] = 0;
         f = _wcsdup(filename);
         if(f == NULL){
-            WgxDbgPrint("BuildLanguageMenu: not enough memory!");
+            WgxDbgPrint(E"BuildLanguageMenu: not enough memory!");
         } else {
             if(prb_probe(pt,(void *)f) == NULL){
-                WgxDbgPrint("BuildLanguageMenu: prb_probe failed for %ws!",f);
+                WgxDbgPrint(E"BuildLanguageMenu: prb_probe failed for %ws!",f);
                 free(f);
             }
         }
@@ -514,10 +514,10 @@ no_files_found:
                 filename[length - 4] = 0;
             f = _wcsdup(filename);
             if(f == NULL){
-                WgxDbgPrint("BuildLanguageMenu: not enough memory!");
+                WgxDbgPrint(E"BuildLanguageMenu: not enough memory!");
             } else {
                 if(prb_probe(pt,(void *)f) == NULL){
-                    WgxDbgPrint("BuildLanguageMenu: prb_probe failed for %ws!",f);
+                    WgxDbgPrint(E"BuildLanguageMenu: prb_probe failed for %ws!",f);
                     free(f);
                 }
             }

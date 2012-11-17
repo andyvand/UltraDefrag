@@ -79,7 +79,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
         break;
     }
     if(text1 == NULL){
-        WgxDbgPrint("ResizeShutdownConfirmDialog: cannot allocate memory for text1");
+        WgxDbgPrint(E"ResizeShutdownConfirmDialog: not enough memory for text1");
         return;
     }
     result = WgxGetTextDimensions(text1,
@@ -101,7 +101,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     
     /* calculate dimensions of buttons */
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_YES_BUTTON),text,sizeof(text)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeShutdownConfirmDialog: cannot get Yes button text");
+        WgxDbgPrintLastError("ResizeShutdownConfirmDialog: cannot get Yes button text");
         goto done;
     }
     text[sizeof(text)/sizeof(wchar_t) - 1] = 0;
@@ -116,7 +116,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
         button_height = height + 2 * BTN_V_SPACING;
 
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_NO_BUTTON),text,sizeof(text)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeShutdownConfirmDialog: cannot get No button text");
+        WgxDbgPrintLastError("ResizeShutdownConfirmDialog: cannot get No button text");
         goto done;
     }
     text[sizeof(text)/sizeof(wchar_t) - 1] = 0;
@@ -380,7 +380,7 @@ int ShutdownOrHibernate(void)
                 WgxDbgPrintLastError("ShutdownOrHibernate: cannot get SetSuspendState address inside powrprof.dll");
         }
         if(pSetSuspendState == NULL)
-            WgxDbgPrint("Therefore SetSystemPowerState API will be used instead of SetSuspendState.\n");
+            WgxDbgPrint(I"Therefore SetSystemPowerState API will be used instead of SetSuspendState.\n");
     }
 
     switch(when_done_action){

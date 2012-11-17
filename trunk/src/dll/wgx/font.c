@@ -88,7 +88,7 @@ BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont)
 
     L = lua_open();  /* create state */
     if(L == NULL){
-        WgxDbgPrint("WgxCreateFont: cannot initialize Lua library\n");
+        WgxDbgPrint(E"WgxCreateFont: cannot initialize Lua library\n");
         goto use_default_font;
     }
     
@@ -122,7 +122,7 @@ BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont)
         lua_pop(L, 1);
         lua_close(L);
     } else {
-        WgxDbgPrint("WgxCreateFont: cannot interprete %s\n",wgx_font_path);
+        WgxDbgPrint(E"WgxCreateFont: cannot interprete %s\n",wgx_font_path);
         lua_close(L);
         goto use_default_font;
     }

@@ -215,7 +215,7 @@ void SavePrefs(void)
 
     if(_mkdir(".\\options") < 0){
         if(errno != EEXIST)
-            WgxDbgPrint("Cannot create .\\options directory: errno = %u\n",errno);
+            WgxDbgPrint(E"Cannot create .\\options directory: errno = %u\n",errno);
     }
     WgxSaveOptions(".\\options\\guiopts-internals.lua",internal_options,SavePrefsCallback);
 }
@@ -492,7 +492,7 @@ track_again:
     error = RegNotifyChangeKeyValue(hKey,FALSE,
         REG_NOTIFY_CHANGE_LAST_SET,hEvent,TRUE);
     if(error != ERROR_SUCCESS){
-        WgxDbgPrint("BootExecTrackingProc: RegNotifyChangeKeyValue failed with code 0x%x",(UINT)error);
+        WgxDbgPrint(E"BootExecTrackingProc: RegNotifyChangeKeyValue failed with code 0x%x",(UINT)error);
         CloseHandle(hEvent);
         goto done;
     }
@@ -500,14 +500,14 @@ track_again:
     while(!stop_track_boot_exec){
         if(WaitForSingleObject(hEvent,100) == WAIT_OBJECT_0){
             if(IsBootTimeDefragEnabled()){
-                WgxDbgPrint("Boot time defragmenter enabled (externally)\n");
+                WgxDbgPrint(I"Boot time defragmenter enabled (externally)\n");
                 boot_time_defrag_enabled = 1;
                 CheckMenuItem(hMainMenu,
                     IDM_CFG_BOOT_ENABLE,
                     MF_BYCOMMAND | MF_CHECKED);
                 SendMessage(hToolbar,TB_CHECKBUTTON,IDM_CFG_BOOT_ENABLE,MAKELONG(TRUE,0));
             } else {
-                WgxDbgPrint("Boot time defragmenter disabled (externally)\n");
+                WgxDbgPrint(I"Boot time defragmenter disabled (externally)\n");
                 boot_time_defrag_enabled = 0;
                 CheckMenuItem(hMainMenu,
                     IDM_CFG_BOOT_ENABLE,

@@ -54,25 +54,25 @@ void test_move(winx_file_info *f,udefrag_job_parameters *jp)
     /* try to move the first cluster to the last free region */
     target_rgn = find_last_free_region(jp,1);
     if(target_rgn == NULL){
-        DebugPrint("test_move: no free region found on disk");
+        DebugPrint(E"test_move: no free region found on disk");
         return;
     }
     if(move_file(f,f->disp.blockmap->vcn,1,target_rgn->lcn,jp) < 0){
-        DebugPrint("test_move: move failed for %ws",f->path);
+        DebugPrint(E"test_move: move failed for %ws",f->path);
         return;
     } else {
-        DebugPrint("test_move: move succeeded for %ws",f->path);
+        DebugPrint(D"test_move: move succeeded for %ws",f->path);
     }
     /* try to move the first cluster back */
     if(can_move(f,jp)){
         if(move_file(f,f->disp.blockmap->vcn,1,source_lcn,jp) < 0){
-            DebugPrint("test_move: move failed for %ws",f->path);
+            DebugPrint(E"test_move: move failed for %ws",f->path);
             return;
         } else {
-            DebugPrint("test_move: move succeeded for %ws",f->path);
+            DebugPrint(D"test_move: move succeeded for %ws",f->path);
         }
     } else {
-        DebugPrint("test_move: file became unmovable %ws",f->path);
+        DebugPrint(E"test_move: file became unmovable %ws",f->path);
     }
     /* release temporarily allocated space */
     release_temp_space_regions(jp);
@@ -87,7 +87,7 @@ void test_special_files_defrag(udefrag_job_parameters *jp)
     winx_file_info *f;
     int special_file = 0;
     
-    DebugPrint("test of special files defragmentation started");
+    DebugPrint(D"test of special files defragmentation started");
 
     /* open the volume */
     jp->fVolume = winx_vopen(winx_toupper(jp->volume_letter));
@@ -98,16 +98,16 @@ void test_special_files_defrag(udefrag_job_parameters *jp)
         if(can_move(f,jp)){
             special_file = 0;
             if(is_reparse_point(f)){
-                DebugPrint("reparse point detected: %ws",f->path);
+                DebugPrint(D"reparse point detected: %ws",f->path);
                 special_file = 1;
             } else if(is_encrypted(f)){
-                DebugPrint("encrypted file detected: %ws",f->path);
+                DebugPrint(D"encrypted file detected: %ws",f->path);
                 special_file = 1;
             } else if(winx_wcsistr(f->path,L"$BITMAP")){
-                DebugPrint("bitmap detected: %ws",f->path);
+                DebugPrint(D"bitmap detected: %ws",f->path);
                 special_file = 1;
             } else if(winx_wcsistr(f->path,L"$ATTRIBUTE_LIST")){
-                DebugPrint("attribute list detected: %ws",f->path);
+                DebugPrint(D"attribute list detected: %ws",f->path);
                 special_file = 1;
             }
             if(special_file)
@@ -117,7 +117,7 @@ void test_special_files_defrag(udefrag_job_parameters *jp)
     }
     
     winx_fclose(jp->fVolume);
-    DebugPrint("test of special files defragmentation completed");
+    DebugPrint(D"test of special files defragmentation completed");
 }
 #endif /* TEST_SPECIAL_FILES_DEFRAG */
 
@@ -298,7 +298,7 @@ static int defrag_routine(udefrag_job_parameters *jp)
         jp->pi.processed_clusters + defrag_cc_routine(jp);
         
     /*
-    DebugPrint(">>> %I64u\\%I64u <<<",
+    DebugPrint(D">>> %I64u\\%I64u <<<",
         jp->pi.processed_clusters,jp->pi.clusters_to_process);
     */
 
@@ -326,12 +326,12 @@ static int defrag_routine(udefrag_job_parameters *jp)
                     if(move_file(file,file->disp.blockmap->vcn,
                      file->disp.clusters,rgn->lcn,jp) >= 0){
                         if(jp->udo.dbgprint_level >= DBG_DETAILED)
-                            DebugPrint("Defrag success for %ws",file->path);
+                            DebugPrint(I"Defrag success for %ws",file->path);
                         defragmented_files ++;
                         defragmented_entirely ++;
                         moved_entirely += (jp->pi.moved_clusters - x);
                     } else {
-                        DebugPrint("Defrag failure for %ws",file->path);
+                        DebugPrint(E"Defrag failure for %ws",file->path);
                     }
                 }
             } else {
@@ -419,10 +419,10 @@ move_clusters:
                         if(rgn){
                             if(move_file(file,vcn,length,rgn->lcn,jp) >= 0){
                                 if(jp->udo.dbgprint_level >= DBG_DETAILED)
-                                    DebugPrint("Defrag success for %ws",file->path);
+                                    DebugPrint(I"Defrag success for %ws",file->path);
                                 defrag_succeeded = 1;
                             } else {
-                                DebugPrint("Defrag failure for %ws",file->path);
+                                DebugPrint(E"Defrag failure for %ws",file->path);
                             }
                         }
                         min_vcn = new_min_vcn;
@@ -446,24 +446,24 @@ completed:
     }
     
     /*
-    DebugPrint(">>> %I64u\\%I64u <<<",
+    DebugPrint(D">>> %I64u\\%I64u <<<",
         jp->pi.processed_clusters,jp->pi.clusters_to_process);
     */
 
     /* display amount of moved data and number of defragmented files */
-    DebugPrint("%I64u files defragmented",defragmented_files);
-    DebugPrint("  %I64u clusters moved",jp->pi.moved_clusters);
+    DebugPrint(I"%I64u files defragmented",defragmented_files);
+    DebugPrint(I"  %I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("  %s moved",buffer);
+    DebugPrint(I"  %s moved",buffer);
     
-    DebugPrint("%I64u files defragmented entirely",defragmented_entirely);
-    DebugPrint("  %I64u clusters moved",moved_entirely);
+    DebugPrint(I"%I64u files defragmented entirely",defragmented_entirely);
+    DebugPrint(I"  %I64u clusters moved",moved_entirely);
     winx_bytes_to_hr(moved_entirely * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("  %s moved",buffer);
-    DebugPrint("%I64u files defragmented partially",defragmented_partially);
-    DebugPrint("  %I64u clusters moved",moved_partially);
+    DebugPrint(I"  %s moved",buffer);
+    DebugPrint(I"%I64u files defragmented partially",defragmented_partially);
+    DebugPrint(I"  %I64u clusters moved",moved_partially);
     winx_bytes_to_hr(moved_partially * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    DebugPrint("  %s moved",buffer);
+    DebugPrint(I"  %s moved",buffer);
     
     /* cleanup */
     clear_currently_excluded_flag(jp);
@@ -483,7 +483,7 @@ static int defrag_sequence(udefrag_job_parameters *jp)
     if(jp->pi.fragmented == 0) return 0;
     
     while(!jp->termination_router((void *)jp)){
-        winx_dbg_print_header(0,0,"defragmentation pass #%u",jp->pi.pass_number);
+        winx_dbg_print_header(0,0,I"defragmentation pass #%u",jp->pi.pass_number);
         result = defrag_routine(jp);
         if(result == 0){
             /* defragmentation succeeded at least once */
@@ -513,11 +513,11 @@ static int defrag_sequence(udefrag_job_parameters *jp)
     if(jp->udo.fragment_size_threshold == DEFAULT_FRAGMENT_SIZE_THRESHOLD){
         jp->udo.fragment_size_threshold = PART_DEFRAG_MAGIC_CONSTANT;
         jp->udo.algorithm_defined_fst = 1;
-        DebugPrint("partial defragmentation: fragment size threshold = %I64u",
+        DebugPrint(I"partial defragmentation: fragment size threshold = %I64u",
             jp->udo.fragment_size_threshold);
         jp->pi.pass_number ++;
         while(!jp->termination_router((void *)jp)){
-            winx_dbg_print_header(0,0,"defragmentation pass #%u",jp->pi.pass_number);
+            winx_dbg_print_header(0,0,I"defragmentation pass #%u",jp->pi.pass_number);
             result = defrag_routine(jp);
             if(result == 0){
                 /* defragmentation succeeded at least once */

@@ -107,7 +107,7 @@ void adjust_move_at_once_parameter(udefrag_job_parameters *jp)
     if(jp->clusters_at_once == 0)
         jp->clusters_at_once ++;
     winx_bytes_to_hr(bytes_at_once,0,buffer,sizeof(buffer));
-    DebugPrint("the program will move %s (%I64u clusters) at once",
+    DebugPrint(I"the program will move %s (%I64u clusters) at once",
         buffer, jp->clusters_at_once);
 }
 
@@ -155,16 +155,16 @@ int get_volume_information(udefrag_job_parameters *jp)
 
     jp->pi.total_space = jp->v_info.total_bytes;
     jp->pi.free_space = jp->v_info.free_bytes;
-    DebugPrint("total clusters: %I64u",jp->v_info.total_clusters);
-    DebugPrint("cluster size: %I64u",jp->v_info.bytes_per_cluster);
+    DebugPrint(I"total clusters: %I64u",jp->v_info.total_clusters);
+    DebugPrint(I"cluster size: %I64u",jp->v_info.bytes_per_cluster);
     /* validate geometry */
     if(!jp->v_info.total_clusters || !jp->v_info.bytes_per_cluster){
-        DebugPrint("wrong volume geometry detected");
+        DebugPrint(E"wrong volume geometry detected");
         return (-1);
     }
     adjust_move_at_once_parameter(jp);
     /* check partition type */
-    DebugPrint("%s partition detected",jp->v_info.fs_name);
+    DebugPrint(I"%s partition detected",jp->v_info.fs_name);
     strncpy(fs_name,jp->v_info.fs_name,MAX_FS_NAME_LENGTH);
     fs_name[MAX_FS_NAME_LENGTH] = 0;
     _strupr(fs_name);
@@ -176,8 +176,8 @@ int get_volume_information(udefrag_job_parameters *jp)
         }
     }
     if(jp->fs_type == FS_UNKNOWN){
-        DebugPrint("file system type is not recognized");
-        DebugPrint("type independent routines will be used to defragment it");
+        DebugPrint(E"file system type is not recognized");
+        DebugPrint(E"type independent routines will be used to defragment it");
     }
     
     jp->pi.clusters_to_process = jp->v_info.total_clusters;
@@ -185,7 +185,7 @@ int get_volume_information(udefrag_job_parameters *jp)
     
     if(jp->udo.fragment_size_threshold){
         if(jp->udo.fragment_size_threshold <= jp->v_info.bytes_per_cluster){
-            DebugPrint("fragment size threshold is below the cluster size, so it will be ignored");
+            DebugPrint(I"fragment size threshold is below the cluster size, so it will be ignored");
             jp->udo.fragment_size_threshold = 0;
         }
     }
@@ -203,7 +203,7 @@ static int process_free_region(winx_volume_region *rgn,void *user_defined_data)
     udefrag_job_parameters *jp = (udefrag_job_parameters *)user_defined_data;
     
     if(jp->udo.dbgprint_level >= DBG_PARANOID)
-        DebugPrint("Free block start: %I64u len: %I64u",rgn->lcn,rgn->length);
+        DebugPrint(I"Free block start: %I64u len: %I64u",rgn->lcn,rgn->length);
     colorize_map_region(jp,rgn->lcn,rgn->length,FREE_SPACE,SYSTEM_SPACE);
     jp->pi.processed_clusters += rgn->length;
     jp->free_regions_count ++;
@@ -222,12 +222,12 @@ static int get_free_space_layout(udefrag_job_parameters *jp)
         WINX_GVR_ALLOW_PARTIAL_SCAN,process_free_region,(void *)jp);
     
     winx_bytes_to_hr(jp->v_info.free_bytes,1,buffer,sizeof(buffer));
-    DebugPrint("free space amount : %s",buffer);
-    DebugPrint("free regions count: %u",jp->free_regions_count);
+    DebugPrint(I"free space amount : %s",buffer);
+    DebugPrint(I"free regions count: %u",jp->free_regions_count);
     
     /* let full disks to pass the analysis successfully */
     if(jp->free_regions == NULL || jp->free_regions_count == 0)
-        DebugPrint("get_free_space_layout: disk is full or some error has been encountered");
+        DebugPrint(E"get_free_space_layout: disk is full or some error has been encountered");
     return 0;
 }
 
@@ -261,7 +261,7 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
     * because mft zones are partially
     * inside already counted free space pool.
     */
-    DebugPrint("%-12s: %-20s: %-20s", "mft section", "start", "length");
+    DebugPrint(I"%-12s: %-20s: %-20s", "mft section", "start", "length");
 
     /* $MFT */
     start = jp->v_info.ntfs_data.MftStartLcn.QuadPart;
@@ -269,14 +269,14 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
         length = jp->v_info.ntfs_data.MftValidDataLength.QuadPart / jp->v_info.ntfs_data.BytesPerCluster;
     else
         length = 0;
-    DebugPrint("%-12s: %-20I64u: %-20I64u", "mft", start, length);
+    DebugPrint(I"%-12s: %-20I64u: %-20I64u", "mft", start, length);
     jp->pi.mft_size = length * jp->v_info.bytes_per_cluster;
-    DebugPrint("mft size = %I64u bytes", jp->pi.mft_size);
+    DebugPrint(I"mft size = %I64u bytes", jp->pi.mft_size);
 
     /* MFT Zone */
     start = jp->v_info.ntfs_data.MftZoneStart.QuadPart;
     length = jp->v_info.ntfs_data.MftZoneEnd.QuadPart - jp->v_info.ntfs_data.MftZoneStart.QuadPart + 1;
-    DebugPrint("%-12s: %-20I64u: %-20I64u", "mft zone", start, length);
+    DebugPrint(I"%-12s: %-20I64u: %-20I64u", "mft zone", start, length);
     if(check_region(jp,start,length)){
         /* remark space as MFT Zone */
         colorize_map_region(jp,start,length,MFT_ZONE_SPACE,0);
@@ -294,7 +294,7 @@ static void get_mft_zones_layout(udefrag_job_parameters *jp)
         if(mirror_size - length * jp->v_info.ntfs_data.BytesPerCluster)
             length ++;
     }
-    DebugPrint("%-12s: %-20I64u: %-20I64u", "mft mirror", start, length);
+    DebugPrint(I"%-12s: %-20I64u: %-20I64u", "mft mirror", start, length);
 }
 
 /**
@@ -428,7 +428,7 @@ static int filter(winx_file_info *f,void *user_defined_data)
     length = wcslen(f->path);
     if(length >= 2){
         if(f->path[length - 1] == '.' && f->path[length - 2] == '\\'){
-            DebugPrint("root directory detected, its trailing dot will be removed");
+            DebugPrint(I"root directory detected, its trailing dot will be removed");
             f->path[length - 1] = 0;
         }
     }
@@ -442,14 +442,14 @@ static int filter(winx_file_info *f,void *user_defined_data)
     
     /* show debugging information about interesting cases */
     if(is_sparse(f))
-        DebugPrint("sparse file found: %ws",f->path);
+        DebugPrint(D"sparse file found: %ws",f->path);
     if(is_reparse_point(f))
-        DebugPrint("reparse point found: %ws",f->path);
+        DebugPrint(D"reparse point found: %ws",f->path);
     /* comment it out after testing to speed things up */
     /*if(winx_wcsistr(f->path,L"$BITMAP"))
-        DebugPrint("bitmap found: %ws",f->path);
+        DebugPrint(D"bitmap found: %ws",f->path);
     if(winx_wcsistr(f->path,L"$ATTRIBUTE_LIST"))
-        DebugPrint("attribute list found: %ws",f->path);
+        DebugPrint(D"attribute list found: %ws",f->path);
     */
     
     /* START OF FILTERING */
@@ -545,16 +545,16 @@ static int terminator(void *user_defined_data)
  */
 void dbg_print_file_counters(udefrag_job_parameters *jp)
 {
-    DebugPrint("folders total:    %u",jp->pi.directories);
-    DebugPrint("files total:      %u",jp->pi.files);
-    DebugPrint("fragmented files: %u",jp->pi.fragmented);
-    DebugPrint("compressed files: %u",jp->pi.compressed);
-    DebugPrint("tiny ...... <  10 KB: %u",jp->f_counters.tiny_files);
-    DebugPrint("small ..... < 100 KB: %u",jp->f_counters.small_files);
-    DebugPrint("average ... <   1 MB: %u",jp->f_counters.average_files);
-    DebugPrint("big ....... <  16 MB: %u",jp->f_counters.big_files);
-    DebugPrint("huge ...... < 128 MB: %u",jp->f_counters.huge_files);
-    DebugPrint("giant ..............: %u",jp->f_counters.giant_files);
+    DebugPrint(I"folders total:    %u",jp->pi.directories);
+    DebugPrint(I"files total:      %u",jp->pi.files);
+    DebugPrint(I"fragmented files: %u",jp->pi.fragmented);
+    DebugPrint(I"compressed files: %u",jp->pi.compressed);
+    DebugPrint(I"tiny ...... <  10 KB: %u",jp->f_counters.tiny_files);
+    DebugPrint(I"small ..... < 100 KB: %u",jp->f_counters.small_files);
+    DebugPrint(I"average ... <   1 MB: %u",jp->f_counters.average_files);
+    DebugPrint(I"big ....... <  16 MB: %u",jp->f_counters.big_files);
+    DebugPrint(I"huge ...... < 128 MB: %u",jp->f_counters.huge_files);
+    DebugPrint(I"giant ..............: %u",jp->f_counters.giant_files);
 }
 
 /**
@@ -627,7 +627,7 @@ static int find_files(udefrag_job_parameters *jp)
     
         /* redraw cluster map */
         colorize_file(jp,f,SYSTEM_SPACE);
-        //DebugPrint("%ws",f->path);
+        //DebugPrint(D"%ws",f->path);
         
         /* add file blocks to the binary search tree - after winx_scan_disk! */
         for(block = f->disp.blockmap; block; block = block->next){
@@ -668,7 +668,7 @@ int is_file_locked(winx_file_info *f,udefrag_job_parameters *jp)
         return 0;
     }
 
-    /*DebugPrintEx(status,"cannot open %ws",f->path);*/
+    /*DebugPrintEx(status,E"cannot open %ws",f->path);*/
     /* redraw space */
     old_color = get_file_color(jp,f);
     f->user_defined_flags |= UD_FILE_LOCKED;
@@ -725,7 +725,7 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
     ULONGLONG time;
     ULONGLONG n = 0;
 
-    winx_dbg_print_header(0,0,"search for well known locked files...");
+    winx_dbg_print_header(0,0,I"search for well known locked files...");
     time = winx_xtime();
     
     for(f = jp->filelist; f; f = f->next){
@@ -733,9 +733,9 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
             if(is_well_known_locked_file(f,jp)){
                 if(!is_file_locked(f,jp)){
                     /* possibility of this case should be reduced */
-                    DebugPrint("false detection: %ws",f->path);
+                    DebugPrint(I"false detection: %ws",f->path);
                 } else {
-                    DebugPrint("true detection:  %ws",f->path);
+                    DebugPrint(I"true detection:  %ws",f->path);
                     n ++;
                 }
             }
@@ -743,8 +743,8 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
         if(f->next == jp->filelist) break;
     }
 
-    DebugPrint("%I64u locked files found",n);
-    winx_dbg_print_header(0,0,"well known locked files search completed in %I64u ms",
+    DebugPrint(I"%I64u locked files found",n);
+    winx_dbg_print_header(0,0,I"well known locked files search completed in %I64u ms",
         winx_xtime() - time);
 }
 
@@ -832,24 +832,24 @@ static int check_requested_action(udefrag_job_parameters *jp)
       && jp->fs_type == FS_NTFS \
       && jp->v_info.bytes_per_cluster > 4096 \
       && jp->win_version <= WINDOWS_2K){
-        DebugPrint("cannot defragment NTFS volumes with clusters bigger than 4KB on nt4/w2k");
+        DebugPrint(E"cannot defragment NTFS volumes with clusters bigger than 4KB on nt4/w2k");
         return UDEFRAG_W2K_4KB_CLUSTERS;
     }
 
     if(jp->job_type != ANALYSIS_JOB && jp->fs_type == FS_UDF){
-        DebugPrint("cannot defragment/optimize UDF volumes,");
-        DebugPrint("because the file system driver does not support FSCTL_MOVE_FILE");
+        DebugPrint(E"cannot defragment/optimize UDF volumes,");
+        DebugPrint(E"because the file system driver does not support FSCTL_MOVE_FILE");
         return UDEFRAG_UDF_DEFRAG;
     }
 
     if(jp->is_fat){
-        DebugPrint("check_requested_action: FAT directories cannot be moved %s",
+        DebugPrint(I"check_requested_action: FAT directories cannot be moved %s",
             jp->win_version > WINDOWS_2K ? "entirely" : "at all");
     }
     if(jp->fs_type == FS_NTFS && jp->win_version < WINDOWS_XP){
-        DebugPrint("check_requested_action: MFT is not movable");
+        DebugPrint(I"check_requested_action: MFT is not movable");
         if(jp->win_version < WINDOWS_2K)
-            DebugPrint("check_requested_action: directories are not movable");
+            DebugPrint(I"check_requested_action: directories are not movable");
     }
     return 0;
 }
@@ -873,11 +873,11 @@ int check_fragmentation_level(udefrag_job_parameters *jp)
     ifr = (unsigned int)(fragmentation * 100.00);
     it = (unsigned int)(jp->udo.fragmentation_threshold * 100.00);
     if(fragmentation < jp->udo.fragmentation_threshold){
-        DebugPrint("fragmentation is below the threshold: %u.%02u%% < %u.%02u%%",
+        DebugPrint(I"fragmentation is below the threshold: %u.%02u%% < %u.%02u%%",
             ifr / 100, ifr % 100, it / 100, it % 100);
         return 0;
     }
-    DebugPrint("fragmentation is above the threshold: %u.%02u%% >= %u.%02u%%",
+    DebugPrint(I"fragmentation is above the threshold: %u.%02u%% >= %u.%02u%%",
         ifr / 100, ifr % 100, it / 100, it % 100);
     return 1;
 }

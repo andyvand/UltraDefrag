@@ -150,14 +150,14 @@ void winx_get_module_filename(char *path)
                 (void)strcpy(path,"\\??\\");
                 (void)strncat(path,as.Buffer,as.Length);
             } else {
-                DebugPrint("winx_get_module_filename: path is too long");
+                DebugPrint(E"winx_get_module_filename: path is too long");
             }
             RtlFreeAnsiString(&as);
         } else {
-            DebugPrint("winx_get_module_filename: cannot convert unicode to ansi path: not enough memory");
+            DebugPrint(E"winx_get_module_filename: cannot convert unicode to ansi path: not enough memory");
         }
     } else {
-        DebugPrintEx(Status,"winx_get_module_filename: cannot query process basic information");
+        DebugPrintEx(Status,E"winx_get_module_filename: cannot query process basic information");
     }
 }
 
@@ -179,7 +179,7 @@ int winx_create_path(char *path)
 
     /* path must contain at least \??\X: */
     if(strstr(path,"\\??\\") != path || strchr(path,':') != (path + 5)){
-        DebugPrint("winx_create_path: native path must be specified");
+        DebugPrint(E"winx_create_path: native path must be specified");
         return (-1);
     }
 
@@ -201,7 +201,7 @@ int winx_create_path(char *path)
     while((p = strchr(p,'\\'))){
         *p = 0;
         if(winx_create_directory(path) < 0){
-            DebugPrint("winx_create_path failed");
+            DebugPrint(E"winx_create_path failed");
             *p = '\\';
             return (-1);
         }
@@ -211,7 +211,7 @@ int winx_create_path(char *path)
     
     /* create target directory */
     if(winx_create_directory(path) < 0){
-        DebugPrint("winx_create_path failed");
+        DebugPrint(E"winx_create_path failed");
         return (-1);
     }
     

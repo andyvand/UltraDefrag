@@ -28,6 +28,8 @@
 
 #include <wchar.h>
 
+#include "../../include/dbg-prefixes.h"
+
 /* definitions missing on several development systems */
 #ifndef USE_WINDDK
 

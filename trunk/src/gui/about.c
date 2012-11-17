@@ -61,7 +61,7 @@ static void ResizeAboutDialog(HWND hwnd)
     
     /* get dimensions of labels */
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_TEXT1),buffer,sizeof(buffer)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeAboutDialog: cannot get top label text");
+        WgxDbgPrintLastError("ResizeAboutDialog: cannot get top label text");
         return;
     }
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
@@ -71,7 +71,7 @@ static void ResizeAboutDialog(HWND hwnd)
     if(result == FALSE) return;
 
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_TEXT2),buffer,sizeof(buffer)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeAboutDialog: cannot get middle label text");
+        WgxDbgPrintLastError("ResizeAboutDialog: cannot get middle label text");
         return;
     }
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
@@ -81,7 +81,7 @@ static void ResizeAboutDialog(HWND hwnd)
     if(result == FALSE) return;
 
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_TEXT3),buffer,sizeof(buffer)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeAboutDialog: cannot get bottom label text");
+        WgxDbgPrintLastError("ResizeAboutDialog: cannot get bottom label text");
         return;
     }
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
@@ -99,7 +99,7 @@ static void ResizeAboutDialog(HWND hwnd)
 
     /* calculate dimensions of buttons */
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_CREDITS),buffer,sizeof(buffer)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeAboutDialog: cannot get Credits button text");
+        WgxDbgPrintLastError("ResizeAboutDialog: cannot get Credits button text");
         return;
     }
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
@@ -113,7 +113,7 @@ static void ResizeAboutDialog(HWND hwnd)
         button1_height = height + 2 * BTN_V_SPACING;
 
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_LICENSE),buffer,sizeof(buffer)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeAboutDialog: cannot get License button text");
+        WgxDbgPrintLastError("ResizeAboutDialog: cannot get License button text");
         return;
     }
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
@@ -127,7 +127,7 @@ static void ResizeAboutDialog(HWND hwnd)
         button1_height = height + 2 * BTN_V_SPACING;
 
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_HOMEPAGE),buffer,sizeof(buffer)/sizeof(wchar_t))){
-        WgxDbgPrint("ResizeAboutDialog: cannot get Homepage button text");
+        WgxDbgPrintLastError("ResizeAboutDialog: cannot get Homepage button text");
         return;
     }
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
