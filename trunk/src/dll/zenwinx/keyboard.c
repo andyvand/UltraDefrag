@@ -513,55 +513,83 @@ static int query_keyboard_count(void)
     KEY_VALUE_PARTIAL_INFORMATION *data_buffer = NULL;
     DWORD data_size = 0;
     DWORD data_size2 = 0;
-    int kbdCount = 2;
+    int kbdCount = 2, old_kbdCount = 0, i;
+    wchar_t *ControlSetKeys[] = {
+        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\Kbdclass\\Enum",
+        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\Kbdclass\\Enum",
+        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\Kbdclass\\Enum"
+    };
 
-    RtlInitUnicodeString(&us,L"\\Registry\\Machine\\SYSTEM\\"
-                             L"CurrentControlSet\\Services\\Kbdclass\\Enum");
-    InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-    status = NtOpenKey(&hKey,KEY_QUERY_VALUE,&oa);
-    if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"query_keyboard_count: cannot open %ws",us.Buffer);
-        return kbdCount;
-    }
+    for(i = 0; i < 3; i++){
+        RtlInitUnicodeString(&us, ControlSetKeys[i]);
+        InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
+        DebugPrint(I"query_keyboard_count: checking %ws",us.Buffer);
+        status = NtOpenKey(&hKey,KEY_READ,&oa);
+        if(status != STATUS_SUCCESS){
+            DebugPrintEx(status,E"query_keyboard_count: cannot open %ws",us.Buffer);
+            if (i == 2)
+                return kbdCount;
+            else
+                continue;
+        }
 
-    RtlInitUnicodeString(&us,L"Count");
-    status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
-            NULL,0,&data_size);
-    if(status != STATUS_BUFFER_TOO_SMALL){
-        DebugPrintEx(status,E"query_keyboard_count: cannot query Count value size");
-        NtCloseSafe(hKey);
-        return kbdCount;
-    }
-    data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
-    if(data_buffer == NULL){
-        DebugPrint(E"query_keyboard_count: cannot allocate %u bytes of memory",data_size);
-        NtCloseSafe(hKey);
-        return kbdCount;
-    }
+        RtlInitUnicodeString(&us,L"Count");
+        status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
+                NULL,0,&data_size);
+        if(status != STATUS_BUFFER_TOO_SMALL){
+            DebugPrintEx(status,E"query_keyboard_count: cannot query Count value size");
+            NtCloseSafe(hKey);
+            if (i == 2)
+                return kbdCount;
+            else
+                continue;
+        }
+        data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
+        if(data_buffer == NULL){
+            DebugPrint(E"query_keyboard_count: cannot allocate %u bytes of memory",data_size);
+            NtCloseSafe(hKey);
+            if (i == 2)
+                return kbdCount;
+            else
+                continue;
+        }
 
-    RtlZeroMemory(data_buffer,data_size);
-    status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
-            data_buffer,data_size,&data_size2);
-    if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"query_keyboard_count: cannot query Count value");
+        RtlZeroMemory(data_buffer,data_size);
+        status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
+                data_buffer,data_size,&data_size2);
+        if(status != STATUS_SUCCESS){
+            DebugPrintEx(status,E"query_keyboard_count: cannot query Count value");
+            winx_free(data_buffer);
+            NtCloseSafe(hKey);
+            if (i == 2)
+                return kbdCount;
+            else
+                continue;
+        }
+
+        if(data_buffer->Type != REG_DWORD){
+            DebugPrint(E"query_keyboard_count: Count value has wrong type 0x%x",
+                    data_buffer->Type);
+            winx_free(data_buffer);
+            NtCloseSafe(hKey);
+            if (i == 2)
+                return kbdCount;
+            else
+                continue;
+        }
+
+        kbdCount = (int)*(DWORD *)data_buffer->Data;
+        DebugPrint(I"query_keyboard_count: old keyboard count is %u",old_kbdCount);
+        DebugPrint(I"query_keyboard_count: keyboard count is %u",kbdCount);
+        if (old_kbdCount > kbdCount) {
+            DebugPrint(D"query_keyboard_count: using old keyboard count!");
+            kbdCount = old_kbdCount;
+        }
+        old_kbdCount = kbdCount;
+
         winx_free(data_buffer);
         NtCloseSafe(hKey);
-        return kbdCount;
     }
-
-    if(data_buffer->Type != REG_DWORD){
-        DebugPrint(E"query_keyboard_count: Count value has wrong type 0x%x",
-                data_buffer->Type);
-        winx_free(data_buffer);
-        NtCloseSafe(hKey);
-        return kbdCount;
-    }
-
-    kbdCount = (int)*(DWORD *)data_buffer->Data;
-    DebugPrint(I"query_keyboard_count: keyboard count is %u",kbdCount);
-
-    winx_free(data_buffer);
-    NtCloseSafe(hKey);
 
     return kbdCount;
 }
