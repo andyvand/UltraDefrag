@@ -64,7 +64,7 @@ int kb_wait_for_input_threads = 0;
 void kb_close(void);
 static int kb_check(HANDLE hKbDevice);
 static int kb_open_internal(int device_number, int kbd_count);
-char *winx_get_error_description(unsigned long status);
+char *winx_get_status_description(unsigned long status);
 static int query_keyboard_count(void);
 
 /**
@@ -111,7 +111,7 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
                         }
                         if(!NT_SUCCESS(Status)){
                             _snprintf(buffer,sizeof(buffer),"\nNtCancelIoFile for KeyboadClass%u failed: %x!\n%s\n",
-                                kbd->device_number,(UINT)Status,winx_get_error_description((ULONG)Status));
+                                kbd->device_number,(UINT)Status,winx_get_status_description((ULONG)Status));
                             buffer[sizeof(buffer) - 1] = 0;
                             winx_print(buffer);
                         }
@@ -124,7 +124,7 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
         /* here we have either an input gathered or an error */
         if(!NT_SUCCESS(Status)){
             _snprintf(buffer,sizeof(buffer),"\nCannot read the KeyboadClass%u device: %x!\n%s\n",
-                kbd->device_number,(UINT)Status,winx_get_error_description((ULONG)Status));
+                kbd->device_number,(UINT)Status,winx_get_status_description((ULONG)Status));
             buffer[sizeof(buffer) - 1] = 0;
             winx_print(buffer);
             goto done;
@@ -135,7 +135,7 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
                 Status = NtWaitForSingleObject(hKbSynchEvent,FALSE,&synch_interval);
                 if(Status != WAIT_OBJECT_0){
                     _snprintf(buffer,sizeof(buffer),"\nkb_wait_for_input: synchronization failed: %x!\n%s\n",
-                        (UINT)Status,winx_get_error_description((ULONG)Status));
+                        (UINT)Status,winx_get_status_description((ULONG)Status));
                     buffer[sizeof(buffer) - 1] = 0;
                     winx_print(buffer);
                 }
@@ -314,7 +314,7 @@ int kb_read(PKEYBOARD_INPUT_DATA pKID,int msec_timeout)
             Status = NtWaitForSingleObject(hKbSynchEvent,FALSE,&synch_interval);
             if(Status != WAIT_OBJECT_0){
                 winx_printf("\nkb_read: synchronization failed: 0x%x\n",(UINT)Status);
-                winx_printf("%s\n\n",winx_get_error_description((ULONG)Status));
+                winx_printf("%s\n\n",winx_get_status_description((ULONG)Status));
             }
         }
 
@@ -382,7 +382,7 @@ static int kb_open_internal(int device_number, int kbd_count)
             DebugPrintEx(Status,E"Cannot open the keyboard %ws",device_name);
             winx_printf("\nCannot open the keyboard %ws: %x!\n",
                 device_name,(UINT)Status);
-            winx_printf("%s\n",winx_get_error_description((ULONG)Status));
+            winx_printf("%s\n",winx_get_status_description((ULONG)Status));
         }
         return (-1);
     }
@@ -391,7 +391,7 @@ static int kb_open_internal(int device_number, int kbd_count)
     if(kb_check(hKbDevice) < 0){
         DebugPrintEx(Status,E"Invalid keyboard device %ws",device_name);
         winx_printf("\nInvalid keyboard device %ws: %x!\n",device_name,(UINT)Status);
-        winx_printf("%s\n",winx_get_error_description((ULONG)Status));
+        winx_printf("%s\n",winx_get_status_description((ULONG)Status));
         NtCloseSafe(hKbDevice);
         return (-1);
     }
@@ -407,7 +407,7 @@ static int kb_open_internal(int device_number, int kbd_count)
         NtCloseSafe(hKbDevice);
         DebugPrintEx(Status,E"Cannot create kb_event%u",device_number);
         winx_printf("\nCannot create kb_event%u: %x!\n",device_number,(UINT)Status);
-        winx_printf("%s\n",winx_get_error_description((ULONG)Status));
+        winx_printf("%s\n",winx_get_status_description((ULONG)Status));
         return (-1);
     }
     
