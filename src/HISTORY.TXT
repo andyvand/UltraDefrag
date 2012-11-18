@@ -62,6 +62,7 @@
 
   Version 5.1.2  2012-12-
   ------------------------------------------------------------------------------
+    - now searching all control set registry keys for keyboard count at boot
     - bug fix: boot time logs forced to use correct error messages
     - now displaying a message when installing on a newer version than Windows 7,
       to make users aware of UltraDefrag being not tested on anything newer than
