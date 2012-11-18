@@ -168,11 +168,11 @@ static int internal_validate_volume(char volume_letter,int skip_removable,volume
     type = winx_get_drive_type(volume_letter);
     if(type < 0) return (-1);
     if(type == DRIVE_CDROM){
-        DebugPrint(I"Disk %c: is cdrom drive.",volume_letter);
+        DebugPrint(I"Disk %c: is on cdrom drive.",volume_letter);
         return UDEFRAG_CDROM;
     }
     if(type == DRIVE_REMOTE){
-        DebugPrint(I"Disk %c: is remote drive.",volume_letter);
+        DebugPrint(I"Disk %c: is on remote drive.",volume_letter);
         return UDEFRAG_REMOTE;
     }
     if(type == DRIVE_ASSIGNED_BY_SUBST_COMMAND){
@@ -182,7 +182,7 @@ static int internal_validate_volume(char volume_letter,int skip_removable,volume
     if(type == DRIVE_REMOVABLE){
         v->is_removable = TRUE;
         if(skip_removable){
-            DebugPrint(I"Disk %c: is removable media.",volume_letter);
+            DebugPrint(I"Disk %c: is on removable media.",volume_letter);
             return UDEFRAG_REMOVABLE;
         }
     }
