@@ -70,7 +70,7 @@
 
     - the following translations were updated:
 
-      Spanish (ES), 
+      Russian, Spanish (ES), 
 
 
   Version 5.1.1  2012-11-11
