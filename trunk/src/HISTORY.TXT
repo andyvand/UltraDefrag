@@ -72,7 +72,7 @@
 
       Russian, Spanish (ES), 
 
-    - query_keyboard_count_class, query_keyboard_count_hid added to be able to
+    - Internals: winx_query_dev_count routine added to be able to
       correct the keyboard initialization problem at boot
 
 
