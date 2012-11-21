@@ -501,10 +501,14 @@ static int kb_check(HANDLE hKbDevice)
 
 /**
  * @internal
- * @brief Queries the registry for the total number of installed keyboards.
- * @return The number of installed keyboards, default is 1.
+ * @brief Queries the registry for the total number
+ * of installed devices of the specified class.
+ * @param[in] class_name the class name.
+ * @param[in] default_value the default number of
+ * the installed devices, intended for being returned
+ * on impossibility to query the real information.
  */
-static int query_keyboard_count_class(void)
+static int winx_query_dev_count(wchar_t *class_name,int default_value)
 {
     UNICODE_STRING us;
     OBJECT_ATTRIBUTES oa;
@@ -513,208 +517,102 @@ static int query_keyboard_count_class(void)
     KEY_VALUE_PARTIAL_INFORMATION *data_buffer = NULL;
     DWORD data_size = 0;
     DWORD data_size2 = 0;
-    int kbdCount = 1, old_kbdCount = 0, i;
+    
     wchar_t *ControlSetKeys[] = {
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\Kbdclass\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\Kbdclass\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\Kbdclass\\Enum"
+        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\%ws\\Enum",
+        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\%ws\\Enum",
+        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\%ws\\Enum"
     };
+    wchar_t path[MAX_PATH + 1]; /* should be enough */
 
-    for(i = 0; i < 3; i++){
-        RtlInitUnicodeString(&us, ControlSetKeys[i]);
+    int i, count = default_value;
+
+    for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
+        _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],class_name);
+        path[MAX_PATH] = 0;
+        RtlInitUnicodeString(&us,path);
         InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-        DebugPrint(I"query_keyboard_count_class: checking %ws",us.Buffer);
+        DebugPrint(I"winx_query_dev_count: checking %ws",path);
         status = NtOpenKey(&hKey,KEY_READ,&oa);
         if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"query_keyboard_count_class: cannot open %ws",us.Buffer);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
+            DebugPrintEx(status,E"winx_query_dev_count: cannot open %ws",path);
+            continue;
         }
 
         RtlInitUnicodeString(&us,L"Count");
         status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
                 NULL,0,&data_size);
         if(status != STATUS_BUFFER_TOO_SMALL){
-            DebugPrintEx(status,E"query_keyboard_count_class: cannot query Count value size");
+            DebugPrintEx(status,E"winx_query_dev_count: cannot query Count value size");
             NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
+            continue;
         }
         data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
         if(data_buffer == NULL){
-            DebugPrint(E"query_keyboard_count_class: cannot allocate %u bytes of memory",data_size);
+            DebugPrint(E"winx_query_dev_count: cannot allocate %u bytes of memory",data_size);
             NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
+            continue;
         }
 
         RtlZeroMemory(data_buffer,data_size);
         status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
                 data_buffer,data_size,&data_size2);
         if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"query_keyboard_count_class: cannot query Count value");
+            DebugPrintEx(status,E"winx_query_dev_count: cannot query Count value");
             winx_free(data_buffer);
             NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
+            continue;
         }
 
         if(data_buffer->Type != REG_DWORD){
-            DebugPrint(E"query_keyboard_count_class: Count value has wrong type 0x%x",
+            DebugPrint(E"winx_query_dev_count: Count value has wrong type 0x%x",
                     data_buffer->Type);
             winx_free(data_buffer);
             NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
+            continue;
         }
 
-        kbdCount = (int)*(DWORD *)data_buffer->Data;
-        DebugPrint(I"query_keyboard_count_class: old keyboard count is %u",old_kbdCount);
-        DebugPrint(I"query_keyboard_count_class: keyboard count is %u",kbdCount);
-        if (old_kbdCount > kbdCount) {
-            DebugPrint(D"query_keyboard_count_class: using old keyboard count!");
-            kbdCount = old_kbdCount;
-        }
-        old_kbdCount = kbdCount;
+        DebugPrint(I"winx_query_dev_count: devices count = %u",
+            (int)*(DWORD *)data_buffer->Data);
+        count = max(count, (int)*(DWORD *)data_buffer->Data);
 
         winx_free(data_buffer);
         NtCloseSafe(hKey);
     }
 
-    return kbdCount;
+    DebugPrint(I"winx_query_dev_count: total devices count = %u",count);
+    return count;
 }
 
 /**
  * @internal
- * @brief Queries the registry for the number of installed USB keyboards.
- * @return The number of installed keyboards, default is 0.
- */
-static int query_keyboard_count_hid(void)
-{
-    UNICODE_STRING us;
-    OBJECT_ATTRIBUTES oa;
-    NTSTATUS status;
-    HANDLE hKey;
-    KEY_VALUE_PARTIAL_INFORMATION *data_buffer = NULL;
-    DWORD data_size = 0;
-    DWORD data_size2 = 0;
-    int kbdCount = 0, old_kbdCount = 0, i;
-    wchar_t *ControlSetKeysHID[] = {
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\kbdhid\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\kbdhid\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\kbdhid\\Enum"
-    };
-
-    for(i = 0; i < 3; i++){
-        RtlInitUnicodeString(&us, ControlSetKeysHID[i]);
-        InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-        DebugPrint(I"query_keyboard_count_hid: checking %ws",us.Buffer);
-        status = NtOpenKey(&hKey,KEY_READ,&oa);
-        if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"query_keyboard_count_hid: cannot open %ws",us.Buffer);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
-        }
-
-        RtlInitUnicodeString(&us,L"Count");
-        status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
-                NULL,0,&data_size);
-        if(status != STATUS_BUFFER_TOO_SMALL){
-            DebugPrintEx(status,E"query_keyboard_count_hid: cannot query Count value size");
-            NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
-        }
-        data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
-        if(data_buffer == NULL){
-            DebugPrint(E"query_keyboard_count_hid: cannot allocate %u bytes of memory",data_size);
-            NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
-        }
-
-        RtlZeroMemory(data_buffer,data_size);
-        status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
-                data_buffer,data_size,&data_size2);
-        if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"query_keyboard_count_hid: cannot query Count value");
-            winx_free(data_buffer);
-            NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
-        }
-
-        if(data_buffer->Type != REG_DWORD){
-            DebugPrint(E"query_keyboard_count_hid: Count value has wrong type 0x%x",
-                    data_buffer->Type);
-            winx_free(data_buffer);
-            NtCloseSafe(hKey);
-            if (i == 2)
-                return kbdCount;
-            else
-                continue;
-        }
-
-        kbdCount = (int)*(DWORD *)data_buffer->Data;
-        DebugPrint(I"query_keyboard_count_hid: old keyboard count is %u",old_kbdCount);
-        DebugPrint(I"query_keyboard_count_hid: keyboard count is %u",kbdCount);
-        if (old_kbdCount > kbdCount) {
-            DebugPrint(D"query_keyboard_count_hid: using old keyboard count!");
-            kbdCount = old_kbdCount;
-        }
-        old_kbdCount = kbdCount;
-
-        winx_free(data_buffer);
-        NtCloseSafe(hKey);
-    }
-
-    return kbdCount;
-}
-
-/**
- * @internal
- * @brief Queries the registry for the number of installed keyboards.
- * @return The number of installed keyboards, default is 2.
+ * @brief Queries the registry for 
+ * the number of installed keyboards.
  */
 static int query_keyboard_count(void)
 {
-    int kbdCount = 2;
-    int kbdCountTotal = query_keyboard_count_class();
-    int kbdCountHID = query_keyboard_count_hid();
+    int count;
+    int total = winx_query_dev_count(L"Kbdclass",1);
+    int hid = winx_query_dev_count(L"kbdhid",0);
 
     /* Windows XP sometimes doesn't count the USB keyboards */
     if (winx_get_os_version() == WINDOWS_XP) {
-        if (kbdCountHID > 0) {
-            kbdCount = (kbdCountTotal <= kbdCountHID ? kbdCountTotal + kbdCountHID : kbdCountTotal);
-            DebugPrint(D"query_keyboard_count: HID greater zero - keyboard count is %u / %u total",kbdCount,kbdCountTotal);
+        if (hid > 0) {
+            count = (total <= hid) ? (total + hid) : total;
+            DebugPrint(D"query_keyboard_count: HID above zero - "
+                "keyboard count is %u (%u total)",count,total);
         } else {
-            kbdCount = (kbdCountTotal == 1 ? 2 : kbdCountTotal);
-            DebugPrint(D"query_keyboard_count: HID zero - keyboard count is %u / %u total",kbdCount,kbdCountTotal);
+            count = (total == 1 ? 2 : total);
+            DebugPrint(D"query_keyboard_count: HID equals zero - "
+                "keyboard count is %u (%u total)",count,total);
         }
     } else {
-        kbdCount = kbdCountTotal;
-        DebugPrint(I"query_keyboard_count: not XP - keyboard count is %u / %u total",kbdCount,kbdCountTotal);
+        count = total;
+        DebugPrint(I"query_keyboard_count: not XP - keyboard "
+            "count is %u (%u total)",count,total);
     }
 
-    return kbdCount;
+    return count;
 }
 
 /** @} */
