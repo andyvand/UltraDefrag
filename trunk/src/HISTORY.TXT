@@ -60,7 +60,7 @@
       the program; look at rsc/compilation.dox for details
 
 
-  Version 5.1.2  2012-12-
+  Version 5.1.2  2012-11-
   ------------------------------------------------------------------------------
     - now searching all control set registry keys for keyboard count at boot
     - bug fix: boot time logs forced to use correct error messages
@@ -71,6 +71,9 @@
     - the following translations were updated:
 
       Russian, Spanish (ES), 
+
+    - query_keyboard_count_class, query_keyboard_count_hid added to be able to
+      correct the keyboard initialization problem at boot
 
 
   Version 5.1.1  2012-11-11
