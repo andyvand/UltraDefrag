@@ -64,13 +64,13 @@
   ------------------------------------------------------------------------------
     - now searching all control set registry keys for keyboard count at boot
     - bug fix: boot time logs forced to use correct error messages
-    - now displaying a message when installing on a newer version than Windows 7,
+    - now displaying a message when installing on a newer versions than Windows 7,
       to make users aware of UltraDefrag being not tested on anything newer than
       Windows 7 currently
 
     - the following translations were updated:
 
-      Russian, Spanish (ES), 
+      Russian, Spanish (ES), Tamil
 
     - Internals: winx_query_dev_count routine added to be able to
       correct the keyboard initialization problem at boot
