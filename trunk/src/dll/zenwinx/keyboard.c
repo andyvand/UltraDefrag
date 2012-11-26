@@ -501,6 +501,157 @@ static int kb_check(HANDLE hKbDevice)
 
 /**
  * @internal
+ * @brief Collects and logs all the values of a registry key.
+ */
+void winx_log_reg_key_info(wchar_t *key_name)
+{
+    UNICODE_STRING us;
+    OBJECT_ATTRIBUTES oa;
+    NTSTATUS status;
+    HANDLE hKey;
+    KEY_FULL_INFORMATION *info_buffer = NULL;
+    KEY_VALUE_FULL_INFORMATION *value_buffer = NULL;
+    DWORD data_size = 0;
+    DWORD data_size2 = 0;
+    DWORD value_size = 0;
+    DWORD value_size2 = 0;
+    wchar_t *value_name = NULL;
+    wchar_t *value_string_data = NULL;
+    int value_dword_data = 0;
+    int i;
+
+    RtlInitUnicodeString(&us,key_name);
+    InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
+    DebugPrint(I"winx_log_reg_key_info: enumerating %ws",key_name);
+    status = NtOpenKey(&hKey,KEY_READ,&oa);
+    if(status != STATUS_SUCCESS){
+        DebugPrintEx(status,E"winx_log_reg_key_info: cannot open %ws",key_name);
+        return;
+    }
+
+    status = NtQueryKey(hKey,KeyFullInformation,NULL,0,&data_size);
+    if(status != STATUS_BUFFER_TOO_SMALL){
+        DebugPrintEx(status,E"winx_log_reg_key_info: cannot query information size");
+        NtCloseSafe(hKey);
+        return;
+    }
+    info_buffer = (KEY_FULL_INFORMATION *)winx_malloc(data_size);
+    if(info_buffer == NULL){
+        DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",data_size);
+        NtCloseSafe(hKey);
+        return;
+    }
+
+    RtlZeroMemory(info_buffer,data_size);
+    status = NtQueryKey(hKey,KeyFullInformation,info_buffer,data_size,&data_size2);
+    if(status != STATUS_SUCCESS){
+        DebugPrintEx(status,E"winx_log_reg_key_info: cannot query information");
+        winx_free(info_buffer);
+        NtCloseSafe(hKey);
+        return;
+    }
+
+    DebugPrint(I"winx_log_reg_key_info: values count = %u",info_buffer->Values);
+    DebugPrint(I"winx_log_reg_key_info: max value name length = %u",info_buffer->MaxValueNameLen);
+    DebugPrint(I"winx_log_reg_key_info: max value data length = %u",info_buffer->MaxValueDataLen);
+
+    value_name = (wchar_t *)winx_malloc(info_buffer->MaxValueNameLen);
+    if(value_name == NULL){
+        DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",info_buffer->MaxValueNameLen);
+        winx_free(info_buffer);
+        NtCloseSafe(hKey);
+        return;
+    }
+
+    value_string_data = (wchar_t *)winx_malloc(info_buffer->MaxValueDataLen);
+    if(value_string_data == NULL){
+        DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",info_buffer->MaxValueDataLen);
+        winx_free(value_name);
+        winx_free(info_buffer);
+        NtCloseSafe(hKey);
+        return;
+    }
+
+    for(i = 0; i < (int)info_buffer->Values; i++) {
+        status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
+                NULL,0,&value_size);
+        if(status != STATUS_BUFFER_TOO_SMALL){
+            DebugPrintEx(status,E"winx_log_reg_key_info: cannot query full information size");
+            break;
+        }
+        value_buffer = (KEY_VALUE_FULL_INFORMATION *)winx_malloc(value_size);
+        if(value_buffer == NULL){
+            DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",value_size);
+            break;
+        }
+
+        RtlZeroMemory(value_buffer,value_size);
+        status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
+                value_buffer,value_size,&value_size2);
+        if(status != STATUS_SUCCESS){
+            DebugPrintEx(status,E"winx_log_reg_key_info: cannot query full information");
+            winx_free(value_buffer);
+            break;
+        }
+        RtlCopyMemory(value_name,value_buffer->Name,value_buffer->NameLength);
+        value_name[value_buffer->NameLength / sizeof(wchar_t)] = 0;
+
+        switch(value_buffer->Type){
+            case REG_DWORD:
+                value_dword_data = (int)*(DWORD *)((BYTE *)value_buffer + value_buffer->DataOffset);
+                DebugPrint(I"winx_log_reg_key_info: value %d = %ws ... %d",i,value_name,value_dword_data);
+                break;
+            case REG_EXPAND_SZ:
+            case REG_SZ:
+                RtlCopyMemory(value_string_data,(BYTE *)value_buffer + value_buffer->DataOffset,value_buffer->DataLength);
+                value_string_data[value_buffer->DataLength / sizeof(wchar_t)] = 0;
+                DebugPrint(I"winx_log_reg_key_info: value %d = %ws ... %ws",i,value_name,value_string_data);
+                break;
+        }
+
+        winx_free(value_buffer);
+    }
+    DebugPrint(I"----------");
+
+    winx_free(value_string_data);
+    winx_free(value_name);
+    winx_free(info_buffer);
+    NtCloseSafe(hKey);
+}
+
+/**
+ * @internal
+ * @brief Collects and logs all the keyboard registry information.
+ */
+void winx_log_keyboard_info(void)
+{
+    wchar_t *ControlSetKeys[] = {
+        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\%ws\\Enum",
+        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\%ws\\Enum",
+        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\%ws\\Enum"
+    };
+    wchar_t path[MAX_PATH + 1]; /* should be enough */
+
+    int i;
+
+    winx_log_reg_key_info(L"\\Registry\\Machine\\HARDWARE\\DEVICEMAP\\KeyboardClass");
+
+    for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
+        _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],L"Kbdclass");
+        path[MAX_PATH] = 0;
+
+        winx_log_reg_key_info(path);
+    }
+    for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
+        _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],L"kbdhid");
+        path[MAX_PATH] = 0;
+
+        winx_log_reg_key_info(path);
+    }
+}
+
+/**
+ * @internal
  * @brief Queries the registry for the total number
  * of installed devices of the specified class.
  * @param[in] class_name the class name.
@@ -611,6 +762,10 @@ static int query_keyboard_count(void)
         DebugPrint(I"query_keyboard_count: not XP - keyboard "
             "count is %u (%u total)",count,total);
     }
+
+    DebugPrint(I"==========");
+    winx_log_keyboard_info();
+    DebugPrint(I"==========");
 
     return count;
 }

@@ -785,6 +785,29 @@ typedef enum _SHUTDOWN_ACTION
     ShutdownPowerOff
 } SHUTDOWN_ACTION;
 
+typedef struct _KEY_FULL_INFORMATION {
+    LARGE_INTEGER LastWriteTime;
+    ULONG         TitleIndex;
+    ULONG         ClassOffset;
+    ULONG         ClassLength;
+    ULONG         SubKeys;
+    ULONG         MaxNameLen;
+    ULONG         MaxClassLen;
+    ULONG         Values;
+    ULONG         MaxValueNameLen;
+    ULONG         MaxValueDataLen;
+    WCHAR         Class[1];
+} KEY_FULL_INFORMATION, *PKEY_FULL_INFORMATION;
+
+typedef struct _KEY_VALUE_FULL_INFORMATION {
+    ULONG TitleIndex;
+    ULONG Type;
+    ULONG DataOffset;
+    ULONG DataLength;
+    ULONG NameLength;
+    WCHAR Name[1];
+} KEY_VALUE_FULL_INFORMATION, *PKEY_VALUE_FULL_INFORMATION;
+
 typedef struct _KEY_VALUE_PARTIAL_INFORMATION
 {
     ULONG TitleIndex;
@@ -792,6 +815,18 @@ typedef struct _KEY_VALUE_PARTIAL_INFORMATION
     ULONG DataLength;
     UCHAR Data[1];
 } KEY_VALUE_PARTIAL_INFORMATION, *PKEY_VALUE_PARTIAL_INFORMATION;
+
+typedef enum _KEY_INFORMATION_CLASS { 
+    KeyBasicInformation           = 0,
+    KeyNodeInformation            = 1,
+    KeyFullInformation            = 2,
+    KeyNameInformation            = 3,
+    KeyCachedInformation          = 4,
+    KeyFlagsInformation           = 5,
+    KeyVirtualizationInformation  = 6,
+    KeyHandleTagsInformation      = 7,
+    MaxKeyInfoClass               = 8
+} KEY_INFORMATION_CLASS;
 
 typedef enum _KEY_VALUE_INFORMATION_CLASS
 {
@@ -1188,6 +1223,8 @@ NTSTATUS    NTAPI    NtQueryInformationProcess(HANDLE,PROCESSINFOCLASS,PVOID,SIZ
 NTSTATUS    NTAPI    NtQueryPerformanceCounter(PLARGE_INTEGER,PLARGE_INTEGER);
 NTSTATUS    NTAPI    NtQuerySymbolicLinkObject(HANDLE,PUNICODE_STRING,PULONG);
 NTSTATUS    NTAPI    NtQuerySystemTime(PLARGE_INTEGER SystemTime);
+NTSTATUS    NTAPI    NtQueryKey(HANDLE,KEY_INFORMATION_CLASS,PVOID,SIZE_T,PULONG);
+NTSTATUS    NTAPI    NtEnumerateValueKey(HANDLE,ULONG,KEY_VALUE_INFORMATION_CLASS,PVOID,SIZE_T,PULONG);
 NTSTATUS    NTAPI    NtQueryValueKey(HANDLE,PUNICODE_STRING,KEY_VALUE_INFORMATION_CLASS,PVOID,SIZE_T,PULONG);
 NTSTATUS    NTAPI    NtQueryVolumeInformationFile(HANDLE,PIO_STATUS_BLOCK,PVOID,SIZE_T,FS_INFORMATION_CLASS);
 NTSTATUS    NTAPI    NtReadFile(HANDLE,HANDLE,PIO_APC_ROUTINE,PVOID,PIO_STATUS_BLOCK,PVOID,SIZE_T,PLARGE_INTEGER,PULONG);
