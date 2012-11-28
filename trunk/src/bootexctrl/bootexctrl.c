@@ -224,7 +224,7 @@ int register_cmd(void)
     }
 
     type = REG_MULTI_SZ;
-    result = RegQueryValueEx(hKey,"BootExecute",NULL,&type,data,&size);
+    result = RegQueryValueEx(hKey,"BootExecute",NULL,&type,(LPBYTE)data,&size);
     if(result != ERROR_SUCCESS){
         if(!silent){
             SetLastError((DWORD)result);
@@ -260,7 +260,7 @@ int register_cmd(void)
     length += strlen(cmd) + 1 + 1;
 
 save_changes:
-    result = RegSetValueEx(hKey,"BootExecute",0,REG_MULTI_SZ,data,length);
+    result = RegSetValueEx(hKey,"BootExecute",0,REG_MULTI_SZ,(const BYTE *)data,length);
     if(result != ERROR_SUCCESS){
         if(!silent){
             SetLastError((DWORD)result);
@@ -307,7 +307,7 @@ int unregister_cmd(void)
     }
 
     type = REG_MULTI_SZ;
-    result = RegQueryValueEx(hKey,"BootExecute",NULL,&type,data,&size);
+    result = RegQueryValueEx(hKey,"BootExecute",NULL,&type,(LPBYTE)data,&size);
     if(result != ERROR_SUCCESS){
         if(!silent){
             SetLastError((DWORD)result);
@@ -354,7 +354,7 @@ int unregister_cmd(void)
     }
     new_data[new_length] = 0;
 
-    result = RegSetValueEx(hKey,"BootExecute",0,REG_MULTI_SZ,new_data,new_length + 1);
+    result = RegSetValueEx(hKey,"BootExecute",0,REG_MULTI_SZ,(const BYTE *)new_data,new_length + 1);
     if(result != ERROR_SUCCESS){
         if(!silent){
             SetLastError((DWORD)result);
