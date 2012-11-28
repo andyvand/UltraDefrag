@@ -127,7 +127,7 @@ static void add_dbg_log_entry(char *msg)
  */
 typedef struct _DBG_OUTPUT_DEBUG_STRING_BUFFER {
     ULONG ProcessId;
-    UCHAR Msg[4096-sizeof(ULONG)];
+    char  Msg[4096-sizeof(ULONG)];
 } DBG_OUTPUT_DEBUG_STRING_BUFFER, *PDBG_OUTPUT_DEBUG_STRING_BUFFER;
 
 #define DBG_OUT_BUFFER_SIZE (4096-sizeof(ULONG))

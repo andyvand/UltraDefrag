@@ -325,7 +325,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
     wchar_t *filename;
     int i, length;
     size_t filesize;
-    unsigned char *buffer, *second_buffer;
+    char *buffer, *second_buffer;
     int unicode_detected;
     char *strings[] = { NULL, NULL };
     int result;
