@@ -28,6 +28,8 @@
       winx_prompt prototypes changed
     - WgxSetTaskbarProgressState and WgxSetTaskbarProgressValue routines
       added to wgx library
+    - Windows Server 2003 DDK support dropped because of lack of variadic macros
+      support there - use Windows Driver Kit v7.1.0 instead
 
     beta1:
     - all the disk processing algorithms were reimplemented
