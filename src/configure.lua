@@ -116,7 +116,7 @@ if show_obsolete_options == 1 then
             "MinGW path: %s\n"..
             "NSIS path: %s\n"..
             "7-Zip path: %s\n"..
-            "Windows Server 2003 DDK path: %s\n"..
+            "Windows Driver Kit v7.1.0 path: %s\n"..
             "MinGW x64 base path: %s\n"..
             "Windows SDK base path: %s\n"..
             "Apply patch to MinGW: %b[No,Yes]\n",
@@ -130,7 +130,7 @@ else
             "MinGW path: %s\n"..
             "NSIS path: %s\n"..
             "7-Zip path: %s\n"..
-            "Windows Server 2003 DDK path: %s\n"..
+            "Windows Driver Kit v7.1.0 path: %s\n"..
             "Apply patch to MinGW: %b[No,Yes]\n",
             ULTRADFGVER, RELEASE_STAGE, MINGWBASE, NSISDIR, SEVENZIP_PATH, WINDDKBASE, apply_patch
             )
