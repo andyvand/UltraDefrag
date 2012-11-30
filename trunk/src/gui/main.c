@@ -98,16 +98,16 @@ static int InitSynchObjects(void)
     if(hLangMenuEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot create language menu synchronization event!");
-        WgxDbgPrintLastError("InitSynchObjects: language menu event creation failed");
+        letrace("language menu event creation failed");
         return (-1);
     }
     hTaskbarIconEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hTaskbarIconEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot create taskbar icon synchronization event!");
-        WgxDbgPrintLastError("InitSynchObjects: taskbar icon event creation failed");
-        WgxDbgPrint(I"no taskbar icon overlays will be shown");
-        WgxDbgPrint(I"and no system tray icon will be shown");
+        letrace("taskbar icon event creation failed");
+        itrace("no taskbar icon overlays will be shown");
+        itrace("and no system tray icon will be shown");
         DestroySynchObjects();
         return (-1);
     }
@@ -115,7 +115,7 @@ static int InitSynchObjects(void)
     if(hMapEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot create cluster map synchronization event!");
-        WgxDbgPrintLastError("InitSynchObjects: map event creation failed");
+        letrace("map event creation failed");
         DestroySynchObjects();
         return (-1);
     }
@@ -123,7 +123,7 @@ static int InitSynchObjects(void)
     if(hListEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
             "Cannot create drives list synchronization event!");
-        WgxDbgPrintLastError("InitSynchObjects: list event creation failed");
+        letrace("list event creation failed");
         DestroySynchObjects();
         return (-1);
     }
@@ -166,7 +166,7 @@ static int IsPortable(void)
     int i;
     
     if(!GetModuleFileNameW(NULL,cd,MAX_PATH)){
-        WgxDbgPrintLastError("IsPortable: cannot get module file name");
+        letrace("cannot get module file name");
         return 1;
     }
     
@@ -203,7 +203,7 @@ static int IsPortable(void)
         0,samDesired,&hRegKey);
     if(result != ERROR_SUCCESS){
         SetLastError((DWORD)result);
-        WgxDbgPrintLastError("IsPortable: cannot open registry");
+        letrace("cannot open registry");
         return 1;
     }
     
@@ -211,7 +211,7 @@ static int IsPortable(void)
     RegCloseKey(hRegKey);
     if(result != ERROR_SUCCESS){
         SetLastError((DWORD)result);
-        WgxDbgPrintLastError("IsPortable: cannot read registry");
+        letrace("cannot read registry");
         return 1;
     }
     
@@ -227,11 +227,11 @@ static int IsPortable(void)
     }
     
     if(udefrag_wcsicmp(path,cd) == 0){
-        WgxDbgPrint(I"Install location \"%ws\" matches \"%ws\", so it isn't portable\n",path,cd);
+        trace(I"Install location \"%ws\" matches \"%ws\", so it isn't portable",path,cd);
         return 0;
     }
     
-    WgxDbgPrint(I"Install location \"%ws\" differs from \"%ws\", so it is portable\n",path,cd);
+    trace(I"Install location \"%ws\" differs from \"%ws\", so it is portable",path,cd);
     return 1;
 }
 
@@ -246,7 +246,7 @@ static int IsBtdInstalled(void)
     FILE *f;
     
     if(!GetSystemDirectory(sysdir,MAX_PATH)){
-        WgxDbgPrintLastError("IsBtdInstalled: cannot get system directory");
+        letrace("cannot get system directory");
         return 1; /* let's assume that it is installed */
     }
     
@@ -255,7 +255,7 @@ static int IsBtdInstalled(void)
 
     f = fopen(path,"rb");
     if(f == NULL){
-        WgxDbgPrint(I"Cannot open %s => the boot time defragmenter is not installed\n",path);
+        trace(I"Cannot open %s => the boot time defragmenter is not installed",path);
         return 0;
     }
     
@@ -363,7 +363,7 @@ void ResizeMainWindow(int force)
         return; /* this happens on early stages of window initialization */
     
     if(!GetClientRect(hWindow,&rc)){
-        WgxDbgPrintLastError("RepositionMainWindowControls: GetClientRect failed");
+        letrace("GetClientRect failed");
         return;
     }
     
@@ -431,13 +431,13 @@ int CreateMainWindow(int nShowCmd)
 
     TaskbarButtonCreatedMsg = RegisterWindowMessage("TaskbarButtonCreated");
     if(TaskbarButtonCreatedMsg == 0)
-        WgxDbgPrintLastError("CreateMainWindow: cannot register TaskbarButtonCreated message");
+        letrace("cannot register TaskbarButtonCreated message");
     TaskbarCreatedMsg = RegisterWindowMessage("TaskbarCreated");
     if(TaskbarCreatedMsg == 0){
-        WgxDbgPrintLastError("CreateMainWindow: cannot register TaskbarCreated message");
+        letrace("cannot register TaskbarCreated message");
         /* turn off minimize to tray option */
         minimize_to_system_tray = 0;
-        WgxDbgPrint(I"CreateMainWindow: minimize_to_system_tray option turned off");
+        itrace("minimize_to_system_tray option turned off");
     }
 
     if(dry_run == 0){
@@ -547,7 +547,7 @@ int CreateMainWindow(int nShowCmd)
     /* load accelerators */
     hAccelTable = LoadAccelerators(hInstance,MAKEINTRESOURCE(IDR_MAIN_ACCELERATOR));
     if(hAccelTable == NULL){
-        WgxDbgPrintLastError("CreateMainWindow: accelerators cannot be loaded");
+        letrace("accelerators cannot be loaded");
     }
     
     SetFocus(hList);
@@ -615,7 +615,7 @@ void OpenWebPage(char *page, char *anchor)
         }
     }
     path[INTERNET_MAX_URL_LENGTH - 1] = 0;
-    /*WgxDbgPrint(D"%ws",path);*/
+    /*trace(D"%ws",path);*/
 
     if (anchor != NULL && exe[0] != 0)
         hApp = ShellExecuteW(hWindow,NULL,exe,path,NULL,SW_SHOW);
@@ -658,7 +658,7 @@ void OpenLog(void)
 {
     /* getenv() may give wrong results as stated in MSDN */
     if(!GetEnvironmentVariableW(L"UD_LOG_FILE_PATH",env_buffer2,MAX_ENV_VARIABLE_LENGTH + 1)){
-        WgxDbgPrintLastError("OpenLog: cannot query UD_LOG_FILE_PATH environment variable");
+        letrace("cannot query UD_LOG_FILE_PATH environment variable");
         MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
     } else {
         udefrag_flush_dbg_log();
@@ -697,19 +697,19 @@ static int IsCursorBetweenControls(void)
     
     /* get cursor's position */
     if(!GetCursorPos(&pt)){
-        WgxDbgPrintLastError("IsCursorBetweenControls: cannot get cursor position");
+        letrace("cannot get cursor position");
         return 0;
     }
     
     /* convert screen coordinates to list view control coordinates */
     if(!MapWindowPoints(NULL,hList,&pt,1)){
-        WgxDbgPrintLastError("IsCursorBetweenControls: MapWindowPoints failed");
+        letrace("MapWindowPoints failed");
         return 0;
     }
     
     /* get dimensions of the list view control */
     if(!GetWindowRect(hList,&rc)){
-        WgxDbgPrintLastError("IsCursorBetweenControls: cannot get height of the list view control");
+        letrace("cannot get height of the list view control");
         return 0;
     }
     rc.bottom -= rc.top;
@@ -759,13 +759,13 @@ static void DrawXorBar(int y)
     
     /* get dimensions of the main window */
     if(!GetWindowRect(hWindow,&rc)){
-        WgxDbgPrintLastError("DrawXorBar: cannot get main window dimensions");
+        letrace("cannot get main window dimensions");
         return;
     }
 
     /* get dimensions of the list view control */
     if(!GetWindowRect(hList,&list_rc)){
-        WgxDbgPrintLastError("DrawXorBar: cannot get list dimensions");
+        letrace("cannot get list dimensions");
         return;
     }
     
@@ -775,7 +775,7 @@ static void DrawXorBar(int y)
     pt.x = 0;
     pt.y = y - 2;
     if(!ClientToScreen(hWindow,&pt)){
-        WgxDbgPrintLastError("DrawXorBar: ClientToScreen failed");
+        letrace("ClientToScreen failed");
         return;
     }
 
@@ -785,12 +785,12 @@ static void DrawXorBar(int y)
     /* create brush */
     hBitmap = CreateBitmap(8, 8, 1, 1, _dotPatternBmp);
     if(hBitmap == NULL){
-        WgxDbgPrintLastError("DrawXorBar: cannot create bitmap");
+        letrace("cannot create bitmap");
         return;
     }
     hBrush = CreatePatternBrush(hBitmap);
     if(hBrush == NULL){
-        WgxDbgPrintLastError("DrawXorBar: cannot create brush");
+        letrace("cannot create brush");
         DeleteObject(hBitmap);
         return;
     }
@@ -836,7 +836,7 @@ static void ResizeListMove(short y)
     /* calculate list height */
     pt.x = pt.y = 0;
     if(!MapWindowPoints(hList,hWindow,&pt,1)){
-        WgxDbgPrintLastError("ResizeListMove: MapWindowPoints failed");
+        letrace("MapWindowPoints failed");
     } else {
         list_height = y - pt.y;
         if(list_height >= 0 && list_height <= GetMaxVolListHeight()){
@@ -861,7 +861,7 @@ static void ResizeListEnd(short y)
         drag_mode = 0;
         pt.x = pt.y = 0;
         if(!MapWindowPoints(hList,hWindow,&pt,1)){
-            WgxDbgPrintLastError("ResizeListEnd: MapWindowPoints failed");
+            letrace("MapWindowPoints failed");
         } else {
             list_height = y - pt.y;
             ResizeMainWindow(1);
@@ -892,7 +892,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         /* set taskbar icon overlay */
         if(show_taskbar_icon_overlay){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+                letrace("wait on hTaskbarIconEvent failed");
             } else {
                 if(job_is_running){
                     if(pause_flag)
@@ -909,7 +909,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         /* set notification area icon */
         if(minimize_to_system_tray){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+                letrace("wait on hTaskbarIconEvent failed");
             } else {
                 ShowSystemTrayIcon(NIM_ADD);
                 SetEvent(hTaskbarIconEvent);
@@ -924,7 +924,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
         hWindow = hWnd;
         if(minimize_to_system_tray){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+                letrace("wait on hTaskbarIconEvent failed");
             } else {
                 ShowSystemTrayIcon(NIM_ADD);
                 SetEvent(hTaskbarIconEvent);
@@ -1152,7 +1152,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                 mi.dwTypeData = lang_name;
                 mi.cch = MAX_PATH;
                 if(!GetMenuItemInfoW(hMainMenu,id,FALSE,&mi)){
-                    WgxDbgPrintLastError("MainWindowProc: cannot get selected language");
+                    letrace("cannot get selected language");
                     return 0;
                 }
                 
@@ -1264,12 +1264,12 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                 memcpy((void *)&r_rc,(void *)&win_rc,sizeof(RECT));
             ResizeMainWindow(0);
         } else {
-            WgxDbgPrint(E"Wrong window dimensions on WM_SIZE message!\n");
+            etrace("wrong window dimensions on WM_SIZE message!");
         }
         /* hide window on minimization when minimize_to_system_tray is turned on */
         if(wParam == SIZE_MINIMIZED && minimize_to_system_tray){
             if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+                letrace("wait on hTaskbarIconEvent failed");
             } else {
                 if(minimize_to_system_tray)
                     WgxHideWindow(hWindow);
@@ -1335,7 +1335,7 @@ done:
     VolListGetColumnWidths();
     /* remove notification area icon */
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("MainWindowProc: wait on hTaskbarIconEvent failed");
+        letrace("wait on hTaskbarIconEvent failed");
     } else {
         HideSystemTrayIcon();
         SetEvent(hTaskbarIconEvent);
@@ -1357,7 +1357,7 @@ DWORD WINAPI UpdateWebStatisticsThreadProc(LPVOID lpParameter)
     /* getenv() may give wrong results as stated in MSDN */
     if(!GetEnvironmentVariableW(L"UD_DISABLE_USAGE_TRACKING",env_buffer,MAX_ENV_VARIABLE_LENGTH + 1)){
         if(GetLastError() != ERROR_ENVVAR_NOT_FOUND)
-            WgxDbgPrintLastError("UpdateWebStatisticsThreadProc: cannot get %%UD_DISABLE_USAGE_TRACKING%%!");
+            letrace("cannot get %%UD_DISABLE_USAGE_TRACKING%%");
     } else {
         if(wcscmp(env_buffer,L"1") == 0)
             tracking_enabled = 0;
@@ -1385,7 +1385,7 @@ DWORD WINAPI UpdateWebStatisticsThreadProc(LPVOID lpParameter)
 void start_web_statistics(void)
 {
     if(!WgxCreateThread(UpdateWebStatisticsThreadProc,NULL)){
-        WgxDbgPrintLastError("Cannot run UpdateWebStatisticsThreadProc");
+        letrace("cannot run UpdateWebStatisticsThreadProc");
         web_statistics_completed = 1;
     }
 }
@@ -1415,7 +1415,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     GetVersionEx(&osvi);
     if(osvi.dwMajorVersion < 5) is_nt4 = 1;
 
-    WgxSetDbgPrintHandler(udefrag_dbg_print);
+    WgxSetInternalTraceHandler(udefrag_dbg_print);
     hInstance = GetModuleHandle(NULL);
     
     /* check for admin rights - they're strongly required */

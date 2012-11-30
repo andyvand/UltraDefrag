@@ -68,14 +68,14 @@ static char *GetLatestVersion(void)
     /* load urlmon.dll library */
     hUrlmonDLL = LoadLibrary("urlmon.dll");
     if(hUrlmonDLL == NULL){
-        WgxDbgPrintLastError("GetLatestVersion: LoadLibrary(urlmon.dll) failed");
+        letrace("cannot load urlmon.dll library");
         return NULL;
     }
     
     /* get an address of procedure downloading a file */
     pURLDownloadToCacheFile = (URLMON_PROCEDURE)GetProcAddress(hUrlmonDLL,"URLDownloadToCacheFileA");
     if(pURLDownloadToCacheFile == NULL){
-        WgxDbgPrintLastError("GetLatestVersion: URLDownloadToCacheFile not found in urlmon.dll");
+        letrace("URLDownloadToCacheFile not found in urlmon.dll");
         return NULL;
     }
     
@@ -84,17 +84,18 @@ static char *GetLatestVersion(void)
 
     version_ini_path[MAX_PATH] = 0;
     if(result != S_OK){
-        if(result == E_OUTOFMEMORY)
-            WgxDbgPrint(E"GetLatestVersion: not enough memory for URLDownloadToCacheFile\n");
-        else
-            WgxDbgPrint(E"GetLatestVersion: URLDownloadToCacheFile failed\n");
+        if(result == E_OUTOFMEMORY){
+            etrace("not enough memory");
+        } else {
+            etrace("URLDownloadToCacheFile failed");
+        }
         return NULL;
     }
     
     /* open the file */
     f = fopen(version_ini_path,"rb");
     if(f == NULL){
-        WgxDbgPrint(E"GetLatestVersion: cannot open %s: %s\n",
+        etrace("cannot open %s: %s",
             version_ini_path,_strerror(NULL));
         return NULL;
     }
@@ -105,9 +106,9 @@ static char *GetLatestVersion(void)
     /* remove cached data, otherwise it may not be loaded next time */
     (void)remove(version_ini_path);
     if(res == 0){
-        WgxDbgPrint(E"GetLatestVersion: cannot read %s\n",version_ini_path);
+        etrace("cannot read %s",version_ini_path);
         if(feof(f))
-            WgxDbgPrint(E"File seems to be empty\n");
+            etrace("file seems to be empty");
         return NULL;
     }
     
@@ -145,12 +146,12 @@ static wchar_t *GetNewVersionAnnouncement(void)
     /*lv[2] = '4';*/
     res = sscanf(lv,"%u.%u.%u",&lmj,&lmn,&li);
     if(res != 3){
-        WgxDbgPrint(E"GetNewVersionAnnouncement: the first sscanf call returned %u\n",res);
+        etrace("the first sscanf call returned %u",res);
         return NULL;
     }
     res = sscanf(cv,"UltraDefrag %u.%u.%u",&cmj,&cmn,&ci);
     if(res != 3){
-        WgxDbgPrint(E"GetNewVersionAnnouncement: the second sscanf call returned %u\n",res);
+        etrace("the second sscanf call returned %u",res);
         return NULL;
     }
     string = _strdup(cv);
@@ -174,7 +175,7 @@ static wchar_t *GetNewVersionAnnouncement(void)
         announcement[MAX_ANNOUNCEMENT_LEN - 1] = 0;
         free(text);
         
-        WgxDbgPrint(I"GetNewVersionAnnouncement: upgrade to %s\n",lv);
+        itrace("upgrade to %s",lv);
         return announcement;
     }
     

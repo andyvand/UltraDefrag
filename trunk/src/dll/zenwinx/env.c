@@ -45,13 +45,13 @@ wchar_t *winx_getenv(wchar_t *name)
 {
     wchar_t *value;
     UNICODE_STRING n, v;
-    NTSTATUS Status;
+    NTSTATUS status;
     
-    DbgCheck1(name,"winx_getenv",NULL);
+    DbgCheck1(name,NULL);
     
     value = winx_malloc(MAX_ENV_VALUE_LENGTH * sizeof(wchar_t));
     if(value == NULL){
-        DebugPrint(E"winx_getenv: not enough memory for %ws",name);
+        etrace("not enough memory for %ws",name);
         return NULL;
     }
 
@@ -59,9 +59,9 @@ wchar_t *winx_getenv(wchar_t *name)
     v.Buffer = value;
     v.Length = 0;
     v.MaximumLength = MAX_ENV_VALUE_LENGTH * sizeof(wchar_t);
-    Status = RtlQueryEnvironmentVariable_U(NULL,&n,&v);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_getenv: cannot query %ws",name);
+    status = RtlQueryEnvironmentVariable_U(NULL,&n,&v);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot query %ws",name);
         winx_free(value);
         return NULL;
     }
@@ -88,7 +88,7 @@ int winx_setenv(wchar_t *name, wchar_t *value)
     UNICODE_STRING n, v;
     NTSTATUS status;
 
-    DbgCheck1(name,"winx_setenv",-1);
+    DbgCheck1(name,-1);
 
     RtlInitUnicodeString(&n,name);
     if(value){
@@ -102,7 +102,7 @@ int winx_setenv(wchar_t *name, wchar_t *value)
         status = RtlSetEnvironmentVariable(NULL,&n,NULL);
     }
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,E"winx_setenv: cannot set %ws",name);
+        strace(status,"cannot set %ws",name);
         return (-1);
     }
     return 0;

@@ -40,22 +40,22 @@
 int winx_create_mutex(wchar_t *name,HANDLE *phandle)
 {
     UNICODE_STRING us;
-    NTSTATUS Status;
+    NTSTATUS status;
     OBJECT_ATTRIBUTES oa;
 
-    DbgCheck2(name,phandle,"winx_create_mutex",-1);
+    DbgCheck2(name,phandle,-1);
     *phandle = NULL;
 
     RtlInitUnicodeString(&us,name);
     InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
-    Status = NtCreateMutant(phandle,MUTEX_ALL_ACCESS,&oa,0);
-    if(Status == STATUS_OBJECT_NAME_COLLISION){
-        DebugPrint(I"winx_create_mutex: %ws already exists",name);
-        Status = NtOpenMutant(phandle,MUTEX_ALL_ACCESS,&oa);
+    status = NtCreateMutant(phandle,MUTEX_ALL_ACCESS,&oa,0);
+    if(status == STATUS_OBJECT_NAME_COLLISION){
+        itrace("%ws already exists",name);
+        status = NtOpenMutant(phandle,MUTEX_ALL_ACCESS,&oa);
     }
-    if(!NT_SUCCESS(Status)){
+    if(!NT_SUCCESS(status)){
         *phandle = NULL;
-        DebugPrintEx(Status,E"winx_create_mutex: cannot create/open %ws",name);
+        strace(status,"cannot create/open %ws",name);
         return (-1);
     }
     return 0;
@@ -75,18 +75,18 @@ int winx_create_mutex(wchar_t *name,HANDLE *phandle)
 int winx_open_mutex(wchar_t *name,HANDLE *phandle)
 {
     UNICODE_STRING us;
-    NTSTATUS Status;
+    NTSTATUS status;
     OBJECT_ATTRIBUTES oa;
 
-    DbgCheck2(name,phandle,"winx_open_mutex",-1);
+    DbgCheck2(name,phandle,-1);
     *phandle = NULL;
 
     RtlInitUnicodeString(&us,name);
     InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
-    Status = NtOpenMutant(phandle,MUTEX_ALL_ACCESS,&oa);
-    if(!NT_SUCCESS(Status)){
+    status = NtOpenMutant(phandle,MUTEX_ALL_ACCESS,&oa);
+    if(!NT_SUCCESS(status)){
         *phandle = NULL;
-        DebugPrintEx(Status,E"winx_open_mutex: cannot open %ws",name);
+        strace(status,"cannot open %ws",name);
         return (-1);
     }
     return 0;
@@ -100,14 +100,13 @@ int winx_open_mutex(wchar_t *name,HANDLE *phandle)
  */
 int winx_release_mutex(HANDLE h)
 {
-    NTSTATUS Status;
+    NTSTATUS status;
     
-    DbgCheck1(h,"winx_release_mutex",-1);
+    DbgCheck1(h,-1);
     
-    Status = NtReleaseMutant(h,NULL);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_release_mutex: "
-            "cannot release mutex");
+    status = NtReleaseMutant(h,NULL);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot release mutex");
         return (-1);
     }
     return 0;

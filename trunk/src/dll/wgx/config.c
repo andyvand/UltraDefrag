@@ -24,15 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-
-#include "wgx.h"
-
-/* Uses Lua */
-#define lua_c
-#include "../../lua5.1/lua.h"
-#include "../../lua5.1/lauxlib.h"
-#include "../../lua5.1/lualib.h"
+#include "wgx-internals.h"
 
 typedef struct _escape_sequence {
     char c;
@@ -100,7 +92,7 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
     
     L = lua_open();
     if(L == NULL){
-        WgxDbgPrint(E"WgxGetOptions: cannot initialize Lua library");
+        etrace("cannot initialize Lua library");
         return FALSE;
     }
     
@@ -111,11 +103,11 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
 
     status = luaL_dofile(L,path);
     if(status != 0){
-        WgxDbgPrint(E"WgxGetOptions: cannot interprete %s",path);
+        etrace("cannot interprete %s",path);
         if(!lua_isnil(L, -1)){
             msg = lua_tostring(L, -1);
             if(msg == NULL) msg = "(error object is not a string)";
-            WgxDbgPrint(E"WgxGetOptions: %s",msg);
+            etrace("%s",msg);
             lua_pop(L, 1);
         }
         lua_close(L);
@@ -144,13 +136,13 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
     
     /*for(i = 0; table[i].name; i++){
         if(table[i].type == WGX_CFG_EMPTY){
-            WgxDbgPrint(D"\n");
+            trace(D"\n");
         } else if(table[i].type == WGX_CFG_COMMENT){
-            WgxDbgPrint(D"-- %s\n",table[i].name);
+            trace(D"-- %s\n",table[i].name);
         } else if(table[i].type == WGX_CFG_INT){
-            WgxDbgPrint(D"%s = %i\n",table[i].name,*((int *)table[i].value));
+            trace(D"%s = %i\n",table[i].name,*((int *)table[i].value));
         } else if(table[i].type == WGX_CFG_STRING){
-            WgxDbgPrint(D"%s = \"%s\"\n",table[i].name,(char *)table[i].value);
+            trace(D"%s = \"%s\"\n",table[i].name,(char *)table[i].value);
         }
     }*/
     
@@ -191,7 +183,7 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
             "Cannot open %s file: %s",
             path,_strerror(NULL));
         err_msg[sizeof(err_msg) - 1] = 0;
-        WgxDbgPrint(E"%s\n",err_msg);
+        etrace("%s",err_msg);
         if(cb != NULL)
             cb(err_msg);
         return FALSE;
@@ -199,16 +191,16 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
 
     for(i = 0; table[i].name; i++){
         if(table[i].type == WGX_CFG_EMPTY){
-            //WgxDbgPrint(D"\n");
+            //trace(D"\n");
             result = fprintf(f,"\n");
         } else if(table[i].type == WGX_CFG_COMMENT){
-            //WgxDbgPrint(D"-- %s\n",table[i].name);
+            //trace(D"-- %s\n",table[i].name);
             result = fprintf(f,"-- %s\n",table[i].name);
         } else if(table[i].type == WGX_CFG_INT){
-            //WgxDbgPrint(D"%s = %i\n",table[i].name,*((int *)table[i].value));
+            //trace(D"%s = %i\n",table[i].name,*((int *)table[i].value));
             result = fprintf(f,"%s = %i\n",table[i].name,*((int *)table[i].value));
         } else if(table[i].type == WGX_CFG_STRING){
-            //WgxDbgPrint(D"%s = \"%s\"\n",table[i].name,(char *)table[i].value);
+            //trace(D"%s = \"%s\"\n",table[i].name,(char *)table[i].value);
             /*result = fprintf(f,"%s = \"%s\"\n",table[i].name,(char *)table[i].value);*/
             result = fprintf(f,"%s = \"",table[i].name);
             if(result < 0)
@@ -240,7 +232,7 @@ fail:
                 "Cannot write to %s file: %s",
                 path,_strerror(NULL));
             err_msg[sizeof(err_msg) - 1] = 0;
-            WgxDbgPrint(E"%s\n",err_msg);
+            etrace("%s",err_msg);
             if(cb != NULL)
                 cb(err_msg);
             return FALSE;

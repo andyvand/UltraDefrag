@@ -1,5 +1,5 @@
 /*
- *  UltraDefrag - a powerful defragmentation tool for Windows NT.
+ *  WGX - Windows GUI Extended Library.
  *  Copyright (c) 2007-2012 Dmitri Arkhangelski (dmitriar@gmail.com).
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,23 +17,25 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/**
- * @brief Prefixes for debugging messages.
- * @details These prefixes are intended for use
- * with messages passed to winx_dbg_print,
- * winx_dbg_print_ex, winx_dbg_print_header,
- * udefrag_dbg_print, WgxDbgPrint routines.
- * To keep logs clean and suitable for easy
- * analysis always use one of the prefixes
- * listed here.
- */
+#ifndef _WGX_INTERNALS_H_
+#define _WGX_INTERNALS_H_
 
-#ifndef _DBG_PREFIXES_H_
-#define _DBG_PREFIXES_H_
+#include <windows.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <objbase.h>
+#include <shellapi.h>
 
-#define I "INFO:  "  /* for general purpose progress information */
-#define E "ERROR: "  /* for errors */
-#define D "DEBUG: "  /* for debugging purposes */
-/* after addition of new prefixes don't forget to adjust winx_dbg_print_header code */
+#define lua_c
+#include "../../lua5.1/lua.h"
+#include "../../lua5.1/lauxlib.h"
+#include "../../lua5.1/lualib.h"
 
-#endif /* _DBG_PREFIXES_H_ */
+#define WgxTraceHandler InternalTraceHandler
+#include "wgx.h"
+
+extern WGX_TRACE_HANDLER InternalTraceHandler;
+
+#endif /* _WGX_INTERNALS_H_ */

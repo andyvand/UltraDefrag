@@ -24,11 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "wgx.h"
+#include "wgx-internals.h"
 
 #define MAX_CMD_LENGTH 32768
 
@@ -49,7 +45,7 @@ BOOL WgxCreateProcess(char *cmd,char *args)
     /* validate arguments */
     if(cmd == NULL){
         error = ERROR_INVALID_PARAMETER;
-        WgxDbgPrint(E"WgxCreateProcess: cmd == NULL");
+        etrace("cmd == NULL");
         goto done;
     }
     if(args == NULL)
@@ -60,14 +56,14 @@ BOOL WgxCreateProcess(char *cmd,char *args)
     cmdline = malloc(MAX_CMD_LENGTH);
     if(command == NULL || cmdline == NULL){
         error = ERROR_NOT_ENOUGH_MEMORY;
-        WgxDbgPrint(E"WgxCreateProcess: not enough memory for %s",cmd);
+        etrace("not enough memory for %s",cmd);
         goto done;
     }
     
     /* expand environment strings in command */
     if(!ExpandEnvironmentStrings(cmd,command,MAX_CMD_LENGTH)){
         error = GetLastError();
-        WgxDbgPrintLastError("WgxCreateProcess: cannot expand environment strings in %s",cmd);
+        letrace("cannot expand environment strings in %s",cmd);
         goto done;
     }
     
@@ -85,7 +81,7 @@ BOOL WgxCreateProcess(char *cmd,char *args)
     if(!CreateProcess(command,cmdline,
       NULL,NULL,FALSE,0,NULL,NULL,&si,&pi)){
         error = GetLastError();
-        WgxDbgPrintLastError("WgxCreateProcess: cannot create process for %s",cmd);
+        letrace("cannot create process for %s",cmd);
         goto done;
     }
     CloseHandle(pi.hProcess);
@@ -130,12 +126,12 @@ BOOL WgxSetProcessPriority(DWORD priority_class)
     hProcess = OpenProcess(PROCESS_SET_INFORMATION,
         FALSE,GetCurrentProcessId());
     if(hProcess == NULL){
-        WgxDbgPrintLastError("WgxSetProcessPriority: cannot open current process");
+        letrace("cannot open current process");
         return FALSE;
     }
     result = SetPriorityClass(hProcess,priority_class);
     if(!result){
-        WgxDbgPrintLastError("WgxSetProcessPriority: cannot set priority class");
+        letrace("cannot set priority class");
     }
     CloseHandle(hProcess);
     return result;
@@ -162,9 +158,9 @@ BOOL WgxCheckAdminRights(void)
     DWORD j;
     
     if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
-        WgxDbgPrintLastError("WgxCheckAdminRights: cannot open access token of the thread");
+        letrace("cannot open access token of the thread");
         if(!OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&hToken)){
-            WgxDbgPrintLastError("WgxCheckAdminRights: cannot open access token of the process");
+            letrace("cannot open access token of the process");
             return FALSE;
         }
     }
@@ -172,7 +168,7 @@ BOOL WgxCheckAdminRights(void)
     if(!AllocateAndInitializeSid(&SystemSidAuthority,2,
       SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
       0,0,0,0,0,0,&psid)){
-        WgxDbgPrintLastError("WgxCheckAdminRights: cannot create the security identifier");
+        letrace("cannot create the security identifier");
         psid = NULL;
         goto done;
     }
@@ -182,11 +178,11 @@ BOOL WgxCheckAdminRights(void)
     if(pCheckTokenMembership){
         /* we are at least on w2k */
         if(!pCheckTokenMembership(NULL,psid,&IsMember)){
-            WgxDbgPrintLastError("WgxCheckAdminRights: cannot check token membership");
+            letrace("cannot check token membership");
             goto done;
         }
         if(!IsMember){
-            WgxDbgPrint(I"WgxCheckAdminRights: the user is not a member of administrators group");
+            itrace("the user is not a member of administrators group");
             goto done;
         }
     } else {
@@ -195,20 +191,20 @@ BOOL WgxCheckAdminRights(void)
             api_result = GetTokenInformation(hToken,TokenGroups,ptg,bytes_allocated,&bytes_needed);
             if(!api_result && GetLastError() != ERROR_INSUFFICIENT_BUFFER){
                 /* the call failed */
-                WgxDbgPrintLastError("WgxCheckAdminRights: cannot get token information");
+                letrace("cannot get token information");
                 goto done;
             }
             if(!api_result){
                 if(bytes_needed <= bytes_allocated){
                     /* the call needs smaller buffer?? */
-                    WgxDbgPrint(E"WgxCheckAdminRights: GetTokenInformation failed (requested smaller buffer)");
+                    etrace("GetTokenInformation failed (requested smaller buffer)");
                     goto done;
                 }
                 /* the call needs larger buffer */
                 free(ptg);
                 ptg = malloc(bytes_needed);
                 if(ptg == NULL){
-                    WgxDbgPrint(E"WgxCheckAdminRights: not enough memory");
+                    etrace("not enough memory");
                     goto done;
                 }
                 bytes_allocated = bytes_needed;
@@ -217,7 +213,7 @@ BOOL WgxCheckAdminRights(void)
             break;
         } while(1);
         if(ptg == NULL){
-            WgxDbgPrint(E"WgxCheckAdminRights: GetTokenInformation failed (requested no buffer)");
+            etrace("GetTokenInformation failed (requested no buffer)");
             goto done;
         }
         for(j = 0; j < ptg->GroupCount; j++){
@@ -226,7 +222,7 @@ BOOL WgxCheckAdminRights(void)
                 goto done;
             }
         }
-        WgxDbgPrint(I"WgxCheckAdminRights: the user is not a member of administrators group");
+        itrace("the user is not a member of administrators group");
         goto done;
     }
     

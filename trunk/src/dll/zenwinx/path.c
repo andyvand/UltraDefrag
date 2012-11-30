@@ -125,8 +125,8 @@ void winx_path_extract_filename(char *path)
  */
 void winx_get_module_filename(char *path)
 {
-    NTSTATUS Status;
     PROCESS_BASIC_INFORMATION ProcessInformation;
+    NTSTATUS status;
     ANSI_STRING as = {0};
     
     if(path == NULL)
@@ -136,28 +136,30 @@ void winx_get_module_filename(char *path)
     
     /* retrieve process executable path */
     RtlZeroMemory(&ProcessInformation,sizeof(ProcessInformation));
-    Status = NtQueryInformationProcess(NtCurrentProcess(),
+    status = NtQueryInformationProcess(NtCurrentProcess(),
                     ProcessBasicInformation,&ProcessInformation,
                     sizeof(ProcessInformation),
                     NULL);
     /* extract path and file name */
-    if(NT_SUCCESS(Status)){
+    if(NT_SUCCESS(status)){
         /* convert Unicode path to ANSI */
-        if(RtlUnicodeStringToAnsiString(&as,&ProcessInformation.PebBaseAddress->ProcessParameters->ImagePathName,TRUE) == STATUS_SUCCESS){
+        if(RtlUnicodeStringToAnsiString(&as,
+          &ProcessInformation.PebBaseAddress->ProcessParameters->ImagePathName,
+          TRUE) == STATUS_SUCCESS){
             /* avoid buffer overflow */
             if(as.Length < (MAX_PATH-4)){
                 /* add native path prefix to path */
                 (void)strcpy(path,"\\??\\");
                 (void)strncat(path,as.Buffer,as.Length);
             } else {
-                DebugPrint(E"winx_get_module_filename: path is too long");
+                etrace("path is too long");
             }
             RtlFreeAnsiString(&as);
         } else {
-            DebugPrint(E"winx_get_module_filename: cannot convert unicode to ansi path: not enough memory");
+            etrace("not enough memory");
         }
     } else {
-        DebugPrintEx(Status,E"winx_get_module_filename: cannot query process basic information");
+        strace(status,"cannot query basic process information");
     }
 }
 
@@ -179,7 +181,7 @@ int winx_create_path(char *path)
 
     /* path must contain at least \??\X: */
     if(strstr(path,"\\??\\") != path || strchr(path,':') != (path + 5)){
-        DebugPrint(E"winx_create_path: native path must be specified");
+        etrace("native path must be specified");
         return (-1);
     }
 
@@ -201,7 +203,7 @@ int winx_create_path(char *path)
     while((p = strchr(p,'\\'))){
         *p = 0;
         if(winx_create_directory(path) < 0){
-            DebugPrint(E"winx_create_path failed");
+            etrace("cannot create %s",path);
             *p = '\\';
             return (-1);
         }
@@ -211,7 +213,7 @@ int winx_create_path(char *path)
     
     /* create target directory */
     if(winx_create_directory(path) < 0){
-        DebugPrint(E"winx_create_path failed");
+        etrace("cannot create %s",path);
         return (-1);
     }
     

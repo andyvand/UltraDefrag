@@ -153,7 +153,7 @@ static void update_progress(udefrag_progress_info *pi, void *p)
         SetSystemTrayIconTooltip(WindowCaption);
 
     if(WaitForSingleObject(hMapEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("update_progress: wait on hMapEvent failed");
+        letrace("wait on hMapEvent failed");
         return;
     }
     if(pi->cluster_map){
@@ -162,7 +162,7 @@ static void update_progress(udefrag_progress_info *pi, void *p)
             job->map.buffer = malloc(pi->cluster_map_size);
         }
         if(job->map.buffer == NULL){
-            WgxDbgPrint(E"update_progress: cannot allocate %u bytes of memory\n",
+            etrace("cannot allocate %u bytes of memory",
                 pi->cluster_map_size);
             job->map.size = 0;
         } else {
@@ -179,7 +179,7 @@ static void update_progress(udefrag_progress_info *pi, void *p)
     if(current_job->job_type == ANALYSIS_JOB \
       || pi->current_operation != VOLUME_ANALYSIS){
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("ProcessSingleVolume: wait on hTaskbarIconEvent failed");
+            letrace("wait on hTaskbarIconEvent failed");
         } else {
             if(show_progress_in_taskbar){
                 WgxSetTaskbarProgressState(hWindow,TBPF_NORMAL);
@@ -222,7 +222,7 @@ void SetPause(void)
 
     /* set taskbar icon overlay and notification area icon */
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("SetPause: wait on hTaskbarIconEvent failed");
+        letrace("wait on hTaskbarIconEvent failed");
     } else {
         SetTaskbarIconOverlay(IDI_PAUSED,"JOB_IS_PAUSED");
         ShowSystemTrayIcon(NIM_MODIFY);
@@ -243,7 +243,7 @@ void ReleasePause(void)
 
     /* set taskbar icon overlay and notification area icon */
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("SetPause: wait on hTaskbarIconEvent failed");
+        letrace("wait on hTaskbarIconEvent failed");
     } else {
         if(job_is_running){
             SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
@@ -423,7 +423,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     
     /* set taskbar icon overlay and notification area icon */
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+        letrace("wait on hTaskbarIconEvent failed");
     } else {
         SetTaskbarIconOverlay(IDI_BUSY,"JOB_IS_RUNNING");
         /* set overall progress: normal 0% */
@@ -469,7 +469,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
         processed_volumes ++;
         /* advance overall progress to processed/selected */
         if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+            letrace("wait on hTaskbarIconEvent failed");
         } else {
             if(show_progress_in_taskbar){
                 WgxSetTaskbarProgressState(hWindow,TBPF_NORMAL);
@@ -515,7 +515,7 @@ DWORD WINAPI StartJobsThreadProc(LPVOID lpParameter)
     
     /* remove taskbar icon overlay; change notification area icon */
     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("StartJobsThreadProc: wait on hTaskbarIconEvent failed");
+        letrace("wait on hTaskbarIconEvent failed");
     } else {
         job_is_running = 0;
         RemoveTaskbarIconOverlay();
@@ -640,7 +640,7 @@ void RepairSelectedVolumes(void)
     buffer[MAX_CMD_LENGTH - 1] = 0;
     strcpy(args,buffer);
     
-    WgxDbgPrint(I"Command Line: %s", args);
+    itrace("Command Line: %s", args);
 
     if(!WgxCreateProcess("%windir%\\system32\\cmd.exe",args)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,

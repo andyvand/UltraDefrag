@@ -215,7 +215,7 @@ void SavePrefs(void)
 
     if(_mkdir(".\\options") < 0){
         if(errno != EEXIST)
-            WgxDbgPrint(E"Cannot create .\\options directory: errno = %u\n",errno);
+            etrace("cannot create .\\options directory: errno = %u",errno);
     }
     WgxSaveOptions(".\\options\\guiopts-internals.lua",internal_options,SavePrefsCallback);
 }
@@ -257,7 +257,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
     h = FindFirstChangeNotification(".\\options",
             FALSE,FILE_NOTIFY_CHANGE_LAST_WRITE);
     if(h == INVALID_HANDLE_VALUE){
-        WgxDbgPrintLastError("PrefsChangesTrackingProc: FindFirstChangeNotification failed");
+        letrace("FindFirstChangeNotification failed");
         changes_tracking_stopped = 1;
         return 0;
     }
@@ -284,7 +284,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
             } else {
                 /* synchronize preferences reload with map redraw */
                 if(WaitForSingleObject(hMapEvent,INFINITE) != WAIT_OBJECT_0){
-                    WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hMapEvent failed");
+                    letrace("wait on hMapEvent failed");
                 } else {
                     /* save state */
                     memcpy(&rc,&r_rc,sizeof(RECT));
@@ -338,7 +338,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
                     
                     /* handle show_taskbar_icon_overlay and minimize_to_system_tray options adjustment */
                     if(WaitForSingleObject(hTaskbarIconEvent,INFINITE) != WAIT_OBJECT_0){
-                        WgxDbgPrintLastError("PrefsChangesTrackingProc: wait on hTaskbarIconEvent failed");
+                        letrace("wait on hTaskbarIconEvent failed");
                     } else {
                         if(show_taskbar_icon_overlay != s_show_taskbar_icon_overlay){
                             if(show_taskbar_icon_overlay && job_is_running){
@@ -370,7 +370,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
             counter ++;
             /* wait for the next notification */
             if(!FindNextChangeNotification(h)){
-                WgxDbgPrintLastError("PrefsChangesTrackingProc: FindNextChangeNotification failed");
+                letrace("FindNextChangeNotification failed");
                 break;
             }
         }
@@ -388,7 +388,7 @@ DWORD WINAPI PrefsChangesTrackingProc(LPVOID lpParameter)
 void StartPrefsChangesTracking()
 {
     if(!WgxCreateThread(PrefsChangesTrackingProc,NULL)){
-        WgxDbgPrintLastError("Cannot create thread for guiopts.lua changes tracking");
+        letrace("cannot create thread for guiopts.lua changes tracking");
         changes_tracking_stopped = 1;
     }
 }
@@ -477,14 +477,14 @@ DWORD WINAPI BootExecTrackingProc(LPVOID lpParameter)
             0,
             KEY_NOTIFY,
             &hKey) != ERROR_SUCCESS){
-        WgxDbgPrintLastError("BootExecTrackingProc: cannot open SMSS key");
+        letrace("cannot open SMSS key");
         boot_exec_tracking_stopped = 1;
         return 0;
     }
             
     hEvent = CreateEvent(NULL,FALSE,FALSE,NULL);
     if(hEvent == NULL){
-        WgxDbgPrintLastError("BootExecTrackingProc: CreateEvent failed");
+        letrace("CreateEvent failed");
         goto done;
     }
 
@@ -492,7 +492,7 @@ track_again:
     error = RegNotifyChangeKeyValue(hKey,FALSE,
         REG_NOTIFY_CHANGE_LAST_SET,hEvent,TRUE);
     if(error != ERROR_SUCCESS){
-        WgxDbgPrint(E"BootExecTrackingProc: RegNotifyChangeKeyValue failed with code 0x%x",(UINT)error);
+        etrace("RegNotifyChangeKeyValue failed with code 0x%x",(UINT)error);
         CloseHandle(hEvent);
         goto done;
     }
@@ -500,14 +500,14 @@ track_again:
     while(!stop_track_boot_exec){
         if(WaitForSingleObject(hEvent,100) == WAIT_OBJECT_0){
             if(IsBootTimeDefragEnabled()){
-                WgxDbgPrint(I"Boot time defragmenter enabled (externally)\n");
+                itrace("boot time defragmenter enabled (externally)");
                 boot_time_defrag_enabled = 1;
                 CheckMenuItem(hMainMenu,
                     IDM_CFG_BOOT_ENABLE,
                     MF_BYCOMMAND | MF_CHECKED);
                 SendMessage(hToolbar,TB_CHECKBUTTON,IDM_CFG_BOOT_ENABLE,MAKELONG(TRUE,0));
             } else {
-                WgxDbgPrint(I"Boot time defragmenter disabled (externally)\n");
+                itrace("boot time defragmenter disabled (externally)");
                 boot_time_defrag_enabled = 0;
                 CheckMenuItem(hMainMenu,
                     IDM_CFG_BOOT_ENABLE,
@@ -532,7 +532,7 @@ void StartBootExecChangesTracking()
 {
     if(btd_installed){
         if(!WgxCreateThread(BootExecTrackingProc,NULL)){
-            WgxDbgPrintLastError("Cannot create thread for BootExecute registry value changes tracking");
+            letrace("cannot create thread for BootExecute registry value changes tracking");
             boot_exec_tracking_stopped = 1;
         }
     } else {

@@ -28,7 +28,9 @@
 #include <ctype.h>
 #include <commctrl.h>
 
+#define WgxTraceHandler dbg_print
 #include "../dll/wgx/wgx.h"
+
 #include "../include/ultradfgver.h"
 
 int h_flag = 0;
@@ -54,7 +56,7 @@ void show_help(void)
         );
 }
 
-void dbg_print(char *format, ...)
+void dbg_print(int flags,char *format, ...)
 {
     va_list arg;
     char *buffer;
@@ -427,7 +429,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     /* strongly required! to be compatible with manifest */
     InitCommonControls();
 
-    WgxSetDbgPrintHandler(dbg_print);
+    WgxSetInternalTraceHandler(dbg_print);
 
     parse_cmdline();
 

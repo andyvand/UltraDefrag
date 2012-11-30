@@ -32,7 +32,6 @@ EXPORTS
     winx_create_path
     winx_create_thread
     winx_dbg_print
-    winx_dbg_print_ex
     winx_dbg_print_header
     winx_defrag_fopen
     winx_defrag_fclose
@@ -83,7 +82,7 @@ EXPORTS
     winx_list_destroy
     winx_list_insert
     winx_list_remove
-    winx_malloc_ex
+    winx_malloc
     winx_open_event
     winx_open_mutex
     winx_patcmp

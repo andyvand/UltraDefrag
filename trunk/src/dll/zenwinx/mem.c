@@ -32,17 +32,16 @@ HANDLE hGlobalHeap = NULL;
  * @brief Allocates a block of memory from the global growable heap.
  * @param size the size of the block to be allocated, in bytes.
  * Note that the allocated block may be bigger than the requested size.
- * @param flags HEAP_ZERO_MEMORY to initialize memory to zero, zero otherwise.
  * @return A pointer to the allocated block. NULL indicates failure.
  */
-void *winx_malloc_ex(SIZE_T size,SIZE_T flags)
+void *winx_malloc(SIZE_T size)
 {
     /*
     * Avoid winx_dbg_xxx calls here
     * to avoid recursion.
     */
     if(hGlobalHeap == NULL) return NULL;
-    return RtlAllocateHeap(hGlobalHeap,flags,size); 
+    return RtlAllocateHeap(hGlobalHeap,0,size);
 }
 
 /**
@@ -71,7 +70,7 @@ int winx_create_global_heap(void)
         hGlobalHeap = RtlCreateHeap(HEAP_GROWABLE,NULL,0,100 * 1024,NULL,NULL);
     }
     if(hGlobalHeap == NULL){
-        /* DebugPrint cannot be used here */
+        /* trace macro cannot be used here */
         /* winx_printf cannot be used here */
         winx_print("\nCannot create global memory heap!\n");
         return (-1);

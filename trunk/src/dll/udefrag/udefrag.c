@@ -227,7 +227,7 @@ static DWORD WINAPI start_job(LPVOID p)
 
     /* check job flags */
     if(jp->udo.job_flags & UD_JOB_REPEAT)
-        DebugPrint(I"repeat action until nothing left to move");
+        trace(I"repeat action until nothing left to move");
     
     /* do the job */
     if(jp->job_type == DEFRAGMENTATION_JOB) action = "defragmenting";
@@ -616,9 +616,9 @@ int udefrag_set_log_file_path(void)
     if(pGetLongPathNameW){
         result = pGetLongPathNameW(path,longpath,MAX_PATH + 1);
         if(result == 0){
-            DebugPrint(E"udefrag_set_log_file_path: GetLongPathNameW failed");
+            etrace("GetLongPathNameW failed");
         } else if(result > MAX_PATH + 1){
-            DebugPrint(E"udefrag_set_log_file_path: path %ws is too long",path);
+            etrace("path %ws is too long",path);
         } else {
             longpath[MAX_PATH] = 0;
             conversion_result = 0;
@@ -636,9 +636,9 @@ int udefrag_set_log_file_path(void)
     if(pGetFullPathNameW){
         result = pGetFullPathNameW(longpath,MAX_PATH + 1,fullpath,NULL);
         if(result == 0){
-            DebugPrint(E"udefrag_set_log_file_path: GetFullPathNameW failed");
+            etrace("GetFullPathNameW failed");
         } else if(result > MAX_PATH + 1){
-            DebugPrint(E"udefrag_set_log_file_path: path %ws is too long",path);
+            etrace("path %ws is too long",path);
         } else {
             fullpath[MAX_PATH] = 0;
             conversion_result = 0;
@@ -655,7 +655,7 @@ int udefrag_set_log_file_path(void)
     winx_free(longpath);
     winx_free(path);
     if(native_path == NULL){
-        DebugPrint(E"udefrag_set_log_file_path: cannot build native path");
+        etrace("cannot build native path");
         return (-1);
     }
     
@@ -666,7 +666,7 @@ int udefrag_set_log_file_path(void)
     result = 0;
     path_copy = winx_strdup(native_path);
     if(path_copy == NULL){
-        DebugPrint(E"udefrag_set_log_file_path: not enough memory");
+        etrace("not enough memory");
     } else {
         winx_path_remove_filename(path_copy);
         result = winx_create_path(path_copy);
@@ -677,17 +677,17 @@ int udefrag_set_log_file_path(void)
     if(result < 0){
         path = winx_getenv(L"TMP");
         if(path == NULL){
-            DebugPrint(E"udefrag_set_log_file_path: failed to query %%TMP%%");
+            etrace("failed to query %%TMP%%");
         } else {
             filename = winx_strdup(native_path);
             if(filename == NULL){
-                DebugPrint(E"udefrag_set_log_file_path: cannot allocate memory for filename");
+                etrace("cannot allocate memory for filename");
             } else {
                 winx_path_extract_filename(filename);
                 winx_free(native_path);
                 native_path = winx_sprintf("\\??\\%ws\\UltraDefrag_Logs\\%s",path,filename);
                 if(native_path == NULL){
-                    DebugPrint(E"udefrag_set_log_file_path: cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
+                    etrace("cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
                 } else {
                     /* delete old logfile from the temporary folder */
                     winx_delete_file(native_path);

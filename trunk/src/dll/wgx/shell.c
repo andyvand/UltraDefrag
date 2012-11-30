@@ -24,12 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-#include <shellapi.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "wgx.h"
+#include "wgx-internals.h"
 
 /**
  * @brief Calls a Win32 ShellExecute() procedure and shows a message

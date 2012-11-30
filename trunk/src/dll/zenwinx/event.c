@@ -42,25 +42,25 @@
 int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
 {
     UNICODE_STRING us;
-    NTSTATUS Status;
+    NTSTATUS status;
     OBJECT_ATTRIBUTES oa;
 
-    DbgCheck3(name,(type == SynchronizationEvent) || (type == NotificationEvent),
-        phandle,"winx_create_event",-1);
+    DbgCheck3(name,(type == SynchronizationEvent) \
+        || (type == NotificationEvent),phandle,-1);
     *phandle = NULL;
 
     RtlInitUnicodeString(&us,name);
     InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
-    Status = NtCreateEvent(phandle,STANDARD_RIGHTS_ALL | 0x1ff,&oa,type,1);
-    if(Status == STATUS_OBJECT_NAME_COLLISION){
+    status = NtCreateEvent(phandle,STANDARD_RIGHTS_ALL | 0x1ff,&oa,type,1);
+    if(status == STATUS_OBJECT_NAME_COLLISION){
         *phandle = NULL;
-        DebugPrint(D"winx_create_event: %ws already exists",name);
+        dtrace("%ws already exists",name);
         /* useful for allowing a single instance of the program */
         return (int)STATUS_OBJECT_NAME_COLLISION;
     }
-    if(!NT_SUCCESS(Status)){
+    if(!NT_SUCCESS(status)){
         *phandle = NULL;
-        DebugPrintEx(Status,E"winx_create_event: cannot create %ws",name);
+        strace(status,"cannot create %ws",name);
         return (-1);
     }
     return 0;
@@ -77,18 +77,18 @@ int winx_create_event(wchar_t *name,int type,HANDLE *phandle)
 int winx_open_event(wchar_t *name,int flags,HANDLE *phandle)
 {
     UNICODE_STRING us;
-    NTSTATUS Status;
+    NTSTATUS status;
     OBJECT_ATTRIBUTES oa;
 
-    DbgCheck2(name,phandle,"winx_open_event",-1);
+    DbgCheck2(name,phandle,-1);
     *phandle = NULL;
 
     RtlInitUnicodeString(&us,name);
     InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
-    Status = NtOpenEvent(phandle,flags,&oa);
-    if(!NT_SUCCESS(Status)){
+    status = NtOpenEvent(phandle,flags,&oa);
+    if(!NT_SUCCESS(status)){
         *phandle = NULL;
-        DebugPrintEx(Status,E"winx_open_event: cannot open %ws",name);
+        strace(status,"cannot open %ws",name);
         return (-1);
     }
     return 0;

@@ -27,10 +27,8 @@
  * @{
  */
 
-#include <windows.h>
-#include "wgx.h"
+#include "wgx-internals.h"
 #include "taskbar.h"
-#include <objbase.h>
 
 /**
  * @return Nonzero value indicates
@@ -97,13 +95,13 @@ BOOL WgxSetTaskbarIconOverlay(HWND hWindow,HINSTANCE hInstance,int resource_id, 
         if(SUCCEEDED(hr)){
             result = TRUE;
         } else {
-            WgxDbgPrint(E"ITaskbarList3_SetOverlayIcon failed with code 0x%x",(UINT)hr);
+            etrace("ITaskbarList3_SetOverlayIcon failed with code 0x%x",(UINT)hr);
         }
         /* cleanup */
         DestroyIcon(hIcon);
         ITaskbarList3_Release(iTBL);
     } else {
-        WgxDbgPrint(E"WgxSetTaskbarIconOverlay failed with code 0x%x",(UINT)hr);
+        etrace("failed with code 0x%x",(UINT)hr);
     }
     CoUninitialize();
     return result;
@@ -151,12 +149,12 @@ BOOL WgxSetTaskbarProgressState(HWND hWindow,TBPFLAG flag)
         if(SUCCEEDED(hr)){
             result = TRUE;
         } else {
-            WgxDbgPrint(E"ITaskbarList3_SetProgressState failed with code 0x%x",(UINT)hr);
+            etrace("ITaskbarList3_SetProgressState failed with code 0x%x",(UINT)hr);
         }
         /* cleanup */
         ITaskbarList3_Release(iTBL);
     } else {
-        WgxDbgPrint(E"WgxSetTaskbarProgressState failed with code 0x%x",(UINT)hr);
+        etrace("failed with code 0x%x",(UINT)hr);
     }
     CoUninitialize();
     return result;
@@ -192,12 +190,12 @@ BOOL WgxSetTaskbarProgressValue(HWND hWindow,ULONGLONG completed,ULONGLONG total
         if(SUCCEEDED(hr)){
             result = TRUE;
         } else {
-            WgxDbgPrint(E"ITaskbarList3_SetProgressValue failed with code 0x%x",(UINT)hr);
+            etrace("ITaskbarList3_SetProgressValue failed with code 0x%x",(UINT)hr);
         }
         /* cleanup */
         ITaskbarList3_Release(iTBL);
     } else {
-        WgxDbgPrint(E"WgxSetTaskbarProgressValue failed with code 0x%x",(UINT)hr);
+        etrace("failed with code 0x%x",(UINT)hr);
     }
     CoUninitialize();
     return result;

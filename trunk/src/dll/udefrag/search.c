@@ -229,7 +229,7 @@ static void free_item (void *prb_item, void *prb_param)
  */
 int create_file_blocks_tree(udefrag_job_parameters *jp)
 {
-    DebugPrint(I"create_file_blocks_tree called");
+    trace(I"create_file_blocks_tree called");
     
     if(jp == NULL)
         return (-1);
@@ -239,7 +239,7 @@ int create_file_blocks_tree(udefrag_job_parameters *jp)
     
     jp->file_blocks = prb_create(blocks_compare,NULL,NULL);
     if(jp->file_blocks == NULL){
-        DebugPrint(E"create_file_blocks_tree: tree creation failed");
+        etrace("tree creation failed");
         return (-1);
     }
     return 0;
@@ -279,7 +279,7 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     }
     /* if a duplicate item exists... */
     if(*p != fb){
-        DebugPrint(E"add_block_to_file_blocks_tree: a duplicate found");
+        etrace("a duplicate found");
         winx_free(fb);
     }
     return 0;
@@ -308,8 +308,7 @@ int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap
     if(fb == NULL){
         /* the following debugging output indicates either
            a bug, or file system inconsistency */
-        DebugPrint(E"remove_block_from_file_blocks_tree: failed for "
-            "%p: VCN = %I64u, LCN = %I64u, LEN = %I64u",
+        etrace("failed for %p: VCN = %I64u, LCN = %I64u, LEN = %I64u",
             block, block->vcn, block->lcn, block->length);
         /* if block does not exist in tree, we have nothing to cleanup */
         return 0;
@@ -324,7 +323,7 @@ int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap
  */
 void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 {
-    DebugPrint(I"destroy_file_blocks_tree called");
+    trace(I"destroy_file_blocks_tree called");
     if(jp){
         if(jp->file_blocks){
             prb_destroy(jp->file_blocks,free_item);
@@ -371,7 +370,7 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
     item = prb_t_insert(&t,jp->file_blocks,&fb);
     if(item == NULL){
         /* insertion failed, let's go to the slow search */
-        DebugPrint(I"find_first_block: slow search will be used");
+        itrace("slow search will be used");
         goto slow_search;
     }
     if(item == &fb){
@@ -379,7 +378,7 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
         item = prb_t_next(&t);
         if(prb_delete(jp->file_blocks,&fb) == NULL){
             /* removing failed, let's go to the slow search */
-            DebugPrint(I"find_first_block: slow search will be used");
+            itrace("slow search will be used");
             goto slow_search;
         }
     }

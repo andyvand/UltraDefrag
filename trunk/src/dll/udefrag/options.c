@@ -55,19 +55,19 @@ int get_options(udefrag_job_parameters *jp)
     /* set filters */
     buffer = winx_getenv(L"UD_IN_FILTER");
     if(buffer){
-        DebugPrint(I"in_filter = %ws",buffer);
+        trace(I"in_filter = %ws",buffer);
         winx_patcomp(&jp->udo.in_filter,buffer,L";\"",WINX_PAT_ICASE);
         winx_free(buffer);
     }
     buffer = winx_getenv(L"UD_EX_FILTER");
     if(buffer){
-        DebugPrint(I"ex_filter = %ws",buffer);
+        trace(I"ex_filter = %ws",buffer);
         winx_patcomp(&jp->udo.ex_filter,buffer,L";\"",WINX_PAT_ICASE);
         winx_free(buffer);
     }
     buffer = winx_getenv(L"UD_CUT_FILTER");
     if(buffer){
-        DebugPrint(I"cut_filter = %ws",buffer);
+        trace(I"cut_filter = %ws",buffer);
         winx_patcomp(&jp->udo.cut_filter,buffer,L";\"",WINX_PAT_ICASE);
         winx_free(buffer);
     }
@@ -175,8 +175,8 @@ int get_options(udefrag_job_parameters *jp)
     buffer = winx_getenv(L"UD_DRY_RUN");
     if(buffer){
         if(!wcscmp(buffer,L"1")){
-            DebugPrint(I"%%UD_DRY_RUN%% environment variable is set to 1,");
-            DebugPrint(I"therefore no actual data moves will be performed on disk");
+            trace(I"%%UD_DRY_RUN%% environment variable is set to 1,");
+            trace(I"therefore no actual data moves will be performed on disk");
             jp->udo.dry_run = 1;
         }
         winx_free(buffer);
@@ -199,44 +199,44 @@ int get_options(udefrag_job_parameters *jp)
     /* print all options */
     winx_dbg_print_header(0,0,I"ultradefrag job options");
     if(jp->udo.in_filter.count){
-        DebugPrint(I"in_filter patterns:");
+        trace(I"in_filter patterns:");
         for(i = 0; i < jp->udo.in_filter.count; i++)
-            DebugPrint(I"  + %ws",jp->udo.in_filter.array[i]);
+            trace(I"  + %ws",jp->udo.in_filter.array[i]);
     }
     if(jp->udo.ex_filter.count){
-        DebugPrint(I"ex_filter patterns:");
+        trace(I"ex_filter patterns:");
         for(i = 0; i < jp->udo.ex_filter.count; i++)
-            DebugPrint(I"  - %ws",jp->udo.ex_filter.array[i]);
+            trace(I"  - %ws",jp->udo.ex_filter.array[i]);
     }
     if(jp->udo.cut_filter.count){
-        DebugPrint(I"cut_filter patterns:");
+        trace(I"cut_filter patterns:");
         for(i = 0; i < jp->udo.cut_filter.count; i++)
-            DebugPrint(I"  + %ws",jp->udo.cut_filter.array[i]);
+            trace(I"  + %ws",jp->udo.cut_filter.array[i]);
     }
     it = (unsigned int)(jp->udo.fragmentation_threshold * 100.00);
-    DebugPrint(I"fragmentation threshold                   = %u.%02u %%",it / 100,it % 100);
+    trace(I"fragmentation threshold                   = %u.%02u %%",it / 100,it % 100);
     (void)winx_bytes_to_hr(jp->udo.size_limit,1,buf,sizeof(buf));
-    DebugPrint(I"file size threshold (for defragmentation) = %s",buf);
+    trace(I"file size threshold (for defragmentation) = %s",buf);
     (void)winx_bytes_to_hr(jp->udo.optimizer_size_limit,1,buf,sizeof(buf));
-    DebugPrint(I"file size threshold (for optimization)    = %s",buf);
+    trace(I"file size threshold (for optimization)    = %s",buf);
     (void)winx_bytes_to_hr(jp->udo.fragment_size_threshold,1,buf,sizeof(buf));
-    DebugPrint(I"fragment size threshold                   = %s",buf);
-    DebugPrint(I"file fragments threshold                  = %I64u",jp->udo.fragments_limit);
-    DebugPrint(I"files will be sorted by %s in %s order",methods[index],
+    trace(I"fragment size threshold                   = %s",buf);
+    trace(I"file fragments threshold                  = %I64u",jp->udo.fragments_limit);
+    trace(I"files will be sorted by %s in %s order",methods[index],
         (jp->udo.sorting_flags & UD_SORT_DESCENDING) ? "descending" : "ascending");
-    DebugPrint(I"time limit                                = %I64u seconds",jp->udo.time_limit);
-    DebugPrint(I"progress refresh interval                 = %u msec",jp->udo.refresh_interval);
-    if(jp->udo.disable_reports) DebugPrint(I"reports disabled");
-    else DebugPrint(I"reports enabled");
+    trace(I"time limit                                = %I64u seconds",jp->udo.time_limit);
+    trace(I"progress refresh interval                 = %u msec",jp->udo.refresh_interval);
+    if(jp->udo.disable_reports) trace(I"reports disabled");
+    else trace(I"reports enabled");
     switch(jp->udo.dbgprint_level){
     case DBG_DETAILED:
-        DebugPrint(I"detailed debug level set");
+        trace(I"detailed debug level set");
         break;
     case DBG_PARANOID:
-        DebugPrint(I"paranoid debug level set");
+        trace(I"paranoid debug level set");
         break;
     default:
-        DebugPrint(I"normal debug level set");
+        trace(I"normal debug level set");
     }
     return 0;
 }

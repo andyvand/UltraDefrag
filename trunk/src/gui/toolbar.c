@@ -188,7 +188,7 @@ int CreateToolbar(void)
     /* initialize tooltips */
     hTooltip = (HWND)SendMessage(hToolbar,TB_GETTOOLTIPS,0,0);
     if(hTooltip == NULL){
-        WgxDbgPrintLastError("CreateToolbar: cannot get tooltip control handle");
+        letrace("cannot get tooltip control handle");
     } else {
         memset(&rc,0,sizeof(RECT));
         for(i = 0; i < N_BUTTONS; i++){

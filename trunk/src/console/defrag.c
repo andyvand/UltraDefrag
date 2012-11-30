@@ -125,7 +125,7 @@ DWORD WINAPI UpdateWebStatisticsThreadProc(LPVOID lpParameter)
     /* getenv() may give wrong results as stated in MSDN */
     if(!GetEnvironmentVariableW(L"UD_DISABLE_USAGE_TRACKING",env_buffer,MAX_ENV_VARIABLE_LENGTH + 1)){
         if(GetLastError() != ERROR_ENVVAR_NOT_FOUND)
-            WgxDbgPrintLastError("UpdateWebStatisticsThreadProc: cannot get %%UD_DISABLE_USAGE_TRACKING%%!");
+            letrace("cannot get %%UD_DISABLE_USAGE_TRACKING%%");
     } else {
         if(wcscmp(env_buffer,L"1") == 0)
             tracking_enabled = 0;
@@ -153,7 +153,7 @@ DWORD WINAPI UpdateWebStatisticsThreadProc(LPVOID lpParameter)
 void start_web_statistics(void)
 {
     if(!WgxCreateThread(UpdateWebStatisticsThreadProc,NULL)){
-        WgxDbgPrintLastError("Cannot run UpdateWebStatisticsThreadProc");
+        letrace("cannot run UpdateWebStatisticsThreadProc");
         web_statistics_completed = 1;
     }
 }
@@ -753,7 +753,7 @@ int __cdecl main(int argc, char **argv)
 
     /* initialize the program */
     hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    WgxSetDbgPrintHandler(udefrag_dbg_print);
+    WgxSetInternalTraceHandler(udefrag_dbg_print);
     parse_cmdline_result = parse_cmdline(argc,argv);
     init_console();
     

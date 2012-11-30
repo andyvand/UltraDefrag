@@ -96,7 +96,7 @@ char *winx_get_windows_directory(void)
     if(windir){
         path = winx_sprintf("\\??\\%ws",windir);
         if(path == NULL)
-            DebugPrint(E"winx_get_windows_directory: not enough memory");
+            etrace("not enough memory");
         winx_free(windir);
     }
     return path;
@@ -119,27 +119,27 @@ int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length)
 {
     OBJECT_ATTRIBUTES oa;
     UNICODE_STRING uStr;
-    NTSTATUS Status;
+    NTSTATUS status;
     HANDLE hLink;
     ULONG size;
 
-    DbgCheck3(name,buffer,(length > 0),"winx_query_symbolic_link",-1);
+    DbgCheck3(name,buffer,(length > 0),-1);
     
     RtlInitUnicodeString(&uStr,name);
     InitializeObjectAttributes(&oa,&uStr,OBJ_CASE_INSENSITIVE,NULL,NULL);
-    Status = NtOpenSymbolicLinkObject(&hLink,SYMBOLIC_LINK_QUERY,&oa);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_query_symbolic_link: cannot open %ls",name);
+    status = NtOpenSymbolicLinkObject(&hLink,SYMBOLIC_LINK_QUERY,&oa);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot open %ls",name);
         return (-1);
     }
     uStr.Buffer = buffer;
     uStr.Length = 0;
     uStr.MaximumLength = length * sizeof(wchar_t);
     size = 0;
-    Status = NtQuerySymbolicLinkObject(hLink,&uStr,&size);
+    status = NtQuerySymbolicLinkObject(hLink,&uStr,&size);
     (void)NtClose(hLink);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_query_symbolic_link: cannot query %ls",name);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot query %ls",name);
         return (-1);
     }
     buffer[length - 1] = 0;
@@ -167,15 +167,14 @@ int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length)
  */
 int winx_set_system_error_mode(unsigned int mode)
 {
-    NTSTATUS Status;
+    NTSTATUS status;
 
-    Status = NtSetInformationProcess(NtCurrentProcess(),
+    status = NtSetInformationProcess(NtCurrentProcess(),
                     ProcessDefaultHardErrorMode,
                     (PVOID)&mode,
                     sizeof(int));
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_set_system_error_mode: "
-                "cannot set system error mode %u",mode);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot set system error mode %u",mode);
         return (-1);
     }
     return 0;
@@ -209,8 +208,8 @@ wchar_t *winx_get_windows_boot_options(void)
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtOpenKey(&hKey,KEY_QUERY_VALUE,&oa);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_get_windows_boot_options: cannot open %ws",us.Buffer);
-        winx_printf("winx_get_windows_boot_options: cannot open %ls: %x\n\n",us.Buffer,(UINT)status);
+        strace(status,"cannot open %ws",us.Buffer);
+        winx_printf("%s: cannot open %ls: %x\n\n",__FUNCTION__,us.Buffer,(UINT)status);
         return NULL;
     }
     
@@ -219,15 +218,15 @@ wchar_t *winx_get_windows_boot_options(void)
     status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
             NULL,0,&data_size);
     if(status != STATUS_BUFFER_TOO_SMALL){
-        DebugPrintEx(status,E"winx_get_windows_boot_options: cannot query SystemStartOptions value size");
-        winx_printf("winx_get_windows_boot_options: cannot query SystemStartOptions value size: %x\n\n",(UINT)status);
+        strace(status,"cannot query SystemStartOptions value size");
+        winx_printf("%s: cannot query SystemStartOptions value size: %x\n\n",__FUNCTION__,(UINT)status);
         return NULL;
     }
     data_size += sizeof(wchar_t);
     data = winx_malloc(data_size);
     if(data == NULL){
-        DebugPrint(E"winx_get_windows_boot_options: cannot allocate %u bytes of memory",data_size);
-        winx_printf("winx_get_windows_boot_options: cannot allocate %u bytes of memory\n\n",data_size);
+        etrace("cannot allocate %u bytes of memory",data_size);
+        winx_printf("%s: cannot allocate %u bytes of memory\n\n",__FUNCTION__,data_size);
         return NULL;
     }
     
@@ -235,8 +234,8 @@ wchar_t *winx_get_windows_boot_options(void)
     status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
             data,data_size,&data_size2);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_get_windows_boot_options: cannot query SystemStartOptions value");
-        winx_printf("winx_get_windows_boot_options: cannot query SystemStartOptions value: %x\n\n",(UINT)status);
+        strace(status,"cannot query SystemStartOptions value");
+        winx_printf("%s: cannot query SystemStartOptions value: %x\n\n",__FUNCTION__,(UINT)status);
         winx_free(data);
         return NULL;
     }
@@ -253,16 +252,16 @@ wchar_t *winx_get_windows_boot_options(void)
 
     boot_options = winx_malloc(buffer_size);
     if(!boot_options){
-        DebugPrint(E"winx_get_windows_boot_options: cannot allocate %u bytes of memory",buffer_size);
-        winx_printf("winx_get_windows_boot_options: cannot allocate %u bytes of memory\n\n",buffer_size);
+        etrace("cannot allocate %u bytes of memory",buffer_size);
+        winx_printf("%s: cannot allocate %u bytes of memory\n\n",__FUNCTION__,buffer_size);
         winx_free(data);
         return NULL;
     }
 
     if(!empty_value){
         memcpy((void *)boot_options,(void *)data_buffer,buffer_size);
-        DebugPrint(I"winx_get_windows_boot_options: %ls - %u",data_buffer,data_size);
-        //winx_printf("winx_get_windows_boot_options: %ls - %u\n\n",data_buffer,data_size);
+        itrace("%ls - %u",data_buffer,data_size);
+        //winx_printf("%s: %ls - %u\n\n",__FUNCTION__,data_buffer,data_size);
     } else {
         boot_options[0] = 0;
     }
@@ -314,18 +313,16 @@ void MarkWindowsBootAsSuccessful(void)
     */
     windir = winx_get_windows_directory();
     if(windir == NULL){
-        DebugPrint(E"MarkWindowsBootAsSuccessful: "
-            "cannot retrieve the Windows directory path");
-        winx_printf("\nMarkWindowsBootAsSuccessful: "
-            "cannot retrieve the Windows directory path\n\n");
+        etrace("cannot retrieve the Windows directory path");
+        winx_printf("\n%s: cannot retrieve the Windows directory path\n\n",__FUNCTION__);
         winx_sleep(3000);
         return;
     }
     path = winx_sprintf("%hs\\bootstat.dat",windir);
     winx_free(windir);
     if(path == NULL){
-        DebugPrint(E"MarkWindowsBootAsSuccessful: not enough memory");
-        winx_printf("\nMarkWindowsBootAsSuccessful: not enough memory\n\n");
+        etrace("not enough memory");
+        winx_printf("\n%s: not enough memory\n\n",__FUNCTION__);
         winx_sleep(3000);
         return;
     }

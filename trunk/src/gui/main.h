@@ -86,7 +86,9 @@
 #include "../lua5.1/lauxlib.h"
 #include "../lua5.1/lualib.h"
 
+#define WgxTraceHandler udefrag_dbg_print
 #include "../dll/wgx/wgx.h"
+
 #include "../dll/udefrag/udefrag.h"
 #include "../include/ultradfgver.h"
 

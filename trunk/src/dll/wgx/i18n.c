@@ -24,21 +24,7 @@
  * @{
  */
 
-/*
-* We use STATUS_WAIT_0...
-* #define WIN32_NO_STATUS
-*/
-#include <windows.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "wgx.h"
-
-#define lua_c
-#include "../../lua5.1/lua.h"
-#include "../../lua5.1/lauxlib.h"
-#include "../../lua5.1/lualib.h"
+#include "wgx-internals.h"
 
 /* synchronization objects */
 HANDLE hSynchEvent = NULL;
@@ -47,8 +33,8 @@ void WgxInitSynchObjects(void)
 {
     hSynchEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hSynchEvent == NULL){
-        WgxDbgPrintLastError("WgxInitSynchObjects: event creation failed");
-        WgxDbgPrint(E"Internationalization routines will not work therefore");
+        letrace("event creation failed");
+        etrace("internationalization routines will not work therefore");
     }
 }
 
@@ -94,7 +80,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
 
     L = lua_open();
     if(L == NULL){
-        WgxDbgPrint(E"WgxBuildResourceTable: cannot initialize Lua library");
+        etrace("cannot initialize Lua library");
         return FALSE;
     }
     
@@ -107,7 +93,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     length = strlen(sctemplate) + strlen(path) + 1;
     script = malloc(length);
     if(script == NULL){
-        WgxDbgPrint(E"WgxBuildResourceTable: not enough memory");
+        etrace("not enough memory");
         lua_close(L);
         return FALSE;
     }
@@ -117,11 +103,11 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     /* extract strings from the file */
     status = luaL_dostring(L, script);
     if(status){
-        WgxDbgPrint(E"WgxBuildResourceTable: script execution failed");
+        etrace("script execution failed");
         if(!lua_isnil(L, -1)){
             msg = lua_tostring(L, -1);
             if(msg == NULL) msg = "(error object is not a string)";
-            WgxDbgPrint(E"WgxBuildResourceTable: %s",msg);
+            etrace("%s",msg);
             lua_pop(L, 1);
         }
         lua_close(L);
@@ -132,7 +118,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     /* fill the table */
     if(hSynchEvent){
         if(WaitForSingleObject(hSynchEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("WgxBuildResourceTable: synchronization failed");
+            letrace("synchronization failed");
         } else {
             for(i = 0; table[i].Key; i++){
                 lua_getglobal(L, table[i].Key);
@@ -142,10 +128,10 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
                         length = strlen(value);
                         table[i].LoadedString = malloc((length + 1) * 2);
                         if(table[i].LoadedString == NULL){
-                            WgxDbgPrint(E"WgxBuildResourceTable: not enough memory");
+                            etrace("not enough memory");
                         } else {
                             if(!MultiByteToWideChar(CP_UTF8,0,value,-1,table[i].LoadedString,length + 1)){
-                                WgxDbgPrintLastError("WgxBuildResourceTable: MultiByteToWideChar failed");
+                                letrace("MultiByteToWideChar failed");
                                 free(table[i].LoadedString);
                                 table[i].LoadedString = NULL;
                             }
@@ -182,12 +168,12 @@ void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow)
         /* synchronize access to the LoadedString */
         if(hSynchEvent){
             if(WaitForSingleObject(hSynchEvent,INFINITE) != WAIT_OBJECT_0){
-                WgxDbgPrintLastError("WgxApplyResourceTable: synchronization failed");
+                letrace("synchronization failed");
             } else {
                 if(table[i].LoadedString){
                     text = _wcsdup(table[i].LoadedString);
                     if(text == NULL)
-                        WgxDbgPrint(E"WgxApplyResourceTable: not enough memory");
+                        etrace("not enough memory");
                 }
                 /* end of synchronization */
                 SetEvent(hSynchEvent);
@@ -196,7 +182,7 @@ void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow)
         if(text == NULL){
             text = _wcsdup(table[i].DefaultString);
             if(text == NULL)
-                WgxDbgPrint(E"WgxApplyResourceTable: not enough memory");
+                etrace("not enough memory");
         }
         if(text){
             (void)SetWindowTextW(hChild,text);
@@ -239,7 +225,7 @@ wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key)
     /* synchronize access to the table */
     if(hSynchEvent){
         if(WaitForSingleObject(hSynchEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("WgxDestroyResourceTable: synchronization failed");
+            letrace("synchronization failed");
             goto synch_failed;
         } else {
             for(i = 0; table[i].Key; i++){
@@ -249,7 +235,7 @@ wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key)
                     else
                         text = _wcsdup(table[i].DefaultString);
                     if(text == NULL)
-                        WgxDbgPrint(E"WgxGetResourceString: not enough memory");
+                        etrace("not enough memory");
                     break;
                 }
             }
@@ -262,7 +248,7 @@ synch_failed:
             if(!strcmp(table[i].Key,key)){
                 text = _wcsdup(table[i].DefaultString);
                 if(text == NULL)
-                    WgxDbgPrint(E"WgxGetResourceString: not enough memory");
+                    etrace("not enough memory");
                 break;
             }
         }
@@ -283,7 +269,7 @@ void WgxDestroyResourceTable(PWGX_I18N_RESOURCE_ENTRY table)
     /* synchronize access to the table */
     if(hSynchEvent){
         if(WaitForSingleObject(hSynchEvent,INFINITE) != WAIT_OBJECT_0){
-            WgxDbgPrintLastError("WgxDestroyResourceTable: synchronization failed");
+            letrace("synchronization failed");
         } else {
             for(i = 0; table[i].Key; i++){
                 if(table[i].LoadedString){

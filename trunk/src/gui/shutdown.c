@@ -79,7 +79,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
         break;
     }
     if(text1 == NULL){
-        WgxDbgPrint(E"ResizeShutdownConfirmDialog: not enough memory for text1");
+        etrace("not enough memory for text1");
         return;
     }
     result = WgxGetTextDimensions(text1,
@@ -101,7 +101,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     
     /* calculate dimensions of buttons */
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_YES_BUTTON),text,sizeof(text)/sizeof(wchar_t))){
-        WgxDbgPrintLastError("ResizeShutdownConfirmDialog: cannot get Yes button text");
+        letrace("cannot get Yes button text");
         goto done;
     }
     text[sizeof(text)/sizeof(wchar_t) - 1] = 0;
@@ -116,7 +116,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
         button_height = height + 2 * BTN_V_SPACING;
 
     if(!GetWindowTextW(GetDlgItem(hwnd,IDC_NO_BUTTON),text,sizeof(text)/sizeof(wchar_t))){
-        WgxDbgPrintLastError("ResizeShutdownConfirmDialog: cannot get No button text");
+        letrace("cannot get No button text");
         goto done;
     }
     text[sizeof(text)/sizeof(wchar_t) - 1] = 0;
@@ -152,7 +152,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
     rc.top = 0;
     rc.bottom = client_height;
     if(!AdjustWindowRect(&rc,WS_CAPTION | WS_DLGFRAME,FALSE)){
-        WgxDbgPrintLastError("ResizeShutdownConfirmDialog: cannot calculate window dimensions");
+        letrace("cannot calculate window dimensions");
         goto done;
     }
             
@@ -262,7 +262,7 @@ BOOL CALLBACK ShutdownConfirmDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lPa
         timer = (UINT_PTR)SetTimer(hWnd,TIMER_ID,1000,NULL);
         if(timer == 0){
             /* message box will prevent shutdown which is dangerous */
-            WgxDbgPrintLastError("ShutdownConfirmDlgProc: SetTimer failed");
+            letrace("SetTimer failed");
             /* force shutdown to avoid situation when pc works a long time without any control */
             (void)EndDialog(hWnd,1);
         }
@@ -373,14 +373,14 @@ int ShutdownOrHibernate(void)
     if(when_done_action == IDM_WHEN_DONE_STANDBY || when_done_action == IDM_WHEN_DONE_HIBERNATE){
         hPowrProfDll = LoadLibrary("powrprof.dll");
         if(hPowrProfDll == NULL){
-            WgxDbgPrintLastError("ShutdownOrHibernate: cannot load powrprof.dll");
+            letrace("cannot load powrprof.dll library");
         } else {
             pSetSuspendState = (SET_SUSPEND_STATE_PROC)GetProcAddress(hPowrProfDll,"SetSuspendState");
             if(pSetSuspendState == NULL)
-                WgxDbgPrintLastError("ShutdownOrHibernate: cannot get SetSuspendState address inside powrprof.dll");
+                letrace("cannot get SetSuspendState address inside powrprof.dll");
         }
         if(pSetSuspendState == NULL)
-            WgxDbgPrint(I"Therefore SetSystemPowerState API will be used instead of SetSuspendState.\n");
+            itrace("therefore SetSystemPowerState API will be used instead of SetSuspendState");
     }
 
     switch(when_done_action){

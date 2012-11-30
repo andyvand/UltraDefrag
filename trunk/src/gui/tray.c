@@ -76,7 +76,7 @@ BOOL ShowSystemTrayIcon(DWORD dwMessage)
         wcscpy(nid.szTip,L"UltraDefrag");
     }
     if(Shell_NotifyIconW(dwMessage,(NOTIFYICONDATAW *)(void *)&nid)) return TRUE;
-    WgxDbgPrintLastError("ShowSystemTrayIcon: Shell_NotifyIconW failed");
+    letrace("Shell_NotifyIconW failed");
     
 fail:
     if(dwMessage == NIM_ADD){
@@ -84,7 +84,7 @@ fail:
         WgxShowWindow(hWindow);
         /* turn off minimize to tray option */
         minimize_to_system_tray = 0;
-        WgxDbgPrint(I"ShowSystemTrayIcon: minimize_to_system_tray option turned off");
+        itrace("minimize_to_system_tray option turned off");
     }
     return FALSE;
 }
@@ -106,7 +106,7 @@ void SetSystemTrayIconTooltip(wchar_t *text)
     wcsncpy(nid.szTip,text,64);
     nid.szTip[63] = 0;
     if(!Shell_NotifyIconW(NIM_MODIFY,(NOTIFYICONDATAW *)(void *)&nid))
-        WgxDbgPrintLastError("SetSystemTrayIconTooltip: Shell_NotifyIconW failed");
+        letrace("Shell_NotifyIconW failed");
 }
 
 static BOOL InsertContextMenuSeparator(HMENU hMenu,UINT pos)
@@ -118,7 +118,7 @@ static BOOL InsertContextMenuSeparator(HMENU hMenu,UINT pos)
     mi.fMask = MIIM_TYPE;
     mi.fType = MFT_SEPARATOR;
     if(!InsertMenuItemW(hMenu,pos,TRUE,&mi)){
-        WgxDbgPrintLastError("InsertSeparator failed");
+        letrace("separator insertion failed");
         return FALSE;
     }
     return TRUE;
@@ -141,7 +141,7 @@ static BOOL InsertContextMenuItem(HMENU hMenu,UINT pos,
     mi.dwTypeData = text ? text : default_text;
     result = InsertMenuItemW(hMenu,pos,TRUE,&mi);
     if(!result){
-        WgxDbgPrintLastError("InsertMenuItem failed");
+        letrace("InsertMenuItem failed");
     }
     free(text);
     return result;
@@ -158,7 +158,7 @@ void ShowSystemTrayIconContextMenu(void)
     /* create popup menu */
     hMenu = CreatePopupMenu();
     if(hMenu == NULL){
-        WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot create menu");
+        letrace("cannot create menu");
         goto done;
     }
     
@@ -175,7 +175,7 @@ void ShowSystemTrayIconContextMenu(void)
 
     /* show menu */
     if(!GetCursorPos(&pt)){
-        WgxDbgPrintLastError("ShowSystemTrayIconContextMenu: cannot get cursor position");
+        letrace("cannot get cursor position");
         goto done;
     }
     (void)TrackPopupMenu(hMenu,TPM_LEFTALIGN|TPM_RIGHTBUTTON,pt.x,pt.y,0,hWindow,NULL);
