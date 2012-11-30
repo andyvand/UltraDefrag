@@ -4,10 +4,10 @@ echo Set Stefans' environment variables...
 :: save username, since build process overwrites it
 if not defined ORIG_USERNAME set ORIG_USERNAME=%USERNAME%
 
-set WINDDKBASE=C:\WinDDK\3790.1830
-:: set WINDDKBASE=C:\WINDDK\7600.16385.1
-set WINSDKBASE=C:\Program Files\Microsoft SDKs\Windows\v7.1
-set MINGWBASE=
+:: set WINDDKBASE=C:\WinDDK\3790.1830
+set WINDDKBASE=C:\WINDDK\7600.16385.1
+set WINSDKBASE=
+set MINGWBASE=C:\MinGW32
 set MINGWx64BASE=
 set NSISDIR=C:\Program Files (x86)\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
