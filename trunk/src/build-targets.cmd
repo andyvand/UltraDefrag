@@ -128,20 +128,15 @@ if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
     set UD_DDK_NAME=
     echo UD_DDK_VER set to "%UD_DDK_VER%"... 
 
-    rem workaround for WDK 6 and above
-    if %UD_DDK_VER% NEQ 3790 set IGNORE_LINKLIB_ABUSE=1
+    set IGNORE_LINKLIB_ABUSE=1
 
     if %UD_BLD_FLG_BUILD_X86% neq 0 (
         echo --------- Target is x86 ---------
         set AMD64=
         set IA64=
         pushd ..
-        rem WDK 6 and above default to Win5.2 sub-system
-        if %UD_DDK_VER% NEQ 3790 (
-            call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre WXP no_oacr
-        ) else (
-            call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre WNET
-        )
+        rem force WDK build binaries for Win5.2 sub-system
+        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre WXP no_oacr
         popd
         set BUILD_DEFAULT=-nmake -i -g -P
         set UDEFRAG_LIB_PATH=..\..\lib
@@ -155,12 +150,7 @@ if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
         echo --------- Target is x64 ---------
         set IA64=
         pushd ..
-        rem WDK 6 and above use x64 instead of AMD64
-        if %UD_DDK_VER% NEQ 3790 (
-            call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre x64 WNET no_oacr
-        ) else (
-            call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre AMD64 WNET
-        )
+        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre x64 WNET no_oacr
         popd
         set BUILD_DEFAULT=-nmake -i -g -P
         set UDEFRAG_LIB_PATH=..\..\lib\amd64
@@ -325,7 +315,7 @@ exit /B 0
     )
 
     rem workaround for WDK 6 and above
-    if %1 EQU X86 if "%UD_DDK_VER%" NEQ "3790" (
+    if %1 EQU X86 (
         set OLD_CL=%CL%
         set CL=/QIfist %CL%
     )
@@ -338,7 +328,7 @@ exit /B 0
     %UD_BUILD_TOOL% lua-gui.build || goto fail
 
     rem workaround for WDK 6 and above
-    if %1 EQU X86 if "%UD_DDK_VER%" NEQ "3790" (
+    if %1 EQU X86 (
         set CL=%OLD_CL%
         set OLD_CL=
     )

@@ -182,12 +182,8 @@ function produce_ddk_makefile()
         f:write("USE_MSVCRT=1\n")
     end
     if target_type == "native" then
-        f:write("USE_NTDLL=1\n\n")
-        
-        -- workaround for WDK 7
-        if os.getenv("UD_DDK_VER") == "7600" then
-            f:write("MINWIN_SDK_LIB_PATH=\$(SDK_LIB_PATH)\n")
-        end
+        f:write("USE_NTDLL=1\n")
+        f:write("MINWIN_SDK_LIB_PATH=\$(SDK_LIB_PATH)\n\n")
     end
     if target_type == "dll" then
         if nativedll == 1 then
@@ -702,12 +698,7 @@ if os.getenv("BUILD_ENV") == "winddk" then
     end
     if static_lib == 0 then
         if arch == "i386" then
-            -- workaround for WDK 7
-            if os.getenv("UD_DDK_VER") == "7600" then
-                copy("objfre_wxp_x86\\i386\\" .. target_name,"..\\..\\bin\\")
-            else
-                copy("objfre_wnet_x86\\i386\\" .. target_name,"..\\..\\bin\\")
-            end
+            copy("objfre_wxp_x86\\i386\\" .. target_name,"..\\..\\bin\\")
         else
             copy("objfre_wnet_" .. arch .. "\\" .. arch .. "\\" .. target_name,
                 "..\\..\\bin\\" .. arch .. "\\")
@@ -715,12 +706,7 @@ if os.getenv("BUILD_ENV") == "winddk" then
     end
     if target_type == "dll" then
         if arch == "i386" then
-            -- workaround for WDK 7
-            if os.getenv("UD_DDK_VER") == "7600" then
-                copy("objfre_wxp_x86\\i386\\" .. name .. ".lib","..\\..\\lib\\")
-            else
-                copy("objfre_wnet_x86\\i386\\" .. name .. ".lib","..\\..\\lib\\")
-            end
+            copy("objfre_wxp_x86\\i386\\" .. name .. ".lib","..\\..\\lib\\")
         else
             copy("objfre_wnet_" .. arch .. "\\" .. arch .. "\\" .. name .. ".lib",
                  "..\\..\\lib\\" .. arch .. "\\" .. name .. ".lib")
