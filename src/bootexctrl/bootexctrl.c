@@ -56,31 +56,73 @@ void show_help(void)
         );
 }
 
+/**
+ * @brief Replaces CR and LF
+ * characters in a string by spaces.
+ * @details Intended for use in dbg_print
+ * routine to keep logging as clean as possible.
+ */
+void remove_crlf(char *s)
+{
+    int i;
+    
+    if(s){
+        for(i = 0; s[i]; i++){
+            if(s[i] == '\r' || s[i] == '\n')
+                s[i] = ' ';
+        }
+    }
+}
+
 void dbg_print(int flags,char *format, ...)
 {
     va_list arg;
     char *buffer;
-    int size, result;
+    char *msg;
+    char *ext_buffer;
+    DWORD error;
     
+    error = GetLastError();
     if(format){
         va_start(arg,format);
-        size = 128; /* set initial buffer size */
-        do {
-            buffer = malloc(size);
-            if(buffer == NULL) break;
-            memset(buffer,0,size); /* needed for _vsnprintf */
-            result = _vsnprintf(buffer,size,format,arg);
-            if(result != -1 && result != size){
+        buffer = wgx_vsprintf(format,arg);
+        if(buffer){
+            if(flags & LAST_ERROR_FLAG){
+                if(!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+                  FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                  NULL,error,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                  (LPTSTR)(void *)&msg,0,NULL)){
+                    if(error == ERROR_COMMITMENT_LIMIT){
+                        ext_buffer = wgx_sprintf("%s: 0x%x error: not enough memory\n",buffer,(UINT)error);
+                    } else {
+                        ext_buffer = wgx_sprintf("%s: 0x%x error\n",buffer,(UINT)error);
+                    }
+                    if(ext_buffer){
+                        OutputDebugString(ext_buffer);
+                        free(ext_buffer);
+                    } else {
+                        OutputDebugString("dbg_print: not enough memory\n");
+                    }
+                } else {
+                    ext_buffer = wgx_sprintf("%s: 0x%x error: %s",buffer,(UINT)error,msg);
+                    if(ext_buffer){
+                        remove_crlf(ext_buffer);
+                        OutputDebugString(ext_buffer);
+                        OutputDebugString("\n");
+                        free(ext_buffer);
+                    } else {
+                        OutputDebugString("dbg_print: not enough memory\n");
+                    }
+                    LocalFree(msg);
+                }
+            } else {
                 OutputDebugString(buffer);
                 OutputDebugString("\n");
-                free(buffer);
-                break;
             }
-            /* buffer is too small; try to allocate two times larger */
             free(buffer);
-            size <<= 1;
-            if(size <= 0) break;
-        } while(1);
+        } else {
+            OutputDebugString("dbg_print: not enough memory\n");
+        }
         va_end(arg);
     }
 }

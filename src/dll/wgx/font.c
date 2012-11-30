@@ -66,6 +66,7 @@ BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont)
 {
     lua_State *L;
     int status;
+    const char *msg;
     char *string;
     LOGFONT lf;
     
@@ -114,7 +115,13 @@ BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont)
         lua_pop(L, 1);
         lua_close(L);
     } else {
-        etrace("cannot interprete %s\n",wgx_font_path);
+        etrace("cannot interprete %s",wgx_font_path);
+        if(!lua_isnil(L, -1)){
+            msg = lua_tostring(L, -1);
+            if(msg == NULL) msg = "(error object is not a string)";
+            etrace("%s",msg);
+            lua_pop(L, 1);
+        }
         lua_close(L);
         goto use_default_font;
     }
