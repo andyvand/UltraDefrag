@@ -45,15 +45,15 @@
  */
 int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter)
 {
-    NTSTATUS Status;
+    NTSTATUS status;
     HANDLE hThread;
 
-    DbgCheck1(start_addr,"winx_create_thread",-1);
+    DbgCheck1(start_addr,-1);
 
-    Status = RtlCreateUserThread(NtCurrentProcess(),NULL,
+    status = RtlCreateUserThread(NtCurrentProcess(),NULL,
                     0,0,0,0,start_addr,parameter,&hThread,NULL);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_create_thread: cannot create thread");
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot create thread");
         return (-1);
     }
     NtCloseSafe(hThread);
@@ -72,9 +72,9 @@ int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter)
  */
 void winx_exit_thread(NTSTATUS status)
 {
-    NTSTATUS Status = ZwTerminateThread(NtCurrentThread(),status);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_exit_thread: cannot terminate thread");
+    NTSTATUS s = ZwTerminateThread(NtCurrentThread(),status);
+    if(!NT_SUCCESS(s)){
+        strace(s,"cannot terminate thread");
     }
 }
 

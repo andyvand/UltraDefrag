@@ -55,10 +55,6 @@
 /*                Prototypes, constants etc.                */
 /************************************************************/
 
-#ifndef DebugPrint
-#define DebugPrint winx_dbg_print
-#endif
-
 #define MAX_FILE_SIZE ((ULONGLONG) -1)
 #define MAX_RGN_SIZE  ((ULONGLONG) -1)
 #define DEFAULT_FRAGMENT_SIZE_THRESHOLD (MAX_FILE_SIZE / 2)

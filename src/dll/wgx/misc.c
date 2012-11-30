@@ -24,11 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "wgx.h"
+#include "wgx-internals.h"
 
 enum {
    LIM_SMALL, // corresponds to SM_CXSMICON/SM_CYSMICON
@@ -124,18 +120,17 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
     if(is_standard_icon_size){
         hLib = LoadLibrary("comctl32.dll");
         if(hLib == NULL){
-            WgxDbgPrintLastError("WgxLoadIcon: cannot load comctl32.dll library");
+            letrace("cannot load comctl32.dll library");
         } else {
             pLoadIconMetric = (LOAD_ICON_METRIC_PROC)GetProcAddress(hLib,"LoadIconMetric");
             if(pLoadIconMetric == NULL){
                 if(vista_and_above){
-                    WgxDbgPrintLastError("WgxLoadIcon: LoadIconMetric "
-                        "procedure not found in comctl32.dll library");
+                    letrace("LoadIconMetric procedure not found in comctl32.dll library");
                 }
             } else {
                 hr = pLoadIconMetric(hInstance,MAKEINTRESOURCEW(IconID),lims,phIcon);
                 if(hr != S_OK || *phIcon == NULL){
-                    WgxDbgPrint(E"WgxLoadIcon: LoadIconMetric failed with code 0x%x",(UINT)hr);
+                    etrace("LoadIconMetric failed with code 0x%x",(UINT)hr);
                 } else {
                     return TRUE;
                 }
@@ -152,7 +147,7 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
         IMAGE_ICON,size,size,
         LR_DEFAULTCOLOR);
     if(*phIcon == NULL){
-        WgxDbgPrintLastError("WgxLoadIcon: LoadImage failed (case 1)");
+        letrace("LoadImage failed (case 1)");
     } else {
         return TRUE;
     }
@@ -164,12 +159,12 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
     */
     *phIcon = LoadIcon(hInstance,MAKEINTRESOURCE(IconID));
     if(*phIcon == NULL){
-        WgxDbgPrintLastError("WgxLoadIcon: LoadIcon failed");
+        letrace("LoadIcon failed");
     } else {
         ScaledIcon = (HICON)CopyImage((HANDLE)*phIcon,
             IMAGE_ICON,size,size,0);
         if(ScaledIcon == NULL){
-            WgxDbgPrintLastError("WgxLoadIcon: CopyImage failed (case 1)");
+            letrace("CopyImage failed (case 1)");
             DestroyIcon(*phIcon);
             *phIcon = NULL;
         } else {
@@ -188,12 +183,12 @@ BOOL WgxLoadIcon(HINSTANCE hInstance,UINT IconID,UINT size,HICON *phIcon)
         IMAGE_ICON,0,0,
         LR_DEFAULTCOLOR);
     if(*phIcon == NULL){
-        WgxDbgPrintLastError("WgxLoadIcon: LoadImage failed (case 2)");
+        letrace("LoadImage failed (case 2)");
     } else {
         ScaledIcon = (HICON)CopyImage((HANDLE)*phIcon,
             IMAGE_ICON,size,size,0);
         if(ScaledIcon == NULL){
-            WgxDbgPrintLastError("WgxLoadIcon: CopyImage failed (case 2)");
+            letrace("CopyImage failed (case 2)");
             DestroyIcon(*phIcon);
             *phIcon = NULL;
             return FALSE;
@@ -315,7 +310,7 @@ BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *p
     if(hFont == NULL){
         hFont = (HFONT)SendMessage(hWnd,WM_GETFONT,0,0);
         if(hFont == NULL){
-            WgxDbgPrintLastError("WgxGetTextDimensions: cannot get default font");
+            letrace("cannot get default font");
             return FALSE;
         }
     }
@@ -323,13 +318,13 @@ BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *p
     /* get dimensions of text */
     hdc = GetDC(hWnd);
     if(hdc == NULL){
-        WgxDbgPrintLastError("WgxGetTextDimensions: cannot get device context of the window");
+        letrace("cannot get device context of the window");
         return FALSE;
     }
     hOldFont = SelectObject(hdc,hFont);
     result = GetTextExtentPoint32W(hdc,text,wcslen(text),&size);
     if(result == FALSE){
-        WgxDbgPrintLastError("WgxGetTextDimensions: cannot get text dimensions");
+        letrace("cannot get text dimensions");
     } else {
         *pWidth = size.cx;
         *pHeight = size.cy;

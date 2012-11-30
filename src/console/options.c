@@ -655,11 +655,11 @@ static void search_for_paths(void)
     
     hKernel32Dll = LoadLibrary("kernel32.dll");
     if(hKernel32Dll == NULL){
-        WgxDbgPrintLastError("search_for_paths: cannot load kernel32.dll");
+        letrace("cannot load kernel32.dll");
     } else {
         pGetLongPathNameW = (GET_LONG_PATH_NAME_W_PROC)GetProcAddress(hKernel32Dll,"GetLongPathNameW");
         if(pGetLongPathNameW == NULL)
-            WgxDbgPrintLastError("search_for_paths: GetLongPathNameW not found in kernel32.dll");
+            letrace("GetLongPathNameW not found in kernel32.dll");
     }
     
     for(i = 1; i < xargc; i++){
@@ -674,7 +674,7 @@ static void search_for_paths(void)
         if(pGetLongPathNameW){
             result = pGetLongPathNameW(xargv[i],long_path,MAX_LONG_PATH + 1);
             if(result == 0){
-                WgxDbgPrintLastError("search_for_paths: GetLongPathNameW failed");
+                letrace("GetLongPathNameW failed");
                 goto use_short_path;
             } else if(result > MAX_LONG_PATH + 1){
                 fprintf(stderr,"search_for_paths: long path of \'%ls\' is too long!",xargv[i]);
@@ -688,7 +688,7 @@ use_short_path:
         /* convert path to the full path */
         result = GetFullPathNameW(long_path,MAX_LONG_PATH + 1,full_path,NULL);
         if(result == 0){
-            WgxDbgPrintLastError("search_for_paths: GetFullPathNameW failed");
+            letrace("GetFullPathNameW failed");
             wcscpy(full_path,long_path);
         } else if(result > MAX_LONG_PATH + 1){
             fprintf(stderr,"search_for_paths: full path of \'%ls\' is too long!",long_path);

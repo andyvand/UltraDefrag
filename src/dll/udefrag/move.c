@@ -122,7 +122,7 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
     if(jp->is_fat && !is_fragmented(f)){
         for(i = 0; dos_files[i]; i++){
             if(winx_wcsmatch(f->path,dos_files[i],WINX_PAT_ICASE)){
-                DebugPrint(I"can_move: essential dos file detected: %ws",f->path);
+                itrace("essential dos file detected: %ws",f->path);
                 f->user_defined_flags |= UD_FILE_ESSENTIAL_BOOT_FILE;
                 return 0;
             }
@@ -130,7 +130,7 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
     }
     for(i = 0; boot_files[i]; i++){
         if(winx_wcsmatch(f->path,boot_files[i],WINX_PAT_ICASE)){
-            DebugPrint(I"can_move: essential boot file detected: %ws",f->path);
+            itrace("essential boot file detected: %ws",f->path);
             f->user_defined_flags |= UD_FILE_ESSENTIAL_BOOT_FILE;
             return 0;
         }
@@ -190,13 +190,13 @@ static winx_blockmap *get_first_block_of_cluster_chain(winx_file_info *f,ULONGLO
 static int move_file_clusters(winx_file_info *f,HANDLE hFile,ULONGLONG startVcn,
     ULONGLONG targetLcn,ULONGLONG n_clusters,udefrag_job_parameters *jp)
 {
-    NTSTATUS Status;
+    NTSTATUS status;
     IO_STATUS_BLOCK iosb;
     MOVEFILE_DESCRIPTOR mfd;
     ULONGLONG clusters_to_move;
 
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
-        DebugPrint(I"sVcn: %I64u,tLcn: %I64u,n: %u",
+        trace(I"sVcn: %I64u,tLcn: %I64u,n: %u",
              startVcn,targetLcn,n_clusters);
     }
     
@@ -227,16 +227,16 @@ static int move_file_clusters(winx_file_info *f,HANDLE hFile,ULONGLONG startVcn,
 #else
         mfd.NumVcns = (ULONG)clusters_to_move;
 #endif
-        Status = NtFsControlFile(winx_fileno(jp->fVolume),NULL,NULL,0,&iosb,
+        status = NtFsControlFile(winx_fileno(jp->fVolume),NULL,NULL,0,&iosb,
                             FSCTL_MOVE_FILE,&mfd,sizeof(MOVEFILE_DESCRIPTOR),
                             NULL,0);
-        if(NT_SUCCESS(Status)){
+        if(NT_SUCCESS(status)){
             NtWaitForSingleObject(winx_fileno(jp->fVolume),FALSE,NULL);
-            Status = iosb.Status;
+            status = iosb.Status;
         }
-        jp->last_move_status = Status;
-        if(!NT_SUCCESS(Status)){
-            DebugPrintEx(Status,E"cannot move file clusters of %ws",f->path);
+        jp->last_move_status = status;
+        if(!NT_SUCCESS(status)){
+            strace(status,"cannot move file clusters of %ws",f->path);
             jp->pi.processed_clusters += n_clusters;
             return (-1);
         }
@@ -298,7 +298,7 @@ static void DbgPrintBlocksOfFile(winx_blockmap *blockmap)
     winx_blockmap *block;
     
     for(block = blockmap; block; block = block->next){
-        DebugPrint(I"VCN: %I64u, LCN: %I64u, LENGTH: %u",
+        trace(I"VCN: %I64u, LCN: %I64u, LENGTH: %u",
             block->vcn,block->lcn,block->length);
         if(block->next == blockmap) break;
     }
@@ -348,8 +348,7 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     
     first_block = get_first_block_of_cluster_chain(f,vcn);
     if(first_block == NULL){
-        DebugPrint(E"calculate_file_disposition: "
-            "get_first_block_of_cluster_chain failed for %ws",f->path);
+        etrace("get_first_block_of_cluster_chain failed for %ws",f->path);
         new_file_info->disp.clusters = 0;
         return;
     }
@@ -411,7 +410,7 @@ static void calculate_file_disposition(winx_file_info *f,ULONGLONG vcn,
     return;
     
 fail:
-    DebugPrint(E"calculate_file_disposition: not enough memory for %ws",f->path);
+    etrace("not enough memory for %ws",f->path);
     winx_list_destroy((list_entry **)(void *)&new_file_info->disp.blockmap);
     new_file_info->disp.fragments = 0;
     new_file_info->disp.clusters = 0;
@@ -515,7 +514,7 @@ int move_file(winx_file_info *f,
 {
     ULONGLONG time;
     wchar_t *path;
-    NTSTATUS Status;
+    NTSTATUS status;
     HANDLE hFile;
     int old_color, new_color;
     int was_fragmented, became_fragmented;
@@ -534,7 +533,7 @@ int move_file(winx_file_info *f,
     
     /* validate parameters */
     if(f == NULL || jp == NULL){
-        DebugPrint(E"move_file: invalid parameter");
+        etrace("invalid parameter");
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
         return (-1);
@@ -542,12 +541,12 @@ int move_file(winx_file_info *f,
     
     path = f->path ? f->path : L"(null)";
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
-        DebugPrint(I"%ws",path);
-        DebugPrint(I"vcn = %I64u, length = %I64u, target = %I64u",vcn,length,target);
+        trace(I"%ws",path);
+        trace(I"vcn = %I64u, length = %I64u, target = %I64u",vcn,length,target);
     }
     
     if(length == 0){
-        DebugPrint(E"move_file: move of zero number "
+        etrace("move of zero number "
             "of clusters requested for %ws",path);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
@@ -561,7 +560,7 @@ int move_file(winx_file_info *f,
     }
     
     if(vcn + length > f->disp.blockmap->prev->vcn + f->disp.blockmap->prev->length){
-        DebugPrint(E"move_file: data move behind "
+        etrace("data move behind "
             "the end of the file requested for %ws",path);
         DbgPrintBlocksOfFile(f->disp.blockmap);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
@@ -571,7 +570,7 @@ int move_file(winx_file_info *f,
     
     first_block = get_first_block_of_cluster_chain(f,vcn);
     if(first_block == NULL){
-        DebugPrint(E"move_file: data move out of "
+        etrace("data move out of "
             "file bounds requested for %ws",path);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
@@ -579,7 +578,7 @@ int move_file(winx_file_info *f,
     }
     
     if(!check_region(jp,target,length)){
-        DebugPrint(E"move_file: there is no sufficient "
+        etrace("there is no sufficient "
             "free space available on target block for %ws",path);
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;
@@ -592,9 +591,9 @@ int move_file(winx_file_info *f,
     was_excluded = is_excluded(f);
 
     /* open the file */
-    Status = winx_defrag_fopen(f,WINX_OPEN_FOR_MOVE,&hFile);
-    if(Status != STATUS_SUCCESS){
-        DebugPrintEx(Status,E"move_file: cannot open %ws",path);
+    status = winx_defrag_fopen(f,WINX_OPEN_FOR_MOVE,&hFile);
+    if(status != STATUS_SUCCESS){
+        strace(status,"cannot open %ws",path);
         f->user_defined_flags |= UD_FILE_LOCKED;
         /* redraw space */
         colorize_file(jp,f,old_color);
@@ -616,7 +615,7 @@ int move_file(winx_file_info *f,
         new_file_info.disp.blockmap = NULL;
         dump_result = winx_ftw_dump_file(&new_file_info,dump_terminator,(void *)jp);
         if(dump_result < 0)
-            DebugPrint(E"move_file: cannot redump the file");
+            etrace("cannot redump the file");
     }
     
     if(dump_result < 0){
@@ -625,15 +624,15 @@ int move_file(winx_file_info *f,
         memcpy(&new_file_info,&desired_file_info,sizeof(winx_file_info));
         moving_result = CALCULATED_MOVING_SUCCESS;
     } else {
-        /*DebugPrint(D"OLD MAP:");
+        /*trace(D"OLD MAP:");
         for(block = f->disp.blockmap; block; block = block->next){
-            DebugPrint(D"VCN = %I64u, LCN = %I64u, LEN = %I64u",
+            trace(D"VCN = %I64u, LCN = %I64u, LEN = %I64u",
                 block->vcn, block->lcn, block->length);
             if(block->next == f->disp.blockmap) break;
         }
-        DebugPrint(D"NEW MAP:");
+        trace(D"NEW MAP:");
         for(block = new_file_info.disp.blockmap; block; block = block->next){
-            DebugPrint(D"VCN = %I64u, LCN = %I64u, LEN = %I64u",
+            trace(D"VCN = %I64u, LCN = %I64u, LEN = %I64u",
                 block->vcn, block->lcn, block->length);
             if(block->next == new_file_info.disp.blockmap) break;
         }*/
@@ -642,10 +641,10 @@ int move_file(winx_file_info *f,
             moving_result = DETERMINED_MOVING_SUCCESS;
         } else {
             if(compare_file_dispositions(&new_file_info,f) == 0){
-                DebugPrint(E"move_file: nothing has been moved for %ws",path);
+                etrace("nothing has been moved for %ws",path);
                 moving_result = DETERMINED_MOVING_FAILURE;
             } else {
-                DebugPrint(E"move_file: new file disposition differs from desired one for %ws",path);
+                etrace("new file disposition differs from desired one for %ws",path);
                 DbgPrintBlocksOfFile(new_file_info.disp.blockmap);
                 moving_result = DETERMINED_MOVING_PARTIAL_SUCCESS;
             }

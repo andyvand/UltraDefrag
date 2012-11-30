@@ -36,7 +36,7 @@ static HANDLE OpenRootDirectory(unsigned char volume_letter)
 {
     wchar_t rootpath[] = L"\\??\\A:\\";
     HANDLE hRoot;
-    NTSTATUS Status;
+    NTSTATUS status;
     UNICODE_STRING uStr;
     OBJECT_ATTRIBUTES ObjectAttributes;
     IO_STATUS_BLOCK IoStatusBlock;
@@ -45,12 +45,12 @@ static HANDLE OpenRootDirectory(unsigned char volume_letter)
     RtlInitUnicodeString(&uStr,rootpath);
     InitializeObjectAttributes(&ObjectAttributes,&uStr,
                    FILE_READ_ATTRIBUTES,NULL,NULL); /* ?? */
-    Status = NtCreateFile(&hRoot,FILE_GENERIC_READ,
+    status = NtCreateFile(&hRoot,FILE_GENERIC_READ,
                 &ObjectAttributes,&IoStatusBlock,NULL,0,
                 FILE_SHARE_READ|FILE_SHARE_WRITE,FILE_OPEN,0,
                 NULL,0);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"OpenRootDirectory: cannot open %ls",rootpath);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot open %ls",rootpath);
         return NULL;
     }
     return hRoot;
@@ -69,7 +69,7 @@ int winx_get_drive_type(char letter)
     PROCESS_DEVICEMAP_INFORMATION pdi;
     FILE_FS_DEVICE_INFORMATION ffdi;
     IO_STATUS_BLOCK iosb;
-    NTSTATUS Status;
+    NTSTATUS status;
     int drive_type;
     HANDLE hRoot;
 
@@ -78,7 +78,7 @@ int winx_get_drive_type(char letter)
 
     letter = winx_toupper(letter); /* possibly required for w2k */
     if(letter < 'A' || letter > 'Z'){
-        DebugPrint(E"winx_get_drive_type: invalid letter %c",letter);
+        etrace("invalid letter %c",letter);
         return (-1);
     }
     
@@ -97,11 +97,11 @@ int winx_get_drive_type(char letter)
     
     /* try to define exactly which type has the specified drive (w2k+) */
     RtlZeroMemory(&pdi,sizeof(PROCESS_DEVICEMAP_INFORMATION));
-    Status = NtQueryInformationProcess(NtCurrentProcess(),
+    status = NtQueryInformationProcess(NtCurrentProcess(),
                     ProcessDeviceMap,&pdi,
                     sizeof(PROCESS_DEVICEMAP_INFORMATION),
                     NULL);
-    if(NT_SUCCESS(Status)){
+    if(NT_SUCCESS(status)){
         drive_type = (int)pdi.Query.DriveType[letter - 'A'];
         /*
         * Type DRIVE_NO_ROOT_DIR have the following drives:
@@ -114,10 +114,10 @@ int winx_get_drive_type(char letter)
         if(drive_type != DRIVE_NO_ROOT_DIR)
             return drive_type;
     } else {
-        if(Status != STATUS_INVALID_INFO_CLASS){ /* exclude common NT4 error code */
+        if(status != STATUS_INVALID_INFO_CLASS){ /* exclude common NT4 error code */
             /* exclude common NT4 Terminal Server Edition error code */
-            if(Status != STATUS_INFO_LENGTH_MISMATCH){
-                DebugPrintEx(Status,E"winx_get_drive_type: cannot get device map");
+            if(status != STATUS_INFO_LENGTH_MISMATCH){
+                strace(status,"cannot get device map");
                 return (-1);
             }
         }
@@ -129,12 +129,12 @@ int winx_get_drive_type(char letter)
     if(hRoot == NULL)
         return (-1);
     RtlZeroMemory(&ffdi,sizeof(FILE_FS_DEVICE_INFORMATION));
-    Status = NtQueryVolumeInformationFile(hRoot,&iosb,
+    status = NtQueryVolumeInformationFile(hRoot,&iosb,
                     &ffdi,sizeof(FILE_FS_DEVICE_INFORMATION),
                     FileFsDeviceInformation);
     NtClose(hRoot);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_get_drive_type: cannot get volume type for \'%c\'",letter);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot get volume type for \'%c\'",letter);
         return (-1);
     }
 
@@ -191,18 +191,17 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
 {
     FILE_FS_SIZE_INFORMATION ffs;
     IO_STATUS_BLOCK IoStatusBlock;
-    NTSTATUS Status;
+    NTSTATUS status;
     WINX_FILE *f;
     DISK_GEOMETRY dg;
     char buffer[32];
     
     /* get drive geometry */
     RtlZeroMemory(&ffs,sizeof(FILE_FS_SIZE_INFORMATION));
-    Status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,&ffs,
+    status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,&ffs,
                 sizeof(FILE_FS_SIZE_INFORMATION),FileFsSizeInformation);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_get_volume_information: cannot get geometry of drive %c:",
-            v->volume_letter);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot get geometry of drive %c:",v->volume_letter);
         return (-1);
     }
     
@@ -226,7 +225,7 @@ static int get_drive_geometry(HANDLE hRoot,winx_volume_information *v)
             v->device_capacity = dg.Cylinders.QuadPart * \
                 dg.TracksPerCylinder * dg.SectorsPerTrack * dg.BytesPerSector;
             winx_bytes_to_hr(v->device_capacity,1,buffer,sizeof(buffer));
-            DebugPrint(I"get_drive_geometry: %c: device capacity = %s",v->volume_letter,buffer);
+            itrace("%c: device capacity = %s",v->volume_letter,buffer);
         }
         winx_fclose(f);
     }
@@ -249,7 +248,7 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
     FILE_FS_ATTRIBUTE_INFORMATION *pfa;
     int fs_attr_info_size;
     IO_STATUS_BLOCK IoStatusBlock;
-    NTSTATUS Status;
+    NTSTATUS status;
     wchar_t fs_name[MAX_FS_NAME_LENGTH + 1];
     int length;
 
@@ -259,11 +258,10 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
         return(-1);
     
     RtlZeroMemory(pfa,fs_attr_info_size);
-    Status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,pfa,
+    status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,pfa,
                 fs_attr_info_size,FileFsAttributeInformation);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_get_volume_information: cannot get file system name of drive %c:",
-            v->volume_letter);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot get file system name of drive %c:",v->volume_letter);
         winx_free(pfa);
         return (-1);
     }
@@ -322,7 +320,7 @@ static void get_volume_label(HANDLE hRoot,winx_volume_information *v)
     FILE_FS_VOLUME_INFORMATION *ffvi;
     int buffer_size;
     IO_STATUS_BLOCK IoStatusBlock;
-    NTSTATUS Status;
+    NTSTATUS status;
     
     /* reset label */
     v->label[0] = 0;
@@ -335,10 +333,10 @@ static void get_volume_label(HANDLE hRoot,winx_volume_information *v)
     
     /* try to get actual label */
     RtlZeroMemory(ffvi,buffer_size);
-    Status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,ffvi,
+    status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,ffvi,
                 buffer_size,FileFsVolumeInformation);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"get_volume_label: cannot get volume label of drive %c:",
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot get volume label of drive %c:",
             v->volume_letter);
         winx_free(ffvi);
         return;
@@ -370,7 +368,7 @@ static void get_volume_dirty_flag(winx_volume_information *v)
         NULL,0,&dirty_flag,sizeof(ULONG),NULL);
     winx_fclose(f);
     if(result >= 0 && (dirty_flag & VOLUME_IS_DIRTY)){
-        DebugPrint(E"%c: volume is dirty! Run CHKDSK to repair it.",
+        etrace("%c: volume is dirty! Run CHKDSK to repair it.",
             v->volume_letter);
         v->is_dirty = 1;
     }
@@ -427,7 +425,7 @@ int winx_get_volume_information(char volume_letter,winx_volume_information *v)
     memset(&v->ntfs_data,0,sizeof(NTFS_DATA));
     if(!strcmp(v->fs_name,"NTFS")){
         if(get_ntfs_data(v) < 0){
-            DebugPrint(E"winx_get_volume_information: NTFS data is unavailable for %c:",
+            etrace("NTFS data is unavailable for %c:",
                 volume_letter);
         }
     }
@@ -539,7 +537,7 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
             status = iosb.Status;
         }
         if(status != STATUS_SUCCESS && status != STATUS_BUFFER_OVERFLOW){
-            DebugPrintEx(status,E"winx_get_free_volume_regions: cannot get volume bitmap");
+            strace(status,"cannot get volume bitmap");
             winx_fclose(f);
             winx_free(bitmap);
             if(flags & WINX_GVR_ALLOW_PARTIAL_SCAN){

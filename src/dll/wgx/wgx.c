@@ -23,9 +23,7 @@
  * @{
  */
 
-#include <windows.h>
-
-#include "wgx.h"
+#include "wgx-internals.h"
 
 void WgxInitSynchObjects(void);
 void WgxDestroySynchObjects(void);

@@ -69,7 +69,7 @@ void dbg_print_header(udefrag_job_parameters *jp)
     c = 'a'; c = winx_towlower(c) - winx_towupper(c);
     winx_wcslwr(s1); winx_wcsupr(s2);
     result = winx_wcsicmp(s1,s2);
-    winx_dbg_print(NULL);
+    winx_dbg_print(0,NULL);
 }
 
 /**
@@ -132,9 +132,9 @@ static void dbg_print_single_counter(udefrag_job_parameters *jp,ULONGLONG counte
     ip = (unsigned int)(p * 10000);
     s = winx_sprintf("%s %I64ums",buffer,time);
     if(s == NULL){
-        DebugPrint(I" - %s %-18s %6I64ums  %3u.%02u %%",name,buffer,time,ip / 100,ip % 100);
+        trace(I" - %s %-18s %6I64ums  %3u.%02u %%",name,buffer,time,ip / 100,ip % 100);
     } else {
-        DebugPrint(I" - %s %-25s  %3u.%02u %%",name,s,ip / 100,ip % 100);
+        trace(I" - %s %-25s  %3u.%02u %%",name,s,ip / 100,ip % 100);
         winx_free(s);
     }
 }
@@ -154,7 +154,7 @@ void dbg_print_performance_counters(udefrag_job_parameters *jp)
     seconds = time / 1000;
     winx_time2str(seconds,buffer,sizeof(buffer));
     time -= seconds * 1000;
-    DebugPrint(I"volume processing completed in %s %I64ums:",buffer,time);
+    trace(I"volume processing completed in %s %I64ums:",buffer,time);
     dbg_print_single_counter(jp,jp->p_counters.analysis_time,             "analysis ...............");
     dbg_print_single_counter(jp,jp->p_counters.searching_time,            "searching ..............");
     dbg_print_single_counter(jp,jp->p_counters.moving_time,               "moving .................");

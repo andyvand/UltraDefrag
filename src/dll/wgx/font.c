@@ -24,15 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-
-#include "wgx.h"
-
-/* Uses Lua */
-#define lua_c
-#include "../../lua5.1/lua.h"
-#include "../../lua5.1/lauxlib.h"
-#include "../../lua5.1/lualib.h"
+#include "wgx-internals.h"
 
 /* returns 0 if variable is not defined */
 static int getint(lua_State *L, char *variable)
@@ -88,7 +80,7 @@ BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont)
 
     L = lua_open();  /* create state */
     if(L == NULL){
-        WgxDbgPrint(E"WgxCreateFont: cannot initialize Lua library\n");
+        etrace("cannot initialize Lua library");
         goto use_default_font;
     }
     
@@ -122,19 +114,19 @@ BOOL WgxCreateFont(char *wgx_font_path,PWGX_FONT pFont)
         lua_pop(L, 1);
         lua_close(L);
     } else {
-        WgxDbgPrint(E"WgxCreateFont: cannot interprete %s\n",wgx_font_path);
+        etrace("cannot interprete %s\n",wgx_font_path);
         lua_close(L);
         goto use_default_font;
     }
     
     pFont->hFont = CreateFontIndirect(&lf);
     if(pFont->hFont == NULL){
-        WgxDbgPrintLastError("WgxCreateFont: CreateFontIndirect for custom font failed");
+        letrace("CreateFontIndirect for custom font failed");
 use_default_font:
         /* try to use default font passed through pFont */
         pFont->hFont = CreateFontIndirect(&pFont->lf);
         if(pFont->hFont == NULL){
-            WgxDbgPrintLastError("WgxCreateFont: CreateFontIndirect for default font failed");
+            letrace("CreateFontIndirect for default font failed");
             return FALSE;
         }
         return TRUE;

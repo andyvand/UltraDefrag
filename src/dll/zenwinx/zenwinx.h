@@ -29,7 +29,11 @@
 #include "ntndk.h"
 #endif /* !WINX_CUSTOM_NTNDK_H */
 
-#include "../../include/dbg-prefixes.h"
+#include "../../include/dbg.h"
+
+#define DEFAULT_TAB_WIDTH 2
+#define DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY "      Hit any key to display next page,\n" \
+                                             "          ESC or Break to abort..."
 
 #ifndef max
 #define max(a,b) ((a)>(b)?(a):(b))
@@ -40,40 +44,50 @@
 
 #define NtCloseSafe(h) { if(h) { NtClose(h); h = NULL; } }
 
-#define DEFAULT_TAB_WIDTH 2
-#define DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY "      Hit any key to display next page,\n          ESC or Break to abort..."
+/* debugging macros */
 
-#define DebugPrint winx_dbg_print
-#define DebugPrintEx winx_dbg_print_ex
+/* prints whatever specified */
+#define trace(format,...)  winx_dbg_print(0,format,## __VA_ARGS__)
 
-#define TraceEnter  { DebugPrint(D"Inside function '%s'...",__FUNCTION__); }
-#define TraceExit   { DebugPrint(D"Leaving function '%s'...",__FUNCTION__); }
-#define TraceSource { DebugPrint(D"Source file '%s' at line %d ...",__FILE__,__LINE__); }
+/* prints {prefix}{function name}: {specified string} */
+#define etrace(format,...) winx_dbg_print(0,E "%s: " format,__FUNCTION__,## __VA_ARGS__)
+#define itrace(format,...) winx_dbg_print(0,I "%s: " format,__FUNCTION__,## __VA_ARGS__)
+#define dtrace(format,...) winx_dbg_print(0,D "%s: " format,__FUNCTION__,## __VA_ARGS__)
+
+/* prints {error prefix}{function name}: {specified string}: {specified nt status and its description} */
+#define strace(status,format,...) { \
+    NtCurrentTeb()->LastStatusValue = status; \
+    winx_dbg_print(NT_STATUS_FLAG,E "%s: " format,__FUNCTION__,## __VA_ARGS__); \
+}
+
+#define TraceEnter  { trace(D"Inside function '%s'...",__FUNCTION__); }
+#define TraceExit   { trace(D"Leaving function '%s'...",__FUNCTION__); }
+#define TraceSource { trace(D"Source file '%s' at line %d ...",__FILE__,__LINE__); }
 
 /*
 * DbgCheckN macro definitions are used
 * to simplify debugging of a situation 
 * when something is mistyped in sources.
 */
-#define DbgCheck1(c,f,r) { \
+#define DbgCheck1(c,r) { \
     if(!(c)) {           \
-        DebugPrint(E"first parameter of %s is invalid",f); \
+        etrace("the first parameter is incorrect"); \
         return (r);      \
     }                    \
 }
 
-#define DbgCheck2(c1,c2,f,r) { \
-    DbgCheck1(c1,f,r)        \
+#define DbgCheck2(c1,c2,r) { \
+    DbgCheck1(c1,r)          \
     if(!(c2)) {              \
-        DebugPrint(E"second parameter of %s is invalid",f); \
+        etrace("the second parameter is incorrect"); \
         return (r);          \
     }                        \
 }
 
-#define DbgCheck3(c1,c2,c3,f,r) { \
-    DbgCheck2(c1,c2,f,r)        \
+#define DbgCheck3(c1,c2,c3,r) { \
+    DbgCheck2(c1,c2,r)       \
     if(!(c3)) {              \
-        DebugPrint(E"third parameter of %s is invalid",f); \
+        etrace("the third parameter is incorrect"); \
         return (r);          \
     }                        \
 }
@@ -88,8 +102,7 @@ void winx_set_dbg_log(char *path);
 #define winx_enable_dbg_log(path) winx_set_dbg_log(path)
 #define winx_disable_dbg_log()    winx_set_dbg_log(NULL)
 void winx_flush_dbg_log(void);
-void winx_dbg_print(char *format, ...);
-void winx_dbg_print_ex(unsigned long status,char *format, ...);
+void winx_dbg_print(int flags,char *format, ...);
 void winx_dbg_print_header(char ch, int width, char *format, ...);
 
 /* env.c */
@@ -249,9 +262,7 @@ int winx_release_spin_lock(winx_spin_lock *sl);
 void winx_destroy_spin_lock(winx_spin_lock *sl);
 
 /* mem.c */
-void *winx_malloc_ex(SIZE_T size,SIZE_T flags);
-#define winx_malloc(n)      winx_malloc_ex(n,0)
-#define winx_malloc_zero(n) winx_malloc_ex(n,HEAP_ZERO_MEMORY)
+void *winx_malloc(SIZE_T size);
 void winx_free(void *addr);
 
 /* misc.c */

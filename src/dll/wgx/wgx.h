@@ -28,7 +28,7 @@
 
 #include <wchar.h>
 
-#include "../../include/dbg-prefixes.h"
+#include "../../include/dbg.h"
 
 /* definitions missing on several development systems */
 #ifndef USE_WINDDK
@@ -84,10 +84,28 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb);
 void WgxPrintUnicodeString(wchar_t *string,FILE *f);
 
 /* dbg.c */
-typedef void (*WGX_DBG_PRINT_HANDLER)(char *format, ...);
-void WgxSetDbgPrintHandler(WGX_DBG_PRINT_HANDLER h);
-void WgxDbgPrint(char *format, ...);
-void WgxDbgPrintLastError(char *format, ...);
+/* debugging macros */
+
+#if defined(__GNUC__)
+/* set it, otherwise warnings will be shown for the tracing macros */
+#pragma GCC diagnostic ignored "-Waddress"
+#endif
+
+/* prints whatever specified */
+#define trace(format,...)   { if(WgxTraceHandler) WgxTraceHandler(0,format,## __VA_ARGS__); }
+
+/* prints {prefix}{function name}: {specified string} */
+#define etrace(format,...)  { if(WgxTraceHandler) WgxTraceHandler(0,E "%s: " format,__FUNCTION__,## __VA_ARGS__); }
+#define itrace(format,...)  { if(WgxTraceHandler) WgxTraceHandler(0,I "%s: " format,__FUNCTION__,## __VA_ARGS__); }
+#define dtrace(format,...)  { if(WgxTraceHandler) WgxTraceHandler(0,D "%s: " format,__FUNCTION__,## __VA_ARGS__); }
+
+/* prints {error prefix}{function name}: {specified string}: {last error and its description} */
+#define letrace(format,...) { if(WgxTraceHandler) WgxTraceHandler(LAST_ERROR_FLAG,E "%s: " format,__FUNCTION__,## __VA_ARGS__); }
+
+/* flags are defined in ../../include/dbg.h file */
+typedef void (*WGX_TRACE_HANDLER)(int flags,char *format, ...);
+void WgxSetInternalTraceHandler(WGX_TRACE_HANDLER h);
+
 int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...);
 
 /* exec.c */

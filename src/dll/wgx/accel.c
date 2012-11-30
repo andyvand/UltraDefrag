@@ -24,9 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-
-#include "wgx.h"
+#include "wgx-internals.h"
 
 /*
 * An article of Mumtaz Zaheer from Pakistan helped us very much

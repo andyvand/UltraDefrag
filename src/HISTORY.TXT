@@ -18,14 +18,18 @@
     - added prefixes for all the debugging messages for easier analysis of logs
 
     - Internals: obsolete winx_virtual_alloc, winx_virtual_free, winx_prompt_ex,
-      winx_load_driver, winx_unload_driver calls removed from zenwinx library
+      winx_load_driver, winx_unload_driver, winx_dbg_print_ex calls removed
+      from zenwinx library
     - winx_heap_alloc, winx_heap_free, winx_list_insert_item, 
       winx_list_remove_item, winx_print_array_of_strings,
       winx_get_environment_variable, winx_set_environment_variable calls
       superseded by winx_malloc, winx_free, winx_list_insert, winx_list_remove,
       winx_print_strings, winx_getenv, winx_setenv calls
     - winx_get_proc_address, winx_create_thread, winx_get_windows_directory,
-      winx_prompt prototypes changed
+      winx_prompt, winx_dbg_print, udefrag_dbg_print prototypes changed
+    - obsolete WgxDbgPrint, WgxDbgPrintLastError routines
+      removed from wgx library
+    - WgxSetDbgPrintHandler routine superseded by WgxSetInternalTraceHandler
     - WgxSetTaskbarProgressState and WgxSetTaskbarProgressValue routines
       added to wgx library
     - Windows Server 2003 DDK support dropped because of lack of variadic macros

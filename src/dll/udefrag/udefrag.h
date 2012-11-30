@@ -24,7 +24,7 @@
 #ifndef _UDEFRAG_H_
 #define _UDEFRAG_H_
 
-#include "../../include/dbg-prefixes.h"
+#include "../../include/dbg.h"
 
 /* debug print levels */
 #define DBG_NORMAL     0
@@ -163,22 +163,26 @@ void udefrag_flush_dbg_log(void);
 /**
  * @brief Delivers a message to the Debug View
  * program and appends it to the log file as well.
+ * @param[in] flags one of the flags defined in
+ * ../../include/dbg.h file.
+ * If NT_STATUS_FLAG is set, the
+ * last nt status value will be appended
+ * to the debugging message as well as its
+ * description. If LAST_ERROR_FLAG is set,
+ * the same stuff will be done for the last
+ * error value.
+ * @param[in] format the format string.
+ * @param[in] ... the parameters.
  * @note
- * - If <b>: $LE</b> appears at end of the format
- * string, the last error code will be appended 
- * to the message as well as its description.
- * - If <b>: $NS</b> appears at end of the format
- * string, the NT status code of the last operation 
- * will be appended to the message as well as its
- * description.
  * - Not all system API set last status code.
- * Use winx_dbg_print_ex to catch the status for sure.
+ * Use strace macro defined in ../zenwinx/zenwinx.h
+ * file to catch the status for sure.
  * - A few prefixes are defined for the debugging
- * messages. They're listed in ../../include/dbg-prefixes.h
+ * messages. They're listed in ../../include/dbg.h
  * file and are intended for easier analysis of logs. To keep
  * logs clean always use one of those prefixes.
  */
-void udefrag_dbg_print(char *format, ...);
+void udefrag_dbg_print(int flags,char *format, ...);
 
 int udefrag_init_failed(void);
 

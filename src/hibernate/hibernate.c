@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define WgxTraceHandler dbg_print
 #include "../dll/wgx/wgx.h"
 
 typedef BOOLEAN (WINAPI *SET_SUSPEND_STATE_PROC)(BOOLEAN Hibernate,
@@ -56,7 +57,7 @@ static void show_help(void)
         );
 }
 
-static void dbg_print(char *format, ...)
+static void dbg_print(int flags,char *format, ...)
 {
     va_list arg;
     char *buffer;
@@ -150,7 +151,7 @@ int __cdecl main(int argc, char **argv)
     printf("Hibernate for Windows - a command line tool for Windows hibernation.\n");
     printf("Copyright (c) UltraDefrag Development Team, 2009-2012.\n\n");
     
-    WgxSetDbgPrintHandler(dbg_print);
+    WgxSetInternalTraceHandler(dbg_print);
 
     /* enable shutdown privilege */
     if(!OpenProcessToken(GetCurrentProcess(), 
@@ -176,11 +177,11 @@ int __cdecl main(int argc, char **argv)
     */
     hPowrProfDll = LoadLibrary("powrprof.dll");
     if(hPowrProfDll == NULL){
-        WgxDbgPrintLastError("Cannot load powrprof.dll");
+        letrace("cannot load powrprof.dll");
     } else {
         pSetSuspendState = (SET_SUSPEND_STATE_PROC)GetProcAddress(hPowrProfDll,"SetSuspendState");
         if(pSetSuspendState == NULL)
-            WgxDbgPrintLastError("Cannot get SetSuspendState address inside powrprof.dll");
+            letrace("cannot get SetSuspendState address inside powrprof.dll");
     }
 
     /* hibernate, request permission from apps and drivers */

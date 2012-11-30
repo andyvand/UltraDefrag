@@ -24,12 +24,7 @@
  * @{
  */
 
-#include <windows.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-#include "wgx.h"
+#include "wgx-internals.h"
 
 #define MAX_GA_REQUEST_LENGTH 1024
 
@@ -55,23 +50,23 @@ static BOOL SendWebAnalyticsRequest(char *url)
     char path[MAX_PATH + 1] = {0};
     
     if(url == NULL){
-        WgxDbgPrint(E"SendWebAnalyticsRequest: URL = NULL\n");
-        goto fail;
+        etrace("URL = NULL");
+        return FALSE;
     }
     
-    WgxDbgPrint(I"SendWebAnalyticsRequest: URL = %s\n",url);
+    itrace("URL = %s",url);
     
     /* load urlmon.dll library */
     hUrlmonDLL = LoadLibrary("urlmon.dll");
     if(hUrlmonDLL == NULL){
-        WgxDbgPrintLastError("SendWebAnalyticsRequest: LoadLibrary(urlmon.dll) failed");
+        letrace("cannot load urlmon.dll library");
         goto fail;
     }
     
     /* get an address of procedure downloading a file */
     pURLDownloadToCacheFile = (URLMON_PROCEDURE)GetProcAddress(hUrlmonDLL,"URLDownloadToCacheFileA");
     if(pURLDownloadToCacheFile == NULL){
-        WgxDbgPrintLastError("SendWebAnalyticsRequest: URLDownloadToCacheFile not found in urlmon.dll");
+        letrace("URLDownloadToCacheFile not found in urlmon.dll");
         goto fail;
     }
     
@@ -79,10 +74,11 @@ static BOOL SendWebAnalyticsRequest(char *url)
     result = pURLDownloadToCacheFile(NULL,url,path,MAX_PATH,0,NULL);
     path[MAX_PATH] = 0;
     if(result != S_OK){
-        if(result == E_OUTOFMEMORY)
-            WgxDbgPrint(E"SendWebAnalyticsRequest: not enough memory\n");
-        else
-            WgxDbgPrint(E"SendWebAnalyticsRequest: URLDownloadToCacheFile failed\n");
+        if(result == E_OUTOFMEMORY) {
+            etrace("not enough memory");
+        } else {
+            etrace("URLDownloadToCacheFile failed");
+        }
         goto fail;
     }
     
@@ -111,7 +107,7 @@ static char *build_ga_request(char *hostname,char *path,char *account)
     
     ga_request = malloc(MAX_GA_REQUEST_LENGTH);
     if(ga_request == NULL){
-        WgxDbgPrint(E"build_ga_request: not enough memory\n");
+        etrace("not enough memory");
         return NULL;
     }
     

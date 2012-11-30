@@ -300,7 +300,7 @@ int kb_read(PKEYBOARD_INPUT_DATA pKID,int msec_timeout)
     LARGE_INTEGER synch_interval;
     NTSTATUS Status;
     
-    DbgCheck1(pKID,"kb_read",-1);
+    DbgCheck1(pKID,-1);
     
     if(msec_timeout != INFINITE){
         attempts = msec_timeout / MAX_TYPING_DELAY + 1;
@@ -364,7 +364,7 @@ static int kb_open_internal(int device_number, int kbd_count)
     UNICODE_STRING uStr;
     OBJECT_ATTRIBUTES ObjectAttributes;
     IO_STATUS_BLOCK IoStatusBlock;
-    NTSTATUS Status;
+    NTSTATUS status;
     HANDLE hKbDevice = NULL;
     HANDLE hKbEvent = NULL;
     int i;
@@ -373,25 +373,25 @@ static int kb_open_internal(int device_number, int kbd_count)
     device_name[31] = 0;
     RtlInitUnicodeString(&uStr,device_name);
     InitializeObjectAttributes(&ObjectAttributes,&uStr,OBJ_CASE_INSENSITIVE,NULL,NULL);
-    Status = NtCreateFile(&hKbDevice,
+    status = NtCreateFile(&hKbDevice,
                 GENERIC_READ | FILE_RESERVE_OPFILTER | FILE_READ_ATTRIBUTES/*0x80100080*/,
                 &ObjectAttributes,&IoStatusBlock,NULL,FILE_ATTRIBUTE_NORMAL/*0x80*/,
                 0,FILE_OPEN/*1*/,FILE_DIRECTORY_FILE/*1*/,NULL,0);
-    if(!NT_SUCCESS(Status)){
+    if(!NT_SUCCESS(status)){
         if(device_number < kbd_count){
-            DebugPrintEx(Status,E"Cannot open the keyboard %ws",device_name);
+            strace(status,"cannot open %ws",device_name);
             winx_printf("\nCannot open the keyboard %ws: %x!\n",
-                device_name,(UINT)Status);
-            winx_printf("%s\n",winx_get_status_description((ULONG)Status));
+                device_name,(UINT)status);
+            winx_printf("%s\n",winx_get_status_description((ULONG)status));
         }
         return (-1);
     }
     
     /* ensure that we have opened a really connected keyboard */
     if(kb_check(hKbDevice) < 0){
-        DebugPrintEx(Status,E"Invalid keyboard device %ws",device_name);
-        winx_printf("\nInvalid keyboard device %ws: %x!\n",device_name,(UINT)Status);
-        winx_printf("%s\n",winx_get_status_description((ULONG)Status));
+        strace(status,"invalid keyboard device %ws",device_name);
+        winx_printf("\nInvalid keyboard device %ws: %x!\n",device_name,(UINT)status);
+        winx_printf("%s\n",winx_get_status_description((ULONG)status));
         NtCloseSafe(hKbDevice);
         return (-1);
     }
@@ -401,13 +401,13 @@ static int kb_open_internal(int device_number, int kbd_count)
     event_name[31] = 0;
     RtlInitUnicodeString(&uStr,event_name);
     InitializeObjectAttributes(&ObjectAttributes,&uStr,0,NULL,NULL);
-    Status = NtCreateEvent(&hKbEvent,STANDARD_RIGHTS_ALL | 0x1ff/*0x1f01ff*/,
+    status = NtCreateEvent(&hKbEvent,STANDARD_RIGHTS_ALL | 0x1ff/*0x1f01ff*/,
         &ObjectAttributes,SynchronizationEvent,0/*FALSE*/);
-    if(!NT_SUCCESS(Status)){
+    if(!NT_SUCCESS(status)){
         NtCloseSafe(hKbDevice);
-        DebugPrintEx(Status,E"Cannot create kb_event%u",device_number);
-        winx_printf("\nCannot create kb_event%u: %x!\n",device_number,(UINT)Status);
-        winx_printf("%s\n",winx_get_status_description((ULONG)Status));
+        strace(status,"cannot create kb_event%u",device_number);
+        winx_printf("\nCannot create kb_event%u: %x!\n",device_number,(UINT)status);
+        winx_printf("%s\n",winx_get_status_description((ULONG)status));
         return (-1);
     }
     
@@ -439,21 +439,21 @@ static int kb_open_internal(int device_number, int kbd_count)
  */
 static int kb_light_up_indicators(HANDLE hKbDevice,USHORT LedFlags)
 {
-    NTSTATUS Status;
+    NTSTATUS status;
     IO_STATUS_BLOCK iosb;
     KEYBOARD_INDICATOR_PARAMETERS kip;
 
     kip.LedFlags = LedFlags;
     kip.UnitId = 0;
 
-    Status = NtDeviceIoControlFile(hKbDevice,NULL,NULL,NULL,
+    status = NtDeviceIoControlFile(hKbDevice,NULL,NULL,NULL,
             &iosb,IOCTL_KEYBOARD_SET_INDICATORS,
             &kip,sizeof(KEYBOARD_INDICATOR_PARAMETERS),NULL,0);
-    if(NT_SUCCESS(Status)){
-        Status = NtWaitForSingleObject(hKbDevice,FALSE,NULL);
-        if(NT_SUCCESS(Status)) Status = iosb.Status;
+    if(NT_SUCCESS(status)){
+        status = NtWaitForSingleObject(hKbDevice,FALSE,NULL);
+        if(NT_SUCCESS(status)) status = iosb.Status;
     }
-    if(!NT_SUCCESS(Status) || Status == STATUS_PENDING) return (-1);
+    if(!NT_SUCCESS(status) || status == STATUS_PENDING) return (-1);
     
     return 0;
 }
@@ -467,21 +467,21 @@ static int kb_light_up_indicators(HANDLE hKbDevice,USHORT LedFlags)
 static int kb_check(HANDLE hKbDevice)
 {
     USHORT LedFlags;
-    NTSTATUS Status;
+    NTSTATUS status;
     IO_STATUS_BLOCK iosb;
     KEYBOARD_INDICATOR_PARAMETERS kip;
     int i;
     
     /* try to get LED flags */
     RtlZeroMemory(&kip,sizeof(KEYBOARD_INDICATOR_PARAMETERS));
-    Status = NtDeviceIoControlFile(hKbDevice,NULL,NULL,NULL,
+    status = NtDeviceIoControlFile(hKbDevice,NULL,NULL,NULL,
             &iosb,IOCTL_KEYBOARD_QUERY_INDICATORS,NULL,0,
             &kip,sizeof(KEYBOARD_INDICATOR_PARAMETERS));
-    if(NT_SUCCESS(Status)){
-        Status = NtWaitForSingleObject(hKbDevice,FALSE,NULL);
-        if(NT_SUCCESS(Status)) Status = iosb.Status;
+    if(NT_SUCCESS(status)){
+        status = NtWaitForSingleObject(hKbDevice,FALSE,NULL);
+        if(NT_SUCCESS(status)) status = iosb.Status;
     }
-    if(!NT_SUCCESS(Status) || Status == STATUS_PENDING) return (-1);
+    if(!NT_SUCCESS(status) || status == STATUS_PENDING) return (-1);
 
     LedFlags = kip.LedFlags;
     
@@ -522,22 +522,22 @@ void winx_log_reg_key_info(wchar_t *key_name)
 
     RtlInitUnicodeString(&us,key_name);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-    DebugPrint(I"winx_log_reg_key_info: enumerating %ws",key_name);
+    itrace("enumerating %ws",key_name);
     status = NtOpenKey(&hKey,KEY_READ,&oa);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_log_reg_key_info: cannot open %ws",key_name);
+        strace(status,"cannot open %ws",key_name);
         return;
     }
 
     status = NtQueryKey(hKey,KeyFullInformation,NULL,0,&data_size);
     if(status != STATUS_BUFFER_TOO_SMALL){
-        DebugPrintEx(status,E"winx_log_reg_key_info: cannot query information size");
+        strace(status,"cannot query information size");
         NtCloseSafe(hKey);
         return;
     }
     info_buffer = (KEY_FULL_INFORMATION *)winx_malloc(data_size);
     if(info_buffer == NULL){
-        DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",data_size);
+        etrace("cannot allocate %u bytes of memory",data_size);
         NtCloseSafe(hKey);
         return;
     }
@@ -545,19 +545,19 @@ void winx_log_reg_key_info(wchar_t *key_name)
     RtlZeroMemory(info_buffer,data_size);
     status = NtQueryKey(hKey,KeyFullInformation,info_buffer,data_size,&data_size2);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_log_reg_key_info: cannot query information");
+        strace(status,"cannot query information");
         winx_free(info_buffer);
         NtCloseSafe(hKey);
         return;
     }
 
-    DebugPrint(I"winx_log_reg_key_info: values count = %u",info_buffer->Values);
-    DebugPrint(I"winx_log_reg_key_info: max value name length = %u",info_buffer->MaxValueNameLen);
-    DebugPrint(I"winx_log_reg_key_info: max value data length = %u",info_buffer->MaxValueDataLen);
+    itrace("values count = %u",info_buffer->Values);
+    itrace("max value name length = %u",info_buffer->MaxValueNameLen);
+    itrace("max value data length = %u",info_buffer->MaxValueDataLen);
 
     value_name = (wchar_t *)winx_malloc(info_buffer->MaxValueNameLen);
     if(value_name == NULL){
-        DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",info_buffer->MaxValueNameLen);
+        etrace("cannot allocate %u bytes of memory",info_buffer->MaxValueNameLen);
         winx_free(info_buffer);
         NtCloseSafe(hKey);
         return;
@@ -565,7 +565,7 @@ void winx_log_reg_key_info(wchar_t *key_name)
 
     value_string_data = (wchar_t *)winx_malloc(info_buffer->MaxValueDataLen);
     if(value_string_data == NULL){
-        DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",info_buffer->MaxValueDataLen);
+        etrace("cannot allocate %u bytes of memory",info_buffer->MaxValueDataLen);
         winx_free(value_name);
         winx_free(info_buffer);
         NtCloseSafe(hKey);
@@ -576,12 +576,12 @@ void winx_log_reg_key_info(wchar_t *key_name)
         status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
                 NULL,0,&value_size);
         if(status != STATUS_BUFFER_TOO_SMALL){
-            DebugPrintEx(status,E"winx_log_reg_key_info: cannot query full information size");
+            strace(status,"cannot query full information size");
             break;
         }
         value_buffer = (KEY_VALUE_FULL_INFORMATION *)winx_malloc(value_size);
         if(value_buffer == NULL){
-            DebugPrint(E"winx_log_reg_key_info: cannot allocate %u bytes of memory",value_size);
+            etrace("cannot allocate %u bytes of memory",value_size);
             break;
         }
 
@@ -589,7 +589,7 @@ void winx_log_reg_key_info(wchar_t *key_name)
         status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
                 value_buffer,value_size,&value_size2);
         if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"winx_log_reg_key_info: cannot query full information");
+            strace(status,"cannot query full information");
             winx_free(value_buffer);
             break;
         }
@@ -599,19 +599,19 @@ void winx_log_reg_key_info(wchar_t *key_name)
         switch(value_buffer->Type){
             case REG_DWORD:
                 value_dword_data = (int)*(DWORD *)((BYTE *)value_buffer + value_buffer->DataOffset);
-                DebugPrint(I"winx_log_reg_key_info: value %d = %ws ... %d",i,value_name,value_dword_data);
+                itrace("value %d = %ws ... %d",i,value_name,value_dword_data);
                 break;
             case REG_EXPAND_SZ:
             case REG_SZ:
                 RtlCopyMemory(value_string_data,(BYTE *)value_buffer + value_buffer->DataOffset,value_buffer->DataLength);
                 value_string_data[value_buffer->DataLength / sizeof(wchar_t)] = 0;
-                DebugPrint(I"winx_log_reg_key_info: value %d = %ws ... %ws",i,value_name,value_string_data);
+                itrace("value %d = %ws ... %ws",i,value_name,value_string_data);
                 break;
         }
 
         winx_free(value_buffer);
     }
-    DebugPrint(I"----------");
+    trace(I"----------");
 
     winx_free(value_string_data);
     winx_free(value_name);
@@ -683,10 +683,10 @@ static int winx_query_dev_count(wchar_t *class_name,int default_value)
         path[MAX_PATH] = 0;
         RtlInitUnicodeString(&us,path);
         InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-        DebugPrint(I"winx_query_dev_count: checking %ws",path);
+        itrace("checking %ws",path);
         status = NtOpenKey(&hKey,KEY_READ,&oa);
         if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"winx_query_dev_count: cannot open %ws",path);
+            strace(status,"cannot open %ws",path);
             continue;
         }
 
@@ -694,13 +694,13 @@ static int winx_query_dev_count(wchar_t *class_name,int default_value)
         status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
                 NULL,0,&data_size);
         if(status != STATUS_BUFFER_TOO_SMALL){
-            DebugPrintEx(status,E"winx_query_dev_count: cannot query Count value size");
+            strace(status,"cannot query Count value size");
             NtCloseSafe(hKey);
             continue;
         }
         data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
         if(data_buffer == NULL){
-            DebugPrint(E"winx_query_dev_count: cannot allocate %u bytes of memory",data_size);
+            etrace("cannot allocate %u bytes of memory",data_size);
             NtCloseSafe(hKey);
             continue;
         }
@@ -709,21 +709,21 @@ static int winx_query_dev_count(wchar_t *class_name,int default_value)
         status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
                 data_buffer,data_size,&data_size2);
         if(status != STATUS_SUCCESS){
-            DebugPrintEx(status,E"winx_query_dev_count: cannot query Count value");
+            strace(status,"cannot query Count value");
             winx_free(data_buffer);
             NtCloseSafe(hKey);
             continue;
         }
 
         if(data_buffer->Type != REG_DWORD){
-            DebugPrint(E"winx_query_dev_count: Count value has wrong type 0x%x",
+            etrace("Count value has wrong type 0x%x",
                     data_buffer->Type);
             winx_free(data_buffer);
             NtCloseSafe(hKey);
             continue;
         }
 
-        DebugPrint(I"winx_query_dev_count: devices count = %u",
+        itrace("devices count = %u",
             (int)*(DWORD *)data_buffer->Data);
         count = max(count, (int)*(DWORD *)data_buffer->Data);
 
@@ -731,7 +731,7 @@ static int winx_query_dev_count(wchar_t *class_name,int default_value)
         NtCloseSafe(hKey);
     }
 
-    DebugPrint(I"winx_query_dev_count: total devices count = %u",count);
+    itrace("total devices count = %u",count);
     return count;
 }
 
@@ -750,22 +750,19 @@ static int query_keyboard_count(void)
     if (winx_get_os_version() == WINDOWS_XP) {
         if (hid > 0) {
             count = (total <= hid) ? (total + hid) : total;
-            DebugPrint(D"query_keyboard_count: HID above zero - "
-                "keyboard count is %u (%u total)",count,total);
+            dtrace("HID above zero - keyboard count is %u (%u total)",count,total);
         } else {
             count = (total == 1 ? 2 : total);
-            DebugPrint(D"query_keyboard_count: HID equals zero - "
-                "keyboard count is %u (%u total)",count,total);
+            dtrace("HID equals zero - keyboard count is %u (%u total)",count,total);
         }
     } else {
         count = total;
-        DebugPrint(I"query_keyboard_count: not XP - keyboard "
-            "count is %u (%u total)",count,total);
+        itrace("not XP - keyboard count is %u (%u total)",count,total);
     }
 
-    DebugPrint(I"==========");
+    trace(I"==========");
     winx_log_keyboard_info();
-    DebugPrint(I"==========");
+    trace(I"==========");
 
     return count;
 }

@@ -14,8 +14,6 @@ EXPORTS
     WgxCreateMenuBitmapMasked
     WgxCreateProcess
     WgxCreateThread
-    WgxDbgPrint
-    WgxDbgPrintLastError
     WgxDestroyFont
     WgxDestroyResourceTable
     WgxDisableWindows
@@ -31,9 +29,9 @@ EXPORTS
     WgxSafeSubclassWindow
     WgxSaveFont
     WgxSaveOptions
-    WgxSetDbgPrintHandler
     WgxSetFont
     WgxSetIcon
+    WgxSetInternalTraceHandler
     WgxSetProcessPriority
     WgxSetTaskbarIconOverlay
     WgxSetTaskbarProgressState

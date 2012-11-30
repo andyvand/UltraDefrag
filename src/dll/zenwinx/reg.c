@@ -62,7 +62,7 @@ int winx_register_boot_exec_command(wchar_t *command)
     wchar_t *value, *pos;
     DWORD length, i, len;
     
-    DbgCheck1(command,"winx_register_boot_exec_command",-1);
+    DbgCheck1(command,-1);
     
     if(open_smss_key(&hKey) < 0) return (-1);
     size = (wcslen(command) + 1) * sizeof(wchar_t);
@@ -72,8 +72,7 @@ int winx_register_boot_exec_command(wchar_t *command)
     }
     
     if(data->Type != REG_MULTI_SZ){
-        DebugPrint(E"winx_register_boot_exec_command: BootExecute value has wrong type 0x%x",
-                data->Type);
+        etrace("BootExecute value has wrong type 0x%x",data->Type);
         winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
@@ -83,7 +82,7 @@ int winx_register_boot_exec_command(wchar_t *command)
     length = (data->DataLength >> 1) - 1;
     for(i = 0; i < length;){
         pos = value + i;
-        //DebugPrint(D"%ws",pos);
+        //trace(D"%ws",pos);
         len = wcslen(pos) + 1;
         /* if the command is yet registered then exit */
         if(cmd_compare(pos,command) > 0)
@@ -125,7 +124,7 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     DWORD new_value_size;
     DWORD new_length;
     
-    DbgCheck1(command,"winx_unregister_boot_exec_command",-1);
+    DbgCheck1(command,-1);
     
     if(open_smss_key(&hKey) < 0) return (-1);
     size = (wcslen(command) + 1) * sizeof(wchar_t);
@@ -135,8 +134,7 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     }
     
     if(data->Type != REG_MULTI_SZ){
-        DebugPrint(E"winx_unregister_boot_exec_command: BootExecute value has wrong type 0x%x",
-                data->Type);
+        etrace("BootExecute value has wrong type 0x%x",data->Type);
         winx_free((void *)data);
         NtCloseSafe(hKey);
         return (-1);
@@ -148,7 +146,7 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     new_value_size = (length + 1) << 1;
     new_value = winx_malloc(new_value_size);
     if(!new_value){
-        DebugPrint(E"winx_unregister_boot_exec_command: cannot allocate %u bytes of memory"
+        etrace("cannot allocate %u bytes of memory"
             "for the new BootExecute value",new_value_size);
         winx_free((void *)data);
         NtCloseSafe(hKey);
@@ -159,7 +157,7 @@ int winx_unregister_boot_exec_command(wchar_t *command)
     new_length = 0;
     for(i = 0; i < length;){
         pos = value + i;
-        //DebugPrint(D"%ws",pos);
+        //trace(D"%ws",pos);
         len = wcslen(pos) + 1;
         if(cmd_compare(pos,command) <= 0){
             wcscpy(new_value + new_length,pos);
@@ -201,7 +199,7 @@ static int open_smss_key(HANDLE *pKey)
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtOpenKey(pKey,KEY_QUERY_VALUE | KEY_SET_VALUE,&oa);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"open_smss_key: cannot open %ws",us.Buffer);
+        strace(status,"cannot open %ws",us.Buffer);
         return (-1);
     }
     return 0;
@@ -232,13 +230,13 @@ static int read_boot_exec_value(HANDLE hKey,void **data,DWORD *size)
     status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
             NULL,0,&data_size);
     if(status != STATUS_BUFFER_TOO_SMALL){
-        DebugPrintEx(status,E"read_boot_exec_value: cannot query BootExecute value size");
+        strace(status,"cannot query BootExecute value size");
         return (-1);
     }
     data_size += additional_space_size;
     data_buffer = winx_malloc(data_size);
     if(data_buffer == NULL){
-        DebugPrint(E"read_boot_exec_value: cannot allocate %u bytes of memory",data_size);
+        etrace("cannot allocate %u bytes of memory",data_size);
         return (-1);
     }
     
@@ -246,7 +244,7 @@ static int read_boot_exec_value(HANDLE hKey,void **data,DWORD *size)
     status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
             data_buffer,data_size,&data_size2);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"read_boot_exec_value: cannot query BootExecute value");
+        strace(status,"cannot query BootExecute value");
         winx_free(data_buffer);
         return (-1);
     }
@@ -272,7 +270,7 @@ static int write_boot_exec_value(HANDLE hKey,void *data,DWORD size)
     RtlInitUnicodeString(&us,L"BootExecute");
     status = NtSetValueKey(hKey,&us,0,REG_MULTI_SZ,data,size);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"write_boot_exec_value: cannot set BootExecute value");
+        strace(status,"cannot set BootExecute value");
         return (-1);
     }
     
@@ -305,20 +303,20 @@ static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
     /* allocate memory */
     reg_cmd_copy = winx_wcsdup(reg_cmd);
     if(reg_cmd_copy == NULL){
-        DebugPrint(E"cmd_compare: cannot allocate %u bytes of memory",
+        etrace("cannot allocate %u bytes of memory",
             (wcslen(reg_cmd) + 1) * sizeof(wchar_t));
         goto done;
     }
     cmd_copy = winx_wcsdup(cmd);
     if(cmd_copy == NULL){
-        DebugPrint(E"cmd_compare: cannot allocate %u bytes of memory",
+        etrace("cannot allocate %u bytes of memory",
             (wcslen(cmd) + 1) * sizeof(wchar_t));
         goto done;
     }
     length = (wcslen(cmd) + wcslen(autocheck) + 1) * sizeof(wchar_t);
     long_cmd = winx_malloc(length);
     if(long_cmd == NULL){
-        DebugPrint(E"cmd_compare: cannot allocate %u bytes of memory",length);
+        etrace("cannot allocate %u bytes of memory",length);
         goto done;
     }
     wcscpy(long_cmd,autocheck);
@@ -359,7 +357,7 @@ static void flush_smss_key(HANDLE hKey)
     
     status = NtFlushKey(hKey);
     if(status != STATUS_SUCCESS)
-        DebugPrintEx(status,E"flush_smss_key: cannot update Session Manager registry key on disk");
+        strace(status,"cannot update Session Manager registry key on disk");
 }
 
 /** @} */

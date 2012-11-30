@@ -475,7 +475,7 @@ int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags
     /* make a copy of the string */
     s = winx_wcsdup(string);
     if(s == NULL){
-        DebugPrint(E"winx_patcomp: cannot allocate %u bytes of memory",
+        etrace("cannot allocate %u bytes of memory",
             (wcslen(string) + 1) * sizeof(wchar_t));
         return (-1);
     }
@@ -502,7 +502,7 @@ int winx_patcomp(winx_patlist *patterns,wchar_t *string,wchar_t *delim,int flags
     /* build array of patterns */
     patterns->array = winx_malloc(patterns->count * sizeof(wchar_t *));
     if(patterns->array == NULL){
-        DebugPrint(E"winx_patcomp: cannot allocate %u bytes of memory",
+        etrace("cannot allocate %u bytes of memory",
             patterns->count * sizeof(wchar_t *));
         winx_free(s);
         patterns->count = 0;
@@ -627,7 +627,7 @@ int winx_bytes_to_hr(ULONGLONG bytes, int digits, char *buffer, int length)
     char spec[] = "%I64u.%00I64u %s";
     int result;
     
-    DbgCheck3(digits >= 0, buffer != NULL, length > 0, "winx_bytes_to_hr", -1);
+    DbgCheck3(digits >= 0, buffer != NULL, length > 0, -1);
 
     for(n = bytes, m = 1, i = 0; n >> 10; n >>= 10, m <<= 10, i++){}
     r = bytes - n * m;
@@ -673,7 +673,7 @@ ULONGLONG winx_hr_to_bytes(char *string)
     int z;           /* number of zeros after the dot */
     double rd;
     
-    DbgCheck1(string != NULL, "winx_hr_to_bytes", 0);
+    DbgCheck1(string, 0);
 
     n = (ULONGLONG)_atoi64(string);
 

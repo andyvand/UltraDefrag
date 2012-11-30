@@ -63,12 +63,12 @@ static char *get_report_path(udefrag_job_parameters *jp)
         /* portable version? */
         winx_get_module_filename(buffer);
         if(buffer[0] == 0){
-            DebugPrint(E"get_report_path: cannot get program\'s path");
+            etrace("cannot get program\'s path");
         } else {
             winx_path_remove_filename(buffer);
             path = winx_sprintf("%ws\\reports",buffer);
             if(path == NULL){
-                DebugPrint(E"get_report_path: not enough memory (case 1)");
+                etrace("not enough memory (case 1)");
             } else {
                 (void)winx_create_directory(path);
                 winx_free(path);
@@ -76,14 +76,14 @@ static char *get_report_path(udefrag_job_parameters *jp)
             path = winx_sprintf("%ws\\reports\\fraglist_%c.luar",
                 buffer,winx_tolower(jp->volume_letter));
             if(path == NULL){
-                DebugPrint(E"get_report_path: not enough memory (case 2)");
+                etrace("not enough memory (case 2)");
             }
         }
     } else {
         /* regular installation */
         path = winx_sprintf("\\??\\%ws\\reports",instdir);
         if(path == NULL){
-            DebugPrint(E"get_report_path: not enough memory (case 3)");
+            etrace("not enough memory (case 3)");
         } else {
             (void)winx_create_directory(path);
             winx_free(path);
@@ -91,7 +91,7 @@ static char *get_report_path(udefrag_job_parameters *jp)
         path = winx_sprintf("\\??\\%ws\\reports\\fraglist_%c.luar",
             instdir,winx_tolower(jp->volume_letter));
         if(path == NULL){
-            DebugPrint(E"get_report_path: not enough memory (case 4)");
+            etrace("not enough memory (case 4)");
         }
         winx_free(instdir);
     }
@@ -118,7 +118,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     
     utf8_path = winx_malloc(MAX_UTF8_PATH_LENGTH);
     if(utf8_path == NULL){
-        DebugPrint(E"save_lua_report: not enough memory");
+        etrace("not enough memory");
         return (-1);
     }
     
@@ -231,7 +231,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     (void)strcpy(buffer,"}\r\n");
     (void)winx_fwrite(buffer,1,strlen(buffer),f);
 
-    DebugPrint(I"report saved to %s",path);
+    trace(I"report saved to %s",path);
     winx_fclose(f);
     winx_free(path);
     winx_free(utf8_path);

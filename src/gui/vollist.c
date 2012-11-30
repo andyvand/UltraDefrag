@@ -254,7 +254,7 @@ int GetMaxVolListHeight(void)
     int h, tb_height, sb_height;
     
     if(!GetClientRect(hWindow,&rc)){
-        WgxDbgPrintLastError("GetMaxVolListHeight: cannot get main window dimensions");
+        letrace("cannot get main window dimensions");
         return DPI(VLIST_HEIGHT);
     }
     h = rc.bottom - rc.top;
@@ -265,11 +265,11 @@ int GetMaxVolListHeight(void)
         tb_height = 24 + 2 * GetSystemMetrics(SM_CYEDGE);
 
     if(!GetClientRect(hStatus,&rc)){
-        WgxDbgPrintLastError("GetMaxVolListHeight: cannot get status bar dimensions");
+        letrace("cannot get status bar dimensions");
         return DPI(VLIST_HEIGHT);
     } else {
         if(!MapWindowPoints(hStatus,hWindow,(LPPOINT)(PRECT)(&rc),(sizeof(RECT)/sizeof(POINT)))){
-            WgxDbgPrintLastError("GetMaxVolListHeight: MapWindowPoints failed");
+            letrace("MapWindowPoints failed");
             return DPI(VLIST_HEIGHT);
         } else {            
             sb_height = rc.bottom - rc.top;
@@ -510,7 +510,7 @@ static DWORD WINAPI RescanDrivesThreadProc(LPVOID lpParameter)
     
     /* synchronize with other theads */
     if(WaitForSingleObject(hListEvent,INFINITE) != WAIT_OBJECT_0){
-        WgxDbgPrintLastError("RescanDrivesThreadProc: wait on hListEvent failed");
+        letrace("synchronization failed");
         return 0;
     }
     
@@ -702,7 +702,7 @@ static void InitImageList(void)
     }
     hImgList = ImageList_Create(size,size,ILC_MASK,4,0);
     if(hImgList == NULL){
-        WgxDbgPrintLastError("InitImageList: ImageList_Create failed");
+        letrace("ImageList_Create failed");
     } else {
         WgxLoadIcon(hInstance,IDI_FIXED,size,&hFixed);
         WgxLoadIcon(hInstance,IDI_REMOVABLE,size,&hRemovable);

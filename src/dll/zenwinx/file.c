@@ -42,11 +42,11 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
     ULONG disposition = FILE_OPEN;
     WINX_FILE *f;
 
-    DbgCheck2(filename,mode,"winx_fopen",NULL);
+    DbgCheck2(filename,mode,NULL);
 
     RtlInitAnsiString(&as,filename);
     if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        DebugPrint(E"winx_fopen: cannot open %s: not enough memory",filename);
+        etrace("cannot open %s: not enough memory",filename);
         return NULL;
     }
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
@@ -86,13 +86,13 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
             );
     RtlFreeUnicodeString(&us);
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_fopen: cannot open %s",filename);
+        strace(status,"cannot open %s",filename);
         return NULL;
     }
     f = (WINX_FILE *)winx_malloc(sizeof(WINX_FILE));
     if(!f){
         NtClose(hFile);
-        DebugPrint(E"winx_fopen: cannot open %s: not enough memory",filename);
+        etrace("cannot open %s: not enough memory",filename);
         return NULL;
     }
     f->hFile = hFile;
@@ -128,7 +128,7 @@ WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size)
     /* allocate memory */
     f->io_buffer = winx_malloc(buffer_size);
     if(f->io_buffer == NULL){
-        DebugPrint(E"winx_fbopen: cannot allocate %u bytes of memory",buffer_size);
+        etrace("cannot allocate %u bytes of memory",buffer_size);
         winx_fclose(f);
         return NULL;
     }
@@ -145,7 +145,7 @@ size_t winx_fread(void *buffer,size_t size,size_t count,WINX_FILE *f)
     NTSTATUS status;
     IO_STATUS_BLOCK iosb;
     
-    DbgCheck2(buffer,f,"winx_fread",0);
+    DbgCheck2(buffer,f,0);
 
     status = NtReadFile(f->hFile,NULL,NULL,NULL,&iosb,
              buffer,size * count,&f->roffset,NULL);
@@ -154,7 +154,7 @@ size_t winx_fread(void *buffer,size_t size,size_t count,WINX_FILE *f)
         if(NT_SUCCESS(status)) status = iosb.Status;
     }
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_fread: cannot read from a file");
+        strace(status,"cannot read from a file");
         return 0;
     }
     if(iosb.Information == 0){ /* encountered on x64 XP */
@@ -177,18 +177,18 @@ static size_t winx_fwrite_helper(const void *buffer,size_t size,size_t count,WIN
     NTSTATUS status;
     IO_STATUS_BLOCK iosb;
     
-    DbgCheck2(buffer,f,"winx_fwrite_helper",0);
+    DbgCheck2(buffer,f,0);
 
     status = NtWriteFile(f->hFile,NULL,NULL,NULL,&iosb,
              (void *)buffer,size * count,&f->woffset,NULL);
     if(NT_SUCCESS(status)){
-        /*DebugPrint(D"waiting for %p at %I64u started",f,f->woffset.QuadPart);*/
+        /*trace(D"waiting for %p at %I64u started",f,f->woffset.QuadPart);*/
         status = NtWaitForSingleObject(f->hFile,FALSE,NULL);
-        /*DebugPrint(D"waiting for %p at %I64u completed",f,f->woffset.QuadPart);*/
+        /*trace(D"waiting for %p at %I64u completed",f,f->woffset.QuadPart);*/
         if(NT_SUCCESS(status)) status = iosb.Status;
     }
     if(status != STATUS_SUCCESS){
-        DebugPrintEx(status,E"winx_fwrite_helper: cannot write to a file");
+        strace(status,"cannot write to a file");
         return 0;
     }
     if(iosb.Information == 0){ /* encountered on x64 XP */
@@ -283,30 +283,31 @@ int winx_ioctl(WINX_FILE *f,
     int *pbytes_returned)
 {
     IO_STATUS_BLOCK iosb;
-    NTSTATUS Status;
+    NTSTATUS status;
 
-    DbgCheck1(f,"winx_ioctl",-1);
+    DbgCheck1(f,-1);
     
     /* required by x64 system, otherwise it may trash stack */
     if(out_buffer) RtlZeroMemory(out_buffer,out_size);
     
     if(pbytes_returned) *pbytes_returned = 0;
     if((code >> 16) == FILE_DEVICE_FILE_SYSTEM){
-        Status = NtFsControlFile(f->hFile,NULL,NULL,NULL,
+        status = NtFsControlFile(f->hFile,NULL,NULL,NULL,
             &iosb,code,in_buffer,in_size,out_buffer,out_size);
     } else {
-        Status = NtDeviceIoControlFile(f->hFile,NULL,NULL,NULL,
+        status = NtDeviceIoControlFile(f->hFile,NULL,NULL,NULL,
             &iosb,code,in_buffer,in_size,out_buffer,out_size);
     }
-    if(NT_SUCCESS(Status)){
-        Status = NtWaitForSingleObject(f->hFile,FALSE,NULL);
-        if(NT_SUCCESS(Status)) Status = iosb.Status;
+    if(NT_SUCCESS(status)){
+        status = NtWaitForSingleObject(f->hFile,FALSE,NULL);
+        if(NT_SUCCESS(status)) status = iosb.Status;
     }
-    if(!NT_SUCCESS(Status)){
-        if(description)
-            DebugPrintEx(Status,E"winx_ioctl: %s failed",description);
-        else
-            DebugPrintEx(Status,E"winx_ioctl: IOCTL %u failed",code);
+    if(!NT_SUCCESS(status)){
+        if(description){
+            strace(status,"%s failed",description);
+        } else {
+            strace(status,"IOCTL %u failed",code);
+        }
         return (-1);
     }
     if(pbytes_returned) *pbytes_returned = (int)iosb.Information;
@@ -319,14 +320,14 @@ int winx_ioctl(WINX_FILE *f,
  */
 int winx_fflush(WINX_FILE *f)
 {
-    NTSTATUS Status;
+    NTSTATUS status;
     IO_STATUS_BLOCK iosb;
     
-    DbgCheck1(f,"winx_fflush",-1);
+    DbgCheck1(f,-1);
 
-    Status = NtFlushBuffersFile(f->hFile,&iosb);
-    if(!NT_SUCCESS(Status)){
-        DebugPrintEx(Status,E"winx_fflush: NtFlushBuffersFile failed");
+    status = NtFlushBuffersFile(f->hFile,&iosb);
+    if(!NT_SUCCESS(status)){
+        strace(status,"cannot flush file buffers");
         return (-1);
     }
     return 0;
@@ -344,14 +345,14 @@ ULONGLONG winx_fsize(WINX_FILE *f)
     IO_STATUS_BLOCK iosb;
     FILE_STANDARD_INFORMATION fsi;
 
-    DbgCheck1(f,"winx_fsize",0);
+    DbgCheck1(f,0);
 
     memset(&fsi,0,sizeof(FILE_STANDARD_INFORMATION));
     status = NtQueryInformationFile(f->hFile,&iosb,
         &fsi,sizeof(FILE_STANDARD_INFORMATION),
         FileStandardInformation);
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,E"winx_fsize: NtQueryInformationFile(FileStandardInformation) failed");
+        strace(status,"cannot get standard file information");
         return 0;
     }
     return fsi.EndOfFile.QuadPart;
@@ -392,11 +393,11 @@ int winx_create_directory(const char *path)
     OBJECT_ATTRIBUTES oa;
     IO_STATUS_BLOCK iosb;
 
-    DbgCheck1(path,"winx_create_directory",-1);
+    DbgCheck1(path,-1);
 
     RtlInitAnsiString(&as,path);
     if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        DebugPrint(E"winx_create_directory: cannot create %s: not enough memory",path);
+        etrace("cannot create %s: not enough memory",path);
         return (-1);
     }
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
@@ -420,7 +421,7 @@ int winx_create_directory(const char *path)
     }
     /* if it already exists then return success */
     if(status == STATUS_OBJECT_NAME_COLLISION) return 0;
-    DebugPrintEx(status,E"winx_create_directory: cannot create %s",path);
+    strace(status,"cannot create %s",path);
     return (-1);
 }
 
@@ -436,11 +437,11 @@ int winx_delete_file(const char *filename)
     NTSTATUS status;
     OBJECT_ATTRIBUTES oa;
 
-    DbgCheck1(filename,"winx_delete_file",-1);
+    DbgCheck1(filename,-1);
 
     RtlInitAnsiString(&as,filename);
     if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        DebugPrint(E"winx_delete_file: cannot delete %s: not enough memory",filename);
+        etrace("cannot delete %s: not enough memory",filename);
         return (-1);
     }
 
@@ -448,7 +449,7 @@ int winx_delete_file(const char *filename)
     status = NtDeleteFile(&oa);
     RtlFreeUnicodeString(&us);
     if(!NT_SUCCESS(status)){
-        DebugPrintEx(status,E"winx_delete_file: cannot delete %s",filename);
+        strace(status,"cannot delete %s",filename);
         return (-1);
     }
     return 0;
@@ -473,7 +474,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
     
     if(bytes_read) *bytes_read = 0;
     
-    DbgCheck1(filename,"winx_get_file_contents",NULL);
+    DbgCheck1(filename,NULL);
     
     f = winx_fopen(filename,"r");
     if(f == NULL){
@@ -665,7 +666,7 @@ NTSTATUS winx_defrag_fopen(winx_file_info *f,int action,HANDLE *phandle)
                             special_file_names[i].accepted_name);
                         buffer[MAX_PATH] = 0;
                         path = buffer;
-                        DebugPrint(I"winx_defrag_fopen: %ws used instead of %ws",path,f->path);
+                        itrace("%ws used instead of %ws",path,f->path);
                         break;
                     }
                 }

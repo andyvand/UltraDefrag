@@ -27,7 +27,7 @@
  * technique prevents the log file update on disk, thus
  * it makes the disk defragmentation more efficient.
  * @note A few prefixes are defined for the debugging
- * messages. They're listed in ../../include/dbg-prefixes.h
+ * messages. They're listed in ../../include/dbg.h
  * file and are intended for easier analysis of logs. To keep
  * logs clean always use one of those prefixes.
  * @addtogroup Debug
@@ -352,20 +352,23 @@ static void remove_crlf(char *s)
 /**
  * @brief Delivers a message to the Debug View
  * program and appends it to the log file as well.
+ * @param[in] flags one of the flags defined in
+ * ../../include/dbg.h file.
+ * If NT_STATUS_FLAG is set, the
+ * last nt status value will be appended
+ * to the debugging message as well as its
+ * description. If LAST_ERROR_FLAG is set,
+ * the same stuff will be done for the last
+ * error value.
+ * @param[in] format the format string.
+ * @param[in] ... the parameters.
  * @note
- * - If <b>: $LE</b> appears at end of the format
- * string, the last error code will be appended 
- * to the message as well as its description.
- * - If <b>: $NS</b> appears at end of the format
- * string, the NT status code of the last operation 
- * will be appended to the message as well as its
- * description.
- * - Not all system API set last status code.
- * Use winx_dbg_print_ex to catch the status for sure.
+ * - Not all system API set the last status code.
+ * Use strace macro to catch the status for sure.
  */
-void winx_dbg_print(char *format, ...)
+void winx_dbg_print(int flags,char *format, ...)
 {
-    char *p, *msg = NULL;
+    char *msg = NULL;
     char *err_msg = NULL;
     char *ext_msg = NULL;
     char *cnv_msg = NULL;
@@ -394,20 +397,12 @@ void winx_dbg_print(char *format, ...)
             msg[length - 1] = 0;
     }
 
-    /* check for $NS and $LE magic sequences */
-    p = strstr(msg,": $NS");
-    if(p == msg + length - 5){
-        msg[length - 5] = 0;
+    if(flags & NT_STATUS_FLAG){
         error = RtlNtStatusToDosError(status);
         ns_flag = 1;
-    } else {
-        p = strstr(msg,": $LE");
-        if(p == msg + length - 5){
-            msg[length - 5] = 0;
-            le_flag = 1;
-        }
     }
-    
+    if(flags & LAST_ERROR_FLAG) le_flag = 1;
+
     if(ns_flag || le_flag){
         err_msg = winx_get_error_description(error,&encoding);
         if(err_msg == NULL && ns_flag){
@@ -470,39 +465,6 @@ no_description:
 /**
  * @brief Delivers a message to the Debug View
  * program and appends it to the log file as well.
- * @details Appends specified status code to the
- * message as well as its description.
- * @param[in] status the NT status code.
- * @param[in] format the format string.
- * @param[in] ... the parameters.
- * @par Example:
- * @code
- * NTSTATUS Status = NtCreateFile(...);
- * if(!NT_SUCCESS(Status)){
- *     winx_dbg_print_ex(Status,E"Cannot create %s file",filename);
- * }
- * @endcode
- */
-void winx_dbg_print_ex(unsigned long status,char *format, ...)
-{
-    va_list arg;
-    char *msg;
-    
-    if(format){
-        va_start(arg,format);
-        msg = winx_vsprintf(format,arg);
-        if(msg){
-            NtCurrentTeb()->LastStatusValue = status;
-            winx_dbg_print("%s: $NS",msg);
-            winx_free(msg);
-        }
-        va_end(arg);
-    }
-}
-
-/**
- * @brief Delivers a message to the Debug View
- * program and appends it to the log file as well.
  * @brief Decorates the message by specified
  * character at both sides.
  * @param[in] ch the character to be used for decoration.
@@ -543,13 +505,13 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
             length = strlen(body);
             if(length > (width - 4)){
                 /* print string not decorated */
-                winx_dbg_print("%s",string);
+                winx_dbg_print(0,"%s",string);
             } else {
                 /* allocate buffer for entire string */
                 buffer = winx_malloc(width + 1);
                 if(buffer == NULL){
                     /* print string not decorated */
-                    winx_dbg_print("%s",string);
+                    winx_dbg_print(0,"%s",string);
                 } else {
                     /* fill buffer by character */
                     memset(buffer,ch,width);
@@ -562,7 +524,7 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
                     /* paste closing space */
                     buffer[left + 1 + length] = 0x20;
                     /* print decorated string */
-                    winx_dbg_print("%s%s",prefix,buffer);
+                    winx_dbg_print(0,"%s%s",prefix,buffer);
                     winx_free(buffer);
                 }
             }
@@ -612,7 +574,7 @@ static void flush_dbg_log(int already_synchronized)
     /* synchronize with other threads */
     if(!already_synchronized){
         if(winx_acquire_spin_lock(path_lock,INFINITE) < 0){
-            DebugPrint(E"flush_dbg_log: synchronization failed");
+            etrace("synchronization failed");
             winx_print("\nflush_dbg_log: synchronization failed!\n");
             return;
         }
@@ -641,7 +603,7 @@ static void flush_dbg_log(int already_synchronized)
         lb = strrchr(log_path,'\\');
         if(lb) *lb = 0;
         if(winx_create_path(log_path) < 0){
-            DebugPrint(E"flush_old_dbg_log: cannot create directory tree for log path");
+            etrace("cannot create directory tree for log path");
             winx_print("\nflush_old_dbg_log: cannot create directory tree for log path\n");
         }
         if(lb) *lb = '\\';
@@ -712,7 +674,7 @@ void winx_set_dbg_log(char *path)
     
     /* synchronize with other threads */
     if(winx_acquire_spin_lock(path_lock,INFINITE) < 0){
-        DebugPrint(E"winx_enable_dbg_log: synchronization failed");
+        etrace("synchronization failed");
         winx_print("\nwinx_enable_dbg_log: synchronization failed!\n");
         return;
     }
@@ -731,11 +693,11 @@ void winx_set_dbg_log(char *path)
         log_path = NULL;
     }
     if(logging_enabled){
-        DebugPrint(I"winx_enable_dbg_log: log_path = %s",path);
+        itrace("log_path = %s",path);
         winx_printf("\nUsing log file \"%s\" ...\n",&path[4]);
         log_path = winx_strdup(path);
         if(log_path == NULL){
-            DebugPrint(E"winx_enable_dbg_log: cannot allocate memory for log path");
+            etrace("not enough memory");
             winx_print("\nCannot allocate memory for log path!\n");
         }
     }

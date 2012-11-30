@@ -71,7 +71,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     jp->pi.cluster_map_size = 0;
     memset(&jp->cluster_map,0,sizeof(cmap));
     
-    DebugPrint(I"map size = %u",map_size);
+    trace(I"map size = %u",map_size);
     if(map_size == 0)
         return 0;
     
@@ -84,14 +84,14 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     /* allocate memory */
     jp->pi.cluster_map = winx_malloc(map_size);
     if(jp->pi.cluster_map == NULL){
-        DebugPrint(E"allocate_map: cannot allocate %u bytes of memory",
+        etrace("cannot allocate %u bytes of memory",
             map_size);
         return UDEFRAG_NO_MEM;
     }
     array_size = map_size * NUM_OF_SPACE_STATES * sizeof(ULONGLONG);
     jp->cluster_map.array = winx_malloc(array_size);
     if(jp->cluster_map.array == NULL){
-        DebugPrint(E"allocate_map: cannot allocate %u bytes of memory",
+        etrace("cannot allocate %u bytes of memory",
             array_size);
         winx_free(jp->pi.cluster_map);
         jp->pi.cluster_map = NULL;
@@ -114,7 +114,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
         jp->cluster_map.unused_cells = jp->cluster_map.map_size - used_cells;
         jp->cluster_map.clusters_per_last_cell = jp->cluster_map.field_size - \
            jp->cluster_map.clusters_per_cell * (used_cells - 1);
-        DebugPrint(I"allocate_map: normal order %I64u : %I64u : %I64u: %I64u", \
+        itrace("normal order %I64u : %I64u : %I64u: %I64u", \
             jp->cluster_map.field_size,jp->cluster_map.clusters_per_cell,
             jp->cluster_map.clusters_per_last_cell,jp->cluster_map.unused_cells);
     } else {
@@ -122,7 +122,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
         jp->cluster_map.cells_per_cluster = jp->cluster_map.map_size / jp->cluster_map.field_size;
         jp->cluster_map.unused_cells = jp->cluster_map.map_size - \
             jp->cluster_map.cells_per_cluster * jp->cluster_map.field_size;
-        DebugPrint(I"allocate_map: opposite order %I64u : %I64u : %I64u", \
+        itrace("opposite order %I64u : %I64u : %I64u", \
             jp->cluster_map.field_size,jp->cluster_map.cells_per_cluster,jp->cluster_map.unused_cells);
     }
 
