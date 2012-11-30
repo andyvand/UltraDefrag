@@ -54,7 +54,7 @@ char *wgx_vsprintf(const char *format,va_list arg)
     /* set the initial buffer size */
     size = WGX_VSPRINTF_BUFFER_SIZE;
     do {
-        buffer = winx_malloc(size);
+        buffer = malloc(size);
         if(buffer == NULL)
             return NULL;
         memset(buffer,0,size); /* needed for _vsnprintf */
@@ -62,7 +62,7 @@ char *wgx_vsprintf(const char *format,va_list arg)
         if(result != -1 && result != size)
             return buffer;
         /* buffer is too small; try to allocate two times larger */
-        winx_free(buffer);
+        free(buffer);
         size <<= 1;
         if(size <= 0)
             return NULL;
