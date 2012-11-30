@@ -106,7 +106,10 @@ BOOL WgxAddAccelerators(HINSTANCE hInstance,HWND hWindow,UINT AccelId)
     
     /* Load the accelerator table. */
     hAccel = LoadAccelerators(hInstance,MAKEINTRESOURCE(AccelId));
-    if(!hAccel) return FALSE;
+    if(!hAccel){
+        letrace("cannot load accelerators");
+        return FALSE;
+    }
 
     if(first_call){
         memset(win,0,sizeof(win));
@@ -114,8 +117,8 @@ BOOL WgxAddAccelerators(HINSTANCE hInstance,HWND hWindow,UINT AccelId)
         first_call = FALSE;
     }
     
-    /* No need to set accelerator for the main window. */
-    /* Set accelerator for children. */
+    /* No need to set accelerators for the main window. */
+    /* Set accelerators for children. */
     hChild = GetWindow(hWindow,GW_CHILD);
     while(hChild){
         if(idx >= (WIN_ARRAY_SIZE - 1))
