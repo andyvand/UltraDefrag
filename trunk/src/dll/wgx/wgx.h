@@ -167,6 +167,10 @@ LRESULT WgxSafeCallWndProc(WNDPROC OldProc,HWND hwnd,UINT msg,WPARAM wParam,LPAR
 BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
     LPCWSTR lpParameters,LPCWSTR lpDirectory,INT nShowCmd);
 
+/* string.c */
+char *wgx_vsprintf(const char *format,va_list arg);
+char *wgx_sprintf(const char *format, ...);
+
 /* taskbar.c */
 typedef enum {
     TBPF_NOPROGRESS	= 0,
