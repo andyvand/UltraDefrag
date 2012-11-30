@@ -86,9 +86,11 @@ void WgxPrintUnicodeString(wchar_t *string,FILE *f);
 /* dbg.c */
 /* debugging macros */
 
-#if defined(__GNUC__)
 /* set it, otherwise warnings will be shown for the tracing macros */
+#if defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Waddress"
+#else
+#pragma warning(disable: 4550)
 #endif
 
 /* prints whatever specified */
