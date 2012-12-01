@@ -60,20 +60,6 @@
 #include "udefrag-internals.h"
 
 /**
- * @bug _ftol2 unresolved symbol error with WDK 7 for WinXP build
- */
-#ifdef _MSC_VER
-#if _MSC_VER >= 1400
-#ifndef _WIN64
-#ifndef STATIC_LIB
-extern long _cdecl _ftol(double x);
-long _cdecl _ftol2(double x){return _ftol(x);}
-#endif
-#endif
-#endif
-#endif
-
-/**
  * @brief Defines whether udefrag library has 
  * been initialized successfully or not.
  * @return Boolean value.

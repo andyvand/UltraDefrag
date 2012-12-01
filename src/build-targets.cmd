@@ -292,6 +292,8 @@ exit /B 0
         cd ..\udefrag
         :: udefrag.c needs to be recompiled because of DllMain
         del /s /q udefrag.obj
+        :: float.c needs to be recompiled because of _ftol2
+        del /s /q float.obj
         %UD_BUILD_TOOL% udefrag.build static-lib || goto fail
         cd ..\native
         %UD_BUILD_TOOL% defrag_native.build || goto fail
@@ -304,6 +306,8 @@ exit /B 0
         cd ..\udefrag
         :: udefrag.c needs to be recompiled because of DllMain
         del /s /q udefrag.obj
+        :: float.c needs to be recompiled because of _ftol2
+        del /s /q float.obj
         %UD_BUILD_TOOL% udefrag.build || goto fail
     ) else (
         pushd obj\zenwinx
@@ -315,7 +319,7 @@ exit /B 0
     )
 
     rem workaround for WDK 6 and above
-    if %1 EQU X86 (
+    if %1 equ X86 if %BUILD_ENV% equ winddk (
         set OLD_CL=%CL%
         set CL=/QIfist %CL%
     )
@@ -328,7 +332,7 @@ exit /B 0
     %UD_BUILD_TOOL% lua-gui.build || goto fail
 
     rem workaround for WDK 6 and above
-    if %1 EQU X86 (
+    if %1 equ X86 if %BUILD_ENV% equ winddk (
         set CL=%OLD_CL%
         set OLD_CL=
     )
