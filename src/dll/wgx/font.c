@@ -195,8 +195,8 @@ BOOL WgxSaveFont(char *wgx_font_path,PWGX_FONT pFont)
 {
     LOGFONT *lf;
     FILE *pf;
+    char *msg;
     int result;
-    char err_msg[1024];
     
     if(wgx_font_path == NULL || pFont == NULL)
         return FALSE;
@@ -205,11 +205,11 @@ BOOL WgxSaveFont(char *wgx_font_path,PWGX_FONT pFont)
 
     pf = fopen(wgx_font_path,"wt");
     if(!pf){
-        (void)_snprintf(err_msg,sizeof(err_msg) - 1,
-            "Cannot save font preferences to %s!\n%s",
-            wgx_font_path,_strerror(NULL));
-        err_msg[sizeof(err_msg) - 1] = 0;
-        MessageBox(0,err_msg,"Warning!",MB_OK | MB_ICONWARNING);
+        msg = wgx_sprintf("Cannot save font preferences "
+            "to %s!\n%s",wgx_font_path,_strerror(NULL));
+        MessageBox(0,msg ? msg : "Cannot save font preferences:\n"
+            "not enough memory!","Warning!",MB_OK | MB_ICONWARNING);
+        free(msg);
         return FALSE;
     }
 
@@ -245,11 +245,11 @@ BOOL WgxSaveFont(char *wgx_font_path,PWGX_FONT pFont)
         );
     fclose(pf);
     if(result < 0){
-        (void)_snprintf(err_msg,sizeof(err_msg) - 1,
-            "Cannot write font preferences to %s!\n%s",
-            wgx_font_path,_strerror(NULL));
-        err_msg[sizeof(err_msg) - 1] = 0;
-        MessageBox(0,err_msg,"Warning!",MB_OK | MB_ICONWARNING);
+        msg = wgx_sprintf("Cannot write font preferences "
+            "to %s!\n%s",wgx_font_path,_strerror(NULL));
+        MessageBox(0,msg ? msg : "Cannot write font preferences:\n"
+            "not enough memory!","Warning!",MB_OK | MB_ICONWARNING);
+        free(msg);
         return FALSE;
     }
     return TRUE;

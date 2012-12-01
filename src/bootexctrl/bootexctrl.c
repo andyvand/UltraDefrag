@@ -161,8 +161,6 @@ static int cmd_compare(char *reg_cmd,char *cmd)
     char *reg_cmd_copy = NULL;
     char *cmd_copy = NULL;
     char *long_cmd = NULL;
-    char autocheck[] = "autocheck ";
-    int length;
     int result = (-1);
     
     /* do we have the command registered as it is? */
@@ -182,15 +180,12 @@ static int cmd_compare(char *reg_cmd,char *cmd)
             MessageBox(NULL,"Not enough memory!","Error",MB_OK | MB_ICONHAND);
         goto done;
     }
-    length = (strlen(cmd) + strlen(autocheck) + 1) * sizeof(char);
-    long_cmd = malloc(length);
+    long_cmd = wgx_sprintf("autocheck %s",cmd);
     if(long_cmd == NULL){
         if(!silent)
             MessageBox(NULL,"Not enough memory!","Error",MB_OK | MB_ICONHAND);
         goto done;
     }
-    strcpy(long_cmd,autocheck);
-    strcat(long_cmd,cmd);
     
     /* convert all strings to lowercase */
     _strlwr(reg_cmd_copy);
