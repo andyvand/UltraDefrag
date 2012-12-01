@@ -27,9 +27,9 @@
 #include "wgx-internals.h"
 
 /**
- * @brief Size of the buffer used by wgx_vsprintf
- * initially. Larger sizes tend to reduce time needed
- * to format long strings.
+ * @brief Size of the buffer used by wgx_vsprintf and
+ * wgx_vswprintf initially. Larger sizes tend to reduce
+ * time needed to format long strings.
  */
 #define WGX_VSPRINTF_BUFFER_SIZE 128
 
@@ -87,6 +87,66 @@ char *wgx_sprintf(const char *format, ...)
     if(format){
         va_start(arg,format);
         return wgx_vsprintf(format,arg);
+    }
+    
+    return NULL;
+}
+
+/**
+ * @brief A robust and flexible alternative to _vsnwprintf.
+ * @param[in] format the format specification.
+ * @param[in] arg pointer to the list of arguments.
+ * @return Pointer to the formatted string, NULL
+ * indicates failure. The string must be deallocated
+ * by free() call after its use.
+ * @note Optimized for speed, can allocate more memory than needed.
+ */
+wchar_t *wgx_vswprintf(const wchar_t *format,va_list arg)
+{
+    wchar_t *buffer;
+    int size;
+    int result;
+    
+    if(format == NULL)
+        return NULL;
+    
+    /* set the initial buffer size */
+    size = WGX_VSPRINTF_BUFFER_SIZE;
+    do {
+        buffer = malloc(size * sizeof(wchar_t));
+        if(buffer == NULL)
+            return NULL;
+        /* the next memset call is needed for _vsnwprintf */
+        memset(buffer,0,size * sizeof(wchar_t));
+        result = _vsnwprintf(buffer,size,format,arg);
+        if(result != -1 && result != size)
+            return buffer;
+        /* buffer is too small; try to allocate two times larger */
+        free(buffer);
+        size <<= 1;
+        if(size * sizeof(wchar_t) <= 0)
+            return NULL;
+    } while(1);
+    
+    return NULL;
+}
+
+/**
+ * @brief A robust and flexible alternative to _snwprintf.
+ * @param[in] format the format specification.
+ * @param[in] ... the arguments.
+ * @return Pointer to the formatted string, NULL
+ * indicates failure. The string must be deallocated
+ * by free() call after its use.
+ * @note Optimized for speed, can allocate more memory than needed.
+ */
+wchar_t *wgx_swprintf(const wchar_t *format, ...)
+{
+    va_list arg;
+    
+    if(format){
+        va_start(arg,format);
+        return wgx_vswprintf(format,arg);
     }
     
     return NULL;
