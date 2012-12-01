@@ -97,14 +97,14 @@ static int InitSynchObjects(void)
     hLangMenuEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hLangMenuEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create language menu synchronization event!");
+            L"Cannot create language menu synchronization event!");
         letrace("language menu event creation failed");
         return (-1);
     }
     hTaskbarIconEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hTaskbarIconEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create taskbar icon synchronization event!");
+            L"Cannot create taskbar icon synchronization event!");
         letrace("taskbar icon event creation failed");
         itrace("no taskbar icon overlays will be shown");
         itrace("and no system tray icon will be shown");
@@ -114,7 +114,7 @@ static int InitSynchObjects(void)
     hMapEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hMapEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create cluster map synchronization event!");
+            L"Cannot create cluster map synchronization event!");
         letrace("map event creation failed");
         DestroySynchObjects();
         return (-1);
@@ -122,7 +122,7 @@ static int InitSynchObjects(void)
     hListEvent = CreateEvent(NULL,FALSE,TRUE,NULL);
     if(hListEvent == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create drives list synchronization event!");
+            L"Cannot create drives list synchronization event!");
         letrace("list event creation failed");
         DestroySynchObjects();
         return (-1);
@@ -290,7 +290,7 @@ static int RegisterMainWindowClass(void)
     
     if(!RegisterClassEx(&wc)){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "RegisterMainWindowClass failed!");
+            L"RegisterMainWindowClass failed!");
         return (-1);
     }
     return 0;
@@ -460,7 +460,7 @@ int CreateMainWindow(int nShowCmd)
             NULL,NULL,hInstance,NULL);
     if(hWindow == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create main window!");
+            L"Cannot create main window!");
         return (-1);
     }
     
@@ -482,7 +482,7 @@ int CreateMainWindow(int nShowCmd)
             hWindow,NULL,hInstance,NULL);
     if(hList == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create disk list control!");
+            L"Cannot create disk list control!");
         return (-1);
     }
 
@@ -493,7 +493,7 @@ int CreateMainWindow(int nShowCmd)
             hWindow,NULL,hInstance,NULL);
     if(hMap == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create cluster map control!");
+            L"Cannot create cluster map control!");
         return (-1);
     }
     
@@ -1065,7 +1065,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_CFG_BOOT_ENABLE:
             if(!GetWindowsDirectoryW(path,MAX_PATH)){
-                WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot retrieve the Windows directory path!");
+                WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
+                    L"Cannot retrieve the Windows directory path!");
             } else {
                 if(boot_time_defrag_enabled){
                     boot_time_defrag_enabled = 0;
@@ -1087,7 +1088,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_CFG_BOOT_SCRIPT:
             if(!GetWindowsDirectoryW(path,MAX_PATH)){
-                WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot retrieve the Windows directory path");
+                WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
+                    L"Cannot retrieve the Windows directory path");
             } else {
                 (void)wcscat(path,L"\\System32\\ud-boot-time.cmd");
                 (void)WgxShellExecuteW(hWindow,L"edit",path,NULL,NULL,SW_SHOW);

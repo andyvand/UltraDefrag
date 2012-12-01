@@ -197,7 +197,7 @@ int CreateMainMenu(void)
     /* attach menu to the window */
     if(!SetMenu(hWindow,hMainMenu)){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot set main menu!");
+            L"Cannot set main menu!");
         DestroyMenu(hMainMenu);
         return (-1);
     }

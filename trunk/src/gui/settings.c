@@ -421,7 +421,7 @@ int IsBootTimeDefragEnabled(void)
             0,
             KEY_QUERY_VALUE,
             &hKey) != ERROR_SUCCESS){
-        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot open SMSS key!");
+        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,L"Cannot open SMSS key!");
         return FALSE;
     }
 
@@ -438,7 +438,7 @@ int IsBootTimeDefragEnabled(void)
     type = REG_MULTI_SZ;
     if(RegQueryValueEx(hKey,"BootExecute",NULL,&type,
             (LPBYTE)data,&size) != ERROR_SUCCESS){
-        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot query BootExecute value!");
+        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,L"Cannot query BootExecute value!");
         (void)RegCloseKey(hKey);
         free(data);
         return FALSE;

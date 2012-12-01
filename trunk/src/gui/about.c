@@ -268,7 +268,7 @@ void AboutBox(void)
         id = IDD_ABOUT;
 
     if(DialogBoxW(hInstance,MAKEINTRESOURCEW(id),hWindow,(DLGPROC)AboutDlgProc) == (-1))
-        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,"Cannot create the About window!");
+        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,L"Cannot create the About window!");
 }
 
 BOOL CALLBACK AboutDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)

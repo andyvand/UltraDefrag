@@ -90,7 +90,7 @@ int CreateToolbar(void)
         hWindow, NULL, hInstance, NULL);
     if(hToolbar == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create main toolbar!");
+            L"Cannot create main toolbar!");
         return (-1);
     }
     
@@ -145,7 +145,7 @@ int CreateToolbar(void)
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgList == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot load main images for the main toolbar!");
+            L"Cannot load main images for the main toolbar!");
         return (-1);
     }
     hToolbarImgListD = ImageList_LoadImage(hInstance,
@@ -153,7 +153,7 @@ int CreateToolbar(void)
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgListD == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot load grayed images for the main toolbar!");
+            L"Cannot load grayed images for the main toolbar!");
         return (-1);
     }
     hToolbarImgListH = ImageList_LoadImage(hInstance,
@@ -161,7 +161,7 @@ int CreateToolbar(void)
         IMAGE_BITMAP,LR_CREATEDIBSECTION);
     if(hToolbarImgListH == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot load highlighted images for the main toolbar!");
+            L"Cannot load highlighted images for the main toolbar!");
         return (-1);
     }
     SendMessage(hToolbar,TB_SETIMAGELIST,0,(LPARAM)hToolbarImgList);

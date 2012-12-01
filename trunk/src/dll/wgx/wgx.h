@@ -108,7 +108,7 @@ void WgxPrintUnicodeString(wchar_t *string,FILE *f);
 typedef void (*WGX_TRACE_HANDLER)(int flags,char *format, ...);
 void WgxSetInternalTraceHandler(WGX_TRACE_HANDLER h);
 
-int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, char *format, ...);
+int WgxDisplayLastError(HWND hParent,UINT msgbox_flags, wchar_t *format, ...);
 
 /* exec.c */
 BOOL WgxCreateProcess(char *cmd,char *args);
@@ -172,6 +172,8 @@ BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
 /* string.c */
 char *wgx_vsprintf(const char *format,va_list arg);
 char *wgx_sprintf(const char *format, ...);
+wchar_t *wgx_vswprintf(const wchar_t *format,va_list arg);
+wchar_t *wgx_swprintf(const wchar_t *format, ...);
 
 /* taskbar.c */
 typedef enum {

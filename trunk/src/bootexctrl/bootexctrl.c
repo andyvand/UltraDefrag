@@ -31,6 +31,8 @@
 #define WgxTraceHandler dbg_print
 #include "../dll/wgx/wgx.h"
 
+#define DisplayLastError(caption) WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,caption)
+
 #include "../include/ultradfgver.h"
 
 int h_flag = 0;
@@ -124,34 +126,6 @@ void dbg_print(int flags,char *format, ...)
             OutputDebugString("dbg_print: not enough memory\n");
         }
         va_end(arg);
-    }
-}
-
-void DisplayLastError(wchar_t *caption)
-{
-    wchar_t *msg;
-    wchar_t buffer[128];
-    DWORD error = GetLastError();
-
-    if(!FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-      FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-      NULL,error,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-      (LPWSTR)(void *)&msg,0,NULL)){
-        if(error == ERROR_COMMITMENT_LIMIT){
-            (void)_snwprintf(buffer,
-                sizeof(buffer)/sizeof(wchar_t),
-                L"Not enough memory.");
-        } else {
-            (void)_snwprintf(buffer,
-                sizeof(buffer)/sizeof(wchar_t),
-                L"Error code = 0x%x",(UINT)error);
-        }
-        buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
-        MessageBoxW(NULL,buffer,caption,MB_OK | MB_ICONHAND);
-        return;
-    } else {
-        MessageBoxW(NULL,msg,caption,MB_OK | MB_ICONHAND);
-        LocalFree(msg);
     }
 }
 

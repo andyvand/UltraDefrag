@@ -52,7 +52,7 @@ static void ShowSingleReport(volume_processing_job *job)
     args[MAX_PATH] = 0;
     if(!WgxCreateProcess(".\\lua5.1a_gui.exe",args)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
-            "Cannot execute lua5.1a_gui.exe program!");
+            L"Cannot execute lua5.1a_gui.exe program!");
     }
 }
 

@@ -554,8 +554,7 @@ void start_selected_jobs(udefrag_job_type job_type)
         else if(job_type == MFT_OPTIMIZATION_JOB)
             action = "MFT optimization";
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
-            "Cannot create thread starting %s!",
-            action);
+            L"Cannot create thread starting %s!",action);
     }
 }
 
@@ -644,7 +643,7 @@ void RepairSelectedVolumes(void)
 
     if(!WgxCreateProcess("%windir%\\system32\\cmd.exe",args)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
-            "Cannot execute cmd.exe program!");
+            L"Cannot execute cmd.exe program!");
     }
 }
 
