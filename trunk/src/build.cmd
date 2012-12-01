@@ -284,7 +284,7 @@ rem Displays usage information.
     echo.
     echo Compiler:
     echo --use-mingw     (default)
-    echo --use-winddk    (we use it for official releases)
+    echo --use-winddk    (we use it for official 64-bit releases)
     echo --use-winsdk
     echo --use-mingw-x64 (experimental, produces wrong x64 code)
     echo.
