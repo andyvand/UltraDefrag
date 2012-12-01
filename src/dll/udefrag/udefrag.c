@@ -82,7 +82,7 @@ int udefrag_init_failed(void)
 static void deliver_progress_info(udefrag_job_parameters *jp,int completion_status)
 {
     udefrag_progress_info pi;
-    ULONGLONG x, y;
+    double x, y;
     int i, k, index, p1, p2;
     int mft_zone_detected;
     int free_cell_detected;
@@ -98,20 +98,16 @@ static void deliver_progress_info(udefrag_job_parameters *jp,int completion_stat
     pi.completion_status = completion_status;
     
     /* calculate progress percentage */
-    /* conversion to LONGLONG is needed for Win DDK */
-    /* so, let's divide both numbers to make safe conversion then */
-    x = pi.processed_clusters / 2;
-    y = pi.clusters_to_process / 2;
+    x = (double)pi.processed_clusters;
+    y = (double)pi.clusters_to_process;
     if(y == 0) pi.percentage = 0.00;
-    else pi.percentage = ((double)(LONGLONG)x / (double)(LONGLONG)y) * 100.00;
+    else pi.percentage = (x / y) * 100.00;
     
     /* calculate fragmentation percentage */
-    /* conversion to LONGLONG is needed for Win DDK */
-    /* so, let's divide both numbers to make safe conversion then */
-    x = pi.bad_fragments / 2;
-    y = pi.fragments / 2;
+    x = (double)pi.bad_fragments;
+    y = (double)pi.fragments;
     if(y == 0) pi.fragmentation = 0.00;
-    else pi.fragmentation = ((double)(LONGLONG)x / (double)(LONGLONG)y) * 100.00;
+    else pi.fragmentation = (x / y) * 100.00;
     
     /* refill cluster map */
     if(jp->pi.cluster_map && jp->cluster_map.array \
@@ -439,8 +435,7 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
     if(pi->files == 0){
         p = 0.00;
     } else {
-        /* conversion to LONGLONG is needed for Win DDK */
-        p = (double)(LONGLONG)pi->fragments / (double)(LONGLONG)pi->files;
+        p = (double)pi->fragments / (double)pi->files;
     }
     ip = (unsigned int)(p * 100.00);
     if(ip < 100) ip = 100; /* fix round off error */

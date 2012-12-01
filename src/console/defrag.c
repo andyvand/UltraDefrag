@@ -683,7 +683,7 @@ static int show_vollist(void)
     volume_info *v;
     int i, percent;
     char s[32];
-    ULONGLONG free, total;
+    double free, total;
     double d = 0;
 
     settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -699,12 +699,9 @@ static int show_vollist(void)
 
     for(i = 0; v[i].letter != 0; i++){
         udefrag_bytes_to_hr((ULONGLONG)(v[i].total_space.QuadPart),2,s,sizeof(s));
-        /* conversion to LONGLONG is needed for Win DDK */
-        /* so, let's divide both numbers to make safe conversion then */
-        total = v[i].total_space.QuadPart / 2;
-        free = v[i].free_space.QuadPart / 2;
-        if(total > 0)
-            d = (double)(LONGLONG)free / (double)(LONGLONG)total;
+        total = (double)v[i].total_space.QuadPart;
+        free = (double)v[i].free_space.QuadPart;
+        if(total > 0) d = free / total;
         percent = (int)(100 * d);
         settextcolor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
         printf("%c:  %8s %12s %8u %%   %ls\n",
