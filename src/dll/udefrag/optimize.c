@@ -1003,7 +1003,7 @@ static int optimize_routine(udefrag_job_parameters *jp)
     /* do the job */
     prb_t_init(&t,pt);
     if(prb_t_first(&t,pt) == NULL) goto done;
-    jp->pi.pass_number = 0; start_lcn = end_lcn = 0;
+    start_lcn = end_lcn = 0;
     while(!jp->termination_router((void *)jp)){
         winx_dbg_print_header(0,0,I"volume optimization pass #%u",jp->pi.pass_number);
         jp->pi.clusters_to_process = \
@@ -1013,19 +1013,21 @@ static int optimize_routine(udefrag_job_parameters *jp)
         
         /* cleanup space in the beginning of the disk */
         move_files_to_back(jp,&end_lcn);
-        if(jp->termination_router((void *)jp)) break;
+        if(jp->termination_router((void *)jp)){
+            /* the pass is completed */
+            jp->pi.pass_number ++;
+            break;
+        }
         
         /* move small files back, sorted */
         move_files_to_front(jp,&start_lcn,end_lcn,&t);
+        jp->pi.pass_number ++; /* the pass is completed */
         
         /* break if no more files need optimization */
         if(prb_t_cur(&t) == NULL) break;
         
         /* break if no repeat allowed */
         if(!(jp->udo.job_flags & UD_JOB_REPEAT)) break;
-
-        /* continue file sorting on the next pass */
-        jp->pi.pass_number ++;
     }
     
 done:
