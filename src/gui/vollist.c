@@ -549,7 +549,7 @@ void UpdateVolList(void)
 {
     if(!WgxCreateThread(RescanDrivesThreadProc,NULL)){
         WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
-            "Cannot create thread starting drives rescan!");
+            L"Cannot create thread starting drives rescan!");
     }
 }
 

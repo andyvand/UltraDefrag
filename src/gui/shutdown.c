@@ -339,7 +339,7 @@ int ShutdownOrHibernate(void)
     /* set SE_SHUTDOWN privilege */
     if(!OpenProcessToken(GetCurrentProcess(), 
     TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,&hToken)){
-        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"ShutdownOrHibernate: cannot open process token!");
+        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"ShutdownOrHibernate: cannot open process token!");
         return 4;
     }
     
@@ -348,7 +348,7 @@ int ShutdownOrHibernate(void)
     tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED; 
     AdjustTokenPrivileges(hToken,FALSE,&tkp,0,(PTOKEN_PRIVILEGES)NULL,0);         
     if(GetLastError() != ERROR_SUCCESS){
-        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"ShutdownOrHibernate: cannot set shutdown privilege!");
+        WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"ShutdownOrHibernate: cannot set shutdown privilege!");
         return 5;
     }
     
@@ -391,7 +391,7 @@ int ShutdownOrHibernate(void)
         else
             result = SetSystemPowerState(TRUE,FALSE);
         if(!result){
-            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot suspend the system!");
+            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot suspend the system!");
             return 6;
         }
         break;
@@ -404,7 +404,7 @@ int ShutdownOrHibernate(void)
             result = SetSystemPowerState(FALSE,FALSE);
         }
         if(!result){
-            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot hibernate the computer!");
+            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot hibernate the computer!");
             return 7;
         }
         break;
@@ -417,7 +417,7 @@ int ShutdownOrHibernate(void)
                 SHTDN_REASON_FLAG_PLANNED);
         }
         if(!result){
-            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot log the user off!");
+            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot log the user off!");
             return 8;
         }
         break;
@@ -430,7 +430,7 @@ int ShutdownOrHibernate(void)
                 SHTDN_REASON_FLAG_PLANNED);
         }
         if(!result){
-            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot reboot the computer!");
+            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot reboot the computer!");
             return 9;
         }
         break;
@@ -443,7 +443,7 @@ int ShutdownOrHibernate(void)
                 SHTDN_REASON_FLAG_PLANNED);
         }
         if(!result){
-            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,"UltraDefrag: cannot shut down the computer!");
+            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot shut down the computer!");
             return 10;
         }
         break;

@@ -62,7 +62,7 @@ void CreateStatusBar(void)
                                  "0 dirs", hWindow, IDM_STATUSBAR);
     if(hStatus == NULL){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-            "Cannot create status bar control!");
+            L"Cannot create status bar control!");
         return;
     }
     

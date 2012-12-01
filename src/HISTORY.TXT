@@ -30,8 +30,9 @@
     - obsolete WgxDbgPrint, WgxDbgPrintLastError routines
       removed from wgx library
     - WgxSetDbgPrintHandler routine superseded by WgxSetInternalTraceHandler
-    - WgxSetTaskbarProgressState, WgxSetTaskbarProgressValue,
-      wgx_sprintf, wgx_vsprintf routines added to wgx library
+    - WgxDisplayLastError prototype changed
+    - WgxSetTaskbarProgressState, WgxSetTaskbarProgressValue, wgx_sprintf,
+      wgx_vsprintf, wgx_swprintf, wgx_vswprintf routines added to wgx library
     - Windows Server 2003 DDK support dropped because of lack of variadic macros
       support there - use Windows Driver Kit v7.1.0 instead
 
