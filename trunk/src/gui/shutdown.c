@@ -79,7 +79,7 @@ static void ResizeShutdownConfirmDialog(HWND hwnd,wchar_t *counter_msg)
         break;
     }
     if(text1 == NULL){
-        etrace("not enough memory for text1");
+        mtrace();
         return;
     }
     result = WgxGetTextDimensions(text1,

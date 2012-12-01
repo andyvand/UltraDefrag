@@ -104,6 +104,9 @@ void WgxPrintUnicodeString(wchar_t *string,FILE *f);
 /* prints {error prefix}{function name}: {specified string}: {last error and its description} */
 #define letrace(format,...) { if(WgxTraceHandler) WgxTraceHandler(LAST_ERROR_FLAG,E "%s: " format,__FUNCTION__,## __VA_ARGS__); }
 
+/* prints {error prefix}{function name}: not enough memory */
+#define mtrace() etrace("not enough memory")
+
 /* flags are defined in ../../include/dbg.h file */
 typedef void (*WGX_TRACE_HANDLER)(int flags,char *format, ...);
 void WgxSetInternalTraceHandler(WGX_TRACE_HANDLER h);

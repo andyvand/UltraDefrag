@@ -51,14 +51,14 @@ winx_spin_lock *winx_init_spin_lock(char *name)
     buffer = winx_sprintf("\\%s_%u",name,
         (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess));
     if(buffer == NULL){
-        etrace("not enough memory for ansi name");
+        etrace("not enough memory for ansi name of %s",name);
         return NULL;
     }
 
     length = strlen(buffer);
     fullname = winx_malloc((length + 1) * sizeof(wchar_t));
     if(fullname == NULL){
-        etrace("not enough memory for unicode name");
+        etrace("not enough memory for unicode name of %s",name);
         winx_free(buffer);
         return NULL;
     }

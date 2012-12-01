@@ -143,7 +143,7 @@ static void CollectCrashInfo(void)
     bytes_to_read = EVENT_BUFFER_SIZE;
     buffer = malloc(bytes_to_read);
     if(buffer == NULL){
-        etrace("not enough memory");
+        mtrace();
         goto done;
     }
     
@@ -167,7 +167,7 @@ static void CollectCrashInfo(void)
                 free(buffer);
                 buffer = malloc(bytes_to_read);
                 if(buffer == NULL){
-                    etrace("not enough memory");
+                    mtrace();
                     goto done;
                 }
                 break;

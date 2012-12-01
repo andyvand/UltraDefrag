@@ -60,6 +60,9 @@
     winx_dbg_print(NT_STATUS_FLAG,E "%s: " format,__FUNCTION__,## __VA_ARGS__); \
 }
 
+/* prints {error prefix}{function name}: not enough memory */
+#define mtrace() etrace("not enough memory")
+
 #define TraceEnter  { trace(D"Inside function '%s'...",__FUNCTION__); }
 #define TraceExit   { trace(D"Leaving function '%s'...",__FUNCTION__); }
 #define TraceSource { trace(D"Source file '%s' at line %d ...",__FILE__,__LINE__); }

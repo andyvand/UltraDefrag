@@ -145,7 +145,7 @@ convert:
     length = (wcslen(string) + 1) * 4; /* should be enough */
     cnv_string = malloc(length);
     if(cnv_string == NULL){
-        etrace("not enough memory");
+        mtrace();
         goto done;
     }
     if(!WideCharToMultiByte(new_code_page,0,string,-1,cnv_string,length,NULL,NULL)){

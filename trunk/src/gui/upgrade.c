@@ -85,7 +85,7 @@ static char *GetLatestVersion(void)
     version_ini_path[MAX_PATH] = 0;
     if(result != S_OK){
         if(result == E_OUTOFMEMORY){
-            etrace("not enough memory");
+            mtrace();
         } else {
             etrace("URLDownloadToCacheFile failed");
         }

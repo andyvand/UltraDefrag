@@ -93,7 +93,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     length = strlen(sctemplate) + strlen(path) + 1;
     script = malloc(length);
     if(script == NULL){
-        etrace("not enough memory");
+        mtrace();
         lua_close(L);
         return FALSE;
     }
@@ -128,7 +128,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
                         length = strlen(value);
                         table[i].LoadedString = malloc((length + 1) * 2);
                         if(table[i].LoadedString == NULL){
-                            etrace("not enough memory");
+                            mtrace();
                         } else {
                             if(!MultiByteToWideChar(CP_UTF8,0,value,-1,table[i].LoadedString,length + 1)){
                                 letrace("MultiByteToWideChar failed");
@@ -173,7 +173,7 @@ void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow)
                 if(table[i].LoadedString){
                     text = _wcsdup(table[i].LoadedString);
                     if(text == NULL)
-                        etrace("not enough memory");
+                        mtrace();
                 }
                 /* end of synchronization */
                 SetEvent(hSynchEvent);
@@ -182,7 +182,7 @@ void WgxApplyResourceTable(PWGX_I18N_RESOURCE_ENTRY table,HWND hWindow)
         if(text == NULL){
             text = _wcsdup(table[i].DefaultString);
             if(text == NULL)
-                etrace("not enough memory");
+                mtrace();
         }
         if(text){
             (void)SetWindowTextW(hChild,text);
@@ -235,7 +235,7 @@ wchar_t *WgxGetResourceString(PWGX_I18N_RESOURCE_ENTRY table,char *key)
                     else
                         text = _wcsdup(table[i].DefaultString);
                     if(text == NULL)
-                        etrace("not enough memory");
+                        mtrace();
                     break;
                 }
             }
@@ -248,7 +248,7 @@ synch_failed:
             if(!strcmp(table[i].Key,key)){
                 text = _wcsdup(table[i].DefaultString);
                 if(text == NULL)
-                    etrace("not enough memory");
+                    mtrace();
                 break;
             }
         }

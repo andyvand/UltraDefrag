@@ -118,7 +118,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     
     utf8_path = winx_malloc(MAX_UTF8_PATH_LENGTH);
     if(utf8_path == NULL){
-        etrace("not enough memory");
+        mtrace();
         return (-1);
     }
     
