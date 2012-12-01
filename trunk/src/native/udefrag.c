@@ -82,7 +82,6 @@ char old_op_name[15] = {0};
  * @note Old dash based progress indication has wrong
  * algorithm not reliable by definition. Therefore
  * it has been replaced by a new single line indicator.
- * @bug _ftol2 unresolved symbol error with WDK 7 for WinXP build
  */
 void RedrawProgress(udefrag_progress_info *pi)
 {
