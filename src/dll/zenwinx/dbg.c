@@ -697,7 +697,7 @@ void winx_set_dbg_log(char *path)
         winx_printf("\nUsing log file \"%s\" ...\n",&path[4]);
         log_path = winx_strdup(path);
         if(log_path == NULL){
-            etrace("not enough memory");
+            mtrace();
             winx_print("\nCannot allocate memory for log path!\n");
         }
     }

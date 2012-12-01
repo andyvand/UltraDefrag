@@ -499,7 +499,7 @@ no_files_found:
             filename[length - 4] = 0;
         f = _wcsdup(filename);
         if(f == NULL){
-            etrace("not enough memory");
+            mtrace();
         } else {
             if(prb_probe(pt,(void *)f) == NULL){
                 etrace("prb_probe failed for %ws",f);
@@ -514,7 +514,7 @@ no_files_found:
                 filename[length - 4] = 0;
             f = _wcsdup(filename);
             if(f == NULL){
-                etrace("not enough memory");
+                mtrace();
             } else {
                 if(prb_probe(pt,(void *)f) == NULL){
                     etrace("prb_probe failed for %ws",f);

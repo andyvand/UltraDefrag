@@ -96,7 +96,7 @@ char *winx_get_windows_directory(void)
     if(windir){
         path = winx_sprintf("\\??\\%ws",windir);
         if(path == NULL)
-            etrace("not enough memory");
+            mtrace();
         winx_free(windir);
     }
     return path;
@@ -321,7 +321,7 @@ void MarkWindowsBootAsSuccessful(void)
     path = winx_sprintf("%hs\\bootstat.dat",windir);
     winx_free(windir);
     if(path == NULL){
-        etrace("not enough memory");
+        mtrace();
         winx_printf("\n%s: not enough memory\n\n",__FUNCTION__);
         winx_sleep(3000);
         return;

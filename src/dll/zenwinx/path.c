@@ -156,7 +156,7 @@ void winx_get_module_filename(char *path)
             }
             RtlFreeAnsiString(&as);
         } else {
-            etrace("not enough memory");
+            mtrace();
         }
     } else {
         strace(status,"cannot query basic process information");

@@ -75,7 +75,7 @@ static BOOL SendWebAnalyticsRequest(char *url)
     path[MAX_PATH] = 0;
     if(result != S_OK){
         if(result == E_OUTOFMEMORY) {
-            etrace("not enough memory");
+            mtrace();
         } else {
             etrace("URLDownloadToCacheFile failed");
         }
@@ -107,7 +107,7 @@ static char *build_ga_request(char *hostname,char *path,char *account)
     
     ga_request = malloc(MAX_GA_REQUEST_LENGTH);
     if(ga_request == NULL){
-        etrace("not enough memory");
+        mtrace();
         return NULL;
     }
     

@@ -204,7 +204,7 @@ BOOL WgxCheckAdminRights(void)
                 free(ptg);
                 ptg = malloc(bytes_needed);
                 if(ptg == NULL){
-                    etrace("not enough memory");
+                    mtrace();
                     goto done;
                 }
                 bytes_allocated = bytes_needed;
