@@ -361,8 +361,8 @@ static void AddCapacityInformation(int index, volume_info *v)
 static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *job)
 {
     LV_ITEMW lviw;
-    wchar_t *ProcessCaption = NULL;
-    wchar_t buffer[128], PassString[32] = L"", MoveString[32] = L"", PercentString[32] = L"";
+    wchar_t *caption = NULL;
+    wchar_t *text = NULL;
 
     lviw.mask = LVIF_TEXT;
     lviw.iItem = index;
@@ -370,52 +370,55 @@ static void VolListUpdateStatusFieldInternal(int index,volume_processing_job *jo
     
     /* each job starts with a volume analysis */
     if(job->pi.current_operation == VOLUME_ANALYSIS && job->job_type != NEVER_EXECUTED_JOB){
-        ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_ANALYSED");
+        caption = WgxGetResourceString(i18n_table,"STATUS_ANALYSED");
     } else {
         switch(job->job_type){
             case ANALYSIS_JOB:
-                ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_ANALYSED");
+                caption = WgxGetResourceString(i18n_table,"STATUS_ANALYSED");
                 break;
             case DEFRAGMENTATION_JOB:
-                ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_DEFRAGMENTED");
+                caption = WgxGetResourceString(i18n_table,"STATUS_DEFRAGMENTED");
                 break;
             case FULL_OPTIMIZATION_JOB:
             case QUICK_OPTIMIZATION_JOB:
             case MFT_OPTIMIZATION_JOB:
-                ProcessCaption = WgxGetResourceString(i18n_table,"STATUS_OPTIMIZED");
+                caption = WgxGetResourceString(i18n_table,"STATUS_OPTIMIZED");
                 break;
         }
     }
     
-    if(job->pi.completion_status < 0 || ProcessCaption == NULL){
+    if(job->pi.completion_status < 0 || caption == NULL){
         lviw.pszText = L"";
     } else {
         if(job->pi.completion_status == 0 || stop_pressed){
-            _snwprintf(PercentString,sizeof(PercentString)/sizeof(wchar_t),L"%5.2lf %% ",job->pi.percentage);
-            PercentString[sizeof(PercentString)/sizeof(wchar_t) - 1] = 0;
-            
             if(job->pi.pass_number > 1){
-                _snwprintf(PassString,sizeof(PassString)/sizeof(wchar_t),L", Pass %d",job->pi.pass_number);
-                PassString[sizeof(PassString)/sizeof(wchar_t) - 1] = 0;
-            }
-                
-            if(job->pi.current_operation == VOLUME_OPTIMIZATION){
-                _snwprintf(MoveString,sizeof(MoveString)/sizeof(wchar_t),L", %I64u moves total",job->pi.total_moves);
-                MoveString[sizeof(MoveString)/sizeof(wchar_t) - 1] = 0;
+                if(job->pi.current_operation == VOLUME_OPTIMIZATION){
+                    text = wgx_swprintf(L"%5.2lf %% %ls, Pass %d, %I64u moves total",
+                        job->pi.percentage,caption,job->pi.pass_number,job->pi.total_moves);
+                } else {
+                    text = wgx_swprintf(L"%5.2lf %% %ls, Pass %d",
+                        job->pi.percentage,caption,job->pi.pass_number);
+                }
+            } else {
+                if(job->pi.current_operation == VOLUME_OPTIMIZATION){
+                    text = wgx_swprintf(L"%5.2lf %% %ls, %I64u moves total",
+                        job->pi.percentage,caption,job->pi.total_moves);
+                } else {
+                    text = wgx_swprintf(L"%5.2lf %% %ls",
+                        job->pi.percentage,caption);
+                }
             }
         } else {
-            if(job->pi.pass_number > 1){
-                _snwprintf(PassString,sizeof(PassString)/sizeof(wchar_t),L", %d passes needed",job->pi.pass_number);
-                PassString[sizeof(PassString)/sizeof(wchar_t) - 1] = 0;
-            }
+            if(job->pi.pass_number > 1)
+                text = wgx_swprintf(L"%ls, %d passes needed",caption,job->pi.pass_number);
+            else
+                text = wgx_swprintf(L"%ls",caption);
         }
-        _snwprintf(buffer,sizeof(buffer)/sizeof(wchar_t),L"%ls%ls%ls%ls",PercentString,ProcessCaption,PassString,MoveString);
-        buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
-        lviw.pszText = buffer;
+        lviw.pszText = text ? text : L"";
     }
 
     (void)SendMessage(hList,LVM_SETITEMW,0,(LRESULT)&lviw);
-    free(ProcessCaption);
+    free(caption); free(text);
 }
 
 /**

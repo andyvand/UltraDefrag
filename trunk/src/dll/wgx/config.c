@@ -164,8 +164,8 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
  */
 BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
 {
-    char err_msg[1024];
     FILE *f;
+    char *msg;
     int i, result = 0;
     unsigned int j, k, n;
     char c;
@@ -179,13 +179,16 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
     
     f = fopen(path,"wt");
     if(f == NULL){
-        (void)_snprintf(err_msg,sizeof(err_msg) - 1,
-            "Cannot open %s file: %s",
-            path,_strerror(NULL));
-        err_msg[sizeof(err_msg) - 1] = 0;
-        etrace("%s",err_msg);
-        if(cb != NULL)
-            cb(err_msg);
+        msg = wgx_sprintf("Cannot open %s "
+            "file: %s",path,_strerror(NULL));
+        if(msg){
+            etrace("%s",msg);
+            if(cb) cb(msg);
+        } else {
+            etrace("Cannot open file: not enough memory!");
+            if(cb) cb("Cannot open file: not enough memory!");
+        }
+        free(msg);
         return FALSE;
     }
 
@@ -228,13 +231,16 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
         if(result < 0){
 fail:
             fclose(f);
-            (void)_snprintf(err_msg,sizeof(err_msg) - 1,
-                "Cannot write to %s file: %s",
-                path,_strerror(NULL));
-            err_msg[sizeof(err_msg) - 1] = 0;
-            etrace("%s",err_msg);
-            if(cb != NULL)
-                cb(err_msg);
+            msg = wgx_sprintf("Cannot write to %s "
+                "file: %s",path,_strerror(NULL));
+            if(msg){
+                etrace("%s",msg);
+                if(cb) cb(msg);
+            } else {
+                etrace("Cannot write to file: not enough memory!");
+                if(cb) cb("Cannot write to file: not enough memory!");
+            }
+            free(msg);
             return FALSE;
         }
     }
