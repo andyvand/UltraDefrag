@@ -39,4 +39,6 @@ EXPORTS
     WgxSetText
     WgxShellExecuteW
     wgx_sprintf
+    wgx_swprintf
     wgx_vsprintf
+    wgx_vswprintf
