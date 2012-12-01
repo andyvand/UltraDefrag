@@ -69,6 +69,7 @@ void dbg_print_header(udefrag_job_parameters *jp)
     c = 'a'; c = winx_towlower(c) - winx_towupper(c);
     winx_wcslwr(s1); winx_wcsupr(s2);
     result = winx_wcsicmp(s1,s2);
+    result += mj + mn;
     winx_dbg_print(0,NULL);
 }
 
