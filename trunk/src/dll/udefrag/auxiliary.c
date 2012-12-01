@@ -127,8 +127,7 @@ static void dbg_print_single_counter(udefrag_job_parameters *jp,ULONGLONG counte
     if(jp->p_counters.overall_time == 0){
         p = 0.00;
     } else {
-        /* conversion to LONGLONG is needed for Win DDK */
-        p = (double)(LONGLONG)counter / (double)(LONGLONG)jp->p_counters.overall_time;
+        p = (double)counter / (double)jp->p_counters.overall_time;
     }
     ip = (unsigned int)(p * 10000);
     s = winx_sprintf("%s %I64ums",buffer,time);

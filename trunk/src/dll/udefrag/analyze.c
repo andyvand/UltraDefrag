@@ -860,16 +860,14 @@ static int check_requested_action(udefrag_job_parameters *jp)
  */
 int check_fragmentation_level(udefrag_job_parameters *jp)
 {
-    ULONGLONG x, y;
+    double x, y;
     unsigned int ifr, it;
     double fragmentation;
     
-    /* conversion to LONGLONG is needed for Win DDK */
-    /* so, let's divide both numbers to make safe conversion then */
-    x = jp->pi.bad_fragments / 2;
-    y = jp->pi.fragments / 2;
+    x = (double)jp->pi.bad_fragments;
+    y = (double)jp->pi.fragments;
     if(y == 0) fragmentation = 0.00;
-    else fragmentation = ((double)(LONGLONG)x / (double)(LONGLONG)y) * 100.00;
+    else fragmentation = (x / y) * 100.00;
     ifr = (unsigned int)(fragmentation * 100.00);
     it = (unsigned int)(jp->udo.fragmentation_threshold * 100.00);
     if(fragmentation < jp->udo.fragmentation_threshold){
