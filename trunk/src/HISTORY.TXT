@@ -77,7 +77,7 @@
 
     - the following translations were updated:
 
-      Russian, Spanish (ES), Tamil
+      Iloko, Russian, Spanish (ES), Tamil
 
     - Internals: winx_query_dev_count routine added to be able to
       correct the keyboard initialization problem at boot
