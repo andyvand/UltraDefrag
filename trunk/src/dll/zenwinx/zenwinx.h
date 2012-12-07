@@ -147,6 +147,7 @@ int winx_delete_file(const char *filename);
 void *winx_get_file_contents(const char *filename,size_t *bytes_read);
 void winx_release_file_contents(void *contents);
 
+/* float.c */
 /* ftw.c */
 /* winx_ftw flags */
 #define WINX_FTW_RECURSIVE              0x1 /* forces to recursively scan all subdirectories */
@@ -265,7 +266,7 @@ int winx_release_spin_lock(winx_spin_lock *sl);
 void winx_destroy_spin_lock(winx_spin_lock *sl);
 
 /* mem.c */
-void *winx_malloc(SIZE_T size);
+void *winx_malloc(size_t size);
 void winx_free(void *addr);
 
 /* misc.c */
