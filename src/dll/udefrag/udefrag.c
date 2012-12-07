@@ -511,7 +511,7 @@ char *udefrag_get_error_description(int error_code)
  * @internal
  * @brief Writes a header to the log file.
  */
-static void write_log_file_header(char *path)
+static void write_log_file_header(wchar_t *path)
 {
     WINX_FILE *f;
     char bom[4] = {0xEF, 0xBB, 0xBF, 0x00};
@@ -557,8 +557,8 @@ int udefrag_set_log_file_path(void)
 {
     wchar_t *path, *longpath, *fullpath;
     int conversion_result;
-    char *native_path, *path_copy, *filename;
-    int result;
+    wchar_t *native_path, *path_copy, *filename;
+    int length, result;
 
     typedef DWORD (__stdcall *GETLONGPATHNAME_PROC)(
         wchar_t *lpszShortPath,wchar_t *lpszLongPath,
@@ -629,23 +629,28 @@ int udefrag_set_log_file_path(void)
         wcsncpy(fullpath,longpath,MAX_PATH);
         fullpath[MAX_PATH] = 0;
     }
-    
-    /* convert to native path */
-    native_path = winx_sprintf("\\??\\%ws",fullpath);
-    winx_free(fullpath);
+
     winx_free(longpath);
     winx_free(path);
+    
+    /* convert to native path */
+    length = wcslen(L"\\??\\") + wcslen(fullpath) + 1;
+    native_path = winx_malloc(length * sizeof(wchar_t));
     if(native_path == NULL){
         etrace("cannot build native path");
+        winx_free(fullpath);
         return (-1);
     }
+    _snwprintf(native_path,length,L"\\??\\%ws",fullpath);
+    native_path[length - 1] = 0;
+    winx_free(fullpath);
     
     /* delete old logfile */
     winx_delete_file(native_path);
     
     /* ensure that target path exists */
     result = 0;
-    path_copy = winx_strdup(native_path);
+    path_copy = winx_wcsdup(native_path);
     if(path_copy == NULL){
         etrace("not enough memory");
     } else {
@@ -660,19 +665,25 @@ int udefrag_set_log_file_path(void)
         if(path == NULL){
             etrace("failed to query %%TMP%%");
         } else {
-            filename = winx_strdup(native_path);
+            filename = winx_wcsdup(native_path);
             if(filename == NULL){
                 etrace("cannot allocate memory for filename");
             } else {
                 winx_path_extract_filename(filename);
+                
                 winx_free(native_path);
-                native_path = winx_sprintf("\\??\\%ws\\UltraDefrag_Logs\\%s",path,filename);
+                length = wcslen(L"\\??\\\\UltraDefrag_Logs\\") + \
+                    wcslen(path) + wcslen(filename) + 1;
+                native_path = winx_malloc(length * sizeof(wchar_t));
                 if(native_path == NULL){
                     etrace("cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
                 } else {
+                    _snwprintf(native_path,length,L"\\??\\%ws\\UltraDefrag_Logs\\%hs",path,filename);
+                    native_path[length - 1] = 0;
                     /* delete old logfile from the temporary folder */
                     winx_delete_file(native_path);
                 }
+                
                 winx_free(filename);
             }
             winx_free(path);

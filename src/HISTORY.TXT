@@ -26,7 +26,12 @@
       superseded by winx_malloc, winx_free, winx_list_insert, winx_list_remove,
       winx_print_strings, winx_getenv, winx_setenv calls
     - winx_get_proc_address, winx_create_thread, winx_get_windows_directory,
-      winx_prompt, winx_dbg_print, udefrag_dbg_print prototypes changed
+      winx_prompt, winx_dbg_print, winx_fopen, winx_fbopen, 
+      winx_get_file_contents, winx_create_directory, winx_delete_file,
+      winx_create_path, winx_path_remove_extension, winx_path_remove_filename,
+      winx_path_extract_filename, winx_get_module_filename,
+      winx_get_windows_directory, winx_set_dbg_log, udefrag_dbg_print
+      prototypes changed
     - obsolete WgxDbgPrint, WgxDbgPrintLastError routines
       removed from wgx library
     - WgxSetDbgPrintHandler routine superseded by WgxSetInternalTraceHandler

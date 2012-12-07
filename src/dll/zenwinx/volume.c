@@ -444,16 +444,10 @@ int winx_get_volume_information(char volume_letter,winx_volume_information *v)
  */
 WINX_FILE *winx_vopen(char volume_letter)
 {
-    char path[] = "\\??\\A:";
-    char flags[2];
-    #define FLAG 'r'
+    wchar_t path[] = L"\\??\\A:";
 
     path[4] = winx_toupper(volume_letter);
-#if FLAG != 'r'
-#error Volume must be opened for read access!
-#endif
-    flags[0] = FLAG; flags[1] = 0;
-    return winx_fopen(path,flags);
+    return winx_fopen(path,"r");
 }
 
 /**
@@ -461,7 +455,7 @@ WINX_FILE *winx_vopen(char volume_letter)
  */
 int winx_vflush(char volume_letter)
 {
-    char path[] = "\\??\\A:";
+    wchar_t path[] = L"\\??\\A:";
     WINX_FILE *f;
     int result = -1;
     

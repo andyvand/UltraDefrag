@@ -28,11 +28,14 @@
 
 /**
  * @brief fopen() native equivalent.
- * @note Only r, w, a, r+, w+, a+ modes are supported.
+ * @note
+ * - Accepts native paths only,
+ * e.g. \\??\\C:\\file.txt
+ * - Only r, w, a, r+, w+, a+
+ * modes are supported.
  */
-WINX_FILE *winx_fopen(const char *filename,const char *mode)
+WINX_FILE *winx_fopen(const wchar_t *filename,const char *mode)
 {
-    ANSI_STRING as;
     UNICODE_STRING us;
     NTSTATUS status;
     HANDLE hFile;
@@ -44,11 +47,7 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
 
     DbgCheck2(filename,mode,NULL);
 
-    RtlInitAnsiString(&as,filename);
-    if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        etrace("cannot open %s: not enough memory",filename);
-        return NULL;
-    }
+    RtlInitUnicodeString(&us,filename);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
 
     if(!strcmp(mode,"r")){
@@ -86,13 +85,13 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
             );
     RtlFreeUnicodeString(&us);
     if(status != STATUS_SUCCESS){
-        strace(status,"cannot open %s",filename);
+        strace(status,"cannot open %ws",filename);
         return NULL;
     }
     f = (WINX_FILE *)winx_malloc(sizeof(WINX_FILE));
     if(!f){
         NtClose(hFile);
-        etrace("cannot open %s: not enough memory",filename);
+        etrace("cannot open %ws: not enough memory",filename);
         return NULL;
     }
     f->hFile = hFile;
@@ -113,7 +112,7 @@ WINX_FILE *winx_fopen(const char *filename,const char *mode)
  * the buffer size, in bytes. Returns
  * NULL if buffer allocation failed.
  */
-WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size)
+WINX_FILE *winx_fbopen(const wchar_t *filename,const char *mode,int buffer_size)
 {
     WINX_FILE *f;
     
@@ -128,7 +127,8 @@ WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size)
     /* allocate memory */
     f->io_buffer = winx_malloc(buffer_size);
     if(f->io_buffer == NULL){
-        etrace("cannot allocate %u bytes of memory",buffer_size);
+        etrace("cannot allocate %u bytes of memory"
+            " for %ws",buffer_size,filename);
         winx_fclose(f);
         return NULL;
     }
@@ -384,22 +384,17 @@ void winx_fclose(WINX_FILE *f)
  * @note If the requested directory already exists
  * this function completes successfully.
  */
-int winx_create_directory(const char *path)
+int winx_create_directory(const wchar_t *path)
 {
-    ANSI_STRING as;
     UNICODE_STRING us;
+    OBJECT_ATTRIBUTES oa;
     NTSTATUS status;
     HANDLE hFile;
-    OBJECT_ATTRIBUTES oa;
     IO_STATUS_BLOCK iosb;
 
     DbgCheck1(path,-1);
 
-    RtlInitAnsiString(&as,path);
-    if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        etrace("cannot create %s: not enough memory",path);
-        return (-1);
-    }
+    RtlInitUnicodeString(&us,path);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
 
     status = NtCreateFile(&hFile,
@@ -421,7 +416,7 @@ int winx_create_directory(const char *path)
     }
     /* if it already exists then return success */
     if(status == STATUS_OBJECT_NAME_COLLISION) return 0;
-    strace(status,"cannot create %s",path);
+    strace(status,"cannot create %ws",path);
     return (-1);
 }
 
@@ -430,26 +425,20 @@ int winx_create_directory(const char *path)
  * @param[in] filename the native path to the file.
  * @return Zero for success, negative value otherwise.
  */
-int winx_delete_file(const char *filename)
+int winx_delete_file(const wchar_t *filename)
 {
-    ANSI_STRING as;
     UNICODE_STRING us;
-    NTSTATUS status;
     OBJECT_ATTRIBUTES oa;
+    NTSTATUS status;
 
     DbgCheck1(filename,-1);
 
-    RtlInitAnsiString(&as,filename);
-    if(RtlAnsiStringToUnicodeString(&us,&as,TRUE) != STATUS_SUCCESS){
-        etrace("cannot delete %s: not enough memory",filename);
-        return (-1);
-    }
-
+    RtlInitUnicodeString(&us,filename);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtDeleteFile(&oa);
     RtlFreeUnicodeString(&us);
     if(!NT_SUCCESS(status)){
-        strace(status,"cannot delete %s",filename);
+        strace(status,"cannot delete %ws",filename);
         return (-1);
     }
     return 0;
@@ -465,7 +454,7 @@ int winx_delete_file(const char *filename)
  * the file contents. This allows to add the terminal
  * zero easily.
  */
-void *winx_get_file_contents(const char *filename,size_t *bytes_read)
+void *winx_get_file_contents(const wchar_t *filename,size_t *bytes_read)
 {
     WINX_FILE *f;
     ULONGLONG size;
@@ -478,7 +467,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
     
     f = winx_fopen(filename,"r");
     if(f == NULL){
-        winx_printf("\nCannot open %s file!\n\n",filename);
+        winx_printf("\nCannot open %ws file!\n\n",filename);
         return NULL;
     }
     
@@ -490,7 +479,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
     
 #ifndef _WIN64
     if(size > 0xFFFFFFFF){
-        winx_printf("\n%s: Files larger than ~4GB aren\'t supported!\n\n",
+        winx_printf("\n%ws: Files larger than ~4GB aren\'t supported!\n\n",
             filename);
         winx_fclose(f);
         return NULL;
@@ -500,7 +489,7 @@ void *winx_get_file_contents(const char *filename,size_t *bytes_read)
     
     contents = winx_malloc(length + 2);
     if(contents == NULL){
-        winx_printf("\n%s: Cannot allocate %u bytes of memory!\n\n",
+        winx_printf("\n%ws: Cannot allocate %u bytes of memory!\n\n",
             filename,length + 2);
         winx_fclose(f);
         return NULL;

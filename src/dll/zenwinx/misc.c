@@ -87,16 +87,22 @@ int winx_get_os_version(void)
  * - The returned string should be freed by the winx_free
  * call after its use.
  */
-char *winx_get_windows_directory(void)
+wchar_t *winx_get_windows_directory(void)
 {
     wchar_t *windir;
-    char *path = NULL;
+    wchar_t *path = NULL;
+    int length;
 
     windir = winx_getenv(L"SystemRoot");
     if(windir){
-        path = winx_sprintf("\\??\\%ws",windir);
-        if(path == NULL)
+        length = wcslen(windir) + wcslen(L"\\??\\") + 1;
+        path = winx_malloc(length * sizeof(wchar_t));
+        if(path == NULL){
             mtrace();
+        } else {
+            _snwprintf(path,length,L"\\??\\%ws",windir);
+            path[length - 1] = 0;
+        }
         winx_free(windir);
     }
     return path;
@@ -301,8 +307,8 @@ int winx_windows_in_safe_mode(void)
  */
 void MarkWindowsBootAsSuccessful(void)
 {
-    char *windir;
-    char *path;
+    wchar_t *windir;
+    wchar_t path[MAX_PATH + 1];
     WINX_FILE *f;
     char boot_success_flag = 1;
     
@@ -318,14 +324,9 @@ void MarkWindowsBootAsSuccessful(void)
         winx_sleep(3000);
         return;
     }
-    path = winx_sprintf("%hs\\bootstat.dat",windir);
+    _snwprintf(path,MAX_PATH,L"%ws\\bootstat.dat",windir);
+    path[MAX_PATH] = 0;
     winx_free(windir);
-    if(path == NULL){
-        mtrace();
-        winx_printf("\n%s: not enough memory\n\n",__FUNCTION__);
-        winx_sleep(3000);
-        return;
-    }
 
     /*
     * Set BootSuccessFlag to 0x1 (look at 
@@ -333,7 +334,6 @@ void MarkWindowsBootAsSuccessful(void)
     * file for details).
     */
     f = winx_fopen(path,"r+");
-    winx_free(path);
     if(f != NULL){
         f->woffset.QuadPart = 0xa;
         (void)winx_fwrite(&boot_success_flag,sizeof(char),1,f);

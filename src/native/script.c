@@ -39,8 +39,8 @@ int escape_flag = 0;
  */
 int ProcessScript(wchar_t *filename)
 {
-    char *windir;
-    char path[MAX_PATH];
+    wchar_t *windir;
+    wchar_t path[MAX_PATH + 1];
     wchar_t *buffer;
     size_t filesize, i, n;
     int line_detected;
@@ -56,12 +56,12 @@ int ProcessScript(wchar_t *filename)
             winx_printf("\nProcessScript: cannot get %%windir%% path\n\n");
             return (-1);
         }
-        (void)_snprintf(path,MAX_PATH - 1,"%hs\\system32\\ud-boot-time.cmd",windir);
-        path[MAX_PATH - 1] = 0;
+        (void)_snwprintf(path,MAX_PATH,L"%ws\\system32\\ud-boot-time.cmd",windir);
+        path[MAX_PATH] = 0;
         winx_free(windir);
     } else {
-        (void)_snprintf(path,MAX_PATH - 1,"\\??\\%ws",filename);
-        path[MAX_PATH - 1] = 0;
+        (void)_snwprintf(path,MAX_PATH,L"\\??\\%ws",filename);
+        path[MAX_PATH] = 0;
     }
 
     buffer = winx_get_file_contents(path,&filesize);
