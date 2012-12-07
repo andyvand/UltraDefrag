@@ -145,7 +145,7 @@ int winx_create_path(wchar_t *path)
     /*wchar_t rootdir[] = L"\\??\\X:\\";*/
     winx_volume_information v;
     wchar_t *p;
-    int n;
+    unsigned int n;
     
     if(path == NULL)
         return (-1);
@@ -164,7 +164,7 @@ int winx_create_path(wchar_t *path)
         // may fail with access denied status
         return winx_create_directory(rootdir);
         */
-        return winx_get_volume_information(path[4],&v);
+        return winx_get_volume_information((char)path[4],&v);
     }
     
     /* skip \??\X:\ */
