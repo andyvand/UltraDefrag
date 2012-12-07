@@ -52,47 +52,67 @@ static void convert_to_utf8_path(char *dst,int size,wchar_t *src)
     }
 }
 
-static char *get_report_path(udefrag_job_parameters *jp)
+static wchar_t *get_report_path(udefrag_job_parameters *jp)
 {
-    wchar_t *instdir;
-    char *path = NULL;
-    char buffer[MAX_PATH];
+    wchar_t *instdir, *fpath;
+    wchar_t *path = NULL;
+    int length;
 
     instdir = winx_getenv(L"UD_INSTALL_DIR");
     if(instdir == NULL){
         /* portable version? */
-        winx_get_module_filename(buffer);
-        if(buffer[0] == 0){
+        fpath = winx_get_module_filename();
+        if(fpath == NULL){
             etrace("cannot get program\'s path");
         } else {
-            winx_path_remove_filename(buffer);
-            path = winx_sprintf("%ws\\reports",buffer);
+            winx_path_remove_filename(fpath);
+
+            length = wcslen(fpath) + wcslen(L"\\reports") + 1;
+            path = winx_malloc(length * sizeof(wchar_t));
             if(path == NULL){
                 etrace("not enough memory (case 1)");
             } else {
+                _snwprintf(path,length,L"%ws\\reports",fpath);
+                path[length - 1] = 0;
                 (void)winx_create_directory(path);
                 winx_free(path);
             }
-            path = winx_sprintf("%ws\\reports\\fraglist_%c.luar",
-                buffer,winx_tolower(jp->volume_letter));
+
+            length = wcslen(fpath) + wcslen(L"\\reports\\fraglist_a.luar") + 1;
+            path = winx_malloc(length * sizeof(wchar_t));
             if(path == NULL){
                 etrace("not enough memory (case 2)");
+            } else {
+                _snwprintf(path,length,L"%ws\\reports\\fraglist_%c.luar",
+                    fpath,winx_tolower(jp->volume_letter));
+                path[length - 1] = 0;
             }
+
+            winx_free(fpath);
         }
     } else {
         /* regular installation */
-        path = winx_sprintf("\\??\\%ws\\reports",instdir);
+        length = wcslen(L"\\??\\\\reports") + wcslen(instdir) + 1;
+        path = winx_malloc(length * sizeof(wchar_t));
         if(path == NULL){
             etrace("not enough memory (case 3)");
         } else {
+            _snwprintf(path,length,L"\\??\\%ws\\reports",instdir);
+            path[length - 1] = 0;
             (void)winx_create_directory(path);
             winx_free(path);
         }
-        path = winx_sprintf("\\??\\%ws\\reports\\fraglist_%c.luar",
-            instdir,winx_tolower(jp->volume_letter));
+
+        length = wcslen(L"\\??\\\\reports\\fraglist_a.luar") + wcslen(instdir) + 1;
+        path = winx_malloc(length * sizeof(wchar_t));
         if(path == NULL){
             etrace("not enough memory (case 4)");
+        } else {
+            _snwprintf(path,length,L"\\??\\%ws\\reports\\fraglist_%c.luar",
+                instdir,winx_tolower(jp->volume_letter));
+            path[length - 1] = 0;
         }
+
         winx_free(instdir);
     }
     return path;
@@ -100,7 +120,7 @@ static char *get_report_path(udefrag_job_parameters *jp)
 
 static int save_lua_report(udefrag_job_parameters *jp)
 {
-    char *path = NULL;
+    wchar_t *path = NULL;
     WINX_FILE *f;
     wchar_t *cn;
     wchar_t compname[MAX_COMPUTERNAME_LENGTH + 1];
@@ -231,7 +251,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     (void)strcpy(buffer,"}\r\n");
     (void)winx_fwrite(buffer,1,strlen(buffer),f);
 
-    trace(I"report saved to %s",path);
+    trace(I"report saved to %ws",path);
     winx_fclose(f);
     winx_free(path);
     winx_free(utf8_path);
@@ -270,23 +290,23 @@ int save_fragmentation_report(udefrag_job_parameters *jp)
  */
 void remove_fragmentation_report(udefrag_job_parameters *jp)
 {
-    char *paths[] = {
-        "\\??\\%c:\\fraglist.luar",
-        "\\??\\%c:\\fraglist.txt",
-        "\\??\\%c:\\fraglist.htm",
-        "\\??\\%c:\\fraglist.html",
+    wchar_t *paths[] = {
+        L"\\??\\%c:\\fraglist.luar",
+        L"\\??\\%c:\\fraglist.txt",
+        L"\\??\\%c:\\fraglist.htm",
+        L"\\??\\%c:\\fraglist.html",
         NULL
     };
-    char path[64];
-    char *new_path, *ext_path;
-    int i;
+    wchar_t path[MAX_PATH + 1];
+    wchar_t *new_path, *ext_path;
+    int i, length;
     
     winx_dbg_print_header(0,0,I"*");
     
     /* remove old reports from the root directory */
     for(i = 0; paths[i]; i++){
-        _snprintf(path,64,paths[i],jp->volume_letter);
-        path[63] = 0;
+        _snwprintf(path,MAX_PATH,paths[i],jp->volume_letter);
+        path[MAX_PATH] = 0;
         (void)winx_delete_file(path);
     }
     
@@ -295,16 +315,29 @@ void remove_fragmentation_report(udefrag_job_parameters *jp)
     if(new_path){
         (void)winx_delete_file(new_path);
         winx_path_remove_extension(new_path);
-        ext_path = winx_sprintf("%hs.txt",new_path);
-        if(ext_path){
+        
+        length = wcslen(new_path) + wcslen(L".txt") + 1;
+        ext_path = winx_malloc(length * sizeof(wchar_t));
+        if(ext_path == NULL){
+            mtrace();
+        } else {
+            _snwprintf(ext_path,length,L"%ws.txt",new_path);
+            ext_path[length - 1] = 0;
             (void)winx_delete_file(ext_path);
             winx_free(ext_path);
         }
-        ext_path = winx_sprintf("%hs.html",new_path);
-        if(ext_path){
+        
+        length = wcslen(new_path) + wcslen(L".html") + 1;
+        ext_path = winx_malloc(length * sizeof(wchar_t));
+        if(ext_path == NULL){
+            mtrace();
+        } else {
+            _snwprintf(ext_path,length,L"%ws.html",new_path);
+            ext_path[length - 1] = 0;
             (void)winx_delete_file(ext_path);
             winx_free(ext_path);
         }
+        
         winx_free(new_path);
     }
 }

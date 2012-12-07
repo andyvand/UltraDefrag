@@ -101,8 +101,7 @@ static int man_listing_terminator(void *user_defined_parameter)
 static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
 {
     wchar_t *instdir;
-    char path[MAX_PATH + 1];
-    wchar_t wpath[MAX_PATH + 1];
+    wchar_t path[MAX_PATH + 1];
     winx_file_info *file, *filelist;
     WINX_FILE *f;
     int i, column;
@@ -119,9 +118,9 @@ static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
     }
 
     /* try to get list of installed man pages through winx_ftw call */
-    _snwprintf(wpath,MAX_PATH,L"%ws\\man",instdir);
-    wpath[MAX_PATH] = 0;
-    filelist = winx_ftw(wpath,0,NULL,NULL,man_listing_terminator,NULL);
+    _snwprintf(path,MAX_PATH,L"%ws\\man",instdir);
+    path[MAX_PATH] = 0;
+    filelist = winx_ftw(path,0,NULL,NULL,man_listing_terminator,NULL);
     if(filelist){
         winx_printf("Available Manual Pages:\n");
         for(file = filelist->prev, column = 0; file; file = file->prev){
@@ -144,16 +143,16 @@ static int list_installed_man_pages(int argc,wchar_t **argv,wchar_t **envp)
         /* cycle through names of existing commands */
         for(i = 0, column = 0; cmd_table[i].cmd_handler != NULL; i++){
             /* build path to the manual page */
-            _snprintf(path,MAX_PATH,"%ws\\man\\%ws.man",instdir,cmd_table[i].cmd_name);
+            _snwprintf(path,MAX_PATH,L"%ws\\man\\%ws.man",instdir,cmd_table[i].cmd_name);
             path[MAX_PATH] = 0;
             /* check for the page existence */
             f = winx_fopen(path,"r");
             if(f != NULL){
                 winx_fclose(f);
                 /* display man page filename on the screen */
-                _snprintf(path,MAX_PATH,"%ws.man",cmd_table[i].cmd_name);
+                _snwprintf(path,MAX_PATH,L"%ws.man",cmd_table[i].cmd_name);
                 path[MAX_PATH] = 0;
-                winx_printf("%-15s",path);
+                winx_printf("%-15ws",path);
                 column ++;
                 if(column >= max_columns){
                     winx_printf("\n");
@@ -320,8 +319,8 @@ static int echo_handler(int argc,wchar_t **argv,wchar_t **envp)
  */
 static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
 {
-    char *windir;
-    char path[MAX_PATH];
+    wchar_t *windir;
+    wchar_t path[MAX_PATH + 1];
     wchar_t *filename;
     int i, length;
     size_t filesize;
@@ -340,8 +339,8 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
             winx_printf("\n%ws: cannot get %%windir%% path\n\n",argv[0]);
             return (-1);
         }
-        (void)_snprintf(path,MAX_PATH - 1,"%hs\\system32\\ud-boot-time.cmd",windir);
-        path[MAX_PATH - 1] = 0;
+        (void)_snwprintf(path,MAX_PATH,L"%ws\\system32\\ud-boot-time.cmd",windir);
+        path[MAX_PATH] = 0;
         winx_free(windir);
     } else {
         length = 0;
@@ -359,8 +358,8 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
             if(i != argc - 1)
                 wcscat(filename,L" ");
         }
-        (void)_snprintf(path,MAX_PATH - 1,"\\??\\%ws",filename);
-        path[MAX_PATH - 1] = 0;
+        (void)_snwprintf(path,MAX_PATH,L"\\??\\%ws",filename);
+        path[MAX_PATH] = 0;
         winx_free(filename);
     }
     (void)filename;
@@ -413,7 +412,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
  */
 static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
 {
-    char path[MAX_PATH];
+    wchar_t path[MAX_PATH + 1];
     wchar_t *filename;
     int i, length;
     WINX_FILE *f;
@@ -454,14 +453,14 @@ static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
         if(i != argc - 1)
             wcscat(filename,L" ");
     }
-    (void)_snprintf(path,MAX_PATH - 1,"\\??\\%ws",filename);
-    path[MAX_PATH - 1] = 0;
+    (void)_snwprintf(path,MAX_PATH,L"\\??\\%ws",filename);
+    path[MAX_PATH] = 0;
     winx_free(filename);
     
     /* open the file */
     f = winx_fopen(path,"r");
     if(f == NULL){
-        winx_printf("\n%ws: cannot open %s\n\n",argv[0],path);
+        winx_printf("\n%ws: cannot open %ws\n\n",argv[0],path);
         return (-1);
     }
     size = winx_fsize(f);
@@ -484,7 +483,7 @@ static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
         bytes_to_read = min(SCREEN_BUFFER_SIZE,filesize);
         result = winx_fread(buffer,sizeof(char),bytes_to_read,f);
         if(result != bytes_to_read && winx_fsize(f) == size){
-            winx_printf("\n%ws: cannot read %s\n\n",argv[0],path);
+            winx_printf("\n%ws: cannot read %ws\n\n",argv[0],path);
             winx_fclose(f);
             return (-1);
         }
@@ -738,8 +737,8 @@ static int pause_handler(int argc,wchar_t **argv,wchar_t **envp)
  */
 int ExecPendingBootOff(void)
 {
-    char *windir;
-    char path[MAX_PATH];
+    wchar_t *windir;
+    wchar_t path[MAX_PATH + 1];
     WINX_FILE *f;
 
     windir = winx_get_windows_directory();
@@ -749,8 +748,8 @@ int ExecPendingBootOff(void)
         short_dbg_delay();
         return 0;
     }
-    (void)_snprintf(path,MAX_PATH,"%hs\\pending-boot-off",windir);
-    path[MAX_PATH - 1] = 0;
+    (void)_snwprintf(path,MAX_PATH,L"%ws\\pending-boot-off",windir);
+    path[MAX_PATH] = 0;
     winx_free(windir);
 
     f = winx_fopen(path,"r");
@@ -771,8 +770,8 @@ int ExecPendingBootOff(void)
 
 static void SavePendingBootOffState(void)
 {
-    char *windir;
-    char path[MAX_PATH];
+    wchar_t *windir;
+    wchar_t path[MAX_PATH + 1];
     WINX_FILE *f;
     char *comment = "UltraDefrag boot-off command is pending.";
     
@@ -785,8 +784,8 @@ static void SavePendingBootOffState(void)
         short_dbg_delay();
         return;
     }
-    (void)_snprintf(path,MAX_PATH,"%hs\\pending-boot-off",windir);
-    path[MAX_PATH - 1] = 0;
+    (void)_snwprintf(path,MAX_PATH,L"%ws\\pending-boot-off",windir);
+    path[MAX_PATH] = 0;
     winx_free(windir);
     f = winx_fopen(path,"w");
     if(f == NULL){

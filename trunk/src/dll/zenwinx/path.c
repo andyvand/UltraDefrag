@@ -34,30 +34,15 @@
  * If the file name contains no dot or is starting with a dot,
  * then path keeps unchanged.
  * @param[in,out] path the native ANSI path to be processed.
+ * @note Optimized for speed.
  */
-void winx_path_remove_extension(char *path)
+void winx_path_remove_extension(wchar_t *path)
 {
     int i;
 
-#if 0
-    char *lb, *dot;
-
-    /* slower */
-    if(path){
-        lb = strrchr(path,'\\');
-        dot = strrchr(path,'.');
-        if(lb && dot){ /* both backslash and a dot exist */
-            if(dot < lb || dot == lb + 1)
-                return; /* filename contains either no dot or a leading dot */
-            *dot = 0;
-        }
-    }
-#else
-    if(path == NULL)
-        return;
+    if(!path) return;
     
-    /* faster */
-    for(i = strlen(path) - 1; i >= 0; i--){
+    for(i = wcslen(path) - 1; i >= 0; i--){
         if(path[i] == '\\')
             return; /* filename contains no dot */
         if(path[i] == '.' && i){
@@ -66,7 +51,6 @@ void winx_path_remove_extension(char *path)
             return;
         }
     }
-#endif
 }
 
 /**
@@ -76,12 +60,12 @@ void winx_path_remove_extension(char *path)
  * If the path has a trailing backslash, then only that is removed.
  * @param[in,out] path the native ANSI path to be processed.
  */
-void winx_path_remove_filename(char *path)
+void winx_path_remove_filename(wchar_t *path)
 {
-    char *lb;
+    wchar_t *lb;
     
     if(path){
-        lb = strrchr(path,'\\');
+        lb = wcsrchr(path,'\\');
         if(lb) *lb = 0;
     }
 }
@@ -94,16 +78,14 @@ void winx_path_remove_filename(char *path)
  * path contains as output <b>Windows\\</b>.
  * @param[in,out] path the native ANSI path to be processed.
  */
-void winx_path_extract_filename(char *path)
+void winx_path_extract_filename(wchar_t *path)
 {
     int i,j,n;
     
-    if(path == NULL)
-        return;
+    if(!path) return;
     
-    n = strlen(path);
-    if(n == 0)
-        return;
+    n = wcslen(path);
+    if(!n) return;
     
     for(i = n - 1; i >= 0; i--){
         if(path[i] == '\\' && (i != n - 1)){
@@ -120,47 +102,36 @@ void winx_path_extract_filename(char *path)
 /**
  * @brief Gets the fully quallified path of the current module.
  * @details This routine is the native equivalent of GetModuleFileName.
- * @param[out] path receives the native path of the current executable.
- * @note path must be MAX_PATH characters long.
+ * @note The returned string should be freed by the winx_free call after its use.
  */
-void winx_get_module_filename(char *path)
+wchar_t *winx_get_module_filename(void)
 {
-    PROCESS_BASIC_INFORMATION ProcessInformation;
+    PROCESS_BASIC_INFORMATION pi;
     NTSTATUS status;
-    ANSI_STRING as = {0};
+    UNICODE_STRING *us;
+    wchar_t *path;
+    int size;
     
-    if(path == NULL)
-        return;
-    
-    path[0] = 0;
-    
-    /* retrieve process executable path */
-    RtlZeroMemory(&ProcessInformation,sizeof(ProcessInformation));
+    RtlZeroMemory(&pi,sizeof(pi));
     status = NtQueryInformationProcess(NtCurrentProcess(),
-                    ProcessBasicInformation,&ProcessInformation,
-                    sizeof(ProcessInformation),
-                    NULL);
-    /* extract path and file name */
-    if(NT_SUCCESS(status)){
-        /* convert Unicode path to ANSI */
-        if(RtlUnicodeStringToAnsiString(&as,
-          &ProcessInformation.PebBaseAddress->ProcessParameters->ImagePathName,
-          TRUE) == STATUS_SUCCESS){
-            /* avoid buffer overflow */
-            if(as.Length < (MAX_PATH-4)){
-                /* add native path prefix to path */
-                (void)strcpy(path,"\\??\\");
-                (void)strncat(path,as.Buffer,as.Length);
-            } else {
-                etrace("path is too long");
-            }
-            RtlFreeAnsiString(&as);
-        } else {
-            mtrace();
-        }
-    } else {
+                    ProcessBasicInformation,&pi,
+                    sizeof(pi),NULL);
+    if(!NT_SUCCESS(status)){
         strace(status,"cannot query basic process information");
+        return NULL;
     }
+    
+    us = &pi.PebBaseAddress->ProcessParameters->ImagePathName;
+    size = us->MaximumLength + sizeof(wchar_t);
+    path = winx_malloc(size);
+    if(path == NULL){
+        mtrace();
+        return NULL;
+    }
+    
+    memset(path,0,size);
+    memcpy(path,us->Buffer,us->Length);
+    return path;
 }
 
 /**
@@ -169,24 +140,24 @@ void winx_get_module_filename(char *path)
  * @return Zero for success,
  * negative value otherwise.
  */
-int winx_create_path(char *path)
+int winx_create_path(wchar_t *path)
 {
-    char *p;
-    unsigned int n;
-    /*char rootdir[] = "\\??\\X:\\";*/
+    /*wchar_t rootdir[] = L"\\??\\X:\\";*/
     winx_volume_information v;
+    wchar_t *p;
+    int n;
     
     if(path == NULL)
         return (-1);
 
     /* path must contain at least \??\X: */
-    if(strstr(path,"\\??\\") != path || strchr(path,':') != (path + 5)){
+    if(wcsstr(path,L"\\??\\") != path || wcschr(path,':') != (path + 5)){
         etrace("native path must be specified");
         return (-1);
     }
 
-    n = strlen("\\??\\X:\\");
-    if(strlen(path) <= n){
+    n = wcslen(L"\\??\\X:\\");
+    if(wcslen(path) <= n){
         /* check for volume existence */
         /*
         rootdir[4] = path[4];
@@ -200,11 +171,11 @@ int winx_create_path(char *path)
     p = path + n;
     
     /* create directory tree */
-    while((p = strchr(p,'\\'))){
+    while((p = wcschr(p,'\\'))){
         *p = 0;
         if(winx_create_directory(path) < 0){
-            etrace("cannot create %s",path);
             *p = '\\';
+            etrace("cannot create %ws",path);
             return (-1);
         }
         *p = '\\';
@@ -213,7 +184,7 @@ int winx_create_path(char *path)
     
     /* create target directory */
     if(winx_create_directory(path) < 0){
-        etrace("cannot create %s",path);
+        etrace("cannot create %ws",path);
         return (-1);
     }
     

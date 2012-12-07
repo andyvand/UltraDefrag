@@ -536,7 +536,7 @@ void winx_dbg_print_header(char ch, int width, char *format, ...)
 
 /* logging to the file */
 
-char *log_path = NULL;
+wchar_t *log_path = NULL;
 
 /* synchronization event for the log path access */
 winx_spin_lock *path_lock = NULL;
@@ -565,7 +565,7 @@ static void flush_dbg_log(int already_synchronized)
 {
     #define DBG_BUFFER_SIZE (100 * 1024) /* 100 KB */
     WINX_FILE *f;
-    char *lb;
+    wchar_t *lb;
     winx_dbg_log_entry *old_dbg_log, *log_entry;
     int length;
     char crlf[] = "\r\n";
@@ -600,7 +600,7 @@ static void flush_dbg_log(int already_synchronized)
     f = winx_fbopen(log_path,"a",DBG_BUFFER_SIZE);
     if(f == NULL){
         /* recreate path if it does not exist */
-        lb = strrchr(log_path,'\\');
+        lb = wcsrchr(log_path,'\\');
         if(lb) *lb = 0;
         if(winx_create_path(log_path) < 0){
             etrace("cannot create directory tree for log path");
@@ -612,7 +612,7 @@ static void flush_dbg_log(int already_synchronized)
 
     /* save log */
     if(f != NULL){
-        winx_printf("\nWriting log file \"%s\" ...\n",&log_path[4]);
+        winx_printf("\nWriting log file \"%ws\" ...\n",&log_path[4]);
         for(log_entry = old_dbg_log; log_entry; log_entry = log_entry->next){
             if(log_entry->buffer){
                 length = strlen(log_entry->buffer);
@@ -664,7 +664,7 @@ void winx_flush_dbg_log(void)
  * all collected data to the disk and disable
  * logging to the file.
  */
-void winx_set_dbg_log(char *path)
+void winx_set_dbg_log(wchar_t *path)
 {
     if(path == NULL){
         logging_enabled = 0;
@@ -683,7 +683,7 @@ void winx_set_dbg_log(char *path)
     if(path || log_path){
         if(!path || !log_path)
             flush_dbg_log(1);
-        else if(strcmp(path,log_path))
+        else if(wcscmp(path,log_path))
             flush_dbg_log(1);
     }
     
@@ -693,9 +693,9 @@ void winx_set_dbg_log(char *path)
         log_path = NULL;
     }
     if(logging_enabled){
-        itrace("log_path = %s",path);
-        winx_printf("\nUsing log file \"%s\" ...\n",&path[4]);
-        log_path = winx_strdup(path);
+        itrace("log_path = %ws",path);
+        winx_printf("\nUsing log file \"%ws\" ...\n",&path[4]);
+        log_path = winx_wcsdup(path);
         if(log_path == NULL){
             mtrace();
             winx_print("\nCannot allocate memory for log path!\n");

@@ -101,7 +101,7 @@
 #define DEFAULT_DBG_PRINT_DECORATION_CHAR  '-'
 #define DEFAULT_DBG_PRINT_HEADER_WIDTH     64
 
-void winx_set_dbg_log(char *path);
+void winx_set_dbg_log(wchar_t *path);
 #define winx_enable_dbg_log(path) winx_set_dbg_log(path)
 #define winx_disable_dbg_log()    winx_set_dbg_log(NULL)
 void winx_flush_dbg_log(void);
@@ -130,8 +130,8 @@ typedef struct _WINX_FILE {
 
 #define winx_fileno(f) ((f)->hFile)
 
-WINX_FILE *winx_fopen(const char *filename,const char *mode);
-WINX_FILE *winx_fbopen(const char *filename,const char *mode,int buffer_size);
+WINX_FILE *winx_fopen(const wchar_t *filename,const char *mode);
+WINX_FILE *winx_fbopen(const wchar_t *filename,const char *mode,int buffer_size);
 size_t winx_fread(void *buffer,size_t size,size_t count,WINX_FILE *f);
 size_t winx_fwrite(const void *buffer,size_t size,size_t count,WINX_FILE *f);
 ULONGLONG winx_fsize(WINX_FILE *f);
@@ -142,9 +142,9 @@ int winx_ioctl(WINX_FILE *f,
     void *out_buffer,int out_size,
     int *pbytes_returned);
 int winx_fflush(WINX_FILE *f);
-int winx_create_directory(const char *path);
-int winx_delete_file(const char *filename);
-void *winx_get_file_contents(const char *filename,size_t *bytes_read);
+int winx_create_directory(const wchar_t *path);
+int winx_delete_file(const wchar_t *filename);
+void *winx_get_file_contents(const wchar_t *filename,size_t *bytes_read);
 void winx_release_file_contents(void *contents);
 
 /* float.c */
@@ -278,9 +278,10 @@ void winx_sleep(int msec);
 #define WINDOWS_2K3    52 /* and Server 2003 R2 and XP x64 */
 #define WINDOWS_VISTA  60 /* and Server 2008 */
 #define WINDOWS_7      61 /* and Server 2008 R2 */
+#define WINDOWS_8      62 /* and Server 2012 */
 int winx_get_os_version(void);
 
-char *winx_get_windows_directory(void);
+wchar_t *winx_get_windows_directory(void);
 int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length);
 
 /* process mode constants */
@@ -297,11 +298,11 @@ int winx_release_mutex(HANDLE h);
 void winx_destroy_mutex(HANDLE h);
 
 /* path.c */
-void winx_path_remove_extension(char *path);
-void winx_path_remove_filename(char *path);
-void winx_path_extract_filename(char *path);
-void winx_get_module_filename(char *path);
-int winx_create_path(char *path);
+void winx_path_remove_extension(wchar_t *path);
+void winx_path_remove_filename(wchar_t *path);
+void winx_path_extract_filename(wchar_t *path);
+wchar_t *winx_get_module_filename(void);
+int winx_create_path(wchar_t *path);
 
 /* privilege.c */
 int winx_enable_privilege(unsigned long luid);

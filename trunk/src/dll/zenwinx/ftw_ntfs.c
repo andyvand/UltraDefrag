@@ -1732,9 +1732,7 @@ static int ntfs_scan_disk_helper(char volume_letter,
     ftw_progress_callback pcb, ftw_terminator t,
     void *user_defined_data, winx_file_info **filelist)
 {
-    char path[64];
-    char f_flags[2];
-    #define FLAG 'r'
+    wchar_t path[] = L"\\??\\A:";
     int result;
     mft_scan_parameters sp;
     winx_file_info *f;
@@ -1749,14 +1747,9 @@ static int ntfs_scan_disk_helper(char volume_letter,
     sp.t = t;
     sp.user_defined_data = user_defined_data;
     
-    /* open volume */
-    (void)_snprintf(path,64,"\\??\\%c:",volume_letter);
-    path[63] = 0;
-    #if FLAG != 'r'
-    #error Volume must be opened for read access!
-    #endif
-    f_flags[0] = FLAG; f_flags[1] = 0;
-    sp.f_volume = winx_fopen(path,f_flags);
+    /* open the volume for read access */
+    path[4] = winx_toupper(volume_letter);
+    sp.f_volume = winx_fopen(path,"r");
     if(sp.f_volume == NULL)
         return (-1);
     
