@@ -37,14 +37,14 @@ static HANDLE OpenRootDirectory(unsigned char volume_letter)
     wchar_t rootpath[] = L"\\??\\A:\\";
     HANDLE hRoot;
     NTSTATUS status;
-    UNICODE_STRING uStr;
+    UNICODE_STRING us;
     OBJECT_ATTRIBUTES ObjectAttributes;
     IO_STATUS_BLOCK IoStatusBlock;
 
     rootpath[4] = (wchar_t)winx_toupper(volume_letter);
-    RtlInitUnicodeString(&uStr,rootpath);
-    InitializeObjectAttributes(&ObjectAttributes,&uStr,
-                   FILE_READ_ATTRIBUTES,NULL,NULL); /* ?? */
+    RtlInitUnicodeString(&us,rootpath);
+    InitializeObjectAttributes(&ObjectAttributes,&us,
+                   FILE_READ_ATTRIBUTES,NULL,NULL);
     status = NtCreateFile(&hRoot,FILE_GENERIC_READ,
                 &ObjectAttributes,&IoStatusBlock,NULL,0,
                 FILE_SHARE_READ|FILE_SHARE_WRITE,FILE_OPEN,0,

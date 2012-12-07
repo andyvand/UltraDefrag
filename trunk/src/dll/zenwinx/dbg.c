@@ -306,7 +306,7 @@ enum {
  */
 static void *winx_get_error_description(ULONG error,int *encoding)
 {
-    UNICODE_STRING uStr;
+    UNICODE_STRING us;
     NTSTATUS Status;
     HMODULE base_addr;
     MESSAGE_RESOURCE_ENTRY *mre;
@@ -317,8 +317,8 @@ static void *winx_get_error_description(ULONG error,int *encoding)
     * library giving us a great deal
     * better information.
     */
-    RtlInitUnicodeString(&uStr,L"kernel32.dll");
-    Status = LdrGetDllHandle(0,0,&uStr,&base_addr);
+    RtlInitUnicodeString(&us,L"kernel32.dll");
+    Status = LdrGetDllHandle(0,0,&us,&base_addr);
     if(!NT_SUCCESS(Status))
         return NULL; /* this case is usual for boot time executables */
     Status = RtlFindMessage(base_addr,(ULONG)(DWORD_PTR)RT_MESSAGETABLE,
