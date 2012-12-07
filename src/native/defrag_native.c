@@ -217,9 +217,8 @@ void __stdcall NtProcessStartup(PPEB Peb)
 static void set_dbg_log(char *name)
 {
     wchar_t *instdir;
-    char *logpath = NULL;
-    int length;
-    wchar_t *unicode_path = NULL;
+    wchar_t *path = NULL;
+    int length, result;
 
     instdir = winx_getenv(L"UD_INSTALL_DIR");
     if(instdir == NULL){
@@ -227,36 +226,25 @@ static void set_dbg_log(char *name)
         return;
     }
     
-    logpath = winx_sprintf("%ws\\logs\\boot-%s.log",instdir,name);
-    winx_free(instdir);
-    if(logpath == NULL){
+    length = wcslen(instdir) + strlen(name) + \
+        wcslen(L"\\logs\\boot-.log") + 1;
+    path = winx_malloc(length * sizeof(wchar_t));
+    if(path == NULL){
         winx_printf("\nset_dbg_log: cannot build log path\n\n");
+        winx_free(instdir);
         return;
     }
     
-    length = strlen(logpath);
-    unicode_path = winx_malloc((length + 1) * sizeof(wchar_t));
-    if(unicode_path == NULL){
-        winx_printf("\nset_dbg_log: cannot allocate %u bytes of memory",
-            (length + 1) * sizeof(wchar_t));
-        goto done;
-    }
-    
-    if(_snwprintf(unicode_path,length + 1,L"%hs",logpath) < 0){
-        winx_printf("\nset_dbg_log: cannot convert log path to unicode\n\n");
-        goto done;
-    }
-    
-    unicode_path[length] = 0;
-    if(winx_setenv(L"UD_LOG_FILE_PATH",unicode_path) < 0){
-        winx_printf("\nset_dbg_log: cannot set %%UD_LOG_FILE_PATH%%\n\n");
-        goto done;
-    }
-    
-    if(udefrag_set_log_file_path() < 0)
-        winx_printf("\nset_dbg_log: udefrag_set_log_file_path failed\n\n");
+    _snwprintf(path,length,L"%ws\\logs\\boot-%hs.log",instdir,name);
+    path[length - 1] = 0;
+    winx_free(instdir);
 
-done:
-    winx_free(logpath);
-    winx_free(unicode_path);
+    result = winx_setenv(L"UD_LOG_FILE_PATH",path);
+    winx_free(path);
+    if(result < 0){
+        winx_printf("\nset_dbg_log: cannot set %%UD_LOG_FILE_PATH%%\n\n");
+    } else {
+        if(udefrag_set_log_file_path() < 0)
+            winx_printf("\nset_dbg_log: udefrag_set_log_file_path failed\n\n");
+    }
 }
