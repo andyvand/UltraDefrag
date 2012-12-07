@@ -34,7 +34,7 @@ HANDLE hGlobalHeap = NULL;
  * Note that the allocated block may be bigger than the requested size.
  * @return A pointer to the allocated block. NULL indicates failure.
  */
-void *winx_malloc(SIZE_T size)
+void *winx_malloc(size_t size)
 {
     /*
     * Avoid winx_dbg_xxx calls here
