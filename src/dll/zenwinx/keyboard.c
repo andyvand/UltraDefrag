@@ -361,7 +361,7 @@ static int kb_open_internal(int device_number, int kbd_count)
 {
     wchar_t device_name[32];
     wchar_t event_name[32];
-    UNICODE_STRING uStr;
+    UNICODE_STRING us;
     OBJECT_ATTRIBUTES ObjectAttributes;
     IO_STATUS_BLOCK IoStatusBlock;
     NTSTATUS status;
@@ -371,8 +371,8 @@ static int kb_open_internal(int device_number, int kbd_count)
 
     (void)_snwprintf(device_name,32,L"\\Device\\KeyboardClass%u",device_number);
     device_name[31] = 0;
-    RtlInitUnicodeString(&uStr,device_name);
-    InitializeObjectAttributes(&ObjectAttributes,&uStr,OBJ_CASE_INSENSITIVE,NULL,NULL);
+    RtlInitUnicodeString(&us,device_name);
+    InitializeObjectAttributes(&ObjectAttributes,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtCreateFile(&hKbDevice,
                 GENERIC_READ | FILE_RESERVE_OPFILTER | FILE_READ_ATTRIBUTES/*0x80100080*/,
                 &ObjectAttributes,&IoStatusBlock,NULL,FILE_ATTRIBUTE_NORMAL/*0x80*/,
@@ -399,8 +399,8 @@ static int kb_open_internal(int device_number, int kbd_count)
     /* create a special event object for internal use */
     (void)_snwprintf(event_name,32,L"\\kb_event%u",device_number);
     event_name[31] = 0;
-    RtlInitUnicodeString(&uStr,event_name);
-    InitializeObjectAttributes(&ObjectAttributes,&uStr,0,NULL,NULL);
+    RtlInitUnicodeString(&us,event_name);
+    InitializeObjectAttributes(&ObjectAttributes,&us,0,NULL,NULL);
     status = NtCreateEvent(&hKbEvent,STANDARD_RIGHTS_ALL | 0x1ff/*0x1f01ff*/,
         &ObjectAttributes,SynchronizationEvent,0/*FALSE*/);
     if(!NT_SUCCESS(status)){

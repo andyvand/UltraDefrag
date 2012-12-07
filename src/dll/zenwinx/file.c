@@ -83,7 +83,6 @@ WINX_FILE *winx_fopen(const wchar_t *filename,const char *mode)
             NULL,
             0
             );
-    RtlFreeUnicodeString(&us);
     if(status != STATUS_SUCCESS){
         strace(status,"cannot open %ws",filename);
         return NULL;
@@ -409,7 +408,6 @@ int winx_create_directory(const wchar_t *path)
             NULL,
             0
             );
-    RtlFreeUnicodeString(&us);
     if(NT_SUCCESS(status)){
         NtClose(hFile);
         return 0;
@@ -436,7 +434,6 @@ int winx_delete_file(const wchar_t *filename)
     RtlInitUnicodeString(&us,filename);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtDeleteFile(&oa);
-    RtlFreeUnicodeString(&us);
     if(!NT_SUCCESS(status)){
         strace(status,"cannot delete %ws",filename);
         return (-1);

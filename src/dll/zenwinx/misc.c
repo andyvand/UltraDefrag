@@ -124,25 +124,25 @@ wchar_t *winx_get_windows_directory(void)
 int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length)
 {
     OBJECT_ATTRIBUTES oa;
-    UNICODE_STRING uStr;
+    UNICODE_STRING us;
     NTSTATUS status;
     HANDLE hLink;
     ULONG size;
 
     DbgCheck3(name,buffer,(length > 0),-1);
     
-    RtlInitUnicodeString(&uStr,name);
-    InitializeObjectAttributes(&oa,&uStr,OBJ_CASE_INSENSITIVE,NULL,NULL);
+    RtlInitUnicodeString(&us,name);
+    InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
     status = NtOpenSymbolicLinkObject(&hLink,SYMBOLIC_LINK_QUERY,&oa);
     if(!NT_SUCCESS(status)){
         strace(status,"cannot open %ls",name);
         return (-1);
     }
-    uStr.Buffer = buffer;
-    uStr.Length = 0;
-    uStr.MaximumLength = length * sizeof(wchar_t);
+    us.Buffer = buffer;
+    us.Length = 0;
+    us.MaximumLength = length * sizeof(wchar_t);
     size = 0;
-    status = NtQuerySymbolicLinkObject(hLink,&uStr,&size);
+    status = NtQuerySymbolicLinkObject(hLink,&us,&size);
     (void)NtClose(hLink);
     if(!NT_SUCCESS(status)){
         strace(status,"cannot query %ls",name);
