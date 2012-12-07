@@ -225,7 +225,7 @@ void InitializeMapDisplay(char volume_letter)
         }
         cursor_pos.X = 0;
         cursor_pos.Y = csbi.dwCursorPosition.Y - 1;
-        if(v_flag) cursor_pos.Y -= v_lines;
+        if(v_flag) cursor_pos.Y -= (SHORT)v_lines;
         if(!SetConsoleCursorPosition(hStdOut,cursor_pos))
             display_last_error("Cannot set cursor position!");
     }
