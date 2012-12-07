@@ -569,67 +569,77 @@ int CreateMainWindow(int nShowCmd)
  */
 void OpenWebPage(char *page, char *anchor)
 {
-    int i;
-    DWORD url_length;
-    wchar_t url[INTERNET_MAX_URL_LENGTH];
-    wchar_t path[INTERNET_MAX_URL_LENGTH];
-    wchar_t exe[MAX_PATH] = {0};
-    char cd[MAX_PATH];
-    HINSTANCE hApp;
+    wchar_t path[INTERNET_MAX_URL_LENGTH + 1];
+    HINSTANCE hInst, hApp = NULL;
+    wchar_t exe[MAX_PATH + 1] = {0};
+    char cd[MAX_PATH + 1];
     HMODULE hShlwapiDll;
     typedef HRESULT (WINAPI *URLCANONICALIZEW_PROC)(wchar_t *pszUrl,
         wchar_t *pszCanonicalized,LPDWORD pcchCanonicalized,DWORD dwFlags);
     URLCANONICALIZEW_PROC pUrlCanonicalizeW = NULL;
-    
-    hShlwapiDll = LoadLibrary("shlwapi.dll");
-    if(hShlwapiDll){
-        pUrlCanonicalizeW = (URLCANONICALIZEW_PROC)GetProcAddress(hShlwapiDll,"UrlCanonicalizeW");
-    }
+    wchar_t url[INTERNET_MAX_URL_LENGTH + 1];
+    DWORD url_length;
+    int i;
 
     (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L".\\handbook\\%hs",page);
+    path[INTERNET_MAX_URL_LENGTH] = 0;
 
-    if (anchor != NULL){
-        if(GetModuleFileName(NULL,cd,MAX_PATH)){
-            cd[MAX_PATH-1] = 0;
-
-            i = strlen(cd) - 1;
-            while(i >= 0) {
-                if(cd[i] == '\\'){
-                    cd[i] = 0;
-                    break;
+    if(anchor == NULL){
+        hApp = ShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+    } else {
+        hInst = FindExecutableW(path,NULL,exe);
+        if((int)(LONG_PTR)hInst <= 32 || exe[0] == 0){
+            etrace("cannot retrieve associated application"
+                " path: 0x%x error",(UINT)(LONG_PTR)hInst);
+        } else {
+            if(!GetModuleFileName(NULL,cd,MAX_PATH)){
+                letrace("cannot get current directory");
+            } else {
+                cd[MAX_PATH] = 0;
+                i = strlen(cd) - 1;
+                while(i >= 0) {
+                    if(cd[i] == '\\'){
+                        cd[i] = 0;
+                        break;
+                    }
+                    i--;
                 }
-                i--;
-            }
-
-            (void)FindExecutableW(path,NULL,exe);
-
-            (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
-                L"file://%hs\\handbook\\%hs#%hs",cd,page,anchor);
-
-            if(pUrlCanonicalizeW){
-                /* URL-encode spaces */
-                url_length = INTERNET_MAX_URL_LENGTH - 1;
-                if(pUrlCanonicalizeW(path,url,&url_length,URL_ESCAPE_SPACES_ONLY | URL_DONT_ESCAPE_EXTRA_INFO) == S_OK)
-                    (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,L"%ls",url);
+    
+                (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
+                    L"file://%hs\\handbook\\%hs#%hs",cd,page,anchor);
+                path[INTERNET_MAX_URL_LENGTH] = 0;
+    
+                hShlwapiDll = LoadLibrary("shlwapi.dll");
+                if(hShlwapiDll){
+                    pUrlCanonicalizeW = (URLCANONICALIZEW_PROC) \
+                        GetProcAddress(hShlwapiDll,"UrlCanonicalizeW");
+                }
+    
+                if(pUrlCanonicalizeW){
+                    /* URL-encode spaces */
+                    url_length = INTERNET_MAX_URL_LENGTH;
+                    if(pUrlCanonicalizeW(path,url,&url_length,
+                      URL_ESCAPE_SPACES_ONLY | URL_DONT_ESCAPE_EXTRA_INFO) == S_OK){
+                        url[INTERNET_MAX_URL_LENGTH] = 0;
+                        wcscpy(path,url);
+                    }
+                }
+                
+                dtrace("%ws opens %ws",exe,path);
+                hApp = ShellExecuteW(hWindow,NULL,exe,path,NULL,SW_SHOW);
             }
         }
     }
-    path[INTERNET_MAX_URL_LENGTH - 1] = 0;
-    /*trace(D"%ws",path);*/
 
-    if (anchor != NULL && exe[0] != 0)
-        hApp = ShellExecuteW(hWindow,NULL,exe,path,NULL,SW_SHOW);
-    else
-        hApp = ShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
     if((int)(LONG_PTR)hApp <= 32){
-        if (anchor != NULL){
+        if(anchor != NULL){
             (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
                 L"http://ultradefrag.sourceforge.net/handbook/%hs#%hs",page,anchor);
         } else {
             (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
                 L"http://ultradefrag.sourceforge.net/handbook/%hs",page);
         }
-        path[INTERNET_MAX_URL_LENGTH - 1] = 0;
+        path[INTERNET_MAX_URL_LENGTH] = 0;
         (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
     }
 }
