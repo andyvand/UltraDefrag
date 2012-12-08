@@ -218,7 +218,7 @@ static void set_dbg_log(char *name)
 {
     wchar_t *instdir;
     wchar_t *path = NULL;
-    int length, result;
+    int size, result;
 
     instdir = winx_getenv(L"UD_INSTALL_DIR");
     if(instdir == NULL){
@@ -226,18 +226,14 @@ static void set_dbg_log(char *name)
         return;
     }
     
-    length = wcslen(instdir) + strlen(name) + \
-        wcslen(L"\\logs\\boot-.log") + 1;
-    path = winx_malloc(length * sizeof(wchar_t));
+    winx_swprintf(path,size,result,
+        L"%ws\\logs\\boot-%hs.log",
+        instdir,name);
+    winx_free(instdir);
     if(path == NULL){
         winx_printf("\nset_dbg_log: cannot build log path\n\n");
-        winx_free(instdir);
         return;
     }
-    
-    _snwprintf(path,length,L"%ws\\logs\\boot-%hs.log",instdir,name);
-    path[length - 1] = 0;
-    winx_free(instdir);
 
     result = winx_setenv(L"UD_LOG_FILE_PATH",path);
     winx_free(path);

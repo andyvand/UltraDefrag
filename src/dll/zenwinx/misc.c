@@ -91,18 +91,13 @@ wchar_t *winx_get_windows_directory(void)
 {
     wchar_t *windir;
     wchar_t *path = NULL;
-    int length;
+    int size, result;
 
     windir = winx_getenv(L"SystemRoot");
     if(windir){
-        length = wcslen(windir) + wcslen(L"\\??\\") + 1;
-        path = winx_malloc(length * sizeof(wchar_t));
-        if(path == NULL){
+        winx_swprintf(path,size,result,L"\\??\\%ws",windir);
+        if(path == NULL)
             mtrace();
-        } else {
-            _snwprintf(path,length,L"\\??\\%ws",windir);
-            path[length - 1] = 0;
-        }
         winx_free(windir);
     }
     return path;

@@ -42,39 +42,22 @@
  */
 winx_spin_lock *winx_init_spin_lock(char *name)
 {
-    winx_spin_lock *sl;
-    char *buffer;
-    int length;
     wchar_t *fullname;
+    int size, result;
+    unsigned int id;
+    winx_spin_lock *sl;
     
     /* attach PID to lock the current process only */
-    buffer = winx_sprintf("\\%s_%u",name,
-        (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess));
-    if(buffer == NULL){
-        etrace("not enough memory for ansi name of %s",name);
-        return NULL;
-    }
-
-    length = strlen(buffer);
-    fullname = winx_malloc((length + 1) * sizeof(wchar_t));
+    id = (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess);
+    winx_swprintf(fullname,size,result,L"\\%hs_%u",name,id);
     if(fullname == NULL){
-        etrace("not enough memory for unicode name of %s",name);
-        winx_free(buffer);
+        etrace("not enough memory for %s (case 1)",name);
         return NULL;
     }
-    
-    if(_snwprintf(fullname,length + 1,L"%hs",buffer) < 0){
-        etrace("name conversion to unicode failed");
-        winx_free(buffer);
-        return NULL;
-    }
-    
-    fullname[length] = 0;
-    winx_free(buffer);
-    
+        
     sl = winx_malloc(sizeof(winx_spin_lock));
     if(sl == NULL){
-        etrace("cannot allocate memory for %s",name);
+        etrace("not enough memory for %s (case 2)",name);
         winx_free(fullname);
         return NULL;
     }
