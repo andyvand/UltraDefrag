@@ -390,8 +390,7 @@ char *winx_vsprintf(const char *format,va_list arg)
     size = WINX_VSPRINTF_BUFFER_SIZE;
     do {
         buffer = winx_malloc(size);
-        if(buffer == NULL)
-            return NULL;
+        if(!buffer) break;
         memset(buffer,0,size); /* needed for _vsnprintf */
         result = _vsnprintf(buffer,size,format,arg);
         if(result != -1 && result != size)
@@ -399,9 +398,7 @@ char *winx_vsprintf(const char *format,va_list arg)
         /* buffer is too small; try to allocate two times larger */
         winx_free(buffer);
         size <<= 1;
-        if(size <= 0)
-            return NULL;
-    } while(1);
+    } while(size > 0);
     
     return NULL;
 }

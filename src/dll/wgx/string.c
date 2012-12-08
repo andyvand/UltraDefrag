@@ -55,8 +55,7 @@ char *wgx_vsprintf(const char *format,va_list arg)
     size = WGX_VSPRINTF_BUFFER_SIZE;
     do {
         buffer = malloc(size);
-        if(buffer == NULL)
-            return NULL;
+        if(!buffer) break;
         memset(buffer,0,size); /* needed for _vsnprintf */
         result = _vsnprintf(buffer,size,format,arg);
         if(result != -1 && result != size)
@@ -64,9 +63,7 @@ char *wgx_vsprintf(const char *format,va_list arg)
         /* buffer is too small; try to allocate two times larger */
         free(buffer);
         size <<= 1;
-        if(size <= 0)
-            return NULL;
-    } while(1);
+    } while(size > 0);
     
     return NULL;
 }
@@ -114,8 +111,7 @@ wchar_t *wgx_vswprintf(const wchar_t *format,va_list arg)
     size = WGX_VSPRINTF_BUFFER_SIZE;
     do {
         buffer = malloc(size * sizeof(wchar_t));
-        if(buffer == NULL)
-            return NULL;
+        if(!buffer) break;
         /* the next memset call is needed for _vsnwprintf */
         memset(buffer,0,size * sizeof(wchar_t));
         result = _vsnwprintf(buffer,size,format,arg);
@@ -124,9 +120,7 @@ wchar_t *wgx_vswprintf(const wchar_t *format,va_list arg)
         /* buffer is too small; try to allocate two times larger */
         free(buffer);
         size <<= 1;
-        if(size * sizeof(wchar_t) <= 0)
-            return NULL;
-    } while(1);
+    } while(size * sizeof(wchar_t) > 0);
     
     return NULL;
 }
