@@ -66,7 +66,7 @@ static wchar_t *get_report_path(udefrag_job_parameters *jp)
             etrace("cannot get program\'s path");
         } else {
             winx_path_remove_filename(fpath);
-            winx_swprintf(path,size,result,L"%ws\\reports",fpath);
+            winx_swprintf(path,size,result,L"\\??\\%ws\\reports",fpath);
             if(path == NULL){
                 etrace("not enough memory (case 1)");
             } else {
@@ -74,7 +74,7 @@ static wchar_t *get_report_path(udefrag_job_parameters *jp)
                 winx_free(path);
             }
             winx_swprintf(path,size,result,
-                L"%ws\\reports\\fraglist_%c.luar",
+                L"\\??\\%ws\\reports\\fraglist_%c.luar",
                 fpath,winx_tolower(jp->volume_letter));
             if(path == NULL)
                 etrace("not enough memory (case 2)");
