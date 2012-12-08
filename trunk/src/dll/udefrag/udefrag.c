@@ -558,7 +558,7 @@ int udefrag_set_log_file_path(void)
     wchar_t *path, *longpath, *fullpath;
     int conversion_result;
     wchar_t *native_path, *path_copy, *filename;
-    int length, result;
+    int size, result;
 
     typedef DWORD (__stdcall *GETLONGPATHNAME_PROC)(
         wchar_t *lpszShortPath,wchar_t *lpszLongPath,
@@ -634,16 +634,12 @@ int udefrag_set_log_file_path(void)
     winx_free(path);
     
     /* convert to native path */
-    length = wcslen(L"\\??\\") + wcslen(fullpath) + 1;
-    native_path = winx_malloc(length * sizeof(wchar_t));
+    winx_swprintf(native_path,size,result,L"\\??\\%ws",fullpath);
+    winx_free(fullpath);
     if(native_path == NULL){
         etrace("cannot build native path");
-        winx_free(fullpath);
         return (-1);
     }
-    _snwprintf(native_path,length,L"\\??\\%ws",fullpath);
-    native_path[length - 1] = 0;
-    winx_free(fullpath);
     
     /* delete old logfile */
     winx_delete_file(native_path);
@@ -670,20 +666,16 @@ int udefrag_set_log_file_path(void)
                 etrace("cannot allocate memory for filename");
             } else {
                 winx_path_extract_filename(filename);
-                
                 winx_free(native_path);
-                length = wcslen(L"\\??\\\\UltraDefrag_Logs\\") + \
-                    wcslen(path) + wcslen(filename) + 1;
-                native_path = winx_malloc(length * sizeof(wchar_t));
+                winx_swprintf(native_path,size,result,
+                    L"\\??\\%ws\\UltraDefrag_Logs\\%ws",
+                    path,filename);
                 if(native_path == NULL){
                     etrace("cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
                 } else {
-                    _snwprintf(native_path,length,L"\\??\\%ws\\UltraDefrag_Logs\\%hs",path,filename);
-                    native_path[length - 1] = 0;
                     /* delete old logfile from the temporary folder */
                     winx_delete_file(native_path);
                 }
-                
                 winx_free(filename);
             }
             winx_free(path);
