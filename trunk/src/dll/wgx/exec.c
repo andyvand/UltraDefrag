@@ -31,8 +31,8 @@
 typedef BOOL (WINAPI*CHECKTOKENMEMBERSHIP)(HANDLE TokenHandle,PSID SidToCheck,PBOOL IsMember);
 
 /**
- * @brief Lightweight version
- * of CreateProcess system API.
+ * @brief A lightweight version
+ * of the CreateProcess system API.
  */
 BOOL WgxCreateProcess(char *cmd,char *args)
 {
@@ -95,8 +95,8 @@ done:
 }
 
 /**
- * @brief Lightweight version
- * of CreateThread system API.
+ * @brief A lightweight version
+ * of the CreateThread system API.
  */
 BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param)
 {

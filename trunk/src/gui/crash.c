@@ -225,7 +225,8 @@ done:
 static void ShowCrashInfo(void)
 {
     if(crash_info_collected){
-        (void)WgxShellExecuteW(hWindow,L"open",L".\\crash-info.log",NULL,NULL,SW_SHOW);
+        (void)WgxShellExecute(hWindow,L"open",L".\\crash-info.log",
+            NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
     }
 }
 

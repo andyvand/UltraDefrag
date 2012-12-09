@@ -204,8 +204,11 @@ DWORD WINAPI CheckForTheNewVersionThreadProc(LPVOID lpParameter)
     if(s){
         text = WgxGetResourceString(i18n_table,"UPGRADE_CAPTION");
         if(text) caption = text; else caption = L"You can upgrade me ^-^";
-        if(MessageBoxW(hWindow,s,caption,MB_OKCANCEL | MB_ICONINFORMATION) == IDOK)
-            (void)WgxShellExecuteW(hWindow,L"open",L"http://ultradefrag.sourceforge.net",NULL,NULL,SW_SHOW);
+        if(MessageBoxW(hWindow,s,caption,MB_OKCANCEL | MB_ICONINFORMATION) == IDOK){
+            (void)WgxShellExecute(hWindow,L"open",
+                L"http://ultradefrag.sourceforge.net",NULL,NULL,
+                SW_SHOW,WSH_NOASYNC | WSH_ALLOW_DEFAULT_ACTION);
+        }
         free(text);
     }
     

@@ -27,86 +27,54 @@
 #include "wgx-internals.h"
 
 /**
- * @brief Calls a Win32 ShellExecute() procedure and shows a message
- * box with detailed information in case of errors.
+ * @brief A lightweight version of the ShellExecuteEx system API.
  */
-BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
-                               LPCWSTR lpParameters,LPCWSTR lpDirectory,INT nShowCmd)
+BOOL WgxShellExecute(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
+  LPCWSTR lpParameters,LPCWSTR lpDirectory,INT nShowCmd,INT nFlags)
 {
-    HINSTANCE hApp;
-    int ret;
-    char *desc;
-    wchar_t *msg;
+    SHELLEXECUTEINFOW se;
+    LPCWSTR op, file, args;
     
-    hApp = ShellExecuteW(hwnd,lpOperation,lpFile,lpParameters,lpDirectory,nShowCmd);
-    ret = (int)(LONG_PTR)hApp;
-    if(ret > 32) return TRUE;
+    op = lpOperation ? lpOperation : L"open";
+    file = lpFile ? lpFile : L"";
+    args = lpParameters ? lpParameters : L"";
     
-    /* handle errors */
-    switch(ret){
-    case 0:
-        desc = "The operating system is out of memory or resources.";
-        break;
-    case ERROR_FILE_NOT_FOUND:
-    /*case SE_ERR_FNF:*/
-        desc = "The specified file was not found.";
-        break;
-    case ERROR_PATH_NOT_FOUND:
-    /*case SE_ERR_PNF:*/
-        desc = "The specified path was not found.";
-        break;
-    case ERROR_BAD_FORMAT:
-        desc = "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image).";
-        break;
-    case SE_ERR_ACCESSDENIED:
-        desc = "The operating system denied access to the specified file.";
-        break;
-    case SE_ERR_ASSOCINCOMPLETE:
-        desc = "The file name association is incomplete or invalid.";
-        break;
-    case SE_ERR_DDEBUSY:
-        desc = "The Dynamic Data Exchange (DDE) transaction could not be completed\n"
-               " because other DDE transactions were being processed.";
-        break;
-    case SE_ERR_DDEFAIL:
-        desc = "The DDE transaction failed.";
-        break;
-    case SE_ERR_DDETIMEOUT:
-        desc = "The DDE transaction could not be completed because the request timed out.";
-        break;
-    case SE_ERR_DLLNOTFOUND:
-        desc = "The specified dynamic-link library (DLL) was not found.";
-        break;
-    case SE_ERR_NOASSOC:
-        desc = "There is no application associated with the given file name extension.\n"
-               "Or you attempt to print a file that is not printable.";
-        break;
-    case SE_ERR_OOM:
-        desc = "There was not enough memory to complete the operation.";
-        break;
-    case SE_ERR_SHARE:
-        desc = "A sharing violation occurred.";
-        break;
-    default:
-        desc = "";
-        break;
+    memset(&se,0,sizeof(se));
+    se.cbSize = sizeof(se);
+    se.fMask = SEE_MASK_FLAG_NO_UI;
+    if(nFlags & WSH_NOASYNC)
+        se.fMask |= SEE_MASK_FLAG_DDEWAIT;
+    se.hwnd = hwnd;
+    se.lpVerb = lpOperation;
+    se.lpFile = lpFile;
+    se.lpParameters = lpParameters;
+    se.lpDirectory = lpDirectory;
+    se.nShow = nShowCmd;
+    if(!ShellExecuteExW(&se)){
+        if(nFlags & WSH_SILENT || \
+           nFlags & WSH_ALLOW_DEFAULT_ACTION){
+            letrace("cannot %ls %ls %ls",op,file,args);
+        } else {
+            WgxDisplayLastError(hwnd,MB_OK | MB_ICONHAND,
+                L"Cannot %ls %ls %ls",op,file,args);
+        }
+        if(nFlags & WSH_ALLOW_DEFAULT_ACTION){
+            /* try the default action */
+            se.lpVerb = NULL;
+            if(!ShellExecuteExW(&se)){
+                if(nFlags & WSH_SILENT){
+                    letrace("cannot launch %ls %ls",file,args);
+                } else {
+                    WgxDisplayLastError(hwnd,MB_OK | MB_ICONHAND,
+                        L"Cannot launch %ls %ls",file,args);
+                }
+                return FALSE;
+            }
+            return TRUE;
+        }
+        return FALSE;
     }
-    
-    if(!lpOperation) lpOperation = L"open";
-    if(!lpFile) lpFile = L"";
-    if(!lpParameters) lpParameters = L"";
-
-    if(desc[0]){
-        msg = wgx_swprintf(L"Cannot %ls %ls %ls\n%hs",
-            lpOperation,lpFile,lpParameters,desc);
-    } else {
-        msg = wgx_swprintf(L"Cannot %ls %ls %ls\nError code = 0x%x",
-            lpOperation,lpFile,lpParameters,ret);
-    }
-    MessageBoxW(hwnd,msg ? msg : L"Not enough memory!",
-        L"Error!",MB_OK | MB_ICONHAND);
-    free(msg);
-    return FALSE;
+    return TRUE;
 }
 
 /** @} */
