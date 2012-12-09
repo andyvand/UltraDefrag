@@ -502,8 +502,12 @@ static int kb_check(HANDLE hKbDevice)
 /**
  * @internal
  * @brief Collects and logs all the values of a registry key.
+ * @param[in] key_name the registry key to enumerate.
+ * @param[in] check_value_name the name of the value to
+ * return information from. If this is NULL the number of
+ * values will be returned.
  */
-void winx_log_reg_key_info(wchar_t *key_name)
+static int winx_log_reg_key_info(wchar_t *key_name, wchar_t *check_value_name)
 {
     UNICODE_STRING us;
     OBJECT_ATTRIBUTES oa;
@@ -517,8 +521,7 @@ void winx_log_reg_key_info(wchar_t *key_name)
     DWORD value_size2 = 0;
     wchar_t *value_name = NULL;
     wchar_t *value_string_data = NULL;
-    int value_dword_data = 0;
-    int i;
+    int i, value_dword_data = 0, value_found = 0;
 
     RtlInitUnicodeString(&us,key_name);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
@@ -526,20 +529,23 @@ void winx_log_reg_key_info(wchar_t *key_name)
     status = NtOpenKey(&hKey,KEY_READ,&oa);
     if(status != STATUS_SUCCESS){
         strace(status,"cannot open %ws",key_name);
-        return;
+        trace(I"----------");
+        return 0;
     }
 
     status = NtQueryKey(hKey,KeyFullInformation,NULL,0,&data_size);
     if(status != STATUS_BUFFER_TOO_SMALL){
         strace(status,"cannot query information size");
         NtCloseSafe(hKey);
-        return;
+        trace(I"----------");
+        return 0;
     }
     info_buffer = (KEY_FULL_INFORMATION *)winx_malloc(data_size);
     if(info_buffer == NULL){
         etrace("cannot allocate %u bytes of memory",data_size);
         NtCloseSafe(hKey);
-        return;
+        trace(I"----------");
+        return 0;
     }
 
     RtlZeroMemory(info_buffer,data_size);
@@ -548,7 +554,8 @@ void winx_log_reg_key_info(wchar_t *key_name)
         strace(status,"cannot query information");
         winx_free(info_buffer);
         NtCloseSafe(hKey);
-        return;
+        trace(I"----------");
+        return 0;
     }
 
     itrace("values count = %u",info_buffer->Values);
@@ -560,7 +567,8 @@ void winx_log_reg_key_info(wchar_t *key_name)
         etrace("cannot allocate %u bytes of memory",info_buffer->MaxValueNameLen);
         winx_free(info_buffer);
         NtCloseSafe(hKey);
-        return;
+        trace(I"----------");
+        return 0;
     }
 
     value_string_data = (wchar_t *)winx_malloc(info_buffer->MaxValueDataLen);
@@ -569,8 +577,11 @@ void winx_log_reg_key_info(wchar_t *key_name)
         winx_free(value_name);
         winx_free(info_buffer);
         NtCloseSafe(hKey);
-        return;
+        trace(I"----------");
+        return 0;
     }
+
+    value_found = (int)info_buffer->Values;
 
     for(i = 0; i < (int)info_buffer->Values; i++) {
         status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
@@ -600,6 +611,10 @@ void winx_log_reg_key_info(wchar_t *key_name)
             case REG_DWORD:
                 value_dword_data = (int)*(DWORD *)((BYTE *)value_buffer + value_buffer->DataOffset);
                 itrace("value %d = %ws ... %d",i,value_name,value_dword_data);
+
+                if(check_value_name != NULL && winx_wcsicmp(value_name,check_value_name) == 0 ){
+                    value_found = value_dword_data;
+                }
                 break;
             case REG_EXPAND_SZ:
             case REG_SZ:
@@ -611,43 +626,14 @@ void winx_log_reg_key_info(wchar_t *key_name)
 
         winx_free(value_buffer);
     }
-    trace(I"----------");
 
     winx_free(value_string_data);
     winx_free(value_name);
     winx_free(info_buffer);
     NtCloseSafe(hKey);
-}
 
-/**
- * @internal
- * @brief Collects and logs all the keyboard registry information.
- */
-void winx_log_keyboard_info(void)
-{
-    wchar_t *ControlSetKeys[] = {
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\%ws\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\%ws\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\%ws\\Enum"
-    };
-    wchar_t path[MAX_PATH + 1]; /* should be enough */
-
-    int i;
-
-    winx_log_reg_key_info(L"\\Registry\\Machine\\HARDWARE\\DEVICEMAP\\KeyboardClass");
-
-    for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
-        _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],L"Kbdclass");
-        path[MAX_PATH] = 0;
-
-        winx_log_reg_key_info(path);
-    }
-    for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
-        _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],L"kbdhid");
-        path[MAX_PATH] = 0;
-
-        winx_log_reg_key_info(path);
-    }
+    trace(I"----------");
+    return value_found;
 }
 
 /**
@@ -655,20 +641,14 @@ void winx_log_keyboard_info(void)
  * @brief Queries the registry for the total number
  * of installed devices of the specified class.
  * @param[in] class_name the class name.
+ * If this parameter is NULL the device map will be read
+ * else the control set of the specified class.
  * @param[in] default_value the default number of
  * the installed devices, intended for being returned
  * on impossibility to query the real information.
  */
 static int winx_query_dev_count(wchar_t *class_name,int default_value)
 {
-    UNICODE_STRING us;
-    OBJECT_ATTRIBUTES oa;
-    NTSTATUS status;
-    HANDLE hKey;
-    KEY_VALUE_PARTIAL_INFORMATION *data_buffer = NULL;
-    DWORD data_size = 0;
-    DWORD data_size2 = 0;
-    
     wchar_t *ControlSetKeys[] = {
         L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\%ws\\Enum",
         L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\%ws\\Enum",
@@ -676,60 +656,24 @@ static int winx_query_dev_count(wchar_t *class_name,int default_value)
     };
     wchar_t path[MAX_PATH + 1]; /* should be enough */
 
-    int i, count = default_value;
+    int i, count = default_value, retrieved_count = 0, new_count = 0;
 
-    for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
-        _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],class_name);
-        path[MAX_PATH] = 0;
-        RtlInitUnicodeString(&us,path);
-        InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-        itrace("checking %ws",path);
-        status = NtOpenKey(&hKey,KEY_READ,&oa);
-        if(status != STATUS_SUCCESS){
-            strace(status,"cannot open %ws",path);
-            continue;
+    trace(I"==========");
+
+    if(class_name == NULL){
+        retrieved_count = winx_log_reg_key_info(L"\\Registry\\Machine\\HARDWARE\\DEVICEMAP\\KeyboardClass", NULL);
+    } else {
+        for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
+            _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],class_name);
+            path[MAX_PATH] = 0;
+
+            new_count = winx_log_reg_key_info(path, L"Count");
+            retrieved_count = max(retrieved_count, new_count);
         }
-
-        RtlInitUnicodeString(&us,L"Count");
-        status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
-                NULL,0,&data_size);
-        if(status != STATUS_BUFFER_TOO_SMALL){
-            strace(status,"cannot query Count value size");
-            NtCloseSafe(hKey);
-            continue;
-        }
-        data_buffer = (KEY_VALUE_PARTIAL_INFORMATION *)winx_malloc(data_size);
-        if(data_buffer == NULL){
-            etrace("cannot allocate %u bytes of memory",data_size);
-            NtCloseSafe(hKey);
-            continue;
-        }
-
-        RtlZeroMemory(data_buffer,data_size);
-        status = NtQueryValueKey(hKey,&us,KeyValuePartialInformation,
-                data_buffer,data_size,&data_size2);
-        if(status != STATUS_SUCCESS){
-            strace(status,"cannot query Count value");
-            winx_free(data_buffer);
-            NtCloseSafe(hKey);
-            continue;
-        }
-
-        if(data_buffer->Type != REG_DWORD){
-            etrace("Count value has wrong type 0x%x",
-                    data_buffer->Type);
-            winx_free(data_buffer);
-            NtCloseSafe(hKey);
-            continue;
-        }
-
-        itrace("devices count = %u",
-            (int)*(DWORD *)data_buffer->Data);
-        count = max(count, (int)*(DWORD *)data_buffer->Data);
-
-        winx_free(data_buffer);
-        NtCloseSafe(hKey);
     }
+
+    itrace("devices count = %u",retrieved_count);
+    count = max(count, retrieved_count);
 
     itrace("total devices count = %u",count);
     return count;
@@ -743,26 +687,25 @@ static int winx_query_dev_count(wchar_t *class_name,int default_value)
 static int query_keyboard_count(void)
 {
     int count;
+    int mapped = winx_query_dev_count(NULL,0);
     int total = winx_query_dev_count(L"Kbdclass",1);
     int hid = winx_query_dev_count(L"kbdhid",0);
+
+    trace(I"==========");
 
     /* Windows XP sometimes doesn't count the USB keyboards */
     if (winx_get_os_version() == WINDOWS_XP) {
         if (hid > 0) {
             count = (total <= hid) ? (total + hid) : total;
-            dtrace("HID above zero - keyboard count is %u (%u total)",count,total);
+            dtrace("HID above zero - keyboard count is %u (%u total / %u mapped)",count,total,mapped);
         } else {
             count = (total == 1 ? 2 : total);
-            dtrace("HID equals zero - keyboard count is %u (%u total)",count,total);
+            dtrace("HID equals zero - keyboard count is %u (%u total / %u mapped)",count,total,mapped);
         }
     } else {
-        count = total;
-        itrace("not XP - keyboard count is %u (%u total)",count,total);
+        count = (mapped > total ? mapped : total);
+        itrace("not XP - keyboard count is %u (%u total / %u mapped)",count,total,mapped);
     }
-
-    trace(I"==========");
-    winx_log_keyboard_info();
-    trace(I"==========");
 
     return count;
 }
