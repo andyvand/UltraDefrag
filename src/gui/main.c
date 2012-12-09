@@ -570,7 +570,8 @@ int CreateMainWindow(int nShowCmd)
 void OpenWebPage(char *page, char *anchor)
 {
     wchar_t path[INTERNET_MAX_URL_LENGTH + 1];
-    HINSTANCE hInst, hApp = NULL;
+    BOOL result = FALSE;
+    HINSTANCE hInst;
     wchar_t exe[MAX_PATH + 1] = {0};
     char cd[MAX_PATH + 1];
     HMODULE hShlwapiDll;
@@ -585,7 +586,8 @@ void OpenWebPage(char *page, char *anchor)
     path[INTERNET_MAX_URL_LENGTH] = 0;
 
     if(anchor == NULL){
-        hApp = ShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+        result = WgxShellExecute(hWindow,L"open",path,NULL,NULL,
+            SW_SHOW,WSH_SILENT | WSH_ALLOW_DEFAULT_ACTION);
     } else {
         hInst = FindExecutableW(path,NULL,exe);
         if((int)(LONG_PTR)hInst <= 32 || exe[0] == 0){
@@ -626,12 +628,13 @@ void OpenWebPage(char *page, char *anchor)
                 }
                 
                 dtrace("%ws opens %ws",exe,path);
-                hApp = ShellExecuteW(hWindow,NULL,exe,path,NULL,SW_SHOW);
+                result = WgxShellExecute(hWindow,NULL,
+                    exe,path,NULL,SW_SHOW,WSH_SILENT);
             }
         }
     }
 
-    if((int)(LONG_PTR)hApp <= 32){
+    if(!result){
         if(anchor != NULL){
             (void)_snwprintf(path,INTERNET_MAX_URL_LENGTH,
                 L"http://ultradefrag.sourceforge.net/handbook/%hs#%hs",page,anchor);
@@ -640,7 +643,8 @@ void OpenWebPage(char *page, char *anchor)
                 L"http://ultradefrag.sourceforge.net/handbook/%hs",page);
         }
         path[INTERNET_MAX_URL_LENGTH] = 0;
-        (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+        (void)WgxShellExecute(hWindow,L"open",path,
+            NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
     }
 }
 
@@ -658,7 +662,8 @@ void OpenTranslationWebPage(wchar_t *page, int islang)
     else
         (void)_snwprintf(path,MAX_PATH,L"http://ultradefrag.wikispaces.com/%ls.lng",page);
     path[MAX_PATH - 1] = 0;
-    (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_SHOW);
+    (void)WgxShellExecute(hWindow,L"open",path,
+        NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
 }
 
 /**
@@ -672,7 +677,8 @@ void OpenLog(void)
         MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
     } else {
         udefrag_flush_dbg_log();
-        (void)WgxShellExecuteW(hWindow,L"open",env_buffer2,NULL,NULL,SW_SHOW);
+        (void)WgxShellExecute(hWindow,L"open",env_buffer2,
+            NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
     }
 }
 
@@ -1027,9 +1033,9 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             OpenLog();
             return 0;
         case IDM_REPORT_BUG:
-            (void)WgxShellExecuteW(hWindow,L"open",
+            (void)WgxShellExecute(hWindow,L"open",
                 L"http://sourceforge.net/p/ultradefrag/bugs/",
-                NULL,NULL,SW_SHOW);
+                NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
             return 0;
         case IDM_EXIT:
             goto done;
@@ -1045,8 +1051,8 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             OpenTranslationWebPage(L"Translation+Report", 0);
             return 0;
         case IDM_TRANSLATIONS_FOLDER:
-            (void)WgxShellExecuteW(hWindow,L"open",L"explorer.exe",
-                L"/select, \".\\i18n\\translation.template\"",NULL,SW_SHOW);
+            (void)WgxShellExecute(hWindow,L"open",L"explorer.exe",
+                L"/select, \".\\i18n\\translation.template\"",NULL,SW_SHOW,0);
             return 0;
         case IDM_TRANSLATIONS_SUBMIT:
             if(GetPrivateProfileStringW(L"Language",L"Selected",NULL,lang_name,MAX_PATH,L".\\lang.ini")>0)
@@ -1069,9 +1075,11 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_CFG_GUI_SETTINGS:
             if(portable_mode)
-                WgxShellExecuteW(hWindow,L"open",L"notepad.exe",L".\\options\\guiopts.lua",NULL,SW_SHOW);
+                WgxShellExecute(hWindow,L"open",L"notepad.exe",
+                    L".\\options\\guiopts.lua",NULL,SW_SHOW,0);
             else
-                WgxShellExecuteW(hWindow,L"Edit",L".\\options\\guiopts.lua",NULL,NULL,SW_SHOW);
+                WgxShellExecute(hWindow,L"Edit",
+                    L".\\options\\guiopts.lua",NULL,NULL,SW_SHOW,0);
             return 0;
         case IDM_CFG_BOOT_ENABLE:
             if(!GetWindowsDirectoryW(path,MAX_PATH)){
@@ -1093,7 +1101,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                     SendMessage(hToolbar,TB_CHECKBUTTON,IDM_CFG_BOOT_ENABLE,MAKELONG(TRUE,0));
                     (void)wcscat(path,L"\\System32\\boot-on.cmd");
                 }
-                (void)WgxShellExecuteW(hWindow,L"open",path,NULL,NULL,SW_HIDE);
+                (void)WgxShellExecute(hWindow,L"open",path,NULL,NULL,SW_HIDE,0);
             }
             return 0;
         case IDM_CFG_BOOT_SCRIPT:
@@ -1102,7 +1110,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                     L"Cannot retrieve the Windows directory path");
             } else {
                 (void)wcscat(path,L"\\System32\\ud-boot-time.cmd");
-                (void)WgxShellExecuteW(hWindow,L"edit",path,NULL,NULL,SW_SHOW);
+                (void)WgxShellExecute(hWindow,L"edit",path,NULL,NULL,SW_SHOW,0);
             }
             return 0;
         case IDM_CFG_REPORTS:
@@ -1114,9 +1122,9 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                 report_opts_path = L".\\options\\udreportopts-custom.lua";
             }
             if(portable_mode)
-                WgxShellExecuteW(hWindow,L"open",L"notepad.exe",report_opts_path,NULL,SW_SHOW);
+                WgxShellExecute(hWindow,L"open",L"notepad.exe",report_opts_path,NULL,SW_SHOW,0);
             else
-                WgxShellExecuteW(hWindow,L"Edit",report_opts_path,NULL,NULL,SW_SHOW);
+                WgxShellExecute(hWindow,L"Edit",report_opts_path,NULL,NULL,SW_SHOW,0);
             return 0;
         /* Help menu handlers */
         case IDM_CONTENTS:

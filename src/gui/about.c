@@ -292,11 +292,14 @@ BOOL CALLBACK AboutDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam)
                     OpenWebPage("Credits.html", NULL);
                     break;
                 case IDC_LICENSE:
-                    (void)WgxShellExecuteW(hWindow,L"open",L".\\LICENSE.TXT",NULL,NULL,SW_SHOW);
+                    (void)WgxShellExecute(hWindow,L"open",L".\\LICENSE.TXT",
+                        NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
                     break;
                 case IDC_HOMEPAGE:
                     (void)SetFocus(GetDlgItem(hWnd,IDC_CREDITS));
-                    (void)WgxShellExecuteW(hWindow,L"open",L"http://ultradefrag.sourceforge.net",NULL,NULL,SW_SHOW);
+                    (void)WgxShellExecute(hWindow,L"open",
+                        L"http://ultradefrag.sourceforge.net",
+                        NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
             }
             if(LOWORD(wParam) == IDCANCEL){
                 (void)EndDialog(hWnd,1);

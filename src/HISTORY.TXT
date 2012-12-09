@@ -34,7 +34,8 @@
       prototypes changed
     - obsolete WgxDbgPrint, WgxDbgPrintLastError routines
       removed from wgx library
-    - WgxSetDbgPrintHandler routine superseded by WgxSetInternalTraceHandler
+    - WgxSetDbgPrintHandler and WgxShellExecuteW routines superseded by
+      WgxSetInternalTraceHandler and WgxShellExecute routines
     - WgxDisplayLastError prototype changed
     - WgxSetTaskbarProgressState, WgxSetTaskbarProgressValue, wgx_sprintf,
       wgx_vsprintf, wgx_swprintf, wgx_vswprintf routines added to wgx library

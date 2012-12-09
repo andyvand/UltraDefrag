@@ -37,7 +37,7 @@ EXPORTS
     WgxSetTaskbarProgressState
     WgxSetTaskbarProgressValue
     WgxSetText
-    WgxShellExecuteW
+    WgxShellExecute
     wgx_sprintf
     wgx_swprintf
     wgx_vsprintf

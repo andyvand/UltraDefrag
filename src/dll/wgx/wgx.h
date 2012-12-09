@@ -169,8 +169,13 @@ WNDPROC WgxSafeSubclassWindow(HWND hwnd,WNDPROC NewProc);
 LRESULT WgxSafeCallWndProc(WNDPROC OldProc,HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam);
 
 /* shell.c */
-BOOL WgxShellExecuteW(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
-    LPCWSTR lpParameters,LPCWSTR lpDirectory,INT nShowCmd);
+/* flags for WgxShellExecute */
+#define WSH_SILENT               0x1 /* don't show message box in case of errors */
+#define WSH_NOASYNC              0x2 /* wait till the request completes; useful when the calling thread terminates quickly */
+#define WSH_ALLOW_DEFAULT_ACTION 0x4 /* try the default action in case of errors */
+
+BOOL WgxShellExecute(HWND hwnd,LPCWSTR lpOperation,LPCWSTR lpFile,
+    LPCWSTR lpParameters,LPCWSTR lpDirectory,INT nShowCmd,INT nFlags);
 
 /* string.c */
 char *wgx_vsprintf(const char *format,va_list arg);
