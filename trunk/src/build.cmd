@@ -60,6 +60,7 @@ if %UD_BLD_FLG_BUILD_IA64% neq 0 (
 )
 echo.
 echo Build success!
+title Build success!
 
 :: install the program if requested
 if %UD_BLD_FLG_DO_INSTALL% neq 0 (
@@ -71,6 +72,7 @@ exit /B 0
 
 :fail
 echo Build error (code %ERRORLEVEL%)!
+title Build error (code %ERRORLEVEL%)!
 exit /B 1
 
 :: --------------------------------------------------------
