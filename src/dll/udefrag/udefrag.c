@@ -514,23 +514,22 @@ char *udefrag_get_error_description(int error_code)
 static void write_log_file_header(wchar_t *path)
 {
     WINX_FILE *f;
-    char buffer1[85] = {0};
-    char buffer2[85] = {0};
-    char bom[4] = {0xEF, 0xBB, 0xBF, 0x00};
-    char header1[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
-                     "\r\n";
-    char format1[] = "                           %s log file\r\n";
-    char format2[] = "                                 Windows NT %u.%u\r\n";
-    char header2[] = "\r\n"
-                     "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
-                     "\r\n"
-                     "                       If you'd like to report a bug,\r\n"
-                     "                  attach this file to your bug report please:\r\n"
-                     "          http://sourceforge.net/tracker/?group_id=199532&atid=969870\r\n"
-                     "\r\n"
-                     "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
-                     "\r\n";
     int os_version, mj, mn;
+    char bom[4] = {0xEF, 0xBB, 0xBF, 0x00};
+    char *header;
+    char format[] = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
+                    "\r\n"
+                    "  %s log file\r\n"
+                    "  Windows NT %u.%u\r\n"
+                    "\r\n"
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
+                    "\r\n"
+                    "                       If you'd like to report a bug,\r\n"
+                    "                  attach this file to your bug report please:\r\n"
+                    "          http://sourceforge.net/tracker/?group_id=199532&atid=969870\r\n"
+                    "\r\n"
+                    "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n"
+                    "\r\n";
 
     f = winx_fopen(path,"a");
     if(f == NULL)
@@ -540,9 +539,6 @@ static void write_log_file_header(wchar_t *path)
     mj = os_version / 10;
     mn = os_version % 10;
 
-    (void)_snprintf(buffer1,sizeof(buffer1)-1,format1,VERSIONINTITLE);
-    (void)_snprintf(buffer2,sizeof(buffer2)-1,format2,mj,mn);
-
     /*
     * UTF-8 encoded files need BOM to be written before the contents.
     */
@@ -550,10 +546,14 @@ static void write_log_file_header(wchar_t *path)
         /* NT4 libraries contain ANSI encoded messages; confirmed on its Russian edition */
         (void)winx_fwrite(bom,sizeof(char),3,f);
     }
-    winx_fwrite(header1,1,sizeof(header1) - 1,f);
-    winx_fwrite(buffer1,sizeof(char),strlen(buffer1),f);
-    winx_fwrite(buffer2,sizeof(char),strlen(buffer2),f);
-    winx_fwrite(header2,1,sizeof(header2) - 1,f);
+
+    header = winx_sprintf(format,VERSIONINTITLE,mj,mn);
+    if(header == NULL){
+        mtrace();
+    } else {
+        winx_fwrite(header,1,strlen(header),f);
+        winx_free(header);
+    }
     winx_fclose(f);
 }
 
