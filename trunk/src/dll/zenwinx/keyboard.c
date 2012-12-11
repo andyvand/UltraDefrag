@@ -28,8 +28,14 @@
 #include "zenwinx.h"
 
 /*
+* This delay is needed for non-PS/2
+* keyboards initialization.
+*/
+#define KB_INIT_DELAY 10 /* sec */
+
+/*
 * This delay affects primarily text typing
-* speed when winx_prompt_ex() is used to get
+* speed when winx_prompt() is used to get
 * user input.
 */
 #define MAX_TYPING_DELAY 10 /* msec */
@@ -49,23 +55,28 @@ typedef struct _KEYBOARD {
     HANDLE hKbEvent;
 } KEYBOARD, *PKEYBOARD;
 
-KEYBOARD kb[MAX_NUM_OF_KEYBOARDS] = {{0}};
+KEYBOARD kb[MAX_NUM_OF_KEYBOARDS];
 int number_of_keyboards = 0;
 
 HANDLE hKbSynchEvent = NULL;
-KEYBOARD_INPUT_DATA kids[KB_QUEUE_LENGTH] = {{0}};
+KEYBOARD_INPUT_DATA kids[KB_QUEUE_LENGTH];
 int start_index = 0;
 int n_written = 0;
 int stop_kb_wait_for_input = 0;
 int kb_wait_for_input_threads = 0;
 #define STOP_KB_WAIT_INTERVAL 100 /* ms */
 
+int kb_read_time_elapsed = 0;
+
 /* prototypes */
-void kb_close(void);
-static int kb_check(HANDLE hKbDevice);
-static int kb_open_internal(int device_number, int kbd_count);
 char *winx_get_status_description(unsigned long status);
-static int query_keyboard_count(void);
+void kb_close(void);
+
+/*
+**************************************************************
+*                   auxiliary functions                      *
+**************************************************************
+*/
 
 /**
  * @internal
@@ -81,13 +92,7 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
     LARGE_INTEGER interval;
     LARGE_INTEGER synch_interval;
     int index;
-    char buffer[128];
     KEYBOARD *kbd = (KEYBOARD *)p;
-    
-    /*
-    * Either debug print or winx_printf,
-    * or memory allocation aren't available here...
-    */
     
     kb_wait_for_input_threads ++;
     interval.QuadPart = -((signed long)STOP_KB_WAIT_INTERVAL * 10000);
@@ -110,10 +115,8 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
                             if(NT_SUCCESS(Status)) Status = iosb.Status;
                         }
                         if(!NT_SUCCESS(Status)){
-                            _snprintf(buffer,sizeof(buffer),"\nNtCancelIoFile for KeyboadClass%u failed: %x!\n%s\n",
+                            winx_printf("\nNtCancelIoFile for KeyboadClass%u failed: %x!\n%s\n",
                                 kbd->device_number,(UINT)Status,winx_get_status_description((ULONG)Status));
-                            buffer[sizeof(buffer) - 1] = 0;
-                            winx_print(buffer);
                         }
                     }
                     goto done;
@@ -123,31 +126,26 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
         }
         /* here we have either an input gathered or an error */
         if(!NT_SUCCESS(Status)){
-            _snprintf(buffer,sizeof(buffer),"\nCannot read the KeyboadClass%u device: %x!\n%s\n",
+            winx_printf("\nCannot read the KeyboadClass%u device: %x!\n%s\n",
                 kbd->device_number,(UINT)Status,winx_get_status_description((ULONG)Status));
-            buffer[sizeof(buffer) - 1] = 0;
-            winx_print(buffer);
             goto done;
         } else {
             /* synchronize with other threads */
-            if(hKbSynchEvent){
-                synch_interval.QuadPart = MAX_WAIT_INTERVAL;
-                Status = NtWaitForSingleObject(hKbSynchEvent,FALSE,&synch_interval);
-                if(Status != WAIT_OBJECT_0){
-                    _snprintf(buffer,sizeof(buffer),"\nkb_wait_for_input: synchronization failed: %x!\n%s\n",
-                        (UINT)Status,winx_get_status_description((ULONG)Status));
-                    buffer[sizeof(buffer) - 1] = 0;
-                    winx_print(buffer);
-                }
+            synch_interval.QuadPart = MAX_WAIT_INTERVAL;
+            Status = NtWaitForSingleObject(hKbSynchEvent,FALSE,&synch_interval);
+            if(Status != WAIT_OBJECT_0){
+                winx_printf("\nkb_wait_for_input: synchronization failed: %x!\n%s\n",
+                    (UINT)Status,winx_get_status_description((ULONG)Status));
+                goto done;
             }
 
             /* push new item to the keyboard queue */
             if(start_index < 0 || start_index >= KB_QUEUE_LENGTH){
-                winx_print("\nkb_wait_for_input: unexpected condition #1!\n\n");
+                winx_printf("\nkb_wait_for_input: unexpected condition #1!\n\n");
                 start_index = 0;
             }
             if(n_written < 0 || n_written > KB_QUEUE_LENGTH){
-                winx_print("\nkb_wait_for_input: unexpected condition #2!\n\n");
+                winx_printf("\nkb_wait_for_input: unexpected condition #2!\n\n");
                 n_written = 0;
             }
 
@@ -163,8 +161,7 @@ static DWORD WINAPI kb_wait_for_input(LPVOID p)
             memcpy(&kids[index],&kid,sizeof(KEYBOARD_INPUT_DATA));
             
             /* release synchronization event */
-            if(hKbSynchEvent)
-                (void)NtSetEvent(hKbSynchEvent,NULL);
+            (void)NtSetEvent(hKbSynchEvent,NULL);
         }
     }
 
@@ -174,260 +171,8 @@ done:
     return 0;
 }
 
-/**
- * @brief Prepares all existing keyboards
- * for work with user input related procedures.
- * @details If checking of first keyboard fails
- * it waits ten seconds for the initialization.
- * This is needed for wireless devices.
- * @return Zero for success, negative value otherwise.
- */
-int winx_kb_init(void)
-{
-    wchar_t event_name[64];
-    int i, j, kbdCount;
-
-    kbdCount = query_keyboard_count();
-
-    /* create synchronization event for safe access to kids array */
-    _snwprintf(event_name,64,L"\\winx_kb_synch_event_%u",
-        (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess));
-    event_name[63] = 0;
-    
-    if(hKbSynchEvent == NULL){
-        (void)winx_create_event(event_name,SynchronizationEvent,&hKbSynchEvent);
-        if(hKbSynchEvent) (void)NtSetEvent(hKbSynchEvent,NULL);
-    }
-    
-    if(hKbSynchEvent == NULL){
-        winx_printf("\nCannot create %ws event!\n\n",event_name);
-        return (-1);
-    }
-
-    /* initialize kb array */
-    memset((void *)kb,0,sizeof(kb));
-    number_of_keyboards = 0;
-    
-    /* check all the keyboards and wait ten seconds
-       for any keyboard that fails detection.
-       required for USB devices, which can change ports */
-    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++) {
-        if (kb_open_internal(i, kbdCount) == -1) {
-            if (i < kbdCount) {
-                winx_printf("Wait 10 seconds for keyboard initialization ");
-                
-                for(j = 0; j < 10; j++){
-                    winx_sleep(1000);
-                    winx_printf(".");
-                }
-                winx_printf("\n\n");
-
-                (void)kb_open_internal(i, kbdCount);
-            }
-        }
-    }
-    
-    /* start threads waiting for user input */
-    stop_kb_wait_for_input = 0;
-    kb_wait_for_input_threads = 0;
-    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
-        if(kb[i].hKbDevice == NULL) break;
-        if(winx_create_thread(kb_wait_for_input,(LPVOID)&kb[i]) < 0){
-            winx_printf("\nCannot create thread gathering input from \\Device\\KeyboardClass%u\n\n",
-                kb[i].device_number);
-            /* stop all threads */
-            stop_kb_wait_for_input = 1;
-            while(kb_wait_for_input_threads)
-                winx_sleep(STOP_KB_WAIT_INTERVAL);
-            return (-1);
-        }
-    }
-    
-    if(kb[0].hKbDevice) return 0; /* success, at least one keyboard found */
-    else return (-1);
-}
-
-/**
- * @internal
- * @brief Closes all opened keyboards.
- */
-void kb_close(void)
-{
-    int i;
-    
-    /*
-    * Either debug print or memory
-    * allocation calls aren't available here...
-    */
-    
-    /* stop threads waiting for user input */
-    stop_kb_wait_for_input = 1; i = 0;
-    /* 3 sec should be enough; otherwise sometimes it hangs */
-    while(kb_wait_for_input_threads && i < 30){
-        winx_sleep(STOP_KB_WAIT_INTERVAL);
-        i++;
-    }
-    if(kb_wait_for_input_threads){
-        winx_printf("Keyboards polling terminated forcibly...\n");
-        winx_sleep(2000);
-    }
-    
-    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
-        if(kb[i].hKbDevice == NULL) break;
-        NtCloseSafe(kb[i].hKbDevice);
-        NtCloseSafe(kb[i].hKbEvent);
-        /* don't reset device_number member here */
-        number_of_keyboards --;
-    }
-    
-    /* destroy synchronization event */
-    winx_destroy_event(hKbSynchEvent);
-}
-
-/**
- * @internal
- * @brief Checks the console for keyboard input.
- * @details Tries to read from all keyboard devices 
- * until specified time-out expires.
- * @param[out] pKID pointer to the structure receiving keyboard input.
- * @param[in] msec_timeout time-out interval in milliseconds.
- * @return Zero if some key was pressed, negative value otherwise.
- */
-int kb_read(PKEYBOARD_INPUT_DATA pKID,int msec_timeout)
-{
-    int attempts = 0;
-    ULONGLONG xtime = 0;
-    LARGE_INTEGER synch_interval;
-    NTSTATUS Status;
-    
-    DbgCheck1(pKID,-1);
-    
-    if(msec_timeout != INFINITE){
-        attempts = msec_timeout / MAX_TYPING_DELAY + 1;
-        xtime = winx_xtime();
-    }
-    
-    while(number_of_keyboards){
-        /* synchronize with other threads */
-        if(hKbSynchEvent){
-            synch_interval.QuadPart = MAX_WAIT_INTERVAL;
-            Status = NtWaitForSingleObject(hKbSynchEvent,FALSE,&synch_interval);
-            if(Status != WAIT_OBJECT_0){
-                winx_printf("\nkb_read: synchronization failed: 0x%x\n",(UINT)Status);
-                winx_printf("%s\n\n",winx_get_status_description((ULONG)Status));
-            }
-        }
-
-        /* pop item from the keyboard queue */
-        if(n_written > 0){
-            memcpy(pKID,&kids[start_index],sizeof(KEYBOARD_INPUT_DATA));
-            start_index ++;
-            if(start_index >= KB_QUEUE_LENGTH)
-                start_index = 0;
-            n_written --;
-            if(hKbSynchEvent)
-                (void)NtSetEvent(hKbSynchEvent,NULL);
-            return 0;
-        }
-
-        /* release synchronization event */
-        if(hKbSynchEvent)
-            (void)NtSetEvent(hKbSynchEvent,NULL);
-
-        winx_sleep(MAX_TYPING_DELAY);
-        if(msec_timeout != INFINITE){
-            attempts --;
-            if(attempts == 0) break;
-            if(xtime && (winx_xtime() - xtime >= msec_timeout)) break;
-        }
-    }
-    return (-1);
-}
-
-/*
-**************************************************************
-*                   internal functions                       *
-**************************************************************
-*/
-
-/**
- * @internal
- * @brief Opens the keyboard.
- * @param[in] device_number the number of the keyboard device.
- * @param[in] kbd_count the number of registered keyboards.
- * @return Zero for success, negative value otherwise.
- */
-static int kb_open_internal(int device_number, int kbd_count)
-{
-    wchar_t device_name[32];
-    wchar_t event_name[32];
-    UNICODE_STRING us;
-    OBJECT_ATTRIBUTES ObjectAttributes;
-    IO_STATUS_BLOCK IoStatusBlock;
-    NTSTATUS status;
-    HANDLE hKbDevice = NULL;
-    HANDLE hKbEvent = NULL;
-    int i;
-
-    (void)_snwprintf(device_name,32,L"\\Device\\KeyboardClass%u",device_number);
-    device_name[31] = 0;
-    RtlInitUnicodeString(&us,device_name);
-    InitializeObjectAttributes(&ObjectAttributes,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-    status = NtCreateFile(&hKbDevice,
-                GENERIC_READ | FILE_RESERVE_OPFILTER | FILE_READ_ATTRIBUTES/*0x80100080*/,
-                &ObjectAttributes,&IoStatusBlock,NULL,FILE_ATTRIBUTE_NORMAL/*0x80*/,
-                0,FILE_OPEN/*1*/,FILE_DIRECTORY_FILE/*1*/,NULL,0);
-    if(!NT_SUCCESS(status)){
-        if(device_number < kbd_count){
-            strace(status,"cannot open %ws",device_name);
-            winx_printf("\nCannot open the keyboard %ws: %x!\n",
-                device_name,(UINT)status);
-            winx_printf("%s\n",winx_get_status_description((ULONG)status));
-        }
-        return (-1);
-    }
-    
-    /* ensure that we have opened a really connected keyboard */
-    if(kb_check(hKbDevice) < 0){
-        strace(status,"invalid keyboard device %ws",device_name);
-        winx_printf("\nInvalid keyboard device %ws: %x!\n",device_name,(UINT)status);
-        winx_printf("%s\n",winx_get_status_description((ULONG)status));
-        NtCloseSafe(hKbDevice);
-        return (-1);
-    }
-    
-    /* create a special event object for internal use */
-    (void)_snwprintf(event_name,32,L"\\kb_event%u",device_number);
-    event_name[31] = 0;
-    RtlInitUnicodeString(&us,event_name);
-    InitializeObjectAttributes(&ObjectAttributes,&us,0,NULL,NULL);
-    status = NtCreateEvent(&hKbEvent,STANDARD_RIGHTS_ALL | 0x1ff/*0x1f01ff*/,
-        &ObjectAttributes,SynchronizationEvent,0/*FALSE*/);
-    if(!NT_SUCCESS(status)){
-        NtCloseSafe(hKbDevice);
-        strace(status,"cannot create kb_event%u",device_number);
-        winx_printf("\nCannot create kb_event%u: %x!\n",device_number,(UINT)status);
-        winx_printf("%s\n",winx_get_status_description((ULONG)status));
-        return (-1);
-    }
-    
-    /* add information to kb array */
-    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
-        if(kb[i].hKbDevice == NULL){
-            kb[i].hKbDevice = hKbDevice;
-            kb[i].hKbEvent = hKbEvent;
-            kb[i].device_number = device_number;
-            number_of_keyboards ++;
-            winx_printf("Keyboard device found: %ws.\n",device_name);
-            return 0;
-        }
-    }
-
-    winx_printf("\nkb array is full!\n");
-    return (-1);
-}
-
 #define LIGHTING_REPEAT_COUNT 0x5
+#define LIGHTING_REPEAT_DELAY 100 /* msec */
 
 /**
  * @internal
@@ -453,7 +198,11 @@ static int kb_light_up_indicators(HANDLE hKbDevice,USHORT LedFlags)
         status = NtWaitForSingleObject(hKbDevice,FALSE,NULL);
         if(NT_SUCCESS(status)) status = iosb.Status;
     }
-    if(!NT_SUCCESS(status) || status == STATUS_PENDING) return (-1);
+    if(!NT_SUCCESS(status) || status == STATUS_PENDING){
+        strace(status,"cannot light up the keyboard"
+            " indicators 0x%x",(UINT)LedFlags);
+        return (-1);
+    }
     
     return 0;
 }
@@ -481,18 +230,21 @@ static int kb_check(HANDLE hKbDevice)
         status = NtWaitForSingleObject(hKbDevice,FALSE,NULL);
         if(NT_SUCCESS(status)) status = iosb.Status;
     }
-    if(!NT_SUCCESS(status) || status == STATUS_PENDING) return (-1);
+    if(!NT_SUCCESS(status) || status == STATUS_PENDING){
+        strace(status,"cannot get keyboard indicators state");
+        return (-1);
+    }
 
     LedFlags = kip.LedFlags;
     
     /* light up LED's */
     for(i = 0; i < LIGHTING_REPEAT_COUNT; i++){
         (void)kb_light_up_indicators(hKbDevice,KEYBOARD_NUM_LOCK_ON);
-        winx_sleep(100);
+        winx_sleep(LIGHTING_REPEAT_DELAY);
         (void)kb_light_up_indicators(hKbDevice,KEYBOARD_CAPS_LOCK_ON);
-        winx_sleep(100);
+        winx_sleep(LIGHTING_REPEAT_DELAY);
         (void)kb_light_up_indicators(hKbDevice,KEYBOARD_SCROLL_LOCK_ON);
-        winx_sleep(100);
+        winx_sleep(LIGHTING_REPEAT_DELAY);
     }
 
     (void)kb_light_up_indicators(hKbDevice,LedFlags);
@@ -501,213 +253,272 @@ static int kb_check(HANDLE hKbDevice)
 
 /**
  * @internal
- * @brief Collects and logs all the values of a registry key.
- * @param[in] key_name the registry key to enumerate.
- * @param[in] check_value_name the name of the value to
- * return information from. If this is NULL the number of
- * values will be returned.
+ * @brief Opens a keyboard device.
+ * @param[in] device_number the number of the keyboard device.
+ * @return Zero for success, negative value otherwise.
  */
-static int winx_log_reg_key_info(wchar_t *key_name, wchar_t *check_value_name)
+static int kb_open_device(int device_number)
 {
+    wchar_t device_name[32];
+    wchar_t event_name[32];
     UNICODE_STRING us;
     OBJECT_ATTRIBUTES oa;
+    IO_STATUS_BLOCK iosb;
     NTSTATUS status;
-    HANDLE hKey;
-    KEY_FULL_INFORMATION *info_buffer = NULL;
-    KEY_VALUE_FULL_INFORMATION *value_buffer = NULL;
-    DWORD data_size = 0;
-    DWORD data_size2 = 0;
-    DWORD value_size = 0;
-    DWORD value_size2 = 0;
-    wchar_t *value_name = NULL;
-    wchar_t *value_string_data = NULL;
-    int i, value_dword_data = 0, value_found = 0;
+    HANDLE hKbDevice = NULL;
+    HANDLE hKbEvent = NULL;
+    int i;
 
-    RtlInitUnicodeString(&us,key_name);
+    (void)_snwprintf(device_name,32,L"\\Device\\KeyboardClass%u",device_number);
+    device_name[31] = 0;
+    RtlInitUnicodeString(&us,device_name);
     InitializeObjectAttributes(&oa,&us,OBJ_CASE_INSENSITIVE,NULL,NULL);
-    itrace("enumerating %ws",key_name);
-    status = NtOpenKey(&hKey,KEY_READ,&oa);
-    if(status != STATUS_SUCCESS){
-        strace(status,"cannot open %ws",key_name);
-        trace(I"----------");
-        return 0;
-    }
-
-    status = NtQueryKey(hKey,KeyFullInformation,NULL,0,&data_size);
-    if(status != STATUS_BUFFER_TOO_SMALL){
-        strace(status,"cannot query information size");
-        NtCloseSafe(hKey);
-        trace(I"----------");
-        return 0;
-    }
-    info_buffer = (KEY_FULL_INFORMATION *)winx_malloc(data_size);
-    if(info_buffer == NULL){
-        etrace("cannot allocate %u bytes of memory",data_size);
-        NtCloseSafe(hKey);
-        trace(I"----------");
-        return 0;
-    }
-
-    RtlZeroMemory(info_buffer,data_size);
-    status = NtQueryKey(hKey,KeyFullInformation,info_buffer,data_size,&data_size2);
-    if(status != STATUS_SUCCESS){
-        strace(status,"cannot query information");
-        winx_free(info_buffer);
-        NtCloseSafe(hKey);
-        trace(I"----------");
-        return 0;
-    }
-
-    itrace("values count = %u",info_buffer->Values);
-    itrace("max value name length = %u",info_buffer->MaxValueNameLen);
-    itrace("max value data length = %u",info_buffer->MaxValueDataLen);
-
-    value_name = (wchar_t *)winx_malloc(info_buffer->MaxValueNameLen);
-    if(value_name == NULL){
-        etrace("cannot allocate %u bytes of memory",info_buffer->MaxValueNameLen);
-        winx_free(info_buffer);
-        NtCloseSafe(hKey);
-        trace(I"----------");
-        return 0;
-    }
-
-    value_string_data = (wchar_t *)winx_malloc(info_buffer->MaxValueDataLen);
-    if(value_string_data == NULL){
-        etrace("cannot allocate %u bytes of memory",info_buffer->MaxValueDataLen);
-        winx_free(value_name);
-        winx_free(info_buffer);
-        NtCloseSafe(hKey);
-        trace(I"----------");
-        return 0;
-    }
-
-    value_found = (int)info_buffer->Values;
-
-    for(i = 0; i < (int)info_buffer->Values; i++) {
-        status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
-                NULL,0,&value_size);
-        if(status != STATUS_BUFFER_TOO_SMALL){
-            strace(status,"cannot query full information size");
-            break;
+    status = NtCreateFile(&hKbDevice,
+                GENERIC_READ | FILE_RESERVE_OPFILTER | FILE_READ_ATTRIBUTES/*0x80100080*/,
+                &oa,&iosb,NULL,FILE_ATTRIBUTE_NORMAL/*0x80*/,
+                0,FILE_OPEN/*1*/,FILE_DIRECTORY_FILE/*1*/,NULL,0);
+    if(!NT_SUCCESS(status)){
+        /* don't litter logs */
+        if(status != STATUS_OBJECT_NAME_NOT_FOUND){
+            strace(status,"cannot open %ws",device_name);
+            winx_printf("\nCannot open the keyboard %ws: %x!\n",
+                device_name,(UINT)status);
+            winx_printf("%s\n",winx_get_status_description((ULONG)status));
         }
-        value_buffer = (KEY_VALUE_FULL_INFORMATION *)winx_malloc(value_size);
-        if(value_buffer == NULL){
-            etrace("cannot allocate %u bytes of memory",value_size);
-            break;
+        return (-1);
+    }
+    
+    /* ensure that we have opened a really connected keyboard */
+    if(kb_check(hKbDevice) < 0){
+        etrace("invalid keyboard device %ws",device_name);
+        winx_printf("\nInvalid keyboard device %ws!\n",device_name);
+        NtCloseSafe(hKbDevice);
+        return (-1);
+    }
+    
+    /* create an event for the kb_wait_for_input procedure */
+    (void)_snwprintf(event_name,32,L"\\kb_event%u",device_number);
+    event_name[31] = 0;
+    if(winx_create_event(event_name,SynchronizationEvent,&hKbEvent) < 0){
+        winx_printf("\nCannot create %ws event!\n",event_name);
+        NtCloseSafe(hKbDevice);
+        return (-1);
+    }
+    (void)NtClearEvent(hKbEvent);
+    
+    /* add information to the kb array */
+    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
+        if(kb[i].hKbDevice == NULL){
+            kb[i].hKbDevice = hKbDevice;
+            kb[i].hKbEvent = hKbEvent;
+            kb[i].device_number = device_number;
+            number_of_keyboards ++;
+            winx_printf("Keyboard device found: %ws.\n",device_name);
+            return 0;
         }
-
-        RtlZeroMemory(value_buffer,value_size);
-        status = NtEnumerateValueKey(hKey,i,KeyValueFullInformation,
-                value_buffer,value_size,&value_size2);
-        if(status != STATUS_SUCCESS){
-            strace(status,"cannot query full information");
-            winx_free(value_buffer);
-            break;
-        }
-        RtlCopyMemory(value_name,value_buffer->Name,value_buffer->NameLength);
-        value_name[value_buffer->NameLength / sizeof(wchar_t)] = 0;
-
-        switch(value_buffer->Type){
-            case REG_DWORD:
-                value_dword_data = (int)*(DWORD *)((BYTE *)value_buffer + value_buffer->DataOffset);
-                itrace("value %d = %ws ... %d",i,value_name,value_dword_data);
-
-                if(check_value_name != NULL && winx_wcsicmp(value_name,check_value_name) == 0 ){
-                    value_found = value_dword_data;
-                }
-                break;
-            case REG_EXPAND_SZ:
-            case REG_SZ:
-                RtlCopyMemory(value_string_data,(BYTE *)value_buffer + value_buffer->DataOffset,value_buffer->DataLength);
-                value_string_data[value_buffer->DataLength / sizeof(wchar_t)] = 0;
-                itrace("value %d = %ws ... %ws",i,value_name,value_string_data);
-                break;
-        }
-
-        winx_free(value_buffer);
     }
 
-    winx_free(value_string_data);
-    winx_free(value_name);
-    winx_free(info_buffer);
-    NtCloseSafe(hKey);
-
-    trace(I"----------");
-    return value_found;
+    /* this case is very extraordinary */
+    winx_printf("\nkb array is full!\n");
+    winx_destroy_event(hKbEvent);
+    NtCloseSafe(hKbDevice);
+    return (-1);
 }
 
 /**
  * @internal
- * @brief Queries the registry for the total number
- * of installed devices of the specified class.
- * @param[in] class_name the class name.
- * If this parameter is NULL the device map will be read
- * else the control set of the specified class.
- * @param[in] default_value the default number of
- * the installed devices, intended for being returned
- * on impossibility to query the real information.
+ * @brief Opens all initialized keyboards.
+ * @return Zero for success, negative value otherwise.
  */
-static int winx_query_dev_count(wchar_t *class_name,int default_value)
+static int kb_open(void)
 {
-    wchar_t *ControlSetKeys[] = {
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet002\\Services\\%ws\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\ControlSet001\\Services\\%ws\\Enum",
-        L"\\Registry\\Machine\\SYSTEM\\CurrentControlSet\\Services\\%ws\\Enum"
-    };
-    wchar_t path[MAX_PATH + 1]; /* should be enough */
+    wchar_t event_name[64];
+    int i;
 
-    int i, count = default_value, retrieved_count = 0, new_count = 0;
+    /* initialize kb array */
+    memset((void *)kb,0,sizeof(kb));
+    number_of_keyboards = 0;
+ 
+    /* create synchronization event for safe access to kids array */
+    _snwprintf(event_name,64,L"\\winx_kb_synch_event_%u",
+        (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess));
+    event_name[63] = 0;
+    if(winx_create_event(event_name,SynchronizationEvent,&hKbSynchEvent) < 0){
+        winx_printf("\nCannot create %ws event!\n\n",event_name);
+        return (-1);
+    }
+    (void)NtSetEvent(hKbSynchEvent,NULL);
 
-    trace(I"==========");
-
-    if(class_name == NULL){
-        retrieved_count = winx_log_reg_key_info(L"\\Registry\\Machine\\HARDWARE\\DEVICEMAP\\KeyboardClass", NULL);
-    } else {
-        for(i = 0; i < sizeof(ControlSetKeys) / sizeof(wchar_t *); i++){
-            _snwprintf(path,MAX_PATH + 1,ControlSetKeys[i],class_name);
-            path[MAX_PATH] = 0;
-
-            new_count = winx_log_reg_key_info(path, L"Count");
-            retrieved_count = max(retrieved_count, new_count);
+    /* open all initialized keyboards */
+    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++) kb_open_device(i);
+    
+    /* start threads waiting for user input */
+    stop_kb_wait_for_input = 0;
+    kb_wait_for_input_threads = 0;
+    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
+        if(kb[i].hKbDevice == NULL) break;
+        if(winx_create_thread(kb_wait_for_input,(LPVOID)&kb[i]) < 0){
+            winx_printf("\nCannot create thread gathering "
+                "input from \\Device\\KeyboardClass%u\n\n",
+                kb[i].device_number);
+            /* stop all threads */
+            kb_close();
+            return (-1);
         }
     }
-
-    itrace("devices count = %u",retrieved_count);
-    count = max(count, retrieved_count);
-
-    itrace("total devices count = %u",count);
-    return count;
+    
+    /* return zero if at least one keyboard found */
+    return (kb[0].hKbDevice) ? 0 : (-1);
 }
 
 /**
  * @internal
- * @brief Queries the registry for 
- * the number of installed keyboards.
+ * @brief Closes all opened keyboards.
  */
-static int query_keyboard_count(void)
+void kb_close(void)
 {
-    int count;
-    int mapped = winx_query_dev_count(NULL,0);
-    int total = winx_query_dev_count(L"Kbdclass",1);
-    int hid = winx_query_dev_count(L"kbdhid",0);
-
-    trace(I"==========");
-
-    /* Windows XP sometimes doesn't count the USB keyboards */
-    if (winx_get_os_version() == WINDOWS_XP) {
-        if (hid > 0) {
-            count = (total <= hid) ? (total + hid) : total;
-            dtrace("HID above zero - keyboard count is %u (%u total / %u mapped)",count,total,mapped);
-        } else {
-            count = (total == 1 ? 2 : total);
-            dtrace("HID equals zero - keyboard count is %u (%u total / %u mapped)",count,total,mapped);
-        }
-    } else {
-        count = (mapped > total ? mapped : total);
-        itrace("not XP - keyboard count is %u (%u total / %u mapped)",count,total,mapped);
+    int i;
+    
+    /* stop threads waiting for user input */
+    stop_kb_wait_for_input = 1; i = 0;
+    /* 3 sec should be enough; otherwise sometimes it hangs */
+    while(kb_wait_for_input_threads && i < 30){
+        winx_sleep(STOP_KB_WAIT_INTERVAL);
+        i++;
     }
+    if(kb_wait_for_input_threads){
+        winx_printf("Keyboards polling terminated forcibly...\n");
+        winx_sleep(2000);
+    }
+    
+    for(i = 0; i < MAX_NUM_OF_KEYBOARDS; i++){
+        if(kb[i].hKbDevice == NULL) break;
+        NtCloseSafe(kb[i].hKbDevice);
+        NtCloseSafe(kb[i].hKbEvent);
+        /* don't reset device_number member here */
+        number_of_keyboards --;
+    }
+    
+    /* destroy synchronization event */
+    winx_destroy_event(hKbSynchEvent);
+    hKbSynchEvent = NULL;
+}
 
-    return count;
+/*
+**************************************************************
+*                   interface functions                      *
+**************************************************************
+*/
+
+/**
+ * @brief Prepares all existing keyboards
+ * for work with user input related procedures.
+ * @return Zero for success, negative value otherwise.
+ * @note This routine does not intended to be called
+ * more than once.
+ */
+int winx_kb_init(void)
+{
+    char dots[KB_INIT_DELAY + 1];
+    KBD_RECORD kbd_rec;
+    int i,j;
+    
+    /*
+    * Open all PS/2 keyboards - 
+    * they're ready immediately.
+    */
+    (void)kb_open();
+    
+    /*
+    * Give USB keyboards time
+    * for initialization.
+    */
+    winx_printf("\n");
+    for(i = 0; i < KB_INIT_DELAY; i++){
+        memset(dots,' ',KB_INIT_DELAY);
+        for(j = 0; j < i + 1; j++)
+            dots[j] = '.';
+        dots[KB_INIT_DELAY] = 0;
+        winx_printf("\rWait for keyboard initialization"
+            "%s [Hit Esc to skip]",dots);
+        kb_read_time_elapsed = 0;
+        if(winx_kb_read(&kbd_rec,1000) == 0){
+            if(kbd_rec.wVirtualScanCode == 0x1) break;
+        } else if(!kb_read_time_elapsed){
+            winx_sleep(1000);
+        }
+    }
+    winx_printf("\rWait for keyboard"
+        " initialization%s [Done]\n\n",dots);
+    
+    /*
+    * Reset keyboard queues; open 
+    * all the connected keyboards.
+    */
+    kb_close();
+    return kb_open();
+}
+
+/**
+ * @internal
+ * @brief Checks the console for keyboard input.
+ * @details Tries to read from all keyboard devices 
+ * until specified time-out expires.
+ * @param[out] pKID pointer to the structure receiving keyboard input.
+ * @param[in] msec_timeout time-out interval in milliseconds.
+ * @return Zero if some key was pressed, negative value otherwise.
+ */
+int kb_read(PKEYBOARD_INPUT_DATA pKID,int msec_timeout)
+{
+    int attempts = 0;
+    ULONGLONG xtime = 0;
+    LARGE_INTEGER synch_interval;
+    NTSTATUS Status;
+    
+    DbgCheck1(pKID,-1);
+    
+    if(msec_timeout != INFINITE){
+        attempts = msec_timeout / MAX_TYPING_DELAY + 1;
+        xtime = winx_xtime();
+    }
+    
+    while(number_of_keyboards){
+        /* synchronize with other threads */
+        synch_interval.QuadPart = MAX_WAIT_INTERVAL;
+        Status = NtWaitForSingleObject(hKbSynchEvent,FALSE,&synch_interval);
+        if(Status != WAIT_OBJECT_0){
+            winx_printf("\nkb_read: synchronization failed: 0x%x\n",(UINT)Status);
+            winx_printf("%s\n\n",winx_get_status_description((ULONG)Status));
+            return (-1);
+        }
+
+        /* pop item from the keyboard queue */
+        if(n_written > 0){
+            memcpy(pKID,&kids[start_index],sizeof(KEYBOARD_INPUT_DATA));
+            start_index ++;
+            if(start_index >= KB_QUEUE_LENGTH)
+                start_index = 0;
+            n_written --;
+            (void)NtSetEvent(hKbSynchEvent,NULL);
+            return 0;
+        }
+
+        /* release synchronization event */
+        (void)NtSetEvent(hKbSynchEvent,NULL);
+
+        winx_sleep(MAX_TYPING_DELAY);
+        if(msec_timeout != INFINITE){
+            attempts --;
+            if(attempts == 0){
+                kb_read_time_elapsed = 1;
+                break;
+            }
+            if(xtime && (winx_xtime() - xtime >= msec_timeout)){
+                kb_read_time_elapsed = 1; break;
+            }
+        }
+    }
+    return (-1);
 }
 
 /** @} */
