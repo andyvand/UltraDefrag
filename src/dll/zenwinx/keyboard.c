@@ -419,9 +419,8 @@ void kb_close(void)
  */
 int winx_kb_init(void)
 {
-    char dots[KB_INIT_DELAY + 1];
     KBD_RECORD kbd_rec;
-    int i,j;
+    int i;
     
     /*
     * Open all PS/2 keyboards - 
@@ -433,23 +432,17 @@ int winx_kb_init(void)
     * Give USB keyboards time
     * for initialization.
     */
-    winx_printf("\n");
+    winx_printf("\nWait for keyboard initialization (hit Esc to skip) ");
     for(i = 0; i < KB_INIT_DELAY; i++){
-        memset(dots,' ',KB_INIT_DELAY);
-        for(j = 0; j < i + 1; j++)
-            dots[j] = '.';
-        dots[KB_INIT_DELAY] = 0;
-        winx_printf("\rWait for keyboard initialization"
-            "%s [Hit Esc to skip]",dots);
         kb_read_time_elapsed = 0;
         if(winx_kb_read(&kbd_rec,1000) == 0){
             if(kbd_rec.wVirtualScanCode == 0x1) break;
         } else if(!kb_read_time_elapsed){
             winx_sleep(1000);
         }
+        winx_printf(".");
     }
-    winx_printf("\rWait for keyboard"
-        " initialization%s [Done]\n\n",dots);
+    winx_printf(" [Done]\n\n");
     
     /*
     * Reset keyboard queues; open 
