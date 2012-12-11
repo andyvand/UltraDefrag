@@ -32,6 +32,8 @@ if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 (
     exit /B 0
 )
 
+title Build started
+
 :: set environment
 call :set_build_environment
 
