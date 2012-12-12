@@ -61,11 +61,11 @@ void winx_init_case_tables(void)
  * @brief Reliable _toupper analog.
  * @details MSDN states: "In order for toupper to give
  * the expected results, __isascii and islower must both
- * return nonzero". fast_toupper has no such limitation.
+ * return nonzero". winx_toupper has no such limitation.
  * @note Converts ASCII characters only (as well
  * as _toupper function included in ntdll library).
  */
-char fast_toupper(char c)
+char winx_toupper(char c)
 {
     return fast_toupper(c);
 }
@@ -74,11 +74,11 @@ char fast_toupper(char c)
  * @brief Reliable _tolower analog.
  * @details MSDN states: "In order for tolower to give
  * the expected results, __isascii and isupper must both
- * return nonzero". fast_tolower has no such limitation.
+ * return nonzero". winx_tolower has no such limitation.
  * @note Converts ASCII characters only (as well
  * as _tolower function included in ntdll library).
  */
-char fast_tolower(char c)
+char winx_tolower(char c)
 {
     return fast_tolower(c);
 }
@@ -90,7 +90,7 @@ char fast_tolower(char c)
  * all the characters according to the
  * Unicode standard.
  */
-wchar_t fast_towupper(wchar_t c)
+wchar_t winx_towupper(wchar_t c)
 {
     return fast_towupper(c);
 }
@@ -102,7 +102,7 @@ wchar_t fast_towupper(wchar_t c)
  * all the characters according to the
  * Unicode standard.
  */
-wchar_t fast_towlower(wchar_t c)
+wchar_t winx_towlower(wchar_t c)
 {
     return fast_towlower(c);
 }
