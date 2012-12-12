@@ -47,6 +47,8 @@
 #define MAX_DOS_DRIVES 26
 #define MAXFSNAME      32  /* I think, that's enough */
 
+int udefrag_init_failed(void);
+
 typedef struct _volume_info {
     char letter;
     char fsname[MAXFSNAME];
@@ -146,12 +148,19 @@ void udefrag_release_default_formatted_results(char *results);
 
 char *udefrag_get_error_description(int error_code);
 
+extern char udefrag_ascii_uppercase[];
+extern char udefrag_ascii_lowercase[];
+extern wchar_t udefrag_u16_uppercase[];
+extern wchar_t udefrag_u16_lowercase[];
+
 /* reliable _toupper and _tolower analogs */
-char udefrag_toupper(char c);
-char udefrag_tolower(char c);
+#define udefrag_toupper(c)  (udefrag_ascii_uppercase[(int)(unsigned char)(c)])
+#define udefrag_tolower(c)  (udefrag_ascii_lowercase[(int)(unsigned char)(c)])
+
 /* reliable towupper and towlower analogs */
-wchar_t udefrag_towupper(wchar_t c);
-wchar_t udefrag_towlower(wchar_t c);
+#define udefrag_towupper(c) (udefrag_u16_uppercase[(unsigned int)(c)])
+#define udefrag_towlower(c) (udefrag_u16_lowercase[(unsigned int)(c)])
+
 /* reliable _wcsupr and _wcslwr analogs */
 wchar_t *udefrag_wcsupr(wchar_t *s);
 wchar_t *udefrag_wcslwr(wchar_t *s);
@@ -184,7 +193,5 @@ void udefrag_flush_dbg_log(void);
  * logs clean always use one of those prefixes.
  */
 void udefrag_dbg_print(int flags,char *format, ...);
-
-int udefrag_init_failed(void);
 
 #endif /* _UDEFRAG_H_ */

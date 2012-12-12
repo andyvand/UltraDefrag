@@ -65,11 +65,15 @@ void dbg_print_header(udefrag_job_parameters *jp)
     winx_dbg_print_header(0,0,I"*");
     
     /* force MinGW to export general purpose udefrag_xxx routines */
-    ch = 'a'; ch = winx_tolower(ch) - winx_toupper(ch);
-    c = 'a'; c = winx_towlower(c) - winx_towupper(c);
+    c = (wchar_t)jp->volume_letter;
+    s1[0] = winx_towlower(c);
+    s2[0] = winx_towupper(c);
     winx_wcslwr(s1); winx_wcsupr(s2);
+    ch = (char)winx_tolower((char)s1[0]);
+    ch -= (char)winx_toupper((char)s2[0]);
     result = winx_wcsicmp(s1,s2);
-    result += mj + mn;
+    s1[0] = (char)(result & 0xFF);
+    winx_wcslwr(s1);
     winx_dbg_print(0,NULL);
 }
 
