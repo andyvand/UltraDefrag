@@ -71,7 +71,6 @@ EXPORTS
     winx_get_windows_boot_options
     winx_get_windows_directory
     winx_hr_to_bytes
-    winx_init_failed
     winx_init_history
     winx_init_library
     winx_init_spin_lock
