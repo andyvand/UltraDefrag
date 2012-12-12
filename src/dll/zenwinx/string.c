@@ -37,6 +37,11 @@
 /* tables for character case conversion */
 #include "case-tables.h"
 
+#define fast_toupper(c)  (ascii_uppercase[(int)(unsigned char)(c)])
+#define fast_tolower(c)  (ascii_lowercase[(int)(unsigned char)(c)])
+#define fast_towupper(c) (u16_uppercase[(unsigned int)(c)])
+#define fast_towlower(c) (u16_lowercase[(unsigned int)(c)])
+
 /**
  * @internal
  * @brief Initializes tables for
@@ -53,6 +58,56 @@ void winx_init_case_tables(void)
 }
 
 /**
+ * @brief Reliable _toupper analog.
+ * @details MSDN states: "In order for toupper to give
+ * the expected results, __isascii and islower must both
+ * return nonzero". fast_toupper has no such limitation.
+ * @note Converts ASCII characters only (as well
+ * as _toupper function included in ntdll library).
+ */
+char fast_toupper(char c)
+{
+    return fast_toupper(c);
+}
+
+/**
+ * @brief Reliable _tolower analog.
+ * @details MSDN states: "In order for tolower to give
+ * the expected results, __isascii and isupper must both
+ * return nonzero". fast_tolower has no such limitation.
+ * @note Converts ASCII characters only (as well
+ * as _tolower function included in ntdll library).
+ */
+char fast_tolower(char c)
+{
+    return fast_tolower(c);
+}
+
+/**
+ * @brief Reliable towupper analog.
+ * @details This routine doesn't depend
+ * on the current locale, it converts
+ * all the characters according to the
+ * Unicode standard.
+ */
+wchar_t fast_towupper(wchar_t c)
+{
+    return fast_towupper(c);
+}
+
+/**
+ * @brief Reliable towlower analog.
+ * @details This routine doesn't depend
+ * on the current locale, it converts
+ * all the characters according to the
+ * Unicode standard.
+ */
+wchar_t fast_towlower(wchar_t c)
+{
+    return fast_towlower(c);
+}
+
+/**
  * @brief Reliable _wcsupr analog.
  * @details This routine doesn't depend
  * on the current locale, it converts
@@ -65,7 +120,7 @@ wchar_t *winx_wcsupr(wchar_t *s)
     
     if(s){
         for(cp = s; *cp; cp++)
-            *cp = winx_towupper(*cp);
+            *cp = fast_towupper(*cp);
     }
     return s;
 }
@@ -83,7 +138,7 @@ wchar_t *winx_wcslwr(wchar_t *s)
     
     if(s){
         for(cp = s; *cp; cp++)
-            *cp = winx_towlower(*cp);
+            *cp = fast_towlower(*cp);
     }
     return s;
 }
@@ -137,7 +192,7 @@ int winx_wcsicmp(const wchar_t *s1, const wchar_t *s2)
         return (!s1 && !s2) ? 0 : 1;
     
     do {
-        result = (int)(winx_towlower(*s1) - winx_towlower(*s2));
+        result = (int)(fast_towlower(*s1) - fast_towlower(*s2));
         if(result != 0) break;
         if(*s1 == 0) break;
         s1++, s2++;
@@ -164,8 +219,8 @@ wchar_t *winx_wcsistr(const wchar_t *s1, const wchar_t *s2)
         _s1 = cp;
         _s2 = (wchar_t *)s2;
         
-        while(*_s1 && *_s2 && !( winx_towlower(*_s1) \
-            - winx_towlower(*_s2) )){ _s1++, _s2++; }
+        while(*_s1 && *_s2 && !( fast_towlower(*_s1) \
+            - fast_towlower(*_s2) )){ _s1++, _s2++; }
         if(!*_s2) return cp;
         cp++;
     }
@@ -188,8 +243,8 @@ char *winx_stristr(const char *s1, const char *s2)
         _s1 = cp;
         _s2 = (char *)s2;
         
-        while(*_s1 && *_s2 && !( winx_tolower(*_s1) \
-            - winx_tolower(*_s2) )){ _s1++, _s2++; }
+        while(*_s1 && *_s2 && !( fast_tolower(*_s1) \
+            - fast_tolower(*_s2) )){ _s1++, _s2++; }
         if(!*_s2) return cp;
         cp++;
     }
@@ -250,8 +305,8 @@ static int wcsmatch_icase_helper(wchar_t *string, wchar_t *mask)
     wchar_t cs, cm;
     
     while(*string && *mask){
-        cs = winx_towlower(*string);
-        cm = winx_towlower(*mask);
+        cs = fast_towlower(*string);
+        cm = fast_towlower(*mask);
         if(cs != cm && cm != '?'){
             /* the current pair of characters differs */
             if(cm != '*') return 0;
@@ -259,7 +314,7 @@ static int wcsmatch_icase_helper(wchar_t *string, wchar_t *mask)
             while(*mask == '*') mask ++;
             if(*mask == 0) return 1;
             /* compare rest of the string with rest of the mask */
-            cm = winx_towlower(*mask);
+            cm = fast_towlower(*mask);
             if(cm == '?'){
                 /* the question mark matches any single character */
                 for(; *string; string++){
@@ -269,7 +324,7 @@ static int wcsmatch_icase_helper(wchar_t *string, wchar_t *mask)
             } else {
                 /* skip part of the string which doesn't match for sure */
                 for(; *string; string++){
-                    if(winx_towlower(*string) == cm){
+                    if(fast_towlower(*string) == cm){
                         if(wcsmatch_icase_helper(string, mask))
                             return 1;
                     }
