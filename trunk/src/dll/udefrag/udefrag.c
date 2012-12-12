@@ -60,13 +60,26 @@
 #include "udefrag-internals.h"
 
 /**
- * @brief Defines whether udefrag library has 
- * been initialized successfully or not.
- * @return Boolean value.
+ * @brief Initializes udefrag library.
+ * @details This routine needs to be called
+ * before any use of other routines.
+ * @return Zero for success, negative value otherwise.
+ * @note This routine initializes zenwinx library as well.
  */
-int udefrag_init_failed(void)
+int udefrag_init_library(void)
 {
-    return winx_init_failed();
+    return winx_init_library();
+}
+
+/**
+ * @brief Releases resources 
+ * acquired by udefrag library.
+ * @note Releases zenwinx resources
+ * as well.
+ */
+void udefrag_unload_library(void)
+{
+    winx_unload_library();
 }
 
 /**
@@ -724,18 +737,20 @@ HANDLE hMutex = NULL;
  */
 BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
 {
-    /*
-    * Both command line and GUI clients support
-    * UD_LOG_FILE_PATH environment variable
-    * to control debug logging to the file.
-    */
     if(dwReason == DLL_PROCESS_ATTACH){
-        if(winx_get_os_version() >= WINDOWS_VISTA)
-            (void)winx_create_mutex(L"\\Sessions\\1\\BaseNamedObjects\\ultradefrag_mutex",&hMutex);
-        else
-            (void)winx_create_mutex(L"\\BaseNamedObjects\\ultradefrag_mutex",&hMutex);
+        /* deny installation/upgrade */
+        if(winx_get_os_version() >= WINDOWS_VISTA){
+            (void)winx_create_mutex(L"\\Sessions\\1"
+                "\\BaseNamedObjects\\ultradefrag_mutex",
+                &hMutex);
+        } else {
+            (void)winx_create_mutex(L"\\BaseNamedObjects"
+                "\\ultradefrag_mutex",&hMutex);
+        }
+        /* accept UD_LOG_FILE_PATH environment variable */
         (void)udefrag_set_log_file_path();
     } else if(dwReason == DLL_PROCESS_DETACH){
+        /* allow installation/upgrade */
         winx_destroy_mutex(hMutex);
     }
     return 1;

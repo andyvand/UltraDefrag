@@ -16,27 +16,9 @@
       forced to be set properly on GUI startup according to the Preview
       menu selections
     - added prefixes for all the debugging messages for easier analysis of logs
-
-    - Internals: obsolete winx_virtual_alloc, winx_virtual_free, winx_prompt_ex,
-      winx_load_driver, winx_unload_driver, winx_dbg_print_ex calls removed
-      from zenwinx library
-    - winx_heap_alloc, winx_heap_free, winx_list_insert_item, 
-      winx_list_remove_item, winx_print_array_of_strings,
-      winx_get_environment_variable, winx_set_environment_variable calls
-      superseded by winx_malloc, winx_free, winx_list_insert, winx_list_remove,
-      winx_print_strings, winx_getenv, winx_setenv calls
-    - winx_get_proc_address, winx_create_thread, winx_get_windows_directory,
-      winx_prompt, winx_dbg_print, winx_fopen, winx_fbopen, 
-      winx_get_file_contents, winx_create_directory, winx_delete_file,
-      winx_create_path, winx_path_remove_extension, winx_path_remove_filename,
-      winx_path_extract_filename, winx_get_module_filename,
-      winx_get_windows_directory, winx_set_dbg_log, udefrag_dbg_print
-      prototypes changed
-    - obsolete WgxDbgPrint, WgxDbgPrintLastError routines
-      removed from wgx library
-    - WgxSetDbgPrintHandler and WgxShellExecuteW routines superseded by
-      WgxSetInternalTraceHandler and WgxShellExecute routines
-    - WgxDisplayLastError prototype changed
+    - Internals: many prototypes changed in zenwinx, udefrag, wgx libraries;
+      obsolete routines removed
+    - udefrag_init_library, udefrag_unload_library routines added
     - WgxSetTaskbarProgressState, WgxSetTaskbarProgressValue, wgx_sprintf,
       wgx_vsprintf, wgx_swprintf, wgx_vswprintf routines added to wgx library
     - tracing macros for easier debugging added to zenwinx.h and wgx.h files

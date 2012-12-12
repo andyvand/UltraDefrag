@@ -202,6 +202,7 @@ static void terminate_console(int code)
     /* wait for web statistics request completion */
     stop_web_statistics();
     
+    udefrag_unload_library();
     exit(code);
 }
 
@@ -740,6 +741,7 @@ void test(void)
  */
 int __cdecl main(int argc, char **argv)
 {
+    int init_result;
     int parse_cmdline_result;
     int result = 1, pause_result;
     
@@ -750,6 +752,7 @@ int __cdecl main(int argc, char **argv)
 
     /* initialize the program */
     hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    init_result = udefrag_init_library();
     WgxSetInternalTraceHandler(udefrag_dbg_print);
     parse_cmdline_result = parse_cmdline(argc,argv);
     init_console();
@@ -772,7 +775,7 @@ int __cdecl main(int argc, char **argv)
     }
 
     /* handle initialization failure */
-    if(udefrag_init_failed()){
+    if(init_result < 0){
         display_error("Initialization failed!\nSend bug report to the authors please.\n");
         terminate_console(1);
     }

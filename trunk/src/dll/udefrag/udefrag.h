@@ -47,7 +47,8 @@
 #define MAX_DOS_DRIVES 26
 #define MAXFSNAME      32  /* I think, that's enough */
 
-int udefrag_init_failed(void);
+int udefrag_init_library(void);
+void udefrag_unload_library(void);
 
 typedef struct _volume_info {
     char letter;

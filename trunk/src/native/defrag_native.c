@@ -56,7 +56,7 @@ static void set_dbg_log(char *name);
 /**
  * @brief Initializes the native application.
  */
-static int NativeAppInit(PPEB Peb)
+static int NativeAppInit(void)
 {
     /*
     * Initialize registry in case 
@@ -66,13 +66,7 @@ static int NativeAppInit(PPEB Peb)
     (void)NtInitializeRegistry(0/*FALSE*/); /* saves boot log etc. */
 #endif
 
-    /*
-    * Since v4.3.0 this app is monolithic
-    * to reach the highest level of reliability.
-    * It was not reliable before because crashed
-    * the system in case of missing DLL's.
-    */
-    if(winx_init_library(Peb) < 0)
+    if(udefrag_init_library() < 0)
         return (-1);
     
     /* start initial logging */
@@ -127,7 +121,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
     
     /* initialize the program */
     peb = Peb;
-    init_result = NativeAppInit(Peb);
+    init_result = NativeAppInit();
 
     /* display copyrights */
     winx_print("\n\n");

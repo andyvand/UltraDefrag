@@ -498,8 +498,7 @@ winx_volume_region *winx_sub_volume_region(winx_volume_region *rlist,
 void winx_release_free_volume_regions(winx_volume_region *rlist);
 
 /* zenwinx.c */
-int winx_init_library(void *peb);
-int winx_init_failed(void);
+int winx_init_library(void);
 void winx_unload_library(void);
 
 void winx_exit(int exit_code);

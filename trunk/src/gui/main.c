@@ -1428,13 +1428,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     typedef BOOL (WINAPI *ICCE_PROC)(LPINITCOMMONCONTROLSEX lpInitCtrls);
     ICCE_PROC pInitCommonControlsEx = NULL;
     INITCOMMONCONTROLSEX icce;
-    int result;
+    int init_result, result;
     
     ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&osvi);
     if(osvi.dwMajorVersion < 5) is_nt4 = 1;
 
+    init_result = udefrag_init_library();
     WgxSetInternalTraceHandler(udefrag_dbg_print);
     hInstance = GetModuleHandle(NULL);
     
@@ -1443,6 +1444,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         MessageBox(NULL,"Administrative rights are needed "
           "to run the program!","UltraDefrag",
           MB_OK | MB_ICONHAND);
+        udefrag_unload_library();
         return 1;
     }
 
@@ -1450,10 +1452,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     StartCrashInfoCheck();
     
     /* handle initialization failure */
-    if(udefrag_init_failed()){
+    if(init_result < 0){
         MessageBoxA(NULL,"Send bug report to the authors please.",
             "UltraDefrag initialization failed!",MB_OK | MB_ICONHAND);
         StopCrashInfoCheck();
+        udefrag_unload_library();
         return 1;
     }
     
@@ -1469,6 +1472,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     
     if(InitSynchObjects() < 0){
         StopCrashInfoCheck();
+        udefrag_unload_library();
         return 1;
     }
 
@@ -1510,6 +1514,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         }
         DestroySynchObjects();
         StopCrashInfoCheck();
+        udefrag_unload_library();
         return 3;
     }
 
@@ -1532,12 +1537,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         WgxDestroyFont(&wgxFont);
         WgxDestroyResourceTable(i18n_table);
         DestroySynchObjects();
+        udefrag_unload_library();
         return result;
     }
     
     WgxDestroyFont(&wgxFont);
     WgxDestroyResourceTable(i18n_table);
     DestroySynchObjects();
+    udefrag_unload_library();
     return 0;
 }
 
