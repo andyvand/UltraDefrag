@@ -350,12 +350,31 @@ int winx_print_strings(char **strings,int line_width,
     int max_rows,char *prompt,int divide_to_pages);
 
 /* string.c */
-/* reliable _toupper and _tolower analogs */
-char winx_toupper(char c);
-char winx_tolower(char c);
-/* reliable towupper and towlower analogs */
-wchar_t winx_towupper(wchar_t c);
-wchar_t winx_towlower(wchar_t c);
+extern char ascii_uppercase[];
+extern char ascii_lowercase[];
+extern wchar_t u16_uppercase[];
+extern wchar_t u16_lowercase[];
+
+/**
+ * @brief Reliable _toupper and _tolower analogs.
+ * @details MSDN states: "In order for toupper/tolower to give
+ * the expected results, __isascii and islower/isupper must both
+ * return nonzero". winx_toupper and winx_tolower have no such limitations.
+ * @note Converts ASCII characters only (as well as _toupper/_tolower
+ * functions included in ntdll library).
+ */
+#define winx_toupper(c)  (ascii_uppercase[(int)(unsigned char)(c)])
+#define winx_tolower(c)  (ascii_lowercase[(int)(unsigned char)(c)])
+
+/**
+ * @brief Reliable towupper and towlower analogs.
+ * @details These routines don't depend on the 
+ * current locale, it converts all the characters
+ * according to the Unicode standard.
+ */
+#define winx_towupper(c) (u16_uppercase[(unsigned int)(c)])
+#define winx_towlower(c) (u16_lowercase[(unsigned int)(c)])
+
 /* reliable _wcsupr and _wcslwr analogs */
 wchar_t *winx_wcsupr(wchar_t *s);
 wchar_t *winx_wcslwr(wchar_t *s);
