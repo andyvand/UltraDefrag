@@ -1,8 +1,6 @@
 LIBRARY udefrag.dll
 
 EXPORTS
-    udefrag_ascii_lowercase=ascii_lowercase
-    udefrag_ascii_uppercase=ascii_uppercase
     udefrag_bytes_to_hr=winx_bytes_to_hr
     udefrag_dbg_print=winx_dbg_print
 
@@ -20,8 +18,10 @@ EXPORTS
     udefrag_set_log_file_path
     udefrag_start_job
 
-    udefrag_u16_lowercase=u16_lowercase
-    udefrag_u16_uppercase=u16_uppercase
+    udefrag_tolower=winx_tolower
+    udefrag_toupper=winx_toupper
+    udefrag_towlower=winx_towlower
+    udefrag_towupper=winx_towupper
 
     udefrag_validate_volume
 

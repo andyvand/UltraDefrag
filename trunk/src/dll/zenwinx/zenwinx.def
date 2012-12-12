@@ -1,9 +1,6 @@
 LIBRARY zenwinx.dll
 
 EXPORTS
-    ascii_lowercase
-    ascii_uppercase
-    
     prb_create
     prb_copy
     prb_destroy
@@ -25,9 +22,6 @@ EXPORTS
     prb_t_cur
     prb_t_replace
 
-    u16_lowercase
-    u16_uppercase
-    
     winx_acquire_spin_lock
     winx_add_volume_region
     winx_breakhit
@@ -123,6 +117,10 @@ EXPORTS
     winx_str2time
     winx_sub_volume_region
     winx_time2str
+    winx_tolower
+    winx_toupper
+    winx_towlower
+    winx_towupper
     winx_to_utf8
     winx_unload_library
     winx_unregister_boot_exec_command
