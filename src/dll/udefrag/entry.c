@@ -18,25 +18,38 @@
  */
 
 /**
- * @file float.c
- * @brief Floating point arithmetic support.
+ * @file entry.c
+ * @brief Entry point.
+ * @addtogroup Entry
  * @{
  */
 
 #include "udefrag-internals.h"
 
-/* fix "_ftol2 unresolved symbol" error for WDK 7 for WinXP build */
-#ifdef _MSC_VER
-#if _MSC_VER >= 1400
-#ifndef _WIN64
-extern long __cdecl _ftol(double x);
-/* _ftol2 seems to be an optimized version of _ftol */
-long __cdecl _ftol2(double x)
+HANDLE hMutex = NULL;
+
+/**
+ * @brief udefrag.dll entry point.
+ */
+BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
 {
-    return _ftol(x);
+    if(dwReason == DLL_PROCESS_ATTACH){
+        /* deny installation/upgrade */
+        if(winx_get_os_version() >= WINDOWS_VISTA){
+            (void)winx_create_mutex(L"\\Sessions\\1"
+                L"\\BaseNamedObjects\\ultradefrag_mutex",
+                &hMutex);
+        } else {
+            (void)winx_create_mutex(L"\\BaseNamedObjects"
+                L"\\ultradefrag_mutex",&hMutex);
+        }
+        /* accept UD_LOG_FILE_PATH environment variable */
+        (void)udefrag_set_log_file_path();
+    } else if(dwReason == DLL_PROCESS_DETACH){
+        /* allow installation/upgrade */
+        winx_destroy_mutex(hMutex);
+    }
+    return 1;
 }
-#endif
-#endif
-#endif
 
 /** @} */

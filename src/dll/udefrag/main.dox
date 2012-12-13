@@ -67,6 +67,12 @@
 /** @} */
 
 /**
+ * @defgroup Entry Entry point
+ * @{
+ */
+/** @} */
+
+/**
  * @defgroup Move File moving
  * @{
  */

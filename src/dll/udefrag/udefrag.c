@@ -728,33 +728,4 @@ void udefrag_flush_dbg_log(void)
     winx_flush_dbg_log();
 }
 
-#ifndef STATIC_LIB
-
-HANDLE hMutex = NULL;
-
-/**
- * @brief udefrag.dll entry point.
- */
-BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
-{
-    if(dwReason == DLL_PROCESS_ATTACH){
-        /* deny installation/upgrade */
-        if(winx_get_os_version() >= WINDOWS_VISTA){
-            (void)winx_create_mutex(L"\\Sessions\\1"
-                L"\\BaseNamedObjects\\ultradefrag_mutex",
-                &hMutex);
-        } else {
-            (void)winx_create_mutex(L"\\BaseNamedObjects"
-                L"\\ultradefrag_mutex",&hMutex);
-        }
-        /* accept UD_LOG_FILE_PATH environment variable */
-        (void)udefrag_set_log_file_path();
-    } else if(dwReason == DLL_PROCESS_DETACH){
-        /* allow installation/upgrade */
-        winx_destroy_mutex(hMutex);
-    }
-    return 1;
-}
-#endif
-
 /** @} */

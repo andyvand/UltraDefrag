@@ -1,5 +1,5 @@
 /*
- *  UltraDefrag - a powerful defragmentation tool for Windows NT.
+ *  ZenWINX - WIndows Native eXtended library.
  *  Copyright (c) 2007-2012 Dmitri Arkhangelski (dmitriar@gmail.com).
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,25 +18,20 @@
  */
 
 /**
- * @file float.c
- * @brief Floating point arithmetic support.
+ * @file entry.c
+ * @brief Entry point.
+ * @addtogroup Entry
  * @{
  */
 
-#include "udefrag-internals.h"
+#include "zenwinx.h"
 
-/* fix "_ftol2 unresolved symbol" error for WDK 7 for WinXP build */
-#ifdef _MSC_VER
-#if _MSC_VER >= 1400
-#ifndef _WIN64
-extern long __cdecl _ftol(double x);
-/* _ftol2 seems to be an optimized version of _ftol */
-long __cdecl _ftol2(double x)
+/**
+ * @brief zenwinx.dll entry point.
+ */
+BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
 {
-    return _ftol(x);
+    return 1;
 }
-#endif
-#endif
-#endif
 
 /** @} */
