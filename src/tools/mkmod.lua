@@ -520,25 +520,24 @@ target_name = name .. "." .. target_ext
 if os.getenv("BUILD_ENV") == "winddk" then
     print(input_filename .. " winddk build performing...\n")
     produce_ddk_makefile()
-    arch = "i386"
-    if os.getenv("AMD64") then arch = "amd64" end
-    if os.getenv("IA64") then arch = "ia64" end
+    objpath = "objfre_wxp_x86\\i386\\"
+    outpath = "..\\..\\bin\\"
+    libpath = "..\\..\\lib\\"
+    if os.getenv("AMD64") then
+        objpath = "objfre_wnet_amd64\\amd64\\"
+        outpath = "..\\..\\bin\\amd64"
+        libpath = "..\\..\\lib\\amd64"
+    elseif os.getenv("IA64") then
+        objpath = "objfre_wnet_ia64\\ia64\\"
+        outpath = "..\\..\\bin\\ia64"
+        libpath = "..\\..\\lib\\ia64"
+    end
     if os.execute(ddk_cmd) ~= 0 then
         error("Cannot build the target!")
     end
-    if arch == "i386" then
-        copy("objfre_wxp_x86\\i386\\" .. target_name,"..\\..\\bin\\")
-    else
-        copy("objfre_wnet_" .. arch .. "\\" .. arch .. "\\" .. target_name,
-            "..\\..\\bin\\" .. arch .. "\\")
-    end
+    copy(objpath .. target_name,outpath)
     if target_type == "dll" then
-        if arch == "i386" then
-            copy("objfre_wxp_x86\\i386\\" .. name .. ".lib","..\\..\\lib\\")
-        else
-            copy("objfre_wnet_" .. arch .. "\\" .. arch .. "\\" .. name .. ".lib",
-                 "..\\..\\lib\\" .. arch .. "\\" .. name .. ".lib")
-        end
+        copy(objpath .. name .. ".lib",libpath)
     end
 elseif os.getenv("BUILD_ENV") == "winsdk" then
     if target_type == "driver" then
