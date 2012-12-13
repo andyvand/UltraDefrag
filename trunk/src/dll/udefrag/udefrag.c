@@ -741,11 +741,11 @@ BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
         /* deny installation/upgrade */
         if(winx_get_os_version() >= WINDOWS_VISTA){
             (void)winx_create_mutex(L"\\Sessions\\1"
-                "\\BaseNamedObjects\\ultradefrag_mutex",
+                L"\\BaseNamedObjects\\ultradefrag_mutex",
                 &hMutex);
         } else {
             (void)winx_create_mutex(L"\\BaseNamedObjects"
-                "\\ultradefrag_mutex",&hMutex);
+                L"\\ultradefrag_mutex",&hMutex);
         }
         /* accept UD_LOG_FILE_PATH environment variable */
         (void)udefrag_set_log_file_path();
