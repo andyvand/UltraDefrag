@@ -242,6 +242,9 @@ exit /B 0
         call :build_modules ia64 || exit /B 1
     )
     
+    :: remove perplexing manifests
+    del /S /Q .\bin\*.manifest
+    
     set path=%OLD_PATH%
     set OLD_PATH=
     

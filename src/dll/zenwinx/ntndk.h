@@ -77,12 +77,6 @@
 *    it will fail.
 */
 
-#define _CRT_SECURE_NO_WARNINGS /* for Windows Server 2008 SDK compiler */
-
-/*
-* We use STATUS_WAIT_0...
-* #define WIN32_NO_STATUS
-*/
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
