@@ -77,6 +77,14 @@ del /f /q "%~n0_exclude.txt"
 :: copy external files on which udefrag.exe command line tool depends
 copy /Y .\obj\share\*.* .\obj\console\
 
+:: copy external files on which monolithic native interface depends
+copy /Y .\obj\native\udefrag.c .\obj\native\udefrag-native.c
+copy /Y .\obj\udefrag\*.* .\obj\native\
+del /Q .\obj\native\udefrag.rc
+copy /Y .\obj\native\volume.c .\obj\native\udefrag-volume.c
+copy /Y .\obj\zenwinx\*.* .\obj\native\
+del /Q .\obj\native\zenwinx.rc
+
 :: copy header files to different locations
 :: to make relative paths of them the same
 :: as in /src directory
@@ -281,42 +289,13 @@ exit /B 0
     rem rebuild modules
     set UD_BUILD_TOOL=lua ..\..\tools\mkmod.lua
     
-    :: monolithic native executable can be
-    :: produced currently by DDK only
-    if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINDDK% (
-        echo Compile monolithic native interface...
-        pushd obj\zenwinx
-        :: zenwinx.c needs to be recompiled because of DllMain
-        del /s /q zenwinx.obj
-        %UD_BUILD_TOOL% zenwinx.build static-lib || goto fail
-        cd ..\udefrag
-        :: udefrag.c needs to be recompiled because of DllMain
-        del /s /q udefrag.obj
-        :: float.c needs to be recompiled because of _ftol2
-        del /s /q float.obj
-        %UD_BUILD_TOOL% udefrag.build static-lib || goto fail
-        cd ..\native
-        %UD_BUILD_TOOL% defrag_native.build || goto fail
-
-        echo Compile native DLL's...
-        cd ..\zenwinx
-        :: zenwinx.c needs to be recompiled because of DllMain
-        del /s /q zenwinx.obj
-        %UD_BUILD_TOOL% zenwinx.build || goto fail
-        cd ..\udefrag
-        :: udefrag.c needs to be recompiled because of DllMain
-        del /s /q udefrag.obj
-        :: float.c needs to be recompiled because of _ftol2
-        del /s /q float.obj
-        %UD_BUILD_TOOL% udefrag.build || goto fail
-    ) else (
-        pushd obj\zenwinx
-        %UD_BUILD_TOOL% zenwinx.build || goto fail
-        cd ..\udefrag
-        %UD_BUILD_TOOL% udefrag.build || goto fail
-        cd ..\native
-        %UD_BUILD_TOOL% defrag_native.build || goto fail
-    )
+    pushd obj\zenwinx
+    %UD_BUILD_TOOL% zenwinx.build || goto fail
+    cd ..\udefrag
+    %UD_BUILD_TOOL% udefrag.build || goto fail
+    echo Compile monolithic native interface...
+    cd ..\native
+    %UD_BUILD_TOOL% defrag_native.build || goto fail
 
     rem workaround for WDK 6 and above
     if %1 equ X86 if %BUILD_ENV% equ winddk (

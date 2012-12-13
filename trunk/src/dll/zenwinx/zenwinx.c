@@ -35,13 +35,6 @@ void MarkWindowsBootAsSuccessful(void);
 char *winx_get_status_description(unsigned long status);
 void kb_close(void);
 
-#ifndef STATIC_LIB
-BOOL WINAPI DllMain(HANDLE hinstDLL,DWORD dwReason,LPVOID lpvReserved)
-{
-    return 1;
-}
-#endif
-
 /**
  * @brief Initializes zenwinx library.
  * @details This routine needs to be called

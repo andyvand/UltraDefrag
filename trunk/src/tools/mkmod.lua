@@ -47,13 +47,9 @@ files, resources, headers, inc = {}, {}, {}, {}
 -- included as dependencies to MinGW makefiles
 rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
 
--- FIXME: Only DDK compiler can compile native executable 
--- with static zenwinx and udefrag libraries.
-static_lib = 0
-
 ddk_cmd = "build.exe"
 mingw_cmd = "mingw32-make -f Makefile.mingw"
-mingw_x64_cmd = "gmake -f Makefile_x64.mingw"
+mingw_x64_cmd = "gmake -f Makefile.mingw"
 
 -- we never use SDK, so let it recompile everything
 sdk_cmd = "nmake.exe /NOLOGO /A /f"
@@ -98,25 +94,6 @@ function build_list_of_headers()
     assert(inc[1],"No acceptable headers found in \"headers\" file!")
 end
 
--- frontend subroutines
-function obsolete(src, dst)
---[[my ($src_mtime,$dst_mtime);
-
-    unless(-f $src){
-        die("Source not found!");
-        return;
-    }
-    unless(-f $dst){
-        return 1;
-    }
-    $src_mtime = (stat($src))[9];
-    $dst_mtime = (stat($dst))[9];
-    --print "src:$src_mtime, dst:$dst_mtime\n";
-    return ($dst_mtime > $src_mtime) ? 0 : 1;
---]]
-    return true
-end
-
 -- WinDDK backend
 makefile_contents = [[
 #
@@ -152,10 +129,6 @@ function produce_ddk_makefile()
     else   error("Unknown target type: " .. target_type .. "!")
     end
     
-    if static_lib == 1 then
-        t = "LIBRARY"
-    end
-
     f:write("TARGETTYPE=", t, "\n\n")
     if target_type == "dll" then
         f:write("DLLDEF=", deffile, "\n\n")
@@ -164,10 +137,6 @@ function produce_ddk_makefile()
     -- use /FA switch to generate assembly listings
     -- f:write("USER_C_FLAGS=/DUSE_WINDDK /FA\n\n")
     f:write("USER_C_FLAGS=/DUSE_WINDDK\n\n")
-    
-    if static_lib == 1 then
-        f:write("USER_C_FLAGS=\$(USER_C_FLAGS) /DSTATIC_LIB\n\n")
-    end
     
     if target_type == "console" or target_type == "gui" then
         f:write("CFLAGS=\$(CFLAGS) /MT\n\n")
@@ -330,7 +299,7 @@ function produce_sdk_makefile()
 end
 
 -- MinGW backend
-main_mingw_rules = [[
+mingw_rules = [[
 define build_target
 @echo Linking...
 @$(CC) -o $(TARGET) $(SRC_OBJS) $(RSRC_OBJS) $(LIB_DIRS) $(LIBS) $(LDFLAGS)
@@ -348,44 +317,27 @@ endef
 
 ]]
 
-static_lib_mingw_rules = [[
-define build_target
-@echo Linking...
-@ar rc lib$(TARGET).a $(SRC_OBJS)
-@ranlib lib$(TARGET).a
-endef
-
-define compile_resource
-@echo Compiling $<
-@$(WINDRES) $(RCFLAGS) $(RC_PREPROC) $(RC_INCLUDE_DIRS) -O COFF -i "$<" -o "$@"
-endef
-
-define compile_source
-@echo Compiling $<
-@$(CC) $(CFLAGS) $(C_PREPROC) $(C_INCLUDE_DIRS) -c "$<" -o "$@"
-endef
-
-]]
-
 function produce_mingw_makefile()
     local adlibs_libs, adlibs_paths, path, lib
+    local dlltool
 
     local f = assert(io.open(".\\Makefile.mingw","w"))
 
-    f:write("PROJECT = ", name, "\nCC = gcc.exe\n\n")
-    f:write("WINDRES = \"\$(COMPILER_BIN)windres.exe\"\n\n")
+    if os.getenv("BUILD_ENV") == "mingw_x64" then
+        dlltool = "x86_64-w64-mingw32-dlltool"
+        f:write("PROJECT = ", name, "\nCC = x86_64-w64-mingw32-gcc.exe\n\n")
+        f:write("WINDRES = \"\$(COMPILER_BIN)x86_64-w64-mingw32-windres.exe\"\n\n")
+        f:write("TARGET = ", target_name, "\n")
+        f:write("CFLAGS = -pipe  -Wall -g0 -O2 -m64\n")
+    else
+        dlltool = "dlltool"
+        f:write("PROJECT = ", name, "\nCC = gcc.exe\n\n")
+        f:write("WINDRES = \"\$(COMPILER_BIN)windres.exe\"\n\n")
+        f:write("TARGET = ", target_name, "\n")
+        f:write("CFLAGS = -pipe  -Wall -g0 -O2\n")
+    end
     
-    f:write("TARGET = ", target_name, "\n")
-    
-    f:write("CFLAGS = -pipe  -Wall -g0 -O2")
---    if static_lib == 1 then
---        f:write(" -DSTATIC_LIB")
---    end
-    f:write("\n")
-
-    f:write("RCFLAGS = ")
-    f:write("\n")
-    
+    f:write("RCFLAGS = \n")
     f:write("C_INCLUDE_DIRS = \n")
     f:write("C_PREPROC = \n")
     f:write("RC_INCLUDE_DIRS = \n")
@@ -403,8 +355,7 @@ function produce_mingw_makefile()
         f:write(mingw_deffile .. " -Wl,--entry,_DriverEntry\@8,")
         f:write("--subsystem,native,--image-base,0x10000,-shared,--strip-all\n")
     elseif target_type == "dll" then
-        f:write("LDFLAGS = -pipe -shared -Wl,")
-        f:write("--out-implib,lib", name, ".dll.a -nostartfiles ")
+        f:write("LDFLAGS = -pipe -shared -nostartfiles ")
         f:write("-nodefaultlibs ", mingw_deffile, " -Wl,--kill-at,")
         f:write("--entry,_DllMain\@12,--strip-all\n")
     else error("Unknown target type: " .. target_type .. "!")
@@ -446,149 +397,24 @@ function produce_mingw_makefile()
     end
     f:write("\n\n")
 
-    --if static_lib == 0 then
-        f:write(main_mingw_rules)
-    --else
-    --    f:write(static_lib_mingw_rules)
-    --end
+    f:write(mingw_rules)
     if target_type == "dll" then
-        f:write("define correct_lib\n")
-        f:write("\@echo ------ correct the lib\$(PROJECT).dll.a library ------\n")
-        f:write("\@dlltool -k --output-lib lib\$(PROJECT).dll.a --def ")
+        f:write("define build_library\n")
+        f:write("\@echo ---------- build the lib\$(PROJECT).dll.a library ----------\n")
+        f:write("\@", dlltool, " -k --output-lib lib\$(PROJECT).dll.a --def ")
         f:write(mingw_deffile, "\n")
         f:write("endef\n\n")
     end
     f:write("define print_header\n")
-    f:write("\@echo ----------Configuration: ", name, " - Release----------\n")
+    f:write("\@echo ---------- Configuration: ", name, " - Release ----------\n")
     f:write("endef\n\n")
     
     f:write("\$(TARGET): \$(RSRC_OBJS) \$(SRC_OBJS)\n")
     f:write("\t\$(print_header)\n")
     f:write("\t\$(build_target)\n")
     if target_type == "dll" then
-        f:write("\t\$(correct_lib)\n")
-    end
-    f:write("\n")
-    
-    build_list_of_headers()
-    
-    for i, v in ipairs(src) do
-        f:write(string.gsub(v,"%.c","%.o"), ": ", v, " ")
-        for i, v in ipairs(inc) do
-            f:write("\\\n", v, " ")
-        end
-        f:write("\n\t\$(compile_source)\n\n")
-    end
-
-    for i, v in ipairs(rc) do
-        f:write(string.gsub(v,"%.rc","%.res"), ": ", v, " ")
-        for i, v in ipairs(inc) do
-            f:write("\\\n", v, " ")
-        end
-        for i, v in ipairs(resources) do
-            f:write("\\\n", v, " ")
-        end
-        f:write("\n\t\$(compile_resource)\n\n")
-    end
-
-    f:close()
-end
-
--- MinGW x64 backend
-function produce_mingw_x64_makefile()
-    local adlibs_libs, adlibs_paths, path, lib
-
-    local f = assert(io.open(".\\Makefile_x64.mingw","w"))
-    
-    f:write("PROJECT = ", name, "\nCC = x86_64-w64-mingw32-gcc.exe\n\n")
-    f:write("WINDRES = \"\$(COMPILER_BIN)x86_64-w64-mingw32-windres.exe\"\n\n")
-    
-    f:write("TARGET = ", target_name, "\n")
-    
-    f:write("CFLAGS = -pipe  -Wall -g0 -O2 -m64\n")
-    f:write("RCFLAGS = \n")
-    
-    f:write("C_INCLUDE_DIRS = \n")
-    f:write("C_PREPROC = \n")
-    f:write("RC_INCLUDE_DIRS = \n")
-    f:write("RC_PREPROC = \n")
-    
-    if target_type == "console" then
-        f:write("LDFLAGS = -pipe -Wl,--strip-all\n")
-    elseif target_type == "gui" then
-        f:write("LDFLAGS = -pipe -mwindows -Wl,--strip-all\n")
-    elseif target_type == "native" then
-        f:write("LDFLAGS = -pipe -nostartfiles -nodefaultlibs ")
-        f:write("-Wl,--entry,_NtProcessStartup\@4,--subsystem,native,--strip-all\n")
-    elseif target_type == "driver" then
-        f:write("LDFLAGS = -pipe -nostartfiles -nodefaultlibs ")
-        f:write(mingw_deffile .. " -Wl,--entry,_DriverEntry\@8,")
-        f:write("--subsystem,native,--image-base,0x10000,-shared,--strip-all\n")
-    elseif target_type == "dll" then
-        f:write("LDFLAGS = -pipe -shared -Wl,")
-        f:write("--out-implib,lib", name, ".dll.a -nostartfiles ")
-        if nativedll == 0 then
-            f:write(mingw_deffile, " -Wl,--kill-at,")
-        else
-            f:write("-nodefaultlibs ", mingw_deffile, " -Wl,--kill-at,")
-        end
-        f:write("--entry,_DllMain\@12,--strip-all\n")
-    else error("Unknown target type: " .. target_type .. "!")
-    end
-
-    f:write("LIBS = ")
-    for i, v in ipairs(libs) do
-        f:write("-l", v, " ")
-    end
-
-    adlibs_libs = {}
-    adlibs_paths = {}
-    for i, v in ipairs(adlibs) do
-        i, j, path, lib = string.find(v,"^(.*)\\(.-)$")
-        if path == nil or lib == nil then
-            table.insert(adlibs_libs,v)
-        else
-            table.insert(adlibs_libs,lib)
-            table.insert(adlibs_paths,path)
-        end
-    end
-    for i, v in ipairs(adlibs_libs) do
-        f:write("-l", v, " ")
-    end
-    f:write("\nLIB_DIRS = ")
-    for i, v in ipairs(adlibs_paths) do
-        f:write("-L\"", v, "\" ")
-    end
-    f:write("\n\n")
-    
-    f:write("SRC_OBJS = ")
-    for i, v in ipairs(src) do
-        f:write(string.gsub(v,"%.c","%.o"), " ")
-    end
-
-    f:write("\n\nRSRC_OBJS = ")
-    for i, v in ipairs(rc) do
-        f:write(string.gsub(v,"%.rc","%.res"), " ")
-    end
-    f:write("\n\n")
-
-    f:write(main_mingw_rules)
-    if target_type == "dll" then
-        f:write("define correct_lib\n")
-        f:write("\@echo ------ correct the lib\$(PROJECT).dll.a library ------\n")
-        f:write("\@x86_64-w64-mingw32-dlltool -k --output-lib lib\$(PROJECT).dll.a --def ")
-        f:write(deffile, "\n")
-        f:write("endef\n\n")
-    end
-    f:write("define print_header\n")
-    f:write("\@echo ----------Configuration: ", name, " - Release----------\n")
-    f:write("endef\n\n")
-    
-    f:write("\$(TARGET): \$(RSRC_OBJS) \$(SRC_OBJS)\n")
-    f:write("\t\$(print_header)\n")
-    f:write("\t\$(build_target)\n")
-    if target_type == "dll" then
-        f:write("\t\$(correct_lib)\n")
+        -- produce interface library from .def file
+        f:write("\t\$(build_library)\n")
     end
     f:write("\n")
     
@@ -622,10 +448,6 @@ assert(input_filename,"File name must be specified!")
 print(input_filename .. " Preparing the makefile generation...\n")
 
 dofile(input_filename)
-
-if arg[2] == "static-lib" then
-    static_lib = 1
-end
 
 if os.execute("cmd.exe /C dir /S /B >project_files") ~= 0 then
     error("Cannot get directory listing!")
@@ -686,23 +508,19 @@ end
 target_name = name .. "." .. target_ext
 
 if os.getenv("BUILD_ENV") == "winddk" then
-    if obsolete(input_filename,".\\sources") then
-        produce_ddk_makefile()
-    end
     print(input_filename .. " winddk build performing...\n")
+    produce_ddk_makefile()
     arch = "i386"
     if os.getenv("AMD64") then arch = "amd64" end
     if os.getenv("IA64") then arch = "ia64" end
     if os.execute(ddk_cmd) ~= 0 then
         error("Cannot build the target!")
     end
-    if static_lib == 0 then
-        if arch == "i386" then
-            copy("objfre_wxp_x86\\i386\\" .. target_name,"..\\..\\bin\\")
-        else
-            copy("objfre_wnet_" .. arch .. "\\" .. arch .. "\\" .. target_name,
-                "..\\..\\bin\\" .. arch .. "\\")
-        end
+    if arch == "i386" then
+        copy("objfre_wxp_x86\\i386\\" .. target_name,"..\\..\\bin\\")
+    else
+        copy("objfre_wnet_" .. arch .. "\\" .. arch .. "\\" .. target_name,
+            "..\\..\\bin\\" .. arch .. "\\")
     end
     if target_type == "dll" then
         if arch == "i386" then
@@ -716,10 +534,8 @@ elseif os.getenv("BUILD_ENV") == "winsdk" then
     if target_type == "driver" then
         print("Driver compilation is not supported by Windows SDK.\n")
     else
-        if obsolete(input_filename, name .. ".mak") then
-            produce_sdk_makefile()
-        end
         print(input_filename .. " windows sdk build performing...\n")
+        produce_sdk_makefile()
         arch = "i386"
         if os.getenv("AMD64") then arch = "amd64" end
         if os.getenv("IA64") then arch = "ia64" end
@@ -727,12 +543,10 @@ elseif os.getenv("BUILD_ENV") == "winsdk" then
         if os.execute(sdk_cmd) ~= 0 then
             error("Cannot build the target!")
         end
-        if static_lib == 0 then
-            if arch == "i386" then
-                copy(target_name, "..\\..\\bin\\")
-            else
-                copy(target_name, "..\\..\\bin\\" .. arch .. "\\")
-            end
+        if arch == "i386" then
+            copy(target_name, "..\\..\\bin\\")
+        else
+            copy(target_name, "..\\..\\bin\\" .. arch .. "\\")
         end
         if target_type == "dll" then
             if arch == "i386" then
@@ -743,37 +557,26 @@ elseif os.getenv("BUILD_ENV") == "winsdk" then
         end
     end
 elseif os.getenv("BUILD_ENV") == "mingw" then
-    if obsolete(input_filename, ".\\Makefile.mingw") then
-        produce_mingw_makefile()
-    end
     print(input_filename .. " mingw build performing...\n")
+    produce_mingw_makefile()
     if os.execute(mingw_cmd) ~= 0 then
         error("Cannot build the target!")
     end
-    if static_lib == 0 then
-        copy(target_name,"..\\..\\bin\\")
-    end
+    copy(target_name,"..\\..\\bin\\")
     if target_type == "dll" then
         copy("lib" .. target_name .. ".a","..\\..\\lib\\")
     end
 elseif os.getenv("BUILD_ENV") == "mingw_x64" then
-    -- NOTE: MinGW x64 compiler currently generates wrong code, therefore we cannot use it for real purposes.
-    if target_type == "driver" then
-        print("Driver compilation is not supported by x64 MinGW.\n")
-    else
-        if obsolete(input_filename, ".\\Makefile_x64.mingw") then
-            produce_mingw_x64_makefile()
-        end
-        print(input_filename .. " mingw build performing...\n")
-        if os.execute(mingw_x64_cmd) ~= 0 then
-            error("Cannot build the target!")
-        end
-        if static_lib == 0 then
-            copy(target_name,"..\\..\\bin\\amd64\\")
-        end
-        if target_type == "dll" then
-            copy("lib" .. target_name .. ".a","..\\..\\lib\\amd64\\")
-        end
+    -- NOTE: MinGW x64 compiler currently generates wrong
+    -- code, therefore we cannot use it for real purposes.
+    print(input_filename .. " mingw x64 build performing...\n")
+    produce_mingw_makefile()
+    if os.execute(mingw_x64_cmd) ~= 0 then
+        error("Cannot build the target!")
+    end
+    copy(target_name,"..\\..\\bin\\amd64\\")
+    if target_type == "dll" then
+        copy("lib" .. target_name .. ".a","..\\..\\lib\\amd64\\")
     end
 else
     error("\%BUILD_ENV\% has wrong value: " .. os.getenv("BUILD_ENV") .. "!")

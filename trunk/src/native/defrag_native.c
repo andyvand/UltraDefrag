@@ -29,8 +29,6 @@
 * prevent BSOD in case of missing UltraDefrag native libraries.
 * Otherwise the following modules becomes critical for the Windows
 * boot process: udefrag.dll, zenwinx.dll.
-* We don't know how to build monolithic app on MinGW,
-* but on Windows DDK this works fine.
 */
 
 /**
@@ -56,14 +54,11 @@ static void set_dbg_log(char *name);
 /**
  * @brief Initializes the native application.
  */
-static int NativeAppInit(void)
+static int native_app_init(void)
 {
-    /*
-    * Initialize registry in case 
-    * of smss.exe replacement.
-    */
 #ifdef USE_INSTEAD_SMSS
-    (void)NtInitializeRegistry(0/*FALSE*/); /* saves boot log etc. */
+    /* it saves boot log etc. */
+    (void)NtInitializeRegistry(0);
 #endif
 
     if(udefrag_init_library() < 0)
@@ -79,7 +74,7 @@ static int NativeAppInit(void)
  * @return Nonzero value if safe mode is
  * detected, zero otherwise.
  */
-static int HandleSafeModeBoot(void)
+static int handle_safe_mode_boot(void)
 {
     int safe_mode;
     
@@ -121,7 +116,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
     
     /* initialize the program */
     peb = Peb;
-    init_result = NativeAppInit();
+    init_result = native_app_init();
 
     /* display copyrights */
     winx_print("\n\n");
@@ -142,7 +137,7 @@ void __stdcall NtProcessStartup(PPEB Peb)
     }
         
     /* handle safe mode boot */
-    if(HandleSafeModeBoot())
+    if(handle_safe_mode_boot())
         return;
         
     /* check for the pending boot-off command */

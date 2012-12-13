@@ -101,6 +101,12 @@
 /** @} */
 
 /**
+ * @defgroup Entry Entry point
+ * @{
+ */
+/** @} */
+
+/**
  * @defgroup Environment Environment
  * @{
  */
