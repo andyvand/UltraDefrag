@@ -49,7 +49,6 @@ rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
 
 ddk_cmd = "build.exe"
 mingw_cmd = "mingw32-make -f Makefile.mingw"
-mingw_x64_cmd = "gmake -f Makefile.mingw"
 
 -- we never use SDK, so let it recompile everything
 sdk_cmd = "nmake.exe /NOLOGO /A /f"
@@ -319,21 +318,16 @@ endef
 
 function produce_mingw_makefile()
     local adlibs_libs, adlibs_paths, path, lib
-    local dlltool
 
     local f = assert(io.open(".\\Makefile.mingw","w"))
 
+    f:write("PROJECT = ", name, "\nCC = gcc.exe\n\n")
+    f:write("WINDRES = \"\$(COMPILER_BIN)windres.exe\"\n\n")
+
+    f:write("TARGET = ", target_name, "\n")
     if os.getenv("BUILD_ENV") == "mingw_x64" then
-        dlltool = "x86_64-w64-mingw32-dlltool"
-        f:write("PROJECT = ", name, "\nCC = x86_64-w64-mingw32-gcc.exe\n\n")
-        f:write("WINDRES = \"\$(COMPILER_BIN)x86_64-w64-mingw32-windres.exe\"\n\n")
-        f:write("TARGET = ", target_name, "\n")
         f:write("CFLAGS = -pipe  -Wall -g0 -O2 -m64\n")
     else
-        dlltool = "dlltool"
-        f:write("PROJECT = ", name, "\nCC = gcc.exe\n\n")
-        f:write("WINDRES = \"\$(COMPILER_BIN)windres.exe\"\n\n")
-        f:write("TARGET = ", target_name, "\n")
         f:write("CFLAGS = -pipe  -Wall -g0 -O2\n")
     end
     
@@ -401,7 +395,7 @@ function produce_mingw_makefile()
     if target_type == "dll" then
         f:write("define build_library\n")
         f:write("\@echo ---------- build the lib\$(PROJECT).dll.a library ----------\n")
-        f:write("\@", dlltool, " -k --output-lib lib\$(PROJECT).dll.a --def ")
+        f:write("\@dlltool -k --output-lib lib\$(PROJECT).dll.a --def ")
         f:write(mingw_deffile, "\n")
         f:write("endef\n\n")
     end
@@ -571,7 +565,7 @@ elseif os.getenv("BUILD_ENV") == "mingw_x64" then
     -- code, therefore we cannot use it for real purposes.
     print(input_filename .. " mingw x64 build performing...\n")
     produce_mingw_makefile()
-    if os.execute(mingw_x64_cmd) ~= 0 then
+    if os.execute(mingw_cmd) ~= 0 then
         error("Cannot build the target!")
     end
     copy(target_name,"..\\..\\bin\\amd64\\")
