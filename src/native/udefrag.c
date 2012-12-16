@@ -91,7 +91,6 @@ void RedrawProgress(udefrag_progress_info *pi)
     char format[16];
     char *results;
 
-    /* TODO: optimize for speed to make redraw faster */
     switch(pi->current_operation){
         case VOLUME_ANALYSIS:
             op_name = "Analyze:  ";

@@ -158,53 +158,24 @@ int open_smss_key(HKEY *phkey)
  */
 static int cmd_compare(char *reg_cmd,char *cmd)
 {
-    char *reg_cmd_copy = NULL;
-    char *cmd_copy = NULL;
-    char *long_cmd = NULL;
-    int result = (-1);
+    char *long_cmd;
+    int result;
     
     /* do we have the command registered as it is? */
-    if(!strcmp(reg_cmd,cmd))
+    if(!_stricmp(cmd,reg_cmd))
         return 1;
-    
-    /* allocate memory */
-    reg_cmd_copy = _strdup(reg_cmd);
-    if(reg_cmd_copy == NULL){
-        if(!silent)
-            MessageBox(NULL,"Not enough memory!","Error",MB_OK | MB_ICONHAND);
-        goto done;
-    }
-    cmd_copy = _strdup(cmd);
-    if(cmd_copy == NULL){
-        if(!silent)
-            MessageBox(NULL,"Not enough memory!","Error",MB_OK | MB_ICONHAND);
-        goto done;
-    }
-    long_cmd = wgx_sprintf("autocheck %s",cmd);
+        
+    /* compare reg_cmd with 'autocheck {cmd}' */
+    long_cmd = wgx_sprintf("autocheck %hs",cmd);
     if(long_cmd == NULL){
         if(!silent)
             MessageBox(NULL,"Not enough memory!","Error",MB_OK | MB_ICONHAND);
-        goto done;
+        return (-1);
     }
-    
-    /* convert all strings to lowercase */
-    _strlwr(reg_cmd_copy);
-    _strlwr(cmd_copy);
-    _strlwr(long_cmd);
-
-    /* compare */
-    if(!strcmp(reg_cmd_copy,cmd_copy) || !strcmp(reg_cmd_copy,long_cmd)){
-        result = 1;
-        goto done;
-    }
-
-    result = 0;
-    
-done:
-    free(reg_cmd_copy);
-    free(cmd_copy);
+        
+    result = _stricmp(long_cmd,reg_cmd);
     free(long_cmd);
-    return result;
+    return (result == 0) ? 1 : 0;
 }
 
 int register_cmd(void)

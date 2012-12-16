@@ -289,57 +289,23 @@ static int write_boot_exec_value(HANDLE hKey,void *data,DWORD size)
  */
 static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
 {
-    wchar_t *reg_cmd_copy = NULL;
-    wchar_t *cmd_copy = NULL;
-    wchar_t *long_cmd = NULL;
-    wchar_t autocheck[] = L"autocheck ";
-    int length;
-    int result = (-1);
+    wchar_t *long_cmd;
+    int size,result;
     
     /* do we have the command registered as it is? */
-    if(!wcscmp(reg_cmd,cmd))
+    if(!winx_wcsicmp(cmd,reg_cmd))
         return 1;
-    
-    /* allocate memory */
-    reg_cmd_copy = winx_wcsdup(reg_cmd);
-    if(reg_cmd_copy == NULL){
-        etrace("cannot allocate %u bytes of memory",
-            (wcslen(reg_cmd) + 1) * sizeof(wchar_t));
-        goto done;
-    }
-    cmd_copy = winx_wcsdup(cmd);
-    if(cmd_copy == NULL){
-        etrace("cannot allocate %u bytes of memory",
-            (wcslen(cmd) + 1) * sizeof(wchar_t));
-        goto done;
-    }
-    length = (wcslen(cmd) + wcslen(autocheck) + 1) * sizeof(wchar_t);
-    long_cmd = winx_malloc(length);
+        
+    /* compare reg_cmd with 'autocheck {cmd}' */
+    winx_swprintf(long_cmd,size,result,L"autocheck %ws",cmd);
     if(long_cmd == NULL){
-        etrace("cannot allocate %u bytes of memory",length);
-        goto done;
+        mtrace();
+        return (-1);
     }
-    wcscpy(long_cmd,autocheck);
-    wcscat(long_cmd,cmd);
-    
-    /* convert all strings to lowercase */
-    _wcslwr(reg_cmd_copy);
-    _wcslwr(cmd_copy);
-    _wcslwr(long_cmd);
-
-    /* compare */
-    if(!wcscmp(reg_cmd_copy,cmd_copy) || !wcscmp(reg_cmd_copy,long_cmd)){
-        result = 1;
-        goto done;
-    }
-
-    result = 0;
-    
-done:
-    winx_free(reg_cmd_copy);
-    winx_free(cmd_copy);
+        
+    result = winx_wcsicmp(long_cmd,reg_cmd);
     winx_free(long_cmd);
-    return result;
+    return (result == 0) ? 1 : 0;
 }
 
 /**

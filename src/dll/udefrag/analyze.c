@@ -717,7 +717,6 @@ static int is_well_known_locked_file(winx_file_info *f,udefrag_job_parameters *j
  * @brief Searches for well known locked files
  * and applies their dispositions to the map.
  * @details Resets f->disp structure of locked files.
- * @todo Speed up.
  */
 static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
 {
