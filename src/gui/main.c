@@ -1447,7 +1447,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
           "to run the program!","UltraDefrag",
           MB_OK | MB_ICONHAND);
         udefrag_unload_library();
-        return 1;
+        return EXIT_FAILURE;
     }
 
     /* show crash info when the program crashed last time */
@@ -1459,7 +1459,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
             "UltraDefrag initialization failed!",MB_OK | MB_ICONHAND);
         StopCrashInfoCheck();
         udefrag_unload_library();
-        return 1;
+        return EXIT_FAILURE;
     }
     
     /* define whether we are in portable mode or not */
@@ -1475,7 +1475,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     if(InitSynchObjects() < 0){
         StopCrashInfoCheck();
         udefrag_unload_library();
-        return 1;
+        return EXIT_FAILURE;
     }
 
     start_web_statistics();
@@ -1517,7 +1517,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         DestroySynchObjects();
         StopCrashInfoCheck();
         udefrag_unload_library();
-        return 3;
+        return EXIT_FAILURE;
     }
 
     /* release all resources */
@@ -1547,7 +1547,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     WgxDestroyResourceTable(i18n_table);
     DestroySynchObjects();
     udefrag_unload_library();
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /** @} */

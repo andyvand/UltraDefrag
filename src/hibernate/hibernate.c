@@ -187,7 +187,7 @@ int __cdecl main(int argc, char **argv)
 
     if(now == 0){
         show_help();
-        return 0;
+        return EXIT_SUCCESS;
     }
 
     printf("Hibernate for Windows - a command line tool for Windows hibernation.\n");
@@ -199,7 +199,7 @@ int __cdecl main(int argc, char **argv)
     if(!OpenProcessToken(GetCurrentProcess(), 
     TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,&hToken)){
         handle_error("Cannot open process token");
-        return 1;
+        return EXIT_FAILURE;
     }
     
     LookupPrivilegeValue(NULL,SE_SHUTDOWN_NAME,&tkp.Privileges[0].Luid);
@@ -208,7 +208,7 @@ int __cdecl main(int argc, char **argv)
     AdjustTokenPrivileges(hToken,FALSE,&tkp,0,(PTOKEN_PRIVILEGES)NULL,0);         
     if(GetLastError() != ERROR_SUCCESS){
         handle_error("Cannot set shutdown privilege");
-        return 1;
+        return EXIT_FAILURE;
     }
     
     /*
@@ -235,7 +235,7 @@ int __cdecl main(int argc, char **argv)
     }
     if(!result){
         handle_error("Cannot hibernate the computer");
-        return 1;
+        return EXIT_FAILURE;
     }
-    return 0;
+    return EXIT_SUCCESS;
 }

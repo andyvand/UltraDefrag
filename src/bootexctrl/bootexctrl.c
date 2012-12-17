@@ -67,7 +67,7 @@ int parse_cmdline(wchar_t *cmdline)
     
     if(cmdline == NULL){
         h_flag = 1;
-        return 0;
+        return EXIT_SUCCESS;
     }
     
     argv = (wchar_t **)CommandLineToArgvW(cmdline,&argc);
@@ -75,7 +75,7 @@ int parse_cmdline(wchar_t *cmdline)
         if(!silent)
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
                 L"BootExecute Control: CommandLineToArgvW failed!");
-        return 1;
+        return EXIT_FAILURE;
     }
 
     for(argc--; argc >= 1; argc--){
@@ -92,7 +92,7 @@ int parse_cmdline(wchar_t *cmdline)
         } else {
             if(wcslen(argv[argc]) > MAX_PATH){
                 DisplayError("Command name is too long!");
-                return 2;
+                return EXIT_FAILURE;
             } else {
                 wcscpy(cmd,argv[argc]);
             }
@@ -103,7 +103,7 @@ int parse_cmdline(wchar_t *cmdline)
         h_flag = 1;
     
     GlobalFree(argv);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
@@ -123,21 +123,21 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
     if(udefrag_init_library() < 0){
         DisplayError("Initialization failed!");
-        exit(1);
+        return EXIT_FAILURE;
     }
 
     WgxSetInternalTraceHandler(udefrag_dbg_print);
 
     result = parse_cmdline(cmdline);
-    if(result != 0){
+    if(result != EXIT_SUCCESS){
         udefrag_unload_library();
-        return result;
+        return EXIT_FAILURE;
     }
 
     if(h_flag){
         show_help();
         udefrag_unload_library();
-        return 0;
+        return EXIT_SUCCESS;
     }
     
     /* check for admin rights - they're strongly required */
@@ -145,7 +145,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         DisplayError("Administrative rights"
             " are needed to run the program!");
         udefrag_unload_library();
-        return 1;
+        return EXIT_FAILURE;
     }
 
     if(r_flag){
@@ -162,5 +162,5 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
         }
     }
     udefrag_unload_library();
-    return (result == 0) ? 0 : 1;
+    return (result == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
