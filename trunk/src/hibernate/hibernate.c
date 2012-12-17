@@ -22,8 +22,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#define WgxTraceHandler dbg_print
+#define WgxTraceHandler udefrag_dbg_print
 #include "../dll/wgx/wgx.h"
+
+#include "../dll/udefrag/udefrag.h"
 
 typedef BOOLEAN (WINAPI *SET_SUSPEND_STATE_PROC)(BOOLEAN Hibernate,
         BOOLEAN ForceCritical,BOOLEAN DisableWakeEvent);
@@ -55,77 +57,6 @@ static void show_help(void)
         "  hibernate now - hibernates PC\n"
         "  hibernate /?  - displays this help\n"
         );
-}
-
-/**
- * @brief Replaces CR and LF
- * characters in a string by spaces.
- * @details Intended for use in dbg_print
- * routine to keep logging as clean as possible.
- */
-static void remove_crlf(char *s)
-{
-    int i;
-    
-    if(s){
-        for(i = 0; s[i]; i++){
-            if(s[i] == '\r' || s[i] == '\n')
-                s[i] = ' ';
-        }
-    }
-}
-
-static void dbg_print(int flags,char *format, ...)
-{
-    va_list arg;
-    char *buffer;
-    char *msg;
-    char *ext_buffer;
-    DWORD error;
-    
-    error = GetLastError();
-    if(format){
-        va_start(arg,format);
-        buffer = wgx_vsprintf(format,arg);
-        if(buffer){
-            if(flags & LAST_ERROR_FLAG){
-                if(!FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-                  FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-                  NULL,error,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                  (LPTSTR)(void *)&msg,0,NULL)){
-                    if(error == ERROR_COMMITMENT_LIMIT){
-                        ext_buffer = wgx_sprintf("%s: 0x%x error: not enough memory\n",buffer,(UINT)error);
-                    } else {
-                        ext_buffer = wgx_sprintf("%s: 0x%x error\n",buffer,(UINT)error);
-                    }
-                    if(ext_buffer){
-                        OutputDebugString(ext_buffer);
-                        free(ext_buffer);
-                    } else {
-                        OutputDebugString("dbg_print: not enough memory\n");
-                    }
-                } else {
-                    ext_buffer = wgx_sprintf("%s: 0x%x error: %s",buffer,(UINT)error,msg);
-                    if(ext_buffer){
-                        remove_crlf(ext_buffer);
-                        OutputDebugString(ext_buffer);
-                        OutputDebugString("\n");
-                        free(ext_buffer);
-                    } else {
-                        OutputDebugString("dbg_print: not enough memory\n");
-                    }
-                    LocalFree(msg);
-                }
-            } else {
-                OutputDebugString(buffer);
-                OutputDebugString("\n");
-            }
-            free(buffer);
-        } else {
-            OutputDebugString("dbg_print: not enough memory\n");
-        }
-        va_end(arg);
-    }
 }
 
 static void handle_error(char *msg)
@@ -193,12 +124,18 @@ int __cdecl main(int argc, char **argv)
     printf("Hibernate for Windows - a command line tool for Windows hibernation.\n");
     printf("Copyright (c) UltraDefrag Development Team, 2009-2012.\n\n");
     
-    WgxSetInternalTraceHandler(dbg_print);
+    if(udefrag_init_library() < 0){
+        fprintf(stderr,"Initialization failed!\n");
+        return EXIT_FAILURE;
+    }
+
+    WgxSetInternalTraceHandler(udefrag_dbg_print);
 
     /* enable shutdown privilege */
     if(!OpenProcessToken(GetCurrentProcess(), 
     TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,&hToken)){
         handle_error("Cannot open process token");
+        udefrag_unload_library();
         return EXIT_FAILURE;
     }
     
@@ -208,6 +145,7 @@ int __cdecl main(int argc, char **argv)
     AdjustTokenPrivileges(hToken,FALSE,&tkp,0,(PTOKEN_PRIVILEGES)NULL,0);         
     if(GetLastError() != ERROR_SUCCESS){
         handle_error("Cannot set shutdown privilege");
+        udefrag_unload_library();
         return EXIT_FAILURE;
     }
     
@@ -235,7 +173,9 @@ int __cdecl main(int argc, char **argv)
     }
     if(!result){
         handle_error("Cannot hibernate the computer");
+        udefrag_unload_library();
         return EXIT_FAILURE;
     }
+    udefrag_unload_library();
     return EXIT_SUCCESS;
 }

@@ -27,7 +27,7 @@ if "%1" equ "" (
     exit /B 1
 )
 
-call :make_manifest %1 1.0.1.0          hibernate    "Hibernate for Windows"         >.\obj\hibernate\hibernate.manifest
+call :make_manifest %1 1.0.2.0          hibernate    "Hibernate for Windows"         >.\obj\hibernate\hibernate.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  udefrag      "UltraDefrag console interface" >.\obj\console\defrag.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  ultradefrag  "UltraDefrag GUI"               >.\obj\gui\res\ultradefrag.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  bootexctrl   "BootExecute Control Program"   >.\obj\bootexctrl\bootexctrl.manifest
