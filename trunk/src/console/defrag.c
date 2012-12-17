@@ -457,13 +457,13 @@ static int process_single_volume(char volume_letter)
 
     /* validate volume letter */
     if(volume_letter == 0){
-        display_error("Drive letter should be specified!\n");
-        return 3;
+        display_error("Drive letter must be specified!\n");
+        return EXIT_FAILURE;
     }
     result = udefrag_validate_volume(volume_letter,FALSE);
     if(result < 0){
         display_invalid_volume_error(result);
-        return 3;
+        return EXIT_FAILURE;
     }
 
     /* initialize cluster map */
@@ -471,7 +471,7 @@ static int process_single_volume(char volume_letter)
         if(AllocateClusterMap() < 0){
             /* terminate process */
             (void)SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,FALSE);
-            terminate_console(4);
+            terminate_console(EXIT_FAILURE);
         }
         InitializeMapDisplay(volume_letter);
         map_size = map_rows * map_symbols_per_line;
@@ -481,7 +481,7 @@ static int process_single_volume(char volume_letter)
     if(screensaver_mode){
         RunScreenSaver();
         FreeClusterMap();
-        return 0;
+        return EXIT_SUCCESS;
     }
 
     /* run the job */
@@ -500,11 +500,11 @@ static int process_single_volume(char volume_letter)
     if(result < 0){
         display_defrag_error(job_type, result);
         FreeClusterMap();
-        return 5;
+        return EXIT_FAILURE;
     }
 
     FreeClusterMap();
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /**
@@ -516,7 +516,7 @@ static int process_volumes(void)
     object_path *path, *another_path;
     int single_path = 0;
     volume_info *v;
-    int i, result = 0;
+    int i, result = EXIT_SUCCESS;
     char letter;
     int n, path_found;
     int first_path = 1;
@@ -613,7 +613,7 @@ static int process_volumes(void)
             }
             
             /* set %UD_CUT_FILTER% */
-            if(stop_flag) return 0;
+            if(stop_flag) return EXIT_SUCCESS;
             if(!SetEnvironmentVariableW(L"UD_CUT_FILTER",cut_filter)){
                 display_last_error("process_volumes: cannot set %%UD_CUT_FILTER%%!");
             }
@@ -631,8 +631,7 @@ static int process_volumes(void)
     }
     
     /* if the job was stopped return success */
-    if(stop_flag)
-        return 0;
+    if(stop_flag) return EXIT_SUCCESS;
     
     /* in case of a single path processing return result */
     if(paths){
@@ -645,14 +644,13 @@ static int process_volumes(void)
     /* 2. process individual volumes specified on the command line */
     for(i = 0; i < MAX_DOS_DRIVES; i++){
         if(letters[i] == 0) break;
-        if(stop_flag) return 0;
+        if(stop_flag) return EXIT_SUCCESS;
         //printf("%c:\n",letters[i]);
         result = process_single_volume(letters[i]);
     }
     
     /* if the job was stopped return success */
-    if(stop_flag)
-        return 0;
+    if(stop_flag) return EXIT_SUCCESS;
     
     /* in case of a single volume processing return result */
     if(letters[1] == 0 && !all_flag && !all_fixed_flag)
@@ -661,8 +659,7 @@ static int process_volumes(void)
     /* 3. handle --all and --all-fixed options */
     if(all_flag || all_fixed_flag){
         v = udefrag_get_vollist(all_fixed_flag ? TRUE : FALSE);
-        if(v == NULL)
-            return 1;
+        if(v == NULL) return EXIT_FAILURE;
         for(i = 0; v[i].letter != 0; i++){
             if(stop_flag) break;
             //printf("%c:\n",v[i].letter);
@@ -670,7 +667,7 @@ static int process_volumes(void)
         }
         udefrag_release_vollist(v);
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /**
@@ -695,7 +692,7 @@ static int show_vollist(void)
     v = udefrag_get_vollist(la_flag ? FALSE : TRUE);
     if(v == NULL){
         settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-        return 2;
+        return EXIT_FAILURE;
     }
 
     for(i = 0; v[i].letter != 0; i++){
@@ -710,7 +707,7 @@ static int show_vollist(void)
     }
     udefrag_release_vollist(v);
     settextcolor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /**
@@ -743,7 +740,8 @@ int __cdecl main(int argc, char **argv)
 {
     int init_result;
     int parse_cmdline_result;
-    int result = 1, pause_result;
+    int pause_result;
+    int result = EXIT_FAILURE;
     
     /*test();
     getch();
@@ -760,7 +758,7 @@ int __cdecl main(int argc, char **argv)
     /* handle help request */
     if(h_flag){
         show_help();
-        terminate_console(0);
+        terminate_console(EXIT_SUCCESS);
     }
 
     printf(VERSIONINTITLE ", Copyright (c) UltraDefrag Development Team, 2007-2012.\n"
@@ -771,42 +769,42 @@ int __cdecl main(int argc, char **argv)
     /* check for admin rights - they're strongly required */
     if(!WgxCheckAdminRights()){
         display_error("Administrative rights are needed to run the program!\n");
-        terminate_console(1);
+        terminate_console(EXIT_FAILURE);
     }
 
     /* handle initialization failure */
     if(init_result < 0){
         display_error("Initialization failed!\nSend bug report to the authors please.\n");
-        terminate_console(1);
+        terminate_console(EXIT_FAILURE);
     }
 
     /* handle obsolete options */
     if(obsolete_option){
         display_error("The -i, -e, -s, -d options are oblolete.\n"
             "Use environment variables instead!\n");
-        terminate_console(1);
+        terminate_console(EXIT_FAILURE);
     }
 
     /* show list of volumes if requested */
     if(l_flag) terminate_console(show_vollist());
     
     /* run disk defragmentation job */
-    if(parse_cmdline_result < 0) goto done;
-    if(!SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,TRUE))
-        display_last_error("Cannot set Ctrl + C handler!");
-    
-    begin_synchronization();
-    
-    /* uncomment for the --wait option testing */
-    //printf("the job gets running\n");
-    //_getch();
-    result = process_volumes();
-    
-    end_synchronization();
-    
-    (void)SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,FALSE);
+    if(parse_cmdline_result == 0){
+        if(!SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,TRUE))
+            display_last_error("Cannot set Ctrl + C handler!");
+        
+        begin_synchronization();
+        
+        /* uncomment for the --wait option testing */
+        //printf("the job gets running\n");
+        //_getch();
+        result = process_volumes();
+        
+        end_synchronization();
+        
+        (void)SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,FALSE);
+    }
 
-done:    
     /* display prompt to hit any key in case of context menu handler */
     if(shellex_flag){
         settextcolor(default_color);
@@ -825,5 +823,5 @@ done:
 
     destroy_paths();
     terminate_console(result);
-    return 0; /* this point will never be reached */
+    return EXIT_SUCCESS; /* this point will never be reached */
 }

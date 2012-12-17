@@ -309,7 +309,7 @@ BOOL CALLBACK ShutdownConfirmDlgProc(HWND hWnd,UINT msg,WPARAM wParam,LPARAM lPa
 /**
  * @brief Shuts computer down or hibernates
  * them respect to user preferences.
- * @return Error code. Zero indicates success.
+ * @return Zero for success, nonzero value otherwise.
  */
 int ShutdownOrHibernate(void)
 {
@@ -327,20 +327,21 @@ int ShutdownOrHibernate(void)
     case IDM_WHEN_DONE_SHUTDOWN:
         if(seconds_for_shutdown_rejection){
             if(DialogBoxW(hInstance,MAKEINTRESOURCEW(IDD_SHUTDOWN),NULL,(DLGPROC)ShutdownConfirmDlgProc) == 0)
-                return 0;
+                return EXIT_SUCCESS;
             /* in case of errors we'll shutdown anyway */
             /* to avoid situation when pc works a long time without any control */
         }
         break;
     case IDM_WHEN_DONE_EXIT:
-        return 0; /* nothing to do */
+        /* nothing to do */
+        return EXIT_SUCCESS;
     }
     
     /* set SE_SHUTDOWN privilege */
     if(!OpenProcessToken(GetCurrentProcess(), 
     TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,&hToken)){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"ShutdownOrHibernate: cannot open process token!");
-        return 4;
+        return EXIT_FAILURE;
     }
     
     LookupPrivilegeValue(NULL,SE_SHUTDOWN_NAME,&tkp.Privileges[0].Luid);
@@ -349,7 +350,7 @@ int ShutdownOrHibernate(void)
     AdjustTokenPrivileges(hToken,FALSE,&tkp,0,(PTOKEN_PRIVILEGES)NULL,0);         
     if(GetLastError() != ERROR_SUCCESS){
         WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"ShutdownOrHibernate: cannot set shutdown privilege!");
-        return 5;
+        return EXIT_FAILURE;
     }
     
     /*
@@ -392,7 +393,7 @@ int ShutdownOrHibernate(void)
             result = SetSystemPowerState(TRUE,FALSE);
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot suspend the system!");
-            return 6;
+            return EXIT_FAILURE;
         }
         break;
     case IDM_WHEN_DONE_HIBERNATE:
@@ -405,7 +406,7 @@ int ShutdownOrHibernate(void)
         }
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot hibernate the computer!");
-            return 7;
+            return EXIT_FAILURE;
         }
         break;
     case IDM_WHEN_DONE_LOGOFF:
@@ -418,7 +419,7 @@ int ShutdownOrHibernate(void)
         }
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot log the user off!");
-            return 8;
+            return EXIT_FAILURE;
         }
         break;
     case IDM_WHEN_DONE_REBOOT:
@@ -431,7 +432,7 @@ int ShutdownOrHibernate(void)
         }
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot reboot the computer!");
-            return 9;
+            return EXIT_FAILURE;
         }
         break;
     case IDM_WHEN_DONE_SHUTDOWN:
@@ -444,12 +445,12 @@ int ShutdownOrHibernate(void)
         }
         if(!result){
             WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,L"UltraDefrag: cannot shut down the computer!");
-            return 10;
+            return EXIT_FAILURE;
         }
         break;
     }
     
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 /** @} */
