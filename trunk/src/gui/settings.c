@@ -411,55 +411,7 @@ void StopPrefsChangesTracking()
  */
 int IsBootTimeDefragEnabled(void)
 {
-    HKEY hKey;
-    DWORD type, size;
-    char *data, *curr_pos;
-    DWORD i, length, curr_len;
-
-    if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-            "SYSTEM\\CurrentControlSet\\Control\\Session Manager",
-            0,
-            KEY_QUERY_VALUE,
-            &hKey) != ERROR_SUCCESS){
-        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,L"Cannot open SMSS key!");
-        return FALSE;
-    }
-
-    type = REG_MULTI_SZ;
-    (void)RegQueryValueEx(hKey,"BootExecute",NULL,&type,NULL,&size);
-    data = malloc(size + 10);
-    if(!data){
-        (void)RegCloseKey(hKey);
-        MessageBox(0,"Not enough memory for IsBootTimeDefragEnabled()!",
-            "Error",MB_OK | MB_ICONHAND);
-        return FALSE;
-    }
-
-    type = REG_MULTI_SZ;
-    if(RegQueryValueEx(hKey,"BootExecute",NULL,&type,
-            (LPBYTE)data,&size) != ERROR_SUCCESS){
-        WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,L"Cannot query BootExecute value!");
-        (void)RegCloseKey(hKey);
-        free(data);
-        return FALSE;
-    }
-
-    length = size - 1;
-    for(i = 0; i < length;){
-        curr_pos = data + i;
-        curr_len = strlen(curr_pos) + 1;
-        /* if the command is yet registered then exit */
-        if(!strcmp(curr_pos,"defrag_native")){
-            (void)RegCloseKey(hKey);
-            free(data);
-            return TRUE;
-        }
-        i += curr_len;
-    }
-
-    (void)RegCloseKey(hKey);
-    free(data);
-    return FALSE;
+    return udefrag_bootex_check(L"defrag_native") > 0 ? 1 : 0;
 }
 
 /**

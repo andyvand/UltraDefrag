@@ -18,7 +18,9 @@
     - added prefixes for all the debugging messages for easier analysis of logs
     - Internals: many prototypes changed in zenwinx, udefrag, wgx libraries;
       obsolete routines removed
-    - udefrag_init_library, udefrag_unload_library routines added
+    - winx_bootex_check routine added to zenwinx library
+    - udefrag_init_library, udefrag_unload_library, udefrag_bootex_check,
+      udefrag_bootex_register, udefrag_bootex_unregister routines added
     - WgxSetTaskbarProgressState, WgxSetTaskbarProgressValue, wgx_sprintf,
       wgx_vsprintf, wgx_swprintf, wgx_vswprintf routines added to wgx library
     - tracing macros for easier debugging added to zenwinx.h and wgx.h files

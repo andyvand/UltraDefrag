@@ -75,6 +75,9 @@ void dbg_print_header(udefrag_job_parameters *jp)
     s1[0] = (char)(result & 0xFF);
     winx_wcslwr(s1);
     winx_dbg_print(0,NULL);
+    winx_bootex_check(L"");
+    winx_bootex_register(L"");
+    winx_bootex_unregister(L"");
 }
 
 /**
