@@ -799,7 +799,7 @@ static int boot_on_handler(int argc,wchar_t **argv,wchar_t **envp)
 {
     pending_boot_off = 0;
     
-    if(winx_register_boot_exec_command(L"defrag_native") < 0){
+    if(winx_bootex_register(L"defrag_native") < 0){
         winx_printf("\nCannot enable the boot time defragmenter.\n\n");
         return (-1);
     }
@@ -813,7 +813,7 @@ int boot_off_handler(int argc,wchar_t **argv,wchar_t **envp)
 {
     pending_boot_off = 1;
     
-    if(winx_unregister_boot_exec_command(L"defrag_native") < 0){
+    if(winx_bootex_unregister(L"defrag_native") < 0){
         winx_printf("\nCannot disable the boot time defragmenter.\n\n");
         return (-1);
     }

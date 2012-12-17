@@ -308,8 +308,9 @@ int winx_create_path(wchar_t *path);
 int winx_enable_privilege(unsigned long luid);
 
 /* reg.c */
-int winx_register_boot_exec_command(wchar_t *command);
-int winx_unregister_boot_exec_command(wchar_t *command);
+int winx_bootex_check(wchar_t *command);
+int winx_bootex_register(wchar_t *command);
+int winx_bootex_unregister(wchar_t *command);
 
 /* stdio.c */
 int winx_putch(int ch);

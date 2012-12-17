@@ -188,4 +188,8 @@ void udefrag_flush_dbg_log(void);
  */
 void udefrag_dbg_print(int flags,char *format, ...);
 
+int udefrag_bootex_check(wchar_t *command);
+int udefrag_bootex_register(wchar_t *command);
+int udefrag_bootex_unregister(wchar_t *command);
+
 #endif /* _UDEFRAG_H_ */

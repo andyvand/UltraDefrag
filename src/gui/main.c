@@ -1082,26 +1082,28 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                     L".\\options\\guiopts.lua",NULL,NULL,SW_SHOW,0);
             return 0;
         case IDM_CFG_BOOT_ENABLE:
-            if(!GetWindowsDirectoryW(path,MAX_PATH)){
-                WgxDisplayLastError(hWindow,MB_OK | MB_ICONHAND,
-                    L"Cannot retrieve the Windows directory path!");
-            } else {
-                if(boot_time_defrag_enabled){
+            if(boot_time_defrag_enabled){
+                if(udefrag_bootex_unregister(L"defrag_native") < 0){
+                    MessageBox(hWindow,"Enable logs or use DbgView program to get more information.",
+                        "Unable to unregister the boot time defragmenter!",MB_OK | MB_ICONHAND);
+                } else {
                     boot_time_defrag_enabled = 0;
                     CheckMenuItem(hMainMenu,
                         IDM_CFG_BOOT_ENABLE,
                         MF_BYCOMMAND | MF_UNCHECKED);
                     SendMessage(hToolbar,TB_CHECKBUTTON,IDM_CFG_BOOT_ENABLE,MAKELONG(FALSE,0));
-                    (void)wcscat(path,L"\\System32\\boot-off.cmd");
+                }
+            } else {
+                if(udefrag_bootex_register(L"defrag_native") < 0){
+                    MessageBox(hWindow,"Enable logs or use DbgView program to get more information.",
+                        "Unable to register the boot time defragmenter!",MB_OK | MB_ICONHAND);
                 } else {
                     boot_time_defrag_enabled = 1;
                     CheckMenuItem(hMainMenu,
                         IDM_CFG_BOOT_ENABLE,
                         MF_BYCOMMAND | MF_CHECKED);
                     SendMessage(hToolbar,TB_CHECKBUTTON,IDM_CFG_BOOT_ENABLE,MAKELONG(TRUE,0));
-                    (void)wcscat(path,L"\\System32\\boot-on.cmd");
                 }
-                (void)WgxShellExecute(hWindow,L"open",path,NULL,NULL,SW_HIDE,0);
             }
             return 0;
         case IDM_CFG_BOOT_SCRIPT:

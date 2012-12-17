@@ -24,6 +24,9 @@ EXPORTS
 
     winx_acquire_spin_lock
     winx_add_volume_region
+    winx_bootex_check
+    winx_bootex_register
+    winx_bootex_unregister
     winx_breakhit
     winx_bytes_to_hr
     winx_create_directory
@@ -99,7 +102,6 @@ EXPORTS
     winx_puts
     winx_query_symbolic_link
     winx_reboot
-    winx_register_boot_exec_command
     winx_release_file_contents
     winx_release_free_volume_regions
     winx_release_mutex
@@ -122,7 +124,6 @@ EXPORTS
     winx_towupper
     winx_to_utf8
     winx_unload_library
-    winx_unregister_boot_exec_command
     winx_vflush
     winx_vopen
     winx_vsprintf
