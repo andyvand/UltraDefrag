@@ -267,6 +267,10 @@ function produce_sdk_makefile()
     elseif target_type == "native" then
         f:write("/entry:\"NtProcessStartup\" ")
     end
+    if target_type == "gui" and umentry == "main" then
+        -- let GUI apps use main() whenever they need
+        f:write(" /entry:\"mainCRTStartup\" ")
+    end
     f:write(" /out:\"", outpath, target_name, "\" \n\n")
     
     f:write("CPP=cl.exe\nRSC=rc.exe\nLINK32=link.exe\n\n")

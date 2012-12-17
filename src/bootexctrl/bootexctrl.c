@@ -28,7 +28,9 @@
 #include <ctype.h>
 #include <commctrl.h>
 
+#define WgxTraceHandler udefrag_dbg_print
 #include "../dll/wgx/wgx.h"
+
 #include "../dll/udefrag/udefrag.h"
 #include "../include/ultradfgver.h"
 
