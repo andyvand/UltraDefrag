@@ -27,6 +27,10 @@
     - Windows Server 2003 DDK support dropped because of lack of variadic macros
       support there - use Windows Driver Kit v7.1.0 instead
 
+    - the following translations were updated:
+
+      Catalan
+
     beta1:
     - all the disk processing algorithms were reimplemented
       to reach better efficiency and shorter processing times

@@ -147,7 +147,7 @@ UPGRADE_MESSAGE           = versió es disponible!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
 
-JOB_IS_RUNNING            = S'està executant una tasca 
+JOB_IS_RUNNING            = S'està executant una tasca
 
 ; Strings for system tray icon context menu.
 
