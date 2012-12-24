@@ -46,21 +46,22 @@ escape_sequence esq[] = {
 };
 
 /**
- * @brief Reads options from configuration file.
- * @details Configuration files must be written
+ * @brief Reads options from a configuration file.
+ * @details The configuration files must be written
  * in Lua language to be accepted.
- * @return TRUE indicates that configuration file
- * has been successfully processed.
+ * @param[in] path the path to the configuration file.
+ * @param[in,out] table the options table.
+ * @return TRUE on success, FALSE otherwise.
  * @note 
  * - NULL can be passed as first parameter to
- * initialize options by their default values.
- * - Option name equal to NULL indicates the end of the table.
- * - WGX_CFG_EMPTY and WGX_CFG_COMMENT options are ignored.
- * - If option type is WGX_CFG_INT value buffer must point to
- * variable of type int. Default value is interpreted as
- * integer, not as pointer. value_length field is ignored.
- * - If otion type is WGX_CFG_STING, all fields of the structure
- * have an obvious meaning.
+ *   initialize options by their default values.
+ * - The option name equal to NULL indicates the end of the table.
+ * - Both WGX_CFG_EMPTY and WGX_CFG_COMMENT options are ignored.
+ * - If option type is WGX_CFG_INT both number and default_number
+ *   members of the structure must be set.
+ * - If option type is WGX_CFG_STING, both string and
+ *   default_string members of the structure must be
+ *   set, as well as string_length.
  */
 BOOL WgxGetOptions(char *path,WGX_OPTION *table)
 {
@@ -76,14 +77,12 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
     /* set defaults */
     for(i = 0; table[i].name; i++){
         if(table[i].type == WGX_CFG_INT){
-            /* copy default value to the buffer */
-            *((int *)table[i].value) = (int)(DWORD_PTR)table[i].default_value;
+            *(table[i].number) = table[i].default_number;
         } else if(table[i].type == WGX_CFG_STRING){
-            /* copy default string to the buffer */
-            strncpy((char *)table[i].value,
-                (char *)table[i].default_value,
-                table[i].value_length);
-            ((char *)table[i].value)[table[i].value_length - 1] = 0;
+            strncpy(table[i].string,
+                table[i].default_string,
+                table[i].string_length);
+            table[i].string[table[i].string_length - 1] = 0;
         }
     }
     
@@ -119,14 +118,14 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
         lua_getglobal(L, table[i].name);
         if(!lua_isnil(L, lua_gettop(L))){
             if(table[i].type == WGX_CFG_INT){
-                *((int *)table[i].value) = (int)lua_tointeger(L, lua_gettop(L));
+                *(table[i].number) = (int)lua_tointeger(L, lua_gettop(L));
             } else if(table[i].type == WGX_CFG_STRING){
                 s = (char *)lua_tostring(L, lua_gettop(L));
                 if(s != NULL){
-                    strncpy((char *)table[i].value,s,table[i].value_length);
-                    ((char *)table[i].value)[table[i].value_length - 1] = 0;
+                    strncpy(table[i].string,s,table[i].string_length);
+                    table[i].string[table[i].string_length - 1] = 0;
                 } else {
-                    strcpy((char *)table[i].value,"");
+                    strcpy(table[i].string,"");
                 }
             }
         }
@@ -140,9 +139,9 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
         } else if(table[i].type == WGX_CFG_COMMENT){
             trace(D"-- %s\n",table[i].name);
         } else if(table[i].type == WGX_CFG_INT){
-            trace(D"%s = %i\n",table[i].name,*((int *)table[i].value));
+            trace(D"%s = %i\n",table[i].name,*(table[i].number));
         } else if(table[i].type == WGX_CFG_STRING){
-            trace(D"%s = \"%s\"\n",table[i].name,(char *)table[i].value);
+            trace(D"%s = \"%s\"\n",table[i].name,table[i].string);
         }
     }*/
     
@@ -152,15 +151,20 @@ BOOL WgxGetOptions(char *path,WGX_OPTION *table)
 }
 
 /**
- * @brief Saves options to configuration file.
- * Configuration files produced are actually 
+ * @brief Saves options to a configuration file.
+ * The configuration files produced are actually 
  * Lua programs.
+ * @param[in] path the path to the configuration file.
+ * @param[in,out] table the options table.
+ * @param[in] cb the address of the callback procedure
+ * intended for being called in case of errors.
+ * @return TRUE on success, FALSE otherwise.
  * @note
  * - Option name equal to NULL inicates the end of the table.
  * - WGX_CFG_EMPTY option forces to insert an empty line.
  * - WGX_CFG_COMMENT inserts a comment with text passed in option's name.
- * - WGX_CFG_INT saves an integer number, on which its value points.
- * - WGX_CFG_STRING saves a string pointed by value field of the structure.
+ * - WGX_CFG_INT saves an integer number.
+ * - WGX_CFG_STRING saves a string.
  */
 BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
 {
@@ -200,18 +204,18 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
             //trace(D"-- %s\n",table[i].name);
             result = fprintf(f,"-- %s\n",table[i].name);
         } else if(table[i].type == WGX_CFG_INT){
-            //trace(D"%s = %i\n",table[i].name,*((int *)table[i].value));
-            result = fprintf(f,"%s = %i\n",table[i].name,*((int *)table[i].value));
+            //trace(D"%s = %i\n",table[i].name,*(table[i].number));
+            result = fprintf(f,"%s = %i\n",table[i].name,*(table[i].number));
         } else if(table[i].type == WGX_CFG_STRING){
-            //trace(D"%s = \"%s\"\n",table[i].name,(char *)table[i].value);
-            /*result = fprintf(f,"%s = \"%s\"\n",table[i].name,(char *)table[i].value);*/
+            //trace(D"%s = \"%s\"\n",table[i].name,table[i].string);
+            /*result = fprintf(f,"%s = \"%s\"\n",table[i].name,table[i].string);*/
             result = fprintf(f,"%s = \"",table[i].name);
             if(result < 0)
                 goto fail;
         
-            n = strlen((char *)table[i].value);
+            n = strlen(table[i].string);
             for(j = 0; j < n; j++){
-                c = ((char *)table[i].value)[j];
+                c = table[i].string[j];
                 /* replace character by escape sequence when needed */
                 sq = NULL;
                 for(k = 0; esq[k].c; k++){
@@ -221,7 +225,7 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
                 if(sq)
                     result = fprintf(f,"%s",sq);
                 else
-                    result = fprintf(f,"%c",((char *)table[i].value)[j]);
+                    result = fprintf(f,"%c",c);
                 if(result < 0)
                     goto fail;
             }
