@@ -524,23 +524,6 @@
  * @latexonly
  * &
  * @endlatexonly
- * @par Find largest free space
- * Always fill the largest free space region first.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
  * @par Sort by path
  * Sort files by their paths in the disk optimization.
  *
