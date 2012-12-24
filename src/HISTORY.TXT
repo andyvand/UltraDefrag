@@ -2,6 +2,9 @@
 
   Version 6.0.0 2012-01-
   ------------------------------------------------------------------------------
+    beta3:
+    - Internals: changed definition of WGX_OPTION structure
+
     beta2:
     - added progress indication to the taskbar button for Windows 7
       and more recent Windows editions; it can be turned on/off by 

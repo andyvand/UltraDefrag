@@ -77,59 +77,57 @@ RECT map_rc = {0,0,0,0};
 
 /* options read from guiopts.lua */
 WGX_OPTION read_only_options[] = {
-    /* type, value buffer size, name, value, default value */
-    {WGX_CFG_INT,     0, "dry_run", &dry_run, 0},
-    {WGX_CFG_INT,     0, "seconds_for_shutdown_rejection", &seconds_for_shutdown_rejection, (void *)60},
-    {WGX_CFG_INT,     0, "map_block_size", &map_block_size, (void *)DEFAULT_MAP_BLOCK_SIZE},
-    {WGX_CFG_INT,     0, "grid_line_width", &grid_line_width, (void *)DEFAULT_GRID_LINE_WIDTH},
-    {WGX_CFG_INT,     0, "grid_color_r", &grid_color_r, (void *)0},
-    {WGX_CFG_INT,     0, "grid_color_g", &grid_color_g, (void *)0},
-    {WGX_CFG_INT,     0, "grid_color_b", &grid_color_b, (void *)0},
-    {WGX_CFG_INT,     0, "free_color_r", &free_color_r, (void *)255},
-    {WGX_CFG_INT,     0, "free_color_g", &free_color_g, (void *)255},
-    {WGX_CFG_INT,     0, "free_color_b", &free_color_b, (void *)255},
-    {WGX_CFG_INT,     0, "disable_latest_version_check", &disable_latest_version_check, (void *)0},
-    {WGX_CFG_INT,     0, "scale_by_dpi", &scale_by_dpi, (void *)1},
-    {WGX_CFG_INT,     0, "restore_default_window_size", &restore_default_window_size, (void *)0},
-    {WGX_CFG_INT,     0, "show_menu_icons", &show_menu_icons, (void *)1},
-    {WGX_CFG_INT,     0, "show_taskbar_icon_overlay", &show_taskbar_icon_overlay, (void *)1},
-    {WGX_CFG_INT,     0, "show_progress_in_taskbar", &show_progress_in_taskbar, (void *)1},
-    {WGX_CFG_INT,     0, "minimize_to_system_tray", &minimize_to_system_tray, (void *)0},
-    
-    {0,               0, NULL, NULL, NULL}
+    /* name, type, value buffer, buffer length, default value */
+    {"disable_latest_version_check", WGX_CFG_INT, &disable_latest_version_check, 0, 0},
+    {"dry_run", WGX_CFG_INT, &dry_run, 0, 0},
+    {"free_color_r", WGX_CFG_INT, &free_color_r, 0, 255},
+    {"free_color_g", WGX_CFG_INT, &free_color_g, 0, 255},
+    {"free_color_b", WGX_CFG_INT, &free_color_b, 0, 255},
+    {"grid_color_r", WGX_CFG_INT, &grid_color_r, 0, 0},
+    {"grid_color_g", WGX_CFG_INT, &grid_color_g, 0, 0},
+    {"grid_color_b", WGX_CFG_INT, &grid_color_b, 0, 0},
+    {"grid_line_width", WGX_CFG_INT, &grid_line_width, 0, DEFAULT_GRID_LINE_WIDTH},
+    {"map_block_size", WGX_CFG_INT, &map_block_size, 0, DEFAULT_MAP_BLOCK_SIZE},
+    {"minimize_to_system_tray", WGX_CFG_INT, &minimize_to_system_tray, 0, 0},
+    {"restore_default_window_size", WGX_CFG_INT, &restore_default_window_size, 0, 0},
+    {"scale_by_dpi", WGX_CFG_INT, &scale_by_dpi, 0, 1},
+    {"seconds_for_shutdown_rejection", WGX_CFG_INT, &seconds_for_shutdown_rejection, 0, 60},
+    {"show_menu_icons", WGX_CFG_INT, &show_menu_icons, 0, 1},
+    {"show_progress_in_taskbar", WGX_CFG_INT, &show_progress_in_taskbar, 0, 1},
+    {"show_taskbar_icon_overlay", WGX_CFG_INT, &show_taskbar_icon_overlay, 0, 1},
+    {NULL, 0, NULL, 0, 0}
 };
 
 /* options stored in guiopts-internals.lua */
 WGX_OPTION internal_options[] = {
-    /* type, value buffer size, name, value, default value */
-    {WGX_CFG_COMMENT, 0, "the settings below are not changeable by the user,", NULL, ""},
-    {WGX_CFG_COMMENT, 0, "they are always overwritten when the program ends", NULL, ""},
+    /* name, type, value buffer, buffer length, default value */
+    {"the settings below are not changeable by the user,", WGX_CFG_COMMENT, NULL, 0, 0},
+    {"they are always overwritten when the program ends", WGX_CFG_COMMENT, NULL, 0, 0},
     
-    {WGX_CFG_INT,     0, "rx", &rx, (void *)UNDEFINED_COORD},
-    {WGX_CFG_INT,     0, "ry", &ry, (void *)UNDEFINED_COORD},
-    {WGX_CFG_INT,     0, "rwidth",  &rwidth,  (void *)DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "rheight", &rheight, (void *)DEFAULT_HEIGHT}, 
-    {WGX_CFG_INT,     0, "maximized", &maximized_window, (void *)0},
-    {WGX_CFG_EMPTY,   0, "", NULL, ""},
+    {"rx", WGX_CFG_INT, &rx, 0, UNDEFINED_COORD},
+    {"ry", WGX_CFG_INT, &ry, 0, UNDEFINED_COORD},
+    {"rwidth", WGX_CFG_INT, &rwidth, 0, DEFAULT_WIDTH},
+    {"rheight", WGX_CFG_INT, &rheight, 0, DEFAULT_HEIGHT}, 
+    {"maximized", WGX_CFG_INT, &maximized_window, 0, 0},
+    {"", WGX_CFG_EMPTY, NULL, 0, 0},
 
-    {WGX_CFG_INT,     0, "skip_removable", &skip_removable, (void *)1},
-    {WGX_CFG_INT,     0, "repeat_action", &repeat_action, (void *)0},
-    {WGX_CFG_EMPTY,   0, "", NULL, ""},
+    {"skip_removable", WGX_CFG_INT, &skip_removable, 0, 1},
+    {"repeat_action", WGX_CFG_INT, &repeat_action, 0, 0},
+    {"", WGX_CFG_EMPTY, NULL, 0, 0},
 
-    {WGX_CFG_INT,     0, "column1_width",  &user_defined_column_widths[0], (void *)C1_DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "column2_width",  &user_defined_column_widths[1], (void *)C2_DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "column2b_width", &user_defined_column_widths[2], (void *)C3_DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "column3_width",  &user_defined_column_widths[3], (void *)C4_DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "column4_width",  &user_defined_column_widths[4], (void *)C5_DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "column5_width",  &user_defined_column_widths[5], (void *)C6_DEFAULT_WIDTH},
-    {WGX_CFG_INT,     0, "list_height", &list_height, (void *)0},
-    {WGX_CFG_EMPTY,   0, "", NULL, ""},
+    {"column1_width", WGX_CFG_INT, &user_defined_column_widths[0], 0, C1_DEFAULT_WIDTH},
+    {"column2_width", WGX_CFG_INT, &user_defined_column_widths[1], 0, C2_DEFAULT_WIDTH},
+    {"column2b_width", WGX_CFG_INT, &user_defined_column_widths[2], 0, C3_DEFAULT_WIDTH},
+    {"column3_width", WGX_CFG_INT, &user_defined_column_widths[3], 0, C4_DEFAULT_WIDTH},
+    {"column4_width", WGX_CFG_INT, &user_defined_column_widths[4], 0, C5_DEFAULT_WIDTH},
+    {"column5_width", WGX_CFG_INT, &user_defined_column_widths[5], 0, C6_DEFAULT_WIDTH},
+    {"list_height", WGX_CFG_INT, &list_height, 0, 0},
+    {"", WGX_CFG_EMPTY, NULL, 0, 0},
 
-    {WGX_CFG_INT,     0, "job_flags",     &job_flags,     (void *)0},
-    {WGX_CFG_INT,     0, "sorting_flags", &sorting_flags, (void *)(SORT_BY_PATH | SORT_ASCENDING)},
-    {WGX_CFG_EMPTY,   0, "", NULL, ""},
-
-    {0,               0, NULL, NULL, NULL}
+    {"job_flags", WGX_CFG_INT, &job_flags, 0, 0},
+    {"sorting_flags", WGX_CFG_INT, &sorting_flags, 0, SORT_BY_PATH | SORT_ASCENDING},
+    {"", WGX_CFG_EMPTY, NULL, 0, 0},
+    {NULL, 0, NULL, 0, 0}
 };
 
 /**

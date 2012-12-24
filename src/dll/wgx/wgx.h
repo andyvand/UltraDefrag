@@ -69,11 +69,17 @@ enum {
 };
 
 typedef struct _WGX_OPTION {
-    int type;             /* one of WGX_CFG_xxx constants */
-    int value_length;     /* length of the value buffer, in bytes (including terminal zero) */
-    char *name;           /* option name, NULL indicates end of options table */
-    void *value;          /* value buffer */
-    void *default_value;  /* default value */
+    char *name;           /* the option name, NULL indicates the end of the table */
+    int type;             /* one of the WGX_CFG_xxx constants */
+    union {
+        int *number;      /* the buffer for the WGX_CFG_INT value */
+        char *string;     /* the buffer for the WGX_CFG_STRING value */
+    };
+    int string_length;    /* length of the string buffer (including terminal zero) */
+    union {
+        int default_number;   /* the default numeric value */
+        char *default_string; /* the default string value */
+    };
 } WGX_OPTION, *PWGX_OPTION;
 
 typedef void (*WGX_SAVE_OPTIONS_CALLBACK)(char *error);
