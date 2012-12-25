@@ -4,6 +4,7 @@
   ------------------------------------------------------------------------------
     beta3:
     - Internals: changed definition of WGX_OPTION structure
+    - WgxGetControlDimensions routine added to wgx library
 
     beta2:
     - added progress indication to the taskbar button for Windows 7
