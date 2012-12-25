@@ -19,6 +19,7 @@ EXPORTS
     WgxDisableWindows
     WgxDisplayLastError
     WgxEnableWindows
+    WgxGetControlDimensions
     WgxGetOptions
     WgxGetResourceString
     WgxGetTextDimensions

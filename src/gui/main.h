@@ -338,8 +338,6 @@ extern int minimize_to_system_tray;
 #define MARGIN         DPI(11) /* dialog box margins */
 #define MIN_BTN_WIDTH  DPI(75) /* recommended button width */
 #define MIN_BTN_HEIGHT DPI(23) /* recommended button height */
-#define BTN_H_SPACING  DPI(9)  /* minimal space between text and button right/left sides */
-#define BTN_V_SPACING  DPI(4)  /* minimal space between text and button top/bottom sides */
 
 /* flags for the preview menu */
 #define SORT_BY_PATH               0x1

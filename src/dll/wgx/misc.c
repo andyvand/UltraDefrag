@@ -26,6 +26,20 @@
 
 #include "wgx-internals.h"
 
+/*
+* Size of the buffer to be used initially
+* in WgxGetControlDimensions routine.
+*/
+#define WGX_TEXT_BUFFER_SIZE 256
+
+/* this macro converts pixels from 96 DPI to the current one */
+#define DPI(x) ((int)((double)x * fScale))
+
+/* window layout constants, used in WgxGetControlDimensions routine */
+/* based on layout guidelines: http://msdn.microsoft.com/en-us/library/aa511279.aspx */
+#define BTN_H_SPACING  DPI(9)  /* minimal space between text and button right/left sides */
+#define BTN_V_SPACING  DPI(4)  /* minimal space between text and button top/bottom sides */
+
 enum {
    LIM_SMALL, // corresponds to SM_CXSMICON/SM_CYSMICON
    LIM_LARGE, // corresponds to SM_CXICON/SM_CYICON
@@ -332,6 +346,87 @@ BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *p
     SelectObject(hdc,hOldFont);
     ReleaseDC(hWnd,hdc);
     return result;
+}
+
+/**
+ * @brief Calculates minimal size of
+ * a control sufficient to cover
+ * its contents entirely.
+ * @param[in] hWnd the control handle.
+ * @param[in] hFont the font to be used.
+ * @param[out] pWidth pointer to variable
+ * receiving the width of the control.
+ * @param[out] pHeight pointer to variable
+ * receiving the height of the control.
+ * @return TRUE for success, FALSE otherwise.
+ * @note Works properly for text labels
+ * and simple text buttons currently.
+ */
+BOOL WgxGetControlDimensions(HWND hControl,HFONT hFont,int *pWidth,int *pHeight)
+{
+    #define CLASS_NAME_LENGTH 32 /* enough for this routine */
+    wchar_t classname[CLASS_NAME_LENGTH];
+    wchar_t *buffer;
+    int size, result;
+    double fScale = 1.0f;
+    HDC hDC;
+
+    /* validate parameters */
+    if(hControl == NULL) return FALSE;
+    if(pWidth == NULL || pHeight == NULL) return FALSE;
+    *pWidth = *pHeight = 0;
+    
+    /* calculate DPI related stuff */
+    hDC = GetDC(NULL);
+    if(hDC){
+        fScale = (double)GetDeviceCaps(hDC,LOGPIXELSX) / 96.0f;
+        ReleaseDC(NULL,hDC);
+    }
+
+    /* calculate space needed to cover the entire text */
+    size = WGX_TEXT_BUFFER_SIZE;
+    do {
+        buffer = malloc(size * sizeof(wchar_t));
+        if(!buffer){
+            mtrace();
+            return FALSE;
+        }
+        result = GetWindowTextW(hControl,buffer,size);
+        if(result == 0){
+            letrace("cannot get control text");
+            free(buffer);
+            return FALSE;
+        }
+        if(result < size - 1){
+            if(!WgxGetTextDimensions(buffer,
+              hFont,hControl,pWidth,pHeight)){
+                free(buffer);
+                return FALSE;
+            }
+            /* everything's all right */
+            free(buffer);
+            break;
+        }
+        /* buffer is too small; try to allocate two times larger */
+        free(buffer);
+        size <<= 1;
+        if(size * sizeof(wchar_t) <= 0){
+            etrace("unexpected condition");
+            return FALSE;
+        }
+    } while(1);
+    
+    /* add extra space for buttons */
+    if(!GetClassNameW(hControl,classname,CLASS_NAME_LENGTH)){
+        letrace("cannot get class name of the control");
+        return FALSE;
+    }
+    if(!_wcsicmp(classname,L"button")){
+        *pWidth += 2 * BTN_H_SPACING;
+        *pHeight += 2 * BTN_V_SPACING;
+    }
+
+    return TRUE;
 }
 
 /**
