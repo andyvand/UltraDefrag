@@ -330,7 +330,7 @@ extern int minimize_to_system_tray;
 
 /* window layout constants, used in shutdown confirmation and about dialogs */
 /* based on layout guidelines: http://msdn.microsoft.com/en-us/library/aa511279.aspx */
-#define ICON_SIZE      32      /* size of the shutdown icon */
+#define ICON_SIZE      DPI(32) /* size of the shutdown icon */
 #define SHIP_WIDTH     109
 #define SHIP_HEIGHT    147
 #define SMALL_SPACING  DPI(7)  /* spacing between related controls */
