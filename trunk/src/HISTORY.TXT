@@ -8,7 +8,7 @@
 
     - the following translations were updated:
 
-      Catalan
+      Catalan, Italian
 
     beta2:
     - added progress indication to the taskbar button for Windows 7
