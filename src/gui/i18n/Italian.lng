@@ -12,6 +12,7 @@
 ; Revised Mar. 23, 2012 by Antonio Vivace
 ; Revised May  05, 2012 by Luigi C.
 ; Revised Jun. 05, 2012 by Zirikkanen
+; Revised Dec. 27, 2012 by Giacomo Margarito
 ;------------------------------------------------------------------------------
 
 ; Please keep the header and comments in English and use Latin letters,
@@ -67,8 +68,8 @@ REPORTS                   = &Rapporti
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &Vedi lista cambiamenti
-TRANSLATIONS_REPORT       = Vedi &rapporto traduzioni
+TRANSLATIONS_CHANGE_LOG   = &Visualizza elenco modifiche
+TRANSLATIONS_REPORT       = Visualizza &rapporto traduzioni
 TRANSLATIONS_FOLDER       = Cartella &traduzioni
 TRANSLATIONS_SUBMIT       = &Invia traduzione corrente
 
@@ -163,7 +164,7 @@ HIDE                      = Nascondi
 
 FRAGMENTED_FILES_ON       = File frammentati su
 
-VISIT_HOMEPAGE            = Visita la Homepage
+VISIT_HOMEPAGE            = Visita il sito web
 VIEW_REPORT_OPTIONS       = Vedi opzioni rapporto
 POWERED_BY_LUA            = Powered by Lua
 
