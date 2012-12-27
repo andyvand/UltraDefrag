@@ -10,7 +10,7 @@
 || [[Bosnian.lng|Bosnian]]                                               || ||=  76 || ||=  91 || ||>    83 % ||
 || [[Bulgarian.lng|Bulgarian]]                                           || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Burmese (Padauk).lng|Burmese (Padauk)]]                             || ||=  91 || ||=  91 || ||>   100 % ||
-|| [[Catalan.lng|Catalan]]                                               || ||=  89 || ||=  91 || ||>    97 % ||
+|| [[Catalan.lng|Catalan]]                                               || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Chinese (Simplified).lng|Chinese (Simplified)]]                     || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Chinese (Traditional).lng|Chinese (Traditional)]]                   || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Croatian.lng|Croatian]]                                             || ||=  86 || ||=  91 || ||>    94 % ||
@@ -98,6 +98,7 @@
 || [[Vietnamese.lng|Vietnamese]]                                         || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Yiddish.lng|Yiddish]]                                               || ||=  91 || ||=  91 || ||>   100 % ||
 || [[Albanian.lng|Albanian]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
+|| [[Catalan.lng|Catalan]]                                               || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Czech.lng|Czech]]                                                   || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Estonian.lng|Estonian]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[German.lng|German]]                                                 || ||=  90 || ||=  91 || ||>    98 % ||
@@ -107,7 +108,6 @@
 || [[Javanese.lng|Javanese]]                                             || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Portuguese.lng|Portuguese]]                                         || ||=  90 || ||=  91 || ||>    98 % ||
 || [[Spanish (MEX).lng|Spanish (MEX)]]                                   || ||=  90 || ||=  91 || ||>    98 % ||
-|| [[Catalan.lng|Catalan]]                                               || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Danish.lng|Danish]]                                                 || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Filipino (Tagalog).lng|Filipino (Tagalog)]]                         || ||=  89 || ||=  91 || ||>    97 % ||
 || [[Latvian.lng|Latvian]]                                               || ||=  89 || ||=  91 || ||>    97 % ||

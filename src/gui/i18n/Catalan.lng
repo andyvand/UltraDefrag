@@ -33,10 +33,10 @@ FULL_OPTIMIZE             = Opti&mitza completament
 OPTIMIZE_MFT              = Optimitza M&FT
 STOP                      = At&ura
 REPEAT_ACTION             = &Repeteix l'acció
-SKIP_REMOVABLE_MEDIA      = Omet unitats &extraïbles
+SKIP_REMOVABLE_MEDIA      = Omet les unitats &extraïbles
 RESCAN_DRIVES             = Reanalit&za
 REPAIR_DRIVES             = Les &unitats de reparació
-WHEN_DONE                 = En aca&bar-se
+WHEN_DONE                 = En &finalitzar
 EXIT                      = &Surt
 
 ; --- --- When done submenu
@@ -51,7 +51,7 @@ WHEN_DONE_SHUTDOWN        = Tanca l'&ordinador
 
 ; --- Report Menu
 
-SHOW_REPORT               = &Mostra informe
+SHOW_REPORT               = &Mostra l'informe
 
 ; --- Settings Menu
 
@@ -62,14 +62,14 @@ REPORTS                   = Infor&mes
 
 ; --- --- Language submenu
 
-TRANSLATIONS_CHANGE_LOG   = &Veure el canvi de registre
-TRANSLATIONS_REPORT       = Veure &informe de la traducció
+TRANSLATIONS_CHANGE_LOG   = &Mostra el canvi de registre
+TRANSLATIONS_REPORT       = Mostra l'&informe de la traducció
 TRANSLATIONS_FOLDER       = &Carpeta de traduccions
-TRANSLATIONS_SUBMIT       = &Enviar traducció actual
+TRANSLATIONS_SUBMIT       = &Envia la traducció actual
 
 ; --- --- Graphical interface submenu
 
-FONT                      = &Font
+FONT                      = &Tipus de lletra
 OPTIONS                   = &Opcions
 
 ; --- --- Boot time scan submenu
@@ -83,14 +83,14 @@ CONTENTS                  = &Continguts
 BEST_PRACTICE             = &Millors pràctiques
 FAQ                       = &Preguntes més freqüents
 CM_LEGEND                 = Grup &llegenda del mapa
-DEBUG                     = &Depurar
-CHECK_UPDATE              = Cercar &actualitzacions
+DEBUG                     = &Depuració
+CHECK_UPDATE              = Cerca &actualitzacions
 ABOUT                     = &Quant a
 
 ; --- --- Debug submenu
 
-OPEN_LOG                  = Obrir &registre
-REPORT_BUG                = &Envieu l'informe d'error
+OPEN_LOG                  = Obre el &registre
+REPORT_BUG                = &Envia l'informe d'error
 
 ; --- Toolbar Tooltips
 
@@ -122,27 +122,27 @@ COMPRESSED                = Comprimits
 
 ; About window.
 
-ABOUT_WIN_TITLE           = Quant a Ultra Defragmenter
+ABOUT_WIN_TITLE           = Quant a l'Ultra Defragmenter
 CREDITS                   = &Crèdits
-LICENSE                   = &Licència
+LICENSE                   = &Llicència
 
 ; Shutdown confirmation
 
 PLEASE_CONFIRM            = Confirmació
-REALLY_SHUTDOWN_WHEN_DONE = Voleu tancar l'ordinador en acabar-se?
-REALLY_HIBERNATE_WHEN_DONE= Voleu hibernar en acabar-se?
-REALLY_LOGOFF_WHEN_DONE   = Voleu tancar la sessión en acabar-se?
-REALLY_REBOOT_WHEN_DONE   = Voleu reiniciar en acabar-se?
-SECONDS_TILL_SHUTDOWN     = segons fins tancanment de l'ordinador
-SECONDS_TILL_HIBERNATION  = segons fins hibernació
-SECONDS_TILL_LOGOFF       = segons fins tancament de la sessió
-SECONDS_TILL_REBOOT       = segons fins reinici
+REALLY_SHUTDOWN_WHEN_DONE = Voleu tancar l'ordinador en finalitzar?
+REALLY_HIBERNATE_WHEN_DONE= Voleu hibernar en finalitzar?
+REALLY_LOGOFF_WHEN_DONE   = Voleu tancar la sessión en finalitzar?
+REALLY_REBOOT_WHEN_DONE   = Voleu reiniciar en finalitzar?
+SECONDS_TILL_SHUTDOWN     = segons per al tancament de l'ordinador
+SECONDS_TILL_HIBERNATION  = segons per a la hibernació
+SECONDS_TILL_LOGOFF       = segons per al tancament de la sessió
+SECONDS_TILL_REBOOT       = segons per al reinici
 YES                       = &Sí
 NO                        = &No
 
 ; Upgrade dialog
 
-UPGRADE_CAPTION           = Actualització disponible  ^-^
+UPGRADE_CAPTION           = Hi ha una actualització disponible  ^-^
 UPGRADE_MESSAGE           = versió es disponible!
 
 ; A string for the taskbar icon overlay, needed for accessibility.
@@ -159,7 +159,7 @@ HIDE                      = Amaga
 FRAGMENTED_FILES_ON       = Fitxers fragmentats en
 
 VISIT_HOMEPAGE            = Visita la pàgina inicial
-VIEW_REPORT_OPTIONS       = Visualitza les opcions d'informe
+VIEW_REPORT_OPTIONS       = Visualitza les opcions de l'informe
 POWERED_BY_LUA            = Amb tecnologia de Lua
 
 FRAGMENTS                 = fragments

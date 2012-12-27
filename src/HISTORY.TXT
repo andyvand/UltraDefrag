@@ -6,6 +6,10 @@
     - Internals: changed definition of WGX_OPTION structure
     - WgxGetControlDimensions routine added to wgx library
 
+    - the following translations were updated:
+
+      Catalan
+
     beta2:
     - added progress indication to the taskbar button for Windows 7
       and more recent Windows editions; it can be turned on/off by 
