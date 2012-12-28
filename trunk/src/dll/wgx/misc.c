@@ -352,7 +352,7 @@ BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *p
  * @brief Calculates minimal size of
  * a control sufficient to cover
  * its contents entirely.
- * @param[in] hWnd the control handle.
+ * @param[in] hControl the control handle.
  * @param[in] hFont the font to be used.
  * @param[out] pWidth pointer to variable
  * receiving the width of the control.
