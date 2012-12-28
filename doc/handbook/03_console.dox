@@ -308,36 +308,19 @@
  * The following example illustrates defragmentation of a few
  * different disks in series adjusting parameters separately for
  * each disk.
- * @htmlonly
- * <div class="fragment">
- *     <div class="line">@echo off</div>
- *     <div class="line"></div>
- *     <div class="line"><span class="keyword">set</span> UD_EX_FILTER=*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar</div>
- *     <div class="line"><span class="keyword">set</span> UD_FILE_SIZE_THRESHOLD=50MB</div>
- *     <div class="line">udefrag c: &gt; c:\ud.log</div>
- *     <div class="line"></div>
- *     <div class="line"><span class="keyword">set</span> UD_IN_FILTER=D:\My Documents\*</div>
- *     <div class="line">udefrag d: &gt;&gt; c:\ud.log</div>
- *     <div class="line"></div>
- *     <div class="line"><span class="keyword">set</span> UD_IN_FILTER=</div>
- *     <div class="line">udefrag e: &gt;&gt; c:\ud.log</div>
- * </div>
- * @endhtmlonly
- * @latexonly
- * \begin{DoxyCode}
+ * @code
  * @echo off
  *
- * \textcolor{keyword}{set} UD\_EX\_FILTER=*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar
- * \textcolor{keyword}{set} UD\_FILE\_SIZE\_THRESHOLD=50MB
- * udefrag c: > c:\(\backslash\)ud.log
+ * set UD_EX_FILTER=*system volume information*;*temp*;*tmp*;*recycle*;*.zip;*.7z;*.rar
+ * set UD_FILE_SIZE_THRESHOLD=50MB
+ * udefrag c: > c:\ud.log
  *
- * \textcolor{keyword}{set} UD\_IN\_FILTER=D:\(\backslash\)My Documents\(\backslash\)*
- * udefrag d: >> c:\(\backslash\)ud.log
+ * set UD_IN_FILTER=D:\My Documents\*
+ * udefrag d: >> c:\ud.log
  *
- * \textcolor{keyword}{set} UD\_IN\_FILTER=
- * udefrag e: >> c:\(\backslash\)ud.log
- * \end{DoxyCode}
- * @endlatexonly
+ * set UD_IN_FILTER=
+ * udefrag e: >> c:\ud.log
+ * @endcode
  * Notice that we are excluding archives in the script above. Because they
  * are usually rarely accessed and may be left fragmented therefore
  * without noticeable system performance degradation.
