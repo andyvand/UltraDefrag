@@ -27,8 +27,9 @@
  * directory of the source tree and type:
  * @code lua tools\make-mingw-projects.lua @endcode
  *
- * In addition to the compilers a few other little tools need to be installed as well:
+ * In addition to the compilers a few other packages need to be installed as well:
  *
+ * - <a href="http://prdownloads.sourceforge.net/wxwindows/wxMSW-2.8.12.zip">wxWidgets 2.8.12</a> to build GUI upon it
  * - <a href="http://nsis.sourceforge.net/">NSIS compiler</a> to create the installers
  * - <a href="http://luabinaries.luaforge.net/">Lua</a>, 
  * <a href="http://sourceforge.net/projects/iup/files/">IUP</a> and 
@@ -41,7 +42,7 @@
  * - <a href="http://www.etree.org/md5com.html">md5sum tool</a> to create the checksums
  * - <a href="http://upx.sf.net/">UPX</a> to reduce the size of the installers
  * 
- * - Install NSIS, 7-zip, Doxygen and optionally "Lua for Windows" and MiKTeX.
+ * - Install wxWidgets, NSIS, 7-zip, Doxygen and optionally "Lua for Windows" and MiKTeX.
  * - If you did not install "Lua for Windows",
  * extract Lua, IUP and CD to some directory on your <b>\%PATH\%</b>, e.g. to <b>C:\\Windows</b>.
  * - Place md5sum.exe into the <b>src\\tools</b> folder of the source code distribution.

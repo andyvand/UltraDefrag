@@ -9,5 +9,6 @@ set WINDDKBASE=D:\WINDDK\7600.16385.1
 set WINSDKBASE=C:\Program Files\Microsoft SDKs\Windows\v6.1
 set MINGWBASE=D:\Software\MinGWStudio\MinGW
 set MINGWx64BASE=D:\Software\mingw64
+set WXWIDGETSDIR=D:\Software\wxMSW-2.8.12
 set NSISDIR=D:\Software\Tools\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
