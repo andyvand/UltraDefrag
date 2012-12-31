@@ -7,6 +7,7 @@ if not defined ORIG_USERNAME set ORIG_USERNAME=%USERNAME%
 set WINSDKBASE=
 set MINGWBASE=C:\PROGRA~1\MinGWStudio\MinGW
 set MINGWx64BASE=
+set WXWIDGETSDIR=
 set NSISDIR=C:\Program Files\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
 
