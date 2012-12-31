@@ -101,9 +101,9 @@ function param_action(dialog, param_index)
         }
         dialog.icon = icon
         if show_obsolete_options == 1 then
-            dialog.size = "400x203"
+            dialog.size = "410x203"
         else
-            dialog.size = "370x173"
+            dialog.size = "410x188"
         end
     end
     return 1
@@ -111,7 +111,7 @@ end
 
 -- show dialog box
 if show_obsolete_options == 1 then
-    ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, MINGWx64BASE, WINSDKBASE, apply_patch = 
+    ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, MINGWx64BASE, apply_patch = 
         iup.GetParam("UltraDefrag build configurator",param_action,
             "UltraDefrag version: %s\n"..
             "Release stage (alpha1, beta2, rc3, final): %s\n".. 
@@ -120,13 +120,13 @@ if show_obsolete_options == 1 then
             "NSIS path: %s\n"..
             "7-Zip path: %s\n"..
             "Windows Driver Kit v7.1.0 path: %s\n"..
-            "MinGW x64 base path: %s\n"..
             "Windows SDK base path: %s\n"..
+            "MinGW x64 base path: %s\n"..
             "Apply patch to MinGW: %b[No,Yes]\n",
-            ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, MINGWx64BASE, WINSDKBASE, apply_patch
+            ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, MINGWx64BASE, apply_patch
             )
 else
-    ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, apply_patch = 
+    ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, apply_patch = 
         iup.GetParam("UltraDefrag build configurator",param_action,
             "UltraDefrag version: %s\n"..
             "Release stage (alpha1, beta2, rc3, final): %s\n".. 
@@ -135,8 +135,9 @@ else
             "NSIS path: %s\n"..
             "7-Zip path: %s\n"..
             "Windows Driver Kit v7.1.0 path: %s\n"..
+            "Windows SDK base path: %s\n"..
             "Apply patch to MinGW: %b[No,Yes]\n",
-            ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, apply_patch
+            ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, apply_patch
             )
 end
 if ret == 1 then

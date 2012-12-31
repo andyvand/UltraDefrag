@@ -64,6 +64,8 @@ xcopy .\dll\wgx     .\obj\wgx         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\dll\zenwinx .\obj\zenwinx     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\gui         .\obj\gui         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\gui\res     .\obj\gui\res     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\wxgui       .\obj\wxgui       /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\wxgui\res   .\obj\wxgui\res   /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\hibernate   .\obj\hibernate   /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\include     .\obj\include     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\lua5.1      .\obj\lua5.1      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
@@ -106,6 +108,7 @@ copy /Y .\headers .\udefrag    || exit /B 1
 copy /Y .\headers .\wgx        || exit /B 1
 copy /Y .\headers .\zenwinx    || exit /B 1
 copy /Y .\headers .\gui        || exit /B 1
+copy /Y .\headers .\wxgui      || exit /B 1
 copy /Y .\headers .\hibernate  || exit /B 1
 copy /Y .\headers .\lua5.1     || exit /B 1
 copy /Y .\headers .\lua        || exit /B 1
@@ -245,6 +248,9 @@ exit /B 0
     :: remove perplexing manifests
     del /S /Q .\bin\*.manifest
     
+    :: get rid of annoying dark green color
+    color
+    
     set path=%OLD_PATH%
     set OLD_PATH=
     
@@ -291,6 +297,24 @@ exit /B 0
 
     rem rebuild modules
     set UD_BUILD_TOOL=lua ..\..\tools\mkmod.lua
+    set WXWIDGETS_INC_PATH=%WXWIDGETSDIR%\include
+    set WX_CONFIG=%BUILD_ENV%-%1
+    if %BUILD_ENV% equ winddk (
+        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
+        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu
+    )
+    if %BUILD_ENV% equ winsdk (
+        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
+        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu
+    )
+    if %BUILD_ENV% equ mingw (
+        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%
+        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%\mswu
+    )
+    if %BUILD_ENV% equ mingw_x64 (
+        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%
+        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%\mswu
+    )
     
     pushd obj\zenwinx
     %UD_BUILD_TOOL% zenwinx.build || goto fail
@@ -330,16 +354,27 @@ exit /B 0
     cd ..\console
     %UD_BUILD_TOOL% defrag.build || goto fail
 
+    cd ..\wxgui
+    %UD_BUILD_TOOL% ultradefrag.build || goto fail
+
     cd ..\gui
     %UD_BUILD_TOOL% ultradefrag.build && goto success
 
     :fail
     set UD_BUILD_TOOL=
+    set WX_CONFIG=
+    set WXWIDGETS_INC_PATH=
+    set WXWIDGETS_INC2_PATH=
+    set WXWIDGETS_LIB_PATH=
     popd
     exit /B 1
     
     :success
     set UD_BUILD_TOOL=
+    set WX_CONFIG=
+    set WXWIDGETS_INC_PATH=
+    set WXWIDGETS_INC2_PATH=
+    set WXWIDGETS_LIB_PATH=
     popd
 
 exit /B 0

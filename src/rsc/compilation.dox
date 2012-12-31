@@ -18,6 +18,10 @@
  * <a href="http://sourceforge.net/projects/tdm-gcc/">MinGW</a> is used to build 32-bit binaries, 
  * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11800">Windows Driver Kit v7.1.0</a> is
  * used for 64-bit binaries production.
+ *
+ * To compile wxWidgets by Windows Driver Kit (WDK) you need also install 
+ * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11310">Windows SDK v6.1</a>
+ * since WDK misses some headers.
  * 
  * MinGW needs to be patched to be able to compile UltraDefrag.
  * Type <b>build --help</b> (see below) for details.
@@ -51,6 +55,15 @@
  * To properly set up the build environment type:
  * @code lua configure.lua @endcode
  * @image html config.lua.png
+ *
+ * To build wxWidgets library type:
+ * @code wxbuild @endcode
+ *
+ * Compile it by all the compilers you use for UltraDefrag compilation
+ * to be able to link binaries correctly. Also don't forget to recompile
+ * the library again after any adjustments of /src/include/wxsetup.h
+ * file. This file is included exactly to build wxWidgets automatically
+ * with options suitable for UltraDefrag.
  *
  * To build UltraDefrag using defaults type:
  * @code build @endcode
