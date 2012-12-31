@@ -47,15 +47,18 @@ echo.
 echo     10 ... Build .................. with Custom Switches
 echo     11 ... Build Portable ......... with Custom Switches
 echo.
-echo     12 ... Build Test Release for Stefan
-echo     13 ... Build Test Installation for Stefan
-echo     14 ... Build Test AMD64 for Stefan
-echo     15 ... Build Test x86 for Stefan
+echo     12 ... Build wxWidgets ........ using MinGW for x86
+echo     13 ... Build wxWidgets ........ using WinSDK for AMD64 and IA64
+echo.
+echo     14 ... Build Test Release for Stefan
+echo     15 ... Build Test Installation for Stefan
+echo     16 ... Build Test AMD64 for Stefan
+echo     17 ... Build Test x86 for Stefan
 echo.
 echo      0 ... EXIT
 
 :: this value holds the number of the last menu entry
-set UD_BLD_MENU_MAX_ENTRIES=15
+set UD_BLD_MENU_MAX_ENTRIES=17
 
 :AskSelection
 echo.
@@ -148,6 +151,16 @@ call build.cmd --portable %UD_BLD_MENU_SWITCH%
 goto finished
 
 :12
+title Build wxWidgets ........ using MinGW for x86
+call wxbuild.cmd
+goto finished
+
+:13
+title Build wxWidgets ........ using WinSDK for AMD64 and IA64
+call wxbuild.cmd --use-winsdk --no-x86
+goto finished
+
+:14
 title Build Test Release for Stefan
 echo.
 call build.cmd --no-amd64 --no-ia64 --no-pdf --no-dev
@@ -156,7 +169,7 @@ echo.
 call :CopyInstallers -zip
 goto finished
 
-:13
+:15
 title Build Test Installation for Stefan
 echo.
 if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winsdk --no-ia64 --no-x86 --install --no-pdf --no-dev
@@ -164,7 +177,7 @@ if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --no-ia64 --no-amd64 --install
 echo.
 goto finished
 
-:14
+:16
 title Build Test AMD64 for Stefan
 echo.
 call build.cmd --use-winsdk --no-ia64 --no-x86 --no-pdf --no-dev
@@ -172,7 +185,7 @@ echo.
 call :CopyInstallers
 goto finished
 
-:15
+:17
 title Build Test x86 for Stefan
 echo.
 call build.cmd --no-ia64 --no-amd64 --no-pdf --no-dev
