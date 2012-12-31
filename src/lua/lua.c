@@ -4,8 +4,6 @@
 ** See Copyright Notice in ../lua5.1/lua.h
 */
 
-/* Modified by dmitriar: __cdecl conventions were added to be compatible with win ddk. */
-
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +30,7 @@ static void lstop (lua_State *L, lua_Debug *ar) {
 }
 
 
-static void __cdecl laction (int i) {
+static void laction (int i) {
   signal(i, SIG_DFL); /* if another SIGINT happens before lstop,
                               terminate process (default action) */
   lua_sethook(globalL, lstop, LUA_MASKCALL | LUA_MASKRET | LUA_MASKCOUNT, 1);
@@ -372,7 +370,7 @@ static int pmain (lua_State *L) {
 }
 
 
-int __cdecl main (int argc, char **argv) {
+int main (int argc, char **argv) {
   int status;
   struct Smain s;
   lua_State *L = lua_open();  /* create state */

@@ -11,4 +11,3 @@ libs = {
     "advapi32"
 }
 adlibs = { "$(UDEFRAG_LIB_PATH)\\lua5.1a" }
-baseaddr = "0x01700000"

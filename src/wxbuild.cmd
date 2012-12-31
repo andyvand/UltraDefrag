@@ -44,59 +44,10 @@ if %UD_BLD_FLG_USE_COMPILER% equ 0 (
     goto mingw_build
 )
 
-if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINDDK%  goto ddk_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MINGW%   goto mingw_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MINGW64% goto mingw_x64_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
 
-
-:ddk_build
-
-    set BUILD_ENV=winddk
-    set OLD_PATH=%path%
-
-    set IGNORE_LINKLIB_ABUSE=1
-
-    if %UD_BLD_FLG_BUILD_X86% neq 0 (
-        echo --------- Target is x86 ---------
-        set AMD64=
-        set IA64=
-        pushd ..
-        rem force WDK build binaries for Win5.2 sub-system
-        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre WXP no_oacr
-        popd
-        set BUILD_DEFAULT=-nmake -i -g -P
-        call :build_library X86 || goto fail
-    )
-    
-    set path=%OLD_PATH%
-    set DDKBUILDENV=
-    
-    if %UD_BLD_FLG_BUILD_AMD64% neq 0 (
-        echo --------- Target is x64 ---------
-        set IA64=
-        pushd ..
-        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre x64 WNET no_oacr
-        popd
-        set BUILD_DEFAULT=-nmake -i -g -P
-        call :build_library amd64 || goto fail
-    )
-    
-    set path=%OLD_PATH%
-    set DDKBUILDENV=
-    
-    if %UD_BLD_FLG_BUILD_IA64% neq 0 (
-        echo --------- Target is ia64 ---------
-        set AMD64=
-        pushd ..
-        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre 64 WNET
-        popd
-        set BUILD_DEFAULT=-nmake -i -g -P
-        call :build_library ia64 || goto fail
-    )
-    
-    goto success
-    
 :winsdk_build
 
     set BUILD_ENV=winsdk
@@ -167,8 +118,6 @@ if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
 :success
 if "%OLD_PATH%" neq "" set path=%OLD_PATH%
 set OLD_PATH=
-set DDKBUILDENV=
-set IGNORE_LINKLIB_ABUSE=
 echo.
 echo Build success!
 title Build success!
@@ -177,8 +126,6 @@ exit /B 0
 :fail
 if "%OLD_PATH%" neq "" set path=%OLD_PATH%
 set OLD_PATH=
-set DDKBUILDENV=
-set IGNORE_LINKLIB_ABUSE=
 echo Build error (code %ERRORLEVEL%)!
 title Build error (code %ERRORLEVEL%)!
 exit /B 1
@@ -194,13 +141,8 @@ exit /B 1
     pushd "%WXWIDGETSDIR%\build\msw"
 
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 goto cleanup
-    set WX_DDK_CPPFLAGS=/I \"%BASEDIR%\inc\api\" /I \"%BASEDIR%\inc\crt\" /I \"%WINSDKBASE%\Include\" /MT
     :: ia64 targeting SDK compiler doesn't support optimization
     if %1 equ ia64 set WX_SDK_CPPFLAGS=/Od
-    if %BUILD_ENV% equ winddk (
-        copy /Y "%WXWIDGETSDIR%\include\wx\msw\setup.h" "%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu\wx\"
-        nmake -f makefile.vc TARGET_CPU=%1 BUILD=release UNICODE=1 CFG=%WX_CONFIG% CPPFLAGS="%WX_DDK_CPPFLAGS%" || goto build_failure
-    )
     if %BUILD_ENV% equ winsdk (
         copy /Y "%WXWIDGETSDIR%\include\wx\msw\setup.h" "%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu\wx\"
         nmake -f makefile.vc TARGET_CPU=%1 BUILD=release UNICODE=1 CFG=%WX_CONFIG% CPPFLAGS="%WX_SDK_CPPFLAGS% /MT" || goto build_failure
@@ -216,9 +158,6 @@ exit /B 1
     goto success
     
     :cleanup
-    if %BUILD_ENV% equ winddk (
-        nmake -f makefile.vc TARGET_CPU=%1 BUILD=release UNICODE=1 CFG=%WX_CONFIG% clean || goto build_failure
-    )
     if %BUILD_ENV% equ winsdk (
         nmake -f makefile.vc TARGET_CPU=%1 BUILD=release UNICODE=1 CFG=%WX_CONFIG% clean || goto build_failure
     )
@@ -233,7 +172,6 @@ exit /B 1
     :build_failure
     popd
     set WX_CONFIG=
-    set WX_DDK_CPPFLAGS=
     set WX_SDK_CPPFLAGS=
     exit /B 1
     
@@ -243,7 +181,6 @@ exit /B 1
     echo wxWidgets compilation completed successfully!
 
     set WX_CONFIG=
-    set WX_DDK_CPPFLAGS=
     set WX_SDK_CPPFLAGS=
 exit /B 0
 
@@ -256,8 +193,7 @@ rem Displays usage information.
     echo.
     echo Compiler:
     echo --use-mingw     (default)
-    echo --use-winddk    (we use it for official 64-bit releases)
-    echo --use-winsdk
+    echo --use-winsdk    (we use it for official 64-bit releases)
     echo --use-mingw-x64 (experimental, produces wrong x64 code)
     echo.
     echo Target architecture (must always be after compiler):

@@ -4,8 +4,6 @@ echo Set Stefans' environment variables...
 :: save username, since build process overwrites it
 if not defined ORIG_USERNAME set ORIG_USERNAME=%USERNAME%
 
-:: set WINDDKBASE=C:\WinDDK\3790.1830
-set WINDDKBASE=C:\WINDDK\7600.16385.1
 set WINSDKBASE=
 set MINGWBASE=C:\MinGW32
 set MINGWx64BASE=

@@ -16,13 +16,9 @@
  * Because the compiled binaries must be compatible with all the Windows editions starting with NT 4.0
  * a combination of two compilers is needed to build UltraDefrag: 
  * <a href="http://sourceforge.net/projects/tdm-gcc/">MinGW</a> is used to build 32-bit binaries, 
- * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11800">Windows Driver Kit v7.1.0</a> is
+ * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11310">Windows SDK v6.1</a> is
  * used for 64-bit binaries production.
  *
- * To compile wxWidgets by Windows Driver Kit (WDK) you need also install 
- * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11310">Windows SDK v6.1</a>
- * since WDK misses some headers.
- * 
  * MinGW needs to be patched to be able to compile UltraDefrag.
  * Type <b>build --help</b> (see below) for details.
  *

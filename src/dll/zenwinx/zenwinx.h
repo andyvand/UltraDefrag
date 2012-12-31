@@ -147,7 +147,6 @@ int winx_delete_file(const wchar_t *filename);
 void *winx_get_file_contents(const wchar_t *filename,size_t *bytes_read);
 void winx_release_file_contents(void *contents);
 
-/* float.c */
 /* ftw.c */
 /* winx_ftw flags */
 #define WINX_FTW_RECURSIVE              0x1 /* forces to recursively scan all subdirectories */

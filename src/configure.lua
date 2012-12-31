@@ -28,7 +28,6 @@ iup.SetLanguage("ENGLISH")
 -- initialize parameters
 ULTRADFGVER   = ""
 RELEASE_STAGE = ""
-WINDDKBASE    = ""
 WINSDKBASE    = ""
 MINGWBASE     = ""
 MINGWx64BASE  = ""
@@ -47,7 +46,6 @@ set VERSION2="$ver_mj, $ver_mn, $ver_fix, 0\0"
 set ULTRADFGVER=$ULTRADFGVER
 set RELEASE_STAGE=$RELEASE_STAGE
 set UDVERSION_SUFFIX=$UDVERSION_SUFFIX
-set WINDDKBASE=$WINDDKBASE
 set WINSDKBASE=$WINSDKBASE
 set MINGWBASE=$MINGWBASE
 set MINGWx64BASE=$MINGWx64BASE
@@ -61,11 +59,6 @@ function expand (s)
         return tostring(_G[n])
       end)
   return s
-end
-
-show_obsolete_options = 0
-if arg[1] == "--all" then
-    show_obsolete_options = 1
 end
 
 -- get parameters from setvars.cmd file
@@ -100,46 +93,25 @@ function param_action(dialog, param_index)
             ; colors = { "255 255 0", "255 0 0" }
         }
         dialog.icon = icon
-        if show_obsolete_options == 1 then
-            dialog.size = "410x203"
-        else
-            dialog.size = "410x188"
-        end
+        dialog.size = "410x188"
     end
     return 1
 end
 
 -- show dialog box
-if show_obsolete_options == 1 then
-    ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, MINGWx64BASE, apply_patch = 
-        iup.GetParam("UltraDefrag build configurator",param_action,
-            "UltraDefrag version: %s\n"..
-            "Release stage (alpha1, beta2, rc3, final): %s\n".. 
-            "MinGW path: %s\n"..
-            "wxWidgets path: %s\n"..
-            "NSIS path: %s\n"..
-            "7-Zip path: %s\n"..
-            "Windows Driver Kit v7.1.0 path: %s\n"..
-            "Windows SDK base path: %s\n"..
-            "MinGW x64 base path: %s\n"..
-            "Apply patch to MinGW: %b[No,Yes]\n",
-            ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, MINGWx64BASE, apply_patch
-            )
-else
-    ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, apply_patch = 
-        iup.GetParam("UltraDefrag build configurator",param_action,
-            "UltraDefrag version: %s\n"..
-            "Release stage (alpha1, beta2, rc3, final): %s\n".. 
-            "MinGW path: %s\n"..
-            "wxWidgets path: %s\n"..
-            "NSIS path: %s\n"..
-            "7-Zip path: %s\n"..
-            "Windows Driver Kit v7.1.0 path: %s\n"..
-            "Windows SDK base path: %s\n"..
-            "Apply patch to MinGW: %b[No,Yes]\n",
-            ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINDDKBASE, WINSDKBASE, apply_patch
-            )
-end
+ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINSDKBASE, MINGWx64BASE, apply_patch = 
+    iup.GetParam("UltraDefrag build configurator",param_action,
+        "UltraDefrag version: %s\n"..
+        "Release stage (alpha1, beta2, rc3, final): %s\n".. 
+        "MinGW path: %s\n"..
+        "wxWidgets path: %s\n"..
+        "NSIS path: %s\n"..
+        "7-Zip path: %s\n"..
+        "Windows SDK v6.1 base path: %s\n"..
+        "MinGW x64 base path: %s\n"..
+        "Apply patch to MinGW: %b[No,Yes]\n",
+        ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINSDKBASE, MINGWx64BASE, apply_patch
+        )
 if ret == 1 then
     -- save options
     i, j, ver_mj, ver_mn, ver_fix = string.find(ULTRADFGVER,"(%d+).(%d+).(%d+)")
