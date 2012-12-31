@@ -43,7 +43,7 @@
 // in the version after it completely.
 //
 // Recommended setting: 0 (please update your code)
-#define WXWIN_COMPATIBILITY_2_6 1
+#define WXWIN_COMPATIBILITY_2_6 0
 
 // MSW-only: Set to 0 for accurate dialog units, else 1 for old behaviour when
 // default system font is used for wxWindow::GetCharWidth/Height() instead of
@@ -157,7 +157,7 @@
 //
 // Recommended setting: 0 (unless you only plan to use Windows NT/2000/XP)
 #ifndef wxUSE_UNICODE
-    #define wxUSE_UNICODE 0
+    #define wxUSE_UNICODE 1
 #endif
 
 // Setting wxUSE_WCHAR_T to 1 gives you some degree of Unicode support without
@@ -188,7 +188,7 @@
 //
 // Recommended setting: depends on whether you intend to use C++ exceptions
 //                      in your own code (1 if you do, 0 if you don't)
-#define wxUSE_EXCEPTIONS    1
+#define wxUSE_EXCEPTIONS    0
 
 // Set wxUSE_EXTENDED_RTTI to 1 to use extended RTTI
 //
@@ -285,7 +285,7 @@
         || (defined(_MSC_VER) && _MSC_VER < 1200)
     #define wxUSE_STD_STRING  0
 #else
-    #define wxUSE_STD_STRING  1
+    #define wxUSE_STD_STRING  0
 #endif
 
 // Support for positional parameters (e.g. %1$d, %2$s ...) in wxVsnprintf.
@@ -469,7 +469,7 @@
 #define wxUSE_APPLE_IEEE          1
 
 // Joystick support class
-#define wxUSE_JOYSTICK            1
+#define wxUSE_JOYSTICK            0
 
 // wxFontMapper class
 #define wxUSE_FONTMAP 1
@@ -526,14 +526,14 @@
 #define wxUSE_SYSTEM_OPTIONS 1
 
 // wxSound class
-#define wxUSE_SOUND      1
+#define wxUSE_SOUND      0
 
 // Use wxMediaCtrl
 //
 // Default is 1.
 //
 // Recommended setting: 1
-#define wxUSE_MEDIACTRL     1
+#define wxUSE_MEDIACTRL     0
 
 // Use GStreamer for Unix (req a lot of dependancies)
 //
@@ -547,7 +547,7 @@
 // Default is 1
 //
 // Recommended setting: 1 (requires wxUSE_XML)
-#define wxUSE_XRC       1
+#define wxUSE_XRC       0
 
 // XML parsing classes. Note that their API will change in the future, so
 // using wxXmlDocument and wxXmlNode in your app is not recommended.
@@ -957,8 +957,8 @@
 // Default is 1 for wxUSE_ENH_METAFILE and 0 for wxUSE_WIN_METAFILES_ALWAYS.
 //
 // Recommended setting: default or 0 for everything for portable programs.
-#define wxUSE_METAFILE              1
-#define wxUSE_ENH_METAFILE          1
+#define wxUSE_METAFILE              0
+#define wxUSE_ENH_METAFILE          0
 #define wxUSE_WIN_METAFILES_ALWAYS  0
 
 // ----------------------------------------------------------------------------
@@ -972,18 +972,18 @@
 // Default is 1.
 //
 // Recommended setting: 1, can be safely set to 0.
-#define wxUSE_MDI 1
+#define wxUSE_MDI 0
 
 // Set to 0 to disable document/view architecture
-#define wxUSE_DOC_VIEW_ARCHITECTURE 1
+#define wxUSE_DOC_VIEW_ARCHITECTURE 0
 
 // Set to 0 to disable MDI document/view architecture
 //
 // Requires wxUSE_MDI && wxUSE_DOC_VIEW_ARCHITECTURE
-#define wxUSE_MDI_ARCHITECTURE    1
+#define wxUSE_MDI_ARCHITECTURE    0
 
 // Set to 0 to disable print/preview architecture code
-#define wxUSE_PRINTING_ARCHITECTURE  1
+#define wxUSE_PRINTING_ARCHITECTURE  0
 
 // wxHTML sublibrary allows to display HTML in wxWindow programs and much,
 // much more.
@@ -992,7 +992,7 @@
 //
 // Recommended setting: 1 (wxHTML is great!), set to 0 if you want compile a
 // smaller library.
-#define wxUSE_HTML          1
+#define wxUSE_HTML          0
 
 // Setting wxUSE_GLCANVAS to 1 enables OpenGL support. You need to have OpenGL
 // headers and libraries to be able to compile the library with wxUSE_GLCANVAS
@@ -1011,7 +1011,7 @@
 //
 // Recommended setting: 1, set to 0 if you want compile a
 // smaller library.
-#define wxUSE_RICHTEXT       1
+#define wxUSE_RICHTEXT       0
 
 // ----------------------------------------------------------------------------
 // Data transfer
@@ -1080,7 +1080,7 @@
 
 
 // Use wxHTML-based help controller?
-#define wxUSE_WXHTML_HELP 1
+#define wxUSE_WXHTML_HELP 0
 
 #define wxUSE_RESOURCES   0
                                 // 0 for no wxGetResource/wxWriteResource
@@ -1164,31 +1164,31 @@
 #define wxUSE_IMAGE         1
 
 // Set to 1 for PNG format support (requires libpng). Also requires wxUSE_ZLIB.
-#define wxUSE_LIBPNG        1
+#define wxUSE_LIBPNG        0
 
 // Set to 1 for JPEG format support (requires libjpeg)
-#define wxUSE_LIBJPEG       1
+#define wxUSE_LIBJPEG       0
 
 // Set to 1 for TIFF format support (requires libtiff)
-#define wxUSE_LIBTIFF       1
+#define wxUSE_LIBTIFF       0
 
 // Set to 1 for TGA format support (loading only)
-#define wxUSE_TGA           1
+#define wxUSE_TGA           0
 
 // Set to 1 for GIF format support
-#define wxUSE_GIF           1
+#define wxUSE_GIF           0
 
 // Set to 1 for PNM format support
-#define wxUSE_PNM           1
+#define wxUSE_PNM           0
 
 // Set to 1 for PCX format support
-#define wxUSE_PCX           1
+#define wxUSE_PCX           0
 
 // Set to 1 for IFF format support (Amiga format)
 #define wxUSE_IFF           0
 
 // Set to 1 for XPM format support
-#define wxUSE_XPM           1
+#define wxUSE_XPM           0
 
 // Set to 1 for MS Icons and Cursors format support
 #define wxUSE_ICO_CUR       1
@@ -1259,7 +1259,7 @@
 //
 // Recommended setting: 1 if you need to control other applications via OLE
 // Automation, can be safely set to 0 otherwise
-#define wxUSE_OLE_AUTOMATION 1
+#define wxUSE_OLE_AUTOMATION 0
 
 // Set this to 1 to enable wxActiveXContainer class allowing to embed OLE
 // controls in wx.
@@ -1267,7 +1267,7 @@
 // Default is 1.
 //
 // Recommended setting: 1, required by wxMediaCtrl
-#define wxUSE_ACTIVEX 1
+#define wxUSE_ACTIVEX 0
 
 // wxDC cacheing implementation
 #define wxUSE_DC_CACHEING 1
@@ -1286,7 +1286,7 @@
 
 // Set to 0 to disable PostScript print/preview architecture code under Windows
 // (just use Windows printing).
-#define wxUSE_POSTSCRIPT_ARCHITECTURE_IN_MSW 1
+#define wxUSE_POSTSCRIPT_ARCHITECTURE_IN_MSW 0
 
 // Set this to 1 to use RICHEDIT controls for wxTextCtrl with style wxTE_RICH
 // which allows to put more than ~32Kb of text in it even under Win9x (NT
@@ -1296,14 +1296,14 @@
 //
 // Recommended setting: 1, only set it to 0 if your compiler doesn't have
 //                      or can't compile <richedit.h>
-#define wxUSE_RICHEDIT  1
+#define wxUSE_RICHEDIT  0
 
 // Set this to 1 to use extra features of richedit v2 and later controls
 //
 // Default is 1 for compilers which support it
 //
 // Recommended setting: 1
-#define wxUSE_RICHEDIT2 1
+#define wxUSE_RICHEDIT2 0
 
 // Set this to 1 to enable support for the owner-drawn menu and listboxes. This
 // is required by wxUSE_CHECKLISTBOX.

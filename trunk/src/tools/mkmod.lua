@@ -42,6 +42,7 @@
 nativedll = 0
 src, rc, includes, libs, adlibs = {}, {}, {}, {}, {}
 files, resources, headers, inc = {}, {}, {}, {}
+cpp_files = 0
 
 -- files which names contain these patterns will be
 -- included as dependencies to MinGW makefiles
@@ -49,9 +50,7 @@ rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
 
 ddk_cmd = "build.exe"
 mingw_cmd = "mingw32-make -f Makefile.mingw"
-
--- we never use SDK, so let it recompile everything
-sdk_cmd = "nmake.exe /NOLOGO /A /f Makefile.winsdk"
+sdk_cmd = "nmake.exe /NOLOGO /f Makefile.winsdk"
 
 -- common subroutines
 function copy(src, dst)
@@ -140,6 +139,8 @@ function produce_ddk_makefile()
     if target_type == "console" or target_type == "gui" then
         f:write("CFLAGS=\$(CFLAGS) /MT\n\n")
     end
+    
+    f:write("INCLUDES=\"$(WXWIDGETS_INC2_PATH);$(WXWIDGETS_INC_PATH)\"\n\n")
 
     f:write("SOURCES=")
     for i, v in ipairs(src) do f:write(v, " ") end
@@ -207,8 +208,17 @@ function produce_sdk_makefile()
     end
 
     f:write("ALL : \"", target_name, "\"\n\n")
-    f:write("CPP_PROJ=/nologo /W3 /O2 /D \"WIN32\" /D \"NDEBUG\" /D \"_MBCS\" ")
+    f:write("CPP_PROJ=/nologo /W3 /D \"WIN32\" /D \"NDEBUG\" /D \"_MBCS\" ")
     f:write("/D \"USE_WINSDK\" /D \"_CRT_SECURE_NO_WARNINGS\" /GS- /arch:SSE2 ")
+    if arch == "ia64" then
+        -- optimization for ia64 is not available:
+        -- the compiler stucks with the message:
+        -- error loading dll 'sched.dll': dll not found
+        f:write("/Od ")
+    else
+        f:write("/O2 ")
+    end
+    f:write("/I \"$(WXWIDGETS_INC2_PATH)\" /I \"$(WXWIDGETS_INC_PATH)\" ")
     
     -- the following check eliminates need of msvcr90.dll library
     if nativedll == 0 then
@@ -231,7 +241,8 @@ function produce_sdk_makefile()
     end
     
     f:write(" /c \n")
-    f:write("RSC_PROJ=/l 0x409 /d \"NDEBUG\" \n")
+    f:write("RSC_PROJ=/l 0x409 /d \"NDEBUG\" ")
+    f:write("/I \"$(WXWIDGETS_INC2_PATH)\" /I \"$(WXWIDGETS_INC_PATH)\" \n")
     
     f:write("LINK32_FLAGS=")
     for i, v in ipairs(libs) do
@@ -275,13 +286,13 @@ function produce_sdk_makefile()
     
     f:write("CPP=cl.exe\nRSC=rc.exe\nLINK32=link.exe\n\n")
     f:write(".c.obj::\n")
-    f:write("    \$(CPP) \@<<\n")
-    f:write("    \$(CPP_PROJ) \$<\n")
-    f:write("<<\n\n")
+    f:write("    \$(CPP) \$(CPP_PROJ) \$<\n\n")
+    f:write(".cpp.obj::\n")
+    f:write("    \$(CPP) \$(CPP_PROJ) \$<\n\n")
 
     f:write("LINK32_OBJS=")
     for i, v in ipairs(src) do
-        f:write(string.gsub(v,"%.c","%.obj"), " ")
+        f:write(string.gsub(v,"%.c(.-)$","%.obj"), " ")
     end
     for i, v in ipairs(rc) do
         f:write(string.gsub(v,"%.rc","%.res"), " ")
@@ -291,14 +302,10 @@ function produce_sdk_makefile()
     if target_type == "dll" then
         f:write("DEF_FILE=", deffile, "\n\n")
         f:write("\"", target_name, "\" : \$(DEF_FILE) \$(LINK32_OBJS)\n")
-        f:write("    \$(LINK32) \@<<\n")
-        f:write("  \$(LINK32_FLAGS) \$(LINK32_OBJS)\n")
-        f:write("<<\n\n")
+        f:write("    \$(LINK32) \$(LINK32_FLAGS) \$(LINK32_OBJS)\n\n")
     else
         f:write("\"", target_name, "\" : \$(LINK32_OBJS)\n")
-        f:write("    \$(LINK32) \@<<\n")
-        f:write("  \$(LINK32_FLAGS) \$(LINK32_OBJS)\n")
-        f:write("<<\n\n")
+        f:write("    \$(LINK32) \$(LINK32_FLAGS) \$(LINK32_OBJS)\n\n")
     end
 
     for i, v in ipairs(rc) do
@@ -341,7 +348,11 @@ function produce_mingw_makefile()
         libpath = libpath .. "amd64\\"
     end
 
-    f:write("PROJECT = ", name, "\nCC = gcc.exe\n\n")
+    if cpp_files ~= 0 then
+        f:write("PROJECT = ", name, "\nCC = g++.exe\n\n")
+    else
+        f:write("PROJECT = ", name, "\nCC = gcc.exe\n\n")
+    end
     f:write("WINDRES = \"\$(COMPILER_BIN)windres.exe\"\n\n")
 
     f:write("TARGET = ", outpath, target_name, "\n")
@@ -352,9 +363,9 @@ function produce_mingw_makefile()
     end
     
     f:write("RCFLAGS = \n")
-    f:write("C_INCLUDE_DIRS = \n")
+    f:write("C_INCLUDE_DIRS = -I\"$(WXWIDGETS_INC2_PATH)\" -I\"$(WXWIDGETS_INC_PATH)\"\n")
     f:write("C_PREPROC = \n")
-    f:write("RC_INCLUDE_DIRS = \n")
+    f:write("RC_INCLUDE_DIRS = -I\"$(WXWIDGETS_INC2_PATH)\" -I\"$(WXWIDGETS_INC_PATH)\"\n")
     f:write("RC_PREPROC = \n")
     
     if target_type == "console" then
@@ -381,6 +392,7 @@ function produce_mingw_makefile()
     end
 
     adlibs_libs = {}
+    rev_adlibs_libs = {}
     adlibs_paths = {}
     for i, v in ipairs(adlibs) do
         i, j, path, lib = string.find(v,"^(.*)\\(.-)$")
@@ -393,6 +405,17 @@ function produce_mingw_makefile()
     end
     for i, v in ipairs(adlibs_libs) do
         f:write("-l", v, " ")
+        table.insert(rev_adlibs_libs,1,v)
+    end
+    -- include libraries in reverse order
+    -- needed to link with static additional libraries
+    for i, v in ipairs(rev_adlibs_libs) do
+        f:write("-l", v, " ")
+    end
+    -- include standard libraries again
+    -- needed to link with static additional libraries
+    for i, v in ipairs(libs) do
+        f:write("-l", v, " ")
     end
     f:write("\nLIB_DIRS = ")
     for i, v in ipairs(adlibs_paths) do
@@ -402,7 +425,7 @@ function produce_mingw_makefile()
     
     f:write("SRC_OBJS = ")
     for i, v in ipairs(src) do
-        f:write(string.gsub(v,"%.c","%.o"), " ")
+        f:write(string.gsub(v,"%.c(.-)$","%.o"), " ")
     end
 
     f:write("\n\nRSRC_OBJS = ")
@@ -435,7 +458,7 @@ function produce_mingw_makefile()
     build_list_of_headers()
     
     for i, v in ipairs(src) do
-        f:write(string.gsub(v,"%.c","%.o"), ": ", v, " ")
+        f:write(string.gsub(v,"%.c(.-)$","%.o"), ": ", v, " ")
         for i, v in ipairs(inc) do
             f:write("\\\n", v, " ")
         end
@@ -498,6 +521,9 @@ for i, v in ipairs(files) do
     i, j, name = string.find(v,"^.*\\(.-)$")
     if not name then name = v end
     if string.find(name,"%.c$") then
+        table.insert(src,name)
+    elseif string.find(name,"%.cpp$") then
+        cpp_files = cpp_files + 1
         table.insert(src,name)
     elseif string.find(name,"%.rc$") then
         table.insert(rc,name)
