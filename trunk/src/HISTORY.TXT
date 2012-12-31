@@ -6,7 +6,11 @@
     - Internals: changed definition of WGX_OPTION structure
     - WgxGetControlDimensions routine added to wgx library
 
-    - the following translations were updated:
+    - the following translations were added:
+
+      Bengali
+
+      - the following translations were updated:
 
       Catalan, Italian
 
