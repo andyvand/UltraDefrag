@@ -10,4 +10,3 @@ libs = { "ntdll" }
 adlibs = { 
       "$(UDEFRAG_LIB_PATH)\\zenwinx", 
 }
-baseaddr = "0x01500000"

@@ -31,8 +31,6 @@
 #include "../../include/dbg.h"
 
 /* definitions missing on several development systems */
-#ifndef USE_WINDDK
-
 #ifndef SetWindowLongPtr
 #define SetWindowLongPtr SetWindowLong
 #endif
@@ -48,8 +46,6 @@
 #ifndef GWLP_WNDPROC
 #define GWLP_WNDPROC GWL_WNDPROC
 #endif
-
-#endif /* !USE_WINDDK */
 
 #ifndef LR_VGACOLOR
 /* this constant is not defined in winuser.h on mingw */

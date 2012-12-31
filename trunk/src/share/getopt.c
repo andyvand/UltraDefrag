@@ -210,9 +210,7 @@ static char *posixly_correct;
 /* Avoid depending on library functions or files
    whose names are inconsistent.  */
 
-/* added by dmitriar: __cdecl keyword is required by Windows Server 2003 DDK */
-
-char * __cdecl getenv ();
+char *getenv ();
 
 static char *
 my_index (str, chr)

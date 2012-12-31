@@ -25,10 +25,4 @@
  * dependency for Windows visual styles support. Message boxes will never 
  * appear on the screen in this case. This undocumented behavior
  * was discovered on 32-bit XP system.
- *
- * - Note that different compilers may use different calling conventions.
- * While GCC uses __cdecl convention by default, MS C compiler included in DDK
- * uses __stdcall. This makes impossible to use binaries together while they're 
- * compiled by these two compilers. UltraDefrag uses no certain convention
- * to keep the code cleaner.
  */

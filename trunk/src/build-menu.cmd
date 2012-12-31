@@ -37,8 +37,8 @@ echo      3 ... Build with Defaults and Install
 echo.
 echo      4 ... Build Release
 echo.
-echo      5 ... Build .................. using WinDDK, no IA64
-echo      6 ... Build Portable ......... using WinDDK, no IA64
+echo      5 ... Build .................. using WinSDK, no IA64
+echo      6 ... Build Portable ......... using WinSDK, no IA64
 echo.
 echo      7 ... Build Docs
 echo      8 ... Build only Handbook
@@ -94,13 +94,13 @@ call build-release.cmd
 goto finished
 
 :5
-title Build .................. using WinDDK, no IA64
-call build.cmd --use-winddk --no-ia64
+title Build .................. using WinSDK, no IA64
+call build.cmd --use-winsdk --no-ia64
 goto finished
 
 :6
-title Build Portable ......... using WinDDK, no IA64
-call build.cmd --portable --use-winddk --no-ia64
+title Build Portable ......... using WinSDK, no IA64
+call build.cmd --portable --use-winsdk --no-ia64
 goto finished
 
 :7
@@ -151,7 +151,7 @@ goto finished
 title Build Test Release for Stefan
 echo.
 call build.cmd --no-amd64 --no-ia64 --no-pdf --no-dev
-call build.cmd --use-winddk --no-x86 --no-ia64 --no-pdf --no-dev
+call build.cmd --use-winsdk --no-x86 --no-ia64 --no-pdf --no-dev
 echo.
 call :CopyInstallers -zip
 goto finished
@@ -159,7 +159,7 @@ goto finished
 :13
 title Build Test Installation for Stefan
 echo.
-if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winddk --no-ia64 --no-x86 --install --no-pdf --no-dev
+if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winsdk --no-ia64 --no-x86 --install --no-pdf --no-dev
 if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --no-ia64 --no-amd64 --install --no-pdf --no-dev
 echo.
 goto finished
@@ -167,7 +167,7 @@ goto finished
 :14
 title Build Test AMD64 for Stefan
 echo.
-call build.cmd --use-winddk --no-ia64 --no-x86 --no-pdf --no-dev
+call build.cmd --use-winsdk --no-ia64 --no-x86 --no-pdf --no-dev
 echo.
 call :CopyInstallers
 goto finished

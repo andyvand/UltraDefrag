@@ -97,7 +97,6 @@
 typedef int BOOL;
 typedef const char *PCSZ;
 
-#ifndef USE_WINDDK
 #ifndef USE_WINSDK
 #if !defined(__MINGW_EXTENSION)
 #define LONG_PTR  signed long*
@@ -107,7 +106,6 @@ typedef KAFFINITY *PKAFFINITY;
 
 typedef ULONG (NTAPI *PTHREAD_START_ROUTINE)(PVOID Parameter);
 #endif /* USE_WINSDK */
-#endif /* USE_WINDDK */
 
 #ifndef NOMINMAX
 #ifndef max

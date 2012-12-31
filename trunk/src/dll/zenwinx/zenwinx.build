@@ -7,4 +7,3 @@ nativedll   = 1
 includes = { "include", "zenwinx" }
 
 libs = { "ntdll" }
-baseaddr = "0x01800000"

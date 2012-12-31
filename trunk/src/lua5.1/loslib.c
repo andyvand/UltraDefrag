@@ -15,10 +15,6 @@
 #include <windows.h>
 #include <shellapi.h>
 
-#ifndef USE_WINDDK
-#define LONG_PTR LONG
-#endif
-
 #include <errno.h>
 #include <locale.h>
 #include <stdlib.h>
@@ -38,6 +34,7 @@
 #else
 #define ULONG_PTR unsigned long
 #endif
+#define LONG_PTR LONG
 
 static HINSTANCE (WINAPI *func_ShellExecuteA)(HWND,LPCSTR,LPCSTR,LPCSTR,LPCSTR,INT);
 

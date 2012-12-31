@@ -26,7 +26,6 @@ rem     build-targets [<compiler>]
 rem
 rem Available <compiler> values:
 rem     --use-mingw (default)
-rem     --use-winddk
 rem     --use-winsdk
 rem     --use-mingw-x64 (experimental)
 rem
@@ -122,85 +121,9 @@ if %UD_BLD_FLG_USE_COMPILER% equ 0 (
     goto mingw_build
 )
 
-if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINDDK%  goto ddk_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MINGW%   goto mingw_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_MINGW64% goto mingw_x64_build
 if %UD_BLD_FLG_USE_COMPILER% equ %UD_BLD_FLG_USE_WINSDK%  goto winsdk_build
-
-
-:ddk_build
-
-    set BUILD_ENV=winddk
-    set OLD_PATH=%path%
-
-    :: check if we are using WDK 6 and above
-    for /d %%D in ( "%WINDDKBASE%" ) do set UD_DDK_NAME=%%~nD
-    set UD_DDK_VER=%UD_DDK_NAME:~0,4%
-    set UD_DDK_NAME=
-    echo UD_DDK_VER set to "%UD_DDK_VER%"... 
-
-    set IGNORE_LINKLIB_ABUSE=1
-
-    if %UD_BLD_FLG_BUILD_X86% neq 0 (
-        echo --------- Target is x86 ---------
-        set AMD64=
-        set IA64=
-        pushd ..
-        rem force WDK build binaries for Win5.2 sub-system
-        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre WXP no_oacr
-        popd
-        set BUILD_DEFAULT=-nmake -i -g -P
-        set UDEFRAG_LIB_PATH=..\..\lib
-        call :build_modules X86 || exit /B 1
-    )
-    
-    set path=%OLD_PATH%
-    set DDKBUILDENV=
-    
-    if %UD_BLD_FLG_BUILD_AMD64% neq 0 (
-        echo --------- Target is x64 ---------
-        set IA64=
-        pushd ..
-        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre x64 WNET no_oacr
-        popd
-        set BUILD_DEFAULT=-nmake -i -g -P
-        set UDEFRAG_LIB_PATH=..\..\lib\amd64
-        call :build_modules amd64 || exit /B 1
-    )
-    
-    set path=%OLD_PATH%
-    set DDKBUILDENV=
-    
-    if %UD_BLD_FLG_BUILD_IA64% neq 0 (
-        echo --------- Target is ia64 ---------
-        set AMD64=
-        pushd ..
-        call "%WINDDKBASE%\bin\setenv.bat" %WINDDKBASE% fre 64 WNET
-        popd
-        set BUILD_DEFAULT=-nmake -i -g -P
-        set UDEFRAG_LIB_PATH=..\..\lib\ia64
-        call :build_modules ia64 || exit /B 1
-    )
-    
-    goto ddk_build_success
-    
-    :ddk_build_fail
-    set path=%OLD_PATH%
-    set OLD_PATH=
-    set DDKBUILDENV=
-    set UD_DDK_VER=
-    set IGNORE_LINKLIB_ABUSE=
-    exit /B 1
-    
-    :ddk_build_success
-    set path=%OLD_PATH%
-    set OLD_PATH=
-    set DDKBUILDENV=
-    set UD_DDK_VER=
-    set IGNORE_LINKLIB_ABUSE=
-    
-exit /B 0
-
 
 :winsdk_build
 
@@ -299,10 +222,6 @@ exit /B 0
     set UD_BUILD_TOOL=lua ..\..\tools\mkmod.lua
     set WXWIDGETS_INC_PATH=%WXWIDGETSDIR%\include
     set WX_CONFIG=%BUILD_ENV%-%1
-    if %BUILD_ENV% equ winddk (
-        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
-        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu
-    )
     if %BUILD_ENV% equ winsdk (
         set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
         set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu
@@ -323,29 +242,14 @@ exit /B 0
     echo Compile monolithic native interface...
     cd ..\native
     %UD_BUILD_TOOL% defrag_native.build || goto fail
-
-    rem workaround for WDK 6 and above
-    if %1 equ X86 if %BUILD_ENV% equ winddk (
-        set OLD_CL=%CL%
-        set CL=/QIfist %CL%
-    )
-
     cd ..\lua5.1
     %UD_BUILD_TOOL% lua.build || goto fail
     cd ..\lua
     %UD_BUILD_TOOL% lua.build || goto fail
     cd ..\lua-gui
     %UD_BUILD_TOOL% lua-gui.build || goto fail
-
-    rem workaround for WDK 6 and above
-    if %1 equ X86 if %BUILD_ENV% equ winddk (
-        set CL=%OLD_CL%
-        set OLD_CL=
-    )
-
     cd ..\wgx
     %UD_BUILD_TOOL% wgx.build ||  goto fail
-
     echo Compile other modules...
     cd ..\bootexctrl
     %UD_BUILD_TOOL% bootexctrl.build || goto fail

@@ -355,7 +355,7 @@ typedef struct Table {
 #define lmod(s,size) \
 	(check_exp((size&(size-1))==0, (cast(int, (s) & ((size)-1)))))
 
-#if defined(USE_WINDDK) || defined (USE_WINSDK)
+#if defined (USE_WINSDK)
 #define twoto(x)	(1i64<<(x))
 #else
 #define twoto(x)    (size_t)(1<<(x))
