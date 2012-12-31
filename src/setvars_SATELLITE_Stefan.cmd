@@ -4,7 +4,7 @@ echo Set Stefans' environment variables...
 :: save username, since build process overwrites it
 if not defined ORIG_USERNAME set ORIG_USERNAME=%USERNAME%
 
-set WINSDKBASE=
+set WINSDKBASE=C:\Program Files\Microsoft SDKs\Windows\v7.1
 set MINGWBASE=C:\MinGW32
 set MINGWx64BASE=
 set WXWIDGETSDIR=D:\wxWidgets-2.8.12
