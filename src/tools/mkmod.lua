@@ -182,10 +182,24 @@ function produce_sdk_makefile()
     f:write(" /out:\"", outpath, target_name, "\" \n\n")
     
     f:write("CPP=cl.exe\nRSC=rc.exe\nLINK32=link.exe\n\n")
-    f:write(".c.obj::\n")
-    f:write("    \$(CPP) \$(CPP_PROJ) \$<\n\n")
-    f:write(".cpp.obj::\n")
-    f:write("    \$(CPP) \$(CPP_PROJ) \$<\n\n")
+
+    build_list_of_headers()
+    f:write("header_files: ")
+    for i, v in ipairs(inc) do
+        f:write("\\\n", v, " ")
+    end
+    f:write("\n\n")
+
+    f:write("resource_files: ")
+    for i, v in ipairs(resources) do
+        f:write("\\\n", v, " ")
+    end
+    f:write("\n\n")
+    
+    for i, v in ipairs(src) do
+        f:write(string.gsub(v,"%.c(.-)$","%.obj"), ": header_files\n")
+        f:write("    \$(CPP) \$(CPP_PROJ) ", v, "\n\n")
+    end
 
     f:write("LINK32_OBJS=")
     for i, v in ipairs(src) do
@@ -207,7 +221,7 @@ function produce_sdk_makefile()
 
     for i, v in ipairs(rc) do
         f:write("SOURCE=", v, "\n\n")
-        f:write(string.gsub(v,"%.rc","%.res"), " : \$(SOURCE)\n")
+        f:write(string.gsub(v,"%.rc","%.res"), " : \$(SOURCE) resource_files\n")
         f:write("    \$(RSC) \$(RSC_PROJ) \$(SOURCE)\n\n")
     end
 
