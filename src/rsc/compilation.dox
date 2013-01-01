@@ -19,7 +19,7 @@
  * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11310">Windows SDK v6.1</a> is
  * used for 64-bit binaries production.
  *
- * MinGW needs to be patched to be able to compile UltraDefrag.
+ * Both MinGW and Windows SDK need to be patched to be able to compile UltraDefrag.
  * Type <b>build --help</b> (see below) for details.
  *
  * You can download the <a href="http://koti.mbnet.fi/vaultec/mingwstudio.php">MinGW Developer Studio</a>,
