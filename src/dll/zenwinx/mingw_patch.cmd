@@ -5,24 +5,25 @@ echo in MinGW installation with a more adequate version.
 echo Usage: mingw_patch.cmd {path to mingw installation}
 echo.
 
-if "%1" equ "" (
-    exit /B 0
+if "%~1" equ "" (
+    exit /B 1
 )
 
 echo Preparing to patch applying...
-pushd %~dp0
+pushd "%~dp0"
+cd ntdll
 
 :: save original version
-if not exist %1\lib\libntdll.a.orig (
-    move %1\lib\libntdll.a %1\lib\libntdll.a.orig
+if not exist "%~1\lib\libntdll.a.orig" (
+    move "%~1\lib\libntdll.a" "%~1\lib\libntdll.a.orig"
 )
 
 :: generate more adequate version
-%1\bin\dlltool -k --output-lib libntdll.a --def ntdll.def
+"%~1\bin\dlltool" -k --output-lib libntdll.a --def ntdll.def
 if %errorlevel% neq 0 goto fail
 
 :: replace file
-move /Y libntdll.a %1\lib\libntdll.a
+move /Y libntdll.a "%~1\lib\libntdll.a"
 
 echo MinGW patched successfully!
 popd
