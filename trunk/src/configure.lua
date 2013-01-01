@@ -26,15 +26,17 @@ require "iupluacontrols51"
 iup.SetLanguage("ENGLISH")
 
 -- initialize parameters
-ULTRADFGVER   = ""
-RELEASE_STAGE = ""
-WINSDKBASE    = ""
-MINGWBASE     = ""
-MINGWx64BASE  = ""
-WXWIDGETSDIR  = ""
-NSISDIR       = ""
-SEVENZIP_PATH = ""
-apply_patch   = 0
+ULTRADFGVER    = ""
+RELEASE_STAGE  = ""
+WINSDKBASE     = ""
+MINGWBASE      = ""
+MINGWx64BASE   = ""
+WXWIDGETSDIR   = ""
+NSISDIR        = ""
+SEVENZIP_PATH  = ""
+mingw_patch    = 0
+mingw_projects = 0
+winsdk_patch   = 0
 
 ver_mj, ver_mn, ver_fix = 0,0,0
 
@@ -93,13 +95,13 @@ function param_action(dialog, param_index)
             ; colors = { "255 255 0", "255 0 0" }
         }
         dialog.icon = icon
-        dialog.size = "410x188"
+        dialog.size = "410x215"
     end
     return 1
 end
 
 -- show dialog box
-ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINSDKBASE, MINGWx64BASE, apply_patch = 
+ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINSDKBASE, MINGWx64BASE, mingw_patch, winsdk_patch, mingw_projects = 
     iup.GetParam("UltraDefrag build configurator",param_action,
         "UltraDefrag version: %s\n"..
         "Release stage (alpha1, beta2, rc3, final): %s\n".. 
@@ -109,8 +111,10 @@ ret, ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH
         "7-Zip path: %s\n"..
         "Windows SDK v6.1 base path: %s\n"..
         "MinGW x64 base path: %s\n"..
-        "Apply patch to MinGW: %b[No,Yes]\n",
-        ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINSDKBASE, MINGWx64BASE, apply_patch
+        "Apply patch to MinGW: %b[No,Yes]\n"..
+        "Apply patch to Windows SDK: %b[No,Yes]\n"..
+        "Make MinGW Developer Studio projects: %b[No,Yes]\n",
+        ULTRADFGVER, RELEASE_STAGE, MINGWBASE, WXWIDGETSDIR, NSISDIR, SEVENZIP_PATH, WINSDKBASE, MINGWx64BASE, mingw_patch, winsdk_patch, mingw_projects
         )
 if ret == 1 then
     -- save options
@@ -125,10 +129,28 @@ if ret == 1 then
     f:write(expand(script))
     f:close()
     print("setvars.cmd script was updated successfully.")
-    if apply_patch == 1 then
-        print("Apply MinGW patch option was selected.")
-        if os.execute("cmd.exe /C .\\dll\\zenwinx\\mingw_patch.cmd " .. MINGWBASE) ~= 0 then
+    if mingw_patch == 1 then
+        print("\n")
+        print("Apply patch to MinGW option was selected.")
+        print("-----------------------------------------")
+        if os.execute("cmd.exe /C .\\dll\\zenwinx\\mingw_patch.cmd \"" .. MINGWBASE .. "\"") ~= 0 then
             error("Cannot apply patch to MinGW!")
+        end
+    end
+    if winsdk_patch == 1 then
+        print("\n")
+        print("Apply patch to Windows SDK option was selected.")
+        print("-----------------------------------------------")
+        if os.execute("cmd.exe /C .\\dll\\zenwinx\\winsdk_patch.cmd \"" .. WINSDKBASE .. "\"") ~= 0 then
+            error("Cannot apply patch to Windows SDK!")
+        end
+    end
+    if mingw_projects == 1 then
+        print("\n")
+        print("Make MinGW Developer Studio projects option was selected.")
+        print("---------------------------------------------------------")
+        if os.execute("lua tools\\make-mingw-projects.lua \"" .. WXWIDGETSDIR .. "\"") ~= 0 then
+            error("Cannot make MinGW Developer Studio projects!")
         end
     end
 end

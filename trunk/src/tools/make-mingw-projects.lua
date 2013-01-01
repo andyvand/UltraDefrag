@@ -20,7 +20,7 @@
 --]]
 
 --[[
-  Synopsis: lua tools\make-mingw-projects.lua
+  Synopsis: lua tools\make-mingw-projects.lua <wxWidgets path>
   
   Note: run this script from /src directory as shown above.
 
@@ -39,7 +39,7 @@ intermediateFilesDirectory=$output_dir
 outputFilesDirectory=$output_dir
 compilerPreprocessor=
 extraCompilerOptions=
-compilerIncludeDirectory=
+compilerIncludeDirectory=$wxpath\lib\gcc_libmingw-X86\mswu;$wxpath\include
 noWarning=0
 defaultWarning=0
 allWarning=1
@@ -53,7 +53,7 @@ runtimeTypeEnabled=1
 optimizeLevel=0
 
 // linker
-libraryPath=$lib_path
+libraryPath=$lib_path;$wxpath\lib\gcc_libmingw-X86
 outputFilename=$out_filename
 libraries=$libraries
 extraLinkerOptions=$dbg_linker_opts
@@ -80,7 +80,7 @@ intermediateFilesDirectory=$output_dir
 outputFilesDirectory=$output_dir
 compilerPreprocessor=
 extraCompilerOptions=
-compilerIncludeDirectory=
+compilerIncludeDirectory=$wxpath\lib\gcc_libmingw-X86\mswu;$wxpath\include
 noWarning=0
 defaultWarning=0
 allWarning=1
@@ -94,7 +94,7 @@ runtimeTypeEnabled=1
 optimizeLevel=2
 
 // linker
-libraryPath=$lib_path
+libraryPath=$lib_path;$wxpath\lib\gcc_libmingw-X86
 outputFilename=$out_filename
 libraries=$libraries
 extraLinkerOptions=$dbg_linker_opts
@@ -197,6 +197,7 @@ function build_project_file(path)
         out_filename = "../bin/" .. target_name
     end
     libraries = ""
+    rev_adlibs_libs = {}
     for i, v in ipairs(libs) do
         if i > 1 then libraries = libraries .. "," end
         libraries = libraries .. v
@@ -208,9 +209,27 @@ function build_project_file(path)
         i, j, file = string.find(v,"^.*\\(.-)$")
         if not file then
             libraries = libraries .. v
+            table.insert(rev_adlibs_libs,1,v)
         else
             libraries = libraries .. file
+            table.insert(rev_adlibs_libs,1,file)
         end
+    end
+    -- include libraries in reverse order
+    -- needed to link with static additional libraries
+    for i, v in ipairs(rev_adlibs_libs) do
+        if libraries ~= "" then
+            libraries = libraries .. ","
+        end
+        libraries = libraries .. v
+    end
+    -- include standard libraries again
+    -- needed to link with static additional libraries
+    for i, v in ipairs(libs) do
+        if libraries ~= "" then
+            libraries = libraries .. ","
+        end
+        libraries = libraries .. v
     end
     dbg_linker_opts = ""
     if target_type == "gui" then
@@ -257,7 +276,7 @@ function build_project_file(path)
     f:write("[Source]\n")
     index = 1
     for i, v in ipairs(files) do
-        if string.find(v,"%.c$") then
+        if string.find(v,"%.c(.-)$") then
             f:write(index, "=", v, "\n")
             index = index + 1
         end
@@ -300,10 +319,13 @@ function build_project_file(path)
     f:write("[History]\n")
     f:close()
 
-    print("Project file generation completed successfully.\n")
+    print("Project file generation completed successfully.")
 end
 
 -- the main code
+wxpath = arg[1]
+assert(wxpath,"wxWidgets path must be specified!")
+
 if os.execute("cmd.exe /C dir /S /B *.build >files") ~= 0 then
     error("Cannot find .build files!")
 end
