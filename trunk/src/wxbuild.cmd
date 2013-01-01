@@ -140,10 +140,16 @@ exit /B 1
     pushd "%WXWIDGETSDIR%\build\msw"
 
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 goto cleanup
+    
+    set WX_SDK_LIBPATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
+    if %1 equ amd64 set WX_SDK_LIBPATH=%WXWIDGETSDIR%\lib\vc_amd64_lib%WX_CONFIG%
+    if %1 equ ia64 set WX_SDK_LIBPATH=%WXWIDGETSDIR%\lib\vc_ia64_lib%WX_CONFIG%
+    
     :: ia64 targeting SDK compiler doesn't support optimization
     if %1 equ ia64 set WX_SDK_CPPFLAGS=/Od
+    
     if %BUILD_ENV% equ winsdk (
-        copy /Y "%WXWIDGETSDIR%\include\wx\msw\setup.h" "%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu\wx\"
+        copy /Y "%WXWIDGETSDIR%\include\wx\msw\setup.h" "%WX_SDK_LIBPATH%\mswu\wx\"
         nmake -f makefile.vc TARGET_CPU=%1 BUILD=release UNICODE=1 CFG=%WX_CONFIG% CPPFLAGS="%WX_SDK_CPPFLAGS% /MT" || goto build_failure
     )
     if %BUILD_ENV% equ mingw (
@@ -172,6 +178,7 @@ exit /B 1
     popd
     set WX_CONFIG=
     set WX_SDK_CPPFLAGS=
+    set WX_SDK_LIBPATH=
     exit /B 1
     
     :success
@@ -181,6 +188,7 @@ exit /B 1
 
     set WX_CONFIG=
     set WX_SDK_CPPFLAGS=
+    set WX_SDK_LIBPATH=
 exit /B 0
 
 rem Displays usage information.
