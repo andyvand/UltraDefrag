@@ -48,8 +48,8 @@ echo     10 ... Build .................. with Custom Switches
 echo     11 ... Build Portable ......... with Custom Switches
 echo.
 echo     12 ... Clean all wxWidgets libraries
-echo     13 ... Build wxWidgets ........ using MinGW for x86
-echo     14 ... Build wxWidgets ........ using WinSDK for AMD64 and IA64
+echo     13 ... Build wxWidgets ........ using MinGW
+echo     14 ... Build wxWidgets ........ using WinSDK
 echo.
 echo     15 ... Build Test Release for Stefan
 echo     16 ... Build Test Installation for Stefan
@@ -158,13 +158,13 @@ call wxbuild.cmd --use-winsdk --clean
 goto finished
 
 :13
-title Build wxWidgets ........ using MinGW for x86
+title Build wxWidgets ........ using MinGW
 call wxbuild.cmd --use-mingw
 goto finished
 
 :14
-title Build wxWidgets ........ using WinSDK for AMD64 and IA64
-call wxbuild.cmd --use-winsdk --no-x86
+title Build wxWidgets ........ using WinSDK
+call wxbuild.cmd --use-winsdk
 goto finished
 
 :15
