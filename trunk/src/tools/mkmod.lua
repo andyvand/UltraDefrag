@@ -28,11 +28,6 @@
     1. the first element of each array has index 1.
     2. only nil and false values are false, all other including 0 are true
 
-  When you use Windows SDK don't forget about the following:
-    * ntdll.lib are missing - copy them from DDK
-    * SSE2 processor is required to run produced binaries
-    * kernel mode driver cannot be compiled
-
   If some library exports functions of __stdcall calling convention
   a *mingw.def file must be presented; it must contain names 
   decorated by at signs and number of bytes needed to pass all 
@@ -197,7 +192,7 @@ function produce_sdk_makefile()
     f:write("\n\n")
     
     for i, v in ipairs(src) do
-        f:write(string.gsub(v,"%.c(.-)$","%.obj"), ": header_files\n")
+        f:write(string.gsub(v,"%.c(.-)$","%.obj"), ": ", v, " header_files\n")
         f:write("    \$(CPP) \$(CPP_PROJ) ", v, "\n\n")
     end
 
@@ -220,9 +215,8 @@ function produce_sdk_makefile()
     end
 
     for i, v in ipairs(rc) do
-        f:write("SOURCE=", v, "\n\n")
-        f:write(string.gsub(v,"%.rc","%.res"), " : \$(SOURCE) resource_files\n")
-        f:write("    \$(RSC) \$(RSC_PROJ) \$(SOURCE)\n\n")
+        f:write(string.gsub(v,"%.rc","%.res"), ": ", v, " header_files resource_files\n")
+        f:write("    \$(RSC) \$(RSC_PROJ) ", v, "\n\n")
     end
 
     f:close()
