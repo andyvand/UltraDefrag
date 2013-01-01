@@ -222,18 +222,22 @@ exit /B 0
     set UD_BUILD_TOOL=lua ..\..\tools\mkmod.lua
     set WXWIDGETS_INC_PATH=%WXWIDGETSDIR%\include
     set WX_CONFIG=%BUILD_ENV%-%1
-    if %BUILD_ENV% equ winsdk (
+    if %BUILD_ENV% equ winsdk if %1 equ X86 (
         set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
-        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%\mswu
+    )
+    if %BUILD_ENV% equ winsdk if %1 equ amd64 (
+        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_amd64_lib%WX_CONFIG%
+    )
+    if %BUILD_ENV% equ winsdk if %1 equ ia64 (
+        set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\vc_ia64_lib%WX_CONFIG%
     )
     if %BUILD_ENV% equ mingw (
         set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%
-        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%\mswu
     )
     if %BUILD_ENV% equ mingw_x64 (
         set WXWIDGETS_LIB_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%
-        set WXWIDGETS_INC2_PATH=%WXWIDGETSDIR%\lib\gcc_lib%WX_CONFIG%\mswu
     )
+    set WXWIDGETS_INC2_PATH=%WXWIDGETS_LIB_PATH%\mswu
     
     pushd obj\zenwinx
     %UD_BUILD_TOOL% zenwinx.build || goto fail
