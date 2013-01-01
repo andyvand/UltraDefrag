@@ -218,6 +218,11 @@ exit /B 0
     rem update manifests
     call make-manifests.cmd %1 || exit /B 1
 
+    if %WindowsSDKVersionOverride%x neq v7.1x goto NoWin7SDK
+    if x%CommandPromptType% neq xCross goto NoWin7SDK
+    set path=%PATH%;%VS100COMNTOOLS%\..\..\VC\Bin
+
+    :NoWin7SDK
     rem rebuild modules
     set UD_BUILD_TOOL=lua ..\..\tools\mkmod.lua
     set WXWIDGETS_INC_PATH=%WXWIDGETSDIR%\include
