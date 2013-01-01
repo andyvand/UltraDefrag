@@ -301,4 +301,7 @@ rem Displays usage information.
     echo.
     echo * To use MinGW run mingw_patch.cmd before:
     echo dll\zenwinx\mingw_patch.cmd {path to mingw installation}
+    echo.
+    echo * To use Windows SDK run winsdk_patch.cmd before:
+    echo dll\zenwinx\winsdk_patch.cmd {path to sdk installation}
 goto :EOF
