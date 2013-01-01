@@ -139,6 +139,11 @@ exit /B 1
     echo.
     pushd "%WXWIDGETSDIR%\build\msw"
 
+    if %WindowsSDKVersionOverride%x neq v7.1x goto NoWin7SDK
+    if x%CommandPromptType% neq xCross goto NoWin7SDK
+    set path=%PATH%;%VS100COMNTOOLS%\..\..\VC\Bin
+
+    :NoWin7SDK
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 goto cleanup
     
     set WX_SDK_LIBPATH=%WXWIDGETSDIR%\lib\vc_lib%WX_CONFIG%
