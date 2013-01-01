@@ -36,7 +36,6 @@ if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%U
 
 :: configure wxWidgets
 copy /Y .\include\wxsetup.h "%WXWIDGETSDIR%\include\wx\msw\setup.h"
-lua tools\patch-wxwidgets.lua "%WXWIDGETSDIR%"
 
 :: build wxWidgets
 if %UD_BLD_FLG_USE_COMPILER% equ 0 (
