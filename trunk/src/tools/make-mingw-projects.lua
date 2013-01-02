@@ -2,7 +2,7 @@
 --[[
   make-mingw-projects.lua - produces MinGW Developer Studio
   project files from *.build files.
-  Copyright (c) 2012 Dmitri Arkhangelski (dmitriar@gmail.com).
+  Copyright (c) 2012-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

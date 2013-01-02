@@ -1,6 +1,6 @@
 /*
  *  Hibernate for Windows - a command line tool for Windows hibernation.
- *  Copyright (c) 2009-2012 Dmitri Arkhangelski (dmitriar@gmail.com).
+ *  Copyright (c) 2009-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ static void show_help(void)
     printf(
         "===============================================================================\n"
         "Hibernate for Windows - a command line tool for Windows hibernation.\n"
-        "Copyright (c) UltraDefrag Development Team, 2009-2012.\n"
+        "Copyright (c) UltraDefrag Development Team, 2009-2013.\n"
         "\n"
         "===============================================================================\n"
         "This program is free software; you can redistribute it and/or\n"
@@ -122,7 +122,7 @@ int __cdecl main(int argc, char **argv)
     }
 
     printf("Hibernate for Windows - a command line tool for Windows hibernation.\n");
-    printf("Copyright (c) UltraDefrag Development Team, 2009-2012.\n\n");
+    printf("Copyright (c) UltraDefrag Development Team, 2009-2013.\n\n");
     
     if(udefrag_init_library() < 0){
         fprintf(stderr,"Initialization failed!\n");
