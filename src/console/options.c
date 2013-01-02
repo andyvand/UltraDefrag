@@ -1,6 +1,6 @@
 /*
  *  UltraDefrag - a powerful defragmentation tool for Windows NT.
- *  Copyright (c) 2007-2012 Dmitri Arkhangelski (dmitriar@gmail.com).
+ *  Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ void show_help(void)
     printf(
         "===============================================================================\n"
         VERSIONINTITLE " - a powerful disk defragmentation tool for Windows NT\n"
-        "Copyright (c) UltraDefrag Development Team, 2007-2012.\n"
+        "Copyright (c) UltraDefrag Development Team, 2007-2013.\n"
         "\n"
         "===============================================================================\n"
         "This program is free software; you can redistribute it and/or\n"

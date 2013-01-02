@@ -2,7 +2,7 @@
 
 ::
 :: This script upgrades all doxygen configuration files of UltraDefrag project.
-:: Copyright (c) 2011-2012 Stefan Pendl (stefanpe@users.sourceforge.net).
+:: Copyright (c) 2011-2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
 :: This program is free software; you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
