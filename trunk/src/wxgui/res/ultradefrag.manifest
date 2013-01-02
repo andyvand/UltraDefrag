@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
  <assemblyIdentity version="7.0.0.0" name="wxultradefrag" processorArchitecture="X86" type="win32"/>
-  <description>UltraDefrag GUI (wxWidgets)</description>
+  <description>UltraDefrag wxGUI</description>
   <dependency>
    <dependentAssembly>
     <assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls"
