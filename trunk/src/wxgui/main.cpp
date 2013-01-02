@@ -30,7 +30,7 @@
 // and Dmitri Arkhangelski <dmitriar@gmail.com>.
 
 // =======================================================================
-// declarations
+//                            Declarations
 // =======================================================================
 
 #include "main.h"
@@ -95,7 +95,7 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(App)
 
 // =======================================================================
-//                             Global variables
+//                            Global variables
 // =======================================================================
 
 MainFrame *g_MainFrame = NULL;
@@ -118,16 +118,6 @@ Log::Log()
 Log::~Log()
 {
     SetActiveTarget(NULL);
-}
-
-/**
- * @brief Shows a message on the screen.
- */
-void Log::ShowMessage(const wxString& message,long style)
-{
-    wxMessageDialog dlg(g_MainFrame,
-        message,wxT("UltraDefrag"),style);
-    dlg.ShowModal();
 }
 
 /**
@@ -163,15 +153,18 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     // will do something special
     case wxLOG_ShowError:
         ::udefrag_dbg_print(0,ERROR_FMT,msg);
-        ShowMessage(msg,wxOK | wxICON_HAND);
+        wxMessageBox(msg,wxT("UltraDefrag"),
+            wxOK | wxICON_HAND,g_MainFrame);
         break;
     case wxLOG_ShowWarning:
         ::udefrag_dbg_print(0,DEBUG_FMT,msg);
-        ShowMessage(msg,wxOK | wxICON_EXCLAMATION);
+        wxMessageBox(msg,wxT("UltraDefrag"),
+            wxOK | wxICON_EXCLAMATION,g_MainFrame);
         break;
     case wxLOG_ShowMessage:
         ::udefrag_dbg_print(0,INFO_FMT,msg);
-        ShowMessage(msg,wxOK | wxICON_INFORMATION);
+        wxMessageBox(msg,wxT("UltraDefrag"),
+            wxOK | wxICON_INFORMATION,g_MainFrame);
         break;
     default:
         ::udefrag_dbg_print(0,INFO_FMT,msg);
@@ -211,8 +204,10 @@ bool App::OnInit()
     
     g_MainFrame = new MainFrame(wxT("UltraDefrag"),
         wxPoint(200,200),wxSize(450,300));
-    if(!g_MainFrame)
+    if(!g_MainFrame){
+        Cleanup();
         return false;
+    }
     g_MainFrame->Show(true);
     SetTopWindow(g_MainFrame);
 
@@ -223,15 +218,23 @@ bool App::OnInit()
 }
 
 /**
- * @brief Deinitializes the application.
+ * @brief Frees application resources.
  */
-int App::OnExit()
+void App::Cleanup()
 {
     // deinitialize logging
     delete m_Log;
     
     // free udefrag.dll library
     ::udefrag_unload_library();
+}
+
+/**
+ * @brief Deinitializes the application.
+ */
+int App::OnExit()
+{
+    Cleanup();
     return wxApp::OnExit();
 }
 

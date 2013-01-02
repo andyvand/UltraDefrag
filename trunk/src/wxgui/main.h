@@ -51,8 +51,6 @@ public:
     ~Log();
     virtual void DoLog(wxLogLevel level,
         const wxChar *msg,time_t timestamp);
-private:
-    void ShowMessage(const wxString& message,long style);
 };
 
 class App: public wxApp {
@@ -60,6 +58,7 @@ public:
     virtual bool OnInit();
     virtual int OnExit();
 private:
+    void Cleanup();
     Log *m_Log;
 };
 
