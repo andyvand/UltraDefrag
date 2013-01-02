@@ -23,9 +23,19 @@
 #define _UDEFRAG_GUI_MAIN_H_
 
 #include <wx/wxprec.h>
+
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
+
+// about dialog is not working yet so disable it
+#ifdef wxUSE_ABOUTDLG
+#undef wxUSE_ABOUTDLG
+#endif
+
+#if wxUSE_ABOUTDLG
+#include <wx/aboutdlg.h>
+#endif // wxUSE_ABOUTDLG
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -33,6 +43,7 @@
 #define wxCharStringFmtSpec "%s"
 #endif
 
+#include "../include/version.h"
 #include "../dll/udefrag/udefrag.h"
 
 enum {
@@ -57,6 +68,7 @@ class App: public wxApp {
 public:
     virtual bool OnInit();
     virtual int OnExit();
+
 private:
     void Cleanup();
     Log *m_Log;
@@ -76,14 +88,14 @@ public:
     void OnMftOpt(wxCommandEvent& event);
     void OnPause(wxCommandEvent& event);
     void OnStop(wxCommandEvent& event);
-    
+
     void OnRepeat(wxCommandEvent& event);
-    
+
     void OnSkipRem(wxCommandEvent& event);
     void OnRescan(wxCommandEvent& event);
 
     void OnRepair(wxCommandEvent& event);
-    
+
     void OnWhenDoneNone(wxCommandEvent& event);
     void OnWhenDoneExit(wxCommandEvent& event);
     void OnWhenDoneStandby(wxCommandEvent& event);
@@ -91,37 +103,38 @@ public:
     void OnWhenDoneLogoff(wxCommandEvent& event);
     void OnWhenDoneReboot(wxCommandEvent& event);
     void OnWhenDoneShutdown(wxCommandEvent& event);
-    
+
     void OnExit(wxCommandEvent& event);
-    
+
     // report menu handlers
     void OnShowReport(wxCommandEvent& event);
-    
+
     // settings menu handlers
     void OnLangShowLog(wxCommandEvent& event);
     void OnLangShowReport(wxCommandEvent& event);
     void OnLangOpenFolder(wxCommandEvent& event);
     void OnLangSubmit(wxCommandEvent& event);
-    
+
     void OnGuiFont(wxCommandEvent& event);
     void OnGuiOptions(wxCommandEvent& event);
-    
+
     void OnBootEnable(wxCommandEvent& event);
     void OnBootScript(wxCommandEvent& event);
-    
+
     void OnReportOptions(wxCommandEvent& event);
-    
+
     // help menu handlers
     void OnHelpContents(wxCommandEvent& event);
     void OnHelpBestPractice(wxCommandEvent& event);
     void OnHelpFaq(wxCommandEvent& event);
     void OnHelpLegend(wxCommandEvent& event);
-    
+
     void OnDebugLog(wxCommandEvent& event);
     void OnDebugSend(wxCommandEvent& event);
-    
+
     void OnHelpUpdate(wxCommandEvent& event);
     void OnHelpAbout(wxCommandEvent& event);
+
 private:
     DECLARE_EVENT_TABLE()
 };
@@ -135,14 +148,14 @@ enum {
     ID_MftOpt,
     ID_Pause,
     ID_Stop,
-    
+
     ID_Repeat,
-    
+
     ID_SkipRem,
     ID_Rescan,
 
     ID_Repair,
-    
+
     ID_WhenDoneNone,
     ID_WhenDoneExit,
     ID_WhenDoneStandby,
@@ -150,35 +163,35 @@ enum {
     ID_WhenDoneLogoff,
     ID_WhenDoneReboot,
     ID_WhenDoneShutdown,
-    
+
     ID_Exit,
-    
+
     // report menu identifiers
     ID_ShowReport,
-    
+
     // settings menu identifiers
     ID_LangShowLog,
     ID_LangShowReport,
     ID_LangOpenFolder,
     ID_LangSubmit,
-    
+
     ID_GuiFont,
     ID_GuiOptions,
-    
+
     ID_BootEnable,
     ID_BootScript,
-    
+
     ID_ReportOptions,
-    
+
     // help menu identifiers
     ID_HelpContents,
     ID_HelpBestPractice,
     ID_HelpFaq,
     ID_HelpLegend,
-    
+
     ID_DebugLog,
     ID_DebugSend,
-    
+
     ID_HelpUpdate,
     ID_HelpAbout
 };

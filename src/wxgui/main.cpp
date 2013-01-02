@@ -44,14 +44,14 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_MftOpt, MainFrame::OnMftOpt)
     EVT_MENU(ID_Pause, MainFrame::OnPause)
     EVT_MENU(ID_Stop, MainFrame::OnStop)
-    
+
     EVT_MENU(ID_Repeat, MainFrame::OnRepeat)
-    
+
     EVT_MENU(ID_SkipRem, MainFrame::OnSkipRem)
     EVT_MENU(ID_Rescan, MainFrame::OnRescan)
 
     EVT_MENU(ID_Repair, MainFrame::OnRepair)
-    
+
     EVT_MENU(ID_WhenDoneNone, MainFrame::OnWhenDoneNone)
     EVT_MENU(ID_WhenDoneExit, MainFrame::OnWhenDoneExit)
     EVT_MENU(ID_WhenDoneStandby, MainFrame::OnWhenDoneStandby)
@@ -59,37 +59,37 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_WhenDoneLogoff, MainFrame::OnWhenDoneLogoff)
     EVT_MENU(ID_WhenDoneReboot, MainFrame::OnWhenDoneReboot)
     EVT_MENU(ID_WhenDoneShutdown, MainFrame::OnWhenDoneShutdown)
-    
-    EVT_MENU(ID_Exit, MainFrame::OnExit)
-    
+
+    EVT_MENU(wxID_EXIT, MainFrame::OnExit)
+
     // report menu
     EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
-    
+
     // settings menu
     EVT_MENU(ID_LangShowLog, MainFrame::OnLangShowLog)
     EVT_MENU(ID_LangShowReport, MainFrame::OnLangShowReport)
     EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
     EVT_MENU(ID_LangSubmit, MainFrame::OnLangSubmit)
-    
+
     EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
     EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
-    
+
     EVT_MENU(ID_BootEnable, MainFrame::OnBootEnable)
     EVT_MENU(ID_BootScript, MainFrame::OnBootScript)
-    
+
     EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
-    
+
     // help menu
     EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
     EVT_MENU(ID_HelpBestPractice, MainFrame::OnHelpBestPractice)
     EVT_MENU(ID_HelpFaq, MainFrame::OnHelpFaq)
     EVT_MENU(ID_HelpLegend, MainFrame::OnHelpLegend)
-    
+
     EVT_MENU(ID_DebugLog, MainFrame::OnDebugLog)
     EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
-    
+
     EVT_MENU(ID_HelpUpdate, MainFrame::OnHelpUpdate)
-    EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
+    EVT_MENU(wxID_ABOUT, MainFrame::OnHelpAbout)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(App)
@@ -128,7 +128,7 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     #define INFO_FMT  (I wxCharStringFmtSpec)
     #define DEBUG_FMT (D wxCharStringFmtSpec)
     #define ERROR_FMT (E wxCharStringFmtSpec)
-    
+
     switch(level){
     // common levels used by wx and ourselves
     // will append a message to the log file
@@ -191,19 +191,19 @@ bool App::OnInit()
         ::wxLogError(wxT("Initialization failed!"));
         return false;
     }
-    
+
     // initialize logging
     m_Log = new Log();
-    
+
     ::wxLogMessage(wxT("Hello, everything's ok!"));
     ::wxLogError(wxT("What's the hell?"));
     //::wxLogFatalError(wxT("Welcome to hell!"));
 
     ::wxLogShowMessage(wxT("Mary had a little lamb."));
     ::wxLogShowError(wxT("COMPUTER MALFUNCTION!"));
-    
+
     g_MainFrame = new MainFrame(wxT("UltraDefrag"),
-        wxPoint(200,200),wxSize(450,300));
+        wxPoint(200,200),wxSize(640,480));
     if(!g_MainFrame){
         Cleanup();
         return false;
@@ -213,7 +213,7 @@ bool App::OnInit()
 
     ::wxLogShowMessage(wxT("Mary had a little lamb."));
     ::wxLogShowError(wxT("COMPUTER MALFUNCTION!"));
-    
+
     return true;
 }
 
@@ -224,7 +224,7 @@ void App::Cleanup()
 {
     // deinitialize logging
     delete m_Log;
-    
+
     // free udefrag.dll library
     ::udefrag_unload_library();
 }
@@ -249,6 +249,31 @@ MainFrame::MainFrame(const wxString& title,
     const wxPoint& pos,const wxSize& size,long style)
        : wxFrame(NULL,wxID_ANY,title,pos,size,style)
 {
+    wxMenu *menuAction = new wxMenu;
+    menuAction->Append(ID_Analyze, wxT("&Analyze\tF5"), wxT("Analyze selected drives"));
+    menuAction->AppendSeparator();
+    menuAction->Append(ID_Repeat, wxT("Re&peat action\tShift+R"), wxT("Repeat until finished"));
+    menuAction->Append(wxID_EXIT);
+
+    wxMenu *menuReport = new wxMenu;
+    menuReport->Append(ID_ShowReport, wxT("&Show report\tF8"), wxT("Show fragmented files report"));
+
+    wxMenu *menuSettings = new wxMenu;
+    menuSettings->Append(ID_ReportOptions, wxT("&Reports\tCtrl+R"), wxT("Select report options"));
+
+    wxMenu *menuHelp = new wxMenu;
+    menuHelp->Append(wxID_ABOUT);
+
+    wxMenuBar *menuBar = new wxMenuBar;
+    menuBar->Append( menuAction,   wxT("&Action")   );
+    menuBar->Append( menuReport,   wxT("&Report")   );
+    menuBar->Append( menuSettings, wxT("&Settings") );
+    menuBar->Append( menuHelp,     wxT("&Help")     );
+
+    SetMenuBar( menuBar );
+
+    CreateStatusBar();
+    SetStatusText( wxT("Welcome to wxUltraDefrag!") );
 }
 
 // =======================================================================
@@ -330,6 +355,7 @@ void MainFrame::OnWhenDoneShutdown(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 {
+    Close( true );
 }
 
 // report menu handlers
@@ -405,6 +431,15 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
+#if wxUSE_ABOUTDLG
+    wxAboutDialogInfo info;
+
+    info.SetVersion(wxT(VERSIONINTITLE));
+    info.SetDescription(wxT("Open source defragmentation utility."));
+    info.SetCopyright(wxT("(C) 2007-2013 UltraDefrag development team"));
+
+    wxAboutBox(info);
+#endif // wxUSE_ABOUTDLG
 }
 
 /** @} */
