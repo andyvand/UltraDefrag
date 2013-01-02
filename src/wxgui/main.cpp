@@ -95,7 +95,92 @@ END_EVENT_TABLE()
 IMPLEMENT_APP(App)
 
 // =======================================================================
-// implementation
+//                             Global variables
+// =======================================================================
+
+MainFrame *g_MainFrame = NULL;
+
+// =======================================================================
+//                                Logging
+// =======================================================================
+
+/**
+ * @brief Sets up custom logging.
+ */
+Log::Log()
+{
+    delete SetActiveTarget(this);
+}
+
+/**
+ * @brief Restores default logging.
+ */
+Log::~Log()
+{
+    SetActiveTarget(NULL);
+}
+
+/**
+ * @brief Shows a message on the screen.
+ */
+void Log::ShowMessage(const wxString& message,long style)
+{
+    wxMessageDialog dlg(g_MainFrame,
+        message,wxT("UltraDefrag"),style);
+    dlg.ShowModal();
+}
+
+/**
+ * @brief Performs logging.
+ */
+void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
+{
+    #define INFO_FMT  (I wxCharStringFmtSpec)
+    #define DEBUG_FMT (D wxCharStringFmtSpec)
+    #define ERROR_FMT (E wxCharStringFmtSpec)
+    
+    switch(level){
+    // common levels used by wx and ourselves
+    // will append a message to the log file
+    case wxLOG_FatalError:
+        // XXX: fatal errors pass by actually
+        ::udefrag_dbg_print(0,ERROR_FMT,msg);
+        ::udefrag_flush_dbg_log();
+        break;
+    case wxLOG_Error:
+        ::udefrag_dbg_print(0,ERROR_FMT,msg);
+        break;
+    case wxLOG_Warning:
+    case wxLOG_Info:
+        ::udefrag_dbg_print(0,DEBUG_FMT,msg);
+        break;
+    case wxLOG_Message:
+    case wxLOG_Status:
+    case wxLOG_Progress:
+        ::udefrag_dbg_print(0,INFO_FMT,msg);
+        break;
+    // custom levels used by ourselves
+    // will do something special
+    case wxLOG_ShowError:
+        ::udefrag_dbg_print(0,ERROR_FMT,msg);
+        ShowMessage(msg,wxOK | wxICON_HAND);
+        break;
+    case wxLOG_ShowWarning:
+        ::udefrag_dbg_print(0,DEBUG_FMT,msg);
+        ShowMessage(msg,wxOK | wxICON_EXCLAMATION);
+        break;
+    case wxLOG_ShowMessage:
+        ::udefrag_dbg_print(0,INFO_FMT,msg);
+        ShowMessage(msg,wxOK | wxICON_INFORMATION);
+        break;
+    default:
+        ::udefrag_dbg_print(0,INFO_FMT,msg);
+        break;
+    }
+}
+
+// =======================================================================
+//                    Application startup and shutdown
 // =======================================================================
 
 /**
@@ -103,10 +188,37 @@ IMPLEMENT_APP(App)
  */
 bool App::OnInit()
 {
-    MainFrame *frame = new MainFrame(wxT("UltraDefrag"),
+    // initialize wxWidgets
+    SetAppName(wxT("UltraDefrag"));
+    if(!wxApp::OnInit())
+        return false;
+
+    // initialize udefrag.dll library
+    if(::udefrag_init_library() < 0){
+        ::wxLogError(wxT("Initialization failed!"));
+        return false;
+    }
+    
+    // initialize logging
+    m_Log = new Log();
+    
+    ::wxLogMessage(wxT("Hello, everything's ok!"));
+    ::wxLogError(wxT("What's the hell?"));
+    //::wxLogFatalError(wxT("Welcome to hell!"));
+
+    ::wxLogShowMessage(wxT("Mary had a little lamb."));
+    ::wxLogShowError(wxT("COMPUTER MALFUNCTION!"));
+    
+    g_MainFrame = new MainFrame(wxT("UltraDefrag"),
         wxPoint(200,200),wxSize(450,300));
-    frame->Show(true);
-    SetTopWindow(frame);
+    if(!g_MainFrame)
+        return false;
+    g_MainFrame->Show(true);
+    SetTopWindow(g_MainFrame);
+
+    ::wxLogShowMessage(wxT("Mary had a little lamb."));
+    ::wxLogShowError(wxT("COMPUTER MALFUNCTION!"));
+    
     return true;
 }
 
@@ -115,8 +227,17 @@ bool App::OnInit()
  */
 int App::OnExit()
 {
-    return 0;
+    // deinitialize logging
+    delete m_Log;
+    
+    // free udefrag.dll library
+    ::udefrag_unload_library();
+    return wxApp::OnExit();
 }
+
+// =======================================================================
+//                             Main window
+// =======================================================================
 
 /**
  * @brief Initializes main window.
@@ -126,6 +247,10 @@ MainFrame::MainFrame(const wxString& title,
        : wxFrame(NULL,wxID_ANY,title,pos,size,style)
 {
 }
+
+// =======================================================================
+//                            Menu handlers
+// =======================================================================
 
 // file menu handlers
 void MainFrame::OnAnalyze(wxCommandEvent& WXUNUSED(event))

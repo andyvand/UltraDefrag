@@ -24,6 +24,10 @@
 #ifndef _UDEFRAG_H_
 #define _UDEFRAG_H_
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 #include "../../include/dbg.h"
 
 /* debug print levels */
@@ -186,10 +190,14 @@ void udefrag_flush_dbg_log(void);
  * file and are intended for easier analysis of logs. To keep
  * logs clean always use one of those prefixes.
  */
-void udefrag_dbg_print(int flags,char *format, ...);
+void udefrag_dbg_print(int flags,const char *format, ...);
 
 int udefrag_bootex_check(wchar_t *command);
 int udefrag_bootex_register(wchar_t *command);
 int udefrag_bootex_unregister(wchar_t *command);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _UDEFRAG_H_ */

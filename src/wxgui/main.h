@@ -27,10 +27,40 @@
 #include <wx/wx.h>
 #endif
 
+#if wxUSE_UNICODE
+#define wxCharStringFmtSpec "%ls"
+#else
+#define wxCharStringFmtSpec "%s"
+#endif
+
+#include "../dll/udefrag/udefrag.h"
+
+enum {
+    wxLOG_ShowError = wxLOG_User,
+    wxLOG_ShowWarning,
+    wxLOG_ShowMessage
+};
+
+#define wxLogShowError(format,...)   wxLogGeneric(wxLOG_ShowError,format,## __VA_ARGS__)
+#define wxLogShowWarning(format,...) wxLogGeneric(wxLOG_ShowWarning,format,## __VA_ARGS__)
+#define wxLogShowMessage(format,...) wxLogGeneric(wxLOG_ShowMessage,format,## __VA_ARGS__)
+
+class Log: public wxLog {
+public:
+    Log();
+    ~Log();
+    virtual void DoLog(wxLogLevel level,
+        const wxChar *msg,time_t timestamp);
+private:
+    void ShowMessage(const wxString& message,long style);
+};
+
 class App: public wxApp {
 public:
     virtual bool OnInit();
     virtual int OnExit();
+private:
+    Log *m_Log;
 };
 
 class MainFrame: public wxFrame {
