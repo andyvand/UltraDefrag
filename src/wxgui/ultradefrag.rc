@@ -25,6 +25,9 @@
 
 #include "../include/version.h"
 
+// application icon
+100 ICON DISCARDABLE "res/app.ico"
+
 // manifests for all targets produces make-manifests.cmd script
 1 24 "res/ultradefrag.manifest"
 

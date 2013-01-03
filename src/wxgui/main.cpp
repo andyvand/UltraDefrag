@@ -183,6 +183,7 @@ bool App::OnInit()
 {
     // initialize wxWidgets
     SetAppName(wxT("UltraDefrag"));
+    ::wxInitAllImageHandlers();
     if(!wxApp::OnInit())
         return false;
 
@@ -246,6 +247,10 @@ int App::OnExit()
 MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
+    // set main window icon
+    wxIconBundle icon(wxT("res/app.ico"),wxBITMAP_TYPE_ICO);
+    SetIcons(icon);
+
     // set main window size and position
     wxConfigBase *cfg = wxConfigBase::Get();
     bool saved = cfg->HasGroup(wxT("MainFrame"));
