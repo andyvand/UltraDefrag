@@ -103,10 +103,12 @@ rem Sets environment for the build process.
         echo #define VERSIONINTITLE "UltraDefrag %ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.new
         echo #define VERSIONINTITLE_PORTABLE "UltraDefrag %ULTRADFGVER% %RELEASE_STAGE% Portable" >> .\include\ultradfgver.new
         echo #define ABOUT_VERSION "Ultra Defragmenter version %ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.new
+        echo #define wxUD_ABOUT_VERSION "%ULTRADFGVER% %RELEASE_STAGE%" >> .\include\ultradfgver.new
     ) else (
         echo #define VERSIONINTITLE "UltraDefrag %ULTRADFGVER%" >> .\include\ultradfgver.new
         echo #define VERSIONINTITLE_PORTABLE "UltraDefrag %ULTRADFGVER% Portable" >> .\include\ultradfgver.new
         echo #define ABOUT_VERSION "Ultra Defragmenter version %ULTRADFGVER%" >> .\include\ultradfgver.new
+        echo #define wxUD_ABOUT_VERSION "%ULTRADFGVER%" >> .\include\ultradfgver.new
     )
     
     rem remove preview menu for release candidates
