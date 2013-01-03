@@ -4,8 +4,7 @@
   ------------------------------------------------------------------------------
     beta1:
     - GUI reimplemented on top of wxWidgets library
-    - internal GUI settings moved from guiopts-internals.lua file
-      to system registry (under HKCU\Software\UltraDefrag key)
+    - internal GUI settings moved from guiopts-internals.lua to gui.ini file
     - Internals: Windows Driver Kit support dropped because of its
       unreliable development environment - use Windows SDK v6.1 instead
 

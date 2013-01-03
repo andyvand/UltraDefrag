@@ -199,12 +199,14 @@ bool App::OnInit()
     
     // use global config object
     // for internal settings
-    wxConfigBase *cfg = wxConfigBase::Get();
+    wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
+        wxT("gui.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
     if(!cfg){
         ::wxLogShowError(wxT("Configuration failed!"));
         Cleanup();
         return false;
     }
+    wxConfigBase::Set(cfg);
     
     // keep things DPI-aware
     HDC hdc = ::GetDC(NULL);
