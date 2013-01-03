@@ -2,6 +2,7 @@
 //
 //  UltraDefrag - a powerful defragmentation tool for Windows NT.
 //  Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
+//  Copyright (c) 2010-2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -258,7 +259,7 @@ MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
     // set main window icon
-    SetIcons(wxICON(appico));
+    SetIcons(wxICON(appicon));
     
     // set main window title
     wxString *instdir = new wxString();
@@ -506,14 +507,8 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxAboutDialogInfo info;
-
-    info.SetVersion(wxT(wxUD_ABOUT_VERSION));
-    info.SetCopyright(wxT("(C) 2007-2013 UltraDefrag development team"));
-    info.SetDescription(wxT("\nAn open source defragmentation utility.\n")
-        wxT("Credits and Licenses are listed in the handbook."));
-
-    wxAboutBox(info);
+    AboutDialog dlg;
+    dlg.ShowModal();
 }
 
 /** @} */
