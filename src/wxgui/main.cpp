@@ -268,16 +268,16 @@ MainFrame::MainFrame()
         wxLogMessage(wxT("Current directory: %ls"),cd.wc_str());
         wxLogMessage(wxT("Installation directory: %ls"),instdir->wc_str());
         if(cd.CmpNoCase(*instdir) == 0){
-            wxLogMessage(wxT("Current directory matches "
-                "installation location, so it isn't portable"));
+            wxLogMessage(wxT("Current directory matches ")
+                wxT("installation location, so it isn't portable"));
             m_Title = new wxString(wxT(VERSIONINTITLE));
         } else {
-            wxLogMessage(wxT("Current directory differs from "
-                "installation location, so it is portable"));
-            m_Title = new wxString(wxT(VERSIONINTITLE" Portable"));
+            wxLogMessage(wxT("Current directory differs from ")
+                wxT("installation location, so it is portable"));
+            m_Title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
         }
     } else {
-        m_Title = new wxString(wxT(VERSIONINTITLE" Portable"));
+        m_Title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
     }
     SetTitle(*m_Title);
     delete instdir;
@@ -507,9 +507,10 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxAboutDialogInfo info;
 
-    info.SetVersion(wxT(VERSIONINTITLE));
+    info.SetVersion(wxT(wxUD_ABOUT_VERSION));
     info.SetCopyright(wxT("(C) 2007-2013 UltraDefrag development team"));
-    info.SetDescription(wxT("Open source defragmentation utility."));
+    info.SetDescription(wxT("Open source defragmentation utility.\n")
+        wxT("Credits and Licenses are listed in the handbook."));
 
     wxAboutBox(info);
 }
