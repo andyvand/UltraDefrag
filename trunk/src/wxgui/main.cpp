@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 /**
- * @file main.c
+ * @file main.cpp
  * @brief Main window.
  * @addtogroup MainWindow
  * @{
@@ -497,15 +497,13 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
-#if wxUSE_ABOUTDLG
     wxAboutDialogInfo info;
 
     info.SetVersion(wxT(VERSIONINTITLE));
-    info.SetDescription(wxT("Open source defragmentation utility."));
     info.SetCopyright(wxT("(C) 2007-2013 UltraDefrag development team"));
+    info.SetDescription(wxT("Open source defragmentation utility."));
 
     wxAboutBox(info);
-#endif // wxUSE_ABOUTDLG
 }
 
 /** @} */

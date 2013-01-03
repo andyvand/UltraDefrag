@@ -31,15 +31,7 @@
 #include <wx/config.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
-
-// about dialog is not working yet so disable it
-#ifdef wxUSE_ABOUTDLG
-#undef wxUSE_ABOUTDLG
-#endif
-
-#if wxUSE_ABOUTDLG
 #include <wx/aboutdlg.h>
-#endif // wxUSE_ABOUTDLG
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
