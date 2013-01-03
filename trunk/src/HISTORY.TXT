@@ -1,6 +1,6 @@
 ﻿HISTORY
 
-  Version 7.0.0 2012-01-
+  Version 7.0.0 2013-01-
   ------------------------------------------------------------------------------
     beta1:
     - GUI reimplemented on top of wxWidgets library
@@ -10,7 +10,7 @@
       unreliable development environment - use Windows SDK v6.1 instead
 
 
-  Version 6.0.0 2012-01-
+  Version 6.0.0 2013-01-
   ------------------------------------------------------------------------------
     RC1:
     - Internals: changed definition of WGX_OPTION structure
@@ -20,7 +20,7 @@
 
       Bengali
 
-      - the following translations were updated:
+    - the following translations were updated:
 
       Catalan, Italian
 
