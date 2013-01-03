@@ -250,6 +250,29 @@ MainFrame::MainFrame()
     // set main window icon
     wxIconBundle icon(wxT("res/app.ico"),wxBITMAP_TYPE_ICO);
     SetIcons(icon);
+    
+    // set main window title
+    wxString *instdir = new wxString();
+    if(wxGetEnv(wxT("UD_INSTALL_DIR"),instdir)){
+        wxStandardPaths stdpaths;
+        wxFileName exepath(stdpaths.GetExecutablePath());
+        wxString cd = exepath.GetPath();
+        wxLogMessage(wxT("Current directory: %ls"),cd.wc_str());
+        wxLogMessage(wxT("Installation directory: %ls"),instdir->wc_str());
+        if(cd.CmpNoCase(*instdir) == 0){
+            wxLogMessage(wxT("Current directory matches "
+                "installation location, so it isn't portable"));
+            m_Title = new wxString(wxT(VERSIONINTITLE));
+        } else {
+            wxLogMessage(wxT("Current directory differs from "
+                "installation location, so it is portable"));
+            m_Title = new wxString(wxT(VERSIONINTITLE" Portable"));
+        }
+    } else {
+        m_Title = new wxString(wxT(VERSIONINTITLE" Portable"));
+    }
+    SetTitle(*m_Title);
+    delete instdir;
 
     // set main window size and position
     wxConfigBase *cfg = wxConfigBase::Get();
@@ -314,6 +337,9 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/width"),(long)width);
     cfg->Write(wxT("/MainFrame/height"),(long)height);
     cfg->Write(wxT("/MainFrame/maximized"),(long)maximized);
+    
+    // free resources
+    delete m_Title;
 }
 
 // =======================================================================
