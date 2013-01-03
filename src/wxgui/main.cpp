@@ -99,6 +99,7 @@ IMPLEMENT_APP(App)
 // =======================================================================
 
 MainFrame *g_MainFrame = NULL;
+double g_fScale = 1.0f;
 
 // =======================================================================
 //                                Logging
@@ -205,6 +206,13 @@ bool App::OnInit()
         return false;
     }
     
+    // keep things DPI-aware
+    HDC hdc = ::GetDC(NULL);
+    if(hdc){
+        g_fScale = (double)::GetDeviceCaps(hdc,LOGPIXELSX) / 96.0f;
+        ::ReleaseDC(NULL,hdc);
+    }
+
     // create main window
     g_MainFrame = new MainFrame();
     if(!g_MainFrame){
@@ -279,8 +287,8 @@ MainFrame::MainFrame()
     bool saved = cfg->HasGroup(wxT("MainFrame"));
     int x = (int)cfg->Read(wxT("/MainFrame/x"),0l);
     int y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
-    int width = (int)cfg->Read(wxT("/MainFrame/width"),640);
-    int height = (int)cfg->Read(wxT("/MainFrame/height"),480);
+    int width = (int)cfg->Read(wxT("/MainFrame/width"),DPI(640));
+    int height = (int)cfg->Read(wxT("/MainFrame/height"),DPI(480));
     SetSize(width,height);
     if(!saved){
         CenterOnScreen();
