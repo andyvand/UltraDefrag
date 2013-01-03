@@ -28,6 +28,8 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/config.h>
+
 // about dialog is not working yet so disable it
 #ifdef wxUSE_ABOUTDLG
 #undef wxUSE_ABOUTDLG
@@ -60,6 +62,7 @@ class Log: public wxLog {
 public:
     Log();
     ~Log();
+
     virtual void DoLog(wxLogLevel level,
         const wxChar *msg,time_t timestamp);
 };
@@ -76,9 +79,8 @@ private:
 
 class MainFrame: public wxFrame {
 public:
-    MainFrame(const wxString& title,
-        const wxPoint& pos,const wxSize &size,
-        long style = wxDEFAULT_FRAME_STYLE);
+    MainFrame();
+    ~MainFrame();
 
     // file menu handlers
     void OnAnalyze(wxCommandEvent& event);
