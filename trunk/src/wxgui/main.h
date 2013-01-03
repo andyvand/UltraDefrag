@@ -42,6 +42,9 @@
 #include "../include/version.h"
 #include "../dll/udefrag/udefrag.h"
 
+/* converts pixels from 96 DPI to the current one */
+#define DPI(x) ((int)((double)x * g_fScale))
+
 enum {
     wxLOG_ShowError = wxLOG_User,
     wxLOG_ShowWarning,
