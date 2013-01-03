@@ -38,6 +38,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/hyperlink.h>
+#include <wx/toolbar.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
