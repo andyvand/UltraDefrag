@@ -149,11 +149,21 @@ public:
     void OnHelpUpdate(wxCommandEvent& event);
     void OnHelpAbout(wxCommandEvent& event);
 
+    // event handlers
+    void OnMove(wxMoveEvent& event);
+    void OnSize(wxSizeEvent& event);
+
 private:
-    void InitToolbar(wxToolBar* toolBar);
+    void InitToolbar();
     void InitMenu();
     
+    int m_x;
+    int m_y;
+    int m_width;
+    int m_height;
+    
     wxString *m_Title;
+    
     DECLARE_EVENT_TABLE()
 };
 

@@ -45,10 +45,12 @@
 /**
  * @brief Initializes toolbar.
  */
-void MainFrame::InitToolbar(wxToolBar* toolBar)
+void MainFrame::InitToolbar()
 {
+    wxToolBar *toolBar = CreateToolBar();
+
     wxBitmap toolbarImage = wxBITMAP(toolbar16);
-    wxMask* imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
+    wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
     toolbarImage.SetMask(imageMask);
 
     int bmHeight = toolbarImage.GetHeight();
@@ -56,7 +58,7 @@ void MainFrame::InitToolbar(wxToolBar* toolBar)
     wxBitmap toolBarBitmaps[TOOLBAR_IMAGE_COUNT];
 
     int i;
-    for(i=0; i<TOOLBAR_IMAGE_COUNT; i++)
+    for(i=0; i < TOOLBAR_IMAGE_COUNT; i++)
         toolBarBitmaps[i] = toolbarImage.GetSubBitmap(wxRect(bmHeight*i,0,bmHeight,bmHeight));
 
     toolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
