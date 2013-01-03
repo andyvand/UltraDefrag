@@ -29,6 +29,8 @@
 #endif
 
 #include <wx/config.h>
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
 
 // about dialog is not working yet so disable it
 #ifdef wxUSE_ABOUTDLG
@@ -138,6 +140,7 @@ public:
     void OnHelpAbout(wxCommandEvent& event);
 
 private:
+    wxString *m_Title;
     DECLARE_EVENT_TABLE()
 };
 
