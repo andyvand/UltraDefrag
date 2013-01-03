@@ -91,6 +91,10 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_HelpUpdate, MainFrame::OnHelpUpdate)
     EVT_MENU(wxID_ABOUT, MainFrame::OnHelpAbout)
+    
+    // event handlers
+    EVT_MOVE(MainFrame::OnMove)
+    EVT_SIZE(MainFrame::OnSize)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(App)
@@ -287,16 +291,16 @@ MainFrame::MainFrame()
     // set main window size and position
     wxConfigBase *cfg = wxConfigBase::Get();
     bool saved = cfg->HasGroup(wxT("MainFrame"));
-    int x = (int)cfg->Read(wxT("/MainFrame/x"),0l);
-    int y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
-    int width = (int)cfg->Read(wxT("/MainFrame/width"),DPI(640));
-    int height = (int)cfg->Read(wxT("/MainFrame/height"),DPI(480));
-    SetSize(width,height);
+    m_x = (int)cfg->Read(wxT("/MainFrame/x"),0l);
+    m_y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
+    m_width = (int)cfg->Read(wxT("/MainFrame/width"),DPI(640));
+    m_height = (int)cfg->Read(wxT("/MainFrame/height"),DPI(480));
+    SetSize(m_width,m_height);
     if(!saved){
         CenterOnScreen();
-        GetPosition(&x,&y);
+        GetPosition(&m_x,&m_y);
     }
-    Move(x,y);
+    Move(m_x,m_y);
     if(cfg->Read(wxT("/MainFrame/maximized"),0l)){
         Maximize(true);
     }
@@ -305,9 +309,7 @@ MainFrame::MainFrame()
     InitMenu();
 
     // create tool bar
-    wxToolBar* toolBar = CreateToolBar();
-
-    InitToolbar(toolBar);
+    InitToolbar();
 
     // create status bar
     CreateStatusBar();
@@ -321,19 +323,32 @@ MainFrame::~MainFrame()
 {
     // save main window size and position
     wxConfigBase *cfg = wxConfigBase::Get();
-    int x,y,width,height;
-    bool maximized = IsMaximized();
-    Hide(); Maximize(false);
-    GetPosition(&x,&y);
-    GetSize(&width,&height);
-    cfg->Write(wxT("/MainFrame/x"),(long)x);
-    cfg->Write(wxT("/MainFrame/y"),(long)y);
-    cfg->Write(wxT("/MainFrame/width"),(long)width);
-    cfg->Write(wxT("/MainFrame/height"),(long)height);
-    cfg->Write(wxT("/MainFrame/maximized"),(long)maximized);
+    cfg->Write(wxT("/MainFrame/x"),(long)m_x);
+    cfg->Write(wxT("/MainFrame/y"),(long)m_y);
+    cfg->Write(wxT("/MainFrame/width"),(long)m_width);
+    cfg->Write(wxT("/MainFrame/height"),(long)m_height);
+    cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
     
     // free resources
     delete m_Title;
+}
+
+// =======================================================================
+//                            Event handlers
+// =======================================================================
+
+void MainFrame::OnMove(wxMoveEvent& event)
+{
+    if(!IsMaximized() && !IsIconized()){
+        GetPosition(&m_x,&m_y);
+        GetSize(&m_width,&m_height);
+    }
+}
+
+void MainFrame::OnSize(wxSizeEvent& event)
+{
+    if(!IsMaximized() && !IsIconized())
+        GetSize(&m_width,&m_height);
 }
 
 // =======================================================================
