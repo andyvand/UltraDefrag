@@ -61,7 +61,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_WhenDoneReboot, MainFrame::OnWhenDoneReboot)
     EVT_MENU(ID_WhenDoneShutdown, MainFrame::OnWhenDoneShutdown)
 
-    EVT_MENU(wxID_EXIT, MainFrame::OnExit)
+    EVT_MENU(ID_Exit, MainFrame::OnExit)
 
     // report menu
     EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
@@ -90,7 +90,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
 
     EVT_MENU(ID_HelpUpdate, MainFrame::OnHelpUpdate)
-    EVT_MENU(wxID_ABOUT, MainFrame::OnHelpAbout)
+    EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
     
     // event handlers
     EVT_MOVE(MainFrame::OnMove)

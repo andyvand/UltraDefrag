@@ -43,7 +43,7 @@
 AboutDialog::AboutDialog()
 {
     if(!wxDialog::Create(g_MainFrame,wxID_ANY,
-        wxT("About UltraDefrag"))) return;
+        _("About UltraDefrag"))) return;
     
     wxStaticText *version = new wxStaticText(this,wxID_ANY,wxT(VERSIONINTITLE));
     wxFont fontBig(*wxNORMAL_FONT);
@@ -54,12 +54,12 @@ AboutDialog::AboutDialog()
     wxStaticText *copyright = new wxStaticText(this,wxID_ANY,
         wxT("(C) 2007-2013 UltraDefrag development team"));
     wxStaticText *description = new wxStaticText(this,wxID_ANY,
-        wxT("An open source defragmentation utility."));
+        _("An open source defragmentation utility."));
     wxStaticText *credits = new wxStaticText(this,wxID_ANY,
-        wxT("Credits and licenses are listed in the handbook."));
+        _("Credits and licenses are listed in the handbook."));
 
     wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(this,wxID_ANY,
-        wxT("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
+        _("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
 
     wxSizer *text = new wxBoxSizer(wxVERTICAL);
     text->Add(version,wxSizerFlags().Centre().Border());

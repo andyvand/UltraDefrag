@@ -47,25 +47,25 @@ void MainFrame::InitMenu()
 {
     // create menu
     wxMenu *menuAction = new wxMenu;
-    menuAction->Append(ID_Analyze,wxT("&Analyze\tF5"),wxT("Analyze selected drives"));
+    menuAction->Append(ID_Analyze,_("&Analyze\tF5"));
     menuAction->AppendSeparator();
-    menuAction->Append(ID_Repeat,wxT("Re&peat action\tShift+R"),wxT("Repeat until finished"));
-    menuAction->Append(wxID_EXIT);
+    menuAction->Append(ID_Repeat,_("Re&peat action\tShift+R"));
+    menuAction->Append(ID_Exit,_("E&xit\tAlt+F4"));
 
     wxMenu *menuReport = new wxMenu;
-    menuReport->Append(ID_ShowReport,wxT("&Show report\tF8"),wxT("Show fragmented files report"));
+    menuReport->Append(ID_ShowReport,_("&Show report\tF8"));
 
     wxMenu *menuSettings = new wxMenu;
-    menuSettings->Append(ID_ReportOptions,wxT("&Reports\tCtrl+R"),wxT("Select report options"));
+    menuSettings->Append(ID_ReportOptions,_("&Reports\tCtrl+R"));
 
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(wxID_ABOUT);
+    menuHelp->Append(ID_HelpAbout,_("&About\tF4"));
 
     wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append(menuAction,   wxT("&Action")  );
-    menuBar->Append(menuReport,   wxT("&Report")  );
-    menuBar->Append(menuSettings, wxT("&Settings"));
-    menuBar->Append(menuHelp,     wxT("&Help")    );
+    menuBar->Append(menuAction,   _("&Action")  );
+    menuBar->Append(menuReport,   _("&Report")  );
+    menuBar->Append(menuSettings, _("&Settings"));
+    menuBar->Append(menuHelp,     _("&Help")    );
 
     SetMenuBar(menuBar);
 }
