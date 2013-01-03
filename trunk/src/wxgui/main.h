@@ -150,6 +150,9 @@ public:
     void OnHelpAbout(wxCommandEvent& event);
 
 private:
+    void InitToolbar(wxToolBar* toolBar);
+    void InitMenu();
+    
     wxString *m_Title;
     DECLARE_EVENT_TABLE()
 };
