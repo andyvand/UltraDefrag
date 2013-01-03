@@ -2,6 +2,7 @@
 //
 //  UltraDefrag - a powerful defragmentation tool for Windows NT.
 //  Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
+//  Copyright (c) 2010-2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -22,6 +23,10 @@
 #ifndef _UDEFRAG_GUI_MAIN_H_
 #define _UDEFRAG_GUI_MAIN_H_
 
+// =======================================================================
+//                               Headers
+// =======================================================================
+
 #include <wx/wxprec.h>
 
 #ifndef WX_PRECOMP
@@ -32,7 +37,7 @@
 #include <wx/fileconf.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
-#include <wx/aboutdlg.h>
+#include <wx/hyperlink.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -42,6 +47,10 @@
 
 #include "../include/version.h"
 #include "../dll/udefrag/udefrag.h"
+
+// =======================================================================
+//                          Macro definitions
+// =======================================================================
 
 /* converts pixels from 96 DPI to the current one */
 #define DPI(x) ((int)((double)x * g_fScale))
@@ -55,6 +64,10 @@ enum {
 #define wxLogShowError(format,...)   wxLogGeneric(wxLOG_ShowError,format,## __VA_ARGS__)
 #define wxLogShowWarning(format,...) wxLogGeneric(wxLOG_ShowWarning,format,## __VA_ARGS__)
 #define wxLogShowMessage(format,...) wxLogGeneric(wxLOG_ShowMessage,format,## __VA_ARGS__)
+
+// =======================================================================
+//                            Declarations
+// =======================================================================
 
 class Log: public wxLog {
 public:
@@ -140,6 +153,15 @@ private:
     DECLARE_EVENT_TABLE()
 };
 
+class AboutDialog: public wxDialog {
+public:
+    AboutDialog();
+};
+
+// =======================================================================
+//                              Constants
+// =======================================================================
+
 enum {
     // file menu identifiers
     ID_Analyze = 1,
@@ -196,5 +218,12 @@ enum {
     ID_HelpUpdate,
     ID_HelpAbout
 };
+
+// =======================================================================
+//                           Global variables
+// =======================================================================
+
+extern MainFrame *g_MainFrame;
+extern double g_fScale;
 
 #endif /* _UDEFRAG_GUI_MAIN_H_ */
