@@ -54,8 +54,9 @@ AboutDialog::AboutDialog()
     wxStaticText *copyright = new wxStaticText(this,wxID_ANY,
         wxT("(C) 2007-2013 UltraDefrag development team"));
     wxStaticText *description = new wxStaticText(this,wxID_ANY,
-        wxT("An open source defragmentation utility.\n")
-        wxT("Credits and Licenses are listed in the handbook."));
+        wxT("An open source defragmentation utility."));
+    wxStaticText *credits = new wxStaticText(this,wxID_ANY,
+        wxT("Credits and licenses are listed in the handbook."));
 
     wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(this,wxID_ANY,
         wxT("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
@@ -65,7 +66,8 @@ AboutDialog::AboutDialog()
     text->AddSpacer(5);
     text->Add(copyright,wxSizerFlags().Centre().Border());
     text->AddSpacer(5);
-    text->Add(description,wxSizerFlags().Centre().Border());
+    text->Add(description,wxSizerFlags().Centre().Border(wxALL & ~wxBOTTOM));
+    text->Add(credits,wxSizerFlags().Centre().Border(wxALL & ~wxTOP));
     text->AddSpacer(5);
     text->Add(homepage,wxSizerFlags().Centre().Border());
 
