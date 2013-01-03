@@ -63,23 +63,23 @@ void MainFrame::InitToolbar()
 
     toolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
 
-    toolBar->AddTool(ID_Analyze,   wxT("Analyze"),   toolBarBitmaps[0], wxT("Analyze"),                  wxITEM_NORMAL);
-    toolBar->AddTool(ID_Repeat,    wxT("Repeat"),    toolBarBitmaps[1], wxT("Repeat"),                   wxITEM_CHECK);
-    toolBar->AddTool(ID_Defrag,    wxT("Defrag"),    toolBarBitmaps[3], wxT("Defragment"),               wxITEM_NORMAL);
-    toolBar->AddTool(ID_QuickOpt,  wxT("QuickOpt"),  toolBarBitmaps[4], wxT("Quick Optimize"),           wxITEM_NORMAL);
-    toolBar->AddTool(ID_FullOpt,   wxT("FullOpt"),   toolBarBitmaps[5], wxT("Full Optimize"),            wxITEM_NORMAL);
-    toolBar->AddTool(ID_MftOpt,    wxT("MftOpt"),    toolBarBitmaps[6], wxT("Optimize MFT"),             wxITEM_NORMAL);
-    toolBar->AddTool(ID_Pause,     wxT("Pause"),     toolBarBitmaps[7], wxT("Pause"),                    wxITEM_NORMAL);
-    toolBar->AddTool(ID_Stop,      wxT("Stop"),      toolBarBitmaps[8], wxT("Stop"),                     wxITEM_NORMAL);
+    toolBar->AddTool(ID_Analyze,   wxT("Analyze"),   toolBarBitmaps[0], _("Analyze"),                  wxITEM_NORMAL);
+    toolBar->AddTool(ID_Repeat,    wxT("Repeat"),    toolBarBitmaps[1], _("Repeat"),                   wxITEM_CHECK);
+    toolBar->AddTool(ID_Defrag,    wxT("Defrag"),    toolBarBitmaps[3], _("Defragment"),               wxITEM_NORMAL);
+    toolBar->AddTool(ID_QuickOpt,  wxT("QuickOpt"),  toolBarBitmaps[4], _("Quick Optimize"),           wxITEM_NORMAL);
+    toolBar->AddTool(ID_FullOpt,   wxT("FullOpt"),   toolBarBitmaps[5], _("Full Optimize"),            wxITEM_NORMAL);
+    toolBar->AddTool(ID_MftOpt,    wxT("MftOpt"),    toolBarBitmaps[6], _("Optimize MFT"),             wxITEM_NORMAL);
+    toolBar->AddTool(ID_Pause,     wxT("Pause"),     toolBarBitmaps[7], _("Pause"),                    wxITEM_NORMAL);
+    toolBar->AddTool(ID_Stop,      wxT("Stop"),      toolBarBitmaps[8], _("Stop"),                     wxITEM_NORMAL);
     toolBar->AddSeparator();
-    toolBar->AddTool(ID_ShowReport,wxT("ShowReport"),toolBarBitmaps[9], wxT("Show Fragmentation Report"),wxITEM_NORMAL);
+    toolBar->AddTool(ID_ShowReport,wxT("ShowReport"),toolBarBitmaps[9], _("Show Fragmentation Report"),wxITEM_NORMAL);
     toolBar->AddSeparator();
-    toolBar->AddTool(ID_GuiOptions,wxT("GuiOptions"),toolBarBitmaps[10],wxT("Edit GUI Settings"),        wxITEM_NORMAL);
+    toolBar->AddTool(ID_GuiOptions,wxT("GuiOptions"),toolBarBitmaps[10],_("Edit GUI Settings"),        wxITEM_NORMAL);
     toolBar->AddSeparator();
-    toolBar->AddTool(ID_BootEnable,wxT("BootEnable"),toolBarBitmaps[11],wxT("Enable Boot"),              wxITEM_NORMAL);
-    toolBar->AddTool(ID_BootScript,wxT("BootScript"),toolBarBitmaps[12],wxT("Edit Boot Script"),         wxITEM_NORMAL);
+    toolBar->AddTool(ID_BootEnable,wxT("BootEnable"),toolBarBitmaps[11],_("Enable Boot"),              wxITEM_NORMAL);
+    toolBar->AddTool(ID_BootScript,wxT("BootScript"),toolBarBitmaps[12],_("Edit Boot Script"),         wxITEM_NORMAL);
     toolBar->AddSeparator();
-    toolBar->AddTool(wxID_ABOUT,   wxT("About"),     toolBarBitmaps[13],wxT("About"),                    wxITEM_NORMAL);
+    toolBar->AddTool(ID_HelpAbout, wxT("HelpAbout"), toolBarBitmaps[13],_("About"),                    wxITEM_NORMAL);
 
     toolBar->Realize();
 }
