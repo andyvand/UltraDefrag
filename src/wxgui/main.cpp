@@ -258,8 +258,7 @@ MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
     // set main window icon
-    wxIconBundle icon(wxT("res/app.ico"),wxBITMAP_TYPE_ICO);
-    SetIcons(icon);
+    SetIcons(wxICON(appico));
     
     // set main window title
     wxString *instdir = new wxString();
@@ -511,7 +510,7 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 
     info.SetVersion(wxT(wxUD_ABOUT_VERSION));
     info.SetCopyright(wxT("(C) 2007-2013 UltraDefrag development team"));
-    info.SetDescription(wxT("Open source defragmentation utility.\n")
+    info.SetDescription(wxT("\nAn open source defragmentation utility.\n")
         wxT("Credits and Licenses are listed in the handbook."));
 
     wxAboutBox(info);
