@@ -28,7 +28,8 @@
 #include <wx/wx.h>
 #endif
 
-#include <wx/config.h>
+#include <wx/confbase.h>
+#include <wx/fileconf.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/aboutdlg.h>
