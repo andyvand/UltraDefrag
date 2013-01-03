@@ -194,26 +194,24 @@ bool App::OnInit()
 
     // initialize logging
     m_Log = new Log();
-
-    ::wxLogMessage(wxT("Hello, everything's ok!"));
-    ::wxLogError(wxT("What's the hell?"));
-    //::wxLogFatalError(wxT("Welcome to hell!"));
-
-    ::wxLogShowMessage(wxT("Mary had a little lamb."));
-    ::wxLogShowError(wxT("COMPUTER MALFUNCTION!"));
-
-    g_MainFrame = new MainFrame(wxT("UltraDefrag"),
-        wxPoint(200,200),wxSize(640,480));
+    
+    // use global config object
+    // for internal settings
+    wxConfigBase *cfg = wxConfigBase::Get();
+    if(!cfg){
+        ::wxLogShowError(wxT("Configuration failed!"));
+        Cleanup();
+        return false;
+    }
+    
+    // create main window
+    g_MainFrame = new MainFrame();
     if(!g_MainFrame){
         Cleanup();
         return false;
     }
     g_MainFrame->Show(true);
     SetTopWindow(g_MainFrame);
-
-    ::wxLogShowMessage(wxT("Mary had a little lamb."));
-    ::wxLogShowError(wxT("COMPUTER MALFUNCTION!"));
-
     return true;
 }
 
@@ -245,35 +243,72 @@ int App::OnExit()
 /**
  * @brief Initializes main window.
  */
-MainFrame::MainFrame(const wxString& title,
-    const wxPoint& pos,const wxSize& size,long style)
-       : wxFrame(NULL,wxID_ANY,title,pos,size,style)
+MainFrame::MainFrame()
+    :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
+    // set main window size and position
+    wxConfigBase *cfg = wxConfigBase::Get();
+    bool saved = cfg->HasGroup(wxT("MainFrame"));
+    int x = (int)cfg->Read(wxT("/MainFrame/x"),0l);
+    int y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
+    int width = (int)cfg->Read(wxT("/MainFrame/width"),640);
+    int height = (int)cfg->Read(wxT("/MainFrame/height"),480);
+    SetClientSize(width,height);
+    if(!saved){
+        CenterOnScreen();
+        GetPosition(&x,&y);
+    }
+    Move(x,y);
+    if(cfg->Read(wxT("/MainFrame/maximized"),0l)){
+        Maximize(true);
+    }
+
+    // create menu
     wxMenu *menuAction = new wxMenu;
-    menuAction->Append(ID_Analyze, wxT("&Analyze\tF5"), wxT("Analyze selected drives"));
+    menuAction->Append(ID_Analyze,wxT("&Analyze\tF5"),wxT("Analyze selected drives"));
     menuAction->AppendSeparator();
-    menuAction->Append(ID_Repeat, wxT("Re&peat action\tShift+R"), wxT("Repeat until finished"));
+    menuAction->Append(ID_Repeat,wxT("Re&peat action\tShift+R"),wxT("Repeat until finished"));
     menuAction->Append(wxID_EXIT);
 
     wxMenu *menuReport = new wxMenu;
-    menuReport->Append(ID_ShowReport, wxT("&Show report\tF8"), wxT("Show fragmented files report"));
+    menuReport->Append(ID_ShowReport,wxT("&Show report\tF8"),wxT("Show fragmented files report"));
 
     wxMenu *menuSettings = new wxMenu;
-    menuSettings->Append(ID_ReportOptions, wxT("&Reports\tCtrl+R"), wxT("Select report options"));
+    menuSettings->Append(ID_ReportOptions,wxT("&Reports\tCtrl+R"),wxT("Select report options"));
 
     wxMenu *menuHelp = new wxMenu;
     menuHelp->Append(wxID_ABOUT);
 
     wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append( menuAction,   wxT("&Action")   );
-    menuBar->Append( menuReport,   wxT("&Report")   );
-    menuBar->Append( menuSettings, wxT("&Settings") );
-    menuBar->Append( menuHelp,     wxT("&Help")     );
+    menuBar->Append(menuAction,   wxT("&Action")  );
+    menuBar->Append(menuReport,   wxT("&Report")  );
+    menuBar->Append(menuSettings, wxT("&Settings"));
+    menuBar->Append(menuHelp,     wxT("&Help")    );
 
-    SetMenuBar( menuBar );
+    SetMenuBar(menuBar);
 
+    // create status bar
     CreateStatusBar();
-    SetStatusText( wxT("Welcome to wxUltraDefrag!") );
+    SetStatusText(wxT("Welcome to wxUltraDefrag!"));
+}
+
+/**
+ * @brief Deinitializes main window.
+ */
+MainFrame::~MainFrame()
+{
+    // save main window size and position
+    wxConfigBase *cfg = wxConfigBase::Get();
+    int x,y,width,height;
+    bool maximized = IsMaximized();
+    Hide(); Maximize(false);
+    GetPosition(&x,&y);
+    GetClientSize(&width,&height);
+    cfg->Write(wxT("/MainFrame/x"),(long)x);
+    cfg->Write(wxT("/MainFrame/y"),(long)y);
+    cfg->Write(wxT("/MainFrame/width"),(long)width);
+    cfg->Write(wxT("/MainFrame/height"),(long)height);
+    cfg->Write(wxT("/MainFrame/maximized"),(long)maximized);
 }
 
 // =======================================================================
@@ -355,7 +390,7 @@ void MainFrame::OnWhenDoneShutdown(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 {
-    Close( true );
+    Close(true);
 }
 
 // report menu handlers
