@@ -253,7 +253,7 @@ MainFrame::MainFrame()
     int y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
     int width = (int)cfg->Read(wxT("/MainFrame/width"),640);
     int height = (int)cfg->Read(wxT("/MainFrame/height"),480);
-    SetClientSize(width,height);
+    SetSize(width,height);
     if(!saved){
         CenterOnScreen();
         GetPosition(&x,&y);
@@ -303,7 +303,7 @@ MainFrame::~MainFrame()
     bool maximized = IsMaximized();
     Hide(); Maximize(false);
     GetPosition(&x,&y);
-    GetClientSize(&width,&height);
+    GetSize(&width,&height);
     cfg->Write(wxT("/MainFrame/x"),(long)x);
     cfg->Write(wxT("/MainFrame/y"),(long)y);
     cfg->Write(wxT("/MainFrame/width"),(long)width);
