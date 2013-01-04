@@ -40,6 +40,7 @@
 #include <wx/hyperlink.h>
 #include <wx/toolbar.h>
 #include <wx/display.h>
+#include <wx/sysopt.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
