@@ -21,14 +21,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <powrprof.h>
 
 #define WgxTraceHandler udefrag_dbg_print
 #include "../dll/wgx/wgx.h"
 
 #include "../dll/udefrag/udefrag.h"
-
-typedef BOOLEAN (WINAPI *SET_SUSPEND_STATE_PROC)(BOOLEAN Hibernate,
-        BOOLEAN ForceCritical,BOOLEAN DisableWakeEvent);
 
 static void show_help(void)
 {
@@ -105,11 +103,9 @@ static void handle_error(char *msg)
 
 int __cdecl main(int argc, char **argv)
 {
-    int result, i, now = 0;
+    int i, now = 0;
     HANDLE hToken; 
     TOKEN_PRIVILEGES tkp;
-    HMODULE hPowrProfDll;
-    SET_SUSPEND_STATE_PROC pSetSuspendState = NULL;
 
     for(i = 0; i < argc; i++){
         if(!strcmp(argv[i],"now")) now = 1;
@@ -155,23 +151,8 @@ int __cdecl main(int argc, char **argv)
     * http://msdn.microsoft.com/en-us/library/aa373206%28VS.85%29.aspx
     * On the other hand, it is missing on NT4.
     */
-    hPowrProfDll = LoadLibrary("powrprof.dll");
-    if(hPowrProfDll == NULL){
-        letrace("cannot load powrprof.dll");
-    } else {
-        pSetSuspendState = (SET_SUSPEND_STATE_PROC)GetProcAddress(hPowrProfDll,"SetSuspendState");
-        if(pSetSuspendState == NULL)
-            letrace("cannot get SetSuspendState address inside powrprof.dll");
-    }
-
     /* hibernate, request permission from apps and drivers */
-    if(pSetSuspendState){
-        result = pSetSuspendState(TRUE,FALSE,FALSE);
-    } else {
-        /* the second parameter must be FALSE, dmitriar's windows xp hangs otherwise */
-        result = SetSystemPowerState(FALSE,FALSE);
-    }
-    if(!result){
+    if(!SetSuspendState(TRUE,FALSE,FALSE)){
         handle_error("Cannot hibernate the computer");
         udefrag_unload_library();
         return EXIT_FAILURE;

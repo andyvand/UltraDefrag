@@ -9,9 +9,11 @@ during the Windows boot process.
 Also one of the primary goals of the UltraDefrag design
 is doing the job as fast and reliable as possible.
 
-UltraDefrag is fully compatible with Windows NT 4.0, Windows 2000,
-Windows XP, Windows Server 2003, Windows Vista, Windows Server 2008,
-Windows 7 and all of the 64-bit editions of Windows.
+UltraDefrag is fully compatible with Windows XP, Windows Server 2003,
+Windows Vista, Windows Server 2008, Windows 7 and all of the 64-bit
+editions of Windows.
+
+For Windows NT 4.0 and Windows 2000 UltraDefrag v6 is available.
 
 You must have administrative rights to install and use UltraDefrag.
 
