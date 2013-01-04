@@ -36,35 +36,27 @@
 
 #include "main.h"
 
-typedef struct _Lang {
-    wxString Name;
-    int Id;
-} Lang;
-
-Lang Languages[] = {
-    {wxT("German"), wxLANGUAGE_GERMAN},
-    {wxEmptyString, 0}
-};
-
 // =======================================================================
 //                         Internationalization
 // =======================================================================
 
 void MainFrame::SetLocale()
 {
-    m_Locale = new wxLocale();
-    wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
-        wxT("lang.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
-    cfg->SetRecordDefaults(true);
-    wxString lang = cfg->Read(wxT("/Language/Selected"),wxT("English (US)"));
-    delete cfg;
     int id = wxLANGUAGE_ENGLISH_US;
-    for(int i = 0; !Languages[i].Name.IsEmpty(); i++){
-        if(lang.CmpNoCase(Languages[i].Name) == 0){
-            id = Languages[i].Id;
-            break;
-        }
+    m_Locale = new wxLocale();
+    wxConfigBase *cfg = wxConfigBase::Get();
+
+    if(cfg->HasGroup(wxT("Language"))){
+        id = (int)cfg->Read(wxT("/Language/Selected"),id);
+    }else{
+        id = m_Locale->GetSystemLanguage();
+
+        if(id == wxLANGUAGE_UNKNOWN)
+            id = wxLANGUAGE_ENGLISH_US;
     }
+    if(!m_Locale->IsAvailable(id))
+        id = wxLANGUAGE_ENGLISH_US;
+
     m_Locale->Init(id,wxLOCALE_CONV_ENCODING);
     m_Locale->AddCatalogLookupPathPrefix(wxT("i18n"));
     m_Locale->AddCatalog(wxT("UltraDefrag"));
