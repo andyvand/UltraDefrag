@@ -24,6 +24,13 @@
 #ifndef _CMD_UDEFRAG_H_
 #define _CMD_UDEFRAG_H_
 
+/*
+* To include GetLongPathName definition on mingw the
+* _WIN32_WINNT constant must be set at least to 0x500.
+*/
+#if defined(__GNUC__)
+#define _WIN32_WINNT 0x500
+#endif
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
