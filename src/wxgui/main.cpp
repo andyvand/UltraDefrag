@@ -202,15 +202,9 @@ bool App::OnInit()
     // initialize logging
     m_Log = new Log();
     
-    // use global config object
-    // for internal settings
+    // use global config object for internal settings
     wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
         wxT("gui.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
-    if(!cfg){
-        ::wxLogShowError(wxT("Configuration failed!"));
-        Cleanup();
-        return false;
-    }
     wxConfigBase::Set(cfg);
     
     // keep things DPI-aware
@@ -220,17 +214,8 @@ bool App::OnInit()
         ::ReleaseDC(NULL,hdc);
     }
 
-    // i18n support
-    m_locale.Init(wxLANGUAGE_GERMAN, wxLOCALE_CONV_ENCODING);
-    wxLocale::AddCatalogLookupPathPrefix(wxT("."));
-    m_locale.AddCatalog(wxT("UltraDefrag"));
-
     // create main window
-    g_MainFrame = new MainFrame(m_locale);
-    if(!g_MainFrame){
-        Cleanup();
-        return false;
-    }
+    g_MainFrame = new MainFrame();
     g_MainFrame->Show(true);
     SetTopWindow(g_MainFrame);
     return true;
@@ -267,8 +252,8 @@ int App::OnExit()
 /**
  * @brief Initializes main window.
  */
-MainFrame::MainFrame(wxLocale& locale)
-    :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag")),m_locale(locale)
+MainFrame::MainFrame()
+    :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
     // set main window icon
     SetIcons(wxICON(appicon));
@@ -328,6 +313,12 @@ MainFrame::MainFrame(wxLocale& locale)
         Maximize(true);
     }
 
+    // i18n support
+    m_Locale = new wxLocale();
+    m_Locale->Init(wxLANGUAGE_GERMAN, wxLOCALE_CONV_ENCODING);
+    m_Locale->AddCatalogLookupPathPrefix(wxT("i18n"));
+    m_Locale->AddCatalog(wxT("UltraDefrag"));
+
     // create menu
     InitMenu();
 
@@ -353,6 +344,7 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
     
     // free resources
+    delete m_Locale;
     delete m_Title;
 }
 

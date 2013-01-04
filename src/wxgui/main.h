@@ -90,14 +90,11 @@ public:
 private:
     void Cleanup();
     Log *m_Log;
-
-protected:
-    wxLocale m_locale; // locale we'll be using
 };
 
 class MainFrame: public wxFrame {
 public:
-    MainFrame(wxLocale& m_locale);
+    MainFrame();
     ~MainFrame();
 
     // file menu handlers
@@ -159,8 +156,6 @@ public:
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
-    wxLocale& m_locale;
-
 private:
     void InitToolbar();
     void InitMenu();
@@ -172,7 +167,8 @@ private:
     
     wxString *m_Title;
     wxToolBar *m_ToolBar;
-    
+    wxLocale *m_Locale;
+
     DECLARE_EVENT_TABLE()
 };
 
