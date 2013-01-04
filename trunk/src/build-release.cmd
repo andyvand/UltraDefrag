@@ -30,15 +30,12 @@ mkdir release
 call build-src-package.cmd || goto build_failed
 copy .\src_package\ultradefrag-%UDVERSION_SUFFIX%.src.7z .\release\
 
-:: build all 32-bit packages
-call build.cmd --all --use-mingw || goto build_failed
+:: build all binaries
+call build.cmd --all --use-winsdk || goto build_failed
 copy .\bin\ultradefrag-%UDVERSION_SUFFIX%.bin.i386.exe .\release\
-copy .\bin\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.i386.zip .\release\
-
-:: build all 64-bit packages
-call build.cmd --all --use-winsdk --no-x86 || goto build_failed
 copy .\bin\amd64\ultradefrag-%UDVERSION_SUFFIX%.bin.amd64.exe .\release\
 copy .\bin\ia64\ultradefrag-%UDVERSION_SUFFIX%.bin.ia64.exe .\release\
+copy .\bin\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.i386.zip .\release\
 copy .\bin\amd64\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.amd64.zip .\release\
 copy .\bin\ia64\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.ia64.zip .\release\
 
