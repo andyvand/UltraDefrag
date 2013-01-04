@@ -47,7 +47,7 @@
  */
 void MainFrame::InitToolbar()
 {
-    wxToolBar *toolBar = CreateToolBar();
+    wxToolBar *toolBar = CreateToolBar(wxNO_BORDER | wxTB_HORIZONTAL | wxTB_FLAT);
 
     wxBitmap toolbarImage = wxBITMAP(toolbar16);
     wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
