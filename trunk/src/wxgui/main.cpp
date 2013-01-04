@@ -339,7 +339,9 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/width"),(long)m_width);
     cfg->Write(wxT("/MainFrame/height"),(long)m_height);
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
-    
+
+    cfg->Write(wxT("/Language/Selected"),(long)m_Locale->GetLanguage());
+
     // free resources
     delete m_Locale;
     delete m_Title;
