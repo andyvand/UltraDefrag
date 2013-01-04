@@ -63,8 +63,7 @@ void MainFrame::InitToolbar()
 
     wxBitmap toolBarBitmaps[TOOLBAR_IMAGE_COUNT];
 
-    int i;
-    for(i=0; i < TOOLBAR_IMAGE_COUNT; i++)
+    for(int i = 0; i < TOOLBAR_IMAGE_COUNT; i++)
         toolBarBitmaps[i] = toolbarImage.GetSubBitmap(wxRect(bmHeight*i,0,bmHeight,bmHeight));
 
     m_ToolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));

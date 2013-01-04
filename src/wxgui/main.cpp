@@ -366,12 +366,14 @@ void MainFrame::OnMove(wxMoveEvent& event)
         GetPosition(&m_x,&m_y);
         GetSize(&m_width,&m_height);
     }
+    event.Skip();
 }
 
 void MainFrame::OnSize(wxSizeEvent& event)
 {
     if(!IsMaximized() && !IsIconized())
         GetSize(&m_width,&m_height);
+    event.Skip();
 }
 
 // =======================================================================
