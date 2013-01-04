@@ -314,10 +314,7 @@ MainFrame::MainFrame()
     }
 
     // i18n support
-    m_Locale = new wxLocale();
-    m_Locale->Init(wxLANGUAGE_GERMAN, wxLOCALE_CONV_ENCODING);
-    m_Locale->AddCatalogLookupPathPrefix(wxT("i18n"));
-    m_Locale->AddCatalog(wxT("UltraDefrag"));
+    SetLocale();
 
     // create menu
     InitMenu();

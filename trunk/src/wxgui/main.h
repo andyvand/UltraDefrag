@@ -157,6 +157,7 @@ public:
     void OnSize(wxSizeEvent& event);
 
 private:
+    void SetLocale();
     void InitToolbar();
     void InitMenu();
     
