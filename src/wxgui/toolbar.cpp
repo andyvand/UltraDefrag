@@ -63,25 +63,32 @@ void MainFrame::InitToolbar()
 
     m_ToolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
 
-    m_ToolBar->AddTool(ID_Analyze,   wxT("Analyze"),   toolBarBitmaps[0], _("Analyze"),                  wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_Repeat,    wxT("Repeat"),    toolBarBitmaps[1], _("Repeat"),                   wxITEM_CHECK);
-    m_ToolBar->AddTool(ID_Defrag,    wxT("Defrag"),    toolBarBitmaps[3], _("Defragment"),               wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_QuickOpt,  wxT("QuickOpt"),  toolBarBitmaps[4], _("Quick Optimize"),           wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_FullOpt,   wxT("FullOpt"),   toolBarBitmaps[5], _("Full Optimize"),            wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_MftOpt,    wxT("MftOpt"),    toolBarBitmaps[6], _("Optimize MFT"),             wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_Pause,     wxT("Pause"),     toolBarBitmaps[7], _("Pause"),                    wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_Stop,      wxT("Stop"),      toolBarBitmaps[8], _("Stop"),                     wxITEM_NORMAL);
+    m_ToolBar->AddTool(ID_Analyze,   toolBarBitmaps[0], _("Analyze"));
+    m_ToolBar->AddCheckTool(ID_Repeat,wxEmptyString,toolBarBitmaps[1],wxNullBitmap /*toolBarBitmaps[2]*/,_("Repeat"));
+    m_ToolBar->AddTool(ID_Defrag,    toolBarBitmaps[3], _("Defragment"));
+    m_ToolBar->AddTool(ID_QuickOpt,  toolBarBitmaps[4], _("Quick Optimize"));
+    m_ToolBar->AddTool(ID_FullOpt,   toolBarBitmaps[5], _("Full Optimize"));
+    m_ToolBar->AddTool(ID_MftOpt,    toolBarBitmaps[6], _("Optimize MFT"));
+    m_ToolBar->AddTool(ID_Pause,     toolBarBitmaps[7], _("Pause"));
+    m_ToolBar->AddTool(ID_Stop,      toolBarBitmaps[8], _("Stop"));
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_ShowReport,wxT("ShowReport"),toolBarBitmaps[9], _("Show Fragmentation Report"),wxITEM_NORMAL);
+    m_ToolBar->AddTool(ID_ShowReport,toolBarBitmaps[9], _("Show Fragmentation Report"));
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_GuiOptions,wxT("GuiOptions"),toolBarBitmaps[10],_("Edit GUI Settings"),        wxITEM_NORMAL);
+    m_ToolBar->AddTool(ID_GuiOptions,toolBarBitmaps[10],_("Edit GUI Settings"));
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_BootEnable,wxT("BootEnable"),toolBarBitmaps[11],_("Enable Boot"),              wxITEM_NORMAL);
-    m_ToolBar->AddTool(ID_BootScript,wxT("BootScript"),toolBarBitmaps[12],_("Edit Boot Script"),         wxITEM_NORMAL);
+    m_ToolBar->AddTool(ID_BootEnable,toolBarBitmaps[11],_("Enable Boot"));
+    m_ToolBar->AddTool(ID_BootScript,toolBarBitmaps[12],_("Edit Boot Script"));
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_HelpAbout, wxT("HelpAbout"), toolBarBitmaps[13],_("About"),                    wxITEM_NORMAL);
+    m_ToolBar->AddTool(ID_HelpAbout, toolBarBitmaps[13],_("About"));
 
     m_ToolBar->Realize();
+    
+    // initial settings (must be after realize)
+    m_ToolBar->ToggleTool(ID_Repeat,true);
+    m_ToolBar->EnableTool(ID_Repeat,false);
+    m_ToolBar->EnableTool(ID_BootEnable,false);
+    m_ToolBar->EnableTool(ID_BootScript,false);
+    
 }
 
 /** @} */
