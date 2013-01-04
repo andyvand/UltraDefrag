@@ -236,6 +236,9 @@ bool App::OnInit()
  */
 void App::Cleanup()
 {
+    // save internal settings
+    delete wxConfigBase::Set(NULL);
+
     // deinitialize logging
     delete m_Log;
 
@@ -293,8 +296,23 @@ MainFrame::MainFrame()
     bool saved = cfg->HasGroup(wxT("MainFrame"));
     m_x = (int)cfg->Read(wxT("/MainFrame/x"),0l);
     m_y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
-    m_width = (int)cfg->Read(wxT("/MainFrame/width"),DPI(640));
-    m_height = (int)cfg->Read(wxT("/MainFrame/height"),DPI(480));
+    m_width = (int)cfg->Read(wxT("/MainFrame/width"),
+        DPI(MAIN_WINDOW_DEFAULT_WIDTH));
+    m_height = (int)cfg->Read(wxT("/MainFrame/height"),
+        DPI(MAIN_WINDOW_DEFAULT_HEIGHT));
+    // validate width and height
+    wxDisplay display;
+    if(m_width < 0 || m_width > display.GetClientArea().width)
+        m_width = DPI(MAIN_WINDOW_DEFAULT_WIDTH);
+    if(m_height < 0 || m_height > display.GetClientArea().height)
+        m_height = DPI(MAIN_WINDOW_DEFAULT_HEIGHT);
+    // validate x and y
+    if(m_x < 0) m_x = 0; if(m_y < 0) m_y = 0;
+    if(m_x > display.GetClientArea().width - 130)
+        m_x = display.GetClientArea().width - 130;
+    if(m_y > display.GetClientArea().height - 50)
+        m_y = display.GetClientArea().height - 50;
+    // now the window is surely inside of the screen
     SetSize(m_width,m_height);
     if(!saved){
         CenterOnScreen();

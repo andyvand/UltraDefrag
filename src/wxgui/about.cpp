@@ -71,8 +71,12 @@ AboutDialog::AboutDialog()
     text->AddSpacer(5);
     text->Add(homepage,wxSizerFlags().Centre().Border());
 
+    wxDisplay display;
+    wxStaticBitmap *bmp = new wxStaticBitmap(this,wxID_ANY,
+        display.GetCurrentMode().GetDepth() > 8 ? \
+        wxBITMAP(ship) : wxBITMAP(ship_8bit));
+
     wxSizer *contents = new wxBoxSizer(wxHORIZONTAL);
-    wxStaticBitmap *bmp = new wxStaticBitmap(this,wxID_ANY,wxBITMAP(ship));
     contents->Add(bmp,wxSizerFlags().Border());
     contents->Add(text,wxSizerFlags(1).Expand());
     SetSizerAndFit(contents);

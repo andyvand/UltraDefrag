@@ -39,6 +39,7 @@
 #include <wx/filename.h>
 #include <wx/hyperlink.h>
 #include <wx/toolbar.h>
+#include <wx/display.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -232,6 +233,9 @@ enum {
     ID_HelpUpdate,
     ID_HelpAbout
 };
+
+#define MAIN_WINDOW_DEFAULT_WIDTH  640
+#define MAIN_WINDOW_DEFAULT_HEIGHT 480
 
 // =======================================================================
 //                           Global variables
