@@ -12,14 +12,11 @@
 /**
  * @page Compilation Compilation
  *
- * UltraDefrag libraries written in C use the variadic macros feature defined in the C99 standard.
- * Because the compiled binaries must be compatible with all the Windows editions starting with NT 4.0
- * a combination of two compilers is needed to build UltraDefrag: 
- * <a href="http://sourceforge.net/projects/tdm-gcc/">MinGW</a> is used to build 32-bit binaries, 
- * <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11310">Windows SDK v6.1</a> is
- * used for 64-bit binaries production.
+ * UltraDefrag uses <a href="http://www.microsoft.com/en-us/download/details.aspx?id=11310">Windows SDK v6.1</a>
+ * to build binaries for all the supported processor architectures. To build 32-bit binaries 
+ * <a href="http://sourceforge.net/projects/tdm-gcc/">MinGW</a> can also be used.
  *
- * Both MinGW and Windows SDK need to be patched to be able to compile UltraDefrag.
+ * Both MinGW and Windows SDK need to be patched to be able to build UltraDefrag.
  * Type <b>build --help</b> (see below) for details.
  *
  * You can download the <a href="http://koti.mbnet.fi/vaultec/mingwstudio.php">MinGW Developer Studio</a>,

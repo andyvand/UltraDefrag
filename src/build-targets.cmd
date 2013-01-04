@@ -25,9 +25,9 @@ rem Usage:
 rem     build-targets [<compiler>]
 rem
 rem Available <compiler> values:
-rem     --use-mingw (default)
-rem     --use-winsdk
-rem     --use-mingw-x64 (experimental)
+rem     --use-mingw     (default)
+rem     --use-winsdk    (we use it for official releases)
+rem     --use-mingw-x64 (experimental, produces wrong x64 code)
 rem
 rem Skip any processor architecture to reduce compile time
 rem     --no-x86

@@ -205,7 +205,7 @@ rem Displays usage information.
     echo.
     echo Compiler:
     echo --use-mingw     (default)
-    echo --use-winsdk    (we use it for official 64-bit releases)
+    echo --use-winsdk    (we use it for official releases)
     echo --use-mingw-x64 (experimental, produces wrong x64 code)
     echo.
     echo Target architecture (must always be after compiler):
