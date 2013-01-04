@@ -47,12 +47,6 @@
  */
 void MainFrame::InitToolbar()
 {
-    // suppress repainting in system colors
-    int majorVersion, minorVersion;
-    wxGetOsVersion(& majorVersion, & minorVersion);
-    if (majorVersion < 5)
-        wxSystemOptions::SetOption(wxT("msw.remap"), 0);
-
     m_ToolBar = CreateToolBar();
 
     wxBitmap toolbarImage = wxBITMAP(toolbar16);
