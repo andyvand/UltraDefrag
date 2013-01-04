@@ -47,7 +47,13 @@
  */
 void MainFrame::InitToolbar()
 {
-    m_ToolBar = CreateToolBar(wxNO_BORDER | wxTB_HORIZONTAL | wxTB_FLAT);
+    // suppress repainting in system colors
+    int majorVersion, minorVersion;
+    wxGetOsVersion(& majorVersion, & minorVersion);
+    if (majorVersion < 5)
+        wxSystemOptions::SetOption(wxT("msw.remap"), 0);
+
+    m_ToolBar = CreateToolBar();
 
     wxBitmap toolbarImage = wxBITMAP(toolbar16);
     wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
