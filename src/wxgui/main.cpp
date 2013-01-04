@@ -220,8 +220,13 @@ bool App::OnInit()
         ::ReleaseDC(NULL,hdc);
     }
 
+    // i18n support
+    m_locale.Init(wxLANGUAGE_GERMAN, wxLOCALE_CONV_ENCODING);
+    wxLocale::AddCatalogLookupPathPrefix(wxT("."));
+    m_locale.AddCatalog(wxT("UltraDefrag"));
+
     // create main window
-    g_MainFrame = new MainFrame();
+    g_MainFrame = new MainFrame(m_locale);
     if(!g_MainFrame){
         Cleanup();
         return false;
@@ -262,8 +267,8 @@ int App::OnExit()
 /**
  * @brief Initializes main window.
  */
-MainFrame::MainFrame()
-    :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
+MainFrame::MainFrame(wxLocale& locale)
+    :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag")),m_locale(locale)
 {
     // set main window icon
     SetIcons(wxICON(appicon));

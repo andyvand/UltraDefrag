@@ -34,13 +34,14 @@
 #endif
 
 #include <wx/confbase.h>
+#include <wx/display.h>
 #include <wx/fileconf.h>
-#include <wx/stdpaths.h>
 #include <wx/filename.h>
 #include <wx/hyperlink.h>
-#include <wx/toolbar.h>
-#include <wx/display.h>
+#include <wx/intl.h>
+#include <wx/stdpaths.h>
 #include <wx/sysopt.h>
+#include <wx/toolbar.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -89,11 +90,14 @@ public:
 private:
     void Cleanup();
     Log *m_Log;
+
+protected:
+    wxLocale m_locale; // locale we'll be using
 };
 
 class MainFrame: public wxFrame {
 public:
-    MainFrame();
+    MainFrame(wxLocale& m_locale);
     ~MainFrame();
 
     // file menu handlers
@@ -154,6 +158,8 @@ public:
     // event handlers
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
+
+    wxLocale& m_locale;
 
 private:
     void InitToolbar();
