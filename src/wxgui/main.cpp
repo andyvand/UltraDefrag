@@ -326,8 +326,11 @@ MainFrame::MainFrame()
     // create menu
     InitMenu();
 
-    // create tool bar
-    InitToolbar();
+    // create tool bar (Windows 2000 and above)
+    int majorVersion, minorVersion;
+    wxGetOsVersion(& majorVersion, & minorVersion);
+    if (majorVersion >= 5)
+        InitToolbar();
 
     // create status bar
     CreateStatusBar();
