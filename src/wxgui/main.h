@@ -164,6 +164,7 @@ private:
     int m_height;
     
     wxString *m_Title;
+    wxToolBar *m_ToolBar;
     
     DECLARE_EVENT_TABLE()
 };
