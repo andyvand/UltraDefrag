@@ -40,12 +40,47 @@
 //                         Internationalization
 // =======================================================================
 
+// macros to add missing languages copied from wxWidgets sources
+#if !defined(__WIN32__) || defined(__WXMICROWIN__)
+#define SETWINLANG(info,lang,sublang)
+#else
+#define SETWINLANG(info,lang,sublang) \
+    info.WinLang = lang, info.WinSublang = sublang;
+#endif // __WIN32__
+
+#define LNG(wxlang, canonical, winlang, winsublang, layout, desc) \
+    info.Language = wxlang;                               \
+    info.CanonicalName = wxT(canonical);                  \
+    info.LayoutDirection = layout;                        \
+    info.Description = wxT(desc);                         \
+    SETWINLANG(info, winlang, winsublang)                 \
+    m_Locale->AddLanguage(info);
+
+// user defined language IDs
+#define wxUD_LANGUAGE_BOSNIAN_LATIN     wxLANGUAGE_USER_DEFINED+1
+#define wxUD_LANGUAGE_BURMESE_PADAUK    wxLANGUAGE_USER_DEFINED+2
+#define wxUD_LANGUAGE_ILOKO             wxLANGUAGE_USER_DEFINED+3
+#define wxUD_LANGUAGE_INDONESIAN_BAHASA wxLANGUAGE_USER_DEFINED+4
+#define wxUD_LANGUAGE_KAPAMPANGAN       wxLANGUAGE_USER_DEFINED+5
+#define wxUD_LANGUAGE_WARAY_WARAY       wxLANGUAGE_USER_DEFINED+6
+
 void MainFrame::SetLocale()
 {
     int id = wxLANGUAGE_ENGLISH_US;
+    wxLanguageInfo info;
+    
     m_Locale = new wxLocale();
     wxConfigBase *cfg = wxConfigBase::Get();
 
+    // add languages missing from wxWidgets
+   LNG(wxUD_LANGUAGE_BOSNIAN_LATIN,     "bs"   , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
+   LNG(wxUD_LANGUAGE_BURMESE_PADAUK,    "my_PA", 0              , 0              , wxLayout_LeftToRight, "Burmese (Padauk)")
+   LNG(wxUD_LANGUAGE_ILOKO,             "il_PH", 0              , 0              , wxLayout_LeftToRight, "Iloko")
+   LNG(wxUD_LANGUAGE_INDONESIAN_BAHASA, "id_BI", LANG_INDONESIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Indonesian (Bahasa Indonesia)")
+   LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pa_PH", 0              , 0              , wxLayout_LeftToRight, "Kapampangan")
+   LNG(wxUD_LANGUAGE_WARAY_WARAY,       "wa_PH", 0              , 0              , wxLayout_LeftToRight, "Waray-Waray")
+
+    // get initial language selection
     if(cfg->HasGroup(wxT("Language"))){
         id = (int)cfg->Read(wxT("/Language/Selected"),id);
     }else{
@@ -57,9 +92,12 @@ void MainFrame::SetLocale()
     if(!m_Locale->IsAvailable(id))
         id = wxLANGUAGE_ENGLISH_US;
 
+    // apply language selection
     m_Locale->Init(id,wxLOCALE_CONV_ENCODING);
     m_Locale->AddCatalogLookupPathPrefix(wxT("i18n"));
     m_Locale->AddCatalog(wxT("UltraDefrag"));
 }
+
+#undef LNG
 
 /** @} */
