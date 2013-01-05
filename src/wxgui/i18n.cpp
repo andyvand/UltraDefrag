@@ -40,20 +40,13 @@
 //                         Internationalization
 // =======================================================================
 
-// macros to add missing languages copied from wxWidgets sources
-#if !defined(__WIN32__) || defined(__WXMICROWIN__)
-#define SETWINLANG(info,lang,sublang)
-#else
-#define SETWINLANG(info,lang,sublang) \
-    info.WinLang = lang, info.WinSublang = sublang;
-#endif // __WIN32__
-
-#define LNG(wxlang, canonical, winlang, winsublang, layout, desc) \
+// macro to add missing languages copied from wxWidgets sources
+#define UD_LNG(wxlang, canonical, winlang, winsublang, layout, desc) \
     info.Language = wxlang;                               \
     info.CanonicalName = wxT(canonical);                  \
     info.LayoutDirection = layout;                        \
     info.Description = wxT(desc);                         \
-    SETWINLANG(info, winlang, winsublang)                 \
+    info.WinLang = winlang, info.WinSublang = winsublang; \
     m_Locale->AddLanguage(info);
 
 // user defined language IDs
@@ -73,12 +66,12 @@ void MainFrame::SetLocale()
     wxConfigBase *cfg = wxConfigBase::Get();
 
     // add languages missing from wxWidgets
-   LNG(wxUD_LANGUAGE_BOSNIAN_LATIN,     "bs"   , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
-   LNG(wxUD_LANGUAGE_BURMESE_PADAUK,    "my_PA", 0              , 0              , wxLayout_LeftToRight, "Burmese (Padauk)")
-   LNG(wxUD_LANGUAGE_ILOKO,             "il_PH", 0              , 0              , wxLayout_LeftToRight, "Iloko")
-   LNG(wxUD_LANGUAGE_INDONESIAN_BAHASA, "id_BI", LANG_INDONESIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Indonesian (Bahasa Indonesia)")
-   LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pa_PH", 0              , 0              , wxLayout_LeftToRight, "Kapampangan")
-   LNG(wxUD_LANGUAGE_WARAY_WARAY,       "wa_PH", 0              , 0              , wxLayout_LeftToRight, "Waray-Waray")
+   UD_LNG(wxUD_LANGUAGE_BOSNIAN_LATIN,     "bs"   , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
+   UD_LNG(wxUD_LANGUAGE_BURMESE_PADAUK,    "my_PA", 0              , 0              , wxLayout_LeftToRight, "Burmese (Padauk)")
+   UD_LNG(wxUD_LANGUAGE_ILOKO,             "il_PH", 0              , 0              , wxLayout_LeftToRight, "Iloko")
+   UD_LNG(wxUD_LANGUAGE_INDONESIAN_BAHASA, "id_BI", LANG_INDONESIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Indonesian (Bahasa Indonesia)")
+   UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pa_PH", 0              , 0              , wxLayout_LeftToRight, "Kapampangan")
+   UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "wa_PH", 0              , 0              , wxLayout_LeftToRight, "Waray-Waray")
 
     // get initial language selection
     if(cfg->HasGroup(wxT("Language"))){
@@ -98,6 +91,6 @@ void MainFrame::SetLocale()
     m_Locale->AddCatalog(wxT("UltraDefrag"));
 }
 
-#undef LNG
+#undef UD_LNG
 
 /** @} */
