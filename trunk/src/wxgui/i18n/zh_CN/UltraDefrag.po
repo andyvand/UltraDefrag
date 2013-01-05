@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 00:08+0100\n"
+"POT-Creation-Date: 2013-01-05 23:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,110 +16,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: about.cpp:46
+#: .\about.cpp:46
 msgid "About UltraDefrag"
 msgstr ""
 
-#: about.cpp:57
+#: .\about.cpp:57
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:59
+#: .\about.cpp:59
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:62
+#: .\about.cpp:62
 msgid "UltraDefrag website"
 msgstr ""
 
-#: menu.cpp:50
-msgid "&Analyze\tF5"
+#: .\menu.cpp:59
+msgid "&Analyze"
 msgstr ""
 
-#: menu.cpp:52
-msgid "Re&peat action\tShift+R"
+#: .\menu.cpp:60
+msgid "&Defragment"
 msgstr ""
 
-#: menu.cpp:53
-msgid "E&xit\tAlt+F4"
+#: .\menu.cpp:61
+msgid "&Quick optimization"
 msgstr ""
 
-#: menu.cpp:56
-msgid "&Show report\tF8"
+#: .\menu.cpp:62
+msgid "&Full optimization"
 msgstr ""
 
-#: menu.cpp:59
-msgid "&Reports\tCtrl+R"
+#: .\menu.cpp:63
+msgid "&Optimize MFT"
 msgstr ""
 
-#: menu.cpp:62
-msgid "&About\tF4"
+#: .\menu.cpp:64
+msgid "&Pause"
 msgstr ""
 
-#: menu.cpp:65
+#: .\menu.cpp:65
+msgid "&Stop"
+msgstr ""
+
+#: .\menu.cpp:67
+msgid "Re&peat action"
+msgstr ""
+
+#: .\menu.cpp:68
+msgid "E&xit"
+msgstr ""
+
+#: .\menu.cpp:72
+msgid "&Show report"
+msgstr ""
+
+#: .\menu.cpp:76
+msgid "&Edit GUI options"
+msgstr ""
+
+#: .\menu.cpp:77
+msgid "Enable &boot time scan"
+msgstr ""
+
+#: .\menu.cpp:78
+msgid "Edit boot time &script"
+msgstr ""
+
+#: .\menu.cpp:79
+msgid "&Reports"
+msgstr ""
+
+#: .\menu.cpp:83
+msgid "&About"
+msgstr ""
+
+#: .\menu.cpp:87
 msgid "&Action"
 msgstr ""
 
-#: menu.cpp:66
+#: .\menu.cpp:88
 msgid "&Report"
 msgstr ""
 
-#: menu.cpp:67
+#: .\menu.cpp:89
 msgid "&Settings"
 msgstr ""
 
-#: menu.cpp:68
+#: .\menu.cpp:90
 msgid "&Help"
-msgstr ""
-
-#: toolbar.cpp:66
-msgid "Analyze"
-msgstr ""
-
-#: toolbar.cpp:67
-msgid "Repeat"
-msgstr ""
-
-#: toolbar.cpp:68
-msgid "Defragment"
-msgstr ""
-
-#: toolbar.cpp:69
-msgid "Quick Optimize"
-msgstr ""
-
-#: toolbar.cpp:70
-msgid "Full Optimize"
-msgstr ""
-
-#: toolbar.cpp:71
-msgid "Optimize MFT"
-msgstr ""
-
-#: toolbar.cpp:72
-msgid "Pause"
-msgstr ""
-
-#: toolbar.cpp:73
-msgid "Stop"
-msgstr ""
-
-#: toolbar.cpp:75
-msgid "Show Fragmentation Report"
-msgstr ""
-
-#: toolbar.cpp:77
-msgid "Edit GUI Settings"
-msgstr ""
-
-#: toolbar.cpp:79
-msgid "Enable Boot"
-msgstr ""
-
-#: toolbar.cpp:80
-msgid "Edit Boot Script"
-msgstr ""
-
-#: toolbar.cpp:82
-msgid "About"
 msgstr ""
