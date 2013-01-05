@@ -91,7 +91,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_HelpUpdate, MainFrame::OnHelpUpdate)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
-    
+
     // event handlers
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
@@ -201,12 +201,12 @@ bool App::OnInit()
 
     // initialize logging
     m_Log = new Log();
-    
+
     // use global config object for internal settings
     wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
         wxT("gui.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
     wxConfigBase::Set(cfg);
-    
+
     // keep things DPI-aware
     HDC hdc = ::GetDC(NULL);
     if(hdc){
@@ -257,7 +257,7 @@ MainFrame::MainFrame()
 {
     // set main window icon
     SetIcons(wxICON(appicon));
-    
+
     // set main window title
     wxString *instdir = new wxString();
     if(wxGetEnv(wxT("UD_INSTALL_DIR"),instdir)){
