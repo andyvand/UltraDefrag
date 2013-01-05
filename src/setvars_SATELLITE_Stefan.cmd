@@ -10,6 +10,7 @@ set MINGWx64BASE=
 set WXWIDGETSDIR=D:\wxWidgets-2.8.12
 set NSISDIR=C:\Program Files (x86)\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
+set GNUWIN32_DIR=C:\Program Files (x86)\GnuWin32\bin
 
 rem comment out next line to enable warnings to find unreachable code
 goto :EOF
