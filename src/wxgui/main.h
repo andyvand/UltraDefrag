@@ -160,15 +160,16 @@ private:
     void SetLocale();
     void InitToolbar();
     void InitMenu();
-    
+
     int m_x;
     int m_y;
     int m_width;
     int m_height;
-    
-    wxString *m_Title;
+
+    wxString  *m_Title;
     wxToolBar *m_ToolBar;
-    wxLocale *m_Locale;
+    wxLocale  *m_Locale;
+    wxMenuBar *m_menuBar;
 
     DECLARE_EVENT_TABLE()
 };
