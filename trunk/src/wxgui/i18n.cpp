@@ -68,7 +68,7 @@ void MainFrame::SetLocale()
 {
     int id = wxLANGUAGE_ENGLISH_US;
     wxLanguageInfo info;
-    
+
     m_Locale = new wxLocale();
     wxConfigBase *cfg = wxConfigBase::Get();
 

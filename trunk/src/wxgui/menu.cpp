@@ -40,6 +40,13 @@
 //                        Menu for main window
 // =======================================================================
 
+#define MAKEITEMLABEL(label, accel) \
+    ItemLabel->Clear();             \
+    ItemLabel->Append(label);       \
+    ItemLabel->Append(wxT("\t"));   \
+    ItemLabel->Append(wxT(accel));
+
+
 /**
  * @brief Initializes main window.
  */
@@ -47,27 +54,38 @@ void MainFrame::InitMenu()
 {
     // create menu
     wxMenu *menuAction = new wxMenu;
-    menuAction->Append(ID_Analyze,_("&Analyze\tF5"));
+    wxString *ItemLabel = new wxString;
+
+    MAKEITEMLABEL(_("&Analyze"),"F5")
+    menuAction->Append(ID_Analyze,ItemLabel->Trim());
+
     menuAction->AppendSeparator();
-    menuAction->Append(ID_Repeat,_("Re&peat action\tShift+R"));
-    menuAction->Append(ID_Exit,_("E&xit\tAlt+F4"));
+    MAKEITEMLABEL(_("Re&peat action"),"Shift+R")
+    menuAction->Append(ID_Repeat,ItemLabel->Trim());
+    MAKEITEMLABEL(_("E&xit"),"Alt+F4")
+    menuAction->Append(ID_Exit,ItemLabel->Trim());
 
     wxMenu *menuReport = new wxMenu;
-    menuReport->Append(ID_ShowReport,_("&Show report\tF8"));
+    MAKEITEMLABEL(_("&Show report"),"F8")
+    menuReport->Append(ID_ShowReport,ItemLabel->Trim());
 
     wxMenu *menuSettings = new wxMenu;
-    menuSettings->Append(ID_ReportOptions,_("&Reports\tCtrl+R"));
+    MAKEITEMLABEL(_("&Reports"),"Ctrl+R")
+    menuSettings->Append(ID_ReportOptions,ItemLabel->Trim());
 
     wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(ID_HelpAbout,_("&About\tF4"));
+    MAKEITEMLABEL(_("&About"),"F4")
+    menuHelp->Append(ID_HelpAbout,ItemLabel->Trim());
 
-    wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append(menuAction,   _("&Action")  );
-    menuBar->Append(menuReport,   _("&Report")  );
-    menuBar->Append(menuSettings, _("&Settings"));
-    menuBar->Append(menuHelp,     _("&Help")    );
+    m_menuBar = new wxMenuBar;
+    m_menuBar->Append(menuAction,   _("&Action")  );
+    m_menuBar->Append(menuReport,   _("&Report")  );
+    m_menuBar->Append(menuSettings, _("&Settings"));
+    m_menuBar->Append(menuHelp,     _("&Help")    );
 
-    SetMenuBar(menuBar);
+    SetMenuBar(m_menuBar);
 }
+
+#undef MAKEITEMLABEL
 
 /** @} */

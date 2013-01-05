@@ -44,13 +44,13 @@ AboutDialog::AboutDialog()
 {
     if(!wxDialog::Create(g_MainFrame,wxID_ANY,
         _("About UltraDefrag"))) return;
-    
+
     wxStaticText *version = new wxStaticText(this,wxID_ANY,wxT(VERSIONINTITLE));
     wxFont fontBig(*wxNORMAL_FONT);
     fontBig.SetPointSize(fontBig.GetPointSize() + 2);
     fontBig.SetWeight(wxFONTWEIGHT_BOLD);
     version->SetFont(fontBig);
-    
+
     wxStaticText *copyright = new wxStaticText(this,wxID_ANY,
         wxT("(C) 2007-2013 UltraDefrag development team"));
     wxStaticText *description = new wxStaticText(this,wxID_ANY,
