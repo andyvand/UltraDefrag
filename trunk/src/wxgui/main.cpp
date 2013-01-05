@@ -319,7 +319,8 @@ MainFrame::MainFrame()
     // create menu
     InitMenu();
 
-    // create tool bar
+    /* create tool bar (must always be after InitMenu,
+       since we mainly use the menu text for the tool tips */
     InitToolbar();
 
     // create status bar
