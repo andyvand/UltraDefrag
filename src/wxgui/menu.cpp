@@ -40,43 +40,49 @@
 //                        Menu for main window
 // =======================================================================
 
-#define MAKEITEMLABEL(label, accel) \
+#define UD_MakeMenuItem(id, label, accel, menu) \
     ItemLabel->Clear();             \
     ItemLabel->Append(label);       \
     ItemLabel->Append(wxT("\t"));   \
-    ItemLabel->Append(wxT(accel));
-
+    ItemLabel->Append(wxT(accel));  \
+    menu->Append(id,ItemLabel->Trim());
 
 /**
  * @brief Initializes main window.
  */
 void MainFrame::InitMenu()
 {
-    // create menu
+    // create action menu
     wxMenu *menuAction = new wxMenu;
     wxString *ItemLabel = new wxString;
 
-    MAKEITEMLABEL(_("&Analyze"),"F5")
-    menuAction->Append(ID_Analyze,ItemLabel->Trim());
-
+    UD_MakeMenuItem(ID_Analyze ,_("&Analyze")           ,"F5"      ,menuAction)
+    UD_MakeMenuItem(ID_Defrag  ,_("&Defragment")        ,"F6"      ,menuAction)
+    UD_MakeMenuItem(ID_QuickOpt,_("&Quick optimization"),"F7"      ,menuAction)
+    UD_MakeMenuItem(ID_FullOpt ,_("&Full optimization") ,"Ctrl+F7" ,menuAction)
+    UD_MakeMenuItem(ID_MftOpt  ,_("&Optimize MFT")      ,"Shift+F7",menuAction)
+    UD_MakeMenuItem(ID_Pause   ,_("&Pause")             ,"Space"   ,menuAction)
+    UD_MakeMenuItem(ID_Stop    ,_("&Stop")              ,"Ctrl+C"  ,menuAction)
     menuAction->AppendSeparator();
-    MAKEITEMLABEL(_("Re&peat action"),"Shift+R")
-    menuAction->Append(ID_Repeat,ItemLabel->Trim());
-    MAKEITEMLABEL(_("E&xit"),"Alt+F4")
-    menuAction->Append(ID_Exit,ItemLabel->Trim());
+    UD_MakeMenuItem(ID_Repeat  ,_("Re&peat action")     ,"Shift+R" ,menuAction)
+    UD_MakeMenuItem(ID_Exit    ,_("E&xit")              ,"Alt+F4"  ,menuAction)
 
+    // create report menu
     wxMenu *menuReport = new wxMenu;
-    MAKEITEMLABEL(_("&Show report"),"F8")
-    menuReport->Append(ID_ShowReport,ItemLabel->Trim());
+    UD_MakeMenuItem(ID_ShowReport,_("&Show report"),"F8",menuReport)
 
+    // create settings menu
     wxMenu *menuSettings = new wxMenu;
-    MAKEITEMLABEL(_("&Reports"),"Ctrl+R")
-    menuSettings->Append(ID_ReportOptions,ItemLabel->Trim());
+    UD_MakeMenuItem(ID_GuiOptions   ,_("&Edit GUI options")     ,"F10"   ,menuSettings)
+    UD_MakeMenuItem(ID_BootEnable   ,_("Enable &boot time scan"),"F11"   ,menuSettings)
+    UD_MakeMenuItem(ID_BootScript   ,_("Edit boot time &script"),"F12"   ,menuSettings)
+    UD_MakeMenuItem(ID_ReportOptions,_("&Reports")              ,"Ctrl+R",menuSettings)
 
+    // create help menu
     wxMenu *menuHelp = new wxMenu;
-    MAKEITEMLABEL(_("&About"),"F4")
-    menuHelp->Append(ID_HelpAbout,ItemLabel->Trim());
+    UD_MakeMenuItem(ID_HelpAbout,_("&About"),"F4",menuHelp)
 
+    // create main menu
     m_menuBar = new wxMenuBar;
     m_menuBar->Append(menuAction,   _("&Action")  );
     m_menuBar->Append(menuReport,   _("&Report")  );
@@ -86,6 +92,6 @@ void MainFrame::InitMenu()
     SetMenuBar(m_menuBar);
 }
 
-#undef MAKEITEMLABEL
+#undef UD_MakeMenuItem
 
 /** @} */

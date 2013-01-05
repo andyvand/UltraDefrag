@@ -42,6 +42,16 @@
 
 #define TOOLBAR_IMAGE_COUNT 14
 
+#define UD_MakeToolItem(id, bmpidx) \
+    ItemLabel->Clear();             \
+    ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
+    m_ToolBar->AddTool(id,toolBarBitmaps[bmpidx],ItemLabel->Trim());
+
+#define UD_MakeToolCheckItem(id, bmpidx) \
+    ItemLabel->Clear();             \
+    ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
+    m_ToolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx],wxNullBitmap,ItemLabel->Trim());
+
 /**
  * @brief Initializes toolbar.
  */
@@ -62,32 +72,37 @@ void MainFrame::InitToolbar()
 
     m_ToolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
 
-    m_ToolBar->AddTool(ID_Analyze,   toolBarBitmaps[0], _("Analyze"));
-    m_ToolBar->AddCheckTool(ID_Repeat,wxEmptyString,toolBarBitmaps[1],wxNullBitmap /*toolBarBitmaps[2]*/,_("Repeat"));
-    m_ToolBar->AddTool(ID_Defrag,    toolBarBitmaps[3], _("Defragment"));
-    m_ToolBar->AddTool(ID_QuickOpt,  toolBarBitmaps[4], _("Quick Optimize"));
-    m_ToolBar->AddTool(ID_FullOpt,   toolBarBitmaps[5], _("Full Optimize"));
-    m_ToolBar->AddTool(ID_MftOpt,    toolBarBitmaps[6], _("Optimize MFT"));
-    m_ToolBar->AddTool(ID_Pause,     toolBarBitmaps[7], _("Pause"));
-    m_ToolBar->AddTool(ID_Stop,      toolBarBitmaps[8], _("Stop"));
+    wxString *ItemLabel = new wxString;
+
+    UD_MakeToolItem(ID_Analyze    ,0)
+    UD_MakeToolCheckItem(ID_Repeat,1)
+    UD_MakeToolItem(ID_Defrag     ,3)
+    UD_MakeToolItem(ID_QuickOpt   ,4)
+    UD_MakeToolItem(ID_FullOpt    ,5)
+    UD_MakeToolItem(ID_MftOpt     ,6)
+    UD_MakeToolItem(ID_Pause      ,7)
+    UD_MakeToolItem(ID_Stop       ,8)
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_ShowReport,toolBarBitmaps[9], _("Show Fragmentation Report"));
+    UD_MakeToolItem(ID_ShowReport ,9)
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_GuiOptions,toolBarBitmaps[10],_("Edit GUI Settings"));
+    UD_MakeToolItem(ID_GuiOptions,10)
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_BootEnable,toolBarBitmaps[11],_("Enable Boot"));
-    m_ToolBar->AddTool(ID_BootScript,toolBarBitmaps[12],_("Edit Boot Script"));
+    UD_MakeToolItem(ID_BootEnable,11)
+    UD_MakeToolItem(ID_BootScript,12)
     m_ToolBar->AddSeparator();
-    m_ToolBar->AddTool(ID_HelpAbout, toolBarBitmaps[13],_("About"));
+    UD_MakeToolItem(ID_HelpAbout ,13)
 
     m_ToolBar->Realize();
-    
+
     // initial settings (must be after realize)
     m_ToolBar->ToggleTool(ID_Repeat,true);
     m_ToolBar->EnableTool(ID_Repeat,false);
     m_ToolBar->EnableTool(ID_BootEnable,false);
     m_ToolBar->EnableTool(ID_BootScript,false);
-    
+
 }
+
+#undef UD_MakeToolItem
+#undef UD_MakeToolCheckItem
 
 /** @} */
