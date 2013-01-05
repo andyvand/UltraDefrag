@@ -1,0 +1,175 @@
+﻿;------------------------------------------------------------------------------
+; UltraDefrag GUI Simplified Chinese Language Pack.
+; Copyright (C) 2008, 2009 muzuiget.
+; Copyright (C) 2010 HPJ.
+; Copyright (C) 2011 Tommy He.
+; Copyright (C) 2012 Elita Alutee.
+;------------------------------------------------------------------------------
+; History --- Date ---------- Full Name
+;------------------------------------------------------------------------------
+; Revised May 23, 2012 by Dandy Cheung
+;------------------------------------------------------------------------------
+
+; Please keep the header and comments in English and use Latin letters,
+; so everyone understands them
+
+; THIS FILE MUST BE SAVED IN **UTF-8** ENCODING
+; Use \n as a newline character in strings.
+; Use an ampersand (&) before a letter to make it a keyboard accelerator
+
+
+; Main Menu
+
+ACTION                    = 操作
+REPORT                    = 报告
+SETTINGS                  = 设置
+HELP                      = 帮助
+
+; --- Action Menu
+
+ANALYSE                   = 分析
+DEFRAGMENT                = 整理
+QUICK_OPTIMIZE            = 快速优化
+FULL_OPTIMIZE             = 全面优化
+OPTIMIZE_MFT              = 优化 MFT
+STOP                      = 停止
+REPEAT_ACTION             = 重复操作
+SKIP_REMOVABLE_MEDIA      = 忽略移动磁盘
+RESCAN_DRIVES             = 重新扫描
+REPAIR_DRIVES             = 修复磁盘
+WHEN_DONE                 = 整理完成后
+EXIT                      = 退出
+
+; --- --- When done submenu
+
+WHEN_DONE_NONE            = 不做任何操作
+WHEN_DONE_EXIT            = 退出
+WHEN_DONE_STANDBY         = 待机
+WHEN_DONE_HIBERNATE       = 休眠
+WHEN_DONE_LOGOFF          = 注销
+WHEN_DONE_REBOOT          = 重启
+WHEN_DONE_SHUTDOWN        = 关机
+
+; --- Report Menu
+
+SHOW_REPORT               = 显示报告
+
+; --- Settings Menu
+
+LANGUAGE                  = 语言
+GRAPHICAL_INTERFACE       = 图形界面
+BOOT_TIME_SCAN            = 启动时扫描
+REPORTS                   = 报告
+
+; --- --- Language submenu
+
+TRANSLATIONS_CHANGE_LOG   = 查看更新记录(&V)
+TRANSLATIONS_REPORT       = 查看翻译报告(&R)
+TRANSLATIONS_FOLDER       = 语言包文件夹
+TRANSLATIONS_SUBMIT       = 提交当前翻译(&S)
+
+; --- --- Graphical interface submenu
+
+FONT                      = 字体
+OPTIONS                   = 选项
+
+; --- --- Boot time scan submenu
+
+ENABLE                    = 开启
+SCRIPT                    = 脚本
+
+; --- Help Menu
+
+CONTENTS                  = 目录
+BEST_PRACTICE             = 最佳方法
+FAQ                       = 常见问题解答
+CM_LEGEND                 = 群集地图图例
+DEBUG                     = 调试(&B)
+CHECK_UPDATE              = 检查更新
+ABOUT                     = 关于
+
+; --- --- Debug submenu
+
+OPEN_LOG                  = 打开日志(&L)
+REPORT_BUG                = 发送错误报告(&R)
+
+; --- Toolbar Tooltips
+
+BOOT_TIME_SCRIPT          = 系统启动脚本
+
+; Drives list items.
+
+VOLUME                    = 卷
+STATUS                    = 状态
+FRAGMENTATION             = 碎片
+TOTAL                     = 总空间
+FREE                      = 空闲空间
+PERCENT                   = 空闲率
+
+; Status messages
+
+STATUS_RUNNING            = 运行中
+STATUS_ANALYSED           = 分析完成
+STATUS_DEFRAGMENTED       = 碎片整理完成
+STATUS_OPTIMIZED          = 优化完成
+STATUS_DIRTY              = 磁盘需要修复
+
+; Status bar messages.
+
+DIRS                      = 目录
+FILES                     = 文件
+FRAGMENTED                = 碎片
+COMPRESSED                = 压缩文件
+
+; About window.
+
+ABOUT_WIN_TITLE           = 关于 UltraDefrag
+CREDITS                   = 开发人员
+LICENSE                   = 许可
+
+; Shutdown confirmation
+
+PLEASE_CONFIRM            = 请确认
+REALLY_SHUTDOWN_WHEN_DONE = 确认完成后关机吗？
+REALLY_HIBERNATE_WHEN_DONE= 确认完成后休眠吗？
+REALLY_LOGOFF_WHEN_DONE   = 确认完成后注销吗？
+REALLY_REBOOT_WHEN_DONE   = 确认完成后重启吗？
+SECONDS_TILL_SHUTDOWN     = 秒后关机
+SECONDS_TILL_HIBERNATION  = 秒后休眠
+SECONDS_TILL_LOGOFF       = 秒后注销
+SECONDS_TILL_REBOOT       = 秒后重新启动
+YES                       = 是
+NO                        = 否
+
+; Upgrade dialog
+
+UPGRADE_CAPTION           = 升级吧 ^-^
+UPGRADE_MESSAGE           = 有更新可以下载！
+
+; A string for the taskbar icon overlay, needed for accessibility.
+
+JOB_IS_RUNNING            = 正在执行一个操作，请稍等
+
+; Strings for system tray icon context menu.
+
+SHOW                      = 显示
+HIDE                      = 隐藏
+
+; Strings for the file fragmentation reports.
+
+FRAGMENTED_FILES_ON       = 碎片文件
+
+VISIT_HOMEPAGE            = 访问我们的主页
+VIEW_REPORT_OPTIONS       = 查看报告选项
+POWERED_BY_LUA            = 由 Lua 技术支持
+
+FRAGMENTS                 = 碎片
+SIZE                      = 大小
+FILENAME                  = 文件名
+COMMENT                   = 意见
+
+LOCKED                    = 冻结中
+MOVE_FAILED               = 移动失败
+INVALID                   = 无效的
+
+; END OF FILE
