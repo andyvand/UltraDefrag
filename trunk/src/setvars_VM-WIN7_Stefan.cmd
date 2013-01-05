@@ -5,11 +5,12 @@ echo Set Stefans' environment variables...
 if not defined ORIG_USERNAME set ORIG_USERNAME=%USERNAME%
 
 set WINSDKBASE=C:\Program Files\Microsoft SDKs\Windows\v7.1
-set MINGWBASE=C:\PROGRA~1\MinGWStudio\MinGW
+set MINGWBASE=C:\MinGW32
 set MINGWx64BASE=
 set WXWIDGETSDIR=C:\wxWidgets-2.8.12
 set NSISDIR=C:\Program Files\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
+set GNUWIN32_DIR=C:\Program Files\GnuWin32\bin
 
 rem comment out next line to enable warnings to find unreachable code
 goto :EOF
