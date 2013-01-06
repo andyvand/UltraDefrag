@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-05 23:15+0100\n"
+"POT-Creation-Date: 2013-01-06 17:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,104 +16,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\about.cpp:46
+#: about.cpp:46
 msgid "About UltraDefrag"
-msgstr "О программе Ultra Defragmenter"
+msgstr ""
 
-#: .\about.cpp:57
+#: about.cpp:57
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: .\about.cpp:59
+#: about.cpp:59
 msgid "Credits and licenses are listed in the handbook."
-msgstr "Авторы and Лицензия are listed in the handbook."
+msgstr ""
 
-#: .\about.cpp:62
+#: about.cpp:62
 msgid "UltraDefrag website"
 msgstr ""
 
-#: .\menu.cpp:59
-
+#: menu.cpp:61
 msgid "&Analyze"
-msgstr "Анализ"
+msgstr ""
 
-#: .\menu.cpp:60
-
+#: menu.cpp:62
 msgid "&Defragment"
-msgstr "Дефрагментация"
+msgstr ""
 
-#: .\menu.cpp:61
-
+#: menu.cpp:63
 msgid "&Quick optimization"
-msgstr "Быстрая оптимизация"
+msgstr ""
 
-#: .\menu.cpp:62
-
+#: menu.cpp:64
 msgid "&Full optimization"
-msgstr "Полная оптимизация"
+msgstr ""
 
-#: .\menu.cpp:63
-
+#: menu.cpp:65
 msgid "&Optimize MFT"
-msgstr "Оптимизация MFT"
+msgstr ""
 
-#: .\menu.cpp:64
+#: menu.cpp:66
 msgid "&Pause"
 msgstr ""
 
-#: .\menu.cpp:65
-
+#: menu.cpp:67
 msgid "&Stop"
-msgstr "Стоп"
+msgstr ""
 
-#: .\menu.cpp:67
-
+#: menu.cpp:69
 msgid "Re&peat action"
-msgstr "&Разрешить повтор"
+msgstr ""
 
-#: .\menu.cpp:68
+#: menu.cpp:70
 msgid "E&xit"
 msgstr ""
 
-#: .\menu.cpp:72
-
+#: menu.cpp:74
 msgid "&Show report"
-msgstr "&Показать отчёт"
+msgstr ""
 
-#: .\menu.cpp:76
+#: menu.cpp:78
 msgid "&Edit GUI options"
 msgstr ""
 
-#: .\menu.cpp:77
+#: menu.cpp:79
 msgid "Enable &boot time scan"
 msgstr ""
 
-#: .\menu.cpp:78
+#: menu.cpp:80
 msgid "Edit boot time &script"
 msgstr ""
 
-#: .\menu.cpp:79
-
+#: menu.cpp:81
 msgid "&Reports"
-msgstr "&Отчёт"
+msgstr ""
 
-#: .\menu.cpp:83
-
+#: menu.cpp:85
 msgid "&About"
-msgstr "О программе"
+msgstr ""
 
-#: .\menu.cpp:87
+#: menu.cpp:89
 msgid "&Action"
-msgstr "&Файл"
+msgstr ""
 
-#: .\menu.cpp:88
+#: menu.cpp:90
 msgid "&Report"
-msgstr "&Отчёт"
+msgstr ""
 
-#: .\menu.cpp:89
+#: menu.cpp:91
 msgid "&Settings"
-msgstr "&Настройки"
+msgstr ""
 
-#: .\menu.cpp:90
+#: menu.cpp:92
 msgid "&Help"
-msgstr "&Справка"
+msgstr ""
