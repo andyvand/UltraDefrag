@@ -331,6 +331,13 @@ MainFrame::MainFrame()
     m_menuBar->FindItem(ID_BootScript)->Enable(btd);
     m_toolBar->EnableTool(ID_BootEnable,btd);
     m_toolBar->EnableTool(ID_BootScript,btd);
+    if(btd && ::udefrag_bootex_check(L"defrag_native") > 0){
+        m_menuBar->FindItem(ID_BootEnable)->Check(true);
+        m_toolBar->ToggleTool(ID_BootEnable,true);
+        m_btdEnabled = true;
+    } else {
+        m_btdEnabled = false;
+    }
 
     // create status bar
     CreateStatusBar();
@@ -498,6 +505,17 @@ void MainFrame::OnGuiOptions(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnBootEnable(wxCommandEvent& WXUNUSED(event))
 {
+    int result;
+    if(m_btdEnabled)
+        result = ::udefrag_bootex_unregister(L"defrag_native");
+    else
+        result = ::udefrag_bootex_register(L"defrag_native");
+    if(result == 0){
+        // registration succeeded
+        m_btdEnabled = m_btdEnabled ? false : true;
+        m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
+        m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
+    }
 }
 
 void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
