@@ -40,8 +40,6 @@
 //                       Tool bar for main window
 // =======================================================================
 
-#define TOOLBAR_IMAGE_COUNT 14
-
 #define UD_MakeToolItem(id, bmpidx) \
     ItemLabel->Clear();             \
     ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
@@ -58,8 +56,8 @@
 void MainFrame::InitToolbar()
 {
     m_toolBar = CreateToolBar();
-
     wxBitmap toolbarImage;
+
     int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
     if(size < 20){
         wxDisplay display;
@@ -85,23 +83,23 @@ void MainFrame::InitToolbar()
 
     wxString *ItemLabel = new wxString;
 
-    UD_MakeToolItem(ID_Analyze      ,0)
-    UD_MakeToolCheckItem(ID_Repeat  ,1)
-    UD_MakeToolItem(ID_Defrag       ,3)
-    UD_MakeToolItem(ID_QuickOpt     ,4)
-    UD_MakeToolItem(ID_FullOpt      ,5)
-    UD_MakeToolItem(ID_MftOpt       ,6)
-    UD_MakeToolItem(ID_Pause        ,7)
-    UD_MakeToolItem(ID_Stop         ,8)
+    UD_MakeToolItem(ID_Analyze     ,ID_BMP_Analyze)
+    UD_MakeToolCheckItem(ID_Repeat ,ID_BMP_Repeat)
+    UD_MakeToolItem(ID_Defrag      ,ID_BMP_Defrag)
+    UD_MakeToolItem(ID_QuickOpt    ,ID_BMP_QuickOpt)
+    UD_MakeToolItem(ID_FullOpt     ,ID_BMP_FullOpt)
+    UD_MakeToolItem(ID_MftOpt      ,ID_BMP_MftOpt)
+    UD_MakeToolItem(ID_Pause       ,ID_BMP_Pause)
+    UD_MakeToolItem(ID_Stop        ,ID_BMP_Stop)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_ShowReport   ,9)
+    UD_MakeToolItem(ID_ShowReport  ,ID_BMP_ShowReport)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_GuiOptions  ,10)
+    UD_MakeToolItem(ID_GuiOptions  ,ID_BMP_GuiOptions)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_BootEnable  ,11)
-    UD_MakeToolItem(ID_BootScript  ,12)
+    UD_MakeToolItem(ID_BootEnable  ,ID_BMP_BootEnable)
+    UD_MakeToolItem(ID_BootScript  ,ID_BMP_BootScript)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_HelpContents,13)
+    UD_MakeToolItem(ID_HelpContents,ID_BMP_HelpContents)
 
     m_toolBar->Realize();
 
