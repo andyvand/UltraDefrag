@@ -106,8 +106,10 @@ void MainFrame::InitToolbar()
     m_toolBar->Realize();
 
     // initial settings (must be after realize)
-    m_toolBar->ToggleTool(ID_Repeat,true);
-    m_toolBar->EnableTool(ID_Repeat,false);
+    wxConfigBase *cfg = wxConfigBase::Get();
+    cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
+    m_toolBar->ToggleTool(ID_Repeat,m_repeat);
+
     m_toolBar->EnableTool(ID_BootEnable,false);
     m_toolBar->EnableTool(ID_BootScript,false);
 
