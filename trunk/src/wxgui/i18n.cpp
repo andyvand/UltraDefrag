@@ -49,7 +49,9 @@
     info.WinLang = winlang, info.WinSublang = winsublang; \
     m_locale->AddLanguage(info);
 
-// user defined language IDs
+/* user defined language IDs
+   Important: never change their order when adding new translations
+   or the selection of the user will be broken */
 #define wxUD_LANGUAGE_BOSNIAN_LATIN     wxLANGUAGE_USER_DEFINED+1
 #define wxUD_LANGUAGE_BURMESE_PADAUK    wxLANGUAGE_USER_DEFINED+2
 #define wxUD_LANGUAGE_ILOKO             wxLANGUAGE_USER_DEFINED+3
@@ -65,7 +67,7 @@ void MainFrame::SetLocale()
     m_locale = new wxLocale();
     wxConfigBase *cfg = wxConfigBase::Get();
 
-    // add languages missing from wxWidgets
+    // add translations missing from wxWidgets
     UD_LNG(wxUD_LANGUAGE_BOSNIAN_LATIN,     "bs@latin"    , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian (Latin)")
     UD_LNG(wxUD_LANGUAGE_BURMESE_PADAUK,    "my@padauk"   , 0              , 0              , wxLayout_LeftToRight, "Burmese (Padauk)")
     UD_LNG(wxUD_LANGUAGE_ILOKO,             "il_PH"       , 0              , 0              , wxLayout_LeftToRight, "Iloko")
