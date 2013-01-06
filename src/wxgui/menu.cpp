@@ -98,23 +98,55 @@ void MainFrame::InitMenu()
     wxMenu *menuReport = new wxMenu;
     UD_MakeMenuItem(ID_ShowReport,"&Show report","F8",menuReport)
 
+    // create language menu
+    m_menuLanguage = new wxMenu;
+    m_menuLanguage->Append(ID_LangShowLog   ,_("&View change log"));
+    m_menuLanguage->Append(ID_LangShowReport,_("View translation &report"));
+    m_menuLanguage->Append(ID_LangOpenFolder,_("&Translations folder"));
+    m_menuLanguage->Append(ID_LangSubmit    ,_("&Submit current translation"));
+
+    // create GUI configuration menu
+    wxMenu *menuGUIconfig = new wxMenu;
+    UD_MakeMenuItem(ID_GuiFont   ,"&Font"   ,"F9" ,menuGUIconfig)
+    UD_MakeMenuItem(ID_GuiOptions,"&Options","F10",menuGUIconfig)
+
+    // create boot configuration menu
+    wxMenu *menuBootConfig = new wxMenu;
+    UD_MakeMenuItem(ID_BootEnable,"&Enable","F11",menuBootConfig);
+    UD_MakeMenuItem(ID_BootScript,"&Script","F12",menuBootConfig);
+
     // create settings menu
     wxMenu *menuSettings = new wxMenu;
-    UD_MakeMenuItem(ID_GuiOptions   ,"&Edit GUI options"     ,"F10"   ,menuSettings)
-    UD_MakeMenuItem(ID_BootEnable   ,"Enable &boot time scan","F11"   ,menuSettings)
-    UD_MakeMenuItem(ID_BootScript   ,"Edit boot time &script","F12"   ,menuSettings)
-    UD_MakeMenuItem(ID_ReportOptions,"&Reports"              ,"Ctrl+R",menuSettings)
+    menuSettings->AppendSubMenu(m_menuLanguage,_("&Language"));
+    menuSettings->AppendSubMenu(menuGUIconfig ,_("&Graphical interface"));
+    menuSettings->AppendSubMenu(menuBootConfig,_("&Boot time scan"));
+    UD_MakeMenuItem(ID_ReportOptions,"&Reports","Ctrl+R",menuSettings)
+
+    // create debug menu
+    wxMenu *menuDebug = new wxMenu;
+    UD_MakeMenuItem(ID_DebugLog,"Open &log","Alt+L",menuDebug)
+    menuDebug->Append(ID_DebugSend,_("Send bug &report"));
 
     // create help menu
     wxMenu *menuHelp = new wxMenu;
-    UD_MakeMenuItem(ID_HelpAbout,"&About","F4",menuHelp)
+    UD_MakeMenuItem(ID_HelpContents    ,"&Contents"     ,"F1",menuHelp)
+    menuHelp->AppendSeparator();
+    UD_MakeMenuItem(ID_HelpBestPractice,"Best &practice","F2",menuHelp)
+    UD_MakeMenuItem(ID_HelpFaq         ,"&FAQ"          ,"F3",menuHelp)
+    menuHelp->Append(ID_HelpLegend     ,_("Cluster map &legend"));
+    menuHelp->AppendSeparator();
+    menuHelp->AppendSubMenu(menuDebug  ,_("&Debug"));
+    menuHelp->AppendSeparator();
+    menuHelp->Append(ID_HelpUpdate     ,_("Check for &update"));
+    menuHelp->AppendSeparator();
+    UD_MakeMenuItem(ID_HelpAbout       ,"&About"        ,"F4",menuHelp)
 
     // create main menu
     m_menuBar = new wxMenuBar;
-    m_menuBar->Append(menuAction,   _("&Action")  );
-    m_menuBar->Append(menuReport,   _("&Report")  );
-    m_menuBar->Append(menuSettings, _("&Settings"));
-    m_menuBar->Append(menuHelp,     _("&Help")    );
+    m_menuBar->Append(menuAction,  _("&Action"));
+    m_menuBar->Append(menuReport,  _("&Report"));
+    m_menuBar->Append(menuSettings,_("&Settings"));
+    m_menuBar->Append(menuHelp,    _("&Help"));
 
     SetMenuBar(m_menuBar);
 
