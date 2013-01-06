@@ -51,15 +51,17 @@ echo     12 ... Clean all wxWidgets libraries
 echo     13 ... Build wxWidgets ........ using MinGW
 echo     14 ... Build wxWidgets ........ using WinSDK
 echo.
-echo     15 ... Build Test Release for Stefan
-echo     16 ... Build Test Installation for Stefan
-echo     17 ... Build Test AMD64 for Stefan
-echo     18 ... Build Test x86 for Stefan
+echo     15 ... Update translation
+echo.
+echo     16 ... Build Test Release for Stefan
+echo     17 ... Build Test Installation for Stefan
+echo     18 ... Build Test AMD64 for Stefan
+echo     19 ... Build Test x86 for Stefan
 echo.
 echo      0 ... EXIT
 
 :: this value holds the number of the last menu entry
-set UD_BLD_MENU_MAX_ENTRIES=18
+set UD_BLD_MENU_MAX_ENTRIES=19
 
 :AskSelection
 echo.
@@ -168,23 +170,27 @@ call wxbuild.cmd --use-winsdk
 goto finished
 
 :15
+title Update translation
+call wxupdate_translation.cmd
+goto finished
+
+:16
 title Build Test Release for Stefan
 echo.
-call build.cmd --no-amd64 --no-ia64 --no-pdf --no-dev
-call build.cmd --use-winsdk --no-x86 --no-ia64 --no-pdf --no-dev
+call build.cmd --use-winsdk --no-ia64 --no-pdf --no-dev
 echo.
 call :CopyInstallers -zip
 goto finished
 
-:16
+:17
 title Build Test Installation for Stefan
 echo.
 if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winsdk --no-ia64 --no-x86 --install --no-pdf --no-dev
-if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --no-ia64 --no-amd64 --install --no-pdf --no-dev
+if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winsdk --no-ia64 --no-amd64 --install --no-pdf --no-dev
 echo.
 goto finished
 
-:17
+:18
 title Build Test AMD64 for Stefan
 echo.
 call build.cmd --use-winsdk --no-ia64 --no-x86 --no-pdf --no-dev
@@ -192,10 +198,10 @@ echo.
 call :CopyInstallers
 goto finished
 
-:18
+:19
 title Build Test x86 for Stefan
 echo.
-call build.cmd --no-ia64 --no-amd64 --no-pdf --no-dev
+call build.cmd --use-winsdk --no-ia64 --no-amd64 --no-pdf --no-dev
 echo.
 call :CopyInstallers
 goto finished
