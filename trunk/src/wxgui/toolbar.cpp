@@ -77,13 +77,11 @@ void MainFrame::InitToolbar()
     toolbarImage.SetMask(imageMask);
 
     int bmHeight = toolbarImage.GetHeight();
+    m_toolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
 
     wxBitmap toolBarBitmaps[TOOLBAR_IMAGE_COUNT];
-
     for(int i = 0; i < TOOLBAR_IMAGE_COUNT; i++)
         toolBarBitmaps[i] = toolbarImage.GetSubBitmap(wxRect(bmHeight*i,0,bmHeight,bmHeight));
-
-    m_toolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
 
     wxString *ItemLabel = new wxString;
 
@@ -113,6 +111,15 @@ void MainFrame::InitToolbar()
     m_toolBar->EnableTool(ID_BootEnable,false);
     m_toolBar->EnableTool(ID_BootScript,false);
 
+    // uncomment to test grayed out images
+    /*m_toolBar->EnableTool(ID_Analyze,false);
+    m_toolBar->EnableTool(ID_Repeat,false);
+    m_toolBar->EnableTool(ID_Defrag,false);
+    m_toolBar->EnableTool(ID_QuickOpt,false);
+    m_toolBar->EnableTool(ID_FullOpt,false);
+    m_toolBar->EnableTool(ID_MftOpt,false);
+    m_toolBar->EnableTool(ID_BootEnable,false);
+    m_toolBar->EnableTool(ID_BootScript,false);*/
 }
 
 #undef UD_MakeToolItem
