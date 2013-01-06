@@ -37,7 +37,7 @@
 #include "main.h"
 
 // =======================================================================
-//                        Toolbar for main window
+//                       Tool bar for main window
 // =======================================================================
 
 #define TOOLBAR_IMAGE_COUNT 14
@@ -53,7 +53,7 @@
     m_toolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx],wxNullBitmap,ItemLabel->Trim());
 
 /**
- * @brief Initializes toolbar.
+ * @brief Initializes tool bar.
  */
 void MainFrame::InitToolbar()
 {
@@ -72,7 +72,7 @@ void MainFrame::InitToolbar()
     } else {
         toolbarImage = wxBITMAP(toolbar32);
     }
-        
+
     wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
     toolbarImage.SetMask(imageMask);
 
