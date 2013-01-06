@@ -40,16 +40,18 @@
 //                        Menu for main window
 // =======================================================================
 
+/* label must always be second argument to be able to extract it using
+   "xgettext -kUD_MakeMenuItem:2 -kUD_MakeMenuCheckItem:2" for translation*/
 #define UD_MakeMenuItem(id, label, accel, menu) \
     ItemLabel->Clear();             \
-    ItemLabel->Append(label);       \
+    ItemLabel->Append(_(label));    \
     ItemLabel->Append(wxT("\t"));   \
     ItemLabel->Append(wxT(accel));  \
     menu->Append(id,ItemLabel->Trim());
 
 #define UD_MakeMenuCheckItem(id, label, accel, menu) \
     ItemLabel->Clear();             \
-    ItemLabel->Append(label);       \
+    ItemLabel->Append(_(label));    \
     ItemLabel->Append(wxT("\t"));   \
     ItemLabel->Append(wxT(accel));  \
     menu->AppendCheckItem(id,ItemLabel->Trim());
@@ -63,31 +65,31 @@ void MainFrame::InitMenu()
     wxMenu *menuAction = new wxMenu;
     wxString *ItemLabel = new wxString;
 
-    UD_MakeMenuItem(ID_Analyze ,_("&Analyze")           ,"F5"      ,menuAction)
-    UD_MakeMenuItem(ID_Defrag  ,_("&Defragment")        ,"F6"      ,menuAction)
-    UD_MakeMenuItem(ID_QuickOpt,_("&Quick optimization"),"F7"      ,menuAction)
-    UD_MakeMenuItem(ID_FullOpt ,_("&Full optimization") ,"Ctrl+F7" ,menuAction)
-    UD_MakeMenuItem(ID_MftOpt  ,_("&Optimize MFT")      ,"Shift+F7",menuAction)
-    UD_MakeMenuItem(ID_Pause   ,_("&Pause")             ,"Space"   ,menuAction)
-    UD_MakeMenuItem(ID_Stop    ,_("&Stop")              ,"Ctrl+C"  ,menuAction)
+    UD_MakeMenuItem(ID_Analyze ,"&Analyze"           ,"F5"      ,menuAction)
+    UD_MakeMenuItem(ID_Defrag  ,"&Defragment"        ,"F6"      ,menuAction)
+    UD_MakeMenuItem(ID_QuickOpt,"&Quick optimization","F7"      ,menuAction)
+    UD_MakeMenuItem(ID_FullOpt ,"&Full optimization" ,"Ctrl+F7" ,menuAction)
+    UD_MakeMenuItem(ID_MftOpt  ,"&Optimize MFT"      ,"Shift+F7",menuAction)
+    UD_MakeMenuItem(ID_Pause   ,"&Pause"             ,"Space"   ,menuAction)
+    UD_MakeMenuItem(ID_Stop    ,"&Stop"              ,"Ctrl+C"  ,menuAction)
     menuAction->AppendSeparator();
-    UD_MakeMenuCheckItem(ID_Repeat,_("Re&peat action")  ,"Shift+R" ,menuAction)
-    UD_MakeMenuItem(ID_Exit    ,_("E&xit")              ,"Alt+F4"  ,menuAction)
+    UD_MakeMenuCheckItem(ID_Repeat,"Re&peat action"  ,"Shift+R" ,menuAction)
+    UD_MakeMenuItem(ID_Exit    ,"E&xit"              ,"Alt+F4"  ,menuAction)
 
     // create report menu
     wxMenu *menuReport = new wxMenu;
-    UD_MakeMenuItem(ID_ShowReport,_("&Show report"),"F8",menuReport)
+    UD_MakeMenuItem(ID_ShowReport,"&Show report","F8",menuReport)
 
     // create settings menu
     wxMenu *menuSettings = new wxMenu;
-    UD_MakeMenuItem(ID_GuiOptions   ,_("&Edit GUI options")     ,"F10"   ,menuSettings)
-    UD_MakeMenuItem(ID_BootEnable   ,_("Enable &boot time scan"),"F11"   ,menuSettings)
-    UD_MakeMenuItem(ID_BootScript   ,_("Edit boot time &script"),"F12"   ,menuSettings)
-    UD_MakeMenuItem(ID_ReportOptions,_("&Reports")              ,"Ctrl+R",menuSettings)
+    UD_MakeMenuItem(ID_GuiOptions   ,"&Edit GUI options"     ,"F10"   ,menuSettings)
+    UD_MakeMenuItem(ID_BootEnable   ,"Enable &boot time scan","F11"   ,menuSettings)
+    UD_MakeMenuItem(ID_BootScript   ,"Edit boot time &script","F12"   ,menuSettings)
+    UD_MakeMenuItem(ID_ReportOptions,"&Reports"              ,"Ctrl+R",menuSettings)
 
     // create help menu
     wxMenu *menuHelp = new wxMenu;
-    UD_MakeMenuItem(ID_HelpAbout,_("&About"),"F4",menuHelp)
+    UD_MakeMenuItem(ID_HelpAbout,"&About","F4",menuHelp)
 
     // create main menu
     m_menuBar = new wxMenuBar;
@@ -97,7 +99,7 @@ void MainFrame::InitMenu()
     m_menuBar->Append(menuHelp,     _("&Help")    );
 
     SetMenuBar(m_menuBar);
-    
+
     // initial settings
     wxConfigBase *cfg = wxConfigBase::Get();
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
