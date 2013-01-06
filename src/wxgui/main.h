@@ -89,7 +89,7 @@ public:
 
 private:
     void Cleanup();
-    Log *m_Log;
+    Log *m_log;
 };
 
 class MainFrame: public wxFrame {
@@ -166,9 +166,9 @@ private:
     int m_width;
     int m_height;
 
-    wxString  *m_Title;
-    wxToolBar *m_ToolBar;
-    wxLocale  *m_Locale;
+    wxString  *m_title;
+    wxToolBar *m_toolBar;
+    wxLocale  *m_locale;
     wxMenuBar *m_menuBar;
 
     DECLARE_EVENT_TABLE()
