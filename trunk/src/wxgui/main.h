@@ -170,8 +170,9 @@ private:
     wxToolBar *m_toolBar;
     wxLocale  *m_locale;
     wxMenuBar *m_menuBar;
-    
+
     bool m_repeat;
+    bool m_skipRem;
 
     DECLARE_EVENT_TABLE()
 };
