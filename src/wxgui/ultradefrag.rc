@@ -33,8 +33,12 @@ appicon ICON DISCARDABLE "res/app.ico"
 ship      BITMAP DISCARDABLE "res/ship.bmp"
 ship_8bit BITMAP DISCARDABLE "res/ship_8bit.bmp"
 
-// tool bar image
-toolbar16 BITMAP "res/toolbar16.bmp"
+// tool bar images
+toolbar16       BITMAP "res/toolbar16.bmp"
+toolbar16_8bit  BITMAP "res/toolbar16_8bit.bmp"
+toolbar20       BITMAP "res/toolbar20.bmp"
+toolbar24       BITMAP "res/toolbar24.bmp"
+toolbar32       BITMAP "res/toolbar32.bmp"
 
 // manifests for all targets produces make-manifests.cmd script
 1 24 "res/ultradefrag.manifest"

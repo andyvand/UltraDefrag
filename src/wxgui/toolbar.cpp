@@ -59,7 +59,20 @@ void MainFrame::InitToolbar()
 {
     m_toolBar = CreateToolBar();
 
-    wxBitmap toolbarImage = wxBITMAP(toolbar16);
+    wxBitmap toolbarImage;
+    int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+    if(size < 20){
+        wxDisplay display;
+        toolbarImage = display.GetCurrentMode().GetDepth() > 8 ? \
+            wxBITMAP(toolbar16) : wxBITMAP(toolbar16_8bit);
+    } else if(size < 24){
+        toolbarImage = wxBITMAP(toolbar20);
+    } else if(size < 32){
+        toolbarImage = wxBITMAP(toolbar24);
+    } else {
+        toolbarImage = wxBITMAP(toolbar32);
+    }
+        
     wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
     toolbarImage.SetMask(imageMask);
 
