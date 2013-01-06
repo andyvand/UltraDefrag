@@ -61,8 +61,12 @@ void MainFrame::InitToolbar()
     int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
     if(size < 20){
         wxDisplay display;
-        toolbarImage = display.GetCurrentMode().GetDepth() > 8 ? \
-            wxBITMAP(toolbar16) : wxBITMAP(toolbar16_8bit);
+        if(display.GetCurrentMode().GetDepth() > 8){
+            toolbarImage = wxBITMAP(toolbar16);
+        } else {
+            wxSystemOptions::SetOption(wxT("msw.remap"),0);
+            toolbarImage = wxBITMAP(toolbar16_8bit);
+        }
     } else if(size < 24){
         toolbarImage = wxBITMAP(toolbar20);
     } else if(size < 32){
