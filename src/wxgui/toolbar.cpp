@@ -100,8 +100,8 @@ void MainFrame::InitToolbar()
     m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_GuiOptions  ,ID_BMP_GuiOptions)
     m_toolBar->AddSeparator();
-    UD_MakeToolCheckItem(ID_BootEnable,ID_BMP_BootEnable)
-    UD_MakeToolItem(ID_BootScript     ,ID_BMP_BootScript)
+    m_toolBar->AddTool(ID_BootEnable,toolBarBitmaps[ID_BMP_BootEnable],_("&Boot time scan"));
+    m_toolBar->AddTool(ID_BootScript,toolBarBitmaps[ID_BMP_BootScript],_("Boot time script"));
     m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_HelpContents,ID_BMP_HelpContents)
 

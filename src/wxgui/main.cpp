@@ -322,7 +322,7 @@ MainFrame::MainFrame()
     /* create tool bar (must always be after InitMenu,
        since we mainly use the menu text for the tool tips */
     InitToolbar();
-    
+
     // check the boot time defragmenter presence
     wxFileName btdFile(wxT("%SystemRoot%\\system32\\defrag_native.exe"));
     btdFile.Normalize();

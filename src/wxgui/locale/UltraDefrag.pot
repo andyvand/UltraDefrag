@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-06 19:21+0100\n"
+"POT-Creation-Date: 2013-01-06 22:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,7 +152,7 @@ msgstr ""
 msgid "&Graphical interface"
 msgstr ""
 
-#: menu.cpp:122
+#: menu.cpp:122 toolbar.cpp:103
 msgid "&Boot time scan"
 msgstr ""
 
@@ -210,4 +210,8 @@ msgstr ""
 
 #: menu.cpp:149
 msgid "&Help"
+msgstr ""
+
+#: toolbar.cpp:104
+msgid "Boot time script"
 msgstr ""
