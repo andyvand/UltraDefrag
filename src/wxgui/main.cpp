@@ -342,8 +342,9 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
 
     cfg->Write(wxT("/Language/Selected"),(long)m_locale->GetLanguage());
-    
+
     cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
+    cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
 
     // free resources
     delete m_locale;
@@ -412,6 +413,7 @@ void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
 {
+    m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
 }
 
 void MainFrame::OnRescan(wxCommandEvent& WXUNUSED(event))

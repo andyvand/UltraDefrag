@@ -36,7 +36,7 @@ pushd "%~dp0\wxgui"
 set gettext_template=locale\UltraDefrag.pot
 
 :: extract translations
-xgettext -C -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_MakeMenuItem:2 -kUD_MakeMenuCheckItem:2 -o %gettext_template% "*.cpp" || goto fail
+xgettext -C -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_MakeMenuItem:2 -kUD_MakeMenuCheckItem:2 -kUD_MakeMenuRadioItem:2 -o %gettext_template% "*.cpp" || goto fail
 
 :: update translations
 for /d %%D in ( "locale\*" ) do for %%T in ( "%%~D\UltraDefrag.po" ) do call :check_translation "%%~T" || goto fail

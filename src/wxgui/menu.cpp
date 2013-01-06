@@ -61,20 +61,38 @@
  */
 void MainFrame::InitMenu()
 {
-    // create action menu
-    wxMenu *menuAction = new wxMenu;
     wxString *ItemLabel = new wxString;
 
-    UD_MakeMenuItem(ID_Analyze ,"&Analyze"           ,"F5"      ,menuAction)
-    UD_MakeMenuItem(ID_Defrag  ,"&Defragment"        ,"F6"      ,menuAction)
-    UD_MakeMenuItem(ID_QuickOpt,"&Quick optimization","F7"      ,menuAction)
-    UD_MakeMenuItem(ID_FullOpt ,"&Full optimization" ,"Ctrl+F7" ,menuAction)
-    UD_MakeMenuItem(ID_MftOpt  ,"&Optimize MFT"      ,"Shift+F7",menuAction)
-    UD_MakeMenuItem(ID_Pause   ,"&Pause"             ,"Space"   ,menuAction)
-    UD_MakeMenuItem(ID_Stop    ,"&Stop"              ,"Ctrl+C"  ,menuAction)
+    // create when done menu
+    wxMenu *menuWhenDone = new wxMenu;
+    menuWhenDone->AppendRadioItem(ID_WhenDoneNone     ,_("&None"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneExit     ,_("E&xit"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneStandby  ,_("Stan&dby"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneHibernate,_("&Hibernate"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneLogoff   ,_("&Logoff"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneReboot   ,_("&Reboot"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneShutdown ,_("&Shutdown"));
+
+    // create action menu
+    wxMenu *menuAction = new wxMenu;
+    UD_MakeMenuItem(ID_Analyze     ,"&Analyze"             ,"F5"      ,menuAction)
+    UD_MakeMenuItem(ID_Defrag      ,"&Defragment"          ,"F6"      ,menuAction)
+    UD_MakeMenuItem(ID_QuickOpt    ,"&Quick optimization"  ,"F7"      ,menuAction)
+    UD_MakeMenuItem(ID_FullOpt     ,"&Full optimization"   ,"Ctrl+F7" ,menuAction)
+    UD_MakeMenuItem(ID_MftOpt      ,"&Optimize MFT"        ,"Shift+F7",menuAction)
+    UD_MakeMenuItem(ID_Pause       ,"&Pause"               ,"Space"   ,menuAction)
+    UD_MakeMenuItem(ID_Stop        ,"&Stop"                ,"Ctrl+C"  ,menuAction)
     menuAction->AppendSeparator();
-    UD_MakeMenuCheckItem(ID_Repeat,"Re&peat action"  ,"Shift+R" ,menuAction)
-    UD_MakeMenuItem(ID_Exit    ,"E&xit"              ,"Alt+F4"  ,menuAction)
+    UD_MakeMenuCheckItem(ID_Repeat ,"Re&peat action"       ,"Shift+R" ,menuAction)
+    menuAction->AppendSeparator();
+    UD_MakeMenuCheckItem(ID_SkipRem,"Skip removable &media","Ctrl+M"  ,menuAction)
+    UD_MakeMenuItem(ID_Rescan      ,"&Rescan drives"       ,"Ctrl+D"  ,menuAction)
+    menuAction->AppendSeparator();
+    menuAction->Append(ID_Repair   ,_("Repair dri&ves"));
+    menuAction->AppendSeparator();
+    menuAction->AppendSubMenu(menuWhenDone,_("&When done"));
+    menuAction->AppendSeparator();
+    UD_MakeMenuItem(ID_Exit        ,"E&xit"                ,"Alt+F4"  ,menuAction)
 
     // create report menu
     wxMenu *menuReport = new wxMenu;
@@ -104,6 +122,9 @@ void MainFrame::InitMenu()
     wxConfigBase *cfg = wxConfigBase::Get();
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
+
+    cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
+    m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 }
 
 #undef UD_MakeMenuItem
