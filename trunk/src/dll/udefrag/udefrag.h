@@ -192,9 +192,9 @@ void udefrag_flush_dbg_log(void);
  */
 void udefrag_dbg_print(int flags,const char *format, ...);
 
-int udefrag_bootex_check(wchar_t *command);
-int udefrag_bootex_register(wchar_t *command);
-int udefrag_bootex_unregister(wchar_t *command);
+int udefrag_bootex_check(const wchar_t *command);
+int udefrag_bootex_register(const wchar_t *command);
+int udefrag_bootex_unregister(const wchar_t *command);
 
 #if defined(__cplusplus)
 }
