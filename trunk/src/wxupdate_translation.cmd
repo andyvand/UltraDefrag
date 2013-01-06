@@ -33,13 +33,13 @@ set PATH=%GNUWIN32_DIR%;%PATH%
 
 pushd "%~dp0\wxgui"
 
-set gettext_template=.\i18n\UltraDefrag_template.po
+set gettext_template=.\locale\UltraDefrag_template.po
 
 :: extract translations
 xgettext -C -n -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -o %gettext_template% ".\*.cpp" || goto fail
 
 :: update translations
-for /d %%D in ( ".\i18n\*" ) do for %%T in ( "%%~D\UltraDefrag.po" ) do call :check_translation "%%~T" || goto fail
+for /d %%D in ( ".\locale\*" ) do for %%T in ( "%%~D\UltraDefrag.po" ) do call :check_translation "%%~T" || goto fail
 
 :success
 if "%OLD_PATH%" neq "" set path=%OLD_PATH%

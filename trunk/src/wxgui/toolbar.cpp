@@ -45,19 +45,19 @@
 #define UD_MakeToolItem(id, bmpidx) \
     ItemLabel->Clear();             \
     ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
-    m_ToolBar->AddTool(id,toolBarBitmaps[bmpidx],ItemLabel->Trim());
+    m_toolBar->AddTool(id,toolBarBitmaps[bmpidx],ItemLabel->Trim());
 
 #define UD_MakeToolCheckItem(id, bmpidx) \
     ItemLabel->Clear();             \
     ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
-    m_ToolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx],wxNullBitmap,ItemLabel->Trim());
+    m_toolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx],wxNullBitmap,ItemLabel->Trim());
 
 /**
  * @brief Initializes toolbar.
  */
 void MainFrame::InitToolbar()
 {
-    m_ToolBar = CreateToolBar();
+    m_toolBar = CreateToolBar();
 
     wxBitmap toolbarImage = wxBITMAP(toolbar16);
     wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
@@ -70,7 +70,7 @@ void MainFrame::InitToolbar()
     for(int i = 0; i < TOOLBAR_IMAGE_COUNT; i++)
         toolBarBitmaps[i] = toolbarImage.GetSubBitmap(wxRect(bmHeight*i,0,bmHeight,bmHeight));
 
-    m_ToolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
+    m_toolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
 
     wxString *ItemLabel = new wxString;
 
@@ -82,23 +82,23 @@ void MainFrame::InitToolbar()
     UD_MakeToolItem(ID_MftOpt     ,6)
     UD_MakeToolItem(ID_Pause      ,7)
     UD_MakeToolItem(ID_Stop       ,8)
-    m_ToolBar->AddSeparator();
+    m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_ShowReport ,9)
-    m_ToolBar->AddSeparator();
+    m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_GuiOptions,10)
-    m_ToolBar->AddSeparator();
+    m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_BootEnable,11)
     UD_MakeToolItem(ID_BootScript,12)
-    m_ToolBar->AddSeparator();
+    m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_HelpAbout ,13)
 
-    m_ToolBar->Realize();
+    m_toolBar->Realize();
 
     // initial settings (must be after realize)
-    m_ToolBar->ToggleTool(ID_Repeat,true);
-    m_ToolBar->EnableTool(ID_Repeat,false);
-    m_ToolBar->EnableTool(ID_BootEnable,false);
-    m_ToolBar->EnableTool(ID_BootScript,false);
+    m_toolBar->ToggleTool(ID_Repeat,true);
+    m_toolBar->EnableTool(ID_Repeat,false);
+    m_toolBar->EnableTool(ID_BootEnable,false);
+    m_toolBar->EnableTool(ID_BootScript,false);
 
 }
 

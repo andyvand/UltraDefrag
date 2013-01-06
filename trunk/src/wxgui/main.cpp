@@ -200,7 +200,7 @@ bool App::OnInit()
     }
 
     // initialize logging
-    m_Log = new Log();
+    m_log = new Log();
 
     // use global config object for internal settings
     wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
@@ -230,7 +230,7 @@ void App::Cleanup()
     delete wxConfigBase::Set(NULL);
 
     // deinitialize logging
-    delete m_Log;
+    delete m_log;
 
     // free udefrag.dll library
     ::udefrag_unload_library();
@@ -269,16 +269,16 @@ MainFrame::MainFrame()
         if(cd.CmpNoCase(*instdir) == 0){
             wxLogMessage(wxT("Current directory matches ")
                 wxT("installation location, so it isn't portable"));
-            m_Title = new wxString(wxT(VERSIONINTITLE));
+            m_title = new wxString(wxT(VERSIONINTITLE));
         } else {
             wxLogMessage(wxT("Current directory differs from ")
                 wxT("installation location, so it is portable"));
-            m_Title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
+            m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
         }
     } else {
-        m_Title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
+        m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
     }
-    SetTitle(*m_Title);
+    SetTitle(*m_title);
     delete instdir;
 
     // set main window size and position
@@ -341,11 +341,11 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/height"),(long)m_height);
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
 
-    cfg->Write(wxT("/Language/Selected"),(long)m_Locale->GetLanguage());
+    cfg->Write(wxT("/Language/Selected"),(long)m_locale->GetLanguage());
 
     // free resources
-    delete m_Locale;
-    delete m_Title;
+    delete m_locale;
+    delete m_title;
 }
 
 // =======================================================================
