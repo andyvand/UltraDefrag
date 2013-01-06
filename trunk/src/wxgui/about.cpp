@@ -61,24 +61,30 @@ AboutDialog::AboutDialog()
     wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(this,wxID_ANY,
         _("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
 
+    wxSizerFlags flags;
+    flags.Center().Border(wxLEFT & wxRIGHT);
+    int space = DPI(11);
+    
     wxSizer *text = new wxBoxSizer(wxVERTICAL);
-    text->Add(version,wxSizerFlags().Centre().Border());
-    text->AddSpacer(5);
-    text->Add(copyright,wxSizerFlags().Centre().Border());
-    text->AddSpacer(5);
-    text->Add(description,wxSizerFlags().Centre().Border(wxALL & ~wxBOTTOM));
-    text->Add(credits,wxSizerFlags().Centre().Border(wxALL & ~wxTOP));
-    text->AddSpacer(5);
-    text->Add(homepage,wxSizerFlags().Centre().Border());
-
+    text->AddSpacer(space);
+    text->Add(version,flags);
+    text->AddSpacer(space);
+    text->Add(copyright,flags);
+    text->AddSpacer(space);
+    text->Add(description,flags);
+    text->Add(credits,flags);
+    text->AddSpacer(space);
+    text->Add(homepage,flags);
+    text->AddSpacer(space);
+    
     wxDisplay display;
     wxStaticBitmap *bmp = new wxStaticBitmap(this,wxID_ANY,
         display.GetCurrentMode().GetDepth() > 8 ? \
         wxBITMAP(ship) : wxBITMAP(ship_8bit));
 
     wxSizer *contents = new wxBoxSizer(wxHORIZONTAL);
-    contents->Add(bmp,wxSizerFlags().Border());
-    contents->Add(text,wxSizerFlags(1).Expand());
+    contents->Add(bmp,wxSizerFlags().Center().Border());
+    contents->Add(text,wxSizerFlags(1).Center().Border());
     SetSizerAndFit(contents);
     Center();
 }
