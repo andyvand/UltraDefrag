@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-06 17:33+0100\n"
+"POT-Creation-Date: 2013-01-06 19:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,78 +32,182 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: menu.cpp:61
-msgid "&Analyze"
+#: menu.cpp:68
+msgid "&None"
 msgstr ""
 
-#: menu.cpp:62
-msgid "&Defragment"
-msgstr ""
-
-#: menu.cpp:63
-msgid "&Quick optimization"
-msgstr ""
-
-#: menu.cpp:64
-msgid "&Full optimization"
-msgstr ""
-
-#: menu.cpp:65
-msgid "&Optimize MFT"
-msgstr ""
-
-#: menu.cpp:66
-msgid "&Pause"
-msgstr ""
-
-#: menu.cpp:67
-msgid "&Stop"
-msgstr ""
-
-#: menu.cpp:69
-msgid "Re&peat action"
-msgstr ""
-
-#: menu.cpp:70
+#: menu.cpp:69 menu.cpp:95
 msgid "E&xit"
 msgstr ""
 
+#: menu.cpp:70
+msgid "Stan&dby"
+msgstr ""
+
+#: menu.cpp:71
+msgid "&Hibernate"
+msgstr ""
+
+#: menu.cpp:72
+msgid "&Logoff"
+msgstr ""
+
+#: menu.cpp:73
+msgid "&Reboot"
+msgstr ""
+
 #: menu.cpp:74
-msgid "&Show report"
+msgid "&Shutdown"
 msgstr ""
 
 #: menu.cpp:78
-msgid "&Edit GUI options"
+msgid "&Analyze"
 msgstr ""
 
 #: menu.cpp:79
-msgid "Enable &boot time scan"
+msgid "&Defragment"
 msgstr ""
 
 #: menu.cpp:80
-msgid "Edit boot time &script"
+msgid "&Quick optimization"
 msgstr ""
 
 #: menu.cpp:81
-msgid "&Reports"
+msgid "&Full optimization"
 msgstr ""
 
-#: menu.cpp:85
-msgid "&About"
+#: menu.cpp:82
+msgid "&Optimize MFT"
+msgstr ""
+
+#: menu.cpp:83
+msgid "&Pause"
+msgstr ""
+
+#: menu.cpp:84
+msgid "&Stop"
+msgstr ""
+
+#: menu.cpp:86
+msgid "Re&peat action"
+msgstr ""
+
+#: menu.cpp:88
+msgid "Skip removable &media"
 msgstr ""
 
 #: menu.cpp:89
-msgid "&Action"
-msgstr ""
-
-#: menu.cpp:90
-msgid "&Report"
+msgid "&Rescan drives"
 msgstr ""
 
 #: menu.cpp:91
+msgid "Repair dri&ves"
+msgstr ""
+
+#: menu.cpp:93
+msgid "&When done"
+msgstr ""
+
+#: menu.cpp:99
+msgid "&Show report"
+msgstr ""
+
+#: menu.cpp:103
+msgid "&View change log"
+msgstr ""
+
+#: menu.cpp:104
+msgid "View translation &report"
+msgstr ""
+
+#: menu.cpp:105
+msgid "&Translations folder"
+msgstr ""
+
+#: menu.cpp:106
+msgid "&Submit current translation"
+msgstr ""
+
+#: menu.cpp:110
+msgid "&Font"
+msgstr ""
+
+#: menu.cpp:111
+msgid "&Options"
+msgstr ""
+
+#: menu.cpp:115
+msgid "&Enable"
+msgstr ""
+
+#: menu.cpp:116
+msgid "&Script"
+msgstr ""
+
+#: menu.cpp:120
+msgid "&Language"
+msgstr ""
+
+#: menu.cpp:121
+msgid "&Graphical interface"
+msgstr ""
+
+#: menu.cpp:122
+msgid "&Boot time scan"
+msgstr ""
+
+#: menu.cpp:123
+msgid "&Reports"
+msgstr ""
+
+#: menu.cpp:127
+msgid "Open &log"
+msgstr ""
+
+#: menu.cpp:128
+msgid "Send bug &report"
+msgstr ""
+
+#: menu.cpp:132
+msgid "&Contents"
+msgstr ""
+
+#: menu.cpp:134
+msgid "Best &practice"
+msgstr ""
+
+#: menu.cpp:135
+msgid "&FAQ"
+msgstr ""
+
+#: menu.cpp:136
+msgid "Cluster map &legend"
+msgstr ""
+
+#: menu.cpp:138
+msgid "&Debug"
+msgstr ""
+
+#: menu.cpp:140
+msgid "Check for &update"
+msgstr ""
+
+#: menu.cpp:142
+msgid "&About"
+msgstr ""
+
+#: menu.cpp:146
+msgid "&Action"
+msgstr ""
+
+#: menu.cpp:147
+msgid "&Report"
+msgstr ""
+
+#: menu.cpp:148
 msgid "&Settings"
 msgstr ""
 
-#: menu.cpp:92
+#: menu.cpp:149
 msgid "&Help"
 msgstr ""
