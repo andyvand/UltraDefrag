@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-05 23:15+0100\n"
+"POT-Creation-Date: 2013-01-06 17:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,94 +16,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\about.cpp:46
+#: about.cpp:46
 msgid "About UltraDefrag"
-msgstr "Über UltraDefrag"
+msgstr ""
 
-#: .\about.cpp:57
+#: about.cpp:57
 msgid "An open source defragmentation utility."
-msgstr "Ein Open Source Defragmentierungswerkzeug."
+msgstr ""
 
-#: .\about.cpp:59
+#: about.cpp:59
 msgid "Credits and licenses are listed in the handbook."
-msgstr "Danksagungen und Lizenzen sind im Handbuch aufgelistet."
+msgstr ""
 
-#: .\about.cpp:62
+#: about.cpp:62
 msgid "UltraDefrag website"
-msgstr "UltraDefrag Internetseite"
+msgstr ""
 
-#: .\menu.cpp:59
+#: menu.cpp:61
 msgid "&Analyze"
-msgstr "&Analysieren"
+msgstr ""
 
-#: .\menu.cpp:60
+#: menu.cpp:62
 msgid "&Defragment"
-msgstr "&Defragmentieren"
+msgstr ""
 
-#: .\menu.cpp:61
+#: menu.cpp:63
 msgid "&Quick optimization"
-msgstr "&Schnell optimieren"
+msgstr ""
 
-#: .\menu.cpp:62
+#: menu.cpp:64
 msgid "&Full optimization"
-msgstr "&Kompeltt optimieren"
+msgstr ""
 
-#: .\menu.cpp:63
+#: menu.cpp:65
 msgid "&Optimize MFT"
-msgstr "MFT &optimieren"
+msgstr ""
 
-#: .\menu.cpp:64
+#: menu.cpp:66
 msgid "&Pause"
-msgstr "&Unterbrechen"
+msgstr ""
 
-#: .\menu.cpp:65
+#: menu.cpp:67
 msgid "&Stop"
-msgstr "Ab&brechen"
+msgstr ""
 
-#: .\menu.cpp:67
+#: menu.cpp:69
 msgid "Re&peat action"
-msgstr "Vorgang &wiederholen"
+msgstr ""
 
-#: .\menu.cpp:68
+#: menu.cpp:70
 msgid "E&xit"
-msgstr "Be&enden"
+msgstr ""
 
-#: .\menu.cpp:72
+#: menu.cpp:74
 msgid "&Show report"
-msgstr "&Bericht anzeigen"
+msgstr ""
 
-#: .\menu.cpp:76
+#: menu.cpp:78
 msgid "&Edit GUI options"
-msgstr "GUI-Einstellungen &bearbeiten"
+msgstr ""
 
-#: .\menu.cpp:77
+#: menu.cpp:79
 msgid "Enable &boot time scan"
-msgstr "Startverarbeitung &einschalten"
+msgstr ""
 
-#: .\menu.cpp:78
+#: menu.cpp:80
 msgid "Edit boot time &script"
-msgstr "&Startskript bearbeiten"
+msgstr ""
 
-#: .\menu.cpp:79
+#: menu.cpp:81
 msgid "&Reports"
-msgstr "&Berichte"
+msgstr ""
 
-#: .\menu.cpp:83
+#: menu.cpp:85
 msgid "&About"
-msgstr "&Über"
+msgstr ""
 
-#: .\menu.cpp:87
+#: menu.cpp:89
 msgid "&Action"
-msgstr "&Vorgang"
+msgstr ""
 
-#: .\menu.cpp:88
+#: menu.cpp:90
 msgid "&Report"
-msgstr "&Bericht"
+msgstr ""
 
-#: .\menu.cpp:89
+#: menu.cpp:91
 msgid "&Settings"
-msgstr "&Einstellungen"
+msgstr ""
 
-#: .\menu.cpp:90
+#: menu.cpp:92
 msgid "&Help"
-msgstr "&Hilfe"
+msgstr ""

@@ -33,20 +33,20 @@ set PATH=%GNUWIN32_DIR%;%PATH%
 
 pushd "%~dp0\wxgui"
 
-set gettext_template=.\locale\UltraDefrag_template.po
+set gettext_template=locale\UltraDefrag.pot
 
 :: extract translations
-xgettext -C -n -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -o %gettext_template% ".\*.cpp" || goto fail
+xgettext -C -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_MakeMenuItem:2 -kUD_MakeMenuCheckItem:2 -o %gettext_template% "*.cpp" || goto fail
 
 :: update translations
-for /d %%D in ( ".\locale\*" ) do for %%T in ( "%%~D\UltraDefrag.po" ) do call :check_translation "%%~T" || goto fail
+for /d %%D in ( "locale\*" ) do for %%T in ( "%%~D\UltraDefrag.po" ) do call :check_translation "%%~T" || goto fail
 
 :success
 if "%OLD_PATH%" neq "" set path=%OLD_PATH%
 set OLD_PATH=
 echo.
-echo Build success!
-title Build success!
+echo Translations updated sucessfully!
+title Translations updated sucessfully!
 popd
 exit /B 0
 
@@ -65,28 +65,27 @@ exit /B 1
 :: syntax: call :check_translation {.PO file}
 :check_translation
     echo.
-    echo processing file "%~1" ...
+    echo ---------------
+    echo processing file "%~1"
 
     rem make sure the translation file is present
-    echo     checking for files existance ...
+    echo ... checking for files existance
     if not exist "%~1" copy /y /v %gettext_template% "%~1" || goto check_fail
 
     rem merge the new strings into the translation file if necessary
-    echo     merging in new strings ...
+    echo ... merging in new strings
     msgmerge -U "%~1" %gettext_template% || goto check_fail
 
     rem compile the .PO file into a .MO file
-    echo     compiling ...
-    msgfmt "%~1" -o "%~dpn1.mo" || goto check_fail
+    echo ... compiling
+    msgfmt -v -o "%~dpn1.mo" "%~1" || goto check_fail
 
     :check_success
-    echo suceeded ...
-    echo ---------------
+    echo ... suceeded
     if exist "%~1~" del /f /q "%~1~"
     exit /B 0
 
     :check_fail
-    failed ...
-    echo ---------------
+    echo ... failed
     exit /B 1
 goto :EOF
