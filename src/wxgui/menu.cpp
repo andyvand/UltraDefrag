@@ -47,6 +47,13 @@
     ItemLabel->Append(wxT(accel));  \
     menu->Append(id,ItemLabel->Trim());
 
+#define UD_MakeMenuCheckItem(id, label, accel, menu) \
+    ItemLabel->Clear();             \
+    ItemLabel->Append(label);       \
+    ItemLabel->Append(wxT("\t"));   \
+    ItemLabel->Append(wxT(accel));  \
+    menu->AppendCheckItem(id,ItemLabel->Trim());
+
 /**
  * @brief Initializes main window.
  */
@@ -64,7 +71,7 @@ void MainFrame::InitMenu()
     UD_MakeMenuItem(ID_Pause   ,_("&Pause")             ,"Space"   ,menuAction)
     UD_MakeMenuItem(ID_Stop    ,_("&Stop")              ,"Ctrl+C"  ,menuAction)
     menuAction->AppendSeparator();
-    UD_MakeMenuItem(ID_Repeat  ,_("Re&peat action")     ,"Shift+R" ,menuAction)
+    UD_MakeMenuCheckItem(ID_Repeat,_("Re&peat action")  ,"Shift+R" ,menuAction)
     UD_MakeMenuItem(ID_Exit    ,_("E&xit")              ,"Alt+F4"  ,menuAction)
 
     // create report menu
@@ -90,8 +97,14 @@ void MainFrame::InitMenu()
     m_menuBar->Append(menuHelp,     _("&Help")    );
 
     SetMenuBar(m_menuBar);
+    
+    // initial settings
+    wxConfigBase *cfg = wxConfigBase::Get();
+    cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
+    m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
 }
 
 #undef UD_MakeMenuItem
+#undef UD_MakeMenuCheckItem
 
 /** @} */

@@ -342,6 +342,8 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
 
     cfg->Write(wxT("/Language/Selected"),(long)m_locale->GetLanguage());
+    
+    cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
 
     // free resources
     delete m_locale;
@@ -403,6 +405,9 @@ void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
 {
+    m_repeat = m_repeat ? false : true;
+    m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
+    m_toolBar->ToggleTool(ID_Repeat,m_repeat);
 }
 
 void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
