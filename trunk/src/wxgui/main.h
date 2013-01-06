@@ -175,6 +175,8 @@ private:
 
     bool m_repeat;
     bool m_skipRem;
+    
+    bool m_btdEnabled;
 
     DECLARE_EVENT_TABLE()
 };

@@ -112,7 +112,7 @@ void MainFrame::InitMenu()
 
     // create boot configuration menu
     wxMenu *menuBootConfig = new wxMenu;
-    UD_MakeMenuItem(ID_BootEnable,"&Enable","F11",menuBootConfig);
+    UD_MakeMenuCheckItem(ID_BootEnable,"&Enable","F11",menuBootConfig);
     UD_MakeMenuItem(ID_BootScript,"&Script","F12",menuBootConfig);
 
     // create settings menu
