@@ -170,6 +170,7 @@ private:
     wxToolBar *m_toolBar;
     wxLocale  *m_locale;
     wxMenuBar *m_menuBar;
+    wxMenu    *m_menuLanguage;
 
     bool m_repeat;
     bool m_skipRem;
