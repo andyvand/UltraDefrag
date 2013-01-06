@@ -85,23 +85,23 @@ void MainFrame::InitToolbar()
 
     wxString *ItemLabel = new wxString;
 
-    UD_MakeToolItem(ID_Analyze    ,0)
-    UD_MakeToolCheckItem(ID_Repeat,1)
-    UD_MakeToolItem(ID_Defrag     ,3)
-    UD_MakeToolItem(ID_QuickOpt   ,4)
-    UD_MakeToolItem(ID_FullOpt    ,5)
-    UD_MakeToolItem(ID_MftOpt     ,6)
-    UD_MakeToolItem(ID_Pause      ,7)
-    UD_MakeToolItem(ID_Stop       ,8)
+    UD_MakeToolItem(ID_Analyze      ,0)
+    UD_MakeToolCheckItem(ID_Repeat  ,1)
+    UD_MakeToolItem(ID_Defrag       ,3)
+    UD_MakeToolItem(ID_QuickOpt     ,4)
+    UD_MakeToolItem(ID_FullOpt      ,5)
+    UD_MakeToolItem(ID_MftOpt       ,6)
+    UD_MakeToolItem(ID_Pause        ,7)
+    UD_MakeToolItem(ID_Stop         ,8)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_ShowReport ,9)
+    UD_MakeToolItem(ID_ShowReport   ,9)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_GuiOptions,10)
+    UD_MakeToolItem(ID_GuiOptions  ,10)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_BootEnable,11)
-    UD_MakeToolItem(ID_BootScript,12)
+    UD_MakeToolItem(ID_BootEnable  ,11)
+    UD_MakeToolItem(ID_BootScript  ,12)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_HelpAbout ,13)
+    UD_MakeToolItem(ID_HelpContents,13)
 
     m_toolBar->Realize();
 
@@ -109,9 +109,6 @@ void MainFrame::InitToolbar()
     wxConfigBase *cfg = wxConfigBase::Get();
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     m_toolBar->ToggleTool(ID_Repeat,m_repeat);
-
-    m_toolBar->EnableTool(ID_BootEnable,false);
-    m_toolBar->EnableTool(ID_BootScript,false);
 
     // uncomment to test grayed out images
     /*m_toolBar->EnableTool(ID_Analyze,false);
