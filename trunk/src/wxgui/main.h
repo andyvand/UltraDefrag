@@ -159,6 +159,7 @@ public:
     void OnSize(wxSizeEvent& event);
     
     void OnBootChange(wxCommandEvent& event);
+    void OnLocaleChange(wxCommandEvent& event);
 
 private:
     void SetLocale();
@@ -170,11 +171,16 @@ private:
     int m_width;
     int m_height;
 
-    wxString  *m_title;
-    wxToolBar *m_toolBar;
-    wxLocale  *m_locale;
-    wxMenuBar *m_menuBar;
-    wxMenu    *m_menuLanguage;
+    wxString   *m_title;
+    wxToolBar  *m_toolBar;
+    wxLocale   *m_locale;
+    wxMenuBar  *m_menuBar;
+    wxMenuItem *m_subMenuWhenDone;
+    wxMenuItem *m_subMenuLanguage;
+    wxMenuItem *m_subMenuGUIconfig;
+    wxMenuItem *m_subMenuBootConfig;
+    wxMenuItem *m_subMenuDebug;
+    wxMenu     *m_menuLanguage;
 
     bool m_repeat;
     bool m_skipRem;
@@ -260,6 +266,7 @@ enum {
     
     // event identifiers
     ID_BootChange,
+    ID_LocaleChange,
 };
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640

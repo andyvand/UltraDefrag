@@ -59,6 +59,22 @@
 #define wxUD_LANGUAGE_KAPAMPANGAN       wxLANGUAGE_USER_DEFINED+5
 #define wxUD_LANGUAGE_WARAY_WARAY       wxLANGUAGE_USER_DEFINED+6
 
+#define UD_UpdateMenuItemLabel(id,label,accel) \
+    if(::strlen(accel)){ \
+        ItemLabel.Clear(); \
+        ItemLabel << _(label) << wxT("\t") << wxT(accel); \
+        m_menuBar->FindItem(id)->SetItemLabel(ItemLabel); \
+        if(m_toolBar->FindById(id)){ \
+            ItemLabel.Clear(); \
+            ItemLabel << _(label) << wxT(" (") << wxT(accel) << wxT(")"); \
+            m_toolBar->SetToolShortHelp(id,ItemLabel); \
+        } \
+    } else { \
+        m_menuBar->FindItem(id)->SetItemLabel(_(label)); \
+        if(m_toolBar->FindById(id)) \
+            m_toolBar->SetToolShortHelp(id,_(label)); \
+    }
+        
 void MainFrame::SetLocale()
 {
     int id = wxLANGUAGE_ENGLISH_US;
@@ -97,6 +113,68 @@ void MainFrame::SetLocale()
     m_locale->AddCatalog(wxT("UltraDefrag"));
 }
 
+void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
+{
+    // update menu labels and tool bar tooltips
+    wxString ItemLabel;
+    UD_UpdateMenuItemLabel(ID_Analyze          , "&Analyze"             , "F5");
+    UD_UpdateMenuItemLabel(ID_Defrag           , "&Defragment"          , "F6");
+    UD_UpdateMenuItemLabel(ID_QuickOpt         , "&Quick optimization"  , "F7");
+    UD_UpdateMenuItemLabel(ID_FullOpt          , "&Full optimization"   , "Ctrl+F7");
+    UD_UpdateMenuItemLabel(ID_MftOpt           , "&Optimize MFT"        , "Shift+F7");
+    UD_UpdateMenuItemLabel(ID_Pause            , "&Pause"               , "Space");
+    UD_UpdateMenuItemLabel(ID_Stop             , "&Stop"                , "Ctrl+C");
+    UD_UpdateMenuItemLabel(ID_Repeat           , "Re&peat action"       , "Shift+R");
+    UD_UpdateMenuItemLabel(ID_SkipRem          , "Skip removable &media", "Ctrl+M");
+    UD_UpdateMenuItemLabel(ID_Rescan           , "&Rescan drives"       , "Ctrl+D");
+    UD_UpdateMenuItemLabel(ID_Repair           , "Repair dri&ves"       , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneNone     , "&None"                , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneExit     , "E&xit"                , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneStandby  , "Stan&dby"             , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneHibernate, "&Hibernate"           , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneLogoff   , "&Logoff"              , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneReboot   , "&Reboot"              , "");
+    UD_UpdateMenuItemLabel(ID_WhenDoneShutdown , "&Shutdown"            , "");
+    UD_UpdateMenuItemLabel(ID_Exit             , "E&xit"                , "Alt+F4");
+    UD_UpdateMenuItemLabel(ID_ShowReport       , "&Show report"         , "F8");
+    UD_UpdateMenuItemLabel(ID_LangShowLog      , "&View change log"     , "");
+    UD_UpdateMenuItemLabel(ID_LangShowReport   , "View translation &report", "");
+    UD_UpdateMenuItemLabel(ID_LangOpenFolder   , "&Translations folder"    , "");
+    UD_UpdateMenuItemLabel(ID_LangSubmit       , "&Submit current translation", "");
+    UD_UpdateMenuItemLabel(ID_GuiFont          , "&Font"                , "F9");
+    UD_UpdateMenuItemLabel(ID_GuiOptions       , "&Options"             , "F10");
+    UD_UpdateMenuItemLabel(ID_BootEnable       , "&Enable"              , "F11");
+    UD_UpdateMenuItemLabel(ID_BootScript       , "&Script"              , "F12");
+    UD_UpdateMenuItemLabel(ID_ReportOptions    , "&Reports"             , "Ctrl+R");
+    UD_UpdateMenuItemLabel(ID_HelpContents     , "&Contents"            , "F1");
+    UD_UpdateMenuItemLabel(ID_HelpBestPractice , "Best &practice"       , "F2");
+    UD_UpdateMenuItemLabel(ID_HelpFaq          , "&FAQ"                 , "F3");
+    UD_UpdateMenuItemLabel(ID_HelpLegend       , "Cluster map &legend"  , "");
+    UD_UpdateMenuItemLabel(ID_DebugLog         , "Open &log"            , "Alt+L");
+    UD_UpdateMenuItemLabel(ID_DebugSend        , "Send bug &report"     , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdate       , "Check for &update"    , "");
+    UD_UpdateMenuItemLabel(ID_HelpAbout        , "&About"               , "F4");
+    m_menuBar->SetMenuLabel(0, _("&Action"));
+    m_menuBar->SetMenuLabel(1, _("&Report"));
+    m_menuBar->SetMenuLabel(2, _("&Settings"));
+    m_menuBar->SetMenuLabel(3, _("&Help"));
+    m_subMenuWhenDone->SetItemLabel(_("&When done"));
+    m_subMenuLanguage->SetItemLabel(_("&Language"));
+    m_subMenuGUIconfig->SetItemLabel(_("&Graphical interface"));
+    m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
+    m_subMenuDebug->SetItemLabel(_("&Debug"));
+
+    // update tooltips which text differ from menu labels
+    ItemLabel.Clear();
+    ItemLabel << _("&Boot time scan") << wxT(" (F11)");
+    m_toolBar->SetToolShortHelp(ID_BootEnable,ItemLabel);
+    ItemLabel.Clear();
+    ItemLabel << _("Boot time script") << wxT(" (F12)");
+    m_toolBar->SetToolShortHelp(ID_BootScript,ItemLabel);
+    
+}
+
+#undef UD_UpdateMenuItemLabel
 #undef UD_LNG
 
 /** @} */
