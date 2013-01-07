@@ -42,11 +42,12 @@
 #include <wx/stdpaths.h>
 #include <wx/sysopt.h>
 #include <wx/toolbar.h>
+#include <wx/thread.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
 #else
-#define wxCharStringFmtSpec "%s"
+#define wxCharStringFmtSpec "%hs"
 #endif
 
 #include "resource.h"
@@ -156,6 +157,8 @@ public:
     // event handlers
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
+    
+    void OnBootChange(wxCommandEvent& event);
 
 private:
     void SetLocale();
@@ -177,8 +180,17 @@ private:
     bool m_skipRem;
     
     bool m_btdEnabled;
+    class BtdThread *m_btdThread;
 
     DECLARE_EVENT_TABLE()
+};
+
+class BtdThread: public wxThread {
+public:
+    BtdThread(wxThreadKind kind);
+    virtual void *Entry();
+
+    bool m_stop;
 };
 
 class AboutDialog: public wxDialog {
@@ -244,7 +256,10 @@ enum {
     ID_DebugSend,
 
     ID_HelpUpdate,
-    ID_HelpAbout
+    ID_HelpAbout,
+    
+    // event identifiers
+    ID_BootChange,
 };
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640

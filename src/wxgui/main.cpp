@@ -95,6 +95,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     // event handlers
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
+    
+    EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(App)
@@ -264,14 +266,14 @@ MainFrame::MainFrame()
         wxStandardPaths stdpaths;
         wxFileName exepath(stdpaths.GetExecutablePath());
         wxString cd = exepath.GetPath();
-        wxLogMessage(wxT("Current directory: %ls"),cd.wc_str());
-        wxLogMessage(wxT("Installation directory: %ls"),instdir->wc_str());
+        wxLogMessage(wxT("current directory: %ls"),cd.wc_str());
+        wxLogMessage(wxT("installation directory: %ls"),instdir->wc_str());
         if(cd.CmpNoCase(*instdir) == 0){
-            wxLogMessage(wxT("Current directory matches ")
+            wxLogMessage(wxT("current directory matches ")
                 wxT("installation location, so it isn't portable"));
             m_title = new wxString(wxT(VERSIONINTITLE));
         } else {
-            wxLogMessage(wxT("Current directory differs from ")
+            wxLogMessage(wxT("current directory differs from ")
                 wxT("installation location, so it is portable"));
             m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
         }
@@ -339,6 +341,15 @@ MainFrame::MainFrame()
         m_btdEnabled = false;
     }
 
+    // track the boot time defragmenter registration
+    m_btdThread = new BtdThread(wxTHREAD_JOINABLE);
+    m_btdThread->m_stop = btd ? false : true;
+    m_btdThread->Create();
+    m_btdThread->Run();
+
+    /*m_toolBar->EnableTool(ID_BootEnable,false);
+    m_toolBar->EnableTool(ID_BootScript,false);*/
+    
     // create status bar
     CreateStatusBar();
     SetStatusText(wxT("Welcome to wxUltraDefrag!"));
@@ -361,6 +372,11 @@ MainFrame::~MainFrame()
 
     cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
+
+    // terminate threads
+    m_btdThread->m_stop = true;
+    m_btdThread->Wait();
+    delete m_btdThread;
 
     // free resources
     delete m_locale;
@@ -516,6 +532,13 @@ void MainFrame::OnBootEnable(wxCommandEvent& WXUNUSED(event))
         m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
         m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
     }
+}
+
+void MainFrame::OnBootChange(wxCommandEvent& event)
+{
+    m_btdEnabled = event.GetInt();
+    m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
+    m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
 }
 
 void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
