@@ -41,14 +41,10 @@
 // =======================================================================
 
 #define UD_MakeToolItem(id, bmpidx) \
-    ItemLabel->Clear();             \
-    ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
-    m_toolBar->AddTool(id,toolBarBitmaps[bmpidx],ItemLabel->Trim());
+    m_toolBar->AddTool(id,toolBarBitmaps[bmpidx]);
 
 #define UD_MakeToolCheckItem(id, bmpidx) \
-    ItemLabel->Clear();             \
-    ItemLabel->Append(m_menuBar->FindItem(id)->GetItemLabelText()); \
-    m_toolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx],wxNullBitmap,ItemLabel->Trim());
+    m_toolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx]);
 
 /**
  * @brief Initializes tool bar.
@@ -85,29 +81,23 @@ void MainFrame::InitToolbar()
     for(int i = 0; i < TOOLBAR_IMAGE_COUNT; i++)
         toolBarBitmaps[i] = toolbarImage.GetSubBitmap(wxRect(bmHeight*i,0,bmHeight,bmHeight));
 
-    wxString *ItemLabel = new wxString;
-
-    UD_MakeToolItem(ID_Analyze     ,ID_BMP_Analyze)
-    UD_MakeToolCheckItem(ID_Repeat ,ID_BMP_Repeat)
-    UD_MakeToolItem(ID_Defrag      ,ID_BMP_Defrag)
-    UD_MakeToolItem(ID_QuickOpt    ,ID_BMP_QuickOpt)
-    UD_MakeToolItem(ID_FullOpt     ,ID_BMP_FullOpt)
-    UD_MakeToolItem(ID_MftOpt      ,ID_BMP_MftOpt)
-    UD_MakeToolItem(ID_Pause       ,ID_BMP_Pause)
-    UD_MakeToolItem(ID_Stop        ,ID_BMP_Stop)
+    UD_MakeToolItem(ID_Analyze         , ID_BMP_Analyze)
+    UD_MakeToolCheckItem(ID_Repeat     , ID_BMP_Repeat)
+    UD_MakeToolItem(ID_Defrag          , ID_BMP_Defrag)
+    UD_MakeToolItem(ID_QuickOpt        , ID_BMP_QuickOpt)
+    UD_MakeToolItem(ID_FullOpt         , ID_BMP_FullOpt)
+    UD_MakeToolItem(ID_MftOpt          , ID_BMP_MftOpt)
+    UD_MakeToolItem(ID_Pause           , ID_BMP_Pause)
+    UD_MakeToolItem(ID_Stop            , ID_BMP_Stop)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_ShowReport  ,ID_BMP_ShowReport)
+    UD_MakeToolItem(ID_ShowReport      , ID_BMP_ShowReport)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_GuiOptions  ,ID_BMP_GuiOptions)
+    UD_MakeToolItem(ID_GuiOptions      , ID_BMP_GuiOptions)
     m_toolBar->AddSeparator();
-    m_toolBar->AddCheckTool(ID_BootEnable,wxEmptyString,
-        toolBarBitmaps[ID_BMP_BootEnable],wxNullBitmap,
-        _("&Boot time scan"));
-    m_toolBar->AddTool(ID_BootScript,
-        toolBarBitmaps[ID_BMP_BootScript],
-        _("Boot time script"));
+    UD_MakeToolCheckItem(ID_BootEnable , ID_BMP_BootEnable)
+    UD_MakeToolItem(ID_BootScript      , ID_BMP_BootScript)
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_HelpContents,ID_BMP_HelpContents)
+    UD_MakeToolItem(ID_HelpContents    , ID_BMP_HelpContents)
 
     m_toolBar->Realize();
 

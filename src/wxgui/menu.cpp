@@ -40,113 +40,95 @@
 //                        Menu for main window
 // =======================================================================
 
-/* label must always be second argument to be able to extract it using
-   "xgettext -kUD_MakeMenuItem:2 -kUD_MakeMenuCheckItem:2" for translation*/
-#define UD_MakeMenuItem(id, label, accel, menu) \
-    ItemLabel->Clear();             \
-    ItemLabel->Append(_(label));    \
-    ItemLabel->Append(wxT("\t"));   \
-    ItemLabel->Append(wxT(accel));  \
-    menu->Append(id,ItemLabel->Trim());
-
-#define UD_MakeMenuCheckItem(id, label, accel, menu) \
-    ItemLabel->Clear();             \
-    ItemLabel->Append(_(label));    \
-    ItemLabel->Append(wxT("\t"));   \
-    ItemLabel->Append(wxT(accel));  \
-    menu->AppendCheckItem(id,ItemLabel->Trim());
-
 /**
- * @brief Initializes main window.
+ * @brief Initializes main menu.
  */
 void MainFrame::InitMenu()
 {
-    wxString *ItemLabel = new wxString;
-
     // create when done menu
     wxMenu *menuWhenDone = new wxMenu;
-    menuWhenDone->AppendRadioItem(ID_WhenDoneNone     ,_("&None"));
-    menuWhenDone->AppendRadioItem(ID_WhenDoneExit     ,_("E&xit"));
-    menuWhenDone->AppendRadioItem(ID_WhenDoneStandby  ,_("Stan&dby"));
-    menuWhenDone->AppendRadioItem(ID_WhenDoneHibernate,_("&Hibernate"));
-    menuWhenDone->AppendRadioItem(ID_WhenDoneLogoff   ,_("&Logoff"));
-    menuWhenDone->AppendRadioItem(ID_WhenDoneReboot   ,_("&Reboot"));
-    menuWhenDone->AppendRadioItem(ID_WhenDoneShutdown ,_("&Shutdown"));
+    menuWhenDone->AppendRadioItem(ID_WhenDoneNone     , wxEmptyString);
+    menuWhenDone->AppendRadioItem(ID_WhenDoneExit     , wxEmptyString);
+    menuWhenDone->AppendRadioItem(ID_WhenDoneStandby  , wxEmptyString);
+    menuWhenDone->AppendRadioItem(ID_WhenDoneHibernate, wxEmptyString);
+    menuWhenDone->AppendRadioItem(ID_WhenDoneLogoff   , wxEmptyString);
+    menuWhenDone->AppendRadioItem(ID_WhenDoneReboot   , wxEmptyString);
+    menuWhenDone->AppendRadioItem(ID_WhenDoneShutdown , wxEmptyString);
 
     // create action menu
-    wxMenu *menuAction = new wxMenu;
-    UD_MakeMenuItem(ID_Analyze     ,"&Analyze"             ,"F5"      ,menuAction)
-    UD_MakeMenuItem(ID_Defrag      ,"&Defragment"          ,"F6"      ,menuAction)
-    UD_MakeMenuItem(ID_QuickOpt    ,"&Quick optimization"  ,"F7"      ,menuAction)
-    UD_MakeMenuItem(ID_FullOpt     ,"&Full optimization"   ,"Ctrl+F7" ,menuAction)
-    UD_MakeMenuItem(ID_MftOpt      ,"&Optimize MFT"        ,"Shift+F7",menuAction)
-    UD_MakeMenuItem(ID_Pause       ,"&Pause"               ,"Space"   ,menuAction)
-    UD_MakeMenuItem(ID_Stop        ,"&Stop"                ,"Ctrl+C"  ,menuAction)
-    menuAction->AppendSeparator();
-    UD_MakeMenuCheckItem(ID_Repeat ,"Re&peat action"       ,"Shift+R" ,menuAction)
-    menuAction->AppendSeparator();
-    UD_MakeMenuCheckItem(ID_SkipRem,"Skip removable &media","Ctrl+M"  ,menuAction)
-    UD_MakeMenuItem(ID_Rescan      ,"&Rescan drives"       ,"Ctrl+D"  ,menuAction)
-    menuAction->AppendSeparator();
-    menuAction->Append(ID_Repair   ,_("Repair dri&ves"));
-    menuAction->AppendSeparator();
-    menuAction->AppendSubMenu(menuWhenDone,_("&When done"));
-    menuAction->AppendSeparator();
-    UD_MakeMenuItem(ID_Exit        ,"E&xit"                ,"Alt+F4"  ,menuAction)
+    wxMenu *m_menuAction = new wxMenu;
+    m_menuAction->Append(ID_Analyze , wxEmptyString);
+    m_menuAction->Append(ID_Defrag  , wxEmptyString);
+    m_menuAction->Append(ID_QuickOpt, wxEmptyString);
+    m_menuAction->Append(ID_FullOpt , wxEmptyString);
+    m_menuAction->Append(ID_MftOpt  , wxEmptyString);
+    m_menuAction->Append(ID_Pause   , wxEmptyString);
+    m_menuAction->Append(ID_Stop    , wxEmptyString);
+    m_menuAction->AppendSeparator();
+    m_menuAction->AppendCheckItem(ID_Repeat , wxEmptyString);
+    m_menuAction->AppendSeparator();
+    m_menuAction->AppendCheckItem(ID_SkipRem, wxEmptyString);
+    m_menuAction->Append(ID_Rescan  , wxEmptyString);
+    m_menuAction->AppendSeparator();
+    m_menuAction->Append(ID_Repair  , wxEmptyString);
+    m_menuAction->AppendSeparator();
+    m_subMenuWhenDone = m_menuAction->AppendSubMenu(menuWhenDone, wxEmptyString);
+    m_menuAction->AppendSeparator();
+    m_menuAction->Append(ID_Exit    , wxEmptyString);
 
     // create report menu
     wxMenu *menuReport = new wxMenu;
-    UD_MakeMenuItem(ID_ShowReport,"&Show report","F8",menuReport)
+    menuReport->Append(ID_ShowReport, wxEmptyString);
 
     // create language menu
     m_menuLanguage = new wxMenu;
-    m_menuLanguage->Append(ID_LangShowLog   ,_("&View change log"));
-    m_menuLanguage->Append(ID_LangShowReport,_("View translation &report"));
-    m_menuLanguage->Append(ID_LangOpenFolder,_("&Translations folder"));
-    m_menuLanguage->Append(ID_LangSubmit    ,_("&Submit current translation"));
+    m_menuLanguage->Append(ID_LangShowLog   , wxEmptyString);
+    m_menuLanguage->Append(ID_LangShowReport, wxEmptyString);
+    m_menuLanguage->Append(ID_LangOpenFolder, wxEmptyString);
+    m_menuLanguage->Append(ID_LangSubmit    , wxEmptyString);
 
     // create GUI configuration menu
     wxMenu *menuGUIconfig = new wxMenu;
-    UD_MakeMenuItem(ID_GuiFont   ,"&Font"   ,"F9" ,menuGUIconfig)
-    UD_MakeMenuItem(ID_GuiOptions,"&Options","F10",menuGUIconfig)
+    menuGUIconfig->Append(ID_GuiFont   , wxEmptyString);
+    menuGUIconfig->Append(ID_GuiOptions, wxEmptyString);
 
     // create boot configuration menu
     wxMenu *menuBootConfig = new wxMenu;
-    UD_MakeMenuCheckItem(ID_BootEnable,"&Enable","F11",menuBootConfig);
-    UD_MakeMenuItem(ID_BootScript,"&Script","F12",menuBootConfig);
+    menuBootConfig->AppendCheckItem(ID_BootEnable, wxEmptyString);
+    menuBootConfig->Append(ID_BootScript         , wxEmptyString);
 
     // create settings menu
     wxMenu *menuSettings = new wxMenu;
-    menuSettings->AppendSubMenu(m_menuLanguage,_("&Language"));
-    menuSettings->AppendSubMenu(menuGUIconfig ,_("&Graphical interface"));
-    menuSettings->AppendSubMenu(menuBootConfig,_("&Boot time scan"));
-    UD_MakeMenuItem(ID_ReportOptions,"&Reports","Ctrl+R",menuSettings)
+    m_subMenuLanguage = menuSettings->AppendSubMenu(m_menuLanguage  , wxEmptyString);
+    m_subMenuGUIconfig = menuSettings->AppendSubMenu(menuGUIconfig  , wxEmptyString);
+    m_subMenuBootConfig = menuSettings->AppendSubMenu(menuBootConfig, wxEmptyString);
+    menuSettings->Append(ID_ReportOptions, wxEmptyString);
 
     // create debug menu
     wxMenu *menuDebug = new wxMenu;
-    UD_MakeMenuItem(ID_DebugLog,"Open &log","Alt+L",menuDebug)
-    menuDebug->Append(ID_DebugSend,_("Send bug &report"));
+    menuDebug->Append(ID_DebugLog , wxEmptyString);
+    menuDebug->Append(ID_DebugSend, wxEmptyString);
 
     // create help menu
     wxMenu *menuHelp = new wxMenu;
-    UD_MakeMenuItem(ID_HelpContents    ,"&Contents"     ,"F1",menuHelp)
+    menuHelp->Append(ID_HelpContents    , wxEmptyString);
     menuHelp->AppendSeparator();
-    UD_MakeMenuItem(ID_HelpBestPractice,"Best &practice","F2",menuHelp)
-    UD_MakeMenuItem(ID_HelpFaq         ,"&FAQ"          ,"F3",menuHelp)
-    menuHelp->Append(ID_HelpLegend     ,_("Cluster map &legend"));
+    menuHelp->Append(ID_HelpBestPractice, wxEmptyString);
+    menuHelp->Append(ID_HelpFaq         , wxEmptyString);
+    menuHelp->Append(ID_HelpLegend      , wxEmptyString);
     menuHelp->AppendSeparator();
-    menuHelp->AppendSubMenu(menuDebug  ,_("&Debug"));
+    m_subMenuDebug = menuHelp->AppendSubMenu(menuDebug, wxEmptyString);
     menuHelp->AppendSeparator();
-    menuHelp->Append(ID_HelpUpdate     ,_("Check for &update"));
+    menuHelp->Append(ID_HelpUpdate      , wxEmptyString);
     menuHelp->AppendSeparator();
-    UD_MakeMenuItem(ID_HelpAbout       ,"&About"        ,"F4",menuHelp)
+    menuHelp->Append(ID_HelpAbout       , wxEmptyString);
 
     // create main menu
     m_menuBar = new wxMenuBar;
-    m_menuBar->Append(menuAction,  _("&Action"));
-    m_menuBar->Append(menuReport,  _("&Report"));
-    m_menuBar->Append(menuSettings,_("&Settings"));
-    m_menuBar->Append(menuHelp,    _("&Help"));
+    m_menuBar->Append(m_menuAction, wxEmptyString);
+    m_menuBar->Append(menuReport  , wxEmptyString);
+    m_menuBar->Append(menuSettings, wxEmptyString);
+    m_menuBar->Append(menuHelp    , wxEmptyString);
 
     SetMenuBar(m_menuBar);
 
@@ -158,8 +140,5 @@ void MainFrame::InitMenu()
     cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 }
-
-#undef UD_MakeMenuItem
-#undef UD_MakeMenuCheckItem
 
 /** @} */
