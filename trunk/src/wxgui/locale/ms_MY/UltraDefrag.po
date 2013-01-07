@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-06 19:21+0100\n"
+"POT-Creation-Date: 2013-01-07 22:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,182 +32,186 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: menu.cpp:68
+#: menu.cpp:68 i18n.cpp:131
 msgid "&None"
 msgstr ""
 
-#: menu.cpp:69 menu.cpp:95
+#: menu.cpp:69 menu.cpp:95 i18n.cpp:132 i18n.cpp:138
 msgid "E&xit"
 msgstr ""
 
-#: menu.cpp:70
+#: menu.cpp:70 i18n.cpp:133
 msgid "Stan&dby"
 msgstr ""
 
-#: menu.cpp:71
+#: menu.cpp:71 i18n.cpp:134
 msgid "&Hibernate"
 msgstr ""
 
-#: menu.cpp:72
+#: menu.cpp:72 i18n.cpp:135
 msgid "&Logoff"
 msgstr ""
 
-#: menu.cpp:73
+#: menu.cpp:73 i18n.cpp:136
 msgid "&Reboot"
 msgstr ""
 
-#: menu.cpp:74
+#: menu.cpp:74 i18n.cpp:137
 msgid "&Shutdown"
 msgstr ""
 
-#: menu.cpp:78
+#: menu.cpp:78 i18n.cpp:120
 msgid "&Analyze"
 msgstr ""
 
-#: menu.cpp:79
+#: menu.cpp:79 i18n.cpp:121
 msgid "&Defragment"
 msgstr ""
 
-#: menu.cpp:80
+#: menu.cpp:80 i18n.cpp:122
 msgid "&Quick optimization"
 msgstr ""
 
-#: menu.cpp:81
+#: menu.cpp:81 i18n.cpp:123
 msgid "&Full optimization"
 msgstr ""
 
-#: menu.cpp:82
+#: menu.cpp:82 i18n.cpp:124
 msgid "&Optimize MFT"
 msgstr ""
 
-#: menu.cpp:83
+#: menu.cpp:83 i18n.cpp:125
 msgid "&Pause"
 msgstr ""
 
-#: menu.cpp:84
+#: menu.cpp:84 i18n.cpp:126
 msgid "&Stop"
 msgstr ""
 
-#: menu.cpp:86
+#: menu.cpp:86 i18n.cpp:127
 msgid "Re&peat action"
 msgstr ""
 
-#: menu.cpp:88
+#: menu.cpp:88 i18n.cpp:128
 msgid "Skip removable &media"
 msgstr ""
 
-#: menu.cpp:89
+#: menu.cpp:89 i18n.cpp:129
 msgid "&Rescan drives"
 msgstr ""
 
-#: menu.cpp:91
+#: menu.cpp:91 i18n.cpp:130
 msgid "Repair dri&ves"
 msgstr ""
 
-#: menu.cpp:93
+#: menu.cpp:93 i18n.cpp:161
 msgid "&When done"
 msgstr ""
 
-#: menu.cpp:99
+#: menu.cpp:99 i18n.cpp:139
 msgid "&Show report"
 msgstr ""
 
-#: menu.cpp:103
+#: menu.cpp:103 i18n.cpp:140
 msgid "&View change log"
 msgstr ""
 
-#: menu.cpp:104
+#: menu.cpp:104 i18n.cpp:141
 msgid "View translation &report"
 msgstr ""
 
-#: menu.cpp:105
+#: menu.cpp:105 i18n.cpp:142
 msgid "&Translations folder"
 msgstr ""
 
-#: menu.cpp:106
+#: menu.cpp:106 i18n.cpp:143
 msgid "&Submit current translation"
 msgstr ""
 
-#: menu.cpp:110
+#: menu.cpp:110 i18n.cpp:144
 msgid "&Font"
 msgstr ""
 
-#: menu.cpp:111
+#: menu.cpp:111 i18n.cpp:145
 msgid "&Options"
 msgstr ""
 
-#: menu.cpp:115
+#: menu.cpp:115 i18n.cpp:146
 msgid "&Enable"
 msgstr ""
 
-#: menu.cpp:116
+#: menu.cpp:116 i18n.cpp:147
 msgid "&Script"
 msgstr ""
 
-#: menu.cpp:120
+#: menu.cpp:120 i18n.cpp:162
 msgid "&Language"
 msgstr ""
 
-#: menu.cpp:121
+#: menu.cpp:121 i18n.cpp:163
 msgid "&Graphical interface"
 msgstr ""
 
-#: menu.cpp:122
+#: menu.cpp:122 toolbar.cpp:103 i18n.cpp:164 i18n.cpp:169
 msgid "&Boot time scan"
 msgstr ""
 
-#: menu.cpp:123
+#: menu.cpp:123 i18n.cpp:148
 msgid "&Reports"
 msgstr ""
 
-#: menu.cpp:127
+#: menu.cpp:127 i18n.cpp:153
 msgid "Open &log"
 msgstr ""
 
-#: menu.cpp:128
+#: menu.cpp:128 i18n.cpp:154
 msgid "Send bug &report"
 msgstr ""
 
-#: menu.cpp:132
+#: menu.cpp:132 i18n.cpp:149
 msgid "&Contents"
 msgstr ""
 
-#: menu.cpp:134
+#: menu.cpp:134 i18n.cpp:150
 msgid "Best &practice"
 msgstr ""
 
-#: menu.cpp:135
+#: menu.cpp:135 i18n.cpp:151
 msgid "&FAQ"
 msgstr ""
 
-#: menu.cpp:136
+#: menu.cpp:136 i18n.cpp:152
 msgid "Cluster map &legend"
 msgstr ""
 
-#: menu.cpp:138
+#: menu.cpp:138 i18n.cpp:165
 msgid "&Debug"
 msgstr ""
 
-#: menu.cpp:140
+#: menu.cpp:140 i18n.cpp:155
 msgid "Check for &update"
 msgstr ""
 
-#: menu.cpp:142
+#: menu.cpp:142 i18n.cpp:156
 msgid "&About"
 msgstr ""
 
-#: menu.cpp:146
+#: menu.cpp:146 i18n.cpp:157
 msgid "&Action"
 msgstr ""
 
-#: menu.cpp:147
+#: menu.cpp:147 i18n.cpp:158
 msgid "&Report"
 msgstr ""
 
-#: menu.cpp:148
+#: menu.cpp:148 i18n.cpp:159
 msgid "&Settings"
 msgstr ""
 
-#: menu.cpp:149
+#: menu.cpp:149 i18n.cpp:160 i18n.cpp:175
 msgid "&Help"
+msgstr ""
+
+#: toolbar.cpp:104 i18n.cpp:172
+msgid "Boot time script"
 msgstr ""
