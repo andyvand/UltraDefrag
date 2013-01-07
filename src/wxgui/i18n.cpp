@@ -74,7 +74,7 @@
         if(m_toolBar->FindById(id)) \
             m_toolBar->SetToolShortHelp(id,_(label)); \
     }
-        
+
 void MainFrame::SetLocale()
 {
     int id = wxLANGUAGE_ENGLISH_US;
@@ -174,7 +174,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
     ItemLabel.Clear();
     ItemLabel << _("&Help") << wxT(" (F1)");
     m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
-    
 }
 
 #undef UD_UpdateMenuItemLabel
