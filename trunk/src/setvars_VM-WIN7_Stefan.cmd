@@ -11,6 +11,7 @@ set WXWIDGETSDIR=C:\wxWidgets-2.8.12
 set NSISDIR=C:\Program Files\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
 set GNUWIN32_DIR=C:\Program Files\GnuWin32\bin
+set CODEBLOCKS_EXE=C:\Program Files\CodeBlocks\codeblocks.exe
 
 rem comment out next line to enable warnings to find unreachable code
 goto :EOF

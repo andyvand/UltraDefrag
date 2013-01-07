@@ -12,3 +12,4 @@ set WXWIDGETSDIR=D:\Software\wxMSW-2.8.12
 set NSISDIR=D:\Software\Tools\NSIS
 set SEVENZIP_PATH=C:\Program Files\7-Zip
 set GNUWIN32_DIR=
+set CODEBLOCKS_EXE=
