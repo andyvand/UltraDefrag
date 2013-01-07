@@ -157,7 +157,7 @@ public:
     // event handlers
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
-    
+
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
 
@@ -184,7 +184,7 @@ private:
 
     bool m_repeat;
     bool m_skipRem;
-    
+
     bool m_btdEnabled;
     class BtdThread *m_btdThread;
 
@@ -263,10 +263,10 @@ enum {
 
     ID_HelpUpdate,
     ID_HelpAbout,
-    
+
     // event identifiers
     ID_BootChange,
-    ID_LocaleChange,
+    ID_LocaleChange
 };
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640
