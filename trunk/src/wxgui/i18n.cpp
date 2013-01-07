@@ -171,6 +171,9 @@ void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
     ItemLabel.Clear();
     ItemLabel << _("Boot time script") << wxT(" (F12)");
     m_toolBar->SetToolShortHelp(ID_BootScript,ItemLabel);
+    ItemLabel.Clear();
+    ItemLabel << _("&Help") << wxT(" (F1)");
+    m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
     
 }
 
