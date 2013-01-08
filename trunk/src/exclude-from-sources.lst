@@ -22,3 +22,5 @@
 \gui\options
 .mdsp
 \internal-doc
+.layout
+.depend
