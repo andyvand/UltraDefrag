@@ -95,7 +95,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     // event handlers
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
-    
+
     EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
     EVT_MENU(ID_LocaleChange, MainFrame::OnLocaleChange)
 END_EVENT_TABLE()
@@ -350,11 +350,11 @@ MainFrame::MainFrame()
 
     /*m_toolBar->EnableTool(ID_BootEnable,false);
     m_toolBar->EnableTool(ID_BootScript,false);*/
-    
+
     // create status bar
     CreateStatusBar();
     SetStatusText(wxT("Welcome to wxUltraDefrag!"));
-    
+
     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_LocaleChange);
     wxPostEvent(this,event);
 }
