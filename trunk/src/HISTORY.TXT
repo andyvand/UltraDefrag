@@ -1,6 +1,6 @@
 ﻿HISTORY
 
-  Version 7.0.0 2013-01-
+  Version 7.0.0 2013-02-
   ------------------------------------------------------------------------------
     beta1:
     - GUI reimplemented on top of wxWidgets library
