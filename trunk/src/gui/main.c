@@ -1207,67 +1207,76 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                 /* save choice */
                 when_done_action = id;
             }
+            /* handle sorting submenu */
+            if(id > IDM_CFG_SORTING && id < IDM_CFG_SORTING_LAST_ITEM){
+                CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_CHECKED);
+                switch(id){
+                case IDM_CFG_SORTING_SORT_BY_PATH:
+                    (void)SetEnvironmentVariable("UD_SORTING","path");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_PATH;
+                    break;
+                case IDM_CFG_SORTING_SORT_BY_SIZE:
+                    (void)SetEnvironmentVariable("UD_SORTING","size");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_SIZE;
+                    break;
+                case IDM_CFG_SORTING_SORT_BY_CREATION_TIME:
+                    (void)SetEnvironmentVariable("UD_SORTING","c_time");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_CREATION_TIME;
+                    break;
+                case IDM_CFG_SORTING_SORT_BY_MODIFICATION_TIME:
+                    (void)SetEnvironmentVariable("UD_SORTING","m_time");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_MODIFICATION_TIME;
+                    break;
+                case IDM_CFG_SORTING_SORT_BY_ACCESS_TIME:
+                    (void)SetEnvironmentVariable("UD_SORTING","a_time");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_BY_ACCESS_TIME;
+                    break;
+                case IDM_CFG_SORTING_SORT_ASCENDING:
+                    (void)SetEnvironmentVariable("UD_SORTING_ORDER","asc");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_DESCENDING,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= ~(SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_ASCENDING;
+                    break;
+                case IDM_CFG_SORTING_SORT_DESCENDING:
+                    (void)SetEnvironmentVariable("UD_SORTING_ORDER","desc");
+                    CheckMenuItem(hMainMenu,IDM_CFG_SORTING_SORT_ASCENDING,MF_BYCOMMAND | MF_UNCHECKED);
+                    sorting_flags &= ~(SORT_ASCENDING | SORT_DESCENDING);
+                    sorting_flags |= SORT_DESCENDING;
+                    break;
+                default:
+                    break;
+                }
+            }
             /* handle preview submenu */
             if(id > IDM_PREVIEW && id < IDM_PREVIEW_LAST_ITEM){
                 CheckMenuItem(hMainMenu,id,MF_BYCOMMAND | MF_CHECKED);
                 switch(id){
-                case IDM_PREVIEW_SORT_BY_PATH:
-                    (void)SetEnvironmentVariable("UD_SORTING","path");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_BY_PATH;
-                    break;
-                case IDM_PREVIEW_SORT_BY_SIZE:
-                    (void)SetEnvironmentVariable("UD_SORTING","size");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_BY_SIZE;
-                    break;
-                case IDM_PREVIEW_SORT_BY_CREATION_TIME:
-                    (void)SetEnvironmentVariable("UD_SORTING","c_time");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_BY_CREATION_TIME;
-                    break;
-                case IDM_PREVIEW_SORT_BY_MODIFICATION_TIME:
-                    (void)SetEnvironmentVariable("UD_SORTING","m_time");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_ACCESS_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_BY_MODIFICATION_TIME;
-                    break;
-                case IDM_PREVIEW_SORT_BY_ACCESS_TIME:
-                    (void)SetEnvironmentVariable("UD_SORTING","a_time");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_PATH,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_SIZE,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_CREATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= (SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_BY_ACCESS_TIME;
-                    break;
-                case IDM_PREVIEW_SORT_ASCENDING:
-                    (void)SetEnvironmentVariable("UD_SORTING_ORDER","asc");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_DESCENDING,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= ~(SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_ASCENDING;
-                    break;
-                case IDM_PREVIEW_SORT_DESCENDING:
-                    (void)SetEnvironmentVariable("UD_SORTING_ORDER","desc");
-                    CheckMenuItem(hMainMenu,IDM_PREVIEW_SORT_ASCENDING,MF_BYCOMMAND | MF_UNCHECKED);
-                    sorting_flags &= ~(SORT_ASCENDING | SORT_DESCENDING);
-                    sorting_flags |= SORT_DESCENDING;
-                    break;
+                case IDM_PREVIEW_DUMMY:
                 default:
                     break;
                 }

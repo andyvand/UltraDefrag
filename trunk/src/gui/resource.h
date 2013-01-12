@@ -137,29 +137,34 @@
 #define IDM_CFG_BOOT_ENABLE             2686
 #define IDM_CFG_BOOT_SCRIPT             2687
 #define IDM_CFG_REPORTS                 2690
+enum {
+    IDM_CFG_SORTING = 2700,
+    IDM_CFG_SORTING_SORT_BY_PATH,
+    IDM_CFG_SORTING_SORT_BY_SIZE,
+    IDM_CFG_SORTING_SORT_BY_CREATION_TIME,
+    IDM_CFG_SORTING_SORT_BY_MODIFICATION_TIME,
+    IDM_CFG_SORTING_SORT_BY_ACCESS_TIME,
+    IDM_CFG_SORTING_SORT_ASCENDING,
+    IDM_CFG_SORTING_SORT_DESCENDING,
+    IDM_CFG_SORTING_LAST_ITEM    /* must always be the last IDM_CFG_SORTING_xxx entry */
+};
 
-#define IDM_HELP                        2700
-#define IDM_CONTENTS                    2710
-#define IDM_BEST_PRACTICE               2720
-#define IDM_FAQ                         2730
-#define IDM_CM_LEGEND                   2732
-#define IDM_CHECK_UPDATE                2735
-#define IDM_ABOUT                       2740
+#define IDM_HELP                        2800
+#define IDM_CONTENTS                    2810
+#define IDM_BEST_PRACTICE               2820
+#define IDM_FAQ                         2830
+#define IDM_CM_LEGEND                   2832
+#define IDM_CHECK_UPDATE                2835
+#define IDM_ABOUT                       2840
 
-#define IDM_SELECT_ALL                  2750
+#define IDM_SELECT_ALL                  2850
 
 /* tray icon context menu constants */
-#define IDM_SHOWHIDE                    2760
+#define IDM_SHOWHIDE                    2860
 
 /* preview menu items */
 enum {
     IDM_PREVIEW = 5000,
-    IDM_PREVIEW_SORT_BY_PATH,
-    IDM_PREVIEW_SORT_BY_SIZE,
-    IDM_PREVIEW_SORT_BY_CREATION_TIME,
-    IDM_PREVIEW_SORT_BY_MODIFICATION_TIME,
-    IDM_PREVIEW_SORT_BY_ACCESS_TIME,
-    IDM_PREVIEW_SORT_ASCENDING,
-    IDM_PREVIEW_SORT_DESCENDING,
-    IDM_PREVIEW_LAST_ITEM    /* must always be the last entry */
+    IDM_PREVIEW_DUMMY,
+    IDM_PREVIEW_LAST_ITEM    /* must always be the last IDM_PREVIEW_xxx entry */
 };

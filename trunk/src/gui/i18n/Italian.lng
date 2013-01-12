@@ -65,6 +65,7 @@ LANGUAGE                  = &Lingua
 GRAPHICAL_INTERFACE       = Interfaccia &grafica
 BOOT_TIME_SCAN            = Scansione all'&avvio
 REPORTS                   = &Rapporti
+SORTING                   = &Sorting
 
 ; --- --- Language submenu
 
@@ -82,6 +83,16 @@ OPTIONS                   = &Opzioni
 
 ENABLE                    = &Abilita
 SCRIPT                    = &Script
+
+; --- --- Sorting submenu
+
+SORT_BY_PATH              = Sort by &path
+SORT_BY_SIZE              = Sort by &size
+SORT_BY_C_TIME            = Sort by &creation time
+SORT_BY_M_TIME            = Sort by last &modification time
+SORT_BY_A_TIME            = Sort by &last access time
+SORT_ASCENDING            = Sort in &ascending order
+SORT_DESCENDING           = Sort in &descending order
 
 ; --- Help Menu
 

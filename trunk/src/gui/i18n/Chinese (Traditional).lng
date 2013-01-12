@@ -60,6 +60,7 @@ LANGUAGE                  = 語言
 GRAPHICAL_INTERFACE       = 圖形界面
 BOOT_TIME_SCAN            = 開機時進行重組
 REPORTS                   = 報告
+SORTING                   = &Sorting
 
 ; --- --- Language submenu
 
@@ -77,6 +78,16 @@ OPTIONS                   = 選項
 
 ENABLE                    = 啟用
 SCRIPT                    = 指令碼
+
+; --- --- Sorting submenu
+
+SORT_BY_PATH              = Sort by &path
+SORT_BY_SIZE              = Sort by &size
+SORT_BY_C_TIME            = Sort by &creation time
+SORT_BY_M_TIME            = Sort by last &modification time
+SORT_BY_A_TIME            = Sort by &last access time
+SORT_ASCENDING            = Sort in &ascending order
+SORT_DESCENDING           = Sort in &descending order
 
 ; --- Help Menu
 
