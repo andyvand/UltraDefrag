@@ -59,6 +59,7 @@ LANGUAGE                  = Jezik
 GRAPHICAL_INTERFACE       = Grafičko sučelje
 BOOT_TIME_SCAN            = Start pri pokretanju Windowsa
 REPORTS                   = Izvješća
+SORTING                   = &Sorting
 
 ; --- --- Language submenu
 
@@ -76,6 +77,16 @@ OPTIONS                   = Opcije
 
 ENABLE                    = Omogući
 SCRIPT                    = Skripta
+
+; --- --- Sorting submenu
+
+SORT_BY_PATH              = Sort by &path
+SORT_BY_SIZE              = Sort by &size
+SORT_BY_C_TIME            = Sort by &creation time
+SORT_BY_M_TIME            = Sort by last &modification time
+SORT_BY_A_TIME            = Sort by &last access time
+SORT_ASCENDING            = Sort in &ascending order
+SORT_DESCENDING           = Sort in &descending order
 
 ; --- Help Menu
 

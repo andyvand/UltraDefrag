@@ -134,6 +134,7 @@ static wchar_t *GetNewVersionAnnouncement(void)
     char *string;
     int lmj, lmn, li; /* latest version numbers */
     int cmj, cmn, ci; /* current version numbers */
+    OSVERSIONINFO osvi;
     int current_version, last_version;
     int unstable_version = 0;
     int upgrade_needed = 0;
@@ -161,6 +162,17 @@ static wchar_t *GetNewVersionAnnouncement(void)
         else if(strstr(string,"beta")) unstable_version = 1;
         else if(strstr(string,"rc")) unstable_version = 1;
         free(string);
+    }
+    
+    /* v7 will not support nt4 and w2k */
+    ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+    osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&osvi);
+    if(osvi.dwMajorVersion * 10 + osvi.dwMinorVersion < 51){
+        if(lmj > 6){
+            itrace("upgrade to v7+ is not available for nt4/w2k");
+            return NULL;
+        }
     }
     
     /* 5.0.0 > 4.99.99 */
