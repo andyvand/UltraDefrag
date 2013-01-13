@@ -4,7 +4,7 @@
 ; Copyright (C) 2010 Sherpya.
 ; Copyright (C) 2011 Edoardo Brunetti
 ; Copyright (C) 2012 Alessandro Visentin
-; Copyright (C) 2012 Giacomo Margarito
+; Copyright (C) 2012-2013 Giacomo Margarito
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ LANGUAGE                  = &Lingua
 GRAPHICAL_INTERFACE       = Interfaccia &grafica
 BOOT_TIME_SCAN            = Scansione all'&avvio
 REPORTS                   = &Rapporti
-SORTING                   = &Sorting
+SORTING                   = &Elencazione
 
 ; --- --- Language submenu
 
@@ -87,13 +87,13 @@ SCRIPT                    = &Script
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = Elenca per &percorso
+SORT_BY_SIZE              = Elenca per &dimensioni
+SORT_BY_C_TIME            = Elenca per ora di &creazione
+SORT_BY_M_TIME            = Elenca per ora dell'ultima &modifica
+SORT_BY_A_TIME            = Elenca per ora dell'ultimo &accesso
+SORT_ASCENDING            = Elenca in &ordine crescente
+SORT_DESCENDING           = Elenca in &ordine decrescente
 
 ; --- Help Menu
 
@@ -147,10 +147,10 @@ LICENSE                   = &Licenza
 ; Shutdown confirmation
 
 PLEASE_CONFIRM            = Conferma
-REALLY_SHUTDOWN_WHEN_DONE = Vuoi veramente spegnere il PC dopo la deframmentazione?
-REALLY_HIBERNATE_WHEN_DONE= Vuoi veramente ibernare il PC dopo la deframmentazione?
-REALLY_LOGOFF_WHEN_DONE   = Vuoi veramente disconnetterti quando il processo è terminato?
-REALLY_REBOOT_WHEN_DONE   = Vuoi veramente riavviare il sistema quando il processo è terminato?
+REALLY_SHUTDOWN_WHEN_DONE = Volete veramente spegnere il PC dopo la deframmentazione?
+REALLY_HIBERNATE_WHEN_DONE= Volete veramente ibernare il PC dopo la deframmentazione?
+REALLY_LOGOFF_WHEN_DONE   = Volete veramente disconnetterti quando il processo è terminato?
+REALLY_REBOOT_WHEN_DONE   = Volete veramente riavviare il sistema quando il processo è terminato?
 SECONDS_TILL_SHUTDOWN     = secondi allo spegnimento
 SECONDS_TILL_HIBERNATION  = secondi all'ibernazione
 SECONDS_TILL_LOGOFF       = secondi alla disconnessione utente
