@@ -31,6 +31,7 @@ DEFRAGMENT                = Defragmentace
 QUICK_OPTIMIZE            = Rychlá optimalizace
 FULL_OPTIMIZE             = Plná optimalizace
 OPTIMIZE_MFT              = Optimalizovat MFT
+PAUSE                     = &Pause
 STOP                      = Zastavit
 REPEAT_ACTION             = Opakovat akci
 SKIP_REMOVABLE_MEDIA      = Přeskočit vyměnitelná média

@@ -35,6 +35,7 @@ DEFRAGMENT                = Defragmentar
 QUICK_OPTIMIZE            = Optimización Rápida
 FULL_OPTIMIZE             = Optimización Completa
 OPTIMIZE_MFT              = Optimización de MFT
+PAUSE                     = &Pause
 STOP                      = Detener
 REPEAT_ACTION             = Repetir Acción
 SKIP_REMOVABLE_MEDIA      = Ignorar Discos Extraíbles

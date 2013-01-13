@@ -31,6 +31,7 @@ DEFRAGMENT                = Ανασυγκρότηση
 QUICK_OPTIMIZE            = Γρήγορη βελτιστοποίηση
 FULL_OPTIMIZE             = Πλήρης βελτιστοποίηση
 OPTIMIZE_MFT              = Βελτιστοποίηση MFT
+PAUSE                     = &Pause
 STOP                      = Διακοπή
 REPEAT_ACTION             = Επανάληψη ενέργειας
 SKIP_REMOVABLE_MEDIA      = Παράλειψη αφαιρούμενων συσκευών

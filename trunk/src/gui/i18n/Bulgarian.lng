@@ -30,6 +30,7 @@ DEFRAGMENT                = &Дефрагментация
 QUICK_OPTIMIZE            = Бърза оптимизация
 FULL_OPTIMIZE             = Пълна оптимизация
 OPTIMIZE_MFT              = Оптимизация на MFT
+PAUSE                     = &Pause
 STOP                      = &Стоп
 REPEAT_ACTION             = Повтаряне
 SKIP_REMOVABLE_MEDIA      = Пропускане на с&меняеми носители

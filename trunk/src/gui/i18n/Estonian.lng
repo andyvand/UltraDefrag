@@ -29,6 +29,7 @@ DEFRAGMENT                = Defragmendi
 QUICK_OPTIMIZE            = Kiire optimeerimine
 FULL_OPTIMIZE             = Täielik optimeerimine
 OPTIMIZE_MFT              = MFT optimeerimine
+PAUSE                     = &Pause
 STOP                      = Peata
 REPEAT_ACTION             = Korda tegevust
 SKIP_REMOVABLE_MEDIA      = Jäta vahele eemaldatav meedia

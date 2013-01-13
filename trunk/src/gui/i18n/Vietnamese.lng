@@ -30,6 +30,7 @@ DEFRAGMENT                = &Chống phân mảnh
 QUICK_OPTIMIZE            = Tối ưu hóa &nhanh
 FULL_OPTIMIZE             = Tối ưu hóa &toàn bộ
 OPTIMIZE_MFT              = Tối ưu hóa &MFT
+PAUSE                     = &Pause
 STOP                      = &Dừng
 REPEAT_ACTION             = &Lặp lại hành động
 SKIP_REMOVABLE_MEDIA      = &Bỏ qua các thiết bị di động

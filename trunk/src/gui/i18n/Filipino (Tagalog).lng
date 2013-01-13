@@ -30,6 +30,7 @@ DEFRAGMENT                = Mag&buo
 QUICK_OPTIMIZE            = Magpahusay na &Mabilis
 FULL_OPTIMIZE             = M&agpahusay ng Buo
 OPTIMIZE_MFT              = Pahusayan ang M&FT
+PAUSE                     = &Pause
 STOP                      = &Tigilin
 REPEAT_ACTION             = Mag-&ulit
 SKIP_REMOVABLE_MEDIA      = Laktawan ang Matatanggal na &Media

@@ -29,6 +29,7 @@ DEFRAGMENT                = &Piaben-abayan
 QUICK_OPTIMIZE            = &Samasan yang malagwa
 FULL_OPTIMIZE             = &Samasan yang laganas
 OPTIMIZE_MFT              = &Samasan ya ing MFT
+PAUSE                     = &Pause
 STOP                      = &Ituknang
 REPEAT_ACTION             = &Pasibaywan/Ulitan
 SKIP_REMOVABLE_MEDIA      = &Lakton la reng mediang milalako

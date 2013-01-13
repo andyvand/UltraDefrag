@@ -29,6 +29,7 @@ DEFRAGMENT                = Defragment
 QUICK_OPTIMIZE            = Quick hagræðingu
 FULL_OPTIMIZE             = Full hagræðingu
 OPTIMIZE_MFT              = Hagræða MFT
+PAUSE                     = &Pause
 STOP                      = Stöðva
 REPEAT_ACTION             = Endurtaka aðgerðir
 SKIP_REMOVABLE_MEDIA      = Sleppa færanlegur frá miðöldum

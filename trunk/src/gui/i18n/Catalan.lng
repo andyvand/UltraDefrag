@@ -31,6 +31,7 @@ DEFRAGMENT                = &Compacta
 QUICK_OPTIMIZE            = &Optimitza ràpidament
 FULL_OPTIMIZE             = Opti&mitza completament
 OPTIMIZE_MFT              = Optimitza M&FT
+PAUSE                     = &Pause
 STOP                      = At&ura
 REPEAT_ACTION             = &Repeteix l'acció
 SKIP_REMOVABLE_MEDIA      = Omet les unitats &extraïbles

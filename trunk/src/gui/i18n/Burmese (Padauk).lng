@@ -29,6 +29,7 @@ DEFRAGMENT                = ဖိုင်ပြန်စီ
 QUICK_OPTIMIZE            = အမြန် အဆင့်မြင့်ဆုံး လုပ်ခြင်း
 FULL_OPTIMIZE             = အပြည့် အဆင့်မြင့်ဆုံး လုပ်ခြင်း
 OPTIMIZE_MFT              = MFT  ကိုအဆင့်မြင့်ဆုံး စေခြင်း
+PAUSE                     = &Pause
 STOP                      = ရပ်
 REPEAT_ACTION             = ပြန်လည်ပြုလုပ်မှု
 SKIP_REMOVABLE_MEDIA      = ဖယ်ရသည့် ဋ္ဌာနေကို ကျော်လွှား

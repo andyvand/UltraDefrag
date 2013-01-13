@@ -29,6 +29,7 @@ DEFRAGMENT                = דעפראגםענטירנ
 QUICK_OPTIMIZE            = שנעל אופטימיזציה
 FULL_OPTIMIZE             = גאַנץ אופטימיזציה
 OPTIMIZE_MFT              = מפט אופטימיזציה
+PAUSE                     = &Pause
 STOP                      = האַלטן
 REPEAT_ACTION             = איבערחזרן אַקציע
 SKIP_REMOVABLE_MEDIA      = דיסקים נשלפים האָפּקען

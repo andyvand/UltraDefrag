@@ -30,6 +30,7 @@ DEFRAGMENT                = &تجزئة
 QUICK_OPTIMIZE            = &تحسين سريع
 FULL_OPTIMIZE             = &تحسين كامل
 OPTIMIZE_MFT              = &تحسين MFT
+PAUSE                     = &Pause
 STOP                      = &إيقاف
 REPEAT_ACTION             = إع&ادة الإجراء
 SKIP_REMOVABLE_MEDIA      = استبعاد &الوسائط القابلة للنقل

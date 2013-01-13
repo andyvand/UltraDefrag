@@ -29,6 +29,7 @@ DEFRAGMENT                = &Dagupen
 QUICK_OPTIMIZE            = Ikanatad a &Napartak
 FULL_OPTIMIZE             = Ikanatad a &Sibubukel
 OPTIMIZE_MFT              = Ikanatad ti M&FT
+PAUSE                     = &Pause
 STOP                      = &Isardeng
 REPEAT_ACTION             = Ulit&en
 SKIP_REMOVABLE_MEDIA      = Ikulasay ti &Media a Maikkat

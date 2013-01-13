@@ -31,6 +31,7 @@ DEFRAGMENT                = 조각모음(&D)
 QUICK_OPTIMIZE            = 빠른 최적화(&Q)
 FULL_OPTIMIZE             = 전체 최적화(&F)
 OPTIMIZE_MFT              = MFT 최적화(&O)
+PAUSE                     = &Pause
 STOP                      = 멈춤(&S)
 REPEAT_ACTION             = 작업 반복(&P)
 SKIP_REMOVABLE_MEDIA      = 이동식 디스크 건너뛰기(&M)
