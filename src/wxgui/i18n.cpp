@@ -49,16 +49,6 @@
     info.WinLang = winlang, info.WinSublang = winsublang; \
     m_locale->AddLanguage(info);
 
-/* user defined language IDs
-   Important: never change their order when adding new translations
-   or the selection of the user will be broken */
-#define wxUD_LANGUAGE_BOSNIAN_LATIN     wxLANGUAGE_USER_DEFINED+1
-#define wxUD_LANGUAGE_BURMESE_PADAUK    wxLANGUAGE_USER_DEFINED+2
-#define wxUD_LANGUAGE_ILOKO             wxLANGUAGE_USER_DEFINED+3
-#define wxUD_LANGUAGE_INDONESIAN_BAHASA wxLANGUAGE_USER_DEFINED+4
-#define wxUD_LANGUAGE_KAPAMPANGAN       wxLANGUAGE_USER_DEFINED+5
-#define wxUD_LANGUAGE_WARAY_WARAY       wxLANGUAGE_USER_DEFINED+6
-
 #define UD_UpdateMenuItemLabel(id,label,accel) \
     if(::strlen(accel)){ \
         ItemLabel.Clear(); \
