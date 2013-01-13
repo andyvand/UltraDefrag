@@ -82,6 +82,7 @@
  * <tr><td>• German                       </td><td>-</td><td> Stefan Geuken</td></tr>
  * <tr><td>                               </td><td>-</td><td> Stefan Pendl</td></tr>
  * <tr><td>• Greek                        </td><td>-</td><td> Konstantinos Kapoukranidis</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Dionisios Klonaris</td></tr>
  * <tr><td>• Hebrew                       </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Hindi                        </td><td>-</td><td> Gaurav Chatterjee</td></tr>
  * <tr><td>                               </td><td>-</td><td> Utkarsh Ray</td></tr>
@@ -207,6 +208,7 @@
  * • German                        & - & Stefan Geuken \\
  *                                 & - & Stefan Pendl \\
  * • Greek                         & - & Konstantinos Kapoukranidis \\
+ *                                 & - & Dionisios Klonaris \\
  * • Hebrew                        & - & Dmitri Arkhangelski \\
  * • Hindi                         & - & Gaurav Chatterjee \\
  *                                 & - & Utkarsh Ray \\
@@ -541,7 +543,7 @@
  * - Alper Tiryakioglu, Antonio Vivace
  * - Benny Stütz
  * - Connection
- * - Dandy Cheung, Daniel Rodríguez, Dionisios Klonaris, Dmitry Zemskov
+ * - Dandy Cheung, Daniel Rodríguez, Dmitry Zemskov
  * - Erwin Dokter, El Fiera
  * - Fabrizio Marana, Francisco Ortega Olivos, FS
  * - Giulio Fornasar, Gustavo Rezende
