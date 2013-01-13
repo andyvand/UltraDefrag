@@ -132,7 +132,8 @@ void MainFrame::InitMenu()
 
             langArray.Sort();
 
-            unsigned int breakCnt = 16;
+            unsigned int breakDelta = (unsigned int)((langArray.Count() + 4) / 3);
+            unsigned int breakCnt = breakDelta - 4;
             for(unsigned int i=0;i<langArray.Count();i++){
                 info = m_locale->FindLanguageInfo(langArray[i]);
 
@@ -140,7 +141,7 @@ void MainFrame::InitMenu()
                 if((i+1) % breakCnt == 0){
                     m_menuLanguage->Break();
 
-                    breakCnt += 20;
+                    breakCnt += breakDelta;
                 }
             }
         }
