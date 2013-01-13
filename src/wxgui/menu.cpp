@@ -94,13 +94,13 @@ void MainFrame::InitMenu()
         wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
         AppLocaleDir.Clear();
         AppLocaleDir.Append(wxGetCwd());
-        AppLocaleDir.Append(wxT("../wxgui/locale"));
+        AppLocaleDir.Append(wxT("/../wxgui/locale"));
     }
     if(!wxDirExists(AppLocaleDir)){
         wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
         AppLocaleDir.Clear();
         AppLocaleDir.Append(wxGetCwd());
-        AppLocaleDir.Append(wxT("../../wxgui/locale"));
+        AppLocaleDir.Append(wxT("/../../wxgui/locale"));
     }
 
     const wxLanguageInfo *info;
@@ -198,6 +198,9 @@ void MainFrame::InitMenu()
 
     cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
+
+    int id = m_locale->GetLanguage();
+    m_menuBar->FindItem(ID_LangSelection + id)->Check(true);
 }
 
 /** @} */
