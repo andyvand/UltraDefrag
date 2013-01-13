@@ -31,6 +31,7 @@ DEFRAGMENT                = Defragmentera
 QUICK_OPTIMIZE            = Snabb optimering
 FULL_OPTIMIZE             = Utförlig optimering
 OPTIMIZE_MFT              = Optimera MFT
+PAUSE                     = &Pause
 STOP                      = Stoppa
 REPEAT_ACTION             = Upprepande aktivitet
 SKIP_REMOVABLE_MEDIA      = Hoppa över flyttbara medier

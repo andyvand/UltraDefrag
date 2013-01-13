@@ -29,6 +29,7 @@ DEFRAGMENT                = &Defragment
 QUICK_OPTIMIZE            = &Optimalkan &Cepat
 FULL_OPTIMIZE             = &Optimalkan &Penuh
 OPTIMIZE_MFT              = &Optimalkan MFT
+PAUSE                     = &Pause
 STOP                      = &Berhenti
 REPEAT_ACTION             = &Ulangi tindakan
 SKIP_REMOVABLE_MEDIA      = &Langkau media alih

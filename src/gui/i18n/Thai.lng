@@ -29,6 +29,7 @@ DEFRAGMENT                = จัดระเบียบ
 QUICK_OPTIMIZE            = การเพิ่มประสิทธิภาพรวดเร็ว
 FULL_OPTIMIZE             = เพิ่มประสิทธิภาพเต็ม
 OPTIMIZE_MFT              = MFT เพิ่มประสิทธิภาพ
+PAUSE                     = &Pause
 STOP                      = หยุดทำงาน
 REPEAT_ACTION             = ทำซ้ำการกระทำ
 SKIP_REMOVABLE_MEDIA      = ยกเว้นไดรฟ์ไม่ถาวร

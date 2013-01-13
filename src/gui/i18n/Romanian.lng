@@ -29,6 +29,7 @@ DEFRAGMENT                = Defragmentare
 QUICK_OPTIMIZE            = Optimizare rapidă
 FULL_OPTIMIZE             = Optimizare completă
 OPTIMIZE_MFT              = Optimizare MFT
+PAUSE                     = &Pause
 STOP                      = Stop
 REPEAT_ACTION             = Repetă acțiunea
 SKIP_REMOVABLE_MEDIA      = Treci peste drive-urile portabile

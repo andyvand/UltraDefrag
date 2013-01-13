@@ -29,6 +29,7 @@ DEFRAGMENT                = ফাইল একত্রীকরণ
 QUICK_OPTIMIZE            = দ্রুত একত্রীকরণ
 FULL_OPTIMIZE             = সম্পূর্ণ সংযোজন
 OPTIMIZE_MFT              = ফাইল তালিকা সংযোজন
+PAUSE                     = &Pause
 STOP                      = থামান
 REPEAT_ACTION             = আবার কাজ চালান
 SKIP_REMOVABLE_MEDIA      = অপসারণযোগ্য মিডিয়া বিচ্ছিন্ন

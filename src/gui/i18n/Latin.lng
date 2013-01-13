@@ -29,6 +29,7 @@ DEFRAGMENT                = &Defragmenta
 QUICK_OPTIMIZE            = &Consumma cito
 FULL_OPTIMIZE             = Consumma &plene
 OPTIMIZE_MFT              = Consumma M&FT
+PAUSE                     = &Pause
 STOP                      = Pau&sa
 REPEAT_ACTION             = Permitto repetitionis
 SKIP_REMOVABLE_MEDIA      = &Exclude discorum amovibilium

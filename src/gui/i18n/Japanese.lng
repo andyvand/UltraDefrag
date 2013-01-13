@@ -32,6 +32,7 @@ DEFRAGMENT                = 断片ファイルのデフラグ
 QUICK_OPTIMIZE            = 迅速に最適化する
 FULL_OPTIMIZE             = 完全に最適化する
 OPTIMIZE_MFT              = MFTの最適化する
+PAUSE                     = &Pause
 STOP                      = 停止
 REPEAT_ACTION             = 操作を繰り返す
 SKIP_REMOVABLE_MEDIA      = リムーバブルメディアは除外

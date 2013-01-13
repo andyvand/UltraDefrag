@@ -30,6 +30,7 @@ DEFRAGMENT                = &Eheytä
 QUICK_OPTIMIZE            = Pika&optimoi
 FULL_OPTIMIZE             = &Täysoptimoi
 OPTIMIZE_MFT              = Optimoi &MFT
+PAUSE                     = &Pause
 STOP                      = &Lopeta
 REPEAT_ACTION             = To&ista toiminto
 SKIP_REMOVABLE_MEDIA      = Ohita &siirrettävät asemat

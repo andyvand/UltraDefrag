@@ -31,6 +31,7 @@ DEFRAGMENT                = &Birleştir
 QUICK_OPTIMIZE            = &Hızlı optimizasyon
 FULL_OPTIMIZE             = &Tam optimizasyon
 OPTIMIZE_MFT              = &MFT optimizasyonu
+PAUSE                     = &Pause
 STOP                      = &Dur
 REPEAT_ACTION             = &İşlemi tekrarla
 SKIP_REMOVABLE_MEDIA      = Çıkarılabilir sürücüleri &gizle

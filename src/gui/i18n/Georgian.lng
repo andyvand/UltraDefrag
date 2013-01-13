@@ -29,6 +29,7 @@ DEFRAGMENT                = &დეფრაგმენტაცია
 QUICK_OPTIMIZE            = ს&წრაფი ოპტიმიზაცია
 FULL_OPTIMIZE             = &სრული ოპტიმიზაცია
 OPTIMIZE_MFT              = &MFT-ს ოპტიმიზაცია
+PAUSE                     = &Pause
 STOP                      = &გაჩერება
 REPEAT_ACTION             = &მოქმედების გამეორება
 SKIP_REMOVABLE_MEDIA      = მ&ოხსნადი დისკების გამოტოვება

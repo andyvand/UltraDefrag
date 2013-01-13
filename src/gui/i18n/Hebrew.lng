@@ -29,6 +29,7 @@ DEFRAGMENT                = אחה
 QUICK_OPTIMIZE            = במהירות האופטימלית
 FULL_OPTIMIZE             = ביסודיות האופטימלית
 OPTIMIZE_MFT              = מפת אופטימיזציה
+PAUSE                     = &Pause
 STOP                      = עצור
 REPEAT_ACTION             = בצע שוב
 SKIP_REMOVABLE_MEDIA      = דלג על דסקים נשלפים

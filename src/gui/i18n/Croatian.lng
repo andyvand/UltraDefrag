@@ -31,6 +31,7 @@ DEFRAGMENT                = Defragmentiraj
 QUICK_OPTIMIZE            = Brza optimizacija
 FULL_OPTIMIZE             = Potpuna optimizacija
 OPTIMIZE_MFT              = Optimiziraj MFT
+PAUSE                     = &Pause
 STOP                      = Zaustavi
 REPEAT_ACTION             = Ponovi radnju
 SKIP_REMOVABLE_MEDIA      = Preskoči prijenosne medije

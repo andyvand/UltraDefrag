@@ -29,6 +29,7 @@ DEFRAGMENT                = &சீரமை
 QUICK_OPTIMIZE            = &விரைவு உகப்பாக்கல்
 FULL_OPTIMIZE             = &முழு உகப்பாக்கல்
 OPTIMIZE_MFT              = &MFT-ஐ உகப்பாக்கவும்
+PAUSE                     = &Pause
 STOP                      = &நிறுத்து
 REPEAT_ACTION             = &மீண்டும் செய்யவும்
 SKIP_REMOVABLE_MEDIA      = &நீக்கக்கூடிய ஊடகத்தைத் தவிர்க்கவும்

@@ -29,6 +29,7 @@ DEFRAGMENT                = &Defragmentuoti
 QUICK_OPTIMIZE            = &Greitas optimizavimas
 FULL_OPTIMIZE             = &Pilnas optimizavimas
 OPTIMIZE_MFT              = &Optimizuoti MFT
+PAUSE                     = &Pause
 STOP                      = &Stabdyti
 REPEAT_ACTION             = Pa&kartoti veiksmą
 SKIP_REMOVABLE_MEDIA      = Praleisti &mobilias laikmenas

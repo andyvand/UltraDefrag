@@ -29,6 +29,7 @@ DEFRAGMENT                = وصل كردن
 QUICK_OPTIMIZE            = بهینه سازی سریع
 FULL_OPTIMIZE             = بهینه سازی کامل
 OPTIMIZE_MFT              = بهینه سازی MFT
+PAUSE                     = &Pause
 STOP                      = توقف
 REPEAT_ACTION             = تکرار عمل
 SKIP_REMOVABLE_MEDIA      = رد كردن مدياي قابل حذف

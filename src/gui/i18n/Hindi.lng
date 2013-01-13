@@ -30,6 +30,7 @@ DEFRAGMENT                = एकीकृत करें
 QUICK_OPTIMIZE            = त्वरित अनुकूलन
 FULL_OPTIMIZE             = पूर्ण अनुकूलन
 OPTIMIZE_MFT              = MFT अनुकूल करें
+PAUSE                     = &Pause
 STOP                      = रोकें
 REPEAT_ACTION             = कार्यवाही दोहराएँ
 SKIP_REMOVABLE_MEDIA      = अलग हो सकने वाली ड्राइव छोडें

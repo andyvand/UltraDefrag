@@ -29,6 +29,7 @@ DEFRAGMENT                = &Defragmentimi
 QUICK_OPTIMIZE            = &Shpejtësia e optimizimit
 FULL_OPTIMIZE             = &Optimizimi i plotë
 OPTIMIZE_MFT              = &Optimizimi MFT
+PAUSE                     = &Pause
 STOP                      = &Ndalimi
 REPEAT_ACTION             = Për&sërit aksionin
 SKIP_REMOVABLE_MEDIA      = Tejkalo &mediumin e lëvizshëm

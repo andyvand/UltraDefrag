@@ -29,6 +29,7 @@ DEFRAGMENT                = &Дефрагментација
 QUICK_OPTIMIZE            = &Брза оптимизација
 FULL_OPTIMIZE             = &Комплетна оптимизација
 OPTIMIZE_MFT              = MFT оптимизација
+PAUSE                     = &Pause
 STOP                      = &Стоп
 REPEAT_ACTION             = Овозможи повторување
 SKIP_REMOVABLE_MEDIA      = &Прескокни отстранливи дискови

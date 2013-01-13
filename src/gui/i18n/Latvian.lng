@@ -31,6 +31,7 @@ DEFRAGMENT                = &Defragmentēt
 QUICK_OPTIMIZE            = Ātrā &optimizācija
 FULL_OPTIMIZE             = &Pilnā optimizācija
 OPTIMIZE_MFT              = Optimizēt &MFT
+PAUSE                     = &Pause
 STOP                      = Ap&turēt
 REPEAT_ACTION             = Atkā&rtot
 SKIP_REMOVABLE_MEDIA      = Izlaist maināmos datu &nesējus

@@ -31,6 +31,7 @@ DEFRAGMENT                = &Defragmentieren
 QUICK_OPTIMIZE            = &Schnell Optimieren
 FULL_OPTIMIZE             = &Komplett Optimieren
 OPTIMIZE_MFT              = &MFT optimieren
+PAUSE                     = &Pause
 STOP                      = &Abbrechen
 REPEAT_ACTION             = &Vorgang wiederholen
 SKIP_REMOVABLE_MEDIA      = &Wechselmedien ignorieren

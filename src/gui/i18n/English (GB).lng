@@ -29,6 +29,7 @@ DEFRAGMENT                = &Defragment
 QUICK_OPTIMIZE            = &Quick optimisation
 FULL_OPTIMIZE             = &Full optimisation
 OPTIMIZE_MFT              = &Optimise MFT
+PAUSE                     = &Pause
 STOP                      = &Stop
 REPEAT_ACTION             = Re&peat action
 SKIP_REMOVABLE_MEDIA      = Skip removable &media

@@ -31,6 +31,7 @@ DEFRAGMENT                = Ig&bug-os
 QUICK_OPTIMIZE            = &Madagmit nga pag-úpay
 FULL_OPTIMIZE             = Bug-&os nga pag-úpay
 OPTIMIZE_MFT              = Upaya an M&FT
+PAUSE                     = &Pause
 STOP                      = &Undanga
 REPEAT_ACTION             = Bali&ka
 SKIP_REMOVABLE_MEDIA      = &Laktawí an natatanggal nga media

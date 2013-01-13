@@ -32,6 +32,7 @@ DEFRAGMENT                = 整理
 QUICK_OPTIMIZE            = 快速优化
 FULL_OPTIMIZE             = 全面优化
 OPTIMIZE_MFT              = 优化 MFT
+PAUSE                     = &Pause
 STOP                      = 停止
 REPEAT_ACTION             = 重复操作
 SKIP_REMOVABLE_MEDIA      = 忽略移动磁盘
