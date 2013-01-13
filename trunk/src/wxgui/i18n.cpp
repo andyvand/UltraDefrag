@@ -92,6 +92,12 @@ void MainFrame::InitLocale()
         id = wxLANGUAGE_ENGLISH_US;
 
     // apply language selection
+    ApplyLocale(id);
+}
+
+void MainFrame::ApplyLocale(int id)
+{
+    // apply language selection
     m_locale->Init(id,wxLOCALE_CONV_ENCODING);
     m_locale->AddCatalogLookupPathPrefix(wxT("locale"));
 
@@ -170,14 +176,7 @@ void MainFrame::OnLanguageChange(wxCommandEvent& event)
 {
     int id = event.GetId() - ID_LangSelection;
 
-    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
-    m_locale->AddCatalogLookupPathPrefix(wxT("locale"));
-
-    // locations for development
-    m_locale->AddCatalogLookupPathPrefix(wxT("../wxgui/locale"));
-    m_locale->AddCatalogLookupPathPrefix(wxT("../../wxgui/locale"));
-
-    m_locale->AddCatalog(wxT("UltraDefrag"));
+    ApplyLocale(id);
 
     wxCommandEvent eventLangUpdate(wxEVT_COMMAND_MENU_SELECTED,ID_LocaleChange);
     wxPostEvent(g_MainFrame,eventLangUpdate);
