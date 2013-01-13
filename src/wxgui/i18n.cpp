@@ -91,6 +91,8 @@ void MainFrame::InitLocale()
     if(!m_locale->IsAvailable(id))
         id = wxLANGUAGE_ENGLISH_US;
 
+    // apply language selection
+    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
     m_locale->AddCatalogLookupPathPrefix(wxT("locale"));
 
     // locations for development
@@ -103,10 +105,6 @@ void MainFrame::InitLocale()
 /* TODO: call it on every change of language selection */
 void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
 {
-    // apply language selection
-    int id = wxLANGUAGE_ENGLISH_US; /* FIXME: get id from menu selection */
-    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
-
     // update menu labels and tool bar tooltips
     wxString ItemLabel;
     UD_UpdateMenuItemLabel(ID_Analyze          , "&Analyze"             , "F5");
@@ -166,6 +164,23 @@ void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
     ItemLabel.Clear();
     ItemLabel << _("&Help") << wxT(" (F1)");
     m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
+}
+
+void MainFrame::OnLanguageChange(wxCommandEvent& event)
+{
+    int id = event.GetId() - ID_LangSelection;
+
+    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
+    m_locale->AddCatalogLookupPathPrefix(wxT("locale"));
+
+    // locations for development
+    m_locale->AddCatalogLookupPathPrefix(wxT("../wxgui/locale"));
+    m_locale->AddCatalogLookupPathPrefix(wxT("../../wxgui/locale"));
+
+    m_locale->AddCatalog(wxT("UltraDefrag"));
+
+    wxCommandEvent eventLangUpdate(wxEVT_COMMAND_MENU_SELECTED,ID_LocaleChange);
+    wxPostEvent(g_MainFrame,eventLangUpdate);
 }
 
 #undef UD_UpdateMenuItemLabel

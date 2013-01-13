@@ -136,6 +136,8 @@ public:
     void OnLangOpenFolder(wxCommandEvent& event);
     void OnLangSubmit(wxCommandEvent& event);
 
+    void OnLanguageChange(wxCommandEvent& event);
+
     void OnGuiFont(wxCommandEvent& event);
     void OnGuiOptions(wxCommandEvent& event);
 
