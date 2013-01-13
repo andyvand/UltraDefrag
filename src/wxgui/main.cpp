@@ -322,8 +322,7 @@ MainFrame::MainFrame()
     // create menu
     InitMenu();
 
-    /* create tool bar (must always be after InitMenu,
-       since we mainly use the menu text for the tool tips */
+    // create tool bar
     InitToolbar();
 
     // check the boot time defragmenter presence

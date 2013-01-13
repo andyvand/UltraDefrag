@@ -45,6 +45,8 @@
 			<Add library="libudefrag.dll.a" />
 			<Add library="libwxmsw28u_adv.a" />
 			<Add library="libwxmsw28u_core.a" />
+			<Add library="libwxpng.a" />
+			<Add library="libwxzlib.a" />
 			<Add library="libwxbase28u.a" />
 			<Add library="libkernel32.a" />
 			<Add library="libuser32.a" />

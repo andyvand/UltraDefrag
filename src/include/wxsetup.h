@@ -1164,7 +1164,7 @@
 #define wxUSE_IMAGE         1
 
 // Set to 1 for PNG format support (requires libpng). Also requires wxUSE_ZLIB.
-#define wxUSE_LIBPNG        0
+#define wxUSE_LIBPNG        1
 
 // Set to 1 for JPEG format support (requires libjpeg)
 #define wxUSE_LIBJPEG       0
