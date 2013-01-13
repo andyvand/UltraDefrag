@@ -1,6 +1,6 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Burmese (Padauk) Language Pack.
-; Copyright (C) 2010 - 2012 Muhammed Widuya.
+; Copyright (C) 2010-2013 Muhammed Widuya.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ DEFRAGMENT                = ဖိုင်ပြန်စီ
 QUICK_OPTIMIZE            = အမြန် အဆင့်မြင့်ဆုံး လုပ်ခြင်း
 FULL_OPTIMIZE             = အပြည့် အဆင့်မြင့်ဆုံး လုပ်ခြင်း
 OPTIMIZE_MFT              = MFT  ကိုအဆင့်မြင့်ဆုံး စေခြင်း
-PAUSE                     = &Pause
+PAUSE                     = ခေတ္တနား
 STOP                      = ရပ်
 REPEAT_ACTION             = ပြန်လည်ပြုလုပ်မှု
 SKIP_REMOVABLE_MEDIA      = ဖယ်ရသည့် ဋ္ဌာနေကို ကျော်လွှား
@@ -59,7 +59,7 @@ LANGUAGE                  = စကား
 GRAPHICAL_INTERFACE       = သုံးသူမျက်နှာပြင်ဇယား
 BOOT_TIME_SCAN            = ဝင်ဒိုး အစတွင် စလုပ်
 REPORTS                   = သတင်းသွင်း
-SORTING                   = &Sorting
+SORTING                   = ရှင်းလင်းခြင်း
 
 ; --- --- Language submenu
 
@@ -80,13 +80,13 @@ SCRIPT                    = ညွှန်စာ
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = လမ်း‌ကြောင်း နှင့်ရှင်း
+SORT_BY_SIZE              = အရွယ် ပမာဏ နှင့်ရှင်း
+SORT_BY_C_TIME            = ဖန်တိးချိန် နှင့်ရှင်း
+SORT_BY_M_TIME            = နောက်ဆုံး ပြုပြင်ချိန် နှင့်ရှင်း
+SORT_BY_A_TIME            = နောက်ဆုံး အသုံးပြုချိန် နှင့်ရှင်း
+SORT_ASCENDING            = အောက်မှအထက်သို့ အတိုင်းနှင့်ရှင်း
+SORT_DESCENDING           = အထက်မှအောက်သို့ အတိုင်းနှင့်ရှင်း
 
 ; --- Help Menu
 
@@ -180,6 +180,6 @@ COMMENT                 ‌  = ဝေဖန်ချက်
 
 LOCKED                    = ဖြည်မရပါ
 MOVE_FAILED               = ရွှေ့မရပါ
-INVALID                   = အားမရသော
+INVALID                   = သေနေသော
 
 ; END OF FILE
