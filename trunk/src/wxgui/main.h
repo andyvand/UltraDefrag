@@ -282,6 +282,19 @@ enum {
 #define MAIN_WINDOW_DEFAULT_WIDTH  640
 #define MAIN_WINDOW_DEFAULT_HEIGHT 480
 
+/* user defined language IDs
+   Important: never change their order when adding new translations
+   or the selection of the user will be broken */
+enum {
+    wxUD_LANGUAGE_BOSNIAN_LATIN = wxLANGUAGE_USER_DEFINED+1,
+    wxUD_LANGUAGE_BURMESE_PADAUK,
+    wxUD_LANGUAGE_ILOKO,
+    wxUD_LANGUAGE_INDONESIAN_BAHASA,
+    wxUD_LANGUAGE_KAPAMPANGAN,
+    wxUD_LANGUAGE_WARAY_WARAY,
+    wxUD_LANGUAGE_LAST          // must always be last in the list
+};
+
 // =======================================================================
 //                           Global variables
 // =======================================================================
