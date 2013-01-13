@@ -366,8 +366,10 @@ MainFrame::MainFrame()
     CreateStatusBar();
     SetStatusText(wxT("Welcome to wxUltraDefrag!"));
 
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_LocaleChange);
-    wxPostEvent(this,event);
+    // set localized text
+    InitLocale();
+    wxCommandEvent event;
+    OnLocaleChange(event);
 }
 
 /**

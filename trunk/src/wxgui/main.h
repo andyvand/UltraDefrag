@@ -164,9 +164,9 @@ public:
     void OnLocaleChange(wxCommandEvent& event);
 
 private:
-    void SetLocale();
     void InitToolbar();
     void InitMenu();
+    void InitLocale();
 
     int m_x;
     int m_y;
