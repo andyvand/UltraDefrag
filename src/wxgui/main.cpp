@@ -202,6 +202,16 @@ bool App::OnInit()
         return false;
     }
 
+    // initialize debug log
+    wxString AppLogDir(wxGetCwd());
+    AppLogDir.Append(wxT("\\Logs"));
+    if(!wxDirExists(AppLogDir))
+        wxMkdir(AppLogDir);
+    if(wxDirExists(AppLogDir)){
+        wxSetEnv(wxT("UD_LOG_FILE_PATH"),AppLogDir.Append(wxT("\\ultradefrag.log")));
+        ::udefrag_set_log_file_path();
+    }
+
     // initialize logging
     m_log = new Log();
 
@@ -539,7 +549,7 @@ void MainFrame::OnBootEnable(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnBootChange(wxCommandEvent& event)
 {
-    m_btdEnabled = event.GetInt();
+    m_btdEnabled = (event.GetInt() > 0);
     m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
     m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
 }
