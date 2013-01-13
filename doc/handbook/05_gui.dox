@@ -109,6 +109,23 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
+ * @image html "Pause.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * \raisebox{-1.5\height}{\includegraphics{Pause.png}} &
+ * @endlatexonly
+ * @par Pause (Space)
+ * This pauses the currently running process at any stage, currently pending move operations will be completed to avoid corruption.
+ * Selecting it once more will resume the paused process.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
  * @image html "Stop.png"
  * @htmlonly
  * </td><td style="width: 90%;">
@@ -237,7 +254,7 @@
  * <table class="doxtable" style="width: 90%; margin:auto;"><tr><td>
  * @endhtmlonly
  * @latexonly
- * \par\begin{center}\begin{xtabular}{|c|p{0.9\linewidth}|}
+ * \par\begin{center}\begin{tabular}{|c|p{0.9\linewidth}|}
  * \hline
  * @endlatexonly
  * @image html "Report.png"
@@ -255,7 +272,7 @@
  * @endhtmlonly
  * @latexonly
  * \\ \hline
- * \end{xtabular}\end{center}\par
+ * \end{tabular}\end{center}\par
  * @endlatexonly
  *
  * <h2>Settings</h2>
@@ -370,6 +387,28 @@
  * @endlatexonly
  * @par Reports (Ctrl+R)
  * This allows changing the look of the reports.
+ *
+ * @htmlonly
+ * </td></tr><tr><td>
+ * @endhtmlonly
+ * @latexonly
+ * \\ \hline
+ * @endlatexonly
+ * @image html "Blank.png"
+ * @image latex "Blank.png"
+ * @htmlonly
+ * </td><td style="width: 90%;">
+ * @endhtmlonly
+ * @latexonly
+ * &
+ * @endlatexonly
+ * @par Sorting
+ * This allows selecting the sorting criteria for the optimization.\n\n
+ * - The entries <b>Sort by path</b>, <b>Sort by size</b>, <b>Sort by creation time</b>,
+ * <b>Sort by last modification time</b> and <b>Sort by last access time</b> specify the
+ * file criteria used for sorting.\n
+ * - The entries <b>Sort in ascending order</b> and <b>Sort in descending order</b>
+ * specify the direction used for sorting.\n
  *
  * @htmlonly
  * </td></tr></table>
@@ -524,110 +563,8 @@
  * @latexonly
  * &
  * @endlatexonly
- * @par Sort by path
- * Sort files by their paths in the disk optimization.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * @par Sort by size
- * Sort files by their sizes in the disk optimization.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * @par Sort by creation time
- * Sort files by their creation times in the disk optimization.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * @par Sort by last modification time
- * Sort files by their last modification times in the disk optimization.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * @par Sort by last access time
- * Sort files by their last access times in the disk optimization.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * @par Sort in ascending order
- * Sort files in ascending order in the disk optimization.
- *
- * @htmlonly
- * </td></tr><tr><td>
- * @endhtmlonly
- * @latexonly
- * \\ \hline
- * @endlatexonly
- * @image html "Blank.png"
- * @image latex "Blank.png"
- * @htmlonly
- * </td><td style="width: 90%;">
- * @endhtmlonly
- * @latexonly
- * &
- * @endlatexonly
- * @par Sort in descending order
- * Sort files in descending order in the disk optimization.
+ * @par No preview options
+ * Currently there are no preview options available.
  *
  * @htmlonly
  * </td></tr></table>
