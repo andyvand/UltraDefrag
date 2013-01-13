@@ -65,15 +65,12 @@
             m_toolBar->SetToolShortHelp(id,_(label)); \
     }
 
-void MainFrame::SetLocale()
+void MainFrame::InitLocale()
 {
-    int id = wxLANGUAGE_ENGLISH_US;
-    wxLanguageInfo info;
-
     m_locale = new wxLocale();
-    wxConfigBase *cfg = wxConfigBase::Get();
 
     // add translations missing from wxWidgets
+    wxLanguageInfo info;
     UD_LNG(wxUD_LANGUAGE_BOSNIAN_LATIN,     "bs@latin"    , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian (Latin)")
     UD_LNG(wxUD_LANGUAGE_BURMESE_PADAUK,    "my@padauk"   , 0              , 0              , wxLayout_LeftToRight, "Burmese (Padauk)")
     UD_LNG(wxUD_LANGUAGE_ILOKO,             "il_PH"       , 0              , 0              , wxLayout_LeftToRight, "Iloko")
@@ -82,6 +79,8 @@ void MainFrame::SetLocale()
     UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "wa_PH"       , 0              , 0              , wxLayout_LeftToRight, "Waray-Waray")
 
     // get initial language selection
+    int id = wxLANGUAGE_ENGLISH_US;
+    wxConfigBase *cfg = wxConfigBase::Get();
     if(cfg->HasGroup(wxT("Language"))){
         id = (int)cfg->Read(wxT("/Language/Selected"),id);
     } else {
@@ -92,8 +91,6 @@ void MainFrame::SetLocale()
     if(!m_locale->IsAvailable(id))
         id = wxLANGUAGE_ENGLISH_US;
 
-    // apply language selection
-    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
     m_locale->AddCatalogLookupPathPrefix(wxT("locale"));
 
     // locations for development
@@ -103,8 +100,13 @@ void MainFrame::SetLocale()
     m_locale->AddCatalog(wxT("UltraDefrag"));
 }
 
+/* TODO: call it on every change of language selection */
 void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
 {
+    // apply language selection
+    int id = wxLANGUAGE_ENGLISH_US; /* FIXME: get id from menu selection */
+    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
+
     // update menu labels and tool bar tooltips
     wxString ItemLabel;
     UD_UpdateMenuItemLabel(ID_Analyze          , "&Analyze"             , "F5");
