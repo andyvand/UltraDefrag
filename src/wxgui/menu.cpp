@@ -119,20 +119,29 @@ void MainFrame::InitMenu()
             m_menuLanguage->AppendRadioItem(ID_LangSelection + info->Language, info->Description);
         } else {
             wxString folder;
+            wxArrayString langArray;
 
             bool cont = dir.GetFirst(&folder, wxT("*"), wxDIR_DIRS);
-            int langCnt = 0, breakCnt = 16;
+
             while(cont){
                 info = m_locale->FindLanguageInfo(folder);
+                langArray.Add(info->Description);
+
+                cont = dir.GetNext(&folder);
+            }
+
+            langArray.Sort();
+
+            unsigned int breakCnt = 16;
+            for(unsigned int i=0;i<langArray.Count();i++){
+                info = m_locale->FindLanguageInfo(langArray[i]);
+
                 m_menuLanguage->AppendRadioItem(ID_LangSelection + info->Language, info->Description);
-                langCnt += 1;
-                if(langCnt % breakCnt == 0){
+                if((i+1) % breakCnt == 0){
                     m_menuLanguage->Break();
 
                     breakCnt += 20;
                 }
-
-                cont = dir.GetNext(&folder);
             }
         }
     }
