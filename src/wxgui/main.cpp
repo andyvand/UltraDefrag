@@ -203,14 +203,10 @@ bool App::OnInit()
     }
 
     // initialize debug log
-    wxString AppLogDir(wxGetCwd());
-    AppLogDir.Append(wxT("\\Logs"));
-    if(!wxDirExists(AppLogDir))
-        wxMkdir(AppLogDir);
-    if(wxDirExists(AppLogDir)){
-        wxSetEnv(wxT("UD_LOG_FILE_PATH"),AppLogDir.Append(wxT("\\ultradefrag.log")));
-        ::udefrag_set_log_file_path();
-    }
+    wxString logpath(wxGetCwd());
+    logpath.Append(wxT("\\logs\\ultradefrag.log"));
+    wxSetEnv(wxT("UD_LOG_FILE_PATH"),logpath);
+    ::udefrag_set_log_file_path();
 
     // initialize logging
     m_log = new Log();
@@ -357,7 +353,14 @@ MainFrame::MainFrame()
     m_btdThread->Create();
     m_btdThread->Run();
 
-    /*m_toolBar->EnableTool(ID_BootEnable,false);
+    // uncomment to test grayed out images
+    /*m_toolBar->EnableTool(ID_Analyze,false);
+    m_toolBar->EnableTool(ID_Repeat,false);
+    m_toolBar->EnableTool(ID_Defrag,false);
+    m_toolBar->EnableTool(ID_QuickOpt,false);
+    m_toolBar->EnableTool(ID_FullOpt,false);
+    m_toolBar->EnableTool(ID_MftOpt,false);
+    m_toolBar->EnableTool(ID_BootEnable,false);
     m_toolBar->EnableTool(ID_BootScript,false);*/
 
     // create status bar
