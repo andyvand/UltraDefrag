@@ -53,6 +53,10 @@ mkdir bin\ia64
     echo doxyfile
     echo .dox
     echo .html
+    echo .mdsp
+    echo .cbp
+    echo .depend
+    echo .layout
 ) >"%~n0_exclude.txt"
 
 xcopy .\bootexctrl  .\obj\bootexctrl  /I /Y /Q /EXCLUDE:%~n0_exclude.txt
