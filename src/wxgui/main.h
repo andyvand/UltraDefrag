@@ -43,6 +43,7 @@
 #include <wx/sysopt.h>
 #include <wx/toolbar.h>
 #include <wx/thread.h>
+#include <wx/mstream.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -202,6 +203,11 @@ public:
 class AboutDialog: public wxDialog {
 public:
     AboutDialog();
+};
+
+class Utils {
+public:
+    wxBitmap *LoadPngResource(const wchar_t *name);
 };
 
 // =======================================================================
