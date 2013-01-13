@@ -86,6 +86,56 @@ void MainFrame::InitMenu()
     m_menuLanguage->Append(ID_LangShowReport, wxEmptyString);
     m_menuLanguage->Append(ID_LangOpenFolder, wxEmptyString);
     m_menuLanguage->Append(ID_LangSubmit    , wxEmptyString);
+    m_menuLanguage->AppendSeparator();
+
+    wxString AppLocaleDir(wxGetCwd());
+    AppLocaleDir.Append(wxT("/locale"));
+    if(!wxDirExists(AppLocaleDir)){
+        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        AppLocaleDir.Clear();
+        AppLocaleDir.Append(wxGetCwd());
+        AppLocaleDir.Append(wxT("../wxgui/locale"));
+    }
+    if(!wxDirExists(AppLocaleDir)){
+        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        AppLocaleDir.Clear();
+        AppLocaleDir.Append(wxGetCwd());
+        AppLocaleDir.Append(wxT("../../wxgui/locale"));
+    }
+
+    const wxLanguageInfo *info;
+    if(!wxDirExists(AppLocaleDir)){
+        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+
+        info = m_locale->FindLanguageInfo(wxT("en_US"));
+        m_menuLanguage->AppendRadioItem(ID_LangSelection + info->Language, info->Description);
+    } else {
+        wxDir dir(AppLocaleDir);
+
+        if(!dir.IsOpened()){
+            wxLogMessage(wxT("can't open lang dir: %ls"), AppLocaleDir.wc_str());
+
+            info = m_locale->FindLanguageInfo(wxT("en_US"));
+            m_menuLanguage->AppendRadioItem(ID_LangSelection + info->Language, info->Description);
+        } else {
+            wxString folder;
+
+            bool cont = dir.GetFirst(&folder, wxT("*"), wxDIR_DIRS);
+            int langCnt = 0, breakCnt = 16;
+            while(cont){
+                info = m_locale->FindLanguageInfo(folder);
+                m_menuLanguage->AppendRadioItem(ID_LangSelection + info->Language, info->Description);
+                langCnt += 1;
+                if(langCnt % breakCnt == 0){
+                    m_menuLanguage->Break();
+
+                    breakCnt += 20;
+                }
+
+                cont = dir.GetNext(&folder);
+            }
+        }
+    }
 
     // create GUI configuration menu
     wxMenu *menuGUIconfig = new wxMenu;
