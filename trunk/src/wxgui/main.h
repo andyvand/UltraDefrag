@@ -44,6 +44,7 @@
 #include <wx/toolbar.h>
 #include <wx/thread.h>
 #include <wx/mstream.h>
+#include <wx/dir.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -272,7 +273,10 @@ enum {
 
     // event identifiers
     ID_BootChange,
-    ID_LocaleChange
+    ID_LocaleChange,
+
+    // language selection menu item, must always be last in the list
+    ID_LangSelection
 };
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640
