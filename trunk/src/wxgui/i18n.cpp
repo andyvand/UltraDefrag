@@ -88,10 +88,7 @@ void MainFrame::InitLocale()
         if(id == wxLANGUAGE_UNKNOWN)
             id = wxLANGUAGE_ENGLISH_US;
     }
-    if(!m_locale->IsAvailable(id))
-        id = wxLANGUAGE_ENGLISH_US;
 
-    // apply language selection
     ApplyLocale(id);
 }
 
