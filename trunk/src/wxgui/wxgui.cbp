@@ -75,6 +75,7 @@
 		<Unit filename="ultradefrag.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="utils.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
