@@ -36,7 +36,7 @@
 || [[Iloko.lng|Iloko]]                                                   || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Indonesian (Bahasa Indonesia).lng|Indonesian (Bahasa Indonesia)]]   || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Indonesian.lng|Indonesian]]                                         || ||=  90 || ||= 100 || ||>    90 % ||
-|| [[Italian.lng|Italian]]                                               || ||=  95 || ||= 100 || ||>    95 % ||
+|| [[Italian.lng|Italian]]                                               || ||=  96 || ||= 100 || ||>    96 % ||
 || [[Japanese.lng|Japanese]]                                             || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Javanese.lng|Javanese]]                                             || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Kapampangan.lng|Kapampangan]]                                       || ||=  66 || ||= 100 || ||>    66 % ||
@@ -75,7 +75,7 @@
 || [[Greek.lng|Greek]]                                                   || ||= 100 || ||= 100 || ||>   100 % ||
 || [[Hungarian.lng|Hungarian]]                                           || ||= 100 || ||= 100 || ||>   100 % ||
 || [[German.lng|German]]                                                 || ||=  98 || ||= 100 || ||>    98 % ||
-|| [[Italian.lng|Italian]]                                               || ||=  95 || ||= 100 || ||>    95 % ||
+|| [[Italian.lng|Italian]]                                               || ||=  96 || ||= 100 || ||>    96 % ||
 || [[Arabic.lng|Arabic]]                                                 || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Belarusian.lng|Belarusian]]                                         || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Bulgarian.lng|Bulgarian]]                                           || ||=  91 || ||= 100 || ||>    91 % ||
