@@ -111,7 +111,7 @@ void MainFrame::InitMenu()
     if(!dir.IsOpened()){
         wxLogMessage(wxT("can't open lang dir: %ls"), AppLocaleDir.wc_str());
         info = m_locale->FindLanguageInfo(wxT("en_US"));
-        m_menuLanguage->AppendRadioItem(ID_LangSelection \
+        m_menuLanguage->AppendRadioItem(ID_LocaleChange \
             + info->Language, info->Description);
     } else {
         wxString folder;
@@ -132,7 +132,7 @@ void MainFrame::InitMenu()
         unsigned int breakCnt = breakDelta - 4;
         for(unsigned int i = 0;i < langArray.Count();i++){
             info = m_locale->FindLanguageInfo(langArray[i]);
-            m_menuLanguage->AppendRadioItem(ID_LangSelection \
+            m_menuLanguage->AppendRadioItem(ID_LocaleChange \
                 + info->Language, info->Description);
             if((i+1) % breakCnt == 0){
                 m_menuLanguage->Break();
@@ -198,7 +198,7 @@ void MainFrame::InitMenu()
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 
     int id = m_locale->GetLanguage();
-    m_menuBar->FindItem(ID_LangSelection + id)->Check(true);
+    m_menuBar->FindItem(ID_LocaleChange + id)->Check(true);
 }
 
 /** @} */

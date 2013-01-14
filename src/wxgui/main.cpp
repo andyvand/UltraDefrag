@@ -72,7 +72,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
     EVT_MENU(ID_LangSubmit, MainFrame::OnLangSubmit)
 
-    EVT_MENU_RANGE(ID_LangSelection, ID_LangSelection+wxUD_LANGUAGE_LAST, MainFrame::OnLanguageChange)
+    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange+wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
 
     EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
     EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
@@ -99,7 +99,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_SIZE(MainFrame::OnSize)
 
     EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
-    EVT_MENU(ID_LocaleChange, MainFrame::OnLocaleChange)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(App)
@@ -369,8 +368,8 @@ MainFrame::MainFrame()
     SetStatusText(wxT("Welcome to wxUltraDefrag!"));
 
     // set localized text
-    InitLocale();
     wxCommandEvent event;
+    event.SetId(ID_LocaleChange+m_locale->GetLanguage());
     OnLocaleChange(event);
 }
 
