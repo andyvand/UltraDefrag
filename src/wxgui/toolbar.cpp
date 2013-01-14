@@ -40,64 +40,52 @@
 //                       Tool bar for main window
 // =======================================================================
 
-#define UD_MakeToolItem(id, bmpidx) \
-    m_toolBar->AddTool(id,toolBarBitmaps[bmpidx]);
+#define UD_MakeToolItem(id, icon) \
+    string.Printf(wxT("%hs%u"),#icon,size); \
+    pic = utils.LoadPngResource(string.wc_str()); \
+    if(pic) m_toolBar->AddTool(id,*pic); \
+    delete pic;
 
-#define UD_MakeToolCheckItem(id, bmpidx) \
-    m_toolBar->AddCheckTool(id,wxEmptyString,toolBarBitmaps[bmpidx]);
+#define UD_MakeToolCheckItem(id, icon) \
+    string.Printf(wxT("%hs%u"),#icon,size); \
+    pic = utils.LoadPngResource(string.wc_str()); \
+    if(pic) m_toolBar->AddCheckTool(id,wxEmptyString, *pic); \
+    delete pic;
 
 /**
  * @brief Initializes tool bar.
  */
 void MainFrame::InitToolbar()
 {
-    m_toolBar = CreateToolBar();
-    wxBitmap toolbarImage;
-
     int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
-    if(size < 20){
-        wxDisplay display;
-        if(display.GetCurrentMode().GetDepth() > 8){
-            toolbarImage = wxBITMAP(toolbar16);
-        } else {
-            wxSystemOptions::SetOption(wxT("msw.remap"),0);
-            toolbarImage = wxBITMAP(toolbar16_8bit);
-        }
-    } else if(size < 24){
-        toolbarImage = wxBITMAP(toolbar20);
-    } else if(size < 32){
-        toolbarImage = wxBITMAP(toolbar24);
-    } else {
-        toolbarImage = wxBITMAP(toolbar32);
-    }
+    if(size < 20) size = 16;
+    else if(size < 24) size = 20;
+    else if(size < 32) size = 24;
+    else size = 32;
 
-    wxMask *imageMask = new wxMask(toolbarImage,wxColor(255,0,255,wxALPHA_OPAQUE));
-    toolbarImage.SetMask(imageMask);
+    //size = 32;
 
-    int bmHeight = toolbarImage.GetHeight();
-    m_toolBar->SetToolBitmapSize(wxSize(bmHeight,bmHeight));
+    m_toolBar = CreateToolBar();
+    m_toolBar->SetToolBitmapSize(wxSize(size,size));
 
-    wxBitmap toolBarBitmaps[TOOLBAR_IMAGE_COUNT];
-    for(int i = 0; i < TOOLBAR_IMAGE_COUNT; i++)
-        toolBarBitmaps[i] = toolbarImage.GetSubBitmap(wxRect(bmHeight*i,0,bmHeight,bmHeight));
-
-    UD_MakeToolItem(ID_Analyze         , ID_BMP_Analyze)
-    UD_MakeToolCheckItem(ID_Repeat     , ID_BMP_Repeat)
-    UD_MakeToolItem(ID_Defrag          , ID_BMP_Defrag)
-    UD_MakeToolItem(ID_QuickOpt        , ID_BMP_QuickOpt)
-    UD_MakeToolItem(ID_FullOpt         , ID_BMP_FullOpt)
-    UD_MakeToolItem(ID_MftOpt          , ID_BMP_MftOpt)
-    UD_MakeToolItem(ID_Pause           , ID_BMP_Pause)
-    UD_MakeToolItem(ID_Stop            , ID_BMP_Stop)
+    wxBitmap *pic; Utils utils; wxString string;
+    UD_MakeToolItem(ID_Analyze         , glass   )
+    UD_MakeToolCheckItem(ID_Repeat     , repeat  )
+    UD_MakeToolItem(ID_Defrag          , defrag  )
+    UD_MakeToolItem(ID_QuickOpt        , quick   )
+    UD_MakeToolItem(ID_FullOpt         , full    )
+    UD_MakeToolItem(ID_MftOpt          , mft     )
+    UD_MakeToolItem(ID_Pause           , pause   )
+    UD_MakeToolItem(ID_Stop            , stop    )
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_ShowReport      , ID_BMP_ShowReport)
+    UD_MakeToolItem(ID_ShowReport      , report  )
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_GuiOptions      , ID_BMP_GuiOptions)
+    UD_MakeToolItem(ID_GuiOptions      , wrench  )
     m_toolBar->AddSeparator();
-    UD_MakeToolCheckItem(ID_BootEnable , ID_BMP_BootEnable)
-    UD_MakeToolItem(ID_BootScript      , ID_BMP_BootScript)
+    UD_MakeToolCheckItem(ID_BootEnable , terminal)
+    UD_MakeToolItem(ID_BootScript      , script  )
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_HelpContents    , ID_BMP_HelpContents)
+    UD_MakeToolItem(ID_HelpContents    , help    )
 
     m_toolBar->Realize();
 
@@ -105,16 +93,6 @@ void MainFrame::InitToolbar()
     wxConfigBase *cfg = wxConfigBase::Get();
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     m_toolBar->ToggleTool(ID_Repeat,m_repeat);
-
-    // uncomment to test grayed out images
-    /*m_toolBar->EnableTool(ID_Analyze,false);
-    m_toolBar->EnableTool(ID_Repeat,false);
-    m_toolBar->EnableTool(ID_Defrag,false);
-    m_toolBar->EnableTool(ID_QuickOpt,false);
-    m_toolBar->EnableTool(ID_FullOpt,false);
-    m_toolBar->EnableTool(ID_MftOpt,false);
-    m_toolBar->EnableTool(ID_BootEnable,false);
-    m_toolBar->EnableTool(ID_BootScript,false);*/
 }
 
 #undef UD_MakeToolItem
