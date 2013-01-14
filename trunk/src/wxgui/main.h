@@ -167,7 +167,7 @@ private:
     void InitToolbar();
     void InitMenu();
     void InitLocale();
-    void ApplyLocale(int id);
+    void SetLocale(int id);
 
     int m_x;
     int m_y;

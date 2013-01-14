@@ -89,10 +89,10 @@ void MainFrame::InitLocale()
             id = wxLANGUAGE_ENGLISH_US;
     }
 
-    ApplyLocale(id);
+    SetLocale(id);
 }
 
-void MainFrame::ApplyLocale(int id)
+void MainFrame::SetLocale(int id)
 {
     // apply language selection
     m_locale->Init(id,wxLOCALE_CONV_ENCODING);
@@ -107,7 +107,7 @@ void MainFrame::ApplyLocale(int id)
 
 void MainFrame::OnLocaleChange(wxCommandEvent& event)
 {
-    ApplyLocale(event.GetId() - ID_LocaleChange);
+    SetLocale(event.GetId() - ID_LocaleChange);
 
     // update menu labels and tool bar tooltips
     wxString ItemLabel;
