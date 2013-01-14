@@ -208,7 +208,7 @@ void MainFrame::InitMenu()
     else if(size < 32) size = 24;
     else size = 32;
 
-    //size = 32;
+    //size = 24;
 
     wxBitmap *pic; Utils utils; wxString string;
     UD_SetMenuIcon(ID_Analyze         , glass )
@@ -244,7 +244,8 @@ void MainFrame::InitMenu()
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 
     int id = m_locale->GetLanguage();
-    m_menuBar->FindItem(ID_LocaleChange + id)->Check(true);
+    wxMenuItem *item = m_menuBar->FindItem(ID_LocaleChange + id);
+    if(item) item->Check(true);
 }
 
 #undef UD_SetMarginWidth
