@@ -105,9 +105,10 @@ void MainFrame::ApplyLocale(int id)
     m_locale->AddCatalog(wxT("UltraDefrag"));
 }
 
-/* TODO: call it on every change of language selection */
-void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnLocaleChange(wxCommandEvent& event)
 {
+    ApplyLocale(event.GetId() - ID_LocaleChange);
+
     // update menu labels and tool bar tooltips
     wxString ItemLabel;
     UD_UpdateMenuItemLabel(ID_Analyze          , "&Analyze"             , "F5");
@@ -167,16 +168,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& WXUNUSED(event))
     ItemLabel.Clear();
     ItemLabel << _("&Help") << wxT(" (F1)");
     m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
-}
-
-void MainFrame::OnLanguageChange(wxCommandEvent& event)
-{
-    int id = event.GetId() - ID_LangSelection;
-
-    ApplyLocale(id);
-
-    wxCommandEvent eventLangUpdate(wxEVT_COMMAND_MENU_SELECTED,ID_LocaleChange);
-    wxPostEvent(g_MainFrame,eventLangUpdate);
 }
 
 #undef UD_UpdateMenuItemLabel

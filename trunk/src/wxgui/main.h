@@ -136,8 +136,6 @@ public:
     void OnLangOpenFolder(wxCommandEvent& event);
     void OnLangSubmit(wxCommandEvent& event);
 
-    void OnLanguageChange(wxCommandEvent& event);
-
     void OnGuiFont(wxCommandEvent& event);
     void OnGuiOptions(wxCommandEvent& event);
 
@@ -276,10 +274,9 @@ enum {
 
     // event identifiers
     ID_BootChange,
-    ID_LocaleChange,
 
     // language selection menu item, must always be last in the list
-    ID_LangSelection
+    ID_LocaleChange
 };
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640
