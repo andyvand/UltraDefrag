@@ -26,6 +26,23 @@
 
 #include "../include/version.h"
 
+#define icons(size) \
+    glass##size    RCDATA "res/" #size "x" #size "/glass.png" \
+    repeat##size   RCDATA "res/" #size "x" #size "/repeat.png" \
+    defrag##size   RCDATA "res/" #size "x" #size "/defrag.png" \
+    quick##size    RCDATA "res/" #size "x" #size "/quick.png" \
+    full##size     RCDATA "res/" #size "x" #size "/full.png" \
+    mft##size      RCDATA "res/" #size "x" #size "/mft.png" \
+    pause##size    RCDATA "res/" #size "x" #size "/pause.png" \
+    stop##size     RCDATA "res/" #size "x" #size "/stop.png" \
+    report##size   RCDATA "res/" #size "x" #size "/report.png" \
+    wrench##size   RCDATA "res/" #size "x" #size "/wrench.png" \
+    terminal##size RCDATA "res/" #size "x" #size "/terminal.png" \
+    script##size   RCDATA "res/" #size "x" #size "/script.png" \
+    help##size     RCDATA "res/" #size "x" #size "/help.png" \
+    light##size    RCDATA "res/" #size "x" #size "/light.png" \
+    star##size     RCDATA "res/" #size "x" #size "/star.png"
+
 // application icon (must be first icon)
 appicon ICON DISCARDABLE "res/app.ico"
 
@@ -36,22 +53,21 @@ ship_8bit BITMAP DISCARDABLE "res/ship_8bit.bmp"
 //////////////////////////////////////////////////////////////////////////
 // Toolbar and menu icons were copied from:
 // - analysis, help icons - from NSIS compiler's frontend
-// - stop, config, terminal, mft optimization icons - 
+// - stop, config, terminal, mft optimization icons -
 //   from Silk icon set 1.3 http://www.famfamfam.com/lab/icons/silk/
 // - report, script icons -
 //   from http://brandspankingnew.net/download.php?file=doc_types_v2.zip
-// - repeat icon - by Interactivemania 
+// - repeat icon - by Interactivemania
 //   http://www.iconfinder.com/icondetails/49846/16/alt_media_repeat_icon
 // - large repeat, pause, stop, terminal, script, help; light bulb,
 //   star icons - from Fugue icon set http://p.yusukekamiyamane.com/
-// All icons are licensed under terms permitting their use 
+// All icons are licensed under terms permitting their use
 // for non commercial purposes.
 //////////////////////////////////////////////////////////////////////////
-toolbar16       BITMAP "res/toolbar16.bmp"
-toolbar16_8bit  BITMAP "res/toolbar16_8bit.bmp"
-toolbar20       BITMAP "res/toolbar20.bmp"
-toolbar24       BITMAP "res/toolbar24.bmp"
-toolbar32       BITMAP "res/toolbar32.bmp"
+icons(16)
+icons(20)
+icons(24)
+icons(32)
 
 // manifests for all targets produces make-manifests.cmd script
 1 24 "res/ultradefrag.manifest"

@@ -52,7 +52,6 @@
 #define wxCharStringFmtSpec "%hs"
 #endif
 
-#include "resource.h"
 #include "../include/version.h"
 #include "../dll/udefrag/udefrag.h"
 

@@ -36,6 +36,18 @@
 
 #include "main.h"
 
+#define UD_SetMenuIcon(id, icon) \
+    string.Printf(wxT("%hs%u"),#icon,size); \
+    pic = utils.LoadPngResource(string.wc_str()); \
+    if(pic) m_menuBar->FindItem(id)->SetBitmap(*pic); \
+    delete pic;
+
+#define UD_SetMarginWidth(menu) \
+    list = menu->GetMenuItems(); \
+    count = list.GetCount(); \
+    for(index = 0; index < count; index++) \
+        list.Item(index)->GetData()->SetMarginWidth(size);
+
 // =======================================================================
 //                        Menu for main window
 // =======================================================================
@@ -189,6 +201,40 @@ void MainFrame::InitMenu()
 
     SetMenuBar(m_menuBar);
 
+    // set menu icons
+    int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+    if(size < 20) size = 16;
+    else if(size < 24) size = 20;
+    else if(size < 32) size = 24;
+    else size = 32;
+
+    //size = 32;
+
+    wxBitmap *pic; Utils utils; wxString string;
+    UD_SetMenuIcon(ID_Analyze         , glass )
+    UD_SetMenuIcon(ID_Defrag          , defrag)
+    UD_SetMenuIcon(ID_QuickOpt        , quick )
+    UD_SetMenuIcon(ID_FullOpt         , full  )
+    UD_SetMenuIcon(ID_MftOpt          , mft   )
+    UD_SetMenuIcon(ID_Stop            , stop  )
+    UD_SetMenuIcon(ID_ShowReport      , report)
+    UD_SetMenuIcon(ID_GuiOptions      , wrench)
+    UD_SetMenuIcon(ID_BootScript      , script)
+    UD_SetMenuIcon(ID_HelpContents    , help  )
+    UD_SetMenuIcon(ID_HelpBestPractice, light )
+    UD_SetMenuIcon(ID_HelpAbout       , star  )
+
+    wxMenuItemList list; size_t count, index;
+    UD_SetMarginWidth(m_menuBar->GetMenu(0))
+    UD_SetMarginWidth(m_menuBar->GetMenu(1))
+    //UD_SetMarginWidth(m_menuBar->GetMenu(2))
+    UD_SetMarginWidth(m_menuBar->GetMenu(3))
+    //UD_SetMarginWidth(menuWhenDone)
+    //UD_SetMarginWidth(m_menuLanguage)
+    UD_SetMarginWidth(menuGUIconfig)
+    UD_SetMarginWidth(menuBootConfig)
+    //UD_SetMarginWidth(menuDebug)
+
     // initial settings
     wxConfigBase *cfg = wxConfigBase::Get();
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
@@ -200,5 +246,8 @@ void MainFrame::InitMenu()
     int id = m_locale->GetLanguage();
     m_menuBar->FindItem(ID_LocaleChange + id)->Check(true);
 }
+
+#undef UD_SetMarginWidth
+#undef UD_SetMenuIcon
 
 /** @} */
