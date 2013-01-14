@@ -29,7 +29,7 @@ DEFRAGMENT                = &დეფრაგმენტაცია
 QUICK_OPTIMIZE            = ს&წრაფი ოპტიმიზაცია
 FULL_OPTIMIZE             = &სრული ოპტიმიზაცია
 OPTIMIZE_MFT              = &MFT-ს ოპტიმიზაცია
-PAUSE                     = &Pause
+PAUSE                     = &შეჩერება
 STOP                      = &გაჩერება
 REPEAT_ACTION             = &მოქმედების გამეორება
 SKIP_REMOVABLE_MEDIA      = მ&ოხსნადი დისკების გამოტოვება
@@ -58,7 +58,7 @@ LANGUAGE                  = &ენა
 GRAPHICAL_INTERFACE       = &იერსახე
 BOOT_TIME_SCAN            = &ჩატვირთვის დროს სკანირება
 REPORTS                   = &ანგარიშები
-SORTING                   = &Sorting
+SORTING                   = &ხარისხდება
 
 ; --- --- Language submenu
 
@@ -79,13 +79,13 @@ SCRIPT                    = &სცენარი
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = დახარისხება &მისამართით
+SORT_BY_SIZE              = დახარისხება &ზომით
+SORT_BY_C_TIME            = დახარისხება &შექმნის დროით
+SORT_BY_M_TIME            = დახარისხება &შ&ეცვლის დროით
+SORT_BY_A_TIME            = დახარისხება &ბოლო წვდომის დროით
+SORT_ASCENDING            = დახარისხება ზრდადობით
+SORT_DESCENDING           = დახარისხება კლებადობით
 
 ; --- Help Menu
 

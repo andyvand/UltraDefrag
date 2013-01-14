@@ -26,7 +26,7 @@
 || [[Finnish.lng|Finnish]]                                               || ||=  87 || ||= 100 || ||>    87 % ||
 || [[French.lng|French]]                                                 || ||=  86 || ||= 100 || ||>    86 % ||
 || [[Galician.lng|Galician]]                                             || ||=  91 || ||= 100 || ||>    91 % ||
-|| [[Georgian.lng|Georgian]]                                             || ||=  91 || ||= 100 || ||>    91 % ||
+|| [[Georgian.lng|Georgian]]                                             || ||= 100 || ||= 100 || ||>   100 % ||
 || [[German.lng|German]]                                                 || ||=  98 || ||= 100 || ||>    98 % ||
 || [[Greek.lng|Greek]]                                                   || ||= 100 || ||= 100 || ||>   100 % ||
 || [[Hebrew.lng|Hebrew]]                                                 || ||=  91 || ||= 100 || ||>    91 % ||
@@ -73,6 +73,7 @@
 
 ||~ Language ||~ ||~ translated ||~ ||~ total ||~ ||~ percentage ||
 || [[Burmese (Padauk).lng|Burmese (Padauk)]]                             || ||= 100 || ||= 100 || ||>   100 % ||
+|| [[Georgian.lng|Georgian]]                                             || ||= 100 || ||= 100 || ||>   100 % ||
 || [[Greek.lng|Greek]]                                                   || ||= 100 || ||= 100 || ||>   100 % ||
 || [[Hungarian.lng|Hungarian]]                                           || ||= 100 || ||= 100 || ||>   100 % ||
 || [[German.lng|German]]                                                 || ||=  98 || ||= 100 || ||>    98 % ||
@@ -84,7 +85,6 @@
 || [[Chinese (Traditional).lng|Chinese (Traditional)]]                   || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Farsi.lng|Farsi]]                                                   || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Galician.lng|Galician]]                                             || ||=  91 || ||= 100 || ||>    91 % ||
-|| [[Georgian.lng|Georgian]]                                             || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Hebrew.lng|Hebrew]]                                                 || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Hindi.lng|Hindi]]                                                   || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Japanese.lng|Japanese]]                                             || ||=  91 || ||= 100 || ||>    91 % ||
