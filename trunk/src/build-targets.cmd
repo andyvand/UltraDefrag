@@ -68,7 +68,7 @@ xcopy .\dll\zenwinx .\obj\zenwinx     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\gui         .\obj\gui         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\gui\res     .\obj\gui\res     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\wxgui       .\obj\wxgui       /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\wxgui\res   .\obj\wxgui\res   /I /Y /Q /EXCLUDE:%~n0_exclude.txt
+xcopy .\wxgui\res   .\obj\wxgui\res   /I /Y /Q /S /EXCLUDE:%~n0_exclude.txt
 xcopy .\hibernate   .\obj\hibernate   /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\include     .\obj\include     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\lua5.1      .\obj\lua5.1      /I /Y /Q /EXCLUDE:%~n0_exclude.txt
