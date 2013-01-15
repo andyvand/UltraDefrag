@@ -70,7 +70,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
 		<Unit filename="menu.cpp" />
-		<Unit filename="resource.h" />
 		<Unit filename="toolbar.cpp" />
 		<Unit filename="ultradefrag.rc">
 			<Option compilerVar="WINDRES" />
