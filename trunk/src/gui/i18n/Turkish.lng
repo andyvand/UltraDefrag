@@ -31,7 +31,7 @@ DEFRAGMENT                = &Birleştir
 QUICK_OPTIMIZE            = &Hızlı optimizasyon
 FULL_OPTIMIZE             = &Tam optimizasyon
 OPTIMIZE_MFT              = &MFT optimizasyonu
-PAUSE                     = &Pause
+PAUSE                     = &Durakla
 STOP                      = &Dur
 REPEAT_ACTION             = &İşlemi tekrarla
 SKIP_REMOVABLE_MEDIA      = Çıkarılabilir sürücüleri &gizle
@@ -60,7 +60,7 @@ LANGUAGE                  = Dil
 GRAPHICAL_INTERFACE       = Grafiksel arabirim
 BOOT_TIME_SCAN            = Açılışta çalış
 REPORTS                   = Raporlar
-SORTING                   = &Sorting
+SORTING                   = &Sıralama
 
 ; --- --- Language submenu
 
@@ -81,13 +81,13 @@ SCRIPT                    = &Betiği düzenle
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = &Adrese göre sırala
+SORT_BY_SIZE              = &Boyuta göre sırala
+SORT_BY_C_TIME            = &Oluşma zamanına göre sırala
+SORT_BY_M_TIME            = &Değişme zamanına göre sırala
+SORT_BY_A_TIME            = &Son erişim zanananına göre sırala
+SORT_ASCENDING            = A&rtan sıralama
+SORT_DESCENDING           = A&zalan sıralama
 
 ; --- Help Menu
 
