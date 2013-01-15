@@ -74,4 +74,54 @@ wxBitmap * Utils::LoadPngResource(const wchar_t *name)
     return new wxBitmap(wxImage(is,wxBITMAP_TYPE_PNG,-1),-1);
 }
 
+/**
+ * @brief Opens the UltraDefrag Handbook,
+ * either its local copy or from the web.
+ */
+void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
+{
+    wxString path; wxURI url;
+    path = wxT("./handbook/") + page;
+
+    if(wxFileExists(path)){
+        path = wxT("file:////") + wxGetCwd();
+        path.Replace(wxT("\\"),wxT("/"));
+        if(!anchor.IsEmpty()){
+            /*
+            * wxLaunchDefaultBrowser
+            * is unable to open a local
+            * page with anchor appended.
+            * So, we're making a redirector
+            * and opening it instead.
+            */
+            wxString redirector(wxT("./handbook/"));
+            redirector << page << wxT(".") << anchor << wxT(".html");
+            if(!wxFileExists(redirector)){
+                wxTextFile file;
+                file.Create(redirector);
+                file.AddLine(wxT("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">"));
+                file.AddLine(wxT("<html><head><meta http-equiv=\"Refresh\" content=\"0; URL=") \
+                    + page + wxT("#") + anchor + wxT("\">"));
+                file.AddLine(wxT("</head><body></body></html>"));
+                file.Write();
+                file.Close();
+            }
+            path << wxT("/") << redirector;
+        } else {
+            path << wxT("/handbook/") << page;
+        }
+    } else {
+        path = wxT("http://ultradefrag.sourceforge.net");
+        path << wxT("/handbook/") << page;
+        if(!anchor.IsEmpty())
+            path << wxT("#") << anchor;
+    }
+
+    url.Create(path);
+    path = url.BuildURI();
+
+    wxLogMessage(wxT("%ls"),path.wc_str());
+    wxLaunchDefaultBrowser(path);
+}
+
 /** @} */
