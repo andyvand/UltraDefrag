@@ -108,13 +108,11 @@ void MainFrame::InitMenu()
     AppLocaleDir.Append(wxT("/locale"));
     if(!wxDirExists(AppLocaleDir)){
         wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
-        AppLocaleDir.Clear();
-        AppLocaleDir << wxGetCwd() << wxT("/../wxgui/locale");
+        AppLocaleDir = wxGetCwd() + wxT("/../wxgui/locale");
     }
     if(!wxDirExists(AppLocaleDir)){
         wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
-        AppLocaleDir.Clear();
-        AppLocaleDir << wxGetCwd() << wxT("/../../wxgui/locale");
+        AppLocaleDir = wxGetCwd() + wxT("/../../wxgui/locale");
     }
 
     wxDir dir(AppLocaleDir);
@@ -227,13 +225,9 @@ void MainFrame::InitMenu()
     wxMenuItemList list; size_t count, index;
     UD_SetMarginWidth(m_menuBar->GetMenu(0))
     UD_SetMarginWidth(m_menuBar->GetMenu(1))
-    //UD_SetMarginWidth(m_menuBar->GetMenu(2))
     UD_SetMarginWidth(m_menuBar->GetMenu(3))
-    //UD_SetMarginWidth(menuWhenDone)
-    //UD_SetMarginWidth(m_menuLanguage)
     UD_SetMarginWidth(menuGUIconfig)
     UD_SetMarginWidth(menuBootConfig)
-    //UD_SetMarginWidth(menuDebug)
 
     // initial settings
     wxConfigBase *cfg = wxConfigBase::Get();
