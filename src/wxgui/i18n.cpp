@@ -51,12 +51,12 @@
 
 #define UD_UpdateMenuItemLabel(id,label,accel) \
     if(::strlen(accel)){ \
-        ItemLabel.Clear(); \
-        ItemLabel << _(label) << wxT("\t") << wxT(accel); \
+        ItemLabel = _(label); \
+        ItemLabel << wxT("\t") << wxT(accel); \
         m_menuBar->FindItem(id)->SetItemLabel(ItemLabel); \
         if(m_toolBar->FindById(id)){ \
-            ItemLabel.Clear(); \
-            ItemLabel << _(label) << wxT(" (") << wxT(accel) << wxT(")"); \
+            ItemLabel = _(label); \
+            ItemLabel << wxT(" (") << wxT(accel) << wxT(")"); \
             m_toolBar->SetToolShortHelp(id,ItemLabel); \
         } \
     } else { \
@@ -159,14 +159,11 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     m_subMenuDebug->SetItemLabel(_("&Debug"));
 
     // update tooltips which text differ from menu labels
-    ItemLabel.Clear();
-    ItemLabel << _("&Boot time scan") << wxT(" (F11)");
+    ItemLabel = _("&Boot time scan"); ItemLabel << wxT(" (F11)");
     m_toolBar->SetToolShortHelp(ID_BootEnable,ItemLabel);
-    ItemLabel.Clear();
-    ItemLabel << _("Boot time script") << wxT(" (F12)");
+    ItemLabel = _("Boot time script"); ItemLabel << wxT(" (F12)");
     m_toolBar->SetToolShortHelp(ID_BootScript,ItemLabel);
-    ItemLabel.Clear();
-    ItemLabel << _("&Help") << wxT(" (F1)");
+    ItemLabel = _("&Help"); ItemLabel << wxT(" (F1)");
     m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
 }
 
