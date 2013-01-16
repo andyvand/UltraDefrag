@@ -405,6 +405,8 @@ void MainFrame::OnSize(wxSizeEvent& event)
 // file menu handlers
 void MainFrame::OnAnalyze(wxCommandEvent& WXUNUSED(event))
 {
+    Utils utils;
+    utils.ShowError(wxT("Cannot open the file!"));
 }
 
 void MainFrame::OnDefrag(wxCommandEvent& WXUNUSED(event))
@@ -541,10 +543,30 @@ void MainFrame::OnHelpLegend(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnDebugLog(wxCommandEvent& WXUNUSED(event))
 {
+    wxString logpath;
+    if(!wxGetEnv(wxT("UD_LOG_FILE_PATH"),&logpath)){
+        wxMessageBox(wxT("Logging to a file is turned off."),
+            wxT("Cannot open log file!"),wxOK | wxICON_HAND,
+            g_MainFrame);
+    } else {
+        wxFileName file(logpath);
+        file.Normalize();
+        ::udefrag_flush_dbg_log();
+        logpath = file.GetFullPath();
+        if(!wxLaunchDefaultBrowser(logpath)){
+            Utils utils; utils.ShowError(
+                wxT("Cannot open %ls!"),logpath.wc_str());
+        }
+    }
 }
 
 void MainFrame::OnDebugSend(wxCommandEvent& WXUNUSED(event))
 {
+    wxString url(wxT("http://sourceforge.net/p/ultradefrag/bugs/"));
+    if(!wxLaunchDefaultBrowser(url)){
+        Utils utils; utils.ShowError(
+            wxT("Cannot open %ls!"),url.wc_str());
+    }
 }
 
 void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))

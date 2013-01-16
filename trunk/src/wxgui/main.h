@@ -47,6 +47,7 @@
 #include <wx/dir.h>
 #include <wx/uri.h>
 #include <wx/textfile.h>
+#include <wx/artprov.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
@@ -196,9 +197,9 @@ public:
 class Utils {
 public:
     wxBitmap *LoadPngResource(const wchar_t *name);
-
     void OpenHandbook(const wxString& page,
         const wxString& anchor = wxEmptyString);
+    void ShowError(const wxChar* format, ...);
 };
 
 // =======================================================================

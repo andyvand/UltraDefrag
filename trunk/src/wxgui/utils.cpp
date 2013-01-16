@@ -124,7 +124,52 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
     path = url.BuildURI();
 
     wxLogMessage(wxT("%ls"),path.wc_str());
-    wxLaunchDefaultBrowser(path);
+    if(!wxLaunchDefaultBrowser(path))
+        ShowError(wxT("Cannot open %ls!"),path.wc_str());
+}
+
+/**
+ * @brief Shows an error and
+ * invites to open the log file.
+ */
+void Utils::ShowError(const wxChar* format, ...)
+{
+    va_list args;
+    va_start(args,format);
+    wxString message;
+    message.PrintfV(format,args);
+    va_end(args);
+
+    wxDialog dlg(g_MainFrame,wxID_ANY,_("Error!"));
+
+    wxStaticBitmap *icon = new wxStaticBitmap(&dlg,wxID_ANY,
+        wxArtProvider::GetIcon(wxART_ERROR,wxART_MESSAGE_BOX));
+    wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message);
+
+    wxSizer *top = new wxBoxSizer(wxHORIZONTAL);
+    top->Add(icon,wxSizerFlags().Border());
+    top->Add(msg,wxSizerFlags().Center().Border());
+
+    wxString label = _("Open &log");
+    label.Replace(wxT("&"),wxT(""));
+    wxButton *log = new wxButton(&dlg,wxID_OK,label);
+    wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,_("Cancel"));
+
+    wxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
+    buttons->Add(log,wxSizerFlags(1).Border());
+    buttons->Add(cancel,wxSizerFlags(1).Border());
+
+    wxSizer *contents = new wxBoxSizer(wxVERTICAL);
+    contents->Add(top,wxSizerFlags().Center().Border());
+    contents->Add(buttons,wxSizerFlags().Center().Border());
+    dlg.SetSizerAndFit(contents);
+
+    dlg.Center();
+
+    if(dlg.ShowModal() == wxID_OK){
+        wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_DebugLog);
+        wxPostEvent(g_MainFrame,event);
+    }
 }
 
 /** @} */
