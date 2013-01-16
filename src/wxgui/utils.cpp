@@ -102,7 +102,10 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
                 file.AddLine(wxT("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">"));
                 file.AddLine(wxT("<html><head><meta http-equiv=\"Refresh\" content=\"0; URL=") \
                     + page + wxT("#") + anchor + wxT("\">"));
-                file.AddLine(wxT("</head><body></body></html>"));
+                file.AddLine(wxT("</head><body>"));
+                file.AddLine(wxT("If the page has not been redirected automatically click "));
+                file.AddLine(wxT("<a href=\"") + page + wxT("#") + anchor + wxT("\">here</a>."));
+                file.AddLine(wxT("</body></html>"));
                 file.Write();
                 file.Close();
             }
