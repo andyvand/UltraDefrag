@@ -146,21 +146,24 @@ void Utils::ShowError(const wxChar* format, ...)
         wxArtProvider::GetIcon(wxART_ERROR,wxART_MESSAGE_BOX));
     wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message);
 
-    wxSizer *top = new wxBoxSizer(wxHORIZONTAL);
+    wxStaticBoxSizer *msgsizer = new wxStaticBoxSizer(wxHORIZONTAL,&dlg);
+    msgsizer->Add(msg,wxSizerFlags().Align(wxALIGN_CENTER).Right().Expand());
+
+    wxStaticBoxSizer *top = new wxStaticBoxSizer(wxHORIZONTAL,&dlg);
     top->Add(icon,wxSizerFlags().Border());
-    top->Add(msg,wxSizerFlags().Center().Border());
+    top->Add(msgsizer,wxSizerFlags(1).Align(wxALIGN_CENTER).Center().Expand().Border());
 
     wxString label = _("Open &log");
     label.Replace(wxT("&"),wxT(""));
     wxButton *log = new wxButton(&dlg,wxID_OK,label);
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,_("Cancel"));
 
-    wxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
+    wxStaticBoxSizer *buttons = new wxStaticBoxSizer(wxHORIZONTAL,&dlg);
     buttons->Add(log,wxSizerFlags(1).Border());
     buttons->Add(cancel,wxSizerFlags(1).Border());
 
-    wxSizer *contents = new wxBoxSizer(wxVERTICAL);
-    contents->Add(top,wxSizerFlags().Center().Border());
+    wxStaticBoxSizer *contents = new wxStaticBoxSizer(wxVERTICAL,&dlg);
+    contents->Add(top,wxSizerFlags().Left().Expand().Border(wxALL & ~wxBOTTOM));
     contents->Add(buttons,wxSizerFlags().Center().Border());
     dlg.SetSizerAndFit(contents);
 
