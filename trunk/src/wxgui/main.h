@@ -64,16 +64,6 @@
 /* converts pixels from 96 DPI to the current one */
 #define DPI(x) ((int)((double)x * g_fScale))
 
-enum {
-    wxLOG_ShowError = wxLOG_User,
-    wxLOG_ShowWarning,
-    wxLOG_ShowMessage
-};
-
-#define wxLogShowError(format,...)   wxLogGeneric(wxLOG_ShowError,format,## __VA_ARGS__)
-#define wxLogShowWarning(format,...) wxLogGeneric(wxLOG_ShowWarning,format,## __VA_ARGS__)
-#define wxLogShowMessage(format,...) wxLogGeneric(wxLOG_ShowMessage,format,## __VA_ARGS__)
-
 // =======================================================================
 //                            Declarations
 // =======================================================================

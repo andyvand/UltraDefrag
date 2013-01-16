@@ -72,7 +72,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
     EVT_MENU(ID_LangSubmit, MainFrame::OnLangSubmit)
 
-    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange+wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
+    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange + \
+        wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
 
     EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
     EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
@@ -140,8 +141,6 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     #define ERROR_FMT (E wxCharStringFmtSpec)
 
     switch(level){
-    // common levels used by wx and ourselves
-    // will append a message to the log file
     case wxLOG_FatalError:
         // XXX: fatal errors pass by actually
         ::udefrag_dbg_print(0,ERROR_FMT,msg);
@@ -153,28 +152,6 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     case wxLOG_Warning:
     case wxLOG_Info:
         ::udefrag_dbg_print(0,DEBUG_FMT,msg);
-        break;
-    case wxLOG_Message:
-    case wxLOG_Status:
-    case wxLOG_Progress:
-        ::udefrag_dbg_print(0,INFO_FMT,msg);
-        break;
-    // custom levels used by ourselves
-    // will do something special
-    case wxLOG_ShowError:
-        ::udefrag_dbg_print(0,ERROR_FMT,msg);
-        wxMessageBox(msg,wxT("UltraDefrag"),
-            wxOK | wxICON_HAND,g_MainFrame);
-        break;
-    case wxLOG_ShowWarning:
-        ::udefrag_dbg_print(0,DEBUG_FMT,msg);
-        wxMessageBox(msg,wxT("UltraDefrag"),
-            wxOK | wxICON_EXCLAMATION,g_MainFrame);
-        break;
-    case wxLOG_ShowMessage:
-        ::udefrag_dbg_print(0,INFO_FMT,msg);
-        wxMessageBox(msg,wxT("UltraDefrag"),
-            wxOK | wxICON_INFORMATION,g_MainFrame);
         break;
     default:
         ::udefrag_dbg_print(0,INFO_FMT,msg);
@@ -193,13 +170,13 @@ bool App::OnInit()
 {
     // initialize wxWidgets
     SetAppName(wxT("UltraDefrag"));
-    ::wxInitAllImageHandlers();
+    wxInitAllImageHandlers();
     if(!wxApp::OnInit())
         return false;
 
     // initialize udefrag.dll library
     if(::udefrag_init_library() < 0){
-        ::wxLogError(wxT("Initialization failed!"));
+        wxLogError(wxT("Initialization failed!"));
         return false;
     }
 
