@@ -36,6 +36,11 @@
 
 #include "main.h"
 
+class AboutDialog: public wxDialog {
+public:
+    AboutDialog();
+};
+
 // =======================================================================
 //                         Custom about dialog
 // =======================================================================
@@ -64,7 +69,7 @@ AboutDialog::AboutDialog()
     wxSizerFlags flags;
     flags.Center().Border(wxLEFT & wxRIGHT);
     int space = DPI(11);
-    
+
     wxSizer *text = new wxBoxSizer(wxVERTICAL);
     text->AddSpacer(space);
     text->Add(version,flags);
@@ -76,7 +81,7 @@ AboutDialog::AboutDialog()
     text->AddSpacer(space);
     text->Add(homepage,flags);
     text->AddSpacer(space);
-    
+
     wxDisplay display;
     wxStaticBitmap *bmp = new wxStaticBitmap(this,wxID_ANY,
         display.GetCurrentMode().GetDepth() > 8 ? \
@@ -87,6 +92,16 @@ AboutDialog::AboutDialog()
     contents->Add(text,wxSizerFlags(1).Center().Border());
     SetSizerAndFit(contents);
     Center();
+}
+
+// =======================================================================
+//                            Event handlers
+// =======================================================================
+
+void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
+{
+    AboutDialog dlg;
+    dlg.ShowModal();
 }
 
 /** @} */
