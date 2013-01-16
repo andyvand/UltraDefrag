@@ -203,11 +203,6 @@ public:
     bool m_stop;
 };
 
-class AboutDialog: public wxDialog {
-public:
-    AboutDialog();
-};
-
 class Utils {
 public:
     wxBitmap *LoadPngResource(const wchar_t *name);

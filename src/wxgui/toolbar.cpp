@@ -49,7 +49,7 @@
 #define UD_MakeToolCheckItem(id, icon) \
     string.Printf(wxT("%hs%u"),#icon,size); \
     pic = utils.LoadPngResource(string.wc_str()); \
-    if(pic) m_toolBar->AddCheckTool(id,wxEmptyString, *pic); \
+    if(pic) m_toolBar->AddCheckTool(id,wxEmptyString,*pic); \
     delete pic;
 
 /**

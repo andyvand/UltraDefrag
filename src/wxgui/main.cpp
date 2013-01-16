@@ -537,28 +537,6 @@ void MainFrame::OnGuiOptions(wxCommandEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnBootEnable(wxCommandEvent& WXUNUSED(event))
-{
-    int result;
-    if(m_btdEnabled)
-        result = ::udefrag_bootex_unregister(L"defrag_native");
-    else
-        result = ::udefrag_bootex_register(L"defrag_native");
-    if(result == 0){
-        // registration succeeded
-        m_btdEnabled = m_btdEnabled ? false : true;
-        m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
-        m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
-    }
-}
-
-void MainFrame::OnBootChange(wxCommandEvent& event)
-{
-    m_btdEnabled = (event.GetInt() > 0);
-    m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
-    m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
-}
-
 void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
 {
 }
@@ -594,12 +572,6 @@ void MainFrame::OnDebugSend(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
 {
-}
-
-void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
-{
-    AboutDialog dlg;
-    dlg.ShowModal();
 }
 
 /** @} */
