@@ -36,34 +36,28 @@
 
 #include "main.h"
 
-class AboutDialog: public wxDialog {
-public:
-    AboutDialog();
-};
-
 // =======================================================================
-//                         Custom about dialog
+//                            Event handlers
 // =======================================================================
 
-AboutDialog::AboutDialog()
+void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
-    if(!wxDialog::Create(g_MainFrame,wxID_ANY,
-        _("About UltraDefrag"))) return;
+    wxDialog dlg(g_MainFrame,wxID_ANY,_("About UltraDefrag"));
 
-    wxStaticText *version = new wxStaticText(this,wxID_ANY,wxT(VERSIONINTITLE));
+    wxStaticText *version = new wxStaticText(&dlg,wxID_ANY,wxT(VERSIONINTITLE));
     wxFont fontBig(*wxNORMAL_FONT);
     fontBig.SetPointSize(fontBig.GetPointSize() + 2);
     fontBig.SetWeight(wxFONTWEIGHT_BOLD);
     version->SetFont(fontBig);
 
-    wxStaticText *copyright = new wxStaticText(this,wxID_ANY,
+    wxStaticText *copyright = new wxStaticText(&dlg,wxID_ANY,
         wxT("(C) 2007-2013 UltraDefrag development team"));
-    wxStaticText *description = new wxStaticText(this,wxID_ANY,
+    wxStaticText *description = new wxStaticText(&dlg,wxID_ANY,
         _("An open source defragmentation utility."));
-    wxStaticText *credits = new wxStaticText(this,wxID_ANY,
+    wxStaticText *credits = new wxStaticText(&dlg,wxID_ANY,
         _("Credits and licenses are listed in the handbook."));
 
-    wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(this,wxID_ANY,
+    wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(&dlg,wxID_ANY,
         _("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
 
     wxSizerFlags flags;
@@ -83,24 +77,16 @@ AboutDialog::AboutDialog()
     text->AddSpacer(space);
 
     wxDisplay display;
-    wxStaticBitmap *bmp = new wxStaticBitmap(this,wxID_ANY,
+    wxStaticBitmap *bmp = new wxStaticBitmap(&dlg,wxID_ANY,
         display.GetCurrentMode().GetDepth() > 8 ? \
         wxBITMAP(ship) : wxBITMAP(ship_8bit));
 
     wxSizer *contents = new wxBoxSizer(wxHORIZONTAL);
     contents->Add(bmp,wxSizerFlags().Center().Border());
     contents->Add(text,wxSizerFlags(1).Center().Border());
-    SetSizerAndFit(contents);
-    Center();
-}
+    dlg.SetSizerAndFit(contents);
 
-// =======================================================================
-//                            Event handlers
-// =======================================================================
-
-void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
-{
-    AboutDialog dlg;
+    dlg.Center();
     dlg.ShowModal();
 }
 
