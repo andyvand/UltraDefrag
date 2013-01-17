@@ -150,9 +150,9 @@ void Utils::ShowError(const wxChar* format, ...)
     wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
     contents->Add(icon, wxGBPosition(0, 0), wxDefaultSpan,
-        (wxTOP | wxLEFT)|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 10);
+        (wxBOTTOM)|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 10);
     contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
-        (wxALL & ~wxBOTTOM)|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
+        (wxALL & ~wxTOP)|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
 
     wxString label = _("Open &log");
     label.Replace(wxT("&"),wxT(""));
@@ -160,13 +160,17 @@ void Utils::ShowError(const wxChar* format, ...)
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,_("Cancel"));
 
     wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
-    buttons->Add(log,wxSizerFlags(1).Border());
-    buttons->Add(cancel,wxSizerFlags(1).Border());
+    buttons->Add(log,wxSizerFlags(1).Border(wxRIGHT));
+    buttons->Add(cancel,wxSizerFlags(1).Border(wxLEFT));
 
     contents->Add(buttons, wxGBPosition(1, 0), wxGBSpan(1, 2),
-        wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    dlg.SetSizerAndFit(contents);
-    contents->SetSizeHints(&dlg);
+        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL);
+
+    wxBoxSizer *space = new wxBoxSizer(wxHORIZONTAL);
+    space->Add(contents,wxSizerFlags().DoubleBorder());
+
+    dlg.SetSizerAndFit(space);
+    space->SetSizeHints(&dlg);
     dlg.Center();
 
     if(dlg.ShowModal() == wxID_OK){
