@@ -86,7 +86,9 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     contents->Add(text,wxSizerFlags(1).Center().Border());
     dlg.SetSizerAndFit(contents);
 
-    dlg.Center();
+    if(!g_MainFrame->IsIconized()) dlg.Center();
+    else dlg.CenterOnScreen();
+
     dlg.ShowModal();
 }
 
