@@ -150,9 +150,9 @@ void Utils::ShowError(const wxChar* format, ...)
     wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
     contents->Add(icon, wxGBPosition(0, 0), wxDefaultSpan,
-        wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+        (wxTOP | wxLEFT)|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 10);
     contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
-        wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+        (wxALL & ~wxBOTTOM)|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
 
     wxString label = _("Open &log");
     label.Replace(wxT("&"),wxT(""));
