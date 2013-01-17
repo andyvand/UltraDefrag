@@ -33,21 +33,22 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/artprov.h>
 #include <wx/confbase.h>
+#include <wx/dir.h>
 #include <wx/display.h>
 #include <wx/fileconf.h>
 #include <wx/filename.h>
+#include <wx/gbsizer.h>
 #include <wx/hyperlink.h>
 #include <wx/intl.h>
+#include <wx/mstream.h>
 #include <wx/stdpaths.h>
 #include <wx/sysopt.h>
-#include <wx/toolbar.h>
-#include <wx/thread.h>
-#include <wx/mstream.h>
-#include <wx/dir.h>
-#include <wx/uri.h>
 #include <wx/textfile.h>
-#include <wx/artprov.h>
+#include <wx/thread.h>
+#include <wx/toolbar.h>
+#include <wx/uri.h>
 
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"

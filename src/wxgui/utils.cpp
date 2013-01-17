@@ -144,29 +144,29 @@ void Utils::ShowError(const wxChar* format, ...)
 
     wxStaticBitmap *icon = new wxStaticBitmap(&dlg,wxID_ANY,
         wxArtProvider::GetIcon(wxART_ERROR,wxART_MESSAGE_BOX));
-    wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message);
+    wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message,
+        wxDefaultPosition,wxDefaultSize,wxALIGN_CENTRE);
 
-    wxStaticBoxSizer *msgsizer = new wxStaticBoxSizer(wxHORIZONTAL,&dlg);
-    msgsizer->Add(msg,wxSizerFlags().Align(wxALIGN_CENTER).Right().Expand());
+    wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
-    wxStaticBoxSizer *top = new wxStaticBoxSizer(wxHORIZONTAL,&dlg);
-    top->Add(icon,wxSizerFlags().Border());
-    top->Add(msgsizer,wxSizerFlags(1).Align(wxALIGN_CENTER).Center().Expand().Border());
+    contents->Add(icon, wxGBPosition(0, 0), wxDefaultSpan,
+        wxALL|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 5);
+    contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
+        wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 
     wxString label = _("Open &log");
     label.Replace(wxT("&"),wxT(""));
     wxButton *log = new wxButton(&dlg,wxID_OK,label);
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,_("Cancel"));
 
-    wxStaticBoxSizer *buttons = new wxStaticBoxSizer(wxHORIZONTAL,&dlg);
+    wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
     buttons->Add(log,wxSizerFlags(1).Border());
     buttons->Add(cancel,wxSizerFlags(1).Border());
 
-    wxStaticBoxSizer *contents = new wxStaticBoxSizer(wxVERTICAL,&dlg);
-    contents->Add(top,wxSizerFlags().Left().Expand().Border(wxALL & ~wxBOTTOM));
-    contents->Add(buttons,wxSizerFlags().Center().Border());
+    contents->Add(buttons, wxGBPosition(1, 0), wxGBSpan(1, 2),
+        wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     dlg.SetSizerAndFit(contents);
-
+    contents->SetSizeHints(&dlg);
     dlg.Center();
 
     if(dlg.ShowModal() == wxID_OK){
