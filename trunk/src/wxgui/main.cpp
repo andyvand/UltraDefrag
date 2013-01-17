@@ -324,10 +324,11 @@ MainFrame::MainFrame()
         m_btdEnabled = false;
     }
 
+    // launch threads for the time consuming operations
+
     // track the boot time defragmenter registration
-    m_btdThread = new BtdThread(wxTHREAD_JOINABLE);
+    m_btdThread = new BtdThread();
     m_btdThread->m_stop = btd ? false : true;
-    m_btdThread->Create();
     m_btdThread->Run();
 
     // uncomment to test grayed out images
@@ -369,8 +370,6 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
 
     // terminate threads
-    m_btdThread->m_stop = true;
-    m_btdThread->Wait();
     delete m_btdThread;
 
     // free resources

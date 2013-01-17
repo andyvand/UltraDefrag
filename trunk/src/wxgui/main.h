@@ -89,6 +89,15 @@ private:
     Log *m_log;
 };
 
+class BtdThread: public wxThread {
+public:
+    BtdThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    ~BtdThread() { m_stop = true; Wait(); }
+    virtual void *Entry();
+
+    bool m_stop;
+};
+
 class MainFrame: public wxFrame {
 public:
     MainFrame();
@@ -182,17 +191,9 @@ private:
     bool m_skipRem;
 
     bool m_btdEnabled;
-    class BtdThread *m_btdThread;
+    BtdThread *m_btdThread;
 
     DECLARE_EVENT_TABLE()
-};
-
-class BtdThread: public wxThread {
-public:
-    BtdThread(wxThreadKind kind);
-    virtual void *Entry();
-
-    bool m_stop;
 };
 
 class Utils {
