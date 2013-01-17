@@ -40,11 +40,6 @@
 //              Boot time defragmenter registration tracking
 // =======================================================================
 
-BtdThread::BtdThread(wxThreadKind kind)
-  : wxThread(kind)
-{
-}
-
 void *BtdThread::Entry()
 {
     wxLogMessage(wxT("boot registration tracking started"));
