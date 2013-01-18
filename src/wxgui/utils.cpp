@@ -36,9 +36,53 @@
 
 #include "main.h"
 
+typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
+    /* LPUNKNOWN */ void *lpUnkcaller,
+    LPCWSTR szURL,
+    LPWSTR szFileName,
+    DWORD cchFileName,
+    DWORD dwReserved,
+    /*IBindStatusCallback*/ void *pBSC
+);
+
 // =======================================================================
 //                         Auxiliary utilities
 // =======================================================================
+
+/**
+ * @brief Downloads a file from the web.
+ * @return Path to the downloaded file.
+ * @note If the program terminates before
+ * the file download completion it crashes.
+ */
+wxString Utils::DownloadFile(const wxString& url)
+{
+    wxLogMessage(wxT("downloading %ls"),url.wc_str());
+
+    HMODULE h = ::LoadLibrary(wxT("urlmon.dll"));
+    if(!h){
+        wxLogSysError(wxT("cannot load urlmon.dll library"));
+        return wxEmptyString;
+    }
+
+    URLMON_PROCEDURE pDownload = (URLMON_PROCEDURE) \
+        ::GetProcAddress(h,"URLDownloadToCacheFileW");
+    if(!pDownload){
+        wxLogSysError(wxT("URLDownloadToCacheFileW procedure not found"));
+        return wxEmptyString;
+    }
+
+    wchar_t buffer[MAX_PATH + 1];
+    HRESULT result = pDownload(NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
+    if(result != S_OK){
+        wxLogError(wxT("URLDownloadToCacheFile failed with code 0x%x"),(UINT)result);
+        return wxEmptyString;
+    }
+
+    buffer[MAX_PATH] = 0;
+    wxString path(buffer);
+    return path;
+}
 
 /**
  * @brief Creates a bitmap

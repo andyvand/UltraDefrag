@@ -211,6 +211,7 @@ private:
 
 class Utils {
 public:
+    static wxString DownloadFile(const wxString& url);
     static wxBitmap *LoadPngResource(const wchar_t *name);
     static void OpenHandbook(const wxString& page,
         const wxString& anchor = wxEmptyString);
