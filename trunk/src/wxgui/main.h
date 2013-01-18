@@ -109,6 +109,17 @@ public:
     bool m_stop;
 };
 
+class UpgradeThread: public wxThread {
+public:
+    UpgradeThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    ~UpgradeThread() { m_stop = true; Wait(); }
+
+    virtual void *Entry();
+
+    bool m_stop;
+    bool m_check;
+};
+
 class MainFrame: public wxFrame {
 public:
     MainFrame();
@@ -176,6 +187,8 @@ public:
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
 
+    void OnShowUpgradeDialog(wxCommandEvent& event);
+
 private:
     void InitToolbar();
     void InitMenu();
@@ -205,6 +218,7 @@ private:
     BtdThread *m_btdThread;
 
     CrashInfoThread *m_crashInfoThread;
+    UpgradeThread *m_upgradeThread;
 
     DECLARE_EVENT_TABLE()
 };
@@ -280,6 +294,7 @@ enum {
 
     // event identifiers
     ID_BootChange,
+    ID_ShowUpgradeDialog,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange

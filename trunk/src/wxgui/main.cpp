@@ -100,6 +100,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_SIZE(MainFrame::OnSize)
 
     EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
+    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::OnShowUpgradeDialog)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(App)
@@ -328,6 +329,10 @@ MainFrame::MainFrame()
     m_crashInfoThread = new CrashInfoThread();
     m_crashInfoThread->Run();
 
+    m_upgradeThread = new UpgradeThread();
+    m_upgradeThread->m_check = true;
+    m_upgradeThread->Run();
+
     // track the boot time defragmenter registration
     m_btdThread = new BtdThread();
     m_btdThread->m_stop = btd ? false : true;
@@ -373,6 +378,7 @@ MainFrame::~MainFrame()
 
     // terminate threads
     delete m_crashInfoThread;
+    delete m_upgradeThread;
     delete m_btdThread;
 
     // free resources
@@ -571,10 +577,6 @@ void MainFrame::OnDebugSend(wxCommandEvent& WXUNUSED(event))
     wxString url(wxT("http://sourceforge.net/p/ultradefrag/bugs/"));
     if(!wxLaunchDefaultBrowser(url))
         Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
-}
-
-void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
-{
 }
 
 /** @} */
