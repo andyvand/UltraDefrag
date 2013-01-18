@@ -66,6 +66,7 @@
 		</Linker>
 		<Unit filename="about.cpp" />
 		<Unit filename="btd.cpp" />
+		<Unit filename="crash.cpp" />
 		<Unit filename="i18n.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
@@ -74,6 +75,7 @@
 		<Unit filename="ultradefrag.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="upgrade.cpp" />
 		<Unit filename="utils.cpp" />
 		<Extensions>
 			<code_completion />
