@@ -541,18 +541,22 @@ void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
 // help menu handlers
 void MainFrame::OnHelpContents(wxCommandEvent& WXUNUSED(event))
 {
+    Utils::OpenHandbook(wxT("index.html"));
 }
 
 void MainFrame::OnHelpBestPractice(wxCommandEvent& WXUNUSED(event))
 {
+    Utils::OpenHandbook(wxT("Tips.html"));
 }
 
 void MainFrame::OnHelpFaq(wxCommandEvent& WXUNUSED(event))
 {
+    Utils::OpenHandbook(wxT("FAQ.html"));
 }
 
 void MainFrame::OnHelpLegend(wxCommandEvent& WXUNUSED(event))
 {
+    Utils::OpenHandbook(wxT("GUI.html"),wxT("cluster_map_legend"));
 }
 
 void MainFrame::OnDebugLog(wxCommandEvent& WXUNUSED(event))
