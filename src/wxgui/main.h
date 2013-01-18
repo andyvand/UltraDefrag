@@ -211,10 +211,10 @@ private:
 
 class Utils {
 public:
-    wxBitmap *LoadPngResource(const wchar_t *name);
-    void OpenHandbook(const wxString& page,
+    static wxBitmap *LoadPngResource(const wchar_t *name);
+    static void OpenHandbook(const wxString& page,
         const wxString& anchor = wxEmptyString);
-    void ShowError(const wxChar* format, ...);
+    static void ShowError(const wxChar* format, ...);
 };
 
 // =======================================================================

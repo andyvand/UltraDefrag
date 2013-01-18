@@ -38,7 +38,7 @@
 
 #define UD_SetMenuIcon(id, icon) \
     string.Printf(wxT("%hs%u"),#icon,size); \
-    pic = utils.LoadPngResource(string.wc_str()); \
+    pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic) m_menuBar->FindItem(id)->SetBitmap(*pic); \
     delete pic;
 
@@ -208,7 +208,7 @@ void MainFrame::InitMenu()
 
     //size = 24;
 
-    wxBitmap *pic; Utils utils; wxString string;
+    wxBitmap *pic; wxString string;
     UD_SetMenuIcon(ID_Analyze         , glass )
     UD_SetMenuIcon(ID_Defrag          , defrag)
     UD_SetMenuIcon(ID_QuickOpt        , quick )

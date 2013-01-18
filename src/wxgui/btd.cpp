@@ -106,8 +106,8 @@ void MainFrame::OnBootEnable(wxCommandEvent& WXUNUSED(event))
         m_menuBar->FindItem(ID_BootEnable)->Check(m_btdEnabled);
         m_toolBar->ToggleTool(ID_BootEnable,m_btdEnabled);
     } else {
-        Utils utils; utils.ShowError(wxT("Cannot %hs the boot time ")
-            wxT("defragmenter!"),m_btdEnabled ? "disable" : "enable");
+        if(m_btdEnabled) Utils::ShowError(wxT("Cannot disable the boot time defragmenter!"));
+        else  Utils::ShowError(wxT("Cannot enable the boot time defragmenter!"));
     }
 }
 
