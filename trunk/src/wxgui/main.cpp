@@ -412,6 +412,13 @@ void MainFrame::OnAnalyze(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnDefrag(wxCommandEvent& WXUNUSED(event))
 {
+    wxFileName file(Utils::DownloadFile(
+        wxT("http://ultradefrag.sourceforge.net/version.ini")));
+    file.Normalize();
+    wxString path = file.GetFullPath();
+    if(!wxLaunchDefaultBrowser(path))
+        Utils::ShowError(wxT("Cannot open %ls!"),path.wc_str());
+    //wxRemoveFile(path);
 }
 
 void MainFrame::OnQuickOpt(wxCommandEvent& WXUNUSED(event))
