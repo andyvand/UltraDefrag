@@ -93,6 +93,17 @@ class BtdThread: public wxThread {
 public:
     BtdThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
     ~BtdThread() { m_stop = true; Wait(); }
+
+    virtual void *Entry();
+
+    bool m_stop;
+};
+
+class CrashInfoThread: public wxThread {
+public:
+    CrashInfoThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    ~CrashInfoThread() { m_stop = true; Wait(); }
+
     virtual void *Entry();
 
     bool m_stop;
@@ -192,6 +203,8 @@ private:
 
     bool m_btdEnabled;
     BtdThread *m_btdThread;
+
+    CrashInfoThread *m_crashInfoThread;
 
     DECLARE_EVENT_TABLE()
 };

@@ -325,6 +325,8 @@ MainFrame::MainFrame()
     }
 
     // launch threads for the time consuming operations
+    m_crashInfoThread = new CrashInfoThread();
+    m_crashInfoThread->Run();
 
     // track the boot time defragmenter registration
     m_btdThread = new BtdThread();
@@ -370,6 +372,7 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
 
     // terminate threads
+    delete m_crashInfoThread;
     delete m_btdThread;
 
     // free resources
