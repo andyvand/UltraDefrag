@@ -309,6 +309,11 @@ MainFrame::MainFrame()
     // create tool bar
     InitToolbar();
 
+    // create list of volumes and cluster map
+    m_splitter = new wxSplitterWindow(this,wxID_ANY);
+    InitVolList(); InitMap();
+    m_splitter->SplitHorizontally(m_vList,m_cMap);
+
     // check the boot time defragmenter presence
     wxFileName btdFile(wxT("%SystemRoot%\\system32\\defrag_native.exe"));
     btdFile.Normalize();

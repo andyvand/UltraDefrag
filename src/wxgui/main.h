@@ -42,7 +42,9 @@
 #include <wx/gbsizer.h>
 #include <wx/hyperlink.h>
 #include <wx/intl.h>
+#include <wx/listctrl.h>
 #include <wx/mstream.h>
+#include <wx/splitter.h>
 #include <wx/stdpaths.h>
 #include <wx/sysopt.h>
 #include <wx/textfile.h>
@@ -194,6 +196,8 @@ private:
     void InitMenu();
     void InitLocale();
     void SetLocale(int id);
+    void InitVolList();
+    void InitMap();
 
     int m_x;
     int m_y;
@@ -210,6 +214,10 @@ private:
     wxMenuItem *m_subMenuBootConfig;
     wxMenuItem *m_subMenuDebug;
     wxMenu     *m_menuLanguage;
+
+    wxSplitterWindow *m_splitter;
+    wxListView *m_vList;
+    wxStaticText *m_cMap;
 
     bool m_repeat;
     bool m_skipRem;
