@@ -136,10 +136,8 @@ save_info:
         wxFileName file(wxT("./crash-info.log"));
         file.Normalize();
         wxString logpath = file.GetFullPath();
-        if(!wxLaunchDefaultBrowser(logpath)){
-            Utils utils; utils.ShowError(
-                wxT("Cannot open %ls!"),logpath.wc_str());
-        }
+        if(!wxLaunchDefaultBrowser(logpath))
+            Utils::ShowError(wxT("Cannot open %ls!"),logpath.wc_str());
     }
 
     // save time stamp of the last processed event

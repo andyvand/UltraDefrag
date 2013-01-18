@@ -42,13 +42,13 @@
 
 #define UD_MakeToolItem(id, icon) \
     string.Printf(wxT("%hs%u"),#icon,size); \
-    pic = utils.LoadPngResource(string.wc_str()); \
+    pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic) m_toolBar->AddTool(id,*pic); \
     delete pic;
 
 #define UD_MakeToolCheckItem(id, icon) \
     string.Printf(wxT("%hs%u"),#icon,size); \
-    pic = utils.LoadPngResource(string.wc_str()); \
+    pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic) m_toolBar->AddCheckTool(id,wxEmptyString,*pic); \
     delete pic;
 
@@ -68,7 +68,7 @@ void MainFrame::InitToolbar()
     m_toolBar = CreateToolBar();
     m_toolBar->SetToolBitmapSize(wxSize(size,size));
 
-    wxBitmap *pic; Utils utils; wxString string;
+    wxBitmap *pic; wxString string;
     UD_MakeToolItem(ID_Analyze         , glass   )
     UD_MakeToolCheckItem(ID_Repeat     , repeat  )
     UD_MakeToolItem(ID_Defrag          , defrag  )
