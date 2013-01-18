@@ -70,6 +70,7 @@
 		<Unit filename="i18n.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
+		<Unit filename="map.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="toolbar.cpp" />
 		<Unit filename="ultradefrag.rc">
@@ -77,6 +78,7 @@
 		</Unit>
 		<Unit filename="upgrade.cpp" />
 		<Unit filename="utils.cpp" />
+		<Unit filename="vollist.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
