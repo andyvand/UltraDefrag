@@ -59,7 +59,7 @@ void *UpgradeThread::Entry()
                 wxString cv(wxT(VERSIONINTITLE));
                 wxLogMessage(wxT("current version: %ls"),cv.wc_str());
                 int cmj, cmn, ci; // current version numbers
-                swscanf(cv.wc_str(),L"%u.%u.%u",&cmj,&cmn,&ci);
+                swscanf(cv.wc_str(),L"UltraDefrag %u.%u.%u",&cmj,&cmn,&ci);
                 bool unstable = false;
                 if(cv.Lower().Find(wxT("alpha")) != wxNOT_FOUND) unstable = true;
                 if(cv.Lower().Find(wxT("beta")) != wxNOT_FOUND) unstable = true;
