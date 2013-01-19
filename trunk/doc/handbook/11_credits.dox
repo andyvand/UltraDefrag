@@ -289,12 +289,30 @@
  * <b>Portions Copyright &copy;</b>
  *
  * UltraDefrag includes portions of the following open source libraries:
+ * <a href="http://www.wxwidgets.org/">wxWidgets</a>, 
  * <a href="http://www.lua.org/">Lua</a>, 
  * <a href="http://www.gnu.org/software/libc/">GNU C Library</a>,
  * <a href="http://www.stanford.edu/~blp/avl/">GNU libavl</a>. Also 
  * UltraDefrag includes portions of <a href="http://www.reactos.org/">ReactOS</a> code.
  *
  * <ul>
+ * <li> Portions Copyright &copy; 1998-2005 Julian Smart, Robert Roebling et al
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Library General Public Licence as published by
+ * the Free Software Foundation; either version 2 of the Licence, or (at
+ * your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library
+ * General Public Licence for more details.
+ *
+ * You should have received a copy of the GNU Library General Public Licence
+ * along with this software, usually in a file named COPYING.LIB.  If not,
+ * write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307 USA.
+ *
  * <li> Portions Copyright &copy; 1994-2007 Lua.org, PUC-Rio
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -368,7 +386,7 @@
  *
  * UltraDefrag GUI includes icons made by third-party persons/organizations.
  *
- * Analysis and help icons were copied from 
+ * The glass icon has been copied from 
  * <a href="http://nsis.sourceforge.net">NSIS</a>
  * compiler's frontend.
  *
@@ -392,7 +410,7 @@
  * -# This notice may not be removed or altered from any source distribution.</li>
  * </ul>
  *
- * Stop, configuration, terminal, MFT optimization icons were copied
+ * Stop, configuration, MFT optimization icons have been copied
  * from <a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam Silk</a> icon set.
  *
  * <ul>
@@ -410,7 +428,7 @@
  * of the icons contained within.</li>
  * </ul>
  * 
- * Repeat icon was copied from <a href="http://www.interactivemania.com/content/default-icon">Default Icon</a> set.
+ * The repeat icon has been copied from <a href="http://www.interactivemania.com/content/default-icon">Default Icon</a> set.
  *
  * <ul>
  * <li> Portions Copyright &copy; 2011 interactivemania
@@ -439,7 +457,7 @@
  *
  * Taskbar overlay icon is based on
  * <a href="http://p.yusukekamiyamane.com/">Fugue</a> icon set.
- * Light bulb, star, pause; large repeat, stop, terminal, script and help icons were copied from this set too.
+ * Pause, terminal, help, light bulb, star; large stop and script icons have been copied from this set too.
  *
  * <ul>
  * <li> Portions Copyright &copy; 2012 Yusuke Kamiyamane
