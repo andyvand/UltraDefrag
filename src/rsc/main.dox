@@ -46,7 +46,8 @@
  * conditions.
  *
  * UltraDefrag includes portions of a few open source libraries 
- * (<a href="http://www.lua.org/">Lua</a>, 
+ * (<a href="http://www.wxwidgets.org/">wxWidgets</a>, 
+ * <a href="http://www.lua.org/">Lua</a>, 
  * <a href="http://www.gnu.org/software/libc/">GNU C Library</a>,
  * <a href="http://www.stanford.edu/~blp/avl/">GNU libavl</a>)
  * as well as portions of <a href="http://www.reactos.org/">ReactOS</a> source code.

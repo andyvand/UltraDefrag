@@ -56,8 +56,8 @@ to http://www.gnu.org/copyleft/gpl.html or write to
 Additional Copyright Information
 --------------------------------
 
-UltraDefrag includes portions of a few open source libraries 
-(Lua, GNU C Library, GNU libavl) as well as portions of ReactOS source code.
+UltraDefrag includes portions of a few open source libraries (wxWidgets, 
+Lua, GNU C Library, GNU libavl) as well as portions of ReactOS source code.
 
 UltraDefrag GUI includes icons made by third-party persons/organizations.
 

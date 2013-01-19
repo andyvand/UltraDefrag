@@ -52,16 +52,16 @@ ship_8bit BITMAP DISCARDABLE "res/ship_8bit.bmp"
 
 //////////////////////////////////////////////////////////////////////////
 // Toolbar and menu icons were copied from:
-// - analysis, help icons - from NSIS compiler's frontend
-// - stop, config, terminal, mft optimization icons -
+// - glass icon - from NSIS compiler's frontend
+// - stop, config, mft optimization icons -
 //   from Silk icon set 1.3 http://www.famfamfam.com/lab/icons/silk/
 // - report, script icons -
 //   from http://brandspankingnew.net/download.php?file=doc_types_v2.zip
 // - repeat icon - by Interactivemania
 //   http://www.iconfinder.com/icondetails/49846/16/alt_media_repeat_icon
-// - large repeat, pause, stop, terminal, script, help; light bulb,
+// - large stop, script; pause, terminal, help, light bulb,
 //   star icons - from Fugue icon set http://p.yusukekamiyamane.com/
-// All icons are licensed under terms permitting their use
+// All icons are licensed under the terms permitting their use
 // for non commercial purposes.
 //////////////////////////////////////////////////////////////////////////
 icons(16)
