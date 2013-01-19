@@ -72,7 +72,7 @@ volume_info *udefrag_get_vollist(int skip_removable)
 
     /* cycle through drive letters */
     for(i = 0, index = 0; i < MAX_DOS_DRIVES; i++){
-        letter = 'A' + (char)i; /* uppercase required by w2k! */
+        letter = 'A' + (char)i;
         if(internal_validate_volume(letter, skip_removable,v + index) >= 0)
             index ++;
     }
@@ -159,7 +159,7 @@ static int internal_validate_volume(char volume_letter,int skip_removable,volume
     if(v == NULL)
         return (-1);
 
-    /* convert volume letter to uppercase - needed for w2k */
+    /* convert volume letter to uppercase */
     volume_letter = winx_toupper(volume_letter);
     
     v->letter = volume_letter;

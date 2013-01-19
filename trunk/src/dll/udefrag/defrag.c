@@ -505,10 +505,6 @@ static int defrag_sequence(udefrag_job_parameters *jp)
         if(jp->pi.fragmented == 0) break;
     }
     
-    /* partial defragmentation is not supported for NTFS under nt4/w2k */
-    if(jp->win_version < WINDOWS_XP && jp->fs_type == FS_NTFS)
-        return overall_result;
-    
     if(jp->pi.fragmented == 0) return overall_result;
     
     /* defragment remaining files partially */

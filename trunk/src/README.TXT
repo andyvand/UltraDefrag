@@ -13,7 +13,7 @@ UltraDefrag is fully compatible with Windows XP, Windows Server 2003,
 Windows Vista, Windows Server 2008, Windows 7 and all of the 64-bit
 editions of Windows.
 
-For Windows NT 4.0 and Windows 2000 UltraDefrag v6 is available.
+UltraDefrag v6 supports Windows NT 4.0 and Windows 2000 as well.
 
 You must have administrative rights to install and use UltraDefrag.
 

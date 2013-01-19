@@ -315,7 +315,7 @@ int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
     /* initialize the job */
     dbg_print_header(&jp);
 
-    /* convert volume letter to uppercase - needed for w2k */
+    /* convert volume letter to uppercase */
     volume_letter = winx_toupper(volume_letter);
     
     memset(&jp,0,sizeof(udefrag_job_parameters));
@@ -495,9 +495,6 @@ char *udefrag_get_error_description(int error_code)
     case UDEFRAG_UNKNOWN_ERROR:
         return "Some unknown internal bug or some\n"
                "rarely arising error has been encountered.";
-    case UDEFRAG_W2K_4KB_CLUSTERS:
-        return "NTFS disks with cluster size greater than 4 KB\n"
-               "cannot be defragmented on Windows 2000 and Windows NT 4.0";
     case UDEFRAG_NO_MEM:
         return "Not enough memory.";
     case UDEFRAG_CDROM:
@@ -555,10 +552,7 @@ static void write_log_file_header(wchar_t *path)
     /*
     * UTF-8 encoded files need BOM to be written before the contents.
     */
-    if(os_version > WINDOWS_NT){
-        /* NT4 libraries contain ANSI encoded messages; confirmed on its Russian edition */
-        (void)winx_fwrite(bom,sizeof(char),3,f);
-    }
+    (void)winx_fwrite(bom,sizeof(char),3,f);
 
     header = winx_sprintf(format,VERSIONINTITLE,mj,mn);
     if(header == NULL){

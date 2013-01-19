@@ -149,8 +149,8 @@ int __cdecl main(int argc, char **argv)
     * There is an opinion that SetSuspendState call
     * is more reliable than SetSystemPowerState:
     * http://msdn.microsoft.com/en-us/library/aa373206%28VS.85%29.aspx
-    * On the other hand, it is missing on NT4.
     */
+
     /* hibernate, request permission from apps and drivers */
     if(!SetSuspendState(TRUE,FALSE,FALSE)){
         handle_error("Cannot hibernate the computer");

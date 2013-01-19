@@ -101,8 +101,6 @@ void adjust_move_at_once_parameter(udefrag_job_parameters *jp)
     } else {
         bytes_at_once = _64M;
     }
-    /* nt4 (and maybe w2k) is able to move no more than 256 KB at once */
-    if(jp->win_version < WINDOWS_XP) bytes_at_once = _256K;
     jp->clusters_at_once = bytes_at_once / jp->v_info.bytes_per_cluster;
     if(jp->clusters_at_once == 0)
         jp->clusters_at_once ++;
@@ -822,34 +820,13 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
  */
 static int check_requested_action(udefrag_job_parameters *jp)
 {
-    /*
-    * NTFS volumes with cluster size greater than 4 KB
-    * cannot be defragmented on Windows 2000 and Windows NT 4.0.
-    * This is a well known limitation of Windows Defrag API.
-    */
-    if(jp->job_type != ANALYSIS_JOB \
-      && jp->fs_type == FS_NTFS \
-      && jp->v_info.bytes_per_cluster > 4096 \
-      && jp->win_version <= WINDOWS_2K){
-        trace(E"cannot defragment NTFS volumes with clusters bigger than 4KB on nt4/w2k");
-        return UDEFRAG_W2K_4KB_CLUSTERS;
-    }
-
     if(jp->job_type != ANALYSIS_JOB && jp->fs_type == FS_UDF){
         trace(E"cannot defragment/optimize UDF volumes,");
         trace(E"because the file system driver does not support FSCTL_MOVE_FILE");
         return UDEFRAG_UDF_DEFRAG;
     }
 
-    if(jp->is_fat){
-        itrace("FAT directories cannot be moved %s",
-            jp->win_version > WINDOWS_2K ? "entirely" : "at all");
-    }
-    if(jp->fs_type == FS_NTFS && jp->win_version < WINDOWS_XP){
-        itrace("MFT is not movable");
-        if(jp->win_version < WINDOWS_2K)
-            itrace("directories are not movable");
-    }
+    if(jp->is_fat) itrace("FAT directories cannot be moved entirely");
     return 0;
 }
 

@@ -18,9 +18,6 @@
  *
  * <h2>Collecting debugging information to report problems using the graphical interface</h2>
  * -# Optionally download the <a href="http://technet.microsoft.com/en-us/sysinternals/bb896647.aspx">DbgView</a> program.
- *    -# The latest version of DbgView cannot be used on NT 4.0, check
- *       <a href="http://doc.sch130.nsc.ru/www.sysinternals.com/ntw2k/freeware/debugview.shtml">this page</a>
- *       for an earlier version.
  * -# Optionally download and install <a href="http://www.gen.hardcopy.de/">Hardcopy</a> as a free utility to easily
  *    create and save screenshots.
  *    -# You can use the native Windows screen capture capability using the <b>[Alt]+[Print Screen]</b>
@@ -75,8 +72,6 @@
  * -# Make sure to have the boot time interface being executed at least once.
  * -# Launch a <b>command prompt</b>, on Vista and above make sure to run as the Administrator user
  *    by right-clicking on it and selecting <b>Run as Administrator</b>.
- * -# For Windows 2000 and below, you need to install the <b>Windows Support Tools</b> shipping with the
- *    Windows installation CD.
  * -# Execute the lines below to add additional information to the <b>boot-startup-phase.log</b> file.
  * @code
  * reg query "HKLM\HARDWARE\DEVICEMAP\KeyboardClass" >>"%UD_INSTALL_DIR%\Logs\boot-startup-phase.log"

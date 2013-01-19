@@ -105,17 +105,6 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
     if(is_moving_failed(f))
         return 0;
     
-    /* skip not movable mft on nt4/w2k */
-    if(jp->win_version < WINDOWS_XP){
-        if(is_mft(f,jp)) return 0;
-    }
-    
-    /* skip not movable ntfs directories on nt4 */
-    if(jp->win_version < WINDOWS_2K){
-        if(jp->fs_type == FS_NTFS && is_directory(f))
-            return 0;
-    }
-    
     /* keep the computer bootable */
     if(is_not_essential_file(f)) return 1;
     if(is_essential_boot_file(f)) return 0;
