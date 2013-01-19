@@ -173,38 +173,48 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
 }
 
 /**
- * @brief Shows an error and
- * invites to open the log file.
+ * @brief wxMessageDialog analog,
+ * but with custom button labels
+ * and with ability to center dialog
+ * over the parent window.
+ * @param[in] parent the parent window.
+ * @param[in] caption the dialog caption.
+ * @param[in] icon one of the wxART_xxx constants.
+ * @param[in] text1 the OK button label.
+ * @param[in] text2 the Cancel button label.
+ * @param[in] format the format specification.
+ * @param[in] ... the parameters.
  */
-void Utils::ShowError(const wxChar* format, ...)
+int Utils::MessageDialog(wxFrame *parent,
+    const wxString& caption, const wxArtID& icon,
+    const wxString& text1, const wxString& text2,
+    const wxChar* format, ...)
 {
+    wxString message;
     va_list args;
     va_start(args,format);
-    wxString message;
     message.PrintfV(format,args);
     va_end(args);
 
-    wxDialog dlg(g_MainFrame,wxID_ANY,_("Error!"));
+    wxDialog dlg(parent,wxID_ANY,caption);
 
-    wxStaticBitmap *icon = new wxStaticBitmap(&dlg,wxID_ANY,
-        wxArtProvider::GetIcon(wxART_ERROR,wxART_MESSAGE_BOX));
+    wxStaticBitmap *pic = new wxStaticBitmap(&dlg,wxID_ANY,
+        wxArtProvider::GetIcon(icon,wxART_MESSAGE_BOX));
     wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message,
         wxDefaultPosition,wxDefaultSize,wxALIGN_CENTRE);
 
     wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
-    contents->Add(icon, wxGBPosition(0, 0), wxDefaultSpan,
+    contents->Add(pic, wxGBPosition(0, 0), wxDefaultSpan,
         (wxBOTTOM)|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 10);
     contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
         (wxALL & ~wxTOP)|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
 
-    wxString label = _("Open &log");
-    label.Replace(wxT("&"),wxT(""));
-    wxButton *log = new wxButton(&dlg,wxID_OK,label);
-    wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,_("Cancel"));
+    wxButton *ok = new wxButton(&dlg,wxID_OK,text1);
+    wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,text2);
 
     wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
-    buttons->Add(log,wxSizerFlags(1).Border(wxRIGHT));
+    buttons->Add(ok,wxSizerFlags(1).Border(wxRIGHT));
     buttons->Add(cancel,wxSizerFlags(1).Border(wxLEFT));
 
     contents->Add(buttons, wxGBPosition(1, 0), wxGBSpan(1, 2),
@@ -216,10 +226,30 @@ void Utils::ShowError(const wxChar* format, ...)
     dlg.SetSizerAndFit(space);
     space->SetSizeHints(&dlg);
 
-    if(!g_MainFrame->IsIconized()) dlg.Center();
+    if(!parent->IsIconized()) dlg.Center();
     else dlg.CenterOnScreen();
 
-    if(dlg.ShowModal() == wxID_OK){
+    return dlg.ShowModal();
+}
+
+/**
+ * @brief Shows an error and
+ * invites to open log file.
+ */
+void Utils::ShowError(const wxChar* format, ...)
+{
+    wxString message;
+    va_list args;
+    va_start(args,format);
+    message.PrintfV(format,args);
+    va_end(args);
+
+    wxString log = _("Open &log");
+    log.Replace(wxT("&"),wxT(""));
+
+    if(MessageDialog(g_MainFrame,_("Error!"),
+      wxART_ERROR,log,_("Cancel"),message) == wxID_OK)
+    {
         wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_DebugLog);
         wxPostEvent(g_MainFrame,event);
     }
