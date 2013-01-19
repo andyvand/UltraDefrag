@@ -96,42 +96,12 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnShowUpgradeDialog(wxCommandEvent& event)
 {
-    wxDialog dlg(this,wxID_ANY,_("You can upgrade me ^-^"));
-
-    wxStaticBitmap *icon = new wxStaticBitmap(&dlg,wxID_ANY,
-        wxArtProvider::GetIcon(wxART_INFORMATION,wxART_MESSAGE_BOX));
     wxString message(event.GetString());
     message << wxT(" ") << _("release is available for download!");
-    wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message,
-        wxDefaultPosition,wxDefaultSize,wxALIGN_CENTRE);
 
-    wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
-
-    contents->Add(icon, wxGBPosition(0, 0), wxDefaultSpan,
-        (wxBOTTOM)|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 10);
-    contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
-        (wxALL & ~wxTOP)|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
-
-    wxButton *ok = new wxButton(&dlg,wxID_OK,_("Upgrade"));
-    wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,_("Cancel"));
-
-    wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
-    buttons->Add(ok,wxSizerFlags(1).Border(wxRIGHT));
-    buttons->Add(cancel,wxSizerFlags(1).Border(wxLEFT));
-
-    contents->Add(buttons, wxGBPosition(1, 0), wxGBSpan(1, 2),
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL);
-
-    wxBoxSizer *space = new wxBoxSizer(wxHORIZONTAL);
-    space->Add(contents,wxSizerFlags().DoubleBorder());
-
-    dlg.SetSizerAndFit(space);
-    space->SetSizeHints(&dlg);
-
-    if(!IsIconized()) dlg.Center();
-    else dlg.CenterOnScreen();
-
-    if(dlg.ShowModal() == wxID_OK){
+    if(Utils::MessageDialog(this,_("You can upgrade me ^-^"),
+      wxART_INFORMATION,_("Upgrade"),_("Cancel"),message) == wxID_OK)
+    {
         wxString url(wxT("http://ultradefrag.sourceforge.net"));
         if(!wxLaunchDefaultBrowser(url))
             Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());

@@ -235,6 +235,10 @@ class Utils {
 public:
     static wxString DownloadFile(const wxString& url);
     static wxBitmap *LoadPngResource(const wchar_t *name);
+    static int MessageDialog(wxFrame *parent,
+        const wxString& caption, const wxArtID& icon,
+        const wxString& text1, const wxString& text2,
+        const wxChar* format, ...);
     static void OpenHandbook(const wxString& page,
         const wxString& anchor = wxEmptyString);
     static void ShowError(const wxChar* format, ...);
