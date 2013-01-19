@@ -71,9 +71,8 @@ void MainFrame::InitLocale()
 
     // add translations missing from wxWidgets
     wxLanguageInfo info;
-    UD_LNG(wxUD_LANGUAGE_BOSNIAN_LATIN,     "bs@latin"    , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian (Latin)")
-    UD_LNG(wxUD_LANGUAGE_BURMESE_PADAUK,    "my@padauk"   , 0              , 0              , wxLayout_LeftToRight, "Burmese (Padauk)")
-    UD_LNG(wxUD_LANGUAGE_ILOKO,             "il_PH"       , 0              , 0              , wxLayout_LeftToRight, "Iloko")
+    UD_LNG(wxUD_LANGUAGE_BOSNIAN,           "bs"          , LANG_BOSNIAN   , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
+    UD_LNG(wxUD_LANGUAGE_ILOKO,             "ilo"         , 0              , 0              , wxLayout_LeftToRight, "Iloko")
     UD_LNG(wxUD_LANGUAGE_INDONESIAN_BAHASA, "id_ID@bahasa", LANG_INDONESIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Indonesian (Bahasa Indonesia)")
     UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pa_PH"       , 0              , 0              , wxLayout_LeftToRight, "Kapampangan")
     UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "wa_PH"       , 0              , 0              , wxLayout_LeftToRight, "Waray-Waray")

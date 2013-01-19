@@ -317,8 +317,7 @@ enum {
    Important: never change their order when adding new translations
    or the selection of the user will be broken */
 enum {
-    wxUD_LANGUAGE_BOSNIAN_LATIN = wxLANGUAGE_USER_DEFINED+1,
-    wxUD_LANGUAGE_BURMESE_PADAUK,
+    wxUD_LANGUAGE_BOSNIAN = wxLANGUAGE_USER_DEFINED+1,
     wxUD_LANGUAGE_ILOKO,
     wxUD_LANGUAGE_INDONESIAN_BAHASA,
     wxUD_LANGUAGE_KAPAMPANGAN,
