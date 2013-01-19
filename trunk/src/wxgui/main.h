@@ -157,9 +157,7 @@ public:
     void OnShowReport(wxCommandEvent& event);
 
     // settings menu handlers
-    void OnLangShowLog(wxCommandEvent& event);
-    void OnLangShowReport(wxCommandEvent& event);
-    void OnLangOpenFolder(wxCommandEvent& event);
+    void OnLangOpenTransifex(wxCommandEvent& event);
     void OnLangSubmit(wxCommandEvent& event);
 
     void OnGuiFont(wxCommandEvent& event);

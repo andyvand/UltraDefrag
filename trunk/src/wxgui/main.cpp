@@ -67,9 +67,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
 
     // settings menu
-    EVT_MENU(ID_LangShowLog, MainFrame::OnLangShowLog)
-    EVT_MENU(ID_LangShowReport, MainFrame::OnLangShowReport)
-    EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
+    EVT_MENU(ID_LangShowLog, MainFrame::OnLangOpenTransifex)
+    EVT_MENU(ID_LangShowReport, MainFrame::OnLangOpenTransifex)
+    EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenTransifex)
     EVT_MENU(ID_LangSubmit, MainFrame::OnLangSubmit)
 
     EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange + \
@@ -511,20 +511,19 @@ void MainFrame::OnShowReport(wxCommandEvent& WXUNUSED(event))
 }
 
 // settings menu handlers
-void MainFrame::OnLangShowLog(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnLangOpenTransifex(wxCommandEvent& WXUNUSED(event))
 {
-}
-
-void MainFrame::OnLangShowReport(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
-{
+    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/"));
+    if(!wxLaunchDefaultBrowser(url))
+        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
 }
 
 void MainFrame::OnLangSubmit(wxCommandEvent& WXUNUSED(event))
 {
+    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/language/"));
+    url << m_locale->GetCanonicalName() << wxT("/");
+    if(!wxLaunchDefaultBrowser(url))
+        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
 }
 
 void MainFrame::OnGuiFont(wxCommandEvent& WXUNUSED(event))
