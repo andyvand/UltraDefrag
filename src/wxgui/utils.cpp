@@ -248,7 +248,7 @@ void Utils::ShowError(const wxChar* format, ...)
     log.Replace(wxT("&"),wxT(""));
 
     if(MessageDialog(g_MainFrame,_("Error!"),
-      wxART_ERROR,log,_("Cancel"),message) == wxID_OK)
+      wxART_ERROR,log,_("&Cancel"),message) == wxID_OK)
     {
         wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_DebugLog);
         wxPostEvent(g_MainFrame,event);
