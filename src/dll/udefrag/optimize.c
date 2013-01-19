@@ -667,9 +667,6 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
     winx_file_info *first_file;
     winx_blockmap *first_block;
     ULONGLONG lcn, min_lcn;
-    ULONGLONG vcn, length;
-    winx_volume_region *rgn;
-    ULONGLONG max_length = MAX_RGN_SIZE;
     int move_block = 0;
     int result;
     ULONGLONG time;
@@ -690,47 +687,15 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
         move_block = is_block_quite_small(jp,first_file,first_block);
         if(move_block){
             lcn = first_block->lcn;
-            if(jp->win_version > WINDOWS_2K || jp->fs_type != FS_NTFS){
-                /* Windows XP and more recent editions have no restrictions */
-                /* FAT under NT4/W2K has no restrictions */
-                result = cleanup_space(jp, first_file,
-                    first_block, first_block->length,
-                    0, first_block->lcn + first_block->length - 1);
-                if(result == 0)
-                    jp->pi.total_moves ++;
-                if(result == -1){
-                    /* no more free space beyond exists */
-                    *start_lcn = lcn;
-                    goto done;
-                }
-            } else {
-                /* NTFS under NT4/W2K has quite complex restrictions */
-                /* see /doc/man/Inside Windows NT Disk Defragmenting.rtf */
-                vcn = first_block->vcn;
-                length = first_block->length;
-                if(!is_compressed(first_file) && !is_sparse(first_file)){
-                    /* adjust range of clusters to comply with restrictions */
-                    length += vcn % 16; vcn -= vcn % 16;
-                    if(length % 16){
-                        length = min(length + (16 - length % 16), /* multiple of 16 */
-                            first_file->disp.clusters - vcn); /* remaining clusters */
-                    }
-                    jp->pi.clusters_to_process += length - first_block->length;
-                }
-                if(length <= max_length){
-                    rgn = find_last_free_region(jp,first_block->lcn \
-                        + first_block->length,length,&max_length);
-                    if(max_length == 0){
-                        /* no more free space beyond exists */
-                        *start_lcn = lcn;
-                        goto done;
-                    }
-                    if(rgn){
-                        if(move_file(first_file,vcn,length,
-                          rgn->lcn + rgn->length - length,jp) >= 0)
-                            jp->pi.total_moves ++;
-                    }
-                }
+            result = cleanup_space(jp, first_file,
+                first_block, first_block->length,
+                0, first_block->lcn + first_block->length - 1);
+            if(result == 0)
+                jp->pi.total_moves ++;
+            if(result == -1){
+                /* no more free space beyond exists */
+                *start_lcn = lcn;
+                goto done;
             }
         }
     }
@@ -1052,13 +1017,6 @@ done:
  * on the disk. On FAT it optimizes directories
  * also. On NTFS it optimizes the MFT.
  * @return Zero for success, negative value otherwise.
- * @note
- * - On Windows NT 4.0 FAT directories movement
- * causes BSOD, on Windows 2000 it simply fails.
- * Thus, the FAT directories optimization is
- * disallowed for these Windows editions.
- * - On Windows NT 4.0 and Windows 2000 MFT is not
- * movable. Thus the MFT optimization is disallowed.
  */
 int optimize(udefrag_job_parameters *jp)
 {

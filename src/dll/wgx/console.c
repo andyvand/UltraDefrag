@@ -49,23 +49,18 @@ typedef BOOL (WINAPI *GET_CURRENT_CONSOLE_FONT_EX_PROC)(HANDLE hConsoleOutput,BO
  * @param[in] f pointer to the output stream - 
  * can be either stdout or stderr.
  * @note
- * - On Windows NT 4.0 this routine always
- * converts the string to the OEM encoding
- * because NT 4.0 doesn't support the UTF-8
- * encoding.
- * - Since Windows 2000 the UTF-8 encoding is always
- * used when the output is redirected to a file.
- * - Since Windows Vista the UTF-8 encoding is used
+ * - UTF-8 encoding is always used when the output
+ * is redirected to a file.
+ * - Since Windows Vista UTF-8 encoding is used
  * when a True Type font is selected for the console
  * window.
  * - In all other cases the string becomes converted
  * to the OEM encoding; thus all the characters which
- * cannot be converted become replaced by the question
+ * cannot be converted become replaced by question
  * marks.
  */
 void WgxPrintUnicodeString(wchar_t *string,FILE *f)
 {
-    OSVERSIONINFO osvi;
     HANDLE hOut;
     DWORD file_type;
     DWORD mode;
@@ -80,14 +75,6 @@ void WgxPrintUnicodeString(wchar_t *string,FILE *f)
     
     old_code_page = GetConsoleOutputCP();
 
-    memset(&osvi,0,sizeof(osvi));
-    osvi.dwOSVersionInfoSize = sizeof(osvi);
-    GetVersionEx(&osvi);
-    if(osvi.dwMajorVersion <= 4){
-        /* Windows NT 4.0 supports OEM encoding only */
-        goto convert;
-    }
-    
     /* output redirected to a file can be converted to UTF-8 */
     hOut = GetStdHandle(f == stdout ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE);
     if(hOut == INVALID_HANDLE_VALUE){

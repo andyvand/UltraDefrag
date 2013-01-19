@@ -132,7 +132,6 @@
  * @code
  * udefrag "%USERPROFILE%" ..\Test "My Documents" C:\WINDOWS\WindowsUpdate.log
  * @endcode
- * - Short paths (like C:\\PROGRA~1\\SOMEFI~1.TXT) aren't accepted on NT4.
  *
  * <h1>Environment variables</h1>
  * <h2>Filter variables</h2>

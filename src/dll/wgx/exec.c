@@ -115,8 +115,6 @@ BOOL WgxCreateThread(LPTHREAD_START_ROUTINE routine,LPVOID param)
  * @param[in] priority_class process priority class.
  * Read MSDN article on SetPriorityClass for details.
  * @return Boolean value. TRUE indicates success.
- * @note Above normal and below normal priorities
- * are not supported by Windows NT 4.0.
  */
 BOOL WgxSetProcessPriority(DWORD priority_class)
 {
@@ -151,11 +149,6 @@ BOOL WgxCheckAdminRights(void)
     CHECKTOKENMEMBERSHIP pCheckTokenMembership;
     BOOL IsMember = FALSE;
     BOOL result = FALSE;
-    BOOL api_result;
-    TOKEN_GROUPS *ptg = NULL;
-    DWORD bytes_allocated = 0;
-    DWORD bytes_needed = 0;
-    DWORD j;
     
     if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
         letrace("cannot open access token of the thread");
@@ -169,68 +162,17 @@ BOOL WgxCheckAdminRights(void)
       SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
       0,0,0,0,0,0,&psid)){
         letrace("cannot create the security identifier");
-        psid = NULL;
-        goto done;
+        CloseHandle(hToken);
+        return FALSE;
     }
       
-    pCheckTokenMembership = (CHECKTOKENMEMBERSHIP)GetProcAddress(
-      GetModuleHandle("advapi32"),"CheckTokenMembership");
-    if(pCheckTokenMembership){
-        /* we are at least on w2k */
-        if(!pCheckTokenMembership(NULL,psid,&IsMember)){
-            letrace("cannot check token membership");
-            goto done;
-        }
-        if(!IsMember){
-            itrace("the user is not a member of administrators group");
-            goto done;
-        }
+    if(!CheckTokenMembership(NULL,psid,&IsMember)){
+        letrace("cannot check token membership");
     } else {
-        /* we are on NT 4 */
-        do {
-            api_result = GetTokenInformation(hToken,TokenGroups,ptg,bytes_allocated,&bytes_needed);
-            if(!api_result && GetLastError() != ERROR_INSUFFICIENT_BUFFER){
-                /* the call failed */
-                letrace("cannot get token information");
-                goto done;
-            }
-            if(!api_result){
-                if(bytes_needed <= bytes_allocated){
-                    /* the call needs smaller buffer?? */
-                    etrace("GetTokenInformation failed (requested smaller buffer)");
-                    goto done;
-                }
-                /* the call needs larger buffer */
-                free(ptg);
-                ptg = malloc(bytes_needed);
-                if(ptg == NULL){
-                    mtrace();
-                    goto done;
-                }
-                bytes_allocated = bytes_needed;
-                continue;
-            }
-            break;
-        } while(1);
-        if(ptg == NULL){
-            etrace("GetTokenInformation failed (requested no buffer)");
-            goto done;
-        }
-        for(j = 0; j < ptg->GroupCount; j++){
-            if(EqualSid(ptg->Groups[j].Sid,psid)){
-                result = TRUE;
-                goto done;
-            }
-        }
-        itrace("the user is not a member of administrators group");
-        goto done;
+        if(!IsMember) itrace("the user is not a member of administrators group");
+        else result = TRUE;
     }
     
-    /* all checks succeeded */
-    result = TRUE;
-
-done:
-    free(ptg);
     if(psid) FreeSid(psid);
     CloseHandle(hToken);
     return result;
