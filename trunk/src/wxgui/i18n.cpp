@@ -75,6 +75,7 @@ void MainFrame::InitLocale()
     UD_LNG(wxUD_LANGUAGE_ILOKO,             "ilo"         , 0              , 0              , wxLayout_LeftToRight, "Iloko")
     UD_LNG(wxUD_LANGUAGE_INDONESIAN_BAHASA, "id_ID@bahasa", LANG_INDONESIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Indonesian (Bahasa Indonesia)")
     UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pa_PH"       , 0              , 0              , wxLayout_LeftToRight, "Kapampangan")
+    UD_LNG(wxUD_LANGUAGE_NORWEGIAN,         "no"          , LANG_NORWEGIAN , SUBLANG_DEFAULT, wxLayout_LeftToRight, "Norwegian")
     UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "wa_PH"       , 0              , 0              , wxLayout_LeftToRight, "Waray-Waray")
 
     // get initial language selection
