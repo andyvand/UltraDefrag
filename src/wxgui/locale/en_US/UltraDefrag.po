@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-07 22:43+0100\n"
+"POT-Creation-Date: 2013-01-19 15:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,202 +16,222 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: about.cpp:46
+#: about.cpp:45
 msgid "About UltraDefrag"
 msgstr ""
 
-#: about.cpp:57
+#: about.cpp:56
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:59
+#: about.cpp:58
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:62
+#: about.cpp:61
 msgid "UltraDefrag website"
 msgstr ""
 
-#: menu.cpp:68 i18n.cpp:131
-msgid "&None"
-msgstr ""
-
-#: menu.cpp:69 menu.cpp:95 i18n.cpp:132 i18n.cpp:138
-msgid "E&xit"
-msgstr ""
-
-#: menu.cpp:70 i18n.cpp:133
-msgid "Stan&dby"
-msgstr ""
-
-#: menu.cpp:71 i18n.cpp:134
-msgid "&Hibernate"
-msgstr ""
-
-#: menu.cpp:72 i18n.cpp:135
-msgid "&Logoff"
-msgstr ""
-
-#: menu.cpp:73 i18n.cpp:136
-msgid "&Reboot"
-msgstr ""
-
-#: menu.cpp:74 i18n.cpp:137
-msgid "&Shutdown"
-msgstr ""
-
-#: menu.cpp:78 i18n.cpp:120
+#: i18n.cpp:114
 msgid "&Analyze"
 msgstr ""
 
-#: menu.cpp:79 i18n.cpp:121
+#: i18n.cpp:115
 msgid "&Defragment"
 msgstr ""
 
-#: menu.cpp:80 i18n.cpp:122
+#: i18n.cpp:116
 msgid "&Quick optimization"
 msgstr ""
 
-#: menu.cpp:81 i18n.cpp:123
+#: i18n.cpp:117
 msgid "&Full optimization"
 msgstr ""
 
-#: menu.cpp:82 i18n.cpp:124
+#: i18n.cpp:118
 msgid "&Optimize MFT"
 msgstr ""
 
-#: menu.cpp:83 i18n.cpp:125
+#: i18n.cpp:119
 msgid "&Pause"
 msgstr ""
 
-#: menu.cpp:84 i18n.cpp:126
+#: i18n.cpp:120
 msgid "&Stop"
 msgstr ""
 
-#: menu.cpp:86 i18n.cpp:127
+#: i18n.cpp:121
 msgid "Re&peat action"
 msgstr ""
 
-#: menu.cpp:88 i18n.cpp:128
+#: i18n.cpp:122
 msgid "Skip removable &media"
 msgstr ""
 
-#: menu.cpp:89 i18n.cpp:129
+#: i18n.cpp:123
 msgid "&Rescan drives"
 msgstr ""
 
-#: menu.cpp:91 i18n.cpp:130
+#: i18n.cpp:124
 msgid "Repair dri&ves"
 msgstr ""
 
-#: menu.cpp:93 i18n.cpp:161
-msgid "&When done"
+#: i18n.cpp:125
+msgid "&None"
 msgstr ""
 
-#: menu.cpp:99 i18n.cpp:139
+#: i18n.cpp:126 i18n.cpp:132
+msgid "E&xit"
+msgstr ""
+
+#: i18n.cpp:127
+msgid "Stan&dby"
+msgstr ""
+
+#: i18n.cpp:128
+msgid "&Hibernate"
+msgstr ""
+
+#: i18n.cpp:129
+msgid "&Logoff"
+msgstr ""
+
+#: i18n.cpp:130
+msgid "&Reboot"
+msgstr ""
+
+#: i18n.cpp:131
+msgid "&Shutdown"
+msgstr ""
+
+#: i18n.cpp:133
 msgid "&Show report"
 msgstr ""
 
-#: menu.cpp:103 i18n.cpp:140
+#: i18n.cpp:134
 msgid "&View change log"
 msgstr ""
 
-#: menu.cpp:104 i18n.cpp:141
+#: i18n.cpp:135
 msgid "View translation &report"
 msgstr ""
 
-#: menu.cpp:105 i18n.cpp:142
+#: i18n.cpp:136
 msgid "&Translations folder"
 msgstr ""
 
-#: menu.cpp:106 i18n.cpp:143
+#: i18n.cpp:137
 msgid "&Submit current translation"
 msgstr ""
 
-#: menu.cpp:110 i18n.cpp:144
+#: i18n.cpp:138
 msgid "&Font"
 msgstr ""
 
-#: menu.cpp:111 i18n.cpp:145
+#: i18n.cpp:139
 msgid "&Options"
 msgstr ""
 
-#: menu.cpp:115 i18n.cpp:146
+#: i18n.cpp:140
 msgid "&Enable"
 msgstr ""
 
-#: menu.cpp:116 i18n.cpp:147
+#: i18n.cpp:141
 msgid "&Script"
 msgstr ""
 
-#: menu.cpp:120 i18n.cpp:162
-msgid "&Language"
-msgstr ""
-
-#: menu.cpp:121 i18n.cpp:163
-msgid "&Graphical interface"
-msgstr ""
-
-#: menu.cpp:122 toolbar.cpp:103 i18n.cpp:164 i18n.cpp:169
-msgid "&Boot time scan"
-msgstr ""
-
-#: menu.cpp:123 i18n.cpp:148
+#: i18n.cpp:142
 msgid "&Reports"
 msgstr ""
 
-#: menu.cpp:127 i18n.cpp:153
-msgid "Open &log"
-msgstr ""
-
-#: menu.cpp:128 i18n.cpp:154
-msgid "Send bug &report"
-msgstr ""
-
-#: menu.cpp:132 i18n.cpp:149
+#: i18n.cpp:143
 msgid "&Contents"
 msgstr ""
 
-#: menu.cpp:134 i18n.cpp:150
+#: i18n.cpp:144
 msgid "Best &practice"
 msgstr ""
 
-#: menu.cpp:135 i18n.cpp:151
+#: i18n.cpp:145
 msgid "&FAQ"
 msgstr ""
 
-#: menu.cpp:136 i18n.cpp:152
+#: i18n.cpp:146
 msgid "Cluster map &legend"
 msgstr ""
 
-#: menu.cpp:138 i18n.cpp:165
-msgid "&Debug"
+#: i18n.cpp:147 utils.cpp:247
+msgid "Open &log"
 msgstr ""
 
-#: menu.cpp:140 i18n.cpp:155
+#: i18n.cpp:148
+msgid "Send bug &report"
+msgstr ""
+
+#: i18n.cpp:149
 msgid "Check for &update"
 msgstr ""
 
-#: menu.cpp:142 i18n.cpp:156
+#: i18n.cpp:150
 msgid "&About"
 msgstr ""
 
-#: menu.cpp:146 i18n.cpp:157
+#: i18n.cpp:151
 msgid "&Action"
 msgstr ""
 
-#: menu.cpp:147 i18n.cpp:158
+#: i18n.cpp:152
 msgid "&Report"
 msgstr ""
 
-#: menu.cpp:148 i18n.cpp:159
+#: i18n.cpp:153
 msgid "&Settings"
 msgstr ""
 
-#: menu.cpp:149 i18n.cpp:160 i18n.cpp:175
+#: i18n.cpp:154 i18n.cpp:166
 msgid "&Help"
 msgstr ""
 
-#: toolbar.cpp:104 i18n.cpp:172
+#: i18n.cpp:155
+msgid "&When done"
+msgstr ""
+
+#: i18n.cpp:156
+msgid "&Language"
+msgstr ""
+
+#: i18n.cpp:157
+msgid "&Graphical interface"
+msgstr ""
+
+#: i18n.cpp:158 i18n.cpp:162
+msgid "&Boot time scan"
+msgstr ""
+
+#: i18n.cpp:159
+msgid "&Debug"
+msgstr ""
+
+#: i18n.cpp:164
 msgid "Boot time script"
+msgstr ""
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr ""
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr ""
+
+#: upgrade.cpp:103
+msgid "Upgrade"
+msgstr ""
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "Cancel"
+msgstr ""
+
+#: utils.cpp:250
+msgid "Error!"
 msgstr ""
