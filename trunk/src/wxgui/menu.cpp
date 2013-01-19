@@ -138,8 +138,10 @@ void MainFrame::InitMenu()
         langArray.Sort();
 
         // divide list of languages to three columns
-        unsigned int breakDelta = (unsigned int)((langArray.Count() + 4) / 3);
+        unsigned int breakDelta = (unsigned int)ceil((langArray.Count() + langArray.Count() % 2 + 4) / 3);
         unsigned int breakCnt = breakDelta - 4;
+        wxLogMessage(wxT("languages: %d, break count: %d, delta: %d"),
+            langArray.Count(), breakCnt, breakDelta);
         for(unsigned int i = 0;i < langArray.Count();i++){
             info = m_locale->FindLanguageInfo(langArray[i]);
             m_menuLanguage->AppendRadioItem(ID_LocaleChange \
