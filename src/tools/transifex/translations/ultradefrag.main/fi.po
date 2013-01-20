@@ -15,12 +15,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: bn\n"
+"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: about.cpp:45
 msgid "About UltraDefrag"
-msgstr "UltraDefrag সম্পর্কে"
+msgstr "Tietoja UltraDefrag"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
@@ -36,39 +36,39 @@ msgstr ""
 
 #: i18n.cpp:115
 msgid "&Action"
-msgstr "কাজ"
+msgstr "&Valinta"
 
 #: i18n.cpp:116
 msgid "&Report"
-msgstr "বিবরণী"
+msgstr "&Raportti"
 
 #: i18n.cpp:117
 msgid "&Settings"
-msgstr "সেটিং"
+msgstr "&Asetukset"
 
 #: i18n.cpp:118 i18n.cpp:185
 msgid "&Help"
-msgstr "সাহায্য"
+msgstr "&Ohje"
 
 #: i18n.cpp:120
 msgid "&Analyze"
-msgstr "বিশ্লেষণ"
+msgstr "&Analysoi"
 
 #: i18n.cpp:121
 msgid "&Defragment"
-msgstr "ফাইল একত্রীকরণ"
+msgstr "&Eheytä"
 
 #: i18n.cpp:122
 msgid "&Quick optimization"
-msgstr "দ্রুত একত্রীকরণ"
+msgstr "Pika&optimoi"
 
 #: i18n.cpp:123
 msgid "&Full optimization"
-msgstr "সম্পূর্ণ সংযোজন"
+msgstr "&Täysoptimoi"
 
 #: i18n.cpp:124
 msgid "&Optimize MFT"
-msgstr "ফাইল তালিকা সংযোজন"
+msgstr "Optimoi &MFT"
 
 #: i18n.cpp:125
 msgid "Pa&use"
@@ -76,71 +76,71 @@ msgstr ""
 
 #: i18n.cpp:126
 msgid "&Stop"
-msgstr "থামান"
+msgstr "&Lopeta"
 
 #: i18n.cpp:127
 msgid "Re&peat action"
-msgstr "আবার কাজ চালান"
+msgstr "To&ista toiminto"
 
 #: i18n.cpp:128
 msgid "Skip removable &media"
-msgstr "অপসারণযোগ্য মিডিয়া বিচ্ছিন্ন"
+msgstr "Ohita &siirrettävät asemat"
 
 #: i18n.cpp:129
 msgid "&Rescan drives"
-msgstr "আবার চেক করণ"
+msgstr "Skannaa &uudelleen"
 
 #: i18n.cpp:130
 msgid "Repair dri&ves"
-msgstr "মেরামত করণ"
+msgstr "Korjaus-asemat"
 
 #: i18n.cpp:131
 msgid "&When done"
-msgstr "শেষ যখন"
+msgstr "&Kun valmis, niin..."
 
 #: i18n.cpp:132 i18n.cpp:135
 msgid "E&xit"
-msgstr "বহির্গমন"
+msgstr "&Poistu"
 
 #: i18n.cpp:134
 msgid "&None"
-msgstr "কিছুই না যখন শেষ"
+msgstr "&ei mitään"
 
 #: i18n.cpp:136
 msgid "Stan&dby"
-msgstr "স্থিত যখন শেষ"
+msgstr "siirry &valmiustilaan"
 
 #: i18n.cpp:137
 msgid "&Hibernate"
-msgstr "যখন শেষ টিকা থাক"
+msgstr "siirry &lepotilaan"
 
 #: i18n.cpp:138
 msgid "&Logoff"
-msgstr "যখন শেষ লগ আউট"
+msgstr "&kirjaudu ulos"
 
 #: i18n.cpp:139
 msgid "&Reboot"
-msgstr "যখন শেষ কম্পিউটার পুনরায় আরম্ভ"
+msgstr "käynnistä &uudelleen"
 
 #: i18n.cpp:140
 msgid "&Shutdown"
-msgstr "যখন শেষ কম্পিউটার বন্ধ"
+msgstr "&sulje"
 
 #: i18n.cpp:142
 msgid "&Show report"
-msgstr "বিবরণী প্রদর্শন"
+msgstr "&Näytä raportti"
 
 #: i18n.cpp:144
 msgid "&Language"
-msgstr "ভাষা"
+msgstr "&Kieli"
 
 #: i18n.cpp:145
 msgid "&Graphical interface"
-msgstr "লৈখিক উপস্থাপনা"
+msgstr "&Graafinen liittymä"
 
 #: i18n.cpp:146 i18n.cpp:181
 msgid "&Boot time scan"
-msgstr "কম্পিউটার শুরুর চেক"
+msgstr "&Skannaus Windows-käynnistyksen myötä"
 
 #: i18n.cpp:147
 msgid "&Sorting"
@@ -148,39 +148,39 @@ msgstr ""
 
 #: i18n.cpp:148
 msgid "&Reports"
-msgstr "বিবরণী"
+msgstr "&Raportit"
 
 #: i18n.cpp:150
 msgid "&View change log"
-msgstr "অনুবাদ পরিবর্তন বিবরণী"
+msgstr "&Näytä muutos loki"
 
 #: i18n.cpp:151
 msgid "View translation &report"
-msgstr "অনুবাদ বিবরণী"
+msgstr "Näytä käännös &raportti"
 
 #: i18n.cpp:152
 msgid "&Translations folder"
-msgstr "অনুবাদ ফোল্ডার"
+msgstr "&Kielitiedostojen kansio"
 
 #: i18n.cpp:153
 msgid "&Submit current translation"
-msgstr "অনুবাদ জমা দিন"
+msgstr "&Lähetä nykyinen käännös"
 
 #: i18n.cpp:155
 msgid "&Font"
-msgstr "লেখা"
+msgstr "&Fontti"
 
 #: i18n.cpp:156
 msgid "&Options"
-msgstr "পছন্দসমূহ"
+msgstr "&Vaihtoehdot"
 
 #: i18n.cpp:158
 msgid "&Enable"
-msgstr "সূচনা"
+msgstr "&Käytä"
 
 #: i18n.cpp:159
 msgid "&Script"
-msgstr "স্ক্রিপ্ট"
+msgstr "&Skripti"
 
 #: i18n.cpp:161
 msgid "By &path"
@@ -212,11 +212,11 @@ msgstr ""
 
 #: i18n.cpp:169
 msgid "&Contents"
-msgstr "সূচীপত্র"
+msgstr "&Sisältö"
 
 #: i18n.cpp:170
 msgid "Best &practice"
-msgstr "উপযুক্ত অনুশীলন"
+msgstr "&Parhaat käytännöt"
 
 #: i18n.cpp:171
 msgid "&Frequently asked questions"
@@ -224,39 +224,39 @@ msgstr ""
 
 #: i18n.cpp:172
 msgid "Cluster map &legend"
-msgstr "দাগ"
+msgstr "Cluster kartta &legenda"
 
 #: i18n.cpp:173
 msgid "&Debug"
-msgstr "কোড মেরামত"
+msgstr ""
 
 #: i18n.cpp:174
 msgid "Check for &update"
-msgstr "চেক আধুনিক সংস্করণ"
+msgstr "&Tarkista päivitykset"
 
 #: i18n.cpp:175
 msgid "&About"
-msgstr "আমাদের সম্পর্কে"
+msgstr "&Ohjelmasta"
 
 #: i18n.cpp:177 utils.cpp:247
 msgid "Open &log"
-msgstr "বিবরণী প্রদর্শন"
+msgstr ""
 
 #: i18n.cpp:178
 msgid "Send bug &report"
-msgstr "ভুল মেরামত"
+msgstr ""
 
 #: i18n.cpp:183
 msgid "Boot time script"
-msgstr "কম্পিউটার শুরুর স্ক্রিপ্ট"
+msgstr "Windows-käynnistyksen aikainen suoritus"
 
 #: upgrade.cpp:100
 msgid "release is available for download!"
-msgstr "নতুন সংস্করণ উপলব্ধ আছে"
+msgstr "julkaisu on ladattavissa!"
 
 #: upgrade.cpp:102
 msgid "You can upgrade me ^-^"
-msgstr "আপগ্রেড করুন"
+msgstr "Voit päivittää minut ^-^"
 
 #: upgrade.cpp:103
 msgid "&Upgrade"
