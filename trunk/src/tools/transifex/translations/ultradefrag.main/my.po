@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-20 03:13+0100\n"
+"PO-Revision-Date: 2013-01-20 11:05+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: my\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr "UltraDefrag အကြောင်း"
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "ပြုလုပ်မှု"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "အကြောင်းကြား"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "ချိန်ညှိရာများ"
+
+#: i18n.cpp:118 i18n.cpp:176
+msgid "&Help"
+msgstr "အကူအညီ"
+
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr "သုံးသပ်"
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr "ဖိုင်ပြန်စီ"
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr "အမြန် အဆင့်မြင့်ဆုံး လုပ်ခြင်း"
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr "အပြည့် အဆင့်မြင့်ဆုံး လုပ်ခြင်း"
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr "MFT  ကိုအဆင့်မြင့်ဆုံး စေခြင်း"
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr "ခေတ္တနား"
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr "ရပ်"
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr "ပြန်လည်ပြုလုပ်မှု"
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr "ဖယ်ရသည့် ဋ္ဌာနေကို ကျော်လွှား"
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr "ဋ္ဌာနေများပြန်စစ်"
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr "ဋ္ဌာနေများ ပြင်ရန်"
+
+#: i18n.cpp:131
+msgid "&When done"
+msgstr "ပြုလုပ်ပြီးလျှင်"
+
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr "ထွက်"
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr "ဗလာ"
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr "အရံသင့် နေ"
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr "မှေးစက်အိပ်"
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr "အပြင်ထွက်"
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr "စက်ပြန်တင်"
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr "စက်ရပ်ဆဲ"
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr "သတင်းပြပါ"
+
+#: i18n.cpp:144
+msgid "&Language"
+msgstr "စကား"
+
+#: i18n.cpp:145
+msgid "&Graphical interface"
+msgstr "သုံးသူမျက်နှာပြင်ဇယား"
+
+#: i18n.cpp:146 i18n.cpp:172
+msgid "&Boot time scan"
+msgstr "ဝင်ဒိုး အစတွင် စလုပ်"
+
+#: i18n.cpp:147
+msgid "&Reports"
+msgstr "သတင်းသွင်း"
+
+#: i18n.cpp:149
+msgid "&View change log"
+msgstr "မှတ်တမ်းပြောင်းလဲမှု ကြည့်ရန်"
+
+#: i18n.cpp:150
+msgid "View translation &report"
+msgstr "စာသားပြန်ရာကို ကြည့်ရန်နှင့် အကြောင်းကြား"
+
+#: i18n.cpp:151
+msgid "&Translations folder"
+msgstr "စာသားပြန်ရာ ဖိုင်တွဲ"
+
+#: i18n.cpp:152
+msgid "&Submit current translation"
+msgstr "စာသားပြန်ရာ တင်ပြ"
+
+#: i18n.cpp:154
+msgid "&Font"
+msgstr "ဖောင့်"
+
+#: i18n.cpp:155
+msgid "&Options"
+msgstr "နှစ်ကြိုက်ရာရွေး"
+
+#: i18n.cpp:157
+msgid "&Enable"
+msgstr "စွမ်းဆောင်နိုင်စေ"
+
+#: i18n.cpp:158
+msgid "&Script"
+msgstr "ညွှန်စာ"
+
+#: i18n.cpp:160
+msgid "&Contents"
+msgstr "ပါဝင်ရာများ"
+
+#: i18n.cpp:161
+msgid "Best &practice"
+msgstr "အကောင်းဆုံး လုပ်စဉ်"
+
+#: i18n.cpp:162
+msgid "&FAQ"
+msgstr "မေးပါများ စကားရ"
+
+#: i18n.cpp:163
+msgid "Cluster map &legend"
+msgstr "စုပြုံလိုက် ပုံနှင့် ဖြစ်စဉ်"
+
+#: i18n.cpp:164
+msgid "&Debug"
+msgstr "ပြသာနာရှင်း"
+
+#: i18n.cpp:165
+msgid "Check for &update"
+msgstr "နောက်ဆုံးပေါ် စစ်ဆေးရန်"
+
+#: i18n.cpp:166
+msgid "&About"
+msgstr "အကြောင်းအရာ"
+
+#: i18n.cpp:168 utils.cpp:247
+msgid "Open &log"
+msgstr "ဖွင့်ပြီး မှတ်တမ်းတင်ရန်"
+
+#: i18n.cpp:169
+msgid "Send bug &report"
+msgstr "ပြသာနာ အကြောင်းကြားရန်"
+
+#: i18n.cpp:174
+msgid "Boot time script"
+msgstr "စက်အစ အညွှန်းစာတို"
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr "ဒေါင်းဆွဲချရန် ထုတ်ထားလိုက်ပါပြီ"
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr "သင်ငါ့ကို အဆင့်မြှင့်နိုင်သည် ^-^"
+
+#: upgrade.cpp:103
+msgid "&Upgrade"
+msgstr ""
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:250
+msgid "Error!"
+msgstr ""
