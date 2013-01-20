@@ -37,6 +37,7 @@ pushd "%~dp0\wxgui"
 
 :: extract translations
 xgettext -C -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot "*.cpp" || goto fail
+copy /v /y locale\UltraDefrag.pot "%~dp0\tools\transifex\translations\ultradefrag.main\en_US.po"
 echo.
 
 :: download all translations from transifex
