@@ -131,7 +131,19 @@ void MainFrame::InitMenu()
 
         while(cont){
             info = m_locale->FindLanguageInfo(folder);
-            if(info) langArray.Add(info->Description);
+            if(info){
+                if(info->Description == wxT("Chinese")){
+                    langArray.Add(wxT("Chinese (Traditional)"));
+                } else {
+                    if(info->Description == wxT("English")){
+                        langArray.Add(wxT("English (U.K.)"));
+                    } else {
+                        langArray.Add(info->Description);
+                    }
+                }
+            } else {
+                wxLogMessage(wxT("can't find locale info for %ls"), folder.wc_str());
+            }
             cont = dir.GetNext(&folder);
         }
 
