@@ -1,0 +1,271 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-20 15:47+0100\n"
+"PO-Revision-Date: 2013-01-20 15:50+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr "UltraDefrag-ის შესახებ"
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "&მოქმედება"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "&ანგარიში"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "&პარამეტრები"
+
+#: i18n.cpp:118 i18n.cpp:185
+msgid "&Help"
+msgstr "&დახმარება"
+
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr "&ანალიზი"
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr "&დეფრაგმენტაცია"
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr "ს&წრაფი ოპტიმიზაცია"
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr "&სრული ოპტიმიზაცია"
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr "&MFT-ს ოპტიმიზაცია"
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr "&შეჩერება"
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr "&გაჩერება"
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr "&მოქმედების გამეორება"
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr "მ&ოხსნადი დისკების გამოტოვება"
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr "&დისკების ხელახალი სკანირება"
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr "დისკების აღდგენა"
+
+#: i18n.cpp:131
+msgid "&When done"
+msgstr "დ&ასრულების შემდეგ"
+
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr "გამოს&ვლა"
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr "&არაფერი მოიმოქმედო"
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr "მო&ლოდინის რეჟიმში გადასვლა"
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr "&ჰიბერნაციის რეჟიმში გადასვლა"
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr "&მომხმარებლის ანგარიშიდან გამოსვლა"
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr "&კომპიუტერის გადატვირთვა"
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr "კ&ომპიუტერის გათიშვა"
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr "&ანგარიშის ნახვა"
+
+#: i18n.cpp:144
+msgid "&Language"
+msgstr "&ენა"
+
+#: i18n.cpp:145
+msgid "&Graphical interface"
+msgstr "&იერსახე"
+
+#: i18n.cpp:146 i18n.cpp:181
+msgid "&Boot time scan"
+msgstr "&ჩატვირთვის დროს სკანირება"
+
+#: i18n.cpp:147
+msgid "&Sorting"
+msgstr "&ხარისხდება"
+
+#: i18n.cpp:148
+msgid "&Reports"
+msgstr "&ანგარიშები"
+
+#: i18n.cpp:150
+msgid "&View change log"
+msgstr "&ცვლილებების ნახვა"
+
+#: i18n.cpp:151
+msgid "View translation &report"
+msgstr "თარგმანის ანგარიშის ნახვა"
+
+#: i18n.cpp:152
+msgid "&Translations folder"
+msgstr "&თარგმანების საქაღალდე"
+
+#: i18n.cpp:153
+msgid "&Submit current translation"
+msgstr "&მიმდინარე თარგმანის გაგზავნა"
+
+#: i18n.cpp:155
+msgid "&Font"
+msgstr "&შრიფტი"
+
+#: i18n.cpp:156
+msgid "&Options"
+msgstr "&პარამეტრები"
+
+#: i18n.cpp:158
+msgid "&Enable"
+msgstr "&ჩართვა"
+
+#: i18n.cpp:159
+msgid "&Script"
+msgstr "&სცენარი"
+
+#: i18n.cpp:161
+msgid "By &path"
+msgstr "&მისამართით"
+
+#: i18n.cpp:162
+msgid "By &size"
+msgstr "&ზომით"
+
+#: i18n.cpp:163
+msgid "By &creation time"
+msgstr "&შექმნის დროით"
+
+#: i18n.cpp:164
+msgid "By last &modification time"
+msgstr "&შ&ეცვლის დროით"
+
+#: i18n.cpp:165
+msgid "By &last access time"
+msgstr "&ბოლო წვდომის დროით"
+
+#: i18n.cpp:166
+msgid "In &ascending order"
+msgstr "ზრდადობით"
+
+#: i18n.cpp:167
+msgid "In &descending order"
+msgstr "კლებადობით"
+
+#: i18n.cpp:169
+msgid "&Contents"
+msgstr "&დახმარების ფაილი"
+
+#: i18n.cpp:170
+msgid "Best &practice"
+msgstr "&სასარგებლო რჩევები"
+
+#: i18n.cpp:171
+msgid "&Frequently asked questions"
+msgstr "&ხშირად დასმული კითხვები"
+
+#: i18n.cpp:172
+msgid "Cluster map &legend"
+msgstr "კლასტერების რუკის ლეგენდა"
+
+#: i18n.cpp:173
+msgid "&Debug"
+msgstr "გას&წორება"
+
+#: i18n.cpp:174
+msgid "Check for &update"
+msgstr "განახლების შემოწმება"
+
+#: i18n.cpp:175
+msgid "&About"
+msgstr "&პროგრამის შესახებ"
+
+#: i18n.cpp:177 utils.cpp:247
+msgid "Open &log"
+msgstr "ჟურნალის &გახსნა"
+
+#: i18n.cpp:178
+msgid "Send bug &report"
+msgstr "შეცდომის &შეტყობინება"
+
+#: i18n.cpp:183
+msgid "Boot time script"
+msgstr "ჩატვირთვის დროს სკანირების სცენარი"
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr "გადმოსაწერად ხელმისაწვდომია ახალი ვერსია!"
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr "შეგიძლია გამაუმჯობესო ^_^"
+
+#: upgrade.cpp:103
+msgid "&Upgrade"
+msgstr ""
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:250
+msgid "Error!"
+msgstr ""

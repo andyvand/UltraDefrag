@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 03:13+0100\n"
-"PO-Revision-Date: 2013-01-20 14:02+0000\n"
+"POT-Creation-Date: 2013-01-20 15:47+0100\n"
+"PO-Revision-Date: 2013-01-20 15:32+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Rapport"
 msgid "&Settings"
 msgstr "Indstillinger"
 
-#: i18n.cpp:118 i18n.cpp:176
+#: i18n.cpp:118 i18n.cpp:185
 msgid "&Help"
 msgstr "Hjælp"
 
@@ -138,83 +138,115 @@ msgstr "Sprog"
 msgid "&Graphical interface"
 msgstr "Brugergrænseflade"
 
-#: i18n.cpp:146 i18n.cpp:172
+#: i18n.cpp:146 i18n.cpp:181
 msgid "&Boot time scan"
 msgstr "Skan ved opstart af Windows"
 
 #: i18n.cpp:147
+msgid "&Sorting"
+msgstr ""
+
+#: i18n.cpp:148
 msgid "&Reports"
 msgstr "Rapporter"
 
-#: i18n.cpp:149
+#: i18n.cpp:150
 msgid "&View change log"
 msgstr "Se ændre log"
 
-#: i18n.cpp:150
+#: i18n.cpp:151
 msgid "View translation &report"
 msgstr "Vis oversættelse &rapport"
 
-#: i18n.cpp:151
+#: i18n.cpp:152
 msgid "&Translations folder"
 msgstr "Oversættelsesmappe"
 
-#: i18n.cpp:152
+#: i18n.cpp:153
 msgid "&Submit current translation"
 msgstr "Indsend nuværende oversættelse"
 
-#: i18n.cpp:154
+#: i18n.cpp:155
 msgid "&Font"
 msgstr "Skrifttype"
 
-#: i18n.cpp:155
+#: i18n.cpp:156
 msgid "&Options"
 msgstr "Indstillinger"
 
-#: i18n.cpp:157
+#: i18n.cpp:158
 msgid "&Enable"
 msgstr "Aktiver"
 
-#: i18n.cpp:158
+#: i18n.cpp:159
 msgid "&Script"
 msgstr ""
 
-#: i18n.cpp:160
+#: i18n.cpp:161
+msgid "By &path"
+msgstr ""
+
+#: i18n.cpp:162
+msgid "By &size"
+msgstr ""
+
+#: i18n.cpp:163
+msgid "By &creation time"
+msgstr ""
+
+#: i18n.cpp:164
+msgid "By last &modification time"
+msgstr ""
+
+#: i18n.cpp:165
+msgid "By &last access time"
+msgstr ""
+
+#: i18n.cpp:166
+msgid "In &ascending order"
+msgstr ""
+
+#: i18n.cpp:167
+msgid "In &descending order"
+msgstr ""
+
+#: i18n.cpp:169
 msgid "&Contents"
 msgstr "Indhold"
 
-#: i18n.cpp:161
+#: i18n.cpp:170
 msgid "Best &practice"
 msgstr "Bedste praksis"
 
-#: i18n.cpp:162
-msgid "&FAQ"
-msgstr "Ofte stillede spørgsmål"
+#: i18n.cpp:171
+msgid "&Frequently asked questions"
+msgstr ""
 
-#: i18n.cpp:163
+#: i18n.cpp:172
 msgid "Cluster map &legend"
 msgstr "Cluster kort legende"
 
-#: i18n.cpp:164
+#: i18n.cpp:173
 msgid "&Debug"
 msgstr "Fejlsøg"
 
-#: i18n.cpp:165
+#: i18n.cpp:174
 msgid "Check for &update"
 msgstr "Kontroller for opdatering"
 
-#: i18n.cpp:166
+#: i18n.cpp:175
 msgid "&About"
 msgstr "Om"
 
-#: i18n.cpp:168 utils.cpp:247
+#: i18n.cpp:177 utils.cpp:247
 msgid "Open &log"
 msgstr "Åbn &log"
 
-#: i18n.cpp:169
+#: i18n.cpp:178
 msgid "Send bug &report"
 msgstr "Send fejl&rapport"
 
-#: i18n.cpp:174
+#: i18n.cpp:183
 msgid "Boot time script"
 msgstr "Boot tid script"
 

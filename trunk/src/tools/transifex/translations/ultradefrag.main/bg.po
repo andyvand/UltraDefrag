@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 03:13+0100\n"
-"PO-Revision-Date: 2013-01-20 10:56+0000\n"
+"POT-Creation-Date: 2013-01-20 15:47+0100\n"
+"PO-Revision-Date: 2013-01-20 15:32+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Доклад"
 msgid "&Settings"
 msgstr "На&стройки"
 
-#: i18n.cpp:118 i18n.cpp:176
+#: i18n.cpp:118 i18n.cpp:185
 msgid "&Help"
 msgstr "Помощ"
 
@@ -138,83 +138,115 @@ msgstr "Език"
 msgid "&Graphical interface"
 msgstr "Графичен интерфейс"
 
-#: i18n.cpp:146 i18n.cpp:172
+#: i18n.cpp:146 i18n.cpp:181
 msgid "&Boot time scan"
 msgstr "Сканиране преди зареждане на Windows"
 
 #: i18n.cpp:147
+msgid "&Sorting"
+msgstr ""
+
+#: i18n.cpp:148
 msgid "&Reports"
 msgstr "Доклади"
 
-#: i18n.cpp:149
+#: i18n.cpp:150
 msgid "&View change log"
 msgstr "&Виж дневника с промени"
 
-#: i18n.cpp:150
+#: i18n.cpp:151
 msgid "View translation &report"
 msgstr "Виж доклада с п&реводи"
 
-#: i18n.cpp:151
+#: i18n.cpp:152
 msgid "&Translations folder"
 msgstr "Папка с преводи"
 
-#: i18n.cpp:152
+#: i18n.cpp:153
 msgid "&Submit current translation"
 msgstr "Приемане на текущия превод"
 
-#: i18n.cpp:154
+#: i18n.cpp:155
 msgid "&Font"
 msgstr "Шрифт"
 
-#: i18n.cpp:155
+#: i18n.cpp:156
 msgid "&Options"
 msgstr "&Опции"
 
-#: i18n.cpp:157
+#: i18n.cpp:158
 msgid "&Enable"
 msgstr "Разр&еши"
 
-#: i18n.cpp:158
+#: i18n.cpp:159
 msgid "&Script"
 msgstr "&Сценарий"
 
-#: i18n.cpp:160
+#: i18n.cpp:161
+msgid "By &path"
+msgstr ""
+
+#: i18n.cpp:162
+msgid "By &size"
+msgstr ""
+
+#: i18n.cpp:163
+msgid "By &creation time"
+msgstr ""
+
+#: i18n.cpp:164
+msgid "By last &modification time"
+msgstr ""
+
+#: i18n.cpp:165
+msgid "By &last access time"
+msgstr ""
+
+#: i18n.cpp:166
+msgid "In &ascending order"
+msgstr ""
+
+#: i18n.cpp:167
+msgid "In &descending order"
+msgstr ""
+
+#: i18n.cpp:169
 msgid "&Contents"
 msgstr "&Съдържание"
 
-#: i18n.cpp:161
+#: i18n.cpp:170
 msgid "Best &practice"
 msgstr "Най-добри &практики"
 
-#: i18n.cpp:162
-msgid "&FAQ"
-msgstr "ЧЗВ"
+#: i18n.cpp:171
+msgid "&Frequently asked questions"
+msgstr ""
 
-#: i18n.cpp:163
+#: i18n.cpp:172
 msgid "Cluster map &legend"
 msgstr "&Легенда на картата"
 
-#: i18n.cpp:164
+#: i18n.cpp:173
 msgid "&Debug"
 msgstr "Де&бъг"
 
-#: i18n.cpp:165
+#: i18n.cpp:174
 msgid "Check for &update"
 msgstr "Проверка за акт&уализации"
 
-#: i18n.cpp:166
+#: i18n.cpp:175
 msgid "&About"
 msgstr "За програмата"
 
-#: i18n.cpp:168 utils.cpp:247
+#: i18n.cpp:177 utils.cpp:247
 msgid "Open &log"
 msgstr "Отваряне на дневника"
 
-#: i18n.cpp:169
+#: i18n.cpp:178
 msgid "Send bug &report"
 msgstr "Изпращане на доклад за бъгове"
 
-#: i18n.cpp:174
+#: i18n.cpp:183
 msgid "Boot time script"
 msgstr "Сценарий преди зареждане на Windows"
 
