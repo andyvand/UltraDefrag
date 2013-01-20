@@ -23,9 +23,9 @@ title Update started
 
 :: set environment
 call setvars.cmd
-echo.
 if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"
 if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
+echo.
 
 if not exist "%GNUWIN32_DIR%" goto gnuwin32_missing
 
