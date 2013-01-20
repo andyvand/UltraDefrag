@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-19 22:06+0100\n"
-"PO-Revision-Date: 2013-01-20 01:00+0000\n"
+"POT-Creation-Date: 2013-01-20 03:13+0100\n"
+"PO-Revision-Date: 2013-01-20 02:23+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,187 +34,187 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: i18n.cpp:114
-msgid "&Analyze"
-msgstr "&Аналіз"
-
 #: i18n.cpp:115
-msgid "&Defragment"
-msgstr "&Дэфрагментацыя"
-
-#: i18n.cpp:116
-msgid "&Quick optimization"
-msgstr "Хуткая апты&мізацыя"
-
-#: i18n.cpp:117
-msgid "&Full optimization"
-msgstr "Поўная аптымізацыя"
-
-#: i18n.cpp:118
-msgid "&Optimize MFT"
-msgstr "Аптымізацыя MFT"
-
-#: i18n.cpp:119
-msgid "&Pause"
-msgstr ""
-
-#: i18n.cpp:120
-msgid "&Stop"
-msgstr "&Стоп"
-
-#: i18n.cpp:121
-msgid "Re&peat action"
-msgstr "Дазволіць паўтор"
-
-#: i18n.cpp:122
-msgid "Skip removable &media"
-msgstr "Перайсці здымных &носьбітаў"
-
-#: i18n.cpp:123
-msgid "&Rescan drives"
-msgstr "А&бнаўленне"
-
-#: i18n.cpp:124
-msgid "Repair dri&ves"
-msgstr "Выправіць дыскі"
-
-#: i18n.cpp:125
-msgid "&None"
-msgstr "&Няма"
-
-#: i18n.cpp:126 i18n.cpp:132
-msgid "E&xit"
-msgstr "Вы&хад"
-
-#: i18n.cpp:127
-msgid "Stan&dby"
-msgstr "У рэжым &чакання"
-
-#: i18n.cpp:128
-msgid "&Hibernate"
-msgstr "&Спячка"
-
-#: i18n.cpp:129
-msgid "&Logoff"
-msgstr "Выхад &з сістэмы"
-
-#: i18n.cpp:130
-msgid "&Reboot"
-msgstr "&Перазагрузка"
-
-#: i18n.cpp:131
-msgid "&Shutdown"
-msgstr "&Выключэнне"
-
-#: i18n.cpp:133
-msgid "&Show report"
-msgstr "&Паказаць справаздачу"
-
-#: i18n.cpp:134
-msgid "&View change log"
-msgstr "&Прагляд часопіса зменіцца"
-
-#: i18n.cpp:135
-msgid "View translation &report"
-msgstr "Паказаць пераклад &справаздачу"
-
-#: i18n.cpp:136
-msgid "&Translations folder"
-msgstr "&Тэчка з перакладамі"
-
-#: i18n.cpp:137
-msgid "&Submit current translation"
-msgstr "&Адправіць бягучы пераклад"
-
-#: i18n.cpp:138
-msgid "&Font"
-msgstr "&Шрыфт"
-
-#: i18n.cpp:139
-msgid "&Options"
-msgstr "&Опцыі"
-
-#: i18n.cpp:140
-msgid "&Enable"
-msgstr "&Ўключыць"
-
-#: i18n.cpp:141
-msgid "&Script"
-msgstr "&Сцэнар"
-
-#: i18n.cpp:142
-msgid "&Reports"
-msgstr "&Справаздачы"
-
-#: i18n.cpp:143
-msgid "&Contents"
-msgstr "&Змест"
-
-#: i18n.cpp:144
-msgid "Best &practice"
-msgstr "&Лепшыя практыкі"
-
-#: i18n.cpp:145
-msgid "&FAQ"
-msgstr "&Пытанні і адказы"
-
-#: i18n.cpp:146
-msgid "Cluster map &legend"
-msgstr "Легенда &карты"
-
-#: i18n.cpp:147 utils.cpp:247
-msgid "Open &log"
-msgstr "&Адкрыйце часопіс"
-
-#: i18n.cpp:148
-msgid "Send bug &report"
-msgstr "Адправіць &паведамленне пра памылку"
-
-#: i18n.cpp:149
-msgid "Check for &update"
-msgstr "&Праверыць абнаўлення"
-
-#: i18n.cpp:150
-msgid "&About"
-msgstr "&Аб праграме"
-
-#: i18n.cpp:151
 msgid "&Action"
 msgstr "&Файл"
 
-#: i18n.cpp:152
+#: i18n.cpp:116
 msgid "&Report"
 msgstr "&Справаздача"
 
-#: i18n.cpp:153
+#: i18n.cpp:117
 msgid "&Settings"
 msgstr "&Наладкі"
 
-#: i18n.cpp:154 i18n.cpp:166
+#: i18n.cpp:118 i18n.cpp:176
 msgid "&Help"
 msgstr "&Даведка"
 
-#: i18n.cpp:155
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr "&Аналіз"
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr "&Дэфрагментацыя"
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr "Хуткая апты&мізацыя"
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr "Поўная аптымізацыя"
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr "Аптымізацыя MFT"
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr "&Стоп"
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr "Дазволіць паўтор"
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr "Перайсці здымных &носьбітаў"
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr "А&бнаўленне"
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr "Выправіць дыскі"
+
+#: i18n.cpp:131
 msgid "&When done"
 msgstr "&Пасля завяршэння"
 
-#: i18n.cpp:156
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr "Вы&хад"
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr "&Няма"
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr "У рэжым &чакання"
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr "&Спячка"
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr "Выхад &з сістэмы"
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr "&Перазагрузка"
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr "&Выключэнне"
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr "&Паказаць справаздачу"
+
+#: i18n.cpp:144
 msgid "&Language"
 msgstr "&Мова"
 
-#: i18n.cpp:157
+#: i18n.cpp:145
 msgid "&Graphical interface"
 msgstr "&Графічны інтэрфейс"
 
-#: i18n.cpp:158 i18n.cpp:162
+#: i18n.cpp:146 i18n.cpp:172
 msgid "&Boot time scan"
 msgstr "&Запуск перад загрузкай Windows"
 
-#: i18n.cpp:159
+#: i18n.cpp:147
+msgid "&Reports"
+msgstr "&Справаздачы"
+
+#: i18n.cpp:149
+msgid "&View change log"
+msgstr "&Прагляд часопіса зменіцца"
+
+#: i18n.cpp:150
+msgid "View translation &report"
+msgstr "Паказаць пераклад &справаздачу"
+
+#: i18n.cpp:151
+msgid "&Translations folder"
+msgstr "&Тэчка з перакладамі"
+
+#: i18n.cpp:152
+msgid "&Submit current translation"
+msgstr "&Адправіць бягучы пераклад"
+
+#: i18n.cpp:154
+msgid "&Font"
+msgstr "&Шрыфт"
+
+#: i18n.cpp:155
+msgid "&Options"
+msgstr "&Опцыі"
+
+#: i18n.cpp:157
+msgid "&Enable"
+msgstr "&Ўключыць"
+
+#: i18n.cpp:158
+msgid "&Script"
+msgstr "&Сцэнар"
+
+#: i18n.cpp:160
+msgid "&Contents"
+msgstr "&Змест"
+
+#: i18n.cpp:161
+msgid "Best &practice"
+msgstr "&Лепшыя практыкі"
+
+#: i18n.cpp:162
+msgid "&FAQ"
+msgstr "&Пытанні і адказы"
+
+#: i18n.cpp:163
+msgid "Cluster map &legend"
+msgstr "Легенда &карты"
+
+#: i18n.cpp:164
 msgid "&Debug"
 msgstr "Адладжваць"
 
-#: i18n.cpp:164
+#: i18n.cpp:165
+msgid "Check for &update"
+msgstr "&Праверыць абнаўлення"
+
+#: i18n.cpp:166
+msgid "&About"
+msgstr "&Аб праграме"
+
+#: i18n.cpp:168 utils.cpp:247
+msgid "Open &log"
+msgstr "&Адкрыйце часопіс"
+
+#: i18n.cpp:169
+msgid "Send bug &report"
+msgstr "Адправіць &паведамленне пра памылку"
+
+#: i18n.cpp:174
 msgid "Boot time script"
 msgstr "Сцэнар запуску перад загрузкай Windows"
 
