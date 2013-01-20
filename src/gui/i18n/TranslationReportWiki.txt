@@ -15,7 +15,7 @@
 || [[Chinese (Simplified).lng|Chinese (Simplified)]]                     || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Chinese (Traditional).lng|Chinese (Traditional)]]                   || ||=  91 || ||= 100 || ||>    91 % ||
 || [[Croatian.lng|Croatian]]                                             || ||=  86 || ||= 100 || ||>    86 % ||
-|| [[Czech.lng|Czech]]                                                   || ||=  90 || ||= 100 || ||>    90 % ||
+|| [[Czech.lng|Czech]]                                                   || ||=  99 || ||= 100 || ||>    99 % ||
 || [[Danish.lng|Danish]]                                                 || ||=  89 || ||= 100 || ||>    89 % ||
 || [[Dutch.lng|Dutch]]                                                   || ||=  87 || ||= 100 || ||>    87 % ||
 || [[English (GB).lng|English (GB)]]                                     || ||=  12 || ||= 100 || ||>    12 % ||
@@ -80,6 +80,7 @@
 || [[Korean.lng|Korean]]                                                 || ||= 100 || ||= 100 || ||>   100 % ||
 || [[Russian.lng|Russian]]                                               || ||= 100 || ||= 100 || ||>   100 % ||
 || [[Turkish.lng|Turkish]]                                               || ||= 100 || ||= 100 || ||>   100 % ||
+|| [[Czech.lng|Czech]]                                                   || ||=  99 || ||= 100 || ||>    99 % ||
 || [[Latvian.lng|Latvian]]                                               || ||=  99 || ||= 100 || ||>    99 % ||
 || [[German.lng|German]]                                                 || ||=  98 || ||= 100 || ||>    98 % ||
 || [[Italian.lng|Italian]]                                               || ||=  96 || ||= 100 || ||>    96 % ||
@@ -105,7 +106,6 @@
 || [[Albanian.lng|Albanian]]                                             || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Bengali.lng|Bengali]]                                               || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Catalan.lng|Catalan]]                                               || ||=  90 || ||= 100 || ||>    90 % ||
-|| [[Czech.lng|Czech]]                                                   || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Estonian.lng|Estonian]]                                             || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Iloko.lng|Iloko]]                                                   || ||=  90 || ||= 100 || ||>    90 % ||
 || [[Indonesian (Bahasa Indonesia).lng|Indonesian (Bahasa Indonesia)]]   || ||=  90 || ||= 100 || ||>    90 % ||
