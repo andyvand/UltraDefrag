@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-20 03:13+0100\n"
+"PO-Revision-Date: 2013-01-20 14:30+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr "Info UltraDefrag´i kohta"
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "Tegevus"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "Raport"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "Seaded"
+
+#: i18n.cpp:118 i18n.cpp:176
+msgid "&Help"
+msgstr "Abi"
+
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr "Analüüsi"
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr "Defragmendi"
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr "Kiire optimeerimine"
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr "Täielik optimeerimine"
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr "MFT optimeerimine"
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr "Peata"
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr "Korda tegevust"
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr "Jäta vahele eemaldatav meedia"
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr "Taasskänni kettaid"
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr "Remont kõvakettad"
+
+#: i18n.cpp:131
+msgid "&When done"
+msgstr "Kui teha"
+
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr "Välju"
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr "Ükski"
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr ""
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr "Talveuni"
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr "Logi välja"
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr "Taaskäivitage arvuti"
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr "Sulgemine"
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr "Kuva aruanne"
+
+#: i18n.cpp:144
+msgid "&Language"
+msgstr "Keel"
+
+#: i18n.cpp:145
+msgid "&Graphical interface"
+msgstr "Graafiline kasutajaliides"
+
+#: i18n.cpp:146 i18n.cpp:172
+msgid "&Boot time scan"
+msgstr "Windowsi bootimise aja skänn"
+
+#: i18n.cpp:147
+msgid "&Reports"
+msgstr "Raportid"
+
+#: i18n.cpp:149
+msgid "&View change log"
+msgstr "&Vaata muuta log"
+
+#: i18n.cpp:150
+msgid "View translation &report"
+msgstr "Vaata tõlke &aruanne"
+
+#: i18n.cpp:151
+msgid "&Translations folder"
+msgstr "&Tõlked kausta"
+
+#: i18n.cpp:152
+msgid "&Submit current translation"
+msgstr "&Esitama praegune tõlge"
+
+#: i18n.cpp:154
+msgid "&Font"
+msgstr "&Fondi"
+
+#: i18n.cpp:155
+msgid "&Options"
+msgstr "Valikud"
+
+#: i18n.cpp:157
+msgid "&Enable"
+msgstr "Võimalda"
+
+#: i18n.cpp:158
+msgid "&Script"
+msgstr "Skript"
+
+#: i18n.cpp:160
+msgid "&Contents"
+msgstr "Sisu"
+
+#: i18n.cpp:161
+msgid "Best &practice"
+msgstr "Parimate tavade"
+
+#: i18n.cpp:162
+msgid "&FAQ"
+msgstr "Korduma kippuvad küsimused"
+
+#: i18n.cpp:163
+msgid "Cluster map &legend"
+msgstr "Cluster kaart legend"
+
+#: i18n.cpp:164
+msgid "&Debug"
+msgstr "Siluda"
+
+#: i18n.cpp:165
+msgid "Check for &update"
+msgstr "Vaata uuendust"
+
+#: i18n.cpp:166
+msgid "&About"
+msgstr "Info"
+
+#: i18n.cpp:168 utils.cpp:247
+msgid "Open &log"
+msgstr "Avage &log"
+
+#: i18n.cpp:169
+msgid "Send bug &report"
+msgstr "&Saada vearaport"
+
+#: i18n.cpp:174
+msgid "Boot time script"
+msgstr "Skripti käivitamise aeg"
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr "versioon on allalaadimiseks kättesaadav!"
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr "Võite minna mind ^-^"
+
+#: upgrade.cpp:103
+msgid "&Upgrade"
+msgstr ""
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:250
+msgid "Error!"
+msgstr ""
