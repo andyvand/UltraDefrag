@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 7.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-19 15:04+0100\n"
+"POT-Creation-Date: 2013-01-19 22:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Dmitri Arkhangelski <EMAIL@ADDRESS>\n"
 "Language-Team: Belarusian <LL@li.org>\n"
@@ -225,11 +225,11 @@ msgid "You can upgrade me ^-^"
 msgstr ""
 
 #: upgrade.cpp:103
-msgid "Upgrade"
+msgid "&Upgrade"
 msgstr ""
 
 #: upgrade.cpp:103 utils.cpp:251
-msgid "Cancel"
+msgid "&Cancel"
 msgstr ""
 
 #: utils.cpp:250
