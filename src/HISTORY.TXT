@@ -10,7 +10,7 @@
       unreliable development environment - use Windows SDK v6.1 instead
 
 
-  Version 6.0.0 2013-01-
+  Version 6.0.0 2013-01-20
   ------------------------------------------------------------------------------
     RC1:
     - Internals: changed definition of WGX_OPTION structure
