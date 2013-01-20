@@ -144,6 +144,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     m_subMenuLanguage->SetItemLabel(_("&Language"));
     m_subMenuGUIconfig->SetItemLabel(_("&Graphical interface"));
     m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
+    m_subMenuSortingConfig->SetItemLabel(_("&Sorting"));
     UD_UpdateMenuItemLabel(ID_ReportOptions    , "&Reports"             , "Ctrl+R");
     // language sub-menu
     UD_UpdateMenuItemLabel(ID_LangShowLog      , "&View change log"     , "");
@@ -156,11 +157,19 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     // boot time scan sub-menu
     UD_UpdateMenuItemLabel(ID_BootEnable       , "&Enable"              , "F11");
     UD_UpdateMenuItemLabel(ID_BootScript       , "&Script"              , "F12");
+    // sorting sub-menu
+    UD_UpdateMenuItemLabel(ID_SortByPath            , "By &path"                  , "");
+    UD_UpdateMenuItemLabel(ID_SortBySize            , "By &size"                  , "");
+    UD_UpdateMenuItemLabel(ID_SortByCreationDate    , "By &creation time"         , "");
+    UD_UpdateMenuItemLabel(ID_SortByModificationDate, "By last &modification time", "");
+    UD_UpdateMenuItemLabel(ID_SortByLastAccessDate  , "By &last access time"      , "");
+    UD_UpdateMenuItemLabel(ID_SortAscending         , "In &ascending order"       , "");
+    UD_UpdateMenuItemLabel(ID_SortDescending        , "In &descending order"      , "");
     // help menu
-    UD_UpdateMenuItemLabel(ID_HelpContents     , "&Contents"            , "F1");
-    UD_UpdateMenuItemLabel(ID_HelpBestPractice , "Best &practice"       , "F2");
+    UD_UpdateMenuItemLabel(ID_HelpContents     , "&Contents"                  , "F1");
+    UD_UpdateMenuItemLabel(ID_HelpBestPractice , "Best &practice"             , "F2");
     UD_UpdateMenuItemLabel(ID_HelpFaq          , "&Frequently asked questions", "F3");
-    UD_UpdateMenuItemLabel(ID_HelpLegend       , "Cluster map &legend"  , "");
+    UD_UpdateMenuItemLabel(ID_HelpLegend       , "Cluster map &legend"        , "");
     m_subMenuDebug->SetItemLabel(_("&Debug"));
     UD_UpdateMenuItemLabel(ID_HelpUpdate       , "Check for &update"    , "");
     UD_UpdateMenuItemLabel(ID_HelpAbout        , "&About"               , "F4");

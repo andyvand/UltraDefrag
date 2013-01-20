@@ -168,6 +168,9 @@ public:
 
     void OnReportOptions(wxCommandEvent& event);
 
+    void OnSortCriteriaChange(wxCommandEvent& event);
+    void OnSortOrderChange(wxCommandEvent& event);
+
     // help menu handlers
     void OnHelpContents(wxCommandEvent& event);
     void OnHelpBestPractice(wxCommandEvent& event);
@@ -210,6 +213,7 @@ private:
     wxMenuItem *m_subMenuLanguage;
     wxMenuItem *m_subMenuGUIconfig;
     wxMenuItem *m_subMenuBootConfig;
+    wxMenuItem *m_subMenuSortingConfig;
     wxMenuItem *m_subMenuDebug;
     wxMenu     *m_menuLanguage;
 
@@ -289,6 +293,16 @@ enum {
     ID_BootScript,
 
     ID_ReportOptions,
+
+    // event registration must be modified to match range
+    ID_SortByPath,
+    ID_SortBySize,
+    ID_SortByCreationDate,
+    ID_SortByModificationDate,
+    ID_SortByLastAccessDate,
+
+    ID_SortAscending,
+    ID_SortDescending,
 
     // help menu identifiers
     ID_HelpContents,
