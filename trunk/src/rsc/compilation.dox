@@ -38,16 +38,25 @@
  * - <a href="http://www.miktex.org/">Basic MiKTeX Installer</a> to create the optional PDF documentation
  * - <a href="http://www.etree.org/md5com.html">md5sum tool</a> to create the checksums
  * - <a href="http://upx.sf.net/">UPX</a> to reduce the size of the installers
+ * - <a href="http://help.transifex.com/features/client/index.html#windows-version">Transifex Client</a>
+ * to download the updated translations from the
+ * <a href="https://www.transifex.com/projects/p/ultradefrag/">translation project</a>
+ * - <a href="http://sourceforge.net/projects/gnuwin32/files/gettext/">GNU gettext</a>
+ * to extract and compile the translations
  * 
- * - Install wxWidgets, NSIS, 7-zip, Doxygen and optionally "Lua for Windows" and MiKTeX.
+ * - Install wxWidgets, NSIS, 7-zip, Doxygen and optionally "Lua for Windows", MiKTeX and "GNU gettext".
  * - If you did not install "Lua for Windows",
  * extract Lua, IUP and CD to some directory on your <b>\%PATH\%</b>, e.g. to <b>C:\\Windows</b>.
  * - Place md5sum.exe into the <b>src\\tools</b> folder of the source code distribution.
  * - Extract upx.exe into the <b>src\\tools\\upx</b> folder of the source code distribution.
+ * - Place tx.exe into the <b>src\\tools\\transifex</b> folder of the source code distribution.
  *
  * To properly set up the build environment type:
  * @code lua configure.lua @endcode
  * @image html config.lua.png
+ *
+ * To update the translations type:
+ * @code wxupdate_translation @endcode
  *
  * To build wxWidgets library type:
  * @code wxbuild @endcode

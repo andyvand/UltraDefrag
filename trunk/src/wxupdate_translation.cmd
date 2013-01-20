@@ -1,6 +1,7 @@
 @echo off
 ::
-:: Script to update the translations using GNU gettext.
+:: Script to update the translations using GNU gettext and the
+:: translation project at https://www.transifex.com/projects/p/ultradefrag/
 :: Copyright (c) 2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
 :: This program is free software; you can redistribute it and/or modify
@@ -22,6 +23,7 @@ title Update started
 
 :: set environment
 call setvars.cmd
+echo.
 if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"
 if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 
@@ -33,13 +35,18 @@ set PATH=%GNUWIN32_DIR%;%PATH%
 
 pushd "%~dp0\wxgui"
 
-set gettext_template=locale\UltraDefrag.pot
-
 :: extract translations
-xgettext -C -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o %gettext_template% "*.cpp" || goto fail
+xgettext -C -j -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot "*.cpp" || goto fail
+echo.
+
+:: download all translations from transifex
+pushd "%~dp0\tools\transifex"
+if exist tx.exe tx.exe pull -a || goto fail
+echo.
+popd
 
 :: update translations
-for /d %%D in ( "locale\*" ) do for %%T in ( "%%~D\UltraDefrag.po" ) do call :check_translation "%%~T" || goto fail
+for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do call :check_translation "%%~F" || goto fail
 
 :success
 if "%OLD_PATH%" neq "" set path=%OLD_PATH%
@@ -66,23 +73,18 @@ exit /B 1
 :check_translation
     echo.
     echo ---------------
-    echo processing file "%~1"
+    echo processing locale "%~n1"
 
-    rem make sure the translation file is present
-    echo ... checking for files existance
-    if not exist "%~1" copy /y /v %gettext_template% "%~1" || goto check_fail
-
-    rem merge the new strings into the translation file if necessary
-    echo ... merging in new strings
-    msgmerge -U "%~1" %gettext_template% || goto check_fail
+    rem make sure the translation folder is present
+    echo ... checking for folders existance
+    if not exist "locale\%~n1" mkdir "locale\%~n1" || goto check_fail
 
     rem compile the .PO file into a .MO file
     echo ... compiling
-    msgfmt -v -o "%~dpn1.mo" "%~1" || goto check_fail
+    msgfmt -v -o "locale\%~n1\UltraDefrag.mo" "%~1" || goto check_fail
 
     :check_success
     echo ... suceeded
-    if exist "%~1~" del /f /q "%~1~"
     exit /B 0
 
     :check_fail
