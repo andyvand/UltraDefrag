@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 02:28+0100\n"
+"POT-Creation-Date: 2013-01-20 03:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,187 +32,187 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: i18n.cpp:114
-msgid "&Analyze"
-msgstr ""
-
 #: i18n.cpp:115
-msgid "&Defragment"
-msgstr ""
-
-#: i18n.cpp:116
-msgid "&Quick optimization"
-msgstr ""
-
-#: i18n.cpp:117
-msgid "&Full optimization"
-msgstr ""
-
-#: i18n.cpp:118
-msgid "&Optimize MFT"
-msgstr ""
-
-#: i18n.cpp:119
-msgid "&Pause"
-msgstr ""
-
-#: i18n.cpp:120
-msgid "&Stop"
-msgstr ""
-
-#: i18n.cpp:121
-msgid "Re&peat action"
-msgstr ""
-
-#: i18n.cpp:122
-msgid "Skip removable &media"
-msgstr ""
-
-#: i18n.cpp:123
-msgid "&Rescan drives"
-msgstr ""
-
-#: i18n.cpp:124
-msgid "Repair dri&ves"
-msgstr ""
-
-#: i18n.cpp:125
-msgid "&None"
-msgstr ""
-
-#: i18n.cpp:126 i18n.cpp:132
-msgid "E&xit"
-msgstr ""
-
-#: i18n.cpp:127
-msgid "Stan&dby"
-msgstr ""
-
-#: i18n.cpp:128
-msgid "&Hibernate"
-msgstr ""
-
-#: i18n.cpp:129
-msgid "&Logoff"
-msgstr ""
-
-#: i18n.cpp:130
-msgid "&Reboot"
-msgstr ""
-
-#: i18n.cpp:131
-msgid "&Shutdown"
-msgstr ""
-
-#: i18n.cpp:133
-msgid "&Show report"
-msgstr ""
-
-#: i18n.cpp:134
-msgid "&View change log"
-msgstr ""
-
-#: i18n.cpp:135
-msgid "View translation &report"
-msgstr ""
-
-#: i18n.cpp:136
-msgid "&Translations folder"
-msgstr ""
-
-#: i18n.cpp:137
-msgid "&Submit current translation"
-msgstr ""
-
-#: i18n.cpp:138
-msgid "&Font"
-msgstr ""
-
-#: i18n.cpp:139
-msgid "&Options"
-msgstr ""
-
-#: i18n.cpp:140
-msgid "&Enable"
-msgstr ""
-
-#: i18n.cpp:141
-msgid "&Script"
-msgstr ""
-
-#: i18n.cpp:142
-msgid "&Reports"
-msgstr ""
-
-#: i18n.cpp:143
-msgid "&Contents"
-msgstr ""
-
-#: i18n.cpp:144
-msgid "Best &practice"
-msgstr ""
-
-#: i18n.cpp:145
-msgid "&FAQ"
-msgstr ""
-
-#: i18n.cpp:146
-msgid "Cluster map &legend"
-msgstr ""
-
-#: i18n.cpp:147 utils.cpp:247
-msgid "Open &log"
-msgstr ""
-
-#: i18n.cpp:148
-msgid "Send bug &report"
-msgstr ""
-
-#: i18n.cpp:149
-msgid "Check for &update"
-msgstr ""
-
-#: i18n.cpp:150
-msgid "&About"
-msgstr ""
-
-#: i18n.cpp:151
 msgid "&Action"
 msgstr ""
 
-#: i18n.cpp:152
+#: i18n.cpp:116
 msgid "&Report"
 msgstr ""
 
-#: i18n.cpp:153
+#: i18n.cpp:117
 msgid "&Settings"
 msgstr ""
 
-#: i18n.cpp:154 i18n.cpp:166
+#: i18n.cpp:118 i18n.cpp:176
 msgid "&Help"
 msgstr ""
 
-#: i18n.cpp:155
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr ""
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr ""
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr ""
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr ""
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr ""
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr ""
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr ""
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr ""
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr ""
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr ""
+
+#: i18n.cpp:131
 msgid "&When done"
 msgstr ""
 
-#: i18n.cpp:156
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr ""
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr ""
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr ""
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr ""
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr ""
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr ""
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr ""
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr ""
+
+#: i18n.cpp:144
 msgid "&Language"
 msgstr ""
 
-#: i18n.cpp:157
+#: i18n.cpp:145
 msgid "&Graphical interface"
 msgstr ""
 
-#: i18n.cpp:158 i18n.cpp:162
+#: i18n.cpp:146 i18n.cpp:172
 msgid "&Boot time scan"
 msgstr ""
 
-#: i18n.cpp:159
-msgid "&Debug"
+#: i18n.cpp:147
+msgid "&Reports"
+msgstr ""
+
+#: i18n.cpp:149
+msgid "&View change log"
+msgstr ""
+
+#: i18n.cpp:150
+msgid "View translation &report"
+msgstr ""
+
+#: i18n.cpp:151
+msgid "&Translations folder"
+msgstr ""
+
+#: i18n.cpp:152
+msgid "&Submit current translation"
+msgstr ""
+
+#: i18n.cpp:154
+msgid "&Font"
+msgstr ""
+
+#: i18n.cpp:155
+msgid "&Options"
+msgstr ""
+
+#: i18n.cpp:157
+msgid "&Enable"
+msgstr ""
+
+#: i18n.cpp:158
+msgid "&Script"
+msgstr ""
+
+#: i18n.cpp:160
+msgid "&Contents"
+msgstr ""
+
+#: i18n.cpp:161
+msgid "Best &practice"
+msgstr ""
+
+#: i18n.cpp:162
+msgid "&FAQ"
+msgstr ""
+
+#: i18n.cpp:163
+msgid "Cluster map &legend"
 msgstr ""
 
 #: i18n.cpp:164
+msgid "&Debug"
+msgstr ""
+
+#: i18n.cpp:165
+msgid "Check for &update"
+msgstr ""
+
+#: i18n.cpp:166
+msgid "&About"
+msgstr ""
+
+#: i18n.cpp:168 utils.cpp:247
+msgid "Open &log"
+msgstr ""
+
+#: i18n.cpp:169
+msgid "Send bug &report"
+msgstr ""
+
+#: i18n.cpp:174
 msgid "Boot time script"
 msgstr ""
 
