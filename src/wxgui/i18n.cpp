@@ -159,7 +159,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     // help menu
     UD_UpdateMenuItemLabel(ID_HelpContents     , "&Contents"            , "F1");
     UD_UpdateMenuItemLabel(ID_HelpBestPractice , "Best &practice"       , "F2");
-    UD_UpdateMenuItemLabel(ID_HelpFaq          , "&FAQ"                 , "F3");
+    UD_UpdateMenuItemLabel(ID_HelpFaq          , "&Frequently asked questions", "F3");
     UD_UpdateMenuItemLabel(ID_HelpLegend       , "Cluster map &legend"  , "");
     m_subMenuDebug->SetItemLabel(_("&Debug"));
     UD_UpdateMenuItemLabel(ID_HelpUpdate       , "Check for &update"    , "");
