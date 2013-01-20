@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-20 03:13+0100\n"
+"PO-Revision-Date: 2013-01-20 12:11+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr "关于 UltraDefrag"
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "操作"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "报告"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "设置"
+
+#: i18n.cpp:118 i18n.cpp:176
+msgid "&Help"
+msgstr "帮助"
+
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr "分析"
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr "整理"
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr "快速优化"
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr "全面优化"
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr "优化 MFT"
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr "停止"
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr "重复操作"
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr "忽略移动磁盘"
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr "重新扫描"
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr "修复磁盘"
+
+#: i18n.cpp:131
+msgid "&When done"
+msgstr "整理完成后"
+
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr "退出"
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr "不做任何操作"
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr "待机"
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr "休眠"
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr "注销"
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr "重启"
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr "关机"
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr "显示报告"
+
+#: i18n.cpp:144
+msgid "&Language"
+msgstr "语言"
+
+#: i18n.cpp:145
+msgid "&Graphical interface"
+msgstr "图形界面"
+
+#: i18n.cpp:146 i18n.cpp:172
+msgid "&Boot time scan"
+msgstr "启动时扫描"
+
+#: i18n.cpp:147
+msgid "&Reports"
+msgstr "报告"
+
+#: i18n.cpp:149
+msgid "&View change log"
+msgstr "查看更新记录"
+
+#: i18n.cpp:150
+msgid "View translation &report"
+msgstr "查看翻译报告"
+
+#: i18n.cpp:151
+msgid "&Translations folder"
+msgstr "语言包文件夹"
+
+#: i18n.cpp:152
+msgid "&Submit current translation"
+msgstr "提交当前翻译"
+
+#: i18n.cpp:154
+msgid "&Font"
+msgstr "字体"
+
+#: i18n.cpp:155
+msgid "&Options"
+msgstr "选项"
+
+#: i18n.cpp:157
+msgid "&Enable"
+msgstr "开启"
+
+#: i18n.cpp:158
+msgid "&Script"
+msgstr "脚本"
+
+#: i18n.cpp:160
+msgid "&Contents"
+msgstr "目录"
+
+#: i18n.cpp:161
+msgid "Best &practice"
+msgstr "最佳方法"
+
+#: i18n.cpp:162
+msgid "&FAQ"
+msgstr "常见问题解答"
+
+#: i18n.cpp:163
+msgid "Cluster map &legend"
+msgstr "群集地图图例"
+
+#: i18n.cpp:164
+msgid "&Debug"
+msgstr "调试"
+
+#: i18n.cpp:165
+msgid "Check for &update"
+msgstr "检查更新"
+
+#: i18n.cpp:166
+msgid "&About"
+msgstr "关于"
+
+#: i18n.cpp:168 utils.cpp:247
+msgid "Open &log"
+msgstr "打开日志"
+
+#: i18n.cpp:169
+msgid "Send bug &report"
+msgstr "发送错误报告"
+
+#: i18n.cpp:174
+msgid "Boot time script"
+msgstr "系统启动脚本"
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr "有更新可以下载！"
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr "升级吧 ^-^"
+
+#: upgrade.cpp:103
+msgid "&Upgrade"
+msgstr ""
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:250
+msgid "Error!"
+msgstr ""
