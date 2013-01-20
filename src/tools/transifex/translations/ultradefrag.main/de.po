@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-19 22:06+0100\n"
+"PO-Revision-Date: 2013-01-19 23:05+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr "Über UltraDefrag"
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr "Ein Open-Source Defragmentierungswerkzeug."
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr "Danksagungen und Lizenzen sind im Handbuch aufgeführt."
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr "UltraDefrag Internetseite"
+
+#: i18n.cpp:114
+msgid "&Analyze"
+msgstr "&Analysieren"
+
+#: i18n.cpp:115
+msgid "&Defragment"
+msgstr "&Defragmentieren"
+
+#: i18n.cpp:116
+msgid "&Quick optimization"
+msgstr "&Schnelloptimierung"
+
+#: i18n.cpp:117
+msgid "&Full optimization"
+msgstr "&Komplettoptimierung"
+
+#: i18n.cpp:118
+msgid "&Optimize MFT"
+msgstr "&Optimiere MFT"
+
+#: i18n.cpp:119
+msgid "&Pause"
+msgstr "&Pause"
+
+#: i18n.cpp:120
+msgid "&Stop"
+msgstr "&Stopp"
+
+#: i18n.cpp:121
+msgid "Re&peat action"
+msgstr "Vorgang &wiederholen"
+
+#: i18n.cpp:122
+msgid "Skip removable &media"
+msgstr "Wechselmedien &ignorieren"
+
+#: i18n.cpp:123
+msgid "&Rescan drives"
+msgstr "Laufwerke &aktualisieren"
+
+#: i18n.cpp:124
+msgid "Repair dri&ves"
+msgstr "Laufwerke &reparieren"
+
+#: i18n.cpp:125
+msgid "&None"
+msgstr "&Nichts unternehmen"
+
+#: i18n.cpp:126 i18n.cpp:132
+msgid "E&xit"
+msgstr "&Beenden"
+
+#: i18n.cpp:127
+msgid "Stan&dby"
+msgstr "&Energie sparen"
+
+#: i18n.cpp:128
+msgid "&Hibernate"
+msgstr "&Ruhezustand"
+
+#: i18n.cpp:129
+msgid "&Logoff"
+msgstr "&Abmelden"
+
+#: i18n.cpp:130
+msgid "&Reboot"
+msgstr "&Neu starten"
+
+#: i18n.cpp:131
+msgid "&Shutdown"
+msgstr "&Herunterfahren"
+
+#: i18n.cpp:133
+msgid "&Show report"
+msgstr "Bericht &anzeigen"
+
+#: i18n.cpp:134
+msgid "&View change log"
+msgstr "Änderungs&protokoll anzeigen"
+
+#: i18n.cpp:135
+msgid "View translation &report"
+msgstr "Übersetzungs&bericht anzeigen"
+
+#: i18n.cpp:136
+msgid "&Translations folder"
+msgstr "Übersetzungs&ordner"
+
+#: i18n.cpp:137
+msgid "&Submit current translation"
+msgstr "&Aktuelle Übersetzung einreichen"
+
+#: i18n.cpp:138
+msgid "&Font"
+msgstr "&Zeichensatz"
+
+#: i18n.cpp:139
+msgid "&Options"
+msgstr "&Einstellungen"
+
+#: i18n.cpp:140
+msgid "&Enable"
+msgstr "&Aktivieren"
+
+#: i18n.cpp:141
+msgid "&Script"
+msgstr "&Skript"
+
+#: i18n.cpp:142
+msgid "&Reports"
+msgstr "&Berichte"
+
+#: i18n.cpp:143
+msgid "&Contents"
+msgstr "&Inhalt"
+
+#: i18n.cpp:144
+msgid "Best &practice"
+msgstr "Empfohlene &Verwendung"
+
+#: i18n.cpp:145
+msgid "&FAQ"
+msgstr "Häufig gestellte &Fragen"
+
+#: i18n.cpp:146
+msgid "Cluster map &legend"
+msgstr "&Zuordnungstabellenerklärung"
+
+#: i18n.cpp:147 utils.cpp:247
+msgid "Open &log"
+msgstr "&Protokoll öffnen"
+
+#: i18n.cpp:148
+msgid "Send bug &report"
+msgstr "Problembericht &senden"
+
+#: i18n.cpp:149
+msgid "Check for &update"
+msgstr "Auf &Aktualisierung prüfen"
+
+#: i18n.cpp:150
+msgid "&About"
+msgstr "&Über"
+
+#: i18n.cpp:151
+msgid "&Action"
+msgstr "&Vorgang"
+
+#: i18n.cpp:152
+msgid "&Report"
+msgstr "&Bericht"
+
+#: i18n.cpp:153
+msgid "&Settings"
+msgstr "&Einstellungen"
+
+#: i18n.cpp:154 i18n.cpp:166
+msgid "&Help"
+msgstr "&Hilfe"
+
+#: i18n.cpp:155
+msgid "&When done"
+msgstr "&Nach Abschluss"
+
+#: i18n.cpp:156
+msgid "&Language"
+msgstr "&Sprache"
+
+#: i18n.cpp:157
+msgid "&Graphical interface"
+msgstr "&Grafische Benutzeroberfläche"
+
+#: i18n.cpp:158 i18n.cpp:162
+msgid "&Boot time scan"
+msgstr "&Überprüfung beim Windows-Start"
+
+#: i18n.cpp:159
+msgid "&Debug"
+msgstr "&Problem berichten"
+
+#: i18n.cpp:164
+msgid "Boot time script"
+msgstr "Windows-Start-Skript"
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr "Neue Version zum Herunterladen vorhanden!"
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr "Du kannst mich aktualisieren ^-^"
+
+#: upgrade.cpp:103
+msgid "&Upgrade"
+msgstr "&Aktualisieren"
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "&Cancel"
+msgstr "&Abbrechen"
+
+#: utils.cpp:250
+msgid "Error!"
+msgstr "Fehler!"
