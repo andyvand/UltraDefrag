@@ -164,11 +164,30 @@ void MainFrame::InitMenu()
         ID_BootEnable, wxEmptyString);
     menuBootConfig->Append(ID_BootScript);
 
+    // create sorting configuration menu
+    wxMenu *menuSortingConfig = new wxMenu;
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortByPath, wxEmptyString);
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortBySize, wxEmptyString);
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortByCreationDate, wxEmptyString);
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortByModificationDate, wxEmptyString);
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortByLastAccessDate, wxEmptyString);
+    menuSortingConfig->AppendSeparator();
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortAscending, wxEmptyString);
+    menuSortingConfig->AppendCheckItem( \
+        ID_SortDescending, wxEmptyString);
+
     // create settings menu
     wxMenu *menuSettings = new wxMenu;
     m_subMenuLanguage = menuSettings->AppendSubMenu(m_menuLanguage  , wxEmptyString);
     m_subMenuGUIconfig = menuSettings->AppendSubMenu(menuGUIconfig  , wxEmptyString);
     m_subMenuBootConfig = menuSettings->AppendSubMenu(menuBootConfig, wxEmptyString);
+    m_subMenuSortingConfig = menuSettings->AppendSubMenu(menuSortingConfig, wxEmptyString);
     menuSettings->Append(ID_ReportOptions);
 
     // create debug menu

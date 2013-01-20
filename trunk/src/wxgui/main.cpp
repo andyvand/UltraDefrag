@@ -83,6 +83,12 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
 
+    EVT_MENU_RANGE(ID_SortByPath,
+        ID_SortByLastAccessDate, MainFrame::OnSortCriteriaChange)
+
+    EVT_MENU_RANGE(ID_SortAscending,
+        ID_SortDescending, MainFrame::OnSortOrderChange)
+
     // help menu
     EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
     EVT_MENU(ID_HelpBestPractice, MainFrame::OnHelpBestPractice)
@@ -563,6 +569,14 @@ void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
 }
 
 void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void MainFrame::OnSortCriteriaChange(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void MainFrame::OnSortOrderChange(wxCommandEvent& WXUNUSED(event))
 {
 }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 03:55+0100\n"
+"POT-Creation-Date: 2013-01-20 12:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "&Settings"
 msgstr ""
 
-#: i18n.cpp:118 i18n.cpp:176
+#: i18n.cpp:118 i18n.cpp:185
 msgid "&Help"
 msgstr ""
 
@@ -136,83 +136,115 @@ msgstr ""
 msgid "&Graphical interface"
 msgstr ""
 
-#: i18n.cpp:146 i18n.cpp:172
+#: i18n.cpp:146 i18n.cpp:181
 msgid "&Boot time scan"
 msgstr ""
 
 #: i18n.cpp:147
+msgid "&Sorting"
+msgstr ""
+
+#: i18n.cpp:148
 msgid "&Reports"
 msgstr ""
 
-#: i18n.cpp:149
+#: i18n.cpp:150
 msgid "&View change log"
 msgstr ""
 
-#: i18n.cpp:150
+#: i18n.cpp:151
 msgid "View translation &report"
 msgstr ""
 
-#: i18n.cpp:151
+#: i18n.cpp:152
 msgid "&Translations folder"
 msgstr ""
 
-#: i18n.cpp:152
+#: i18n.cpp:153
 msgid "&Submit current translation"
 msgstr ""
 
-#: i18n.cpp:154
+#: i18n.cpp:155
 msgid "&Font"
 msgstr ""
 
-#: i18n.cpp:155
+#: i18n.cpp:156
 msgid "&Options"
 msgstr ""
 
-#: i18n.cpp:157
+#: i18n.cpp:158
 msgid "&Enable"
 msgstr ""
 
-#: i18n.cpp:158
+#: i18n.cpp:159
 msgid "&Script"
 msgstr ""
 
-#: i18n.cpp:160
-msgid "&Contents"
-msgstr ""
-
 #: i18n.cpp:161
-msgid "Best &practice"
+msgid "By &path"
 msgstr ""
 
 #: i18n.cpp:162
-msgid "&Frequently asked questions"
+msgid "By &size"
 msgstr ""
 
 #: i18n.cpp:163
-msgid "Cluster map &legend"
+msgid "By &creation time"
 msgstr ""
 
 #: i18n.cpp:164
-msgid "&Debug"
+msgid "By last &modification time"
 msgstr ""
 
 #: i18n.cpp:165
-msgid "Check for &update"
+msgid "By &last access time"
 msgstr ""
 
 #: i18n.cpp:166
-msgid "&About"
+msgid "In &ascending order"
 msgstr ""
 
-#: i18n.cpp:168 utils.cpp:247
-msgid "Open &log"
+#: i18n.cpp:167
+msgid "In &descending order"
 msgstr ""
 
 #: i18n.cpp:169
-msgid "Send bug &report"
+msgid "&Contents"
+msgstr ""
+
+#: i18n.cpp:170
+msgid "Best &practice"
+msgstr ""
+
+#: i18n.cpp:171
+msgid "&Frequently asked questions"
+msgstr ""
+
+#: i18n.cpp:172
+msgid "Cluster map &legend"
+msgstr ""
+
+#: i18n.cpp:173
+msgid "&Debug"
 msgstr ""
 
 #: i18n.cpp:174
+msgid "Check for &update"
+msgstr ""
+
+#: i18n.cpp:175
+msgid "&About"
+msgstr ""
+
+#: i18n.cpp:177 utils.cpp:247
+msgid "Open &log"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "Send bug &report"
+msgstr ""
+
+#: i18n.cpp:183
 msgid "Boot time script"
 msgstr ""
 
