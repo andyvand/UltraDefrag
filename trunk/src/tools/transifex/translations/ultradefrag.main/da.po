@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-20 03:13+0100\n"
+"PO-Revision-Date: 2013-01-20 14:02+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr "Om UltraDefrag"
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "Handling"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "Rapport"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "Indstillinger"
+
+#: i18n.cpp:118 i18n.cpp:176
+msgid "&Help"
+msgstr "Hjælp"
+
+#: i18n.cpp:120
+msgid "&Analyze"
+msgstr "Analyser"
+
+#: i18n.cpp:121
+msgid "&Defragment"
+msgstr "Defragmenter"
+
+#: i18n.cpp:122
+msgid "&Quick optimization"
+msgstr "Hurtig optimering"
+
+#: i18n.cpp:123
+msgid "&Full optimization"
+msgstr "Fuld optimering"
+
+#: i18n.cpp:124
+msgid "&Optimize MFT"
+msgstr "Optimer MFT"
+
+#: i18n.cpp:125
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:126
+msgid "&Stop"
+msgstr "Stands"
+
+#: i18n.cpp:127
+msgid "Re&peat action"
+msgstr "Gentag handling"
+
+#: i18n.cpp:128
+msgid "Skip removable &media"
+msgstr "Kun faste drev"
+
+#: i18n.cpp:129
+msgid "&Rescan drives"
+msgstr "Opdater drevlisten"
+
+#: i18n.cpp:130
+msgid "Repair dri&ves"
+msgstr "Reparation drev"
+
+#: i18n.cpp:131
+msgid "&When done"
+msgstr "Efter udførsel"
+
+#: i18n.cpp:132 i18n.cpp:135
+msgid "E&xit"
+msgstr "Luk programmet"
+
+#: i18n.cpp:134
+msgid "&None"
+msgstr "Gør ingenting"
+
+#: i18n.cpp:136
+msgid "Stan&dby"
+msgstr ""
+
+#: i18n.cpp:137
+msgid "&Hibernate"
+msgstr "Dvale"
+
+#: i18n.cpp:138
+msgid "&Logoff"
+msgstr "Log af"
+
+#: i18n.cpp:139
+msgid "&Reboot"
+msgstr "Genstart"
+
+#: i18n.cpp:140
+msgid "&Shutdown"
+msgstr "Luk ned"
+
+#: i18n.cpp:142
+msgid "&Show report"
+msgstr "Vis rapport"
+
+#: i18n.cpp:144
+msgid "&Language"
+msgstr "Sprog"
+
+#: i18n.cpp:145
+msgid "&Graphical interface"
+msgstr "Brugergrænseflade"
+
+#: i18n.cpp:146 i18n.cpp:172
+msgid "&Boot time scan"
+msgstr "Skan ved opstart af Windows"
+
+#: i18n.cpp:147
+msgid "&Reports"
+msgstr "Rapporter"
+
+#: i18n.cpp:149
+msgid "&View change log"
+msgstr "Se ændre log"
+
+#: i18n.cpp:150
+msgid "View translation &report"
+msgstr "Vis oversættelse &rapport"
+
+#: i18n.cpp:151
+msgid "&Translations folder"
+msgstr "Oversættelsesmappe"
+
+#: i18n.cpp:152
+msgid "&Submit current translation"
+msgstr "Indsend nuværende oversættelse"
+
+#: i18n.cpp:154
+msgid "&Font"
+msgstr "Skrifttype"
+
+#: i18n.cpp:155
+msgid "&Options"
+msgstr "Indstillinger"
+
+#: i18n.cpp:157
+msgid "&Enable"
+msgstr "Aktiver"
+
+#: i18n.cpp:158
+msgid "&Script"
+msgstr ""
+
+#: i18n.cpp:160
+msgid "&Contents"
+msgstr "Indhold"
+
+#: i18n.cpp:161
+msgid "Best &practice"
+msgstr "Bedste praksis"
+
+#: i18n.cpp:162
+msgid "&FAQ"
+msgstr "Ofte stillede spørgsmål"
+
+#: i18n.cpp:163
+msgid "Cluster map &legend"
+msgstr "Cluster kort legende"
+
+#: i18n.cpp:164
+msgid "&Debug"
+msgstr "Fejlsøg"
+
+#: i18n.cpp:165
+msgid "Check for &update"
+msgstr "Kontroller for opdatering"
+
+#: i18n.cpp:166
+msgid "&About"
+msgstr "Om"
+
+#: i18n.cpp:168 utils.cpp:247
+msgid "Open &log"
+msgstr "Åbn &log"
+
+#: i18n.cpp:169
+msgid "Send bug &report"
+msgstr "Send fejl&rapport"
+
+#: i18n.cpp:174
+msgid "Boot time script"
+msgstr "Boot tid script"
+
+#: upgrade.cpp:100
+msgid "release is available for download!"
+msgstr "release er tilgængelig for download!"
+
+#: upgrade.cpp:102
+msgid "You can upgrade me ^-^"
+msgstr "Du kan opgradere mig ^-^"
+
+#: upgrade.cpp:103
+msgid "&Upgrade"
+msgstr ""
+
+#: upgrade.cpp:103 utils.cpp:251
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:250
+msgid "Error!"
+msgstr ""
