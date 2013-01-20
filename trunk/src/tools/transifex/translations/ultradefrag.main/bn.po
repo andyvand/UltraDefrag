@@ -9,18 +9,18 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-20 03:13+0100\n"
-"PO-Revision-Date: 2013-01-20 02:23+0000\n"
+"PO-Revision-Date: 2013-01-20 02:38+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: bn\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: about.cpp:45
 msgid "About UltraDefrag"
-msgstr "О программе UltraDefrag"
+msgstr "UltraDefrag সম্পর্কে"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
@@ -36,39 +36,39 @@ msgstr ""
 
 #: i18n.cpp:115
 msgid "&Action"
-msgstr "&Файл"
+msgstr "কাজ"
 
 #: i18n.cpp:116
 msgid "&Report"
-msgstr "&Отчёт"
+msgstr "বিবরণী"
 
 #: i18n.cpp:117
 msgid "&Settings"
-msgstr "&Настройки"
+msgstr "সেটিং"
 
 #: i18n.cpp:118 i18n.cpp:176
 msgid "&Help"
-msgstr "&Справка"
+msgstr "সাহায্য"
 
 #: i18n.cpp:120
 msgid "&Analyze"
-msgstr "&Анализ"
+msgstr "বিশ্লেষণ"
 
 #: i18n.cpp:121
 msgid "&Defragment"
-msgstr "&Дефрагментация"
+msgstr "ফাইল একত্রীকরণ"
 
 #: i18n.cpp:122
 msgid "&Quick optimization"
-msgstr "&Быстрая оптимизация"
+msgstr "দ্রুত একত্রীকরণ"
 
 #: i18n.cpp:123
 msgid "&Full optimization"
-msgstr "&Полная оптимизация"
+msgstr "সম্পূর্ণ সংযোজন"
 
 #: i18n.cpp:124
 msgid "&Optimize MFT"
-msgstr "&Оптимизация MFT"
+msgstr "ফাইল তালিকা সংযোজন"
 
 #: i18n.cpp:125
 msgid "Pa&use"
@@ -76,155 +76,155 @@ msgstr ""
 
 #: i18n.cpp:126
 msgid "&Stop"
-msgstr "&Стоп"
+msgstr "থামান"
 
 #: i18n.cpp:127
 msgid "Re&peat action"
-msgstr "&Разрешить повтор"
+msgstr "আবার কাজ চালান"
 
 #: i18n.cpp:128
 msgid "Skip removable &media"
-msgstr "Пропустить &сменные носители"
+msgstr "অপসারণযোগ্য মিডিয়া বিচ্ছিন্ন"
 
 #: i18n.cpp:129
 msgid "&Rescan drives"
-msgstr "Пересканировать &диски"
+msgstr "আবার চেক করণ"
 
 #: i18n.cpp:130
 msgid "Repair dri&ves"
-msgstr "Исправить диски"
+msgstr "মেরামত করণ"
 
 #: i18n.cpp:131
 msgid "&When done"
-msgstr "После &завершения"
+msgstr "শেষ যখন"
 
 #: i18n.cpp:132 i18n.cpp:135
 msgid "E&xit"
-msgstr "&Выйти"
+msgstr "বহির্গমন"
 
 #: i18n.cpp:134
 msgid "&None"
-msgstr "&Ничего не делать"
+msgstr "কিছুই না যখন শেষ"
 
 #: i18n.cpp:136
 msgid "Stan&dby"
-msgstr "Перейти в режим &ожидания"
+msgstr "স্থিত যখন শেষ"
 
 #: i18n.cpp:137
 msgid "&Hibernate"
-msgstr "Перейти в &спящий режим"
+msgstr "যখন শেষ টিকা থাক"
 
 #: i18n.cpp:138
 msgid "&Logoff"
-msgstr "Вы&йти из системы"
+msgstr "যখন শেষ লগ আউট"
 
 #: i18n.cpp:139
 msgid "&Reboot"
-msgstr "&Перезагрузить компьютер"
+msgstr "যখন শেষ কম্পিউটার পুনরায় আরম্ভ"
 
 #: i18n.cpp:140
 msgid "&Shutdown"
-msgstr "&Выключить компьютер"
+msgstr "যখন শেষ কম্পিউটার বন্ধ"
 
 #: i18n.cpp:142
 msgid "&Show report"
-msgstr "&Показать отчёт"
+msgstr "বিবরণী প্রদর্শন"
 
 #: i18n.cpp:144
 msgid "&Language"
-msgstr "&Язык"
+msgstr "ভাষা"
 
 #: i18n.cpp:145
 msgid "&Graphical interface"
-msgstr "&Графический интерфейс"
+msgstr "লৈখিক উপস্থাপনা"
 
 #: i18n.cpp:146 i18n.cpp:172
 msgid "&Boot time scan"
-msgstr "&Запуск перед загрузкой Windows"
+msgstr "কম্পিউটার শুরুর চেক"
 
 #: i18n.cpp:147
 msgid "&Reports"
-msgstr "&Отчёты"
+msgstr "বিবরণী"
 
 #: i18n.cpp:149
 msgid "&View change log"
-msgstr "&Смотреть журнал изменений"
+msgstr "অনুবাদ পরিবর্তন বিবরণী"
 
 #: i18n.cpp:150
 msgid "View translation &report"
-msgstr "Смотреть &отчёт перевода"
+msgstr "অনুবাদ বিবরণী"
 
 #: i18n.cpp:151
 msgid "&Translations folder"
-msgstr "&Каталог переводов"
+msgstr "অনুবাদ ফোল্ডার"
 
 #: i18n.cpp:152
 msgid "&Submit current translation"
-msgstr "&Отправить текущий перевод"
+msgstr "অনুবাদ জমা দিন"
 
 #: i18n.cpp:154
 msgid "&Font"
-msgstr "&Шрифт"
+msgstr "লেখা"
 
 #: i18n.cpp:155
 msgid "&Options"
-msgstr "&Опции"
+msgstr "পছন্দসমূহ"
 
 #: i18n.cpp:157
 msgid "&Enable"
-msgstr "&Включить"
+msgstr "সূচনা"
 
 #: i18n.cpp:158
 msgid "&Script"
-msgstr "&Сценарий"
+msgstr "স্ক্রিপ্ট"
 
 #: i18n.cpp:160
 msgid "&Contents"
-msgstr "&Содержание"
+msgstr "সূচীপত্র"
 
 #: i18n.cpp:161
 msgid "Best &practice"
-msgstr "&Полезные советы"
+msgstr "উপযুক্ত অনুশীলন"
 
 #: i18n.cpp:162
 msgid "&FAQ"
-msgstr "&Часто задаваемые вопросы"
+msgstr "ঘনঘন প্রশ্ন এর উত্তর"
 
 #: i18n.cpp:163
 msgid "Cluster map &legend"
-msgstr "&Легенда карты кластеров"
+msgstr "দাগ"
 
 #: i18n.cpp:164
 msgid "&Debug"
-msgstr "От&ладка"
+msgstr "কোড মেরামত"
 
 #: i18n.cpp:165
 msgid "Check for &update"
-msgstr "&Проверить обновления"
+msgstr "চেক আধুনিক সংস্করণ"
 
 #: i18n.cpp:166
 msgid "&About"
-msgstr "&О программе"
+msgstr "আমাদের সম্পর্কে"
 
 #: i18n.cpp:168 utils.cpp:247
 msgid "Open &log"
-msgstr "Открыть &журнал"
+msgstr "বিবরণী প্রদর্শন"
 
 #: i18n.cpp:169
 msgid "Send bug &report"
-msgstr "Отправить &сообщение об ошибке"
+msgstr "ভুল মেরামত"
 
 #: i18n.cpp:174
 msgid "Boot time script"
-msgstr "Сценарий работы перед загрузкой Windows"
+msgstr "কম্পিউটার শুরুর স্ক্রিপ্ট"
 
 #: upgrade.cpp:100
 msgid "release is available for download!"
-msgstr "релиз доступен для загрузки!"
+msgstr "নতুন সংস্করণ উপলব্ধ আছে"
 
 #: upgrade.cpp:102
 msgid "You can upgrade me ^-^"
-msgstr "Вы можете меня обновить ^-^"
+msgstr "আপগ্রেড করুন"
 
 #: upgrade.cpp:103
 msgid "&Upgrade"
