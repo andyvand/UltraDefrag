@@ -1,7 +1,7 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Spanish (ES) Language Pack.
 ; Copyright (C) 2010 Txusti.
-; Copyright (C) 2010, 2011 Juan C. Mendez Valledor.
+; Copyright (C) 2010-2013 Juan C. Mendez Valledor.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ LANGUAGE                  = Idioma
 GRAPHICAL_INTERFACE       = Interfaz Gráfica
 BOOT_TIME_SCAN            = Escanear al Arrancar
 REPORTS                   = Informes
-SORTING                   = &Sorting
+SORTING                   = &Ordenación
 
 ; --- --- Language submenu
 
@@ -85,13 +85,13 @@ SCRIPT                    = Comandos
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = Ordenar por &ruta
+SORT_BY_SIZE              = Ordenar por &tamaño
+SORT_BY_C_TIME            = Ordenar por &fecha creación
+SORT_BY_M_TIME            = Ordenar por última &modificación
+SORT_BY_A_TIME            = Ordenar por &último acceso
+SORT_ASCENDING            = Ordenar en &orden ascendente
+SORT_DESCENDING           = Ordenar en &orden descendente
 
 ; --- Help Menu
 
