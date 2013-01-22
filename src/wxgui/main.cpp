@@ -98,7 +98,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_DebugLog, MainFrame::OnDebugLog)
     EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
 
-    EVT_MENU(ID_HelpUpdate, MainFrame::OnHelpUpdate)
+    EVT_MENU_RANGE(ID_HelpUpdateNone,
+        ID_HelpUpdateCheck, MainFrame::OnHelpUpdate)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
 
     // event handlers
@@ -340,7 +341,11 @@ MainFrame::MainFrame()
     m_crashInfoThread = new CrashInfoThread();
     m_crashInfoThread->Run();
 
+    unsigned int ulevel = (unsigned int)cfg->Read(wxT("/Upgrade/Level"),1);
+    m_menuBar->FindItem(ID_HelpUpdateNone + ulevel)->Check();
+
     m_upgradeThread = new UpgradeThread();
+    m_upgradeThread->m_level = ulevel;
     m_upgradeThread->m_check = true;
     m_upgradeThread->Run();
 
@@ -386,6 +391,8 @@ MainFrame::~MainFrame()
 
     cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
+
+    cfg->Write(wxT("/Upgrade/Level"),(long)m_upgradeThread->m_level);
 
     // terminate threads
     delete m_crashInfoThread;

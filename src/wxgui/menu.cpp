@@ -178,20 +178,20 @@ void MainFrame::InitMenu()
 
     // create sorting configuration menu
     wxMenu *menuSortingConfig = new wxMenu;
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortByPath, wxEmptyString);
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortBySize, wxEmptyString);
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortByCreationDate, wxEmptyString);
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortByModificationDate, wxEmptyString);
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortByLastAccessDate, wxEmptyString);
     menuSortingConfig->AppendSeparator();
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortAscending, wxEmptyString);
-    menuSortingConfig->AppendCheckItem( \
+    menuSortingConfig->AppendRadioItem( \
         ID_SortDescending, wxEmptyString);
 
     // create settings menu
@@ -207,6 +207,17 @@ void MainFrame::InitMenu()
     menuDebug->Append(ID_DebugLog);
     menuDebug->Append(ID_DebugSend);
 
+    // create upgrade menu
+    wxMenu *menuUpgrade = new wxMenu;
+    menuUpgrade->AppendRadioItem( \
+        ID_HelpUpdateNone, wxEmptyString);
+    menuUpgrade->AppendRadioItem( \
+        ID_HelpUpdateStable, wxEmptyString);
+    menuUpgrade->AppendRadioItem( \
+        ID_HelpUpdateAll, wxEmptyString);
+    menuUpgrade->AppendSeparator();
+    menuUpgrade->Append(ID_HelpUpdateCheck);
+
     // create help menu
     wxMenu *menuHelp = new wxMenu;
     menuHelp->Append(ID_HelpContents);
@@ -219,7 +230,9 @@ void MainFrame::InitMenu()
         menuHelp->AppendSubMenu( \
         menuDebug, wxEmptyString);
     menuHelp->AppendSeparator();
-    menuHelp->Append(ID_HelpUpdate);
+    m_subMenuUpgrade = \
+        menuHelp->AppendSubMenu( \
+        menuUpgrade, wxEmptyString);
     menuHelp->AppendSeparator();
     menuHelp->Append(ID_HelpAbout);
 

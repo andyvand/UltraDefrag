@@ -120,6 +120,7 @@ public:
 
     bool m_stop;
     bool m_check;
+    unsigned int m_level;
 };
 
 class MainFrame: public wxFrame {
@@ -215,6 +216,7 @@ private:
     wxMenuItem *m_subMenuBootConfig;
     wxMenuItem *m_subMenuSortingConfig;
     wxMenuItem *m_subMenuDebug;
+    wxMenuItem *m_subMenuUpgrade;
     wxMenu     *m_menuLanguage;
 
     wxSplitterWindow *m_splitter;
@@ -313,7 +315,11 @@ enum {
     ID_DebugLog,
     ID_DebugSend,
 
-    ID_HelpUpdate,
+    ID_HelpUpdateNone,
+    ID_HelpUpdateStable,
+    ID_HelpUpdateAll,
+    ID_HelpUpdateCheck,
+
     ID_HelpAbout,
 
     // event identifiers
