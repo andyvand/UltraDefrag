@@ -45,7 +45,7 @@
 void *UpgradeThread::Entry()
 {
     while(!m_stop){
-        if(m_check){
+        if(m_check && m_level > 0){
             wxString path = Utils::DownloadFile(wxT(VERSION_URL));
             if(!path.IsEmpty()){
                 wxTextFile file; file.Open(path);
@@ -89,9 +89,17 @@ void *UpgradeThread::Entry()
 //                           Event handlers
 // =======================================================================
 
-void MainFrame::OnHelpUpdate(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnHelpUpdate(wxCommandEvent& event)
 {
-    m_upgradeThread->m_check = true;
+    switch(event.GetId()){
+        case ID_HelpUpdateNone:
+        case ID_HelpUpdateStable:
+        case ID_HelpUpdateAll:
+            m_upgradeThread->m_level = event.GetId() - ID_HelpUpdateNone;
+            break;
+        case ID_HelpUpdateCheck:
+            m_upgradeThread->m_check = true;
+    }
 }
 
 void MainFrame::OnShowUpgradeDialog(wxCommandEvent& event)

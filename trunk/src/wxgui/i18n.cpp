@@ -171,7 +171,11 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_HelpFaq          , "&Frequently asked questions", "F3");
     UD_UpdateMenuItemLabel(ID_HelpLegend       , "Cluster map &legend"        , "");
     m_subMenuDebug->SetItemLabel(_("&Debug"));
-    UD_UpdateMenuItemLabel(ID_HelpUpdate       , "Check for &update"    , "");
+    m_subMenuUpgrade->SetItemLabel(_("&Upgrade"));
+    UD_UpdateMenuItemLabel(ID_HelpUpdateNone   , "&None"                , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateStable , "&Only stable release" , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateAll    , "&All releases"        , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateCheck  , "&Check now"           , "");
     UD_UpdateMenuItemLabel(ID_HelpAbout        , "&About"               , "F4");
     // debug sub-menu
     UD_UpdateMenuItemLabel(ID_DebugLog         , "Open &log"            , "Alt+L");
