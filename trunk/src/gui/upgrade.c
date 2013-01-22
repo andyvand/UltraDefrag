@@ -123,6 +123,61 @@ static char *GetLatestVersion(void)
 }
 
 /**
+ * @brief Parses a version string and generates an integer for comparison.
+ * @return An integer representing the version. -1 indicates that
+ * the version string parsing failed.
+ */
+static int ParseVersionString(char *version)
+{
+    char *string, *string1;
+    int mj, mn, i, uv; /* version numbers (major, minor, index, unstable version) */
+    int res;
+    
+    if(version == NULL) return -1;
+    
+    string = _strdup(version);
+    string1 = _strdup(version);
+    if(string){
+        _strlwr(string);
+        _strlwr(string1);
+        if(strstr(string,"alpha")){
+            res = sscanf(string1,"%u.%u.%u alpha%u",&mj,&mn,&i,&uv);
+            if(res != 4){
+                etrace("alpha sscanf of '%s' returned %u",version,res);
+                return -1;
+            }
+            uv += 100;
+        } else if(strstr(string,"beta")){
+            res = sscanf(string1,"%u.%u.%u beta%u",&mj,&mn,&i,&uv);
+            if(res != 4){
+                etrace("beta sscanf of '%s' returned %u",version,res);
+                return -1;
+            }
+            uv += 200;
+        } else if(strstr(string,"rc")){
+            res = sscanf(string1,"%u.%u.%u rc%u",&mj,&mn,&i,&uv);
+            if(res != 4){
+                etrace("rc sscanf of '%s' returned %u",version,res);
+                return -1;
+            }
+            uv += 300;
+        } else {
+            res = sscanf(string1,"%u.%u.%u",&mj,&mn,&i);
+            if(res != 3){
+                etrace("regular sscanf of '%s' returned %u",version,res);
+                return -1;
+            }
+            uv = 999;
+        }
+        free(string1);
+        free(string);
+    }
+    
+    /* 5.0.0 > 4.99.99 rc10*/
+    return mj * 10000000 + mn * 100000 + i * 1000 + uv;
+}
+
+/**
  * @brief Defines whether a new version is available for download or not.
  * @return A string containing an announcement. NULL indicates that
  * there is no new version available.
@@ -131,56 +186,33 @@ static wchar_t *GetNewVersionAnnouncement(void)
 {
     char *lv;
     char *cv = VERSIONINTITLE;
-    char *string;
-    int lmj, lmn, li; /* latest version numbers */
-    int cmj, cmn, ci; /* current version numbers */
     OSVERSIONINFO osvi;
     int current_version, last_version;
-    int unstable_version = 0;
-    int upgrade_needed = 0;
-    int res;
     wchar_t *text, *message;
 
     lv = GetLatestVersion();
     if(lv == NULL) return NULL;
     
-    /*lv[2] = '4';*/
-    res = sscanf(lv,"%u.%u.%u",&lmj,&lmn,&li);
-    if(res != 3){
-        etrace("the first sscanf call returned %u",res);
-        return NULL;
-    }
-    res = sscanf(cv,"UltraDefrag %u.%u.%u",&cmj,&cmn,&ci);
-    if(res != 3){
-        etrace("the second sscanf call returned %u",res);
-        return NULL;
-    }
-    string = _strdup(cv);
-    if(string){
-        _strlwr(string);
-        if(strstr(string,"alpha")) unstable_version = 1;
-        else if(strstr(string,"beta")) unstable_version = 1;
-        else if(strstr(string,"rc")) unstable_version = 1;
-        free(string);
-    }
+    current_version = ParseVersionString(&cv[12]);
+    if(current_version == -1) return NULL;
+    itrace("current version is %s ... %u",cv,current_version);
+    
+    last_version = ParseVersionString(lv);
+    if(last_version == -1) return NULL;
+    itrace("latest version is %s ... %u",lv,last_version);
     
     /* v7 will not support nt4 and w2k */
     ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&osvi);
     if(osvi.dwMajorVersion * 10 + osvi.dwMinorVersion < 51){
-        if(lmj > 6){
+        if(last_version > 69999999){
             itrace("upgrade to v7+ is not available for nt4/w2k");
             return NULL;
         }
     }
     
-    /* 5.0.0 > 4.99.99 */
-    current_version = cmj * 10000 + cmn * 100 + ci;
-    last_version = lmj * 10000 + lmn * 100 + li;
-    if(last_version > current_version) upgrade_needed = 1;
-    else if(last_version == current_version && unstable_version) upgrade_needed = 1;
-    if(upgrade_needed){
+    if(last_version > current_version){
         text = WgxGetResourceString(i18n_table,"UPGRADE_MESSAGE");
         if(text) message = text; else message = L"release is available for download!";
         _snwprintf(announcement,MAX_ANNOUNCEMENT_LEN,L"%hs %ws",lv,message);

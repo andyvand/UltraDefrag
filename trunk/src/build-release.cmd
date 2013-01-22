@@ -51,8 +51,13 @@ copy .\HISTORY.TXT .\release\
 copy /Y .\HISTORY.TXT ..\..\web\
 
 :: update version notification
-echo %ULTRADFGVER% > ..\..\web\version.ini
-echo %ULTRADFGVER% > ..\..\web\version_xp.ini
+if /I "%RELEASE_STAGE:~0,2%" equ "RC" (
+    echo %ULTRADFGVER% %RELEASE_STAGE%> ..\..\web\version.ini
+    echo %ULTRADFGVER% %RELEASE_STAGE%> ..\..\web\version_xp.ini
+) else (
+    echo %ULTRADFGVER%> ..\..\web\version.ini
+    echo %ULTRADFGVER%> ..\..\web\version_xp.ini
+)
 
 echo.
 echo Release made successfully!
