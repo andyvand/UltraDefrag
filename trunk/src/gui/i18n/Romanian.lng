@@ -1,6 +1,6 @@
 ﻿;------------------------------------------------------------------------------
 ; UltraDefrag GUI Romanian Language Pack.
-; Copyright (C) 2011 Micu Dumitru.
+; Copyright (C) 2011-2013 Micu (BeBe) Dumitru.
 ;------------------------------------------------------------------------------
 ; History --- Date ---------- Full Name
 ;------------------------------------------------------------------------------
@@ -29,10 +29,10 @@ DEFRAGMENT                = Defragmentare
 QUICK_OPTIMIZE            = Optimizare rapidă
 FULL_OPTIMIZE             = Optimizare completă
 OPTIMIZE_MFT              = Optimizare MFT
-PAUSE                     = &Pause
+PAUSE                     = Pauzã
 STOP                      = Stop
 REPEAT_ACTION             = Repetă acțiunea
-SKIP_REMOVABLE_MEDIA      = Treci peste drive-urile portabile
+SKIP_REMOVABLE_MEDIA      = Omite drive-urile portabile
 RESCAN_DRIVES             = Re-scanează unitățile
 REPAIR_DRIVES             = Repară unitățile
 WHEN_DONE                 = Când e gata
@@ -58,7 +58,7 @@ LANGUAGE                  = Limba
 GRAPHICAL_INTERFACE       = Interfața grafică
 BOOT_TIME_SCAN            = Scanare la pornirea sistemului
 REPORTS                   = Rapoarte
-SORTING                   = &Sorting
+SORTING                   = Sortare
 
 ; --- --- Language submenu
 
@@ -79,13 +79,13 @@ SCRIPT                    = Script
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = Sortare dupa locatie
+SORT_BY_SIZE              = Sortare dupa marime
+SORT_BY_C_TIME            = Sortare dupa durata
+SORT_BY_M_TIME            = Sortare dupa timp
+SORT_BY_A_TIME            = Sortare dupa accesare
+SORT_ASCENDING            = Sortare ordine crescatoare
+SORT_DESCENDING           = Sortare ordine descrescatoare
 
 ; --- Help Menu
 
