@@ -150,7 +150,8 @@
  * \raisebox{-1.5\height}{\includegraphics{Repeat.png}} &
  * @endlatexonly
  * @par Repeat action (Shift+R)
- * If this is set, the current operation will be repeated multiple times in a row. This allows processing as many files as possible.
+ * If this is set, the current operation will be repeated multiple times in a row until there is nothing left that can be moved.
+ * This allows processing as many files as possible.
  *
  * @htmlonly
  * </td></tr><tr><td>
