@@ -129,47 +129,37 @@ static char *GetLatestVersion(void)
  */
 static int ParseVersionString(char *version)
 {
-    char *string, *string1;
+    char *string;
     int mj, mn, i, uv; /* version numbers (major, minor, index, unstable version) */
     int res;
     
     if(version == NULL) return -1;
     
     string = _strdup(version);
-    string1 = _strdup(version);
     if(string){
         _strlwr(string);
-        _strlwr(string1);
-        if(strstr(string,"alpha")){
-            res = sscanf(string1,"%u.%u.%u alpha%u",&mj,&mn,&i,&uv);
-            if(res != 4){
-                etrace("alpha sscanf of '%s' returned %u",version,res);
-                return -1;
-            }
+        res = sscanf(string,"%u.%u.%u alpha%u",&mj,&mn,&i,&uv);
+        if(res == 4){
             uv += 100;
-        } else if(strstr(string,"beta")){
-            res = sscanf(string1,"%u.%u.%u beta%u",&mj,&mn,&i,&uv);
-            if(res != 4){
-                etrace("beta sscanf of '%s' returned %u",version,res);
-                return -1;
-            }
-            uv += 200;
-        } else if(strstr(string,"rc")){
-            res = sscanf(string1,"%u.%u.%u rc%u",&mj,&mn,&i,&uv);
-            if(res != 4){
-                etrace("rc sscanf of '%s' returned %u",version,res);
-                return -1;
-            }
-            uv += 300;
         } else {
-            res = sscanf(string1,"%u.%u.%u",&mj,&mn,&i);
-            if(res != 3){
-                etrace("regular sscanf of '%s' returned %u",version,res);
-                return -1;
+            res = sscanf(string,"%u.%u.%u beta%u",&mj,&mn,&i,&uv);
+            if(res == 4){
+                uv += 200;
+            } else {
+                res = sscanf(string,"%u.%u.%u rc%u",&mj,&mn,&i,&uv);
+                if(res == 4){
+                    uv += 300;
+                } else {
+                    res = sscanf(string,"%u.%u.%u",&mj,&mn,&i);
+                    if(res == 3){
+                        uv = 999;
+                    } else {
+                        etrace("parsing of '%s' failed",version);
+                        return -1;
+                    }
+                }
             }
-            uv = 999;
         }
-        free(string1);
         free(string);
     }
     
