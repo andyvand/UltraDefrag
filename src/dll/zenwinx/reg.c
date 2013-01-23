@@ -219,7 +219,7 @@ static void destroy_boot_exec_list(struct cmd *list)
  * is registered, zero indicates that it isn't,
  * negative value indicates a failure of the check.
  */
-int winx_bootex_check(wchar_t *command)
+int winx_bootex_check(const wchar_t *command)
 {
     struct cmd *c, *list = NULL;
     int result = (-1);
@@ -256,7 +256,7 @@ done:
  * @note Command's executable must be placed inside 
  * the system32 directory to be executed successfully.
  */
-int winx_bootex_register(wchar_t *command)
+int winx_bootex_register(const wchar_t *command)
 {
     struct cmd *c, *list = NULL;
     struct cmd *prev_command = NULL;
@@ -315,7 +315,7 @@ done:
  * executable, without the extension.
  * @return Zero for success, negative value otherwise.
  */
-int winx_bootex_unregister(wchar_t *command)
+int winx_bootex_unregister(const wchar_t *command)
 {
     struct cmd *c, *list = NULL;
     struct cmd *head, *next = NULL;

@@ -42,6 +42,7 @@
 		</ResourceCompiler>
 		<Linker>
 			<Add option="-mwindows" />
+			<Add library="libzenwinx.dll.a" />
 			<Add library="libudefrag.dll.a" />
 			<Add library="libwxmsw28u_adv.a" />
 			<Add library="libwxmsw28u_core.a" />

@@ -12,6 +12,7 @@ libs = {
     "ole32", "oleaut32", "uuid"
 }
 adlibs = { 
+    "$(UDEFRAG_LIB_PATH)\\zenwinx", 
     "$(UDEFRAG_LIB_PATH)\\udefrag", 
     "$(UDEFRAG_LIB_PATH)\\lua5.1a", 
     "$(WXWIDGETS_LIB_PATH)\\wxbase28u", 

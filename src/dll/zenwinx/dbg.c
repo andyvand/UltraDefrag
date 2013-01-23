@@ -367,7 +367,7 @@ static void remove_crlf(char *s)
  * - Not all system API set the last status code.
  * Use strace macro to catch the status for sure.
  */
-void winx_dbg_print(int flags,char *format, ...)
+void winx_dbg_print(int flags, const char *format, ...)
 {
     char *msg = NULL;
     char *err_msg = NULL;
@@ -475,7 +475,7 @@ no_description:
  * @param[in] format the format string.
  * @param[in] ... the parameters.
  */
-void winx_dbg_print_header(char ch, int width, char *format, ...)
+void winx_dbg_print_header(char ch, int width, const char *format, ...)
 {
     va_list arg;
     char *string;

@@ -59,6 +59,7 @@
 #endif
 
 #include "../include/version.h"
+#include "../dll/zenwinx/zenwinx.h"
 #include "../dll/udefrag/udefrag.h"
 
 // =======================================================================
