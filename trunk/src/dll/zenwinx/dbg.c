@@ -34,6 +34,7 @@
  * @{
  */
 
+#include "ntndk.h"
 #include "zenwinx.h"
 
 /* controls whether the messages will be collected or not */

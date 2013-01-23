@@ -29,6 +29,7 @@
 * possible - they're much easier for use.
 */
 
+#include "ntndk.h"
 #include "zenwinx.h"
 
 struct cmd {
