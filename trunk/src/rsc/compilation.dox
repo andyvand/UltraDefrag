@@ -16,23 +16,11 @@
  * to build binaries for all the supported processor architectures. To build 32-bit binaries 
  * <a href="http://sourceforge.net/projects/tdm-gcc/">MinGW</a> can also be used.
  *
- * Both MinGW and Windows SDK need to be patched to be able to build UltraDefrag.
- * Type <b>build --help</b> (see below) for details.
- *
- * You can download the <a href="http://koti.mbnet.fi/vaultec/mingwstudio.php">MinGW Developer Studio</a>,
- * if you need a fully functional development environment for MinGW. To build project files for it go to /src
- * directory of the source tree and type:
- * @code lua tools\make-mingw-projects.lua @endcode
- *
  * In addition to the compilers a few other packages need to be installed as well:
  *
  * - <a href="http://prdownloads.sourceforge.net/wxwindows/wxMSW-2.8.12.zip">wxWidgets 2.8.12</a> to build GUI upon it
  * - <a href="http://nsis.sourceforge.net/">NSIS compiler</a> to create the installers
- * - <a href="http://luabinaries.luaforge.net/">Lua</a>, 
- * <a href="http://sourceforge.net/projects/iup/files/">IUP</a> and 
- * <a href="http://sourceforge.net/projects/canvasdraw/files/">CD</a>,
- * or install <a href="http://code.google.com/p/luaforwindows/">Lua for Windows</a>
- * to configure the development environment
+ * - <a href="http://luabinaries.luaforge.net/">Lua</a> to run build scripts
  * - <a href="http://www.7-zip.org/">7-zip file archiver</a> to compress the source code and portable packages
  * - <a href="http://www.doxygen.org/">Doxygen</a> to create the documentation
  * - <a href="http://www.miktex.org/">Basic MiKTeX Installer</a> to create the optional PDF documentation
@@ -44,26 +32,24 @@
  * - <a href="http://sourceforge.net/projects/gnuwin32/files/gettext/">GNU gettext</a>
  * to extract and compile the translations
  * 
- * - Install wxWidgets, NSIS, 7-zip, Doxygen and optionally "Lua for Windows", MiKTeX and "GNU gettext".
- * - If you did not install "Lua for Windows",
- * extract Lua, IUP and CD to some directory on your <b>\%PATH\%</b>, e.g. to <b>C:\\Windows</b>.
+ * - Install wxWidgets, NSIS, 7-zip, Doxygen and optionally MiKTeX and "GNU gettext".
+ * - Extract Lua to some directory on your <b>\%PATH\%</b>, e.g. to <b>C:\\Windows</b>.
  * - Place md5sum.exe into the <b>src\\tools</b> folder of the source code distribution.
  * - Extract upx.exe into the <b>src\\tools\\upx</b> folder of the source code distribution.
  * - Place tx.exe into the <b>src\\tools\\transifex</b> folder of the source code distribution.
  *
- * To properly set up the build environment type:
- * @code lua configure.lua @endcode
- * @image html config.lua.png
+ * To properly set up the build environment edit the <b>setvars.cmd</b> script and then type:
+ * @code patch-tools @endcode
  *
  * To update the translations type:
- * @code wxupdate_translation @endcode
+ * @code update-translations @endcode
  *
  * To build wxWidgets library type:
  * @code wxbuild @endcode
  *
  * Compile it by all the compilers you use for UltraDefrag compilation
  * to be able to link binaries correctly. Also don't forget to recompile
- * the library again after any adjustments of /src/include/wxsetup.h
+ * the library again after any adjustments of src\\tools\\patch\\wx\setup.h
  * file. This file is included exactly to build wxWidgets automatically
  * with options suitable for UltraDefrag.
  *
@@ -78,9 +64,4 @@
  *
  * If you'd like to know, how the build process works, look at .cmd files -
  * they contain the complete information.
- *
- * If you are using MinGW Developer Studio, note that you cannot
- * build proper .a files directly from IDE. So, when you change some
- * DLL entries, you need to rebuild all to make these changes visible
- * from other modules.
  */

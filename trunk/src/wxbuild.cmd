@@ -35,7 +35,7 @@ if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAM
 if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 
 :: configure wxWidgets
-copy /Y .\include\wxsetup.h "%WXWIDGETSDIR%\include\wx\msw\setup.h"
+copy /Y .\tools\patch\wx\setup.h "%WXWIDGETSDIR%\include\wx\msw\setup.h"
 
 :: build wxWidgets
 if %UD_BLD_FLG_USE_COMPILER% equ 0 (
