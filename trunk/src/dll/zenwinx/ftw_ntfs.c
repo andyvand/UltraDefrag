@@ -962,8 +962,7 @@ static void analyze_non_resident_attribute_list(winx_file_info *f,ULONGLONG list
     /* allocate memory for an integral number of cluster to hold a whole AttributeList */
     cluster_size = sp->ml.cluster_size;
     clusters_to_read = list_size / cluster_size;
-    /* the following check is a little bit complicated, because _aulldvrm() call is missing on w2k */
-    if(list_size - clusters_to_read * cluster_size/*list_size % cluster_size*/) clusters_to_read ++;
+    if(list_size % cluster_size) clusters_to_read ++;
     cluster = (char *)winx_malloc((SIZE_T)(cluster_size * clusters_to_read));
     if(!cluster){
         etrace("cannot allocate %I64u bytes of memory",
