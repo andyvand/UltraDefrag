@@ -57,7 +57,7 @@
  * Options:
  * @par -r, \--repeat
  * Defragment or optimize the disk until there is nothing left that can be moved.
- * This will process the disk multiple times in a row.
+ * This will process the disk multiple times in a row if needed and possible.
  *
  * @par -b, \--use-system-color-scheme
  * Use system color scheme (usually black/white) instead of the green color.
@@ -103,7 +103,7 @@
  * @note
  * All the environment variables listed below are ignored when the \--shellex switch
  * is on the command line. Instead of taking environment variables into account
- * the program interpretes the \%UD_INSTALL_DIR\%\\options\\guiopts.lua file.
+ * the program interprets the \%UD_INSTALL_DIR\%\\options\\guiopts.lua file.
  *
  * Drive letter:
  * <ul>
