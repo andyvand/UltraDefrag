@@ -70,7 +70,7 @@ void *BtdThread::Entry()
         }
         while(!m_stop){
             if(WaitForSingleObject(hEvent,100) == WAIT_OBJECT_0){
-                int result = ::udefrag_bootex_check(L"defrag_native");
+                int result = ::winx_bootex_check(L"defrag_native");
                 if(result >= 0){
                     wxLogMessage(wxT("boot time defragmenter %hs"),
                         result > 0 ? "enabled" : "disabled");
@@ -97,9 +97,9 @@ void MainFrame::OnBootEnable(wxCommandEvent& WXUNUSED(event))
 {
     int result;
     if(m_btdEnabled)
-        result = ::udefrag_bootex_unregister(L"defrag_native");
+        result = ::winx_bootex_unregister(L"defrag_native");
     else
-        result = ::udefrag_bootex_register(L"defrag_native");
+        result = ::winx_bootex_register(L"defrag_native");
     if(result == 0){
         // registration succeeded
         m_btdEnabled = m_btdEnabled ? false : true;

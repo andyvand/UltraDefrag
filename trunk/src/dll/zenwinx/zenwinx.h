@@ -96,8 +96,8 @@ void winx_set_dbg_log(wchar_t *path);
 #define winx_enable_dbg_log(path) winx_set_dbg_log(path)
 #define winx_disable_dbg_log()    winx_set_dbg_log(NULL)
 void winx_flush_dbg_log(void);
-void winx_dbg_print(int flags,char *format, ...);
-void winx_dbg_print_header(char ch, int width, char *format, ...);
+void winx_dbg_print(int flags, const char *format, ...);
+void winx_dbg_print_header(char ch, int width, const char *format, ...);
 
 /* env.c */
 wchar_t *winx_getenv(wchar_t *name);
@@ -300,9 +300,9 @@ int winx_create_path(wchar_t *path);
 int winx_enable_privilege(unsigned long luid);
 
 /* reg.c */
-int winx_bootex_check(wchar_t *command);
-int winx_bootex_register(wchar_t *command);
-int winx_bootex_unregister(wchar_t *command);
+int winx_bootex_check(const wchar_t *command);
+int winx_bootex_register(const wchar_t *command);
+int winx_bootex_unregister(const wchar_t *command);
 
 /* stdio.c */
 #ifdef _NTNDK_H_

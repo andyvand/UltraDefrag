@@ -151,18 +151,18 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     switch(level){
     case wxLOG_FatalError:
         // XXX: fatal errors pass by actually
-        ::udefrag_dbg_print(0,ERROR_FMT,msg);
-        ::udefrag_flush_dbg_log();
+        ::winx_dbg_print(0,ERROR_FMT,msg);
+        ::winx_flush_dbg_log();
         break;
     case wxLOG_Error:
-        ::udefrag_dbg_print(0,ERROR_FMT,msg);
+        ::winx_dbg_print(0,ERROR_FMT,msg);
         break;
     case wxLOG_Warning:
     case wxLOG_Info:
-        ::udefrag_dbg_print(0,DEBUG_FMT,msg);
+        ::winx_dbg_print(0,DEBUG_FMT,msg);
         break;
     default:
-        ::udefrag_dbg_print(0,INFO_FMT,msg);
+        ::winx_dbg_print(0,INFO_FMT,msg);
         break;
     }
 }
@@ -329,7 +329,7 @@ MainFrame::MainFrame()
     m_menuBar->FindItem(ID_BootScript)->Enable(btd);
     m_toolBar->EnableTool(ID_BootEnable,btd);
     m_toolBar->EnableTool(ID_BootScript,btd);
-    if(btd && ::udefrag_bootex_check(L"defrag_native") > 0){
+    if(btd && ::winx_bootex_check(L"defrag_native") > 0){
         m_menuBar->FindItem(ID_BootEnable)->Check(true);
         m_toolBar->ToggleTool(ID_BootEnable,true);
         m_btdEnabled = true;
@@ -618,7 +618,7 @@ void MainFrame::OnDebugLog(wxCommandEvent& WXUNUSED(event))
     } else {
         wxFileName file(logpath);
         file.Normalize();
-        ::udefrag_flush_dbg_log();
+        ::winx_flush_dbg_log();
         logpath = file.GetFullPath();
         if(!wxLaunchDefaultBrowser(logpath))
             Utils::ShowError(wxT("Cannot open %ls!"),logpath.wc_str());
