@@ -30,16 +30,17 @@
  * - smss.exe is one of the most important Windows components
  *   participating in the Windows boot process
  * 
- * Using ZenWINX library you may easily create your own native 
+ * Using ZenWINX library you might easily create your own native 
  * application. This library gives you over 100 functions which
  * highly simplifies the Windows native development. Also it 
  * contains a Native Development Kit header file with a lot of
  * definitions required for the native development.
  * 
- * ZenWINX is fully compatible with Windows NT 4.0, Windows 2000,
- * Windows XP, Windows Server 2003, Windows Vista, 
- * Windows Server 2008, Windows 7 and all of the 64-bit editions
- * of Windows.
+ * ZenWINX is fully compatible with Windows XP, Windows Server 2003,
+ * Windows Vista, Windows Server 2008, Windows 7 
+ * and all of the 64-bit editions of Windows.
+ *
+ * ZenWINX v6 supports Windows NT 4.0 and Windows 2000 as well.
  *
  * <h2>Projects</h2>
  * ZenWINX library is currently used in the following projects:
@@ -57,7 +58,7 @@
  * <h2>Compilation</h2>
  * Actually at this moment ZenWINX is a part of the 
  * <a href="http://ultradefrag.sourceforge.net">UltraDefrag</a> 
- * project. You should therefore download the latest sources of them
+ * project. You should therefore download the latest sources of it
  * to compile ZenWINX library. Detailed information is 
  * <a href="http://ultradefrag.sourceforge.net/handbook/development.html">here</a>.
  *
