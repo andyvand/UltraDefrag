@@ -171,7 +171,7 @@ goto finished
 
 :15
 title Update translation
-call wxupdate_translation.cmd
+call update-translations.cmd
 goto finished
 
 :16
