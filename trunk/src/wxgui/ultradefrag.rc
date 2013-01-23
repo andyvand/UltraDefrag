@@ -26,23 +26,6 @@
 
 #include "../include/version.h"
 
-#define icons(size) \
-    glass##size    RCDATA "res/" #size "x" #size "/glass.png" \
-    repeat##size   RCDATA "res/" #size "x" #size "/repeat.png" \
-    defrag##size   RCDATA "res/" #size "x" #size "/defrag.png" \
-    quick##size    RCDATA "res/" #size "x" #size "/quick.png" \
-    full##size     RCDATA "res/" #size "x" #size "/full.png" \
-    mft##size      RCDATA "res/" #size "x" #size "/mft.png" \
-    pause##size    RCDATA "res/" #size "x" #size "/pause.png" \
-    stop##size     RCDATA "res/" #size "x" #size "/stop.png" \
-    report##size   RCDATA "res/" #size "x" #size "/report.png" \
-    wrench##size   RCDATA "res/" #size "x" #size "/wrench.png" \
-    terminal##size RCDATA "res/" #size "x" #size "/terminal.png" \
-    script##size   RCDATA "res/" #size "x" #size "/script.png" \
-    help##size     RCDATA "res/" #size "x" #size "/help.png" \
-    light##size    RCDATA "res/" #size "x" #size "/light.png" \
-    star##size     RCDATA "res/" #size "x" #size "/star.png"
-
 // application icon (must be first icon)
 appicon ICON DISCARDABLE "res/app.ico"
 
@@ -64,10 +47,69 @@ ship_8bit BITMAP DISCARDABLE "res/ship_8bit.bmp"
 // All icons are licensed under the terms permitting their use
 // for non commercial purposes.
 //////////////////////////////////////////////////////////////////////////
-icons(16)
-icons(20)
-icons(24)
-icons(32)
+glass16    RCDATA "res/16x16/glass.png"
+repeat16   RCDATA "res/16x16/repeat.png"
+defrag16   RCDATA "res/16x16/defrag.png"
+quick16    RCDATA "res/16x16/quick.png"
+full16     RCDATA "res/16x16/full.png"
+mft16      RCDATA "res/16x16/mft.png"
+pause16    RCDATA "res/16x16/pause.png"
+stop16     RCDATA "res/16x16/stop.png"
+report16   RCDATA "res/16x16/report.png"
+wrench16   RCDATA "res/16x16/wrench.png"
+terminal16 RCDATA "res/16x16/terminal.png"
+script16   RCDATA "res/16x16/script.png"
+help16     RCDATA "res/16x16/help.png"
+light16    RCDATA "res/16x16/light.png"
+star16     RCDATA "res/16x16/star.png"
+
+glass20    RCDATA "res/20x20/glass.png"
+repeat20   RCDATA "res/20x20/repeat.png"
+defrag20   RCDATA "res/20x20/defrag.png"
+quick20    RCDATA "res/20x20/quick.png"
+full20     RCDATA "res/20x20/full.png"
+mft20      RCDATA "res/20x20/mft.png"
+pause20    RCDATA "res/20x20/pause.png"
+stop20     RCDATA "res/20x20/stop.png"
+report20   RCDATA "res/20x20/report.png"
+wrench20   RCDATA "res/20x20/wrench.png"
+terminal20 RCDATA "res/20x20/terminal.png"
+script20   RCDATA "res/20x20/script.png"
+help20     RCDATA "res/20x20/help.png"
+light20    RCDATA "res/20x20/light.png"
+star20     RCDATA "res/20x20/star.png"
+
+glass24    RCDATA "res/24x24/glass.png"
+repeat24   RCDATA "res/24x24/repeat.png"
+defrag24   RCDATA "res/24x24/defrag.png"
+quick24    RCDATA "res/24x24/quick.png"
+full24     RCDATA "res/24x24/full.png"
+mft24      RCDATA "res/24x24/mft.png"
+pause24    RCDATA "res/24x24/pause.png"
+stop24     RCDATA "res/24x24/stop.png"
+report24   RCDATA "res/24x24/report.png"
+wrench24   RCDATA "res/24x24/wrench.png"
+terminal24 RCDATA "res/24x24/terminal.png"
+script24   RCDATA "res/24x24/script.png"
+help24     RCDATA "res/24x24/help.png"
+light24    RCDATA "res/24x24/light.png"
+star24     RCDATA "res/24x24/star.png"
+
+glass32    RCDATA "res/32x32/glass.png"
+repeat32   RCDATA "res/32x32/repeat.png"
+defrag32   RCDATA "res/32x32/defrag.png"
+quick32    RCDATA "res/32x32/quick.png"
+full32     RCDATA "res/32x32/full.png"
+mft32      RCDATA "res/32x32/mft.png"
+pause32    RCDATA "res/32x32/pause.png"
+stop32     RCDATA "res/32x32/stop.png"
+report32   RCDATA "res/32x32/report.png"
+wrench32   RCDATA "res/32x32/wrench.png"
+terminal32 RCDATA "res/32x32/terminal.png"
+script32   RCDATA "res/32x32/script.png"
+help32     RCDATA "res/32x32/help.png"
+light32    RCDATA "res/32x32/light.png"
+star32     RCDATA "res/32x32/star.png"
 
 // manifests for all targets produces make-manifests.cmd script
 1 24 "res/ultradefrag.manifest"
