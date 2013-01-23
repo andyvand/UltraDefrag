@@ -146,7 +146,6 @@ BOOL WgxCheckAdminRights(void)
     HANDLE hToken;
     SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
     PSID psid = NULL;
-    CHECKTOKENMEMBERSHIP pCheckTokenMembership;
     BOOL IsMember = FALSE;
     BOOL result = FALSE;
     
@@ -169,8 +168,11 @@ BOOL WgxCheckAdminRights(void)
     if(!CheckTokenMembership(NULL,psid,&IsMember)){
         letrace("cannot check token membership");
     } else {
-        if(!IsMember) itrace("the user is not a member of administrators group");
-        else result = TRUE;
+        if(!IsMember){
+            itrace("the user is not a member of administrators group");
+        } else {
+            result = TRUE;
+        }
     }
     
     if(psid) FreeSid(psid);

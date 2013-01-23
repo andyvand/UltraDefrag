@@ -20,6 +20,14 @@
 #ifndef _WGX_INTERNALS_H_
 #define _WGX_INTERNALS_H_
 
+/*
+* To include CheckTokenMembership definition on mingw
+* the _WIN32_WINNT constant must be set at least to 0x500.
+*/
+#if defined(__GNUC__)
+#define _WIN32_WINNT 0x500
+#endif
+
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
