@@ -24,6 +24,7 @@
  * @{
  */
 
+#include "ntndk.h"
 #include "zenwinx.h"
 
 #define INTERNAL_BUFFER_SIZE 2048

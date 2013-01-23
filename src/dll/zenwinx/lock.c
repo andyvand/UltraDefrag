@@ -26,6 +26,7 @@
  * @{
  */
 
+#include "ntndk.h"
 #include "zenwinx.h"
 
 /*

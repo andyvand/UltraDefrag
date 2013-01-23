@@ -24,27 +24,18 @@
 #ifndef _ZENWINX_H_
 #define _ZENWINX_H_
 
-/* define WINX_CUSTOM_NTNDK_H to suppress inclusion of ZenWINX ntndk.h file */
-#ifndef WINX_CUSTOM_NTNDK_H
-#include "ntndk.h"
-#endif /* !WINX_CUSTOM_NTNDK_H */
-
-#include "../../include/dbg.h"
+#if defined(__cplusplus)
+extern "C" {
+#endif
 
 #define DEFAULT_TAB_WIDTH 2
 #define DEFAULT_PAGING_PROMPT_TO_HIT_ANY_KEY "      Hit any key to display next page,\n" \
                                              "          ESC or Break to abort..."
 
-#ifndef max
-#define max(a,b) ((a)>(b)?(a):(b))
-#endif
-#ifndef min
-#define min(a,b) ((a)<(b)?(a):(b))
-#endif
-
 #define NtCloseSafe(h) { if(h) { NtClose(h); h = NULL; } }
 
 /* debugging macros */
+#include "../../include/dbg.h"
 
 /* prints whatever specified */
 #define trace(format,...)  winx_dbg_print(0,format,## __VA_ARGS__)
@@ -229,8 +220,10 @@ int winx_ftw_dump_file(winx_file_info *f,ftw_terminator t,void *user_defined_dat
 #define WINX_OPEN_FOR_BASIC_INFO 0x2 /* open for NtQueryInformationFile(FILE_BASIC_INFORMATION) */
 #define WINX_OPEN_FOR_MOVE       0x4 /* open for FSCTL_MOVE_FILE */
 
+#ifdef _NTNDK_H_
 NTSTATUS winx_defrag_fopen(winx_file_info *f,int action,HANDLE *phandle);
 void winx_defrag_fclose(HANDLE h);
+#endif
 
 /* ftw_ntfs.c */
 /* int64.c */
@@ -312,6 +305,7 @@ int winx_bootex_register(wchar_t *command);
 int winx_bootex_unregister(wchar_t *command);
 
 /* stdio.c */
+#ifdef _NTNDK_H_
 int winx_putch(int ch);
 int winx_puts(const char *string);
 void winx_print(char *string);
@@ -348,6 +342,7 @@ int winx_prompt(char *prompt,char *string,int n,winx_history *h);
 
 int winx_print_strings(char **strings,int line_width,
     int max_rows,char *prompt,int divide_to_pages);
+#endif /* _NTNDK_H_ */
 
 /* string.c */
 /* reliable _toupper and _tolower analogs */
@@ -424,8 +419,10 @@ ULONGLONG winx_hr_to_bytes(char *string);
 void winx_to_utf8(char *dst,int size,wchar_t *src);
 
 /* thread.c */
+#ifdef _NTNDK_H_
 int winx_create_thread(PTHREAD_START_ROUTINE start_addr,PVOID parameter);
 void winx_exit_thread(NTSTATUS status);
+#endif
 
 /* time.c */
 ULONGLONG winx_str2time(char *string);
@@ -457,6 +454,27 @@ int winx_get_drive_type(char letter);
 * to hold all known names.
 */
 #define MAX_FS_NAME_LENGTH 31
+
+#ifndef _NTNDK_H_
+#pragma pack(push, 1)
+typedef struct _NTFS_DATA {
+    LARGE_INTEGER VolumeSerialNumber;
+    LARGE_INTEGER NumberSectors;
+    LARGE_INTEGER TotalClusters;
+    LARGE_INTEGER FreeClusters;
+    LARGE_INTEGER TotalReserved;
+    ULONG BytesPerSector;
+    ULONG BytesPerCluster;
+    ULONG BytesPerFileRecordSegment;
+    ULONG ClustersPerFileRecordSegment;
+    LARGE_INTEGER MftValidDataLength;
+    LARGE_INTEGER MftStartLcn;
+    LARGE_INTEGER Mft2StartLcn;
+    LARGE_INTEGER MftZoneStart;
+    LARGE_INTEGER MftZoneEnd;
+} NTFS_DATA, *PNTFS_DATA;
+#pragma pack(pop)
+#endif /* !_NTNDK_H_ */
 
 typedef struct _winx_volume_information {
     char volume_letter;                    /* must be set by caller! */
@@ -507,5 +525,9 @@ void winx_shutdown(void);
 
 /* Red-black trees with parent pointers */
 #include "prb.h"
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif /* _ZENWINX_H_ */
