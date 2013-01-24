@@ -17,16 +17,19 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*
+* There is an opinion that SetSuspendState call
+* is more reliable than SetSystemPowerState:
+* http://msdn.microsoft.com/en-us/library/aa373206%28VS.85%29.aspx
+*/
+
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <powrprof.h>
 
-#define WgxTraceHandler udefrag_dbg_print
-#include "../dll/wgx/wgx.h"
-
-#include "../dll/udefrag/udefrag.h"
+#include "../dll/zenwinx/zenwinx.h"
 
 static void show_help(void)
 {
@@ -57,59 +60,13 @@ static void show_help(void)
         );
 }
 
-static void handle_error(char *msg)
-{
-    DWORD error;
-    wchar_t *error_message;
-    int length;
-
-    error = GetLastError();
-    /* format message and display it on the screen */
-    if(FormatMessageW( 
-        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-        FORMAT_MESSAGE_FROM_SYSTEM | 
-        FORMAT_MESSAGE_IGNORE_INSERTS,
-        NULL,
-        error,
-        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-        (LPWSTR)(void *)&error_message,
-        0,
-        NULL)){
-            fprintf(stderr,"%s: ",msg);
-            /* get rid of trailing dot and new line */
-            length = wcslen(error_message);
-            if(length > 0){
-                if(error_message[length - 1] == '\n')
-                    error_message[length - 1] = 0;
-            }
-            if(length > 1){
-                if(error_message[length - 2] == '\r')
-                    error_message[length - 2] = 0;
-            }
-            if(length > 2){
-                if(error_message[length - 3] == '.')
-                    error_message[length - 3] = 0;
-            }
-            WgxPrintUnicodeString(error_message,stderr);
-            fprintf(stderr,"!\n");
-            LocalFree(error_message);
-    } else {
-        if(error == ERROR_COMMITMENT_LIMIT)
-            fprintf(stderr,"%s: not enough memory!\n",msg);
-        else
-            fprintf(stderr,"%s: unknown reason!\n",msg);
-    }
-}
-
-int __cdecl main(int argc, char **argv)
+int __cdecl main(int argc,char **argv)
 {
     int i, now = 0;
-    HANDLE hToken; 
-    TOKEN_PRIVILEGES tkp;
 
-    for(i = 0; i < argc; i++){
-        if(!strcmp(argv[i],"now")) now = 1;
-        if(!strcmp(argv[i],"NOW")) now = 1;
+    for(i = 1; i < argc; i++){
+        if(!stricmp(argv[i],"now"))
+            now = 1;
     }
 
     if(now == 0){
@@ -120,43 +77,26 @@ int __cdecl main(int argc, char **argv)
     printf("Hibernate for Windows - a command line tool for Windows hibernation.\n");
     printf("Copyright (c) UltraDefrag Development Team, 2009-2013.\n\n");
     
-    if(udefrag_init_library() < 0){
+    if(winx_init_library() < 0){
         fprintf(stderr,"Initialization failed!\n");
         return EXIT_FAILURE;
     }
 
-    WgxSetInternalTraceHandler(udefrag_dbg_print);
-
-    /* enable shutdown privilege */
-    if(!OpenProcessToken(GetCurrentProcess(), 
-    TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,&hToken)){
-        handle_error("Cannot open process token");
-        udefrag_unload_library();
+    if(winx_enable_privilege(SE_SHUTDOWN_PRIVILEGE) < 0){
+        fprintf(stderr,"Cannot enable shutdown privilege!\n"
+            "Use DbgView program to get more information.\n");
+        winx_unload_library();
         return EXIT_FAILURE;
     }
-    
-    LookupPrivilegeValue(NULL,SE_SHUTDOWN_NAME,&tkp.Privileges[0].Luid);
-    tkp.PrivilegeCount = 1;  // one privilege to set    
-    tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED; 
-    AdjustTokenPrivileges(hToken,FALSE,&tkp,0,(PTOKEN_PRIVILEGES)NULL,0);         
-    if(GetLastError() != ERROR_SUCCESS){
-        handle_error("Cannot set shutdown privilege");
-        udefrag_unload_library();
-        return EXIT_FAILURE;
-    }
-    
-    /*
-    * There is an opinion that SetSuspendState call
-    * is more reliable than SetSystemPowerState:
-    * http://msdn.microsoft.com/en-us/library/aa373206%28VS.85%29.aspx
-    */
 
     /* hibernate, request permission from apps and drivers */
     if(!SetSuspendState(TRUE,FALSE,FALSE)){
-        handle_error("Cannot hibernate the computer");
-        udefrag_unload_library();
+        letrace("cannot hibernate the computer");
+        fprintf(stderr,"Cannot hibernate the computer!\n"
+            "Use DbgView program to get more information.\n");
+        winx_unload_library();
         return EXIT_FAILURE;
     }
-    udefrag_unload_library();
+    winx_unload_library();
     return EXIT_SUCCESS;
 }

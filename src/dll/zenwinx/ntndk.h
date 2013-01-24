@@ -127,28 +127,6 @@ typedef LPOSVERSIONINFOW PRTL_OSVERSIONINFOW;
 
 #define MAX_WAIT_INTERVAL (-0x7FFFFFFFFFFFFFFFLL)
 
-#define SE_ASSIGNPRIMARYTOKEN_PRIVILEGE  0x3
-#define SE_AUDIT_PRIVILEGE               0x15
-#define SE_BACKUP_PRIVILEGE              0x11
-#define SE_CREATE_PAGEFILE_PRIVILEGE     0x0f
-#define SE_CREATE_PERMANENT_PRIVILEGE    0x10
-#define SE_CREATE_TOKEN_PRIVILEGE        0x2
-#define SE_DEBUG_PRIVILEGE               0x14
-#define SE_IMPERSONATE_PRIVILEGE
-#define SE_INC_BASE_PRIORITY_PRIVILEGE   0x0e
-#define SE_INCREASE_QUOTA_PRIVILEGE      0x5
-#define SE_LOAD_DRIVER_PRIVILEGE         0x0a
-#define SE_LOCK_MEMORY_PRIVILEGE         0x4
-#define SE_MANAGE_VOLUME_PRIVILEGE       0x1c
-#define SE_PROF_SINGLE_PROCESS_PRIVILEGE 0x0d
-#define SE_RESTORE_PRIVILEGE             0x12
-#define SE_SECURITY_PRIVILEGE            0x8
-#define SE_SHUTDOWN_PRIVILEGE            0x13
-#define SE_SYSTEM_PROFILE_PRIVILEGE      0x0b
-#define SE_SYSTEMTIME_PRIVILEGE          0x0c
-#define SE_TAKE_OWNERSHIP_PRIVILEGE      0x9
-#define SE_TCB_PRIVILEGE                 0x7
-
 /* ifndef directives are used to prevent warnings when mingw is used */
 #define STATUS_SUCCESS                ((NTSTATUS)0x00000000)
 #ifndef STATUS_TIMEOUT
