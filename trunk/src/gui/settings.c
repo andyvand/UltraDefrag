@@ -409,7 +409,7 @@ void StopPrefsChangesTracking()
  */
 int IsBootTimeDefragEnabled(void)
 {
-    return udefrag_bootex_check(L"defrag_native") > 0 ? 1 : 0;
+    return winx_bootex_check(L"defrag_native") > 0 ? 1 : 0;
 }
 
 /**

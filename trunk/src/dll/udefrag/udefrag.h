@@ -28,8 +28,6 @@
 extern "C" {
 #endif
 
-#include "../../include/dbg.h"
-
 /* debug print levels */
 #define DBG_NORMAL     0
 #define DBG_DETAILED   1
@@ -67,9 +65,6 @@ volume_info *udefrag_get_vollist(int skip_removable);
 void udefrag_release_vollist(volume_info *v);
 int udefrag_validate_volume(char volume_letter,int skip_removable);
 int udefrag_get_volume_information(char volume_letter,volume_info *v);
-
-int udefrag_bytes_to_hr(ULONGLONG bytes, int digits, char *buffer, int length);
-ULONGLONG udefrag_hr_to_bytes(char *string);
 
 typedef enum {
     ANALYSIS_JOB = 0,
@@ -152,48 +147,7 @@ void udefrag_release_default_formatted_results(char *results);
 
 char *udefrag_get_error_description(int error_code);
 
-/* reliable _toupper and _tolower analogs */
-char udefrag_toupper(char c);
-char udefrag_tolower(char c);
- /* reliable towupper and towlower analogs */
-wchar_t udefrag_towupper(wchar_t c);
-wchar_t udefrag_towlower(wchar_t c);
-/* reliable _wcsupr and _wcslwr analogs */
-wchar_t *udefrag_wcsupr(wchar_t *s);
-wchar_t *udefrag_wcslwr(wchar_t *s);
-/* reliable _wcsicmp analog */
-int udefrag_wcsicmp(const wchar_t *s1, const wchar_t *s2);
-
 int udefrag_set_log_file_path(void);
-void udefrag_flush_dbg_log(void);
-
-/**
- * @brief Delivers a message to the Debug View
- * program and appends it to the log file as well.
- * @param[in] flags one of the flags defined in
- * ../../include/dbg.h file.
- * If NT_STATUS_FLAG is set, the
- * last nt status value will be appended
- * to the debugging message as well as its
- * description. If LAST_ERROR_FLAG is set,
- * the same stuff will be done for the last
- * error value.
- * @param[in] format the format string.
- * @param[in] ... the parameters.
- * @note
- * - Not all system API set last status code.
- * Use strace macro defined in ../zenwinx/zenwinx.h
- * file to catch the status for sure.
- * - A few prefixes are defined for the debugging
- * messages. They're listed in ../../include/dbg.h
- * file and are intended for easier analysis of logs. To keep
- * logs clean always use one of those prefixes.
- */
-void udefrag_dbg_print(int flags,const char *format, ...);
-
-int udefrag_bootex_check(const wchar_t *command);
-int udefrag_bootex_register(const wchar_t *command);
-int udefrag_bootex_unregister(const wchar_t *command);
 
 #if defined(__cplusplus)
 }

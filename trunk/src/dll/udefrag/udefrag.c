@@ -711,13 +711,4 @@ int udefrag_set_log_file_path(void)
     return 0;
 }
 
-/**
- * @brief Appends all collected debugging
- * information to the log file.
- */
-void udefrag_flush_dbg_log(void)
-{
-    winx_flush_dbg_log();
-}
-
 /** @} */
