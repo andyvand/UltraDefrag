@@ -342,7 +342,8 @@ MainFrame::MainFrame()
     m_crashInfoThread->Run();
 
     unsigned int ulevel = (unsigned int)cfg->Read(wxT("/Upgrade/Level"),1);
-    m_menuBar->FindItem(ID_HelpUpdateNone + ulevel)->Check();
+    wxMenuItem *item = m_menuBar->FindItem(ID_HelpUpdateNone + ulevel);
+    if(item) item->Check();
 
     m_upgradeThread = new UpgradeThread();
     m_upgradeThread->m_level = ulevel;
