@@ -21,6 +21,15 @@
 * BootExecute Control program.
 */
 
+/*
+* To include CheckTokenMembership definition 
+* (used by CheckAdminRights) on mingw the 
+* _WIN32_WINNT constant must be set at least
+* to 0x500.
+*/
+#if defined(__GNUC__)
+#define _WIN32_WINNT 0x500
+#endif
 #include <windows.h>
 #include <shellapi.h>
 #include <stdio.h>
@@ -28,141 +37,101 @@
 #include <ctype.h>
 #include <commctrl.h>
 
-#define WgxTraceHandler udefrag_dbg_print
-#include "../dll/wgx/wgx.h"
+#include "../dll/zenwinx/zenwinx.h"
 
-#include "../dll/udefrag/udefrag.h"
-#include "../include/ultradfgver.h"
+/* include CheckAdminRights */
+#include "../share/utils.c"
 
-#define DisplayError(msg) { \
-    if(!silent) \
-        MessageBox(NULL,msg, \
-            "BootExecute Control", \
-            MB_OK | MB_ICONHAND); \
+#define error(msg) { \
+    if(!silent) MessageBox(NULL,msg, \
+        "BootExecute Control", \
+        MB_OK | MB_ICONHAND); \
 }
 
-int h_flag = 0;
-int r_flag = 0;
-int u_flag = 0;
+char cmd[32768] = {0}; /* should be enough as MSDN states */
 int silent = 0;
-wchar_t cmd[MAX_PATH + 1] = L"";
 
-void show_help(void)
+int __cdecl main(int argc,char **argv)
 {
-    if(!silent){
-        MessageBox(NULL,
+    int h_flag = 0, r_flag = 0, u_flag = 0;
+    int i, result;
+    wchar_t *ucmd;
+
+    /*
+    * Strongly required to be 
+    * compatible with manifest.
+    */
+    InitCommonControls();
+
+    /* parse command line */
+    for(i = 1; i < argc; i++){
+        if(!_stricmp(argv[i],"/h")){
+            h_flag = 1;
+        } else if(!_stricmp(argv[i],"/r")){
+            r_flag = 1;
+        } else if(!_stricmp(argv[i],"/s")){
+            silent = 1;
+        } else if(!_stricmp(argv[i],"/u")){
+            u_flag = 1;
+        } else if(!_stricmp(argv[i],"/?")){
+            h_flag = 1;
+        } else {
+            strncpy(cmd,argv[i],sizeof(cmd));
+            cmd[sizeof(cmd) - 1] = 0;
+        }
+    }
+
+    /* handle help requests */
+    if(h_flag || !cmd[0] || (!r_flag && !u_flag)){
+        if(!silent) MessageBox(NULL,
             "Usage:\n"
             "bootexctrl /r [/s] command - register command\n"
             "bootexctrl /u [/s] command - unregister command\n"
-            "Specify /s option to run the program in silent mode."
-            ,
+            "Specify /s option to run the program in silent mode.",
             "BootExecute Control",
             MB_OK
         );
-    }
-}
-
-int parse_cmdline(wchar_t *cmdline)
-{
-    wchar_t **argv;
-    int argc;
-    
-    if(cmdline == NULL){
-        h_flag = 1;
         return EXIT_SUCCESS;
     }
     
-    argv = (wchar_t **)CommandLineToArgvW(cmdline,&argc);
-    if(argv == NULL){
-        if(!silent)
-            WgxDisplayLastError(NULL,MB_OK | MB_ICONHAND,
-                L"BootExecute Control: CommandLineToArgvW failed!");
+    if(winx_init_library() < 0){
+        error("Initialization failed!");
         return EXIT_FAILURE;
     }
 
-    for(argc--; argc >= 1; argc--){
-        if(!wcscmp(argv[argc],L"/r")){
-            r_flag = 1;
-        } else if(!wcscmp(argv[argc],L"/u")){
-            u_flag = 1;
-        } else if(!wcscmp(argv[argc],L"/h")){
-            h_flag = 1;
-        } else if(!wcscmp(argv[argc],L"/?")){
-            h_flag = 1;
-        } else if(!wcscmp(argv[argc],L"/s")){
-            silent = 1;
-        } else {
-            if(wcslen(argv[argc]) > MAX_PATH){
-                DisplayError("Command name is too long!");
-                return EXIT_FAILURE;
-            } else {
-                wcscpy(cmd,argv[argc]);
-            }
-        }
-    }
-    
-    if(!cmd[0] || (!r_flag && !u_flag))
-        h_flag = 1;
-    
-    GlobalFree(argv);
-    return EXIT_SUCCESS;
-}
-
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
-{
-    wchar_t *cmdline = GetCommandLineW();
-    int result;
-
-    /* check for /s option */
-    if(cmdline){
-        _wcslwr(cmdline);
-        if(wcsstr(cmdline,L"/s"))
-            silent = 1;
-    }
-
-    /* strongly required! to be compatible with manifest */
-    InitCommonControls();
-
-    if(udefrag_init_library() < 0){
-        DisplayError("Initialization failed!");
+    /*
+    * Check for admin rights - 
+    * they're strongly required.
+    */
+    if(!CheckAdminRights()){
+        error("Administrative rights are "
+            "needed to run the program!");
+        winx_unload_library();
         return EXIT_FAILURE;
     }
 
-    WgxSetInternalTraceHandler(udefrag_dbg_print);
-
-    result = parse_cmdline(cmdline);
-    if(result != EXIT_SUCCESS){
-        udefrag_unload_library();
-        return EXIT_FAILURE;
-    }
-
-    if(h_flag){
-        show_help();
-        udefrag_unload_library();
-        return EXIT_SUCCESS;
-    }
-    
-    /* check for admin rights - they're strongly required */
-    if(!WgxCheckAdminRights()){
-        DisplayError("Administrative rights"
-            " are needed to run the program!");
-        udefrag_unload_library();
+    /* convert command to Unicode */
+    ucmd = winx_swprintf(L"%hs",cmd);
+    if(!ucmd){
+        error("Not enough memory!");
+        winx_unload_library();
         return EXIT_FAILURE;
     }
 
     if(r_flag){
-        result = udefrag_bootex_register(cmd);
+        result = winx_bootex_register(ucmd);
         if(result < 0){
-            DisplayError("Cannot register the command!\n"
+            error("Cannot register the command!\n"
                 "Use DbgView program to get more information.");
         }
     } else {
-        result = udefrag_bootex_unregister(cmd);
+        result = winx_bootex_unregister(ucmd);
         if(result < 0){
-            DisplayError("Cannot unregister the command!\n"
+            error("Cannot unregister the command!\n"
                 "Use DbgView program to get more information.");
         }
     }
-    udefrag_unload_library();
+    winx_free(ucmd);
+    winx_unload_library();
     return (result == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
