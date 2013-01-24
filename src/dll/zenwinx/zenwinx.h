@@ -51,6 +51,9 @@ extern "C" {
     winx_dbg_print(NT_STATUS_FLAG,E "%s: " format,__FUNCTION__,## __VA_ARGS__); \
 }
 
+/* prints {error prefix}{function name}: {specified string}: {last error and its description} */
+#define letrace(format,...) winx_dbg_print(LAST_ERROR_FLAG,E "%s: " format,__FUNCTION__,## __VA_ARGS__)
+
 /* prints {error prefix}{function name}: not enough memory */
 #define mtrace() etrace("not enough memory")
 
@@ -363,41 +366,8 @@ char *winx_stristr(const char *s1, const char *s2);
 int winx_wcsmatch(wchar_t *string, wchar_t *mask, int flags);
 char *winx_vsprintf(const char *format,va_list arg);
 char *winx_sprintf(const char *format, ...);
-
-/*
-* winx_swprintf routine implementation
-* would be too sophisticated because
-* nt 4.0 misses _vsnwprintf call.
-* The macro implementation is much easier.
-*
-* Example:
-*
-* wchar_t *msg;
-* int size, result;
-*
-* winx_swprintf(msg,size,result,L"%hs","hello");
-* if(msg){
-*   winx_printf("%ws\n",msg);
-*   winx_free(msg);
-* }
-*/
-#define WINX_SWPRINTF_BUFFER_SIZE 128
-#define winx_swprintf(retval,size,result,format,...) { \
-    size = WINX_SWPRINTF_BUFFER_SIZE; \
-    do { \
-        retval = winx_malloc(size * sizeof(wchar_t)); \
-        if(!retval) break; \
-        memset(retval,0,size * sizeof(wchar_t)); \
-        result = _snwprintf(retval,size,format,## __VA_ARGS__); \
-        if(result != -1 && result != size){ \
-            retval[size - 1] = 0; \
-            break; \
-        } \
-        winx_free(retval); \
-        retval = NULL; \
-        size <<= 1; \
-    } while(size > 0); \
-}
+wchar_t *winx_vswprintf(const wchar_t *format,va_list arg);
+wchar_t *winx_swprintf(const wchar_t *format, ...);
 
 #define WINX_PAT_ICASE  0x1 /* compile patterns for case insensitive search */
 

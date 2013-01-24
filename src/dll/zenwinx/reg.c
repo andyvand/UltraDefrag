@@ -127,14 +127,14 @@ static int get_boot_exec_list(struct cmd **list)
 static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
 {
     wchar_t *long_cmd;
-    int size,result;
+    int result;
     
     /* do we have the command registered as it is? */
     if(!winx_wcsicmp(cmd,reg_cmd))
         return 1;
         
     /* compare reg_cmd with 'autocheck {cmd}' */
-    winx_swprintf(long_cmd,size,result,L"autocheck %ws",cmd);
+    long_cmd = winx_swprintf(L"autocheck %ws",cmd);
     if(long_cmd == NULL){
         mtrace();
         return (-1);

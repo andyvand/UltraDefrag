@@ -579,7 +579,7 @@ int udefrag_set_log_file_path(void)
     wchar_t *path, *longpath, *fullpath;
     int conversion_result;
     wchar_t *native_path, *path_copy, *filename;
-    int size, result;
+    int result;
 
     typedef DWORD (__stdcall *GETLONGPATHNAME_PROC)(
         wchar_t *lpszShortPath,wchar_t *lpszLongPath,
@@ -655,7 +655,7 @@ int udefrag_set_log_file_path(void)
     winx_free(path);
     
     /* convert to native path */
-    winx_swprintf(native_path,size,result,L"\\??\\%ws",fullpath);
+    native_path = winx_swprintf(L"\\??\\%ws",fullpath);
     winx_free(fullpath);
     if(native_path == NULL){
         etrace("cannot build native path");
@@ -688,9 +688,7 @@ int udefrag_set_log_file_path(void)
             } else {
                 winx_path_extract_filename(filename);
                 winx_free(native_path);
-                winx_swprintf(native_path,size,result,
-                    L"\\??\\%ws\\UltraDefrag_Logs\\%ws",
-                    path,filename);
+                native_path = winx_swprintf(L"\\??\\%ws\\UltraDefrag_Logs\\%ws",path,filename);
                 if(native_path == NULL){
                     etrace("cannot build %%tmp%%\\UltraDefrag_Logs\\{filename}");
                 } else {
