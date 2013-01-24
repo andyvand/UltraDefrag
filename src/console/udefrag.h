@@ -44,11 +44,12 @@
 #include "../lua5.1/lauxlib.h"
 #include "../lua5.1/lualib.h"
 
-#define WgxTraceHandler udefrag_dbg_print
-#include "../dll/wgx/wgx.h"
-
+#include "../dll/zenwinx/zenwinx.h"
 #include "../dll/udefrag/udefrag.h"
 #include "../include/ultradfgver.h"
+
+#define WgxTraceHandler winx_dbg_print
+#include "../dll/wgx/wgx.h"
 
 /* sets text color only if -b option is not set */
 #define settextcolor(c)    { if(!b_flag) (void)SetConsoleTextAttribute(hStdOut,c); }

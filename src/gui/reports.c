@@ -38,7 +38,7 @@ static void ShowSingleReport(volume_processing_job *job)
     if(job == NULL) return;
 
     _snprintf(path,MAX_PATH + 1,".\\reports\\fraglist_%c.luar",
-        udefrag_tolower(job->volume_letter));
+        winx_tolower(job->volume_letter));
     path[MAX_PATH] = 0;
 
     if(job->job_type == NEVER_EXECUTED_JOB){

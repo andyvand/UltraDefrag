@@ -41,11 +41,6 @@ void dbg_print_header(udefrag_job_parameters *jp)
     int os_version;
     int mj, mn;
     winx_time t;
-    char ch;
-    wchar_t c;
-    wchar_t s1[] = L"a";
-    wchar_t s2[] = L"b";
-    int result;
 
     /* print driver version */
     winx_dbg_print_header(0,0,I"*");
@@ -63,21 +58,6 @@ void dbg_print_header(udefrag_job_parameters *jp)
     winx_dbg_print_header(0x20,0,I"[%02i.%02i.%04i at %02i:%02i]",
         (int)t.day,(int)t.month,(int)t.year,(int)t.hour,(int)t.minute);
     winx_dbg_print_header(0,0,I"*");
-    
-    /* force MinGW to export general purpose udefrag_xxx routines */
-    c = (wchar_t)jp->volume_letter;
-    s1[0] = winx_towlower(c);
-    s2[0] = winx_towupper(c);
-    winx_wcslwr(s1); winx_wcsupr(s2);
-    ch = (char)winx_tolower((char)s1[0]);
-    ch -= (char)winx_toupper((char)s2[0]);
-    result = winx_wcsicmp(s1,s2);
-    s1[0] = (char)(result & 0xFF);
-    winx_wcslwr(s1);
-    winx_dbg_print(0,NULL);
-    winx_bootex_check(L"");
-    winx_bootex_register(L"");
-    winx_bootex_unregister(L"");
 }
 
 /**

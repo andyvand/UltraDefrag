@@ -332,12 +332,12 @@ static void AddCapacityInformation(int index, volume_info *v)
     lvi.mask = LVIF_TEXT;
     lvi.iItem = index;
 
-    (void)udefrag_bytes_to_hr((ULONGLONG)(v->total_space.QuadPart),2,s,sizeof(s));
+    (void)winx_bytes_to_hr((ULONGLONG)(v->total_space.QuadPart),2,s,sizeof(s));
     lvi.iSubItem = 3;
     lvi.pszText = s;
     (void)SendMessage(hList,LVM_SETITEM,0,(LRESULT)&lvi);
 
-    (void)udefrag_bytes_to_hr((ULONGLONG)(v->free_space.QuadPart),2,s,sizeof(s));
+    (void)winx_bytes_to_hr((ULONGLONG)(v->free_space.QuadPart),2,s,sizeof(s));
     lvi.iSubItem = 4;
     lvi.pszText = s;
     (void)SendMessage(hList,LVM_SETITEM,0,(LRESULT)&lvi);
@@ -616,7 +616,7 @@ int get_job_index(volume_processing_job *job)
         lvi.pszText = buffer;
         lvi.cchTextMax = 63;
         if(SendMessage(hList,LVM_GETITEM,0,(LRESULT)&lvi)){
-            if(udefrag_tolower(buffer[0]) == udefrag_tolower(job->volume_letter))
+            if(winx_tolower(buffer[0]) == winx_tolower(job->volume_letter))
                 return index;
         }
     }

@@ -11,6 +11,7 @@ libs = {
     "shell32", "msvcrt", "comdlg32", "advapi32"
 }
 adlibs = { 
+    "$(UDEFRAG_LIB_PATH)\\zenwinx", 
     "$(UDEFRAG_LIB_PATH)\\udefrag", 
     "$(UDEFRAG_LIB_PATH)\\lua5.1a", 
     "$(UDEFRAG_LIB_PATH)\\wgx"

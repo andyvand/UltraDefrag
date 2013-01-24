@@ -226,7 +226,7 @@ static int IsPortable(void)
         (void)wcscpy(path,instdir);
     }
     
-    if(udefrag_wcsicmp(path,cd) == 0){
+    if(winx_wcsicmp(path,cd) == 0){
         trace(I"Install location \"%ws\" matches \"%ws\", so it isn't portable",path,cd);
         return 0;
     }
@@ -676,7 +676,7 @@ void OpenLog(void)
         letrace("cannot query UD_LOG_FILE_PATH environment variable");
         MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
     } else {
-        udefrag_flush_dbg_log();
+        winx_flush_dbg_log();
         (void)WgxShellExecute(hWindow,L"open",env_buffer2,
             NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
     }
@@ -1083,7 +1083,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
             return 0;
         case IDM_CFG_BOOT_ENABLE:
             if(boot_time_defrag_enabled){
-                if(udefrag_bootex_unregister(L"defrag_native") < 0){
+                if(winx_bootex_unregister(L"defrag_native") < 0){
                     MessageBox(hWindow,"Enable logs or use DbgView program to get more information.",
                         "Unable to unregister the boot time defragmenter!",MB_OK | MB_ICONHAND);
                 } else {
@@ -1094,7 +1094,7 @@ LRESULT CALLBACK MainWindowProc(HWND hWnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
                     SendMessage(hToolbar,TB_CHECKBUTTON,IDM_CFG_BOOT_ENABLE,MAKELONG(FALSE,0));
                 }
             } else {
-                if(udefrag_bootex_register(L"defrag_native") < 0){
+                if(winx_bootex_register(L"defrag_native") < 0){
                     MessageBox(hWindow,"Enable logs or use DbgView program to get more information.",
                         "Unable to register the boot time defragmenter!",MB_OK | MB_ICONHAND);
                 } else {
@@ -1447,7 +1447,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
     if(osvi.dwMajorVersion < 5) is_nt4 = 1;
 
     init_result = udefrag_init_library();
-    WgxSetInternalTraceHandler(udefrag_dbg_print);
+    WgxSetInternalTraceHandler((WGX_TRACE_HANDLER)winx_dbg_print);
     hInstance = GetModuleHandle(NULL);
     
     /* check for admin rights - they're strongly required */

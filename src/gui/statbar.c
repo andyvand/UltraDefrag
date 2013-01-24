@@ -158,7 +158,7 @@ void UpdateStatusBar(udefrag_progress_info *pi)
         free(text);
     }
 
-    (void)udefrag_bytes_to_hr(pi->mft_size,2,s,sizeof(s));
+    (void)winx_bytes_to_hr(pi->mft_size,2,s,sizeof(s));
     (void)_snwprintf(bf,BFSIZE - 1,L"%S MFT",s);
     bf[BFSIZE - 1] = 0;
     (void)SendMessage(hStatus,SB_SETTEXTW,4,(LPARAM)bf);

@@ -84,7 +84,7 @@ void init_jobs(void)
 volume_processing_job *get_job(char volume_letter)
 {
     /* validate volume letter */
-    volume_letter = udefrag_tolower(volume_letter);
+    volume_letter = winx_tolower(volume_letter);
     if(volume_letter < 'a' || volume_letter > 'z')
         return NULL;
     
@@ -141,10 +141,10 @@ static void update_progress(udefrag_progress_info *pi, void *p)
     
     if(dry_run){
         (void)swprintf(WindowCaption, L"%c:  %c %6.2lf %% (dry run)", 
-            udefrag_toupper(job->volume_letter), current_operation, pi->percentage);
+            winx_toupper(job->volume_letter), current_operation, pi->percentage);
     } else {
         (void)swprintf(WindowCaption, L"%c:  %c %6.2lf %%",
-            udefrag_toupper(job->volume_letter), current_operation, pi->percentage);
+            winx_toupper(job->volume_letter), current_operation, pi->percentage);
     }
     (void)SetWindowTextW(hWindow, WindowCaption);
     
