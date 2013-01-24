@@ -272,7 +272,7 @@ exit /B 0
     %UD_BUILD_TOOL% defrag.build || goto fail
 
     cd ..\wxgui
-    %UD_BUILD_TOOL% ultradefrag.build || goto fail
+    %UD_BUILD_TOOL% wxgui.build || goto fail
 
     cd ..\gui
     %UD_BUILD_TOOL% ultradefrag.build && goto success

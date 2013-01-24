@@ -74,7 +74,7 @@
 		<Unit filename="map.cpp" />
 		<Unit filename="menu.cpp" />
 		<Unit filename="toolbar.cpp" />
-		<Unit filename="ultradefrag.rc">
+		<Unit filename="wxgui.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="upgrade.cpp" />
