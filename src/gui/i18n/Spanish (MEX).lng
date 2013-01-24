@@ -61,7 +61,7 @@ LANGUAGE                  = &Idioma
 GRAPHICAL_INTERFACE       = Interfaz &gráfica
 BOOT_TIME_SCAN            = &Escaneo en arranque
 REPORTS                   = &Reportes
-SORTING                   = &Sorting
+SORTING                   = &Ordenar por...
 
 ; --- --- Language submenu
 
@@ -82,13 +82,13 @@ SCRIPT                    = &Comandos
 
 ; --- --- Sorting submenu
 
-SORT_BY_PATH              = Sort by &path
-SORT_BY_SIZE              = Sort by &size
-SORT_BY_C_TIME            = Sort by &creation time
-SORT_BY_M_TIME            = Sort by last &modification time
-SORT_BY_A_TIME            = Sort by &last access time
-SORT_ASCENDING            = Sort in &ascending order
-SORT_DESCENDING           = Sort in &descending order
+SORT_BY_PATH              = Ordenar por &Ruta
+SORT_BY_SIZE              = Ordenar por &Tamaño
+SORT_BY_C_TIME            = Ordenar por fecha de &Creación
+SORT_BY_M_TIME            = Ordenar por fecha de Última &Modificación
+SORT_BY_A_TIME            = Ordenar por fecha de &Último acceso
+SORT_ASCENDING            = Ordenar en forma &Ascendente
+SORT_DESCENDING           = Ordenar en forma &Descendente
 
 ; --- Help Menu
 
@@ -173,7 +173,7 @@ FRAGMENTED_FILES_ON       = Archivos fragmentados en
 
 VISIT_HOMEPAGE            = Visitar el sitio Web
 VIEW_REPORT_OPTIONS       = Ver las opciones del reporte
-POWERED_BY_LUA            = Desarrollado con LUA
+POWERED_BY_LUA            = Desarrollado por LUA
 
 FRAGMENTS                 = fragmentos
 SIZE                      = tamaño
