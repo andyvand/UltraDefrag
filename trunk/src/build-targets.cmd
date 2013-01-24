@@ -80,7 +80,7 @@ xcopy .\share       .\obj\share       /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 del /f /q "%~n0_exclude.txt"
 
 :: copy external files on which udefrag.exe command line tool depends
-copy /Y .\obj\share\*.* .\obj\console\
+copy /Y .\obj\share\getopt*.* .\obj\console\
 
 :: copy external files on which monolithic native interface depends
 copy /Y .\obj\native\udefrag.c .\obj\native\udefrag-native.c
