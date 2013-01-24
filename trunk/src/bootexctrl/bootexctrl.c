@@ -23,9 +23,8 @@
 
 /*
 * To include CheckTokenMembership definition 
-* (used by CheckAdminRights) on mingw the 
-* _WIN32_WINNT constant must be set at least
-* to 0x500.
+* on mingw the _WIN32_WINNT constant must be
+* set at least to 0x500.
 */
 #if defined(__GNUC__)
 #define _WIN32_WINNT 0x500
@@ -39,9 +38,6 @@
 
 #include "../dll/zenwinx/zenwinx.h"
 
-/* include CheckAdminRights */
-#include "../share/utils.c"
-
 #define error(msg) { \
     if(!silent) MessageBox(NULL,msg, \
         "BootExecute Control", \
@@ -50,6 +46,46 @@
 
 char cmd[32768] = {0}; /* should be enough as MSDN states */
 int silent = 0;
+
+/**
+ * @brief Defines whether the user
+ * has administrative rights or not.
+ * @details Based on the UserInfo
+ * NSIS plug-in.
+ */
+static int check_admin_rights(void)
+{
+    HANDLE hToken;
+    SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
+    PSID psid = NULL;
+    BOOL IsMember = FALSE;
+    
+    if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
+        letrace("cannot open access token of the thread");
+        if(!OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&hToken)){
+            letrace("cannot open access token of the process");
+            return 0;
+        }
+    }
+    
+    if(!AllocateAndInitializeSid(&SystemSidAuthority,2,
+      SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
+      0,0,0,0,0,0,&psid)){
+        letrace("cannot create the security identifier");
+        CloseHandle(hToken);
+        return 0;
+    }
+      
+    if(!CheckTokenMembership(NULL,psid,&IsMember)){
+        letrace("cannot check token membership");
+        if(psid) FreeSid(psid); CloseHandle(hToken);
+        return 0;
+    }
+
+    if(!IsMember) itrace("the user is not a member of administrators group");
+    if(psid) FreeSid(psid); CloseHandle(hToken);
+    return IsMember;
+}
 
 int __cdecl main(int argc,char **argv)
 {
@@ -103,7 +139,7 @@ int __cdecl main(int argc,char **argv)
     * Check for admin rights - 
     * they're strongly required.
     */
-    if(!CheckAdminRights()){
+    if(!check_admin_rights()){
         error("Administrative rights are "
             "needed to run the program!");
         winx_unload_library();
