@@ -8,6 +8,7 @@
     - Windows NT 4.0 and Windows 2000 support dropped due to a poor system API
     - Internals: Windows Driver Kit support dropped because of its
       unreliable development environment - use Windows SDK v6.1 instead
+    - winx_vswprintf and winx_swprintf routines added to zenwinx library
 
 
   Version 6.0.0 2013-01-

@@ -56,7 +56,6 @@ static wchar_t *get_report_path(udefrag_job_parameters *jp)
 {
     wchar_t *instdir, *fpath;
     wchar_t *path = NULL;
-    int size, result;
 
     instdir = winx_getenv(L"UD_INSTALL_DIR");
     if(instdir == NULL){
@@ -66,15 +65,14 @@ static wchar_t *get_report_path(udefrag_job_parameters *jp)
             etrace("cannot get program\'s path");
         } else {
             winx_path_remove_filename(fpath);
-            winx_swprintf(path,size,result,L"\\??\\%ws\\reports",fpath);
+            path = winx_swprintf(L"\\??\\%ws\\reports",fpath);
             if(path == NULL){
                 etrace("not enough memory (case 1)");
             } else {
                 (void)winx_create_directory(path);
                 winx_free(path);
             }
-            winx_swprintf(path,size,result,
-                L"\\??\\%ws\\reports\\fraglist_%c.luar",
+            path = winx_swprintf(L"\\??\\%ws\\reports\\fraglist_%c.luar",
                 fpath,winx_tolower(jp->volume_letter));
             if(path == NULL)
                 etrace("not enough memory (case 2)");
@@ -82,15 +80,14 @@ static wchar_t *get_report_path(udefrag_job_parameters *jp)
         }
     } else {
         /* regular installation */
-        winx_swprintf(path,size,result,L"\\??\\%ws\\reports",instdir);
+        path = winx_swprintf(L"\\??\\%ws\\reports",instdir);
         if(path == NULL){
             etrace("not enough memory (case 3)");
         } else {
             (void)winx_create_directory(path);
             winx_free(path);
         }
-        winx_swprintf(path,size,result,
-            L"\\??\\%ws\\reports\\fraglist_%c.luar",
+        path = winx_swprintf(L"\\??\\%ws\\reports\\fraglist_%c.luar",
             instdir,winx_tolower(jp->volume_letter));
         if(path == NULL)
             etrace("not enough memory (case 4)");
@@ -280,7 +277,7 @@ void remove_fragmentation_report(udefrag_job_parameters *jp)
     };
     wchar_t path[MAX_PATH + 1];
     wchar_t *new_path, *ext_path;
-    int i, size, result;
+    int i;
     
     winx_dbg_print_header(0,0,I"*");
     
@@ -296,14 +293,14 @@ void remove_fragmentation_report(udefrag_job_parameters *jp)
     if(new_path){
         (void)winx_delete_file(new_path);
         winx_path_remove_extension(new_path);
-        winx_swprintf(ext_path,size,result,L"%ws.txt",new_path);
+        ext_path = winx_swprintf(L"%ws.txt",new_path);
         if(ext_path == NULL){
             mtrace();
         } else {
             (void)winx_delete_file(ext_path);
             winx_free(ext_path);
         }
-        winx_swprintf(ext_path,size,result,L"%ws.html",new_path);
+        ext_path = winx_swprintf(L"%ws.html",new_path);
         if(ext_path == NULL){
             mtrace();
         } else {
