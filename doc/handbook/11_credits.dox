@@ -486,7 +486,7 @@
  *
  * @htmlonly
  * <table style="border:none; margin-left:20px;">
- * <tr><td>• Justin Dearing     </td><td>-</td><td> An initial version of this handbook and other documentation files.</td></tr>
+ * <tr><td>• Justin Dearing     </td><td>-</td><td> The initial version of this handbook and other documentation files.</td></tr>
  * <tr><td>                     </td><td> </td><td> UltraDefrag Scheduler .NET application.</td></tr>
  * <tr><td>• Tiago Filipe Silva </td><td>-</td><td> Optimization of web images and udsorting.js script.</td></tr>
  * </table>
@@ -494,7 +494,7 @@
  *
  * @latexonly
  * \par\begin{Indent}\begin{tabular}{lcp{0.6\linewidth}}
- * • Justin Dearing     & - & An initial version of this handbook and other documentation files. \\
+ * • Justin Dearing     & - & The initial version of this handbook and other documentation files. \\
  *                      &   & UltraDefrag Scheduler .NET application. \\
  * • Tiago Filipe Silva & - & Optimization of web images and udsorting.js script. \\
  * \end{tabular}\end{Indent}\par
