@@ -28,7 +28,7 @@ if "%1" equ "" (
 )
 
 call :make_manifest %1 1.0.2.0          hibernate      "Hibernate for Windows"         >.\obj\hibernate\hibernate.manifest
-call :make_manifest %1 %ULTRADFGVER%.0  udefrag        "UltraDefrag console interface" >.\obj\console\defrag.manifest
+call :make_manifest %1 %ULTRADFGVER%.0  udefrag        "UltraDefrag console interface" >.\obj\console\console.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  ultradefrag    "UltraDefrag GUI"               >.\obj\gui\res\ultradefrag.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  wxultradefrag  "UltraDefrag wxGUI"             >.\obj\wxgui\res\ultradefrag.manifest
 call :make_manifest %1 %ULTRADFGVER%.0  bootexctrl     "BootExecute Control Program"   >.\obj\bootexctrl\bootexctrl.manifest
@@ -38,7 +38,7 @@ call :make_manifest %1 5.1.2.0          Lua            "Lua GUI"                
 rem update manifests in working copy of sources
 if /i "%1" equ "X86" (
     copy /Y .\obj\hibernate\hibernate.manifest   .\hibernate\hibernate.manifest
-    copy /Y .\obj\console\defrag.manifest        .\console\defrag.manifest
+    copy /Y .\obj\console\console.manifest        .\console\console.manifest
     copy /Y .\obj\gui\res\ultradefrag.manifest   .\gui\res\ultradefrag.manifest
     copy /Y .\obj\wxgui\res\ultradefrag.manifest .\wxgui\res\ultradefrag.manifest
     copy /Y .\obj\bootexctrl\bootexctrl.manifest .\bootexctrl\bootexctrl.manifest

@@ -269,7 +269,7 @@ exit /B 0
     cd ..\hibernate
     %UD_BUILD_TOOL% hibernate.build || goto fail
     cd ..\console
-    %UD_BUILD_TOOL% defrag.build || goto fail
+    %UD_BUILD_TOOL% console.build || goto fail
 
     cd ..\wxgui
     %UD_BUILD_TOOL% wxgui.build || goto fail
