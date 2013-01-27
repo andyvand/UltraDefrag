@@ -35,7 +35,6 @@
 // =======================================================================
 
 #include "main.h"
-#include "getopt.h"
 
 extern "C" {
 #define lua_c
@@ -43,6 +42,9 @@ extern "C" {
 #include "../lua5.1/lauxlib.h"
 #include "../lua5.1/lualib.h"
 }
+
+#define __STDC__ 1
+#include "getopt.h"
 
 bool set_shellex_options(void);
 

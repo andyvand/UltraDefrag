@@ -35,7 +35,6 @@
 // =======================================================================
 
 #include "main.h"
-#include <conio.h>
 
 #define MAX_ENV_VAR_LENGTH 32767 // as MSDN states
 

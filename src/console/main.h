@@ -38,6 +38,8 @@
 #include <wx/filename.h>
 #include <wx/thread.h>
 
+#include <conio.h>
+
 #if wxUSE_UNICODE
 #define wxCharStringFmtSpec "%ls"
 #else
