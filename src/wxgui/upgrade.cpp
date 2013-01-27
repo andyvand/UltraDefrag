@@ -36,7 +36,14 @@
 
 #include "main.h"
 
+enum {
+    UPGRADE_NONE = 0,
+    UPGRADE_STABLE,
+    UPGRADE_ALL
+};
+
 #define VERSION_URL "http://ultradefrag.sourceforge.net/version.ini"
+#define STABLE_VERSION_URL "http://ultradefrag.sourceforge.net/stable-version.ini"
 
 // =======================================================================
 //                          Upgrade handling
@@ -45,33 +52,24 @@
 void *UpgradeThread::Entry()
 {
     while(!m_stop){
-        if(m_check && m_level > 0){
-            wxString path = Utils::DownloadFile(wxT(VERSION_URL));
+        if(m_check && m_level){
+            wxString path = Utils::DownloadFile(
+                m_level == UPGRADE_ALL ? wxT(VERSION_URL) :
+                wxT(STABLE_VERSION_URL)
+            );
             if(!path.IsEmpty()){
                 wxTextFile file; file.Open(path);
                 wxString lv = file.GetFirstLine();
                 lv.Trim(true); lv.Trim(false);
-                wxLogMessage(wxT("last version: %ls"),lv.wc_str());
-                int lmj, lmn, li; // latest version numbers
-                swscanf(lv.wc_str(),L"%u.%u.%u",&lmj,&lmn,&li);
-                // lmj = 8; /* for testing */
+                int last = ParseVersionString(lv.char_str());
 
-                wxString cv(wxT(VERSIONINTITLE));
-                wxLogMessage(wxT("current version: %ls"),cv.wc_str());
-                int cmj, cmn, ci; // current version numbers
-                swscanf(cv.wc_str(),L"UltraDefrag %u.%u.%u",&cmj,&cmn,&ci);
-                bool unstable = false;
-                if(cv.Lower().Find(wxT("alpha")) != wxNOT_FOUND) unstable = true;
-                if(cv.Lower().Find(wxT("beta")) != wxNOT_FOUND) unstable = true;
-                if(cv.Lower().Find(wxT("rc")) != wxNOT_FOUND) unstable = true;
+                const char *cv = VERSIONINTITLE;
+                int current = ParseVersionString(&cv[12]);
 
-                /* 5.0.0 > 4.99.99 */
-                int current = cmj * 10000 + cmn * 100 + ci;
-                int last = lmj * 10000 + lmn * 100 + li;
-                bool upgrade = (last > current);
-                if(last == current && unstable) upgrade = true;
+                wxLogMessage(wxT("last version   : UltraDefrag %ls"),lv.wc_str());
+                wxLogMessage(wxT("current version: %hs"),cv);
 
-                if(upgrade){
+                if(last && current && last > current){
                     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowUpgradeDialog);
                     event.SetString(lv);
                     wxPostEvent(g_MainFrame,event);
@@ -86,6 +84,50 @@ void *UpgradeThread::Entry()
     }
 
     return NULL;
+}
+
+/**
+ * @brief Parses a version string and generates an integer for comparison.
+ * @return An integer representing the version. Zero indicates that
+ * the version string parsing failed.
+ */
+int UpgradeThread::ParseVersionString(const char *version)
+{
+    char *string = _strdup(version);
+    if(!string) return 0;
+
+    _strlwr(string);
+
+    // version numbers (major, minor, revision, unstable version)
+    int mj, mn, rev, uv;
+
+    int res = sscanf(string,"%u.%u.%u alpha%u",&mj,&mn,&rev,&uv);
+    if(res == 4){
+        uv += 100;
+    } else {
+        res = sscanf(string,"%u.%u.%u beta%u",&mj,&mn,&rev,&uv);
+        if(res == 4){
+            uv += 200;
+        } else {
+            res = sscanf(string,"%u.%u.%u rc%u",&mj,&mn,&rev,&uv);
+            if(res == 4){
+                uv += 300;
+            } else {
+                res = sscanf(string,"%u.%u.%u",&mj,&mn,&rev);
+                if(res == 3){
+                    uv = 999;
+                } else {
+                    etrace("parsing of '%hs' failed",version);
+                    return 0;
+                }
+            }
+        }
+    }
+
+    free(string);
+
+    /* 5.0.0 > 4.99.99 rc10*/
+    return mj * 10000000 + mn * 100000 + rev * 1000 + uv;
 }
 
 // =======================================================================
