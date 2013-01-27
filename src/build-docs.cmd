@@ -48,7 +48,6 @@ if "%UD_BLD_FLG_BUILD_INT%" == "1" (
     call :compile_int .\dll\udefrag        udefrag.dll  || goto fail
     call :compile_int .\dll\wgx            wgx          || goto fail
     call :compile_int .\dll\zenwinx        zenwinx      || goto fail
-    call :compile_int .\gui                gui          || goto fail
 ) else (
     call :compile_docs ..\doc\handbook || goto fail
     copy /Y ..\doc\handbook\doxy-doc\html\*.* "%~dp0\..\..\web\handbook" || goto fail

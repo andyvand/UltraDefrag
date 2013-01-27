@@ -255,6 +255,9 @@ bool parse_cmdline(int argc, char **argv)
     /* --quick-optimize flag has more precedence */
     if(g_quick_optimization) g_optimize = false;
 
+    /* -p flag disables cluster map as well */
+    if(g_no_progress) g_show_map = false;
+
     /* search for drive letters and paths */
     wxString cmdline(GetCommandLine());
     cmdline.Replace(wxT("\\\""),wxT("\\\\\""));
