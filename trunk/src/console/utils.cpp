@@ -214,21 +214,15 @@ wxString download(const wxString& url)
 {
     wxLogMessage(wxT("downloading %ls"),url.wc_str());
 
-    HMODULE h = ::LoadLibrary(wxT("urlmon.dll"));
-    if(!h){
-        wxLogSysError(wxT("cannot load urlmon.dll library"));
-        return wxEmptyString;
-    }
+    wxDynamicLibrary lib(wxT("urlmon"));
+    wxDYNLIB_FUNCTION(URLMON_PROCEDURE,
+        URLDownloadToCacheFileW, lib);
 
-    URLMON_PROCEDURE pDownload = (URLMON_PROCEDURE) \
-        ::GetProcAddress(h,"URLDownloadToCacheFileW");
-    if(!pDownload){
-        wxLogSysError(wxT("URLDownloadToCacheFileW procedure not found"));
+    if(!pfnURLDownloadToCacheFileW)
         return wxEmptyString;
-    }
 
     wchar_t buffer[MAX_PATH + 1];
-    HRESULT result = pDownload(NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
+    HRESULT result = pfnURLDownloadToCacheFileW(NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
     if(result != S_OK){
         wxLogError(wxT("URLDownloadToCacheFile failed with code 0x%x"),(UINT)result);
         return wxEmptyString;

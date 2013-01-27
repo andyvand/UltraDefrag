@@ -76,6 +76,9 @@ void *UpgradeThread::Entry()
                     event.SetString(lv);
                     wxPostEvent(g_MainFrame,event);
                 }
+
+                // remove file from cache
+                file.Close(); wxRemoveFile(path);
             }
             m_check = false;
         }
