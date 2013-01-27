@@ -22,7 +22,3 @@ adlibs = {
     "$(WXWIDGETS_LIB_PATH)\\wxmsw28u_adv"
 }
 umentry = "winmain"
-
-function mingw_project_rules()
-    output_dir = "../obj/wxgui"
-end
