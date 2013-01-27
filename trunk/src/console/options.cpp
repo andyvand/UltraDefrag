@@ -263,7 +263,7 @@ bool parse_cmdline(int argc, char **argv)
     cmdline.Replace(wxT("\\\""),wxT("\\\\\""));
     wxArrayString opts = wxCmdLineParser::ConvertStringToArgs(cmdline);
     g_volumes = new wxArrayString(); g_paths = new wxArrayString();
-    for(int i = 1; i < opts.GetCount(); i++){
+    for(int i = 1; i < (int)opts.GetCount(); i++){
         opts[i].Replace(wxT("\\\\"),wxT("\\"));
         //printf("%ls\n",opts[i].wc_str());
         if(opts[i].IsEmpty()) continue;

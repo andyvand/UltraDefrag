@@ -65,7 +65,7 @@ int __cdecl main(int argc,char **argv)
     int i, now = 0;
 
     for(i = 1; i < argc; i++){
-        if(!stricmp(argv[i],"now"))
+        if(!_stricmp(argv[i],"now"))
             now = 1;
     }
 

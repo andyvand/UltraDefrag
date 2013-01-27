@@ -124,7 +124,7 @@ static int get_boot_exec_list(struct cmd **list)
  * zero indicates that they're different, negative value
  * indicates a failure of the comparison.
  */
-static int cmd_compare(wchar_t *reg_cmd,wchar_t *cmd)
+static int cmd_compare(wchar_t *reg_cmd,const wchar_t *cmd)
 {
     wchar_t *long_cmd;
     int result;
