@@ -37,6 +37,7 @@
 #include <wx/confbase.h>
 #include <wx/dir.h>
 #include <wx/display.h>
+#include <wx/dynlib.h>
 #include <wx/fileconf.h>
 #include <wx/filename.h>
 #include <wx/gbsizer.h>
