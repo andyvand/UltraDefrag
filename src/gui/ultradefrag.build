@@ -17,7 +17,3 @@ adlibs = {
     "$(UDEFRAG_LIB_PATH)\\wgx"
 }
 umentry = "winmain"
-
-function mingw_project_rules()
-    output_dir = "../obj/gui"
-end
