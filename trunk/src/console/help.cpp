@@ -88,7 +88,7 @@ void show_help(void)
         "  -r,  --repeat                       Repeat action until nothing left to move.\n"
         "  -b,  --use-system-color-scheme      Use system (usually black/white)\n"
         "                                      color scheme instead of the green color.\n"
-        "  -p,  --suppress-progress-indicator  Hide progress indicator.\n"
+        "  -p,  --suppress-progress-indicator  Hide progress indicator and cluster map.\n"
         "  -v,  --show-volume-information      Show disk information after a job.\n"
         "  -m,  --show-cluster-map             Show map representing clusters\n"
         "                                      on the disk.\n"

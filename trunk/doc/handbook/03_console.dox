@@ -63,7 +63,7 @@
  * Use system color scheme (usually black/white) instead of the green color.
  *
  * @par -p, \--suppress-progress-indicator
- * Hide progress indicator.
+ * Hide progress indicator and cluster map.
  *
  * @par -v, \--show-volume-information
  * Show disk information after a job completes.
