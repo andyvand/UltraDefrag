@@ -83,6 +83,14 @@ public:
         const wxChar *msg,time_t timestamp);
 };
 
+class StatThread: public wxThread {
+public:
+    StatThread() : wxThread(wxTHREAD_JOINABLE) { Create(); Run(); }
+    ~StatThread() { Wait(); }
+
+    virtual void *Entry();
+};
+
 class App: public wxApp {
 public:
     virtual bool OnInit();
@@ -91,6 +99,7 @@ public:
 private:
     void Cleanup();
     Log *m_log;
+    StatThread *m_statThread;
 };
 
 class BtdThread: public wxThread {
@@ -239,7 +248,9 @@ private:
 
 class Utils {
 public:
+    static bool CheckAdminRights(void);
     static wxString DownloadFile(const wxString& url);
+    static void GaRequest(const wxString& path);
     static wxBitmap *LoadPngResource(const wchar_t *name);
     static int MessageDialog(wxFrame *parent,
         const wxString& caption, const wxArtID& icon,
