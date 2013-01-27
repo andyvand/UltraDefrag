@@ -16,23 +16,18 @@
  * - <a href="http://www.gnu.org/prep/standards/">GNU coding standards</a>
  * - <a href="http://www.gnu.org/prep/maintain/">Information for maintainers of GNU software</a>
  *
- * The Ultra Defragmenter consists of few modules tied together:
- *
- * @image html udscheme.png
- *
  * The volume processing algorithms are contained in udefrag.dll library.
- * All three user interfaces are built over it.
  *
- * ZenWINX is a framework for the Windows native development. The complete
- * documentation for it is <a href="http://zenwinx.sourceforge.net">here</a>.
+ * Both command line and graphical interfaces are built on top 
+ * of <a href="http://www.wxwidgets.org/">wxWidgets</a> library
+ * which helps a lot to do all the things in the most simple manner.
  *
- * Lua is used to convert reports from an internal representation to HTML
- * pages, and to make configuration files reading simpler.
+ * The boot time interface is written in pure C simply because it's intended
+ * to be executed in an environment which misses some stuff needed for more 
+ * sophisticated things. However, the interface is built over 
+ * <a href="http://zenwinx.sourceforge.net">ZenWINX</a> library
+ * which makes its development easier.
  *
- * WGX library simplifies GUI development by a compact set of common
- * routines missing in Windows, but needed for the most GUI applications.
- *
- * The report sorting engine embedded in HTML reports is written in JavaScript.
- *
- * UltraDefrag installer is written in NSIS.
+ * And, at last, Lua is used to convert reports from an internal representation
+ * to HTML pages and plain text files.
  */
