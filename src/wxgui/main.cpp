@@ -168,6 +168,31 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
 }
 
 // =======================================================================
+//                             Web statistics
+// =======================================================================
+
+void *StatThread::Entry()
+{
+    bool enabled = true; wxString s;
+    if(wxGetEnv(wxT("UD_DISABLE_USAGE_TRACKING"),&s))
+        if(s.Cmp(wxT("1")) == 0) enabled = false;
+
+    if(enabled){
+#ifndef _WIN64
+        Utils::GaRequest(wxT("/appstat/gui-x86.html"));
+#else
+    #if defined(_IA64_)
+        Utils::GaRequest(wxT("/appstat/gui-ia64.html"));
+    #else
+        Utils::GaRequest(wxT("/appstat/gui-x64.html"));
+    #endif
+#endif
+    }
+
+    return NULL;
+}
+
+// =======================================================================
 //                    Application startup and shutdown
 // =======================================================================
 
@@ -196,6 +221,18 @@ bool App::OnInit()
     // initialize logging
     m_log = new Log();
 
+    // start web statistics
+    m_statThread = new StatThread();
+
+    // check for administrative rights
+    if(!Utils::CheckAdminRights()){
+        wxMessageDialog dlg(NULL,
+            wxT("Administrative rights are needed to run the program!"),
+            wxT("UltraDefrag"),wxOK | wxICON_ERROR);
+        dlg.ShowModal(); Cleanup();
+        return false;
+    }
+
     // use global config object for internal settings
     wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
         wxT("gui.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
@@ -222,6 +259,9 @@ void App::Cleanup()
 {
     // save internal settings
     delete wxConfigBase::Set(NULL);
+
+    // stop web statistics
+    delete m_statThread;
 
     // deinitialize logging
     delete m_log;

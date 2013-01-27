@@ -50,6 +50,45 @@ typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
 // =======================================================================
 
 /**
+ * @brief Defines whether the user
+ * has administrative rights or not.
+ * @details Based on the UserInfo
+ * NSIS plug-in.
+ */
+bool Utils::CheckAdminRights(void)
+{
+    HANDLE hToken;
+    if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
+        letrace("cannot open access token of the thread");
+        if(!OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&hToken)){
+            letrace("cannot open access token of the process");
+            return false;
+        }
+    }
+
+    PSID psid = NULL;
+    SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
+    if(!AllocateAndInitializeSid(&SystemSidAuthority,2,
+      SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
+      0,0,0,0,0,0,&psid)){
+        letrace("cannot create the security identifier");
+        CloseHandle(hToken);
+        return false;
+    }
+
+    BOOL is_member = false;
+    if(!CheckTokenMembership(NULL,psid,&is_member)){
+        letrace("cannot check token membership");
+        if(psid) FreeSid(psid); CloseHandle(hToken);
+        return false;
+    }
+
+    if(!is_member) itrace("the user is not a member of administrators group");
+    if(psid) FreeSid(psid); CloseHandle(hToken);
+    return is_member;
+}
+
+/**
  * @brief Downloads a file from the web.
  * @return Path to the downloaded file.
  * @note If the program terminates before
@@ -76,6 +115,42 @@ wxString Utils::DownloadFile(const wxString& url)
     buffer[MAX_PATH] = 0;
     wxString path(buffer);
     return path;
+}
+
+/**
+ * @brief Sends a request to Google Analytics
+ * service gathering statistics of the use
+ * of the program.
+ * @details Based on http://code.google.com/apis/analytics/docs/
+ * and http://www.vdgraaf.info/google-analytics-without-javascript.html
+ */
+void Utils::GaRequest(const wxString& path)
+{
+    srand((unsigned int)time(NULL));
+    int utmn = (rand() << 16) + rand();
+    int utmhid = (rand() << 16) + rand();
+    int cookie = (rand() << 16) + rand();
+    int random = (rand() << 16) + rand();
+    __int64 today = (__int64)time(NULL);
+
+    wxString request;
+
+    request << wxT("http://www.google-analytics.com/__utm.gif?utmwv=4.6.5");
+    request << wxString::Format(wxT("&utmn=%u"),utmn);
+    request << wxT("&utmhn=ultradefrag.sourceforge.net");
+    request << wxString::Format(wxT("&utmhid=%u&utmr=-"),utmhid);
+    request << wxT("&utmp=") << path;
+    request << wxT("&utmac=");
+    request << wxT("UA-15890458-1");
+    request << wxString::Format(wxT("&utmcc=__utma%%3D%u.%u.%I64u.%I64u.%I64u.") \
+        wxT("50%%3B%%2B__utmz%%3D%u.%I64u.27.2.utmcsr%%3Dgoogle.com%%7Cutmccn%%3D") \
+        wxT("(referral)%%7Cutmcmd%%3Dreferral%%7Cutmcct%%3D%%2F%3B"),
+        cookie,random,today,today,today,cookie,today);
+
+    wxString url(request);
+    wxString file = DownloadFile(url);
+    if(!file.IsEmpty())
+        wxRemoveFile(file);
 }
 
 /**
