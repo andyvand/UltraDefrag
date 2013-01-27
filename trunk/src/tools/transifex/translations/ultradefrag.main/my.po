@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR UltraDefrag Development Team
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 15:47+0100\n"
-"PO-Revision-Date: 2013-01-20 15:32+0000\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-22 02:16+0100\n"
+"PO-Revision-Date: 2013-01-26 10:24+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: about.cpp:58
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "မင်းသားများ and လိုင်စင် are listed in the handbook."
 
 #: about.cpp:61
 msgid "UltraDefrag website"
@@ -46,7 +46,7 @@ msgstr "အကြောင်းကြား"
 msgid "&Settings"
 msgstr "ချိန်ညှိရာများ"
 
-#: i18n.cpp:118 i18n.cpp:185
+#: i18n.cpp:118 i18n.cpp:189
 msgid "&Help"
 msgstr "အကူအညီ"
 
@@ -102,7 +102,7 @@ msgstr "ပြုလုပ်ပြီးလျှင်"
 msgid "E&xit"
 msgstr "ထွက်"
 
-#: i18n.cpp:134
+#: i18n.cpp:134 i18n.cpp:175
 msgid "&None"
 msgstr "ဗလာ"
 
@@ -138,13 +138,13 @@ msgstr "စကား"
 msgid "&Graphical interface"
 msgstr "သုံးသူမျက်နှာပြင်ဇယား"
 
-#: i18n.cpp:146 i18n.cpp:181
+#: i18n.cpp:146 i18n.cpp:185
 msgid "&Boot time scan"
 msgstr "ဝင်ဒိုး အစတွင် စလုပ်"
 
 #: i18n.cpp:147
 msgid "&Sorting"
-msgstr ""
+msgstr "ရှင်းလင်းခြင်း"
 
 #: i18n.cpp:148
 msgid "&Reports"
@@ -184,31 +184,31 @@ msgstr "ညွှန်စာ"
 
 #: i18n.cpp:161
 msgid "By &path"
-msgstr ""
+msgstr "လမ်း‌ကြောင်း"
 
 #: i18n.cpp:162
 msgid "By &size"
-msgstr ""
+msgstr "အရွယ် ပမာဏ"
 
 #: i18n.cpp:163
 msgid "By &creation time"
-msgstr ""
+msgstr "ဖန်တိးချိန်"
 
 #: i18n.cpp:164
 msgid "By last &modification time"
-msgstr ""
+msgstr "နောက်ဆုံး ပြုပြင်ချိန်"
 
 #: i18n.cpp:165
 msgid "By &last access time"
-msgstr ""
+msgstr "နောက်ဆုံး အသုံးပြုချိန်"
 
 #: i18n.cpp:166
 msgid "In &ascending order"
-msgstr ""
+msgstr "အောက်မှအထက်သို့"
 
 #: i18n.cpp:167
 msgid "In &descending order"
-msgstr ""
+msgstr "အထက်မှအောက်သို့"
 
 #: i18n.cpp:169
 msgid "&Contents"
@@ -220,7 +220,7 @@ msgstr "အကောင်းဆုံး လုပ်စဉ်"
 
 #: i18n.cpp:171
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "မေးပါများ စကားရ"
 
 #: i18n.cpp:172
 msgid "Cluster map &legend"
@@ -230,39 +230,47 @@ msgstr "စုပြုံလိုက် ပုံနှင့် ဖြစ်�
 msgid "&Debug"
 msgstr "ပြသာနာရှင်း"
 
-#: i18n.cpp:174
-msgid "Check for &update"
-msgstr "နောက်ဆုံးပေါ် စစ်ဆေးရန်"
-
-#: i18n.cpp:175
-msgid "&About"
-msgstr "အကြောင်းအရာ"
-
-#: i18n.cpp:177 utils.cpp:247
-msgid "Open &log"
-msgstr "ဖွင့်ပြီး မှတ်တမ်းတင်ရန်"
-
-#: i18n.cpp:178
-msgid "Send bug &report"
-msgstr "ပြသာနာ အကြောင်းကြားရန်"
-
-#: i18n.cpp:183
-msgid "Boot time script"
-msgstr "စက်အစ အညွှန်းစာတို"
-
-#: upgrade.cpp:100
-msgid "release is available for download!"
-msgstr "ဒေါင်းဆွဲချရန် ထုတ်ထားလိုက်ပါပြီ"
-
-#: upgrade.cpp:102
-msgid "You can upgrade me ^-^"
-msgstr "သင်ငါ့ကို အဆင့်မြှင့်နိုင်သည် ^-^"
-
-#: upgrade.cpp:103
+#: i18n.cpp:174 upgrade.cpp:111
 msgid "&Upgrade"
 msgstr ""
 
-#: upgrade.cpp:103 utils.cpp:251
+#: i18n.cpp:176
+msgid "&Only stable release"
+msgstr ""
+
+#: i18n.cpp:177
+msgid "&All releases"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:179
+msgid "&About"
+msgstr "အကြောင်းအရာ"
+
+#: i18n.cpp:181 utils.cpp:247
+msgid "Open &log"
+msgstr "ဖွင့်ပြီး မှတ်တမ်းတင်ရန်"
+
+#: i18n.cpp:182
+msgid "Send bug &report"
+msgstr "ပြသာနာ အကြောင်းကြားရန်"
+
+#: i18n.cpp:187
+msgid "Boot time script"
+msgstr "စက်အစ အညွှန်းစာတို"
+
+#: upgrade.cpp:108
+msgid "release is available for download!"
+msgstr "ဒေါင်းဆွဲချရန် ထုတ်ထားလိုက်ပါပြီ"
+
+#: upgrade.cpp:110
+msgid "You can upgrade me ^-^"
+msgstr "သင်ငါ့ကို အဆင့်မြှင့်နိုင်သည် ^-^"
+
+#: upgrade.cpp:111 utils.cpp:251
 msgid "&Cancel"
 msgstr ""
 

@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR UltraDefrag Development Team
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 15:47+0100\n"
-"PO-Revision-Date: 2013-01-20 15:55+0000\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-22 02:16+0100\n"
+"PO-Revision-Date: 2013-01-26 10:25+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "&Bericht"
 msgid "&Settings"
 msgstr "&Einstellungen"
 
-#: i18n.cpp:118 i18n.cpp:185
+#: i18n.cpp:118 i18n.cpp:189
 msgid "&Help"
 msgstr "&Hilfe"
 
@@ -102,7 +102,7 @@ msgstr "&Nach Abschluss"
 msgid "E&xit"
 msgstr "&Beenden"
 
-#: i18n.cpp:134
+#: i18n.cpp:134 i18n.cpp:175
 msgid "&None"
 msgstr "&Nichts unternehmen"
 
@@ -138,7 +138,7 @@ msgstr "&Sprache"
 msgid "&Graphical interface"
 msgstr "&Grafische Benutzeroberfläche"
 
-#: i18n.cpp:146 i18n.cpp:181
+#: i18n.cpp:146 i18n.cpp:185
 msgid "&Boot time scan"
 msgstr "&Überprüfung beim Windows-Start"
 
@@ -230,39 +230,47 @@ msgstr "&Zuordnungstabellenerklärung"
 msgid "&Debug"
 msgstr "&Problem berichten"
 
-#: i18n.cpp:174
-msgid "Check for &update"
-msgstr "Auf &Aktualisierung prüfen"
-
-#: i18n.cpp:175
-msgid "&About"
-msgstr "&Über"
-
-#: i18n.cpp:177 utils.cpp:247
-msgid "Open &log"
-msgstr "&Protokoll öffnen"
-
-#: i18n.cpp:178
-msgid "Send bug &report"
-msgstr "Problembericht &senden"
-
-#: i18n.cpp:183
-msgid "Boot time script"
-msgstr "Windows-Start-Skript"
-
-#: upgrade.cpp:100
-msgid "release is available for download!"
-msgstr "Neue Version zum Herunterladen vorhanden!"
-
-#: upgrade.cpp:102
-msgid "You can upgrade me ^-^"
-msgstr "Du kannst mich aktualisieren ^-^"
-
-#: upgrade.cpp:103
+#: i18n.cpp:174 upgrade.cpp:111
 msgid "&Upgrade"
 msgstr "&Aktualisieren"
 
-#: upgrade.cpp:103 utils.cpp:251
+#: i18n.cpp:176
+msgid "&Only stable release"
+msgstr "&Nur stabile Versionen"
+
+#: i18n.cpp:177
+msgid "&All releases"
+msgstr "&Alle Versionen"
+
+#: i18n.cpp:178
+msgid "&Check now"
+msgstr "&Jetzt überprüfen"
+
+#: i18n.cpp:179
+msgid "&About"
+msgstr "&Über"
+
+#: i18n.cpp:181 utils.cpp:247
+msgid "Open &log"
+msgstr "&Protokoll öffnen"
+
+#: i18n.cpp:182
+msgid "Send bug &report"
+msgstr "Problembericht &senden"
+
+#: i18n.cpp:187
+msgid "Boot time script"
+msgstr "Windows-Start-Skript"
+
+#: upgrade.cpp:108
+msgid "release is available for download!"
+msgstr "Neue Version zum Herunterladen vorhanden!"
+
+#: upgrade.cpp:110
+msgid "You can upgrade me ^-^"
+msgstr "Du kannst mich aktualisieren ^-^"
+
+#: upgrade.cpp:111 utils.cpp:251
 msgid "&Cancel"
 msgstr "&Abbrechen"
 

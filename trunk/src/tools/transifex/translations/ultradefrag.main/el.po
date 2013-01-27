@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR UltraDefrag Development Team
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 15:47+0100\n"
-"PO-Revision-Date: 2013-01-20 16:07+0000\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-22 02:16+0100\n"
+"PO-Revision-Date: 2013-01-22 09:30+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Αναφορά"
 msgid "&Settings"
 msgstr "Ρυθμίσεις"
 
-#: i18n.cpp:118 i18n.cpp:185
+#: i18n.cpp:118 i18n.cpp:189
 msgid "&Help"
 msgstr "Βοήθεια"
 
@@ -102,7 +102,7 @@ msgstr "Όταν ολοκληρωθεί"
 msgid "E&xit"
 msgstr "Έξοδος"
 
-#: i18n.cpp:134
+#: i18n.cpp:134 i18n.cpp:175
 msgid "&None"
 msgstr "Τίποτα"
 
@@ -138,7 +138,7 @@ msgstr "Γλώσσα"
 msgid "&Graphical interface"
 msgstr "Γραφικό περιβάλλον"
 
-#: i18n.cpp:146 i18n.cpp:181
+#: i18n.cpp:146 i18n.cpp:185
 msgid "&Boot time scan"
 msgstr "Έλεγχος κατά την εκκίνηση"
 
@@ -230,39 +230,47 @@ msgstr "Χάρτης συστοιχιών και υπόμνημα"
 msgid "&Debug"
 msgstr "&Αποσφαλμάτωση"
 
-#: i18n.cpp:174
-msgid "Check for &update"
-msgstr "Έλεγχος για ενημερώσεις"
-
-#: i18n.cpp:175
-msgid "&About"
-msgstr "Σχετικά"
-
-#: i18n.cpp:177 utils.cpp:247
-msgid "Open &log"
-msgstr "Άνοιγμα αρχείου &καταγραφής"
-
-#: i18n.cpp:178
-msgid "Send bug &report"
-msgstr "Αποστολή αναφοράς &σφαλμάτων"
-
-#: i18n.cpp:183
-msgid "Boot time script"
-msgstr "Σενάριο κατά την εκκίνηση"
-
-#: upgrade.cpp:100
-msgid "release is available for download!"
-msgstr "Νέα έκδοση διαθέσιμη!"
-
-#: upgrade.cpp:102
-msgid "You can upgrade me ^-^"
-msgstr "Δυνατότητα αναβάθμισης ^-^"
-
-#: upgrade.cpp:103
+#: i18n.cpp:174 upgrade.cpp:111
 msgid "&Upgrade"
 msgstr ""
 
-#: upgrade.cpp:103 utils.cpp:251
+#: i18n.cpp:176
+msgid "&Only stable release"
+msgstr ""
+
+#: i18n.cpp:177
+msgid "&All releases"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:179
+msgid "&About"
+msgstr "Σχετικά"
+
+#: i18n.cpp:181 utils.cpp:247
+msgid "Open &log"
+msgstr "Άνοιγμα αρχείου &καταγραφής"
+
+#: i18n.cpp:182
+msgid "Send bug &report"
+msgstr "Αποστολή αναφοράς &σφαλμάτων"
+
+#: i18n.cpp:187
+msgid "Boot time script"
+msgstr "Σενάριο κατά την εκκίνηση"
+
+#: upgrade.cpp:108
+msgid "release is available for download!"
+msgstr "Νέα έκδοση διαθέσιμη!"
+
+#: upgrade.cpp:110
+msgid "You can upgrade me ^-^"
+msgstr "Δυνατότητα αναβάθμισης ^-^"
+
+#: upgrade.cpp:111 utils.cpp:251
 msgid "&Cancel"
 msgstr ""
 

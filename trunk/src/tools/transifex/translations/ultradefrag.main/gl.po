@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR UltraDefrag Development Team
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 15:47+0100\n"
-"PO-Revision-Date: 2013-01-20 15:36+0000\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-22 02:16+0100\n"
+"PO-Revision-Date: 2013-01-22 09:30+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "&Informe"
 msgid "&Settings"
 msgstr "&Configuración"
 
-#: i18n.cpp:118 i18n.cpp:185
+#: i18n.cpp:118 i18n.cpp:189
 msgid "&Help"
 msgstr "A&xuda"
 
@@ -102,7 +102,7 @@ msgstr "Ao &rematar"
 msgid "E&xit"
 msgstr "&Saír"
 
-#: i18n.cpp:134
+#: i18n.cpp:134 i18n.cpp:175
 msgid "&None"
 msgstr "Nada"
 
@@ -138,7 +138,7 @@ msgstr "&Lingua"
 msgid "&Graphical interface"
 msgstr "Interface &gráfica"
 
-#: i18n.cpp:146 i18n.cpp:181
+#: i18n.cpp:146 i18n.cpp:185
 msgid "&Boot time scan"
 msgstr "&Escanear no inicio"
 
@@ -230,39 +230,47 @@ msgstr "Cluster mapa &lenda"
 msgid "&Debug"
 msgstr "&Depurar"
 
-#: i18n.cpp:174
-msgid "Check for &update"
-msgstr "Asegúrese de que hai actuali&zación"
-
-#: i18n.cpp:175
-msgid "&About"
-msgstr "&Acerca de"
-
-#: i18n.cpp:177 utils.cpp:247
-msgid "Open &log"
-msgstr "&Abre rexistro"
-
-#: i18n.cpp:178
-msgid "Send bug &report"
-msgstr "&Enviar informe de erro"
-
-#: i18n.cpp:183
-msgid "Boot time script"
-msgstr "Comandos do inicio"
-
-#: upgrade.cpp:100
-msgid "release is available for download!"
-msgstr "versión está dispoñible para descargar!"
-
-#: upgrade.cpp:102
-msgid "You can upgrade me ^-^"
-msgstr "Pode actualizar me ^-^"
-
-#: upgrade.cpp:103
+#: i18n.cpp:174 upgrade.cpp:111
 msgid "&Upgrade"
 msgstr ""
 
-#: upgrade.cpp:103 utils.cpp:251
+#: i18n.cpp:176
+msgid "&Only stable release"
+msgstr ""
+
+#: i18n.cpp:177
+msgid "&All releases"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:179
+msgid "&About"
+msgstr "&Acerca de"
+
+#: i18n.cpp:181 utils.cpp:247
+msgid "Open &log"
+msgstr "&Abre rexistro"
+
+#: i18n.cpp:182
+msgid "Send bug &report"
+msgstr "&Enviar informe de erro"
+
+#: i18n.cpp:187
+msgid "Boot time script"
+msgstr "Comandos do inicio"
+
+#: upgrade.cpp:108
+msgid "release is available for download!"
+msgstr "versión está dispoñible para descargar!"
+
+#: upgrade.cpp:110
+msgid "You can upgrade me ^-^"
+msgstr "Pode actualizar me ^-^"
+
+#: upgrade.cpp:111 utils.cpp:251
 msgid "&Cancel"
 msgstr ""
 
