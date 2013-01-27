@@ -128,6 +128,7 @@ public:
     ~UpgradeThread() { m_stop = true; Wait(); }
 
     virtual void *Entry();
+    int ParseVersionString(const char *version);
 
     bool m_stop;
     bool m_check;

@@ -51,10 +51,13 @@ copy .\HISTORY.TXT .\release\
 copy /Y .\HISTORY.TXT ..\..\web\
 
 :: update version notification
-set version_sting=%ULTRADFGVER%
-if /I "%RELEASE_STAGE:~0,2%" equ "RC" set version_sting=%ULTRADFGVER% %RELEASE_STAGE%
+set version_string=%ULTRADFGVER%
+if "%RELEASE_STAGE%" neq "" set version_sting=%ULTRADFGVER% %RELEASE_STAGE%
+
 echo %version_sting%> ..\..\web\version.ini
 echo %version_sting%> ..\..\web\version_xp.ini
+
+if "%RELEASE_STAGE%" equ "" echo %version_sting%> ..\..\web\stable-version.ini
 
 echo.
 echo Release made successfully!

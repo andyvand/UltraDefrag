@@ -116,6 +116,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     m_menuBar->SetMenuLabel(1, _("&Report"));
     m_menuBar->SetMenuLabel(2, _("&Settings"));
     m_menuBar->SetMenuLabel(3, _("&Help"));
+
     // action menu
     UD_UpdateMenuItemLabel(ID_Analyze          , "&Analyze"             , "F5");
     UD_UpdateMenuItemLabel(ID_Defrag           , "&Defragment"          , "F6");
@@ -128,8 +129,11 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_SkipRem          , "Skip removable &media", "Ctrl+M");
     UD_UpdateMenuItemLabel(ID_Rescan           , "&Rescan drives"       , "Ctrl+D");
     UD_UpdateMenuItemLabel(ID_Repair           , "Repair dri&ves"       , "");
+
     m_subMenuWhenDone->SetItemLabel(_("&When done"));
+
     UD_UpdateMenuItemLabel(ID_Exit             , "E&xit"                , "Alt+F4");
+
     // when done sub-menu
     UD_UpdateMenuItemLabel(ID_WhenDoneNone     , "&None"                , "");
     UD_UpdateMenuItemLabel(ID_WhenDoneExit     , "E&xit"                , "");
@@ -138,25 +142,32 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_WhenDoneLogoff   , "&Logoff"              , "");
     UD_UpdateMenuItemLabel(ID_WhenDoneReboot   , "&Reboot"              , "");
     UD_UpdateMenuItemLabel(ID_WhenDoneShutdown , "&Shutdown"            , "");
+
     // report menu
     UD_UpdateMenuItemLabel(ID_ShowReport       , "&Show report"         , "F8");
+
     // settings menu
     m_subMenuLanguage->SetItemLabel(_("&Language"));
     m_subMenuGUIconfig->SetItemLabel(_("&Graphical interface"));
     m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
     m_subMenuSortingConfig->SetItemLabel(_("&Sorting"));
+
     UD_UpdateMenuItemLabel(ID_ReportOptions    , "&Reports"             , "Ctrl+R");
+
     // language sub-menu
     UD_UpdateMenuItemLabel(ID_LangShowLog      , "&View change log"     , "");
     UD_UpdateMenuItemLabel(ID_LangShowReport   , "View translation &report", "");
     UD_UpdateMenuItemLabel(ID_LangOpenFolder   , "&Translations folder"    , "");
     UD_UpdateMenuItemLabel(ID_LangSubmit       , "&Submit current translation", "");
+
     // graphical interface sub-menu
     UD_UpdateMenuItemLabel(ID_GuiFont          , "&Font"                , "F9");
     UD_UpdateMenuItemLabel(ID_GuiOptions       , "&Options"             , "F10");
+
     // boot time scan sub-menu
     UD_UpdateMenuItemLabel(ID_BootEnable       , "&Enable"              , "F11");
     UD_UpdateMenuItemLabel(ID_BootScript       , "&Script"              , "F12");
+
     // sorting sub-menu
     UD_UpdateMenuItemLabel(ID_SortByPath            , "By &path"                  , "");
     UD_UpdateMenuItemLabel(ID_SortBySize            , "By &size"                  , "");
@@ -165,18 +176,22 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_SortByLastAccessDate  , "By &last access time"      , "");
     UD_UpdateMenuItemLabel(ID_SortAscending         , "In &ascending order"       , "");
     UD_UpdateMenuItemLabel(ID_SortDescending        , "In &descending order"      , "");
+
     // help menu
     UD_UpdateMenuItemLabel(ID_HelpContents     , "&Contents"                  , "F1");
     UD_UpdateMenuItemLabel(ID_HelpBestPractice , "Best &practice"             , "F2");
     UD_UpdateMenuItemLabel(ID_HelpFaq          , "&Frequently asked questions", "F3");
     UD_UpdateMenuItemLabel(ID_HelpLegend       , "Cluster map &legend"        , "");
+
     m_subMenuDebug->SetItemLabel(_("&Debug"));
     m_subMenuUpgrade->SetItemLabel(_("&Upgrade"));
-    UD_UpdateMenuItemLabel(ID_HelpUpdateNone   , "&None"                , "");
-    UD_UpdateMenuItemLabel(ID_HelpUpdateStable , "&Only stable release" , "");
-    UD_UpdateMenuItemLabel(ID_HelpUpdateAll    , "&All releases"        , "");
-    UD_UpdateMenuItemLabel(ID_HelpUpdateCheck  , "&Check now"           , "");
-    UD_UpdateMenuItemLabel(ID_HelpAbout        , "&About"               , "F4");
+
+    UD_UpdateMenuItemLabel(ID_HelpUpdateNone   , "&Never check"                , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateStable , "Check stable releases &only" , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateAll    , "Check &all releases"         , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateCheck  , "&Check now"                  , "");
+    UD_UpdateMenuItemLabel(ID_HelpAbout        , "&About"                      , "F4");
+
     // debug sub-menu
     UD_UpdateMenuItemLabel(ID_DebugLog         , "Open &log"            , "Alt+L");
     UD_UpdateMenuItemLabel(ID_DebugSend        , "Send bug &report"     , "");
