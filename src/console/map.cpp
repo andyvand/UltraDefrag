@@ -115,6 +115,8 @@ void init_map(char letter)
 
 void redraw_map(udefrag_progress_info *pi)
 {
+    char c[2];
+
     if(pi){
         if(pi->cluster_map && pi->cluster_map_size == g_map_rows * g_map_symbols_per_line)
             memcpy(g_map,pi->cluster_map,pi->cluster_map_size);
@@ -126,7 +128,6 @@ void redraw_map(udefrag_progress_info *pi)
     force_color(g_map_border_color);
     short prev_color = g_map_border_color;
 
-    char c[2];
     c[0] = 0xC9; c[1] = 0; printf(c);
 
     for(int j = 0; j < g_map_symbols_per_line; j++){

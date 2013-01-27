@@ -354,7 +354,7 @@ static int process_volumes(void)
     char letter = 0; bool result = true;
 
     bool first_group = true; g_paths->Sort();
-    for(int i = 0; i < g_paths->GetCount(); i++){
+    for(int i = 0; i < (int)g_paths->GetCount(); i++){
         wxString path = (*g_paths)[i];
         if(g_shellex && g_folder){
             if(path.Last() == '\\'){
@@ -417,7 +417,7 @@ static int process_volumes(void)
         wxUnsetEnv(wxT("UD_CUT_FILTER"));
 
     /* process volumes */
-    for(int i = 0; i < g_volumes->GetCount(); i++){
+    for(int i = 0; i < (int)g_volumes->GetCount(); i++){
         if(g_stop) break;
         if(process_single_volume((*g_volumes)[i][0]))
             overall_result = true;
@@ -439,7 +439,7 @@ static int process_volumes(void)
     end_synchronization();
 
     (void)SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandlerRoutine,FALSE);
-    return (overall_result > 0) ? 0 : 1;
+    return (overall_result == true) ? 0 : 1;
 }
 
 // =======================================================================
