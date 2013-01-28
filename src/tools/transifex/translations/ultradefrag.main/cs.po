@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+#  <appukonrad@gmail.com>, 2013.
 #  <stefan.pendl.71@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-22 02:16+0100\n"
-"PO-Revision-Date: 2013-01-22 09:30+0000\n"
-"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"POT-Creation-Date: 2013-01-27 19:42+0100\n"
+"PO-Revision-Date: 2013-01-28 09:09+0000\n"
+"Last-Translator: jui <appukonrad@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +25,15 @@ msgstr "O aplikaci UltraDefrag"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Open source defragmentační nástroj."
 
 #: about.cpp:58
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Kredity a licence jsou uvedeny v návodu."
 
 #: about.cpp:61
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag website"
 
 #: i18n.cpp:115
 msgid "&Action"
@@ -72,7 +73,7 @@ msgstr "Optimalizovat MFT"
 
 #: i18n.cpp:125
 msgid "Pa&use"
-msgstr ""
+msgstr "Pozastavit"
 
 #: i18n.cpp:126
 msgid "&Stop"
@@ -144,7 +145,7 @@ msgstr "Defragmentace při startu OS"
 
 #: i18n.cpp:147
 msgid "&Sorting"
-msgstr ""
+msgstr "Řazení"
 
 #: i18n.cpp:148
 msgid "&Reports"
@@ -160,7 +161,7 @@ msgstr "Zobrazit protokol překladu"
 
 #: i18n.cpp:152
 msgid "&Translations folder"
-msgstr "Jazyková složka"
+msgstr "Složka překladů"
 
 #: i18n.cpp:153
 msgid "&Submit current translation"
@@ -184,31 +185,31 @@ msgstr "Skript"
 
 #: i18n.cpp:161
 msgid "By &path"
-msgstr ""
+msgstr "Podle umístění"
 
 #: i18n.cpp:162
 msgid "By &size"
-msgstr ""
+msgstr "Podle velikosti"
 
 #: i18n.cpp:163
 msgid "By &creation time"
-msgstr ""
+msgstr "Podle času vytvoření"
 
 #: i18n.cpp:164
 msgid "By last &modification time"
-msgstr ""
+msgstr "Podle času poslední úpravy"
 
 #: i18n.cpp:165
 msgid "By &last access time"
-msgstr ""
+msgstr "Podle posledního času použití"
 
 #: i18n.cpp:166
 msgid "In &ascending order"
-msgstr ""
+msgstr "Ve  vzestupném pořadí"
 
 #: i18n.cpp:167
 msgid "In &descending order"
-msgstr ""
+msgstr "V  sestupném pořadí"
 
 #: i18n.cpp:169
 msgid "&Contents"
@@ -220,7 +221,7 @@ msgstr "Osvědčené postupy"
 
 #: i18n.cpp:171
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "Často kladené otázky"
 
 #: i18n.cpp:172
 msgid "Cluster map &legend"
@@ -232,19 +233,19 @@ msgstr "Ladit"
 
 #: i18n.cpp:174 upgrade.cpp:111
 msgid "&Upgrade"
-msgstr ""
+msgstr "Aktualizace"
 
 #: i18n.cpp:176
 msgid "&Only stable release"
-msgstr ""
+msgstr "Jen stabilní vydání"
 
 #: i18n.cpp:177
 msgid "&All releases"
-msgstr ""
+msgstr "Všechna vydání"
 
 #: i18n.cpp:178
 msgid "&Check now"
-msgstr ""
+msgstr "Zjistit nyní"
 
 #: i18n.cpp:179
 msgid "&About"
@@ -272,8 +273,8 @@ msgstr "Je možné mě aktualizovat ^-^"
 
 #: upgrade.cpp:111 utils.cpp:251
 msgid "&Cancel"
-msgstr ""
+msgstr "Storno"
 
 #: utils.cpp:250
 msgid "Error!"
-msgstr ""
+msgstr "Chyba!"
