@@ -99,7 +99,7 @@ bool check_admin_rights(void)
 
     if(!is_member) itrace("the user is not a member of administrators group");
     if(psid) FreeSid(psid); CloseHandle(hToken);
-    return is_member;
+    return (is_member == 0 ? false : true);
 }
 
 /**
@@ -201,7 +201,7 @@ void print_unicode(wchar_t *string)
     /* if the console runs inside of the PowerShell ISE, UTF-8 can be used too */
     /* however, this approach failed being tested on a Win7 driven machine */
 
-    DWORD n; WriteConsole(g_out,string,wcslen(string),&n,NULL);
+    DWORD n; WriteConsole(g_out,string,(DWORD)wcslen(string),&n,NULL);
 }
 
 /**

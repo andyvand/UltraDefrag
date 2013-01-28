@@ -56,8 +56,8 @@ void *CrashInfoThread::Entry()
     // get time stamp of the last processed event
     wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
         wxT("crash-info.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
-    long last_time_stamp = cfg->Read(wxT("/LastProcessedEvent/TimeStamp"),0l);
-    long new_time_stamp = last_time_stamp;
+    DWORD last_time_stamp = (DWORD)cfg->Read(wxT("/LastProcessedEvent/TimeStamp"),0l);
+    DWORD new_time_stamp = last_time_stamp;
 
     // collect information on application crashes
     HANDLE hLog = ::OpenEventLog(NULL,wxT("Application"));
@@ -67,7 +67,7 @@ void *CrashInfoThread::Entry()
     }
 
     while(!m_stop){
-        bool result = ::ReadEventLog(hLog,
+        BOOL result = ::ReadEventLog(hLog,
             EVENTLOG_SEQUENTIAL_READ | EVENTLOG_BACKWARDS_READ,
             0,buffer,bytes_to_read,&bytes_read,&bytes_needed);
         if(!result){
@@ -126,7 +126,7 @@ save_info:
         log.AddLine(wxT("                                                                                "));
         log.AddLine(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         log.AddLine(wxT("                                                                                "));
-        for(int i = 0; i < info.Count(); i++) log.AddLine(info[i]);
+        for(int i = 0; i < (int)info.Count(); i++) log.AddLine(info[i]);
         log.Write();
         log.Close();
     }
@@ -141,7 +141,7 @@ save_info:
     }
 
     // save time stamp of the last processed event
-    if(!m_stop) cfg->Write(wxT("/LastProcessedEvent/TimeStamp"),new_time_stamp);
+    if(!m_stop) cfg->Write(wxT("/LastProcessedEvent/TimeStamp"),(long)new_time_stamp);
 
 done:
     if(hLog) ::CloseEventLog(hLog);
