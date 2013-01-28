@@ -562,7 +562,7 @@ NTSTATUS winx_defrag_fopen(winx_file_info *f,int action,HANDLE *phandle)
     int win_version = winx_get_os_version();
     ACCESS_MASK access_rights = SYNCHRONIZE;
     ULONG flags = FILE_SYNCHRONOUS_IO_NONALERT;
-    int length, i;
+    int i, length;
     char volume_letter;
     wchar_t *path;
     wchar_t buffer[MAX_PATH + 1];
@@ -622,7 +622,7 @@ NTSTATUS winx_defrag_fopen(winx_file_info *f,int action,HANDLE *phandle)
     * http://msdn.microsoft.com/en-us/library/windows/desktop/aa363911(v=vs.85).aspx
     */
     path = f->path;
-    length = wcslen(f->path);
+    length = (int)wcslen(f->path);
     if(length >= 9){ /* to ensure that we have at least \??\X:\$x */
         if(f->path[7] == '$'){
             volume_letter = (char)f->path[4];

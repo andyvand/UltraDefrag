@@ -129,7 +129,7 @@ int winx_query_symbolic_link(wchar_t *name, wchar_t *buffer, int length)
     }
     us.Buffer = buffer;
     us.Length = 0;
-    us.MaximumLength = length * sizeof(wchar_t);
+    us.MaximumLength = (USHORT)(length * sizeof(wchar_t));
     size = 0;
     status = NtQuerySymbolicLinkObject(hLink,&us,&size);
     (void)NtClose(hLink);

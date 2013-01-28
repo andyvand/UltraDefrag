@@ -160,7 +160,7 @@ static int save_boot_exec_list(struct cmd *list)
     NTSTATUS status;
     
     for(c = list; c; c = c->next){
-        if(c->cmd[0]) length += wcslen(c->cmd) + 1;
+        if(c->cmd[0]) length += (int)wcslen(c->cmd) + 1;
         if(c->next == list) break;
     }
     commands = winx_malloc(length * sizeof(wchar_t));

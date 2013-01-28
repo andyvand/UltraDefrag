@@ -171,7 +171,7 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
     FILE *f;
     char *msg;
     int i, result = 0;
-    unsigned int j, k, n;
+    int j, k, n;
     char c;
     char *sq;
     
@@ -213,7 +213,7 @@ BOOL WgxSaveOptions(char *path,WGX_OPTION *table,WGX_SAVE_OPTIONS_CALLBACK cb)
             if(result < 0)
                 goto fail;
         
-            n = strlen(table[i].string);
+            n = (int)strlen(table[i].string);
             for(j = 0; j < n; j++){
                 c = table[i].string[j];
                 /* replace character by escape sequence when needed */

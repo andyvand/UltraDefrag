@@ -155,7 +155,7 @@ char *winx_strdup(const char *s)
     if(s == NULL)
         return NULL;
     
-    length = strlen(s);
+    length = (int)strlen(s);
     cp = winx_malloc((length + 1) * sizeof(char));
     if(cp) strcpy(cp,s);
     return cp;
@@ -172,7 +172,7 @@ wchar_t *winx_wcsdup(const wchar_t *s)
     if(s == NULL)
         return NULL;
     
-    length = wcslen(s);
+    length = (int)wcslen(s);
     cp = winx_malloc((length + 1) * sizeof(wchar_t));
     if(cp) wcscpy(cp,s);
     return cp;

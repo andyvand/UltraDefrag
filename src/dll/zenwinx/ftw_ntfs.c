@@ -593,7 +593,7 @@ static void analyze_single_attribute(ULONGLONG mft_id,FILE_RECORD_HEADER *frh,
                     attribute_found = TRUE;
             } else {
                 if(name != NULL){
-                    name_length = wcslen(attr_name);
+                    name_length = (int)wcslen(attr_name);
                     if(name_length == attr->NameLength){
                         if(memcmp((void *)attr_name,(void *)name,name_length * sizeof(wchar_t)) == 0){
                             if(attr->AttributeNumber == attr_number)
@@ -1262,7 +1262,7 @@ static int update_stream_name(winx_file_info *f,mft_scan_parameters *sp)
     wchar_t *new_name;
     int length;
     
-    length = wcslen(f->name) + wcslen(sp->mfi.Name) + 1;
+    length = (int)wcslen(f->name) + (int)wcslen(sp->mfi.Name) + 1;
     new_name = winx_malloc((length + 1) * sizeof(wchar_t));
     if(new_name == NULL){
         etrace("cannot allocate %u bytes of memory",

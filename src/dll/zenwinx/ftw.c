@@ -302,12 +302,12 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     memcpy(f->name,file_entry->FileName,file_entry->FileNameLength);
     
     /* detect whether we are in root directory or not */
-    length = wcslen(path);
+    length = (int)wcslen(path);
     if(path[length - 1] == '\\')
         is_rootdir = 1; /* only root directory contains trailing backslash */
     
     /* build path */
-    length += wcslen(f->name) + 1;
+    length += (int)wcslen(f->name) + 1;
     if(!is_rootdir)
         length ++;
     f->path = winx_malloc(length * sizeof(wchar_t));
@@ -386,7 +386,7 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
         return (-1);
     
     /* build path */
-    length = wcslen(path) + 1;
+    length = (int)wcslen(path) + 1;
     f->path = winx_malloc(length * sizeof(wchar_t));
     if(f->path == NULL){
         etrace("cannot allocate %u bytes of memory",

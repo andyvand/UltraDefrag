@@ -90,7 +90,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
     lua_gc(L, LUA_GCRESTART, 0);
     
     /* prepare Lua script */
-    length = strlen(sctemplate) + strlen(path) + 1;
+    length = (int)strlen(sctemplate) + (int)strlen(path) + 1;
     script = malloc(length);
     if(script == NULL){
         mtrace();
@@ -125,7 +125,7 @@ BOOL WgxBuildResourceTable(PWGX_I18N_RESOURCE_ENTRY table,char *path)
                 if(!lua_isnil(L, lua_gettop(L))){
                     value = lua_tostring(L, lua_gettop(L));
                     if(value){
-                        length = strlen(value);
+                        length = (int)strlen(value);
                         table[i].LoadedString = malloc((length + 1) * 2);
                         if(table[i].LoadedString == NULL){
                             mtrace();
