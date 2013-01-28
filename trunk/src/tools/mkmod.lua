@@ -236,9 +236,14 @@ define compile_resource
 @$(WINDRES) $(RCFLAGS) $(RC_PREPROC) $(RC_INCLUDE_DIRS) -O COFF -i "$<" -o "$@"
 endef
 
-define compile_source
+define compile_c_source
 @echo Compiling $<
-@$(CC) $(CFLAGS) $(C_PREPROC) $(C_INCLUDE_DIRS) -c "$<" -o "$@"
+@gcc.exe $(CFLAGS) $(C_PREPROC) $(C_INCLUDE_DIRS) -c "$<" -o "$@"
+endef
+
+define compile_cpp_source
+@echo Compiling $<
+@g++.exe $(CFLAGS) $(C_PREPROC) $(C_INCLUDE_DIRS) -c "$<" -o "$@"
 endef
 
 ]]
@@ -369,7 +374,11 @@ function produce_mingw_makefile()
         for i, v in ipairs(inc) do
             f:write("\\\n", v, " ")
         end
-        f:write("\n\t\$(compile_source)\n\n")
+        if string.find(v,"%.cpp$") then
+            f:write("\n\t\$(compile_cpp_source)\n\n")
+        else
+            f:write("\n\t\$(compile_c_source)\n\n")
+        end
     end
 
     for i, v in ipairs(rc) do
