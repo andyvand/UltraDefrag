@@ -138,10 +138,14 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& event)
 {
     switch(event.GetId()){
         case ID_HelpUpdateNone:
+            // disable checks
+            m_upgradeThread->m_level = 0;
+            break;
         case ID_HelpUpdateStable:
         case ID_HelpUpdateAll:
+            // enable the check...
             m_upgradeThread->m_level = event.GetId() - ID_HelpUpdateNone;
-            break;
+            // ...and check it now
         case ID_HelpUpdateCheck:
             m_upgradeThread->m_check = true;
     }
