@@ -143,7 +143,7 @@ void RedrawProgress(udefrag_progress_info *pi)
     _snprintf(format,sizeof(format),"\r%%-%us",progress_line_length);
     format[sizeof(format) - 1] = 0;
     winx_printf(format,s);
-    progress_line_length = strlen(s);
+    progress_line_length = (int)strlen(s);
 
     if(pi->completion_status != 0){
         /* print results of the completed job */
@@ -534,7 +534,7 @@ static void search_for_paths(int argc,wchar_t **argv,wchar_t **envp)
             /* check for trailing quote */
             if(argv[i][wcslen(argv[i]) - 1] == '"'){
                 /* remove trailing quote */
-                n = wcslen(aux_buffer);
+                n = (int)wcslen(aux_buffer);
                 if(n > 0) aux_buffer[n - 1] = 0;
                 add_path(aux_buffer);
                 aux_buffer[0] = 0;
@@ -553,7 +553,7 @@ static void search_for_paths(int argc,wchar_t **argv,wchar_t **envp)
                 wcsncpy(aux_buffer,aux_buffer2,MAX_LONG_PATH);
                 aux_buffer[MAX_LONG_PATH] = 0;
                 /* remove trailing quote */
-                n = wcslen(aux_buffer);
+                n = (int)wcslen(aux_buffer);
                 if(n > 0) aux_buffer[n - 1] = 0;
             }
             add_path(aux_buffer);

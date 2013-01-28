@@ -210,7 +210,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
 
             if(file->f->path != NULL){
                 /* skip \??\ sequence in the beginning of the path */
-                length = wcslen(file->f->path);
+                length = (int)wcslen(file->f->path);
                 if(length > 4){
                     convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->f->path + 4);
                 } else {

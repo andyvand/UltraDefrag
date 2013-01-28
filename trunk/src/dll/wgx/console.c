@@ -129,7 +129,7 @@ void WgxPrintUnicodeString(wchar_t *string,FILE *f)
 
 convert:
     /* convert string to the acceptable encoding */
-    length = (wcslen(string) + 1) * 4; /* should be enough */
+    length = ((int)wcslen(string) + 1) * 4; /* should be enough */
     cnv_string = malloc(length);
     if(cnv_string == NULL){
         mtrace();

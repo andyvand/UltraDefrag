@@ -194,7 +194,7 @@ static void deliver_message(char *string)
     dbuffer->Msg[DBG_OUT_BUFFER_SIZE - 1] = 0;
 
     /* ensure that the buffer has new line character */
-    length = strlen(dbuffer->Msg);
+    length = (int)strlen(dbuffer->Msg);
     if(length > 0){
         if(dbuffer->Msg[length-1] != '\n'){
             if(length == (DBG_OUT_BUFFER_SIZE - 1)){
@@ -375,8 +375,7 @@ void winx_dbg_print(int flags, const char *format, ...)
     char *cnv_msg = NULL;
     ULONG status, error;
     int ns_flag = 0, le_flag = 0;
-    int encoding;
-    int length;
+    int encoding, length;
     va_list arg;
     
     /* save last error codes */
@@ -392,7 +391,7 @@ void winx_dbg_print(int flags, const char *format, ...)
     if(!msg) return;
     
     /* get rid of trailing new line character */
-    length = strlen(msg);
+    length = (int)strlen(msg);
     if(length){
         if(msg[length - 1] == '\n')
             msg[length - 1] = 0;
@@ -420,7 +419,7 @@ void winx_dbg_print(int flags, const char *format, ...)
                 add_dbg_log_entry(ext_msg ? ext_msg : msg);
                 deliver_message(ext_msg ? ext_msg : msg);
             } else {
-                length = (wcslen((wchar_t *)err_msg) + 1) * sizeof(wchar_t);
+                length = ((int)wcslen((wchar_t *)err_msg) + 1) * sizeof(wchar_t);
                 length *= 2; /* enough to hold UTF-8 string */
                 cnv_msg = winx_malloc(length);
                 if(cnv_msg){
@@ -481,9 +480,8 @@ void winx_dbg_print_header(char ch, int width, const char *format, ...)
     char *string;
     char *prefix;
     char *body;
-    int length;
+    int length, left;
     char *buffer;
-    int left;
     
     if(ch == 0)
         ch = DEFAULT_DBG_PRINT_DECORATION_CHAR;
@@ -503,7 +501,7 @@ void winx_dbg_print_header(char ch, int width, const char *format, ...)
             } else if(strstr(string,D) == string){
                 prefix = D; body += strlen(D);
             }
-            length = strlen(body);
+            length = (int)strlen(body);
             if(length > (width - 4)){
                 /* print string not decorated */
                 winx_dbg_print(0,"%s",string);
@@ -616,7 +614,7 @@ static void flush_dbg_log(int already_synchronized)
         winx_printf("\nWriting log file \"%ws\" ...\n",&log_path[4]);
         for(log_entry = old_dbg_log; log_entry; log_entry = log_entry->next){
             if(log_entry->buffer){
-                length = strlen(log_entry->buffer);
+                length = (int)strlen(log_entry->buffer);
                 if(length){
                     /* get rid of trailing new line character */
                     if(log_entry->buffer[length - 1] == '\n'){

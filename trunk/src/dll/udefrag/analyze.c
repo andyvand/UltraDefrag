@@ -423,7 +423,7 @@ static int filter(winx_file_info *f,void *user_defined_data)
     * directory path, otherwise we'll not
     * be able to defragment it.
     */
-    length = wcslen(f->path);
+    length = (int)wcslen(f->path);
     if(length >= 2){
         if(f->path[length - 1] == '.' && f->path[length - 2] == '\\'){
             trace(I"root directory detected, its trailing dot will be removed");
@@ -691,7 +691,7 @@ static int is_well_known_locked_file(winx_file_info *f,udefrag_job_parameters *j
         L"$Secure",
         NULL
     };
-    int i, length = wcslen(f->path);
+    int i, length = (int)wcslen(f->path);
     
     /* search for well known locked NTFS meta files */
     if(length >= 9){ /* ensure that we have at least \??\X:\$x */

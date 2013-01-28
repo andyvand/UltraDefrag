@@ -336,7 +336,7 @@ BOOL WgxGetTextDimensions(wchar_t *text,HFONT hFont,HWND hWnd,int *pWidth,int *p
         return FALSE;
     }
     hOldFont = SelectObject(hdc,hFont);
-    result = GetTextExtentPoint32W(hdc,text,wcslen(text),&size);
+    result = GetTextExtentPoint32W(hdc,text,(int)wcslen(text),&size);
     if(result == FALSE){
         letrace("cannot get text dimensions");
     } else {
