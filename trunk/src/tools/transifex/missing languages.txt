@@ -1,0 +1,23 @@
+name             Kapampangan
+code             pam
+code_aliases     pam-PH
+nplurals         2
+pluralequation   (n != 1)
+rule_zero
+rule_two
+rule_one         n is 1
+rule_few
+rule_many
+rule_other       everything else
+
+name             Wáray-Wáray
+code             war
+code_aliases     war-PH
+nplurals         2
+pluralequation   (n != 1)
+rule_zero
+rule_two
+rule_one         n is 1
+rule_few
+rule_many
+rule_other       everything else
