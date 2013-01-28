@@ -44,7 +44,7 @@ cpp_files = 0
 rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
 
 mingw_cmd = "mingw32-make -f Makefile.mingw"
-sdk_cmd = "nmake.exe /NOLOGO /f Makefile.winsdk"
+sdk_cmd = "nmake.exe /NOLOGO /S /f Makefile.winsdk"
 
 -- common subroutines
 function build_list_of_headers()
@@ -101,7 +101,10 @@ function produce_sdk_makefile()
 
     f:write("ALL : \"", target_name, "\"\n\n")
     f:write("CPP_PROJ=/nologo /W3 /D \"WIN32\" /D \"NDEBUG\" /D \"_MBCS\" ")
-    f:write("/D \"USE_WINSDK\" /D \"_CRT_SECURE_NO_WARNINGS\" /GS- /Gd /arch:SSE2 ")
+    f:write("/D \"USE_WINSDK\" /D \"_CRT_SECURE_NO_WARNINGS\" /GS- /Gd ")
+    if arch == "i386" then
+        f:write("/arch:SSE2 ")
+    end
     if arch == "ia64" then
         -- optimization for ia64 is not available:
         -- the compiler stucks with the message:
@@ -218,7 +221,7 @@ function produce_sdk_makefile()
     for i, v in ipairs(rc) do
         outfile = string.gsub(v,"%.rc","%-" .. arch .. "%.res")
         f:write(outfile, ": ", v, " header_files resource_files\n")
-        f:write("    \$(RSC) \$(RSC_PROJ) /Fo", outfile, " ", v, "\n\n")
+        f:write("    \$(RSC) \$(RSC_PROJ) /nologo /Fo", outfile, " ", v, "\n\n")
     end
 
     f:close()
@@ -492,3 +495,6 @@ else
 end
 
 print(input_filename .. " " .. os.getenv("BUILD_ENV") .. " build was successful.\n")
+
+-- uncomment for checking each targets build process separately
+-- os.execute("cmd.exe /C pause")
