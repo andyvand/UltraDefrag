@@ -350,7 +350,7 @@ static int process_volumes(void)
     /* process paths */
     wxString orig_cut_filter; wxString cut_filter;
     bool save_filter = wxGetEnv(wxT("UD_CUT_FILTER"),&orig_cut_filter);
-    char letter = 0; bool result = true;
+    char letter = 0;
 
     bool first_group = true; g_paths->Sort();
     for(int i = 0; i < (int)g_paths->GetCount(); i++){
@@ -467,7 +467,7 @@ static int list_volumes(void)
         double d = (total > 0) ? free / total : 0;
         int percent = (int)(100 * d);
         color(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-        printf("%c:  %8hs %12hs %8u %%   %ls\n",
+        printf("%c:  %8s %12s %8u %%   %ls\n",
             v[i].letter,v[i].fsname,s,percent,v[i].label);
     }
     udefrag_release_vollist(v);

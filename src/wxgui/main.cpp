@@ -357,7 +357,9 @@ MainFrame::MainFrame()
     InitToolbar();
 
     // create list of volumes and cluster map
-    m_splitter = new wxSplitterWindow(this,wxID_ANY);
+    m_splitter = new wxSplitterWindow(this,wxID_ANY,
+        wxDefaultPosition,wxDefaultSize,
+        wxSP_3D | wxSP_LIVE_UPDATE);
     InitVolList(); InitMap();
     m_splitter->SplitHorizontally(m_vList,m_cMap);
 

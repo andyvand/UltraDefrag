@@ -158,7 +158,7 @@ void print_unicode(wchar_t *string)
             if(!GetConsoleMode(g_out,&mode)){
                 if(GetLastError() == ERROR_INVALID_HANDLE){
                     wxString s(string);
-                    printf("%hs",s.utf8_str().data());
+                    printf("%s",s.utf8_str().data());
                     return;
                 } else {
                     letrace("GetConsoleMode failed");
@@ -166,7 +166,7 @@ void print_unicode(wchar_t *string)
             }
         } else {
             wxString s(string);
-            printf("%hs",s.utf8_str().data());
+            printf("%s",s.utf8_str().data());
             return;
         }
     }
@@ -189,7 +189,7 @@ void print_unicode(wchar_t *string)
                         letrace("SetConsoleOutputCP failed");
                     } else {
                         wxString s(string);
-                        printf("%hs",s.utf8_str().data());
+                        printf("%s",s.utf8_str().data());
                         SetConsoleOutputCP(old_cp);
                         return;
                     }
