@@ -42,7 +42,7 @@ echo.
 
 :: download all translations from transifex
 pushd "%~dp0\tools\transifex"
-if exist tx.exe tx.exe pull -a || goto fail
+if exist tx.exe tx.exe pull -a || (popd && goto fail)
 echo.
 popd
 
