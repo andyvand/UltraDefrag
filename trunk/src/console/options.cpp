@@ -43,7 +43,9 @@ extern "C" {
 #include "../lua5.1/lualib.h"
 }
 
+#if !defined(__GNUC__)
 #define __STDC__ 1
+#endif
 #include "getopt.h"
 
 bool set_shellex_options(void);
@@ -389,7 +391,7 @@ bool set_shellex_options(void)
             const char *msg = lua_tostring(L,-1);
             if(!msg) msg = "(error object is not a string)";
             wxLogError(wxT("%hs"),msg);
-            fprintf(stderr,"%hs\n",msg);
+            fprintf(stderr,"%s\n",msg);
             lua_pop(L, 1);
         }
         lua_close(L);
