@@ -36,6 +36,7 @@ set PATH=%GNUWIN32_DIR%;%PATH%
 pushd "%~dp0\wxgui"
 
 :: extract translations
+copy /v /y locale\UltraDefrag.header locale\UltraDefrag.pot
 xgettext -C -j --copyright-holder="UltraDefrag Development Team" --msgid-bugs-address="http://sourceforge.net/p/ultradefrag/bugs/" -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot *.cpp || goto fail
 copy /v /y locale\UltraDefrag.pot "%~dp0\tools\transifex\translations\ultradefrag.main\en_US.po"
 echo.
