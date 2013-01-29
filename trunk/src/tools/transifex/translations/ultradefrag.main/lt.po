@@ -1,0 +1,282 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR UltraDefrag Development Team
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-28 22:25+0100\n"
+"PO-Revision-Date: 2013-01-29 20:08+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr ""
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "&Veiksmai"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "&Ataskaita"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "&Nuostatos"
+
+#: i18n.cpp:118 i18n.cpp:204
+msgid "&Help"
+msgstr "&Pagalba"
+
+#: i18n.cpp:121
+msgid "&Analyze"
+msgstr "&Analizuoti"
+
+#: i18n.cpp:122
+msgid "&Defragment"
+msgstr "&Defragmentuoti"
+
+#: i18n.cpp:123
+msgid "&Quick optimization"
+msgstr "&Greitas optimizavimas"
+
+#: i18n.cpp:124
+msgid "&Full optimization"
+msgstr "&Pilnas optimizavimas"
+
+#: i18n.cpp:125
+msgid "&Optimize MFT"
+msgstr "&Optimizuoti MFT"
+
+#: i18n.cpp:126
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:127
+msgid "&Stop"
+msgstr "&Stabdyti"
+
+#: i18n.cpp:128
+msgid "Re&peat action"
+msgstr "Pa&kartoti veiksmą"
+
+#: i18n.cpp:129
+msgid "Skip removable &media"
+msgstr "Praleisti &mobilias laikmenas"
+
+#: i18n.cpp:130
+msgid "&Rescan drives"
+msgstr "Pe&rskanuoti diskus"
+
+#: i18n.cpp:131
+msgid "Repair dri&ves"
+msgstr "Tva&rkyti diskus"
+
+#: i18n.cpp:133
+msgid "&When done"
+msgstr "&Užbaigus"
+
+#: i18n.cpp:135 i18n.cpp:139
+msgid "E&xit"
+msgstr "&Išeiti"
+
+#: i18n.cpp:138
+msgid "&None"
+msgstr "&Nieko"
+
+#: i18n.cpp:140
+msgid "Stan&dby"
+msgstr "Pristab&dyti"
+
+#: i18n.cpp:141
+msgid "&Hibernate"
+msgstr "&Hibernuoti"
+
+#: i18n.cpp:142
+msgid "&Logoff"
+msgstr "&Atjungti vartotoją"
+
+#: i18n.cpp:143
+msgid "&Reboot"
+msgstr "&Perkrauti"
+
+#: i18n.cpp:144
+msgid "&Shutdown"
+msgstr "Išjun&gti"
+
+#: i18n.cpp:147
+msgid "&Show report"
+msgstr "&Rodyti ataskaitą"
+
+#: i18n.cpp:150
+msgid "&Language"
+msgstr "Ka&lba"
+
+#: i18n.cpp:151
+msgid "&Graphical interface"
+msgstr "&Grafinė sąsaja"
+
+#: i18n.cpp:152 i18n.cpp:200
+msgid "&Boot time scan"
+msgstr "&Skanuoti OS krovimo metu"
+
+#: i18n.cpp:153
+msgid "&Sorting"
+msgstr "&Rikiavimas"
+
+#: i18n.cpp:155
+msgid "&Reports"
+msgstr "&Ataskaitos"
+
+#: i18n.cpp:158
+msgid "&View change log"
+msgstr "&Pakeitimai"
+
+#: i18n.cpp:159
+msgid "View translation &report"
+msgstr "Vertimo &ataskaita"
+
+#: i18n.cpp:160
+msgid "&Translations folder"
+msgstr "Vertimų &katalogas"
+
+#: i18n.cpp:161
+msgid "&Submit current translation"
+msgstr "&Siųsti vertimą"
+
+#: i18n.cpp:164
+msgid "&Font"
+msgstr "&Šriftas"
+
+#: i18n.cpp:165
+msgid "&Options"
+msgstr "&Parinktys"
+
+#: i18n.cpp:168
+msgid "&Enable"
+msgstr "&Paleisti"
+
+#: i18n.cpp:169
+msgid "&Script"
+msgstr "&Skriptas"
+
+#: i18n.cpp:172
+msgid "By &path"
+msgstr "Rikiuoti pagal &kelią"
+
+#: i18n.cpp:173
+msgid "By &size"
+msgstr "Rikiuoti pagal &dydį"
+
+#: i18n.cpp:174
+msgid "By &creation time"
+msgstr "Rikiuoti pagal &sukūrimo laiką"
+
+#: i18n.cpp:175
+msgid "By last &modification time"
+msgstr "Rikiuoti pagal paskutinį &modifikacijos laiką"
+
+#: i18n.cpp:176
+msgid "By &last access time"
+msgstr "Rikiuoti pagal &paskutinį kreipties laiką"
+
+#: i18n.cpp:177
+msgid "In &ascending order"
+msgstr "Rikiuoti &didėjimo tvarka"
+
+#: i18n.cpp:178
+msgid "In &descending order"
+msgstr "Rikiuoti &mažėjimo tvarka"
+
+#: i18n.cpp:181
+msgid "&Contents"
+msgstr "&Turinys"
+
+#: i18n.cpp:182
+msgid "Best &practice"
+msgstr "Geroji &praktika"
+
+#: i18n.cpp:183
+msgid "&Frequently asked questions"
+msgstr "&DUK"
+
+#: i18n.cpp:184
+msgid "Cluster map &legend"
+msgstr "Klasterių išdėstymo &legenda"
+
+#: i18n.cpp:186
+msgid "&Debug"
+msgstr ""
+
+#: i18n.cpp:187 upgrade.cpp:160
+msgid "&Upgrade"
+msgstr ""
+
+#: i18n.cpp:189
+msgid "&Never check"
+msgstr ""
+
+#: i18n.cpp:190
+msgid "Check stable releases &only"
+msgstr ""
+
+#: i18n.cpp:191
+msgid "Check &all releases"
+msgstr ""
+
+#: i18n.cpp:192
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:193
+msgid "&About"
+msgstr "&Apie"
+
+#: i18n.cpp:196 utils.cpp:316
+msgid "Open &log"
+msgstr "Atverti žurna&lą"
+
+#: i18n.cpp:197
+msgid "Send bug &report"
+msgstr "Pranešti apie &klaidą"
+
+#: i18n.cpp:202
+msgid "Boot time script"
+msgstr "Skriptas OS įkrovai"
+
+#: upgrade.cpp:157
+msgid "release is available for download!"
+msgstr "laidą jau galima parsisiųsti!"
+
+#: upgrade.cpp:159
+msgid "You can upgrade me ^-^"
+msgstr "O mane galima atnaujnti ^-^"
+
+#: upgrade.cpp:160 utils.cpp:320
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:319
+msgid "Error!"
+msgstr ""

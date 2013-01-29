@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-29 18:03+0100\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,266 +16,300 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: about.cpp:45
-msgid "About UltraDefrag"
-msgstr ""
 
-#: about.cpp:56
-msgid "An open source defragmentation utility."
-msgstr ""
-
-#: about.cpp:58
-msgid "Credits and licenses are listed in the handbook."
-msgstr ""
-
-#: about.cpp:61
-msgid "UltraDefrag website"
-msgstr ""
-
-#: i18n.cpp:114
 msgid "&Action"
-msgstr ""
+msgstr "&Búhat"
 
-#: i18n.cpp:115
 msgid "&Report"
-msgstr ""
+msgstr "&Súmat"
 
-#: i18n.cpp:116
 msgid "&Settings"
-msgstr ""
+msgstr "S&eting"
 
-#: i18n.cpp:117 i18n.cpp:203
 msgid "&Help"
-msgstr ""
+msgstr "B&ulig"
 
-#: i18n.cpp:120
 msgid "&Analyze"
-msgstr ""
+msgstr "Pag&himay"
 
-#: i18n.cpp:121
 msgid "&Defragment"
-msgstr ""
+msgstr "Ig&bug-os"
 
-#: i18n.cpp:122
 msgid "&Quick optimization"
-msgstr ""
+msgstr "&Madagmit nga pag-úpay"
 
-#: i18n.cpp:123
 msgid "&Full optimization"
-msgstr ""
+msgstr "Bug-&os nga pag-úpay"
 
-#: i18n.cpp:124
 msgid "&Optimize MFT"
+msgstr "Upaya an M&FT"
+
+msgid "&Pause"
 msgstr ""
 
-#: i18n.cpp:125
-msgid "Pa&use"
-msgstr ""
-
-#: i18n.cpp:126
 msgid "&Stop"
-msgstr ""
+msgstr "&Undanga"
 
-#: i18n.cpp:127
 msgid "Re&peat action"
-msgstr ""
+msgstr "Bali&ka"
 
-#: i18n.cpp:128
 msgid "Skip removable &media"
-msgstr ""
+msgstr "&Laktawí an natatanggal nga media"
 
-#: i18n.cpp:129
 msgid "&Rescan drives"
-msgstr ""
+msgstr "Balika pagskan han mga &drayb"
 
-#: i18n.cpp:130
 msgid "Repair dri&ves"
-msgstr ""
+msgstr "Repair drives"
 
-#: i18n.cpp:132
 msgid "&When done"
-msgstr ""
+msgstr "Pagka&human"
 
-#: i18n.cpp:134 i18n.cpp:138
 msgid "E&xit"
-msgstr ""
+msgstr "&Gawas"
 
-#: i18n.cpp:137
 msgid "&None"
-msgstr ""
+msgstr "&Waray"
 
-#: i18n.cpp:139
 msgid "Stan&dby"
-msgstr ""
+msgstr "&Hulat"
 
-#: i18n.cpp:140
 msgid "&Hibernate"
-msgstr ""
+msgstr "&Katurog"
 
-#: i18n.cpp:141
 msgid "&Logoff"
 msgstr ""
 
-#: i18n.cpp:142
 msgid "&Reboot"
-msgstr ""
+msgstr "&Balik pagtikang"
 
-#: i18n.cpp:143
 msgid "&Shutdown"
-msgstr ""
+msgstr "&Parong"
 
-#: i18n.cpp:146
 msgid "&Show report"
-msgstr ""
+msgstr "Igpakita an &sumat"
 
-#: i18n.cpp:149
 msgid "&Language"
-msgstr ""
+msgstr "&Pinulongan"
 
-#: i18n.cpp:150
 msgid "&Graphical interface"
 msgstr ""
 
-#: i18n.cpp:151 i18n.cpp:199
 msgid "&Boot time scan"
-msgstr ""
+msgstr "Pag-scan &ha pagtikang"
 
-#: i18n.cpp:152
+msgid "&Reports"
+msgstr "&Sumat"
+
 msgid "&Sorting"
 msgstr ""
 
-#: i18n.cpp:154
-msgid "&Reports"
-msgstr ""
-
-#: i18n.cpp:157
 msgid "&View change log"
-msgstr ""
+msgstr "&Kitaa an talaan hin pagbag-o"
 
-#: i18n.cpp:158
 msgid "View translation &report"
-msgstr ""
+msgstr "Kitaa an &sumat han paghubad"
 
-#: i18n.cpp:159
 msgid "&Translations folder"
-msgstr ""
+msgstr "&Hiripusán han mga hinubad"
 
-#: i18n.cpp:160
 msgid "&Submit current translation"
-msgstr ""
+msgstr "&Igsumite an yana nga ginhubad"
 
-#: i18n.cpp:163
 msgid "&Font"
 msgstr ""
 
-#: i18n.cpp:164
 msgid "&Options"
-msgstr ""
+msgstr "&Pagpipilian"
 
-#: i18n.cpp:167
 msgid "&Enable"
-msgstr ""
+msgstr "&Tugoti"
 
-#: i18n.cpp:168
 msgid "&Script"
-msgstr ""
+msgstr "&Iskrip"
 
-#: i18n.cpp:171
 msgid "By &path"
 msgstr ""
 
-#: i18n.cpp:172
 msgid "By &size"
 msgstr ""
 
-#: i18n.cpp:173
 msgid "By &creation time"
 msgstr ""
 
-#: i18n.cpp:174
 msgid "By last &modification time"
 msgstr ""
 
-#: i18n.cpp:175
 msgid "By &last access time"
 msgstr ""
 
-#: i18n.cpp:176
 msgid "In &ascending order"
 msgstr ""
 
-#: i18n.cpp:177
 msgid "In &descending order"
 msgstr ""
 
-#: i18n.cpp:180
 msgid "&Contents"
-msgstr ""
+msgstr "&Sulod"
 
-#: i18n.cpp:181
 msgid "Best &practice"
-msgstr ""
+msgstr "Gimaupayi &nga buhat"
 
-#: i18n.cpp:182
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "&Agsob Ginpapakiana"
 
-#: i18n.cpp:183
 msgid "Cluster map &legend"
 msgstr ""
 
-#: i18n.cpp:185
-msgid "&Debug"
+msgid "De&bug"
 msgstr ""
 
-#: i18n.cpp:186 upgrade.cpp:160
-msgid "&Upgrade"
+msgid "Check for &update"
 msgstr ""
 
-#: i18n.cpp:188
-msgid "&Never check"
-msgstr ""
-
-#: i18n.cpp:189
-msgid "Check &stable releases only"
-msgstr ""
-
-#: i18n.cpp:190
-msgid "Check &all releases"
-msgstr ""
-
-#: i18n.cpp:191
-msgid "&Check now"
-msgstr ""
-
-#: i18n.cpp:192
 msgid "&About"
-msgstr ""
+msgstr "&Bahin han"
 
-#: i18n.cpp:195 utils.cpp:316
 msgid "Open &log"
-msgstr ""
+msgstr "Buklará &an talaan"
 
-#: i18n.cpp:196
 msgid "Send bug &report"
-msgstr ""
+msgstr "Igsumat it &bug"
 
-#: i18n.cpp:201
 msgid "Boot time script"
+msgstr "Iskrip ha pagtikang"
+
+msgid "Drive"
+msgstr "Drayb"
+
+msgid "Status"
+msgstr "Kahímtang"
+
+msgid "Fragmentation"
 msgstr ""
 
-#: upgrade.cpp:157
-msgid "release is available for download!"
+msgid "Total Space"
+msgstr "Kabug-osan"
+
+msgid "Free Space"
+msgstr "Libre"
+
+msgid "% free"
+msgstr "% nga libre"
+
+msgid "Executing"
+msgstr "Ginpapadalagan"
+
+msgid "Analyzed"
+msgstr "Ginhimay"
+
+msgid "Defragmented"
+msgstr "Ginbug-os"
+
+msgid "Optimized"
+msgstr "Ginpaurupay"
+
+msgid "Disk needs to be repaired"
 msgstr ""
 
-#: upgrade.cpp:159
+msgid "folders"
+msgstr "folder"
+
+msgid "files"
+msgstr "fayl"
+
+msgid "fragmented"
+msgstr "ginpinitpinit"
+
+msgid "compressed"
+msgstr "gindasok"
+
+msgid "About Ultra Defragmenter"
+msgstr "Bahin han Ultra Defragmenter"
+
+msgid "&Credits"
+msgstr "&Pagkilala"
+
+msgid "&License"
+msgstr "&Lisensya"
+
+msgid "Please Confirm"
+msgstr "Alayon pagpamatuod"
+
+msgid "Do you really want to shutdown when done?"
+msgstr "¿Karúyag mo ba parongon kun humán na?"
+
+msgid "Do you really want to hibernate when done?"
+msgstr "¿Karúyag mo ba pakaturogon kun humán na?"
+
+msgid "Do you really want to log off when done?"
+msgstr "¿Karúyag mo ba gumawas kun humán na?"
+
+msgid "Do you really want to reboot when done?"
+msgstr "¿Karúyag mo ba bumalik pagtikáng kun humán na?"
+
+msgid "seconds until shutdown"
+msgstr "ka segundo ugsa pumárong"
+
+msgid "seconds until hibernation"
+msgstr "ka segundo ugsa pakaturógon"
+
+msgid "seconds until logoff"
+msgstr "ka segundo ugsa gumawás"
+
+msgid "seconds until reboot"
+msgstr "ka segundo ugsa bumálik pagtikáng"
+
+msgid "&Yes"
+msgstr "&Oo"
+
+msgid "&No"
+msgstr "&Diri"
+
 msgid "You can upgrade me ^-^"
-msgstr ""
+msgstr "Puyde mo ako ig-upgrade ^-^"
 
-#: upgrade.cpp:160 utils.cpp:320
-msgid "&Cancel"
-msgstr ""
+msgid "release is available for download!"
+msgstr "ginpagawas andam na para hin pagdeskarga!"
 
-#: utils.cpp:319
-msgid "Error!"
-msgstr ""
+msgid "A job is running"
+msgstr "Mayda buruhaton nga ginpapadalagan"
+
+msgid "Show"
+msgstr "Igpakita"
+
+msgid "Hide"
+msgstr "Tago-a"
+
+msgid "Fragmented files on"
+msgstr "Mga ginpinitpinit nga mga fayl ha"
+
+msgid "Visit our Homepage"
+msgstr "Bisitaha an amon baláyan"
+
+msgid "View report options"
+msgstr "Kitaa an pagpipili-an hin mga súmat"
+
+msgid "Powered by Lua"
+msgstr "Ginpapadalágan han Lua"
+
+msgid "Fragments"
+msgstr "nga mga pinitpinit"
+
+msgid "Size"
+msgstr "kadako"
+
+msgid "Filename"
+msgstr "ngaran han fayl"
+
+msgid "Comment"
+msgstr "panhinabi"
+
+msgid "locked"
+msgstr "ginkandadohan"
+
+msgid "move failed"
+msgstr "waray mabalhin"
+
+msgid "invalid"
+msgstr "diri mahihimo"
