@@ -60,6 +60,17 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(&dlg,wxID_ANY,
         _("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
 
+    // Burmese needs Padauk font for display
+    if(m_locale->GetCanonicalName().Left(2) == wxT("my")){
+        wxFont textFont = description->GetFont();
+        textFont.SetFaceName(wxT("Padauk"));
+        textFont.SetPointSize(textFont.GetPointSize() + 2);
+
+        description->SetFont(textFont);
+        credits->SetFont(textFont);
+        homepage->SetFont(textFont);
+    }
+
     wxSizerFlags flags;
     flags.Center().Border(wxLEFT & wxRIGHT);
     int space = DPI(11);
