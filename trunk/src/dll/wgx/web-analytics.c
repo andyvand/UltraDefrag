@@ -126,7 +126,7 @@ static char *build_ga_request(char *hostname,char *path,char *account)
         "&utmr=-"
         "&utmp=%s"
         "&utmac=%s"
-        "&utmcc=__utma%%3D%u.%u.%I64u.%I64u.%I64u.50%%3B%%2B__utmz%%3D%u.%I64u.27.2.utmcsr%%3Dgoogle.com%%7Cutmccn%%3D(referral)%%7Cutmcmd%%3Dreferral%%7Cutmcct%%3D%%2F%3B",
+        "&utmcc=__utma%%3D%u.%u.%I64u.%I64u.%I64u.50%%3B%%2B__utmz%%3D%u.%I64u.27.2.utmcsr%%3Dgoogle.com%%7Cutmccn%%3D(referral)%%7Cutmcmd%%3Dreferral%%7Cutmcct%%3D%%2F%%3B",
         utmn,hostname,utmhid,path,account,
         cookie,random,today,today,today,cookie,today
         );
