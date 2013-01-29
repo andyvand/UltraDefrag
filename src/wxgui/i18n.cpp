@@ -187,7 +187,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     m_subMenuUpgrade->SetItemLabel(_("&Upgrade"));
 
     UD_UpdateMenuItemLabel(ID_HelpUpdateNone   , "&Never check"                , "");
-    UD_UpdateMenuItemLabel(ID_HelpUpdateStable , "Check stable releases &only" , "");
+    UD_UpdateMenuItemLabel(ID_HelpUpdateStable , "Check &stable releases only" , "");
     UD_UpdateMenuItemLabel(ID_HelpUpdateAll    , "Check &all releases"         , "");
     UD_UpdateMenuItemLabel(ID_HelpUpdateCheck  , "&Check now"                  , "");
     UD_UpdateMenuItemLabel(ID_HelpAbout        , "&About"                      , "F4");
