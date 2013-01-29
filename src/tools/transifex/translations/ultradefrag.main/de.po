@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-22 02:16+0100\n"
-"PO-Revision-Date: 2013-01-26 10:25+0000\n"
+"POT-Creation-Date: 2013-01-28 22:25+0100\n"
+"PO-Revision-Date: 2013-01-29 13:57+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,234 +46,238 @@ msgstr "&Bericht"
 msgid "&Settings"
 msgstr "&Einstellungen"
 
-#: i18n.cpp:118 i18n.cpp:189
+#: i18n.cpp:118 i18n.cpp:204
 msgid "&Help"
 msgstr "&Hilfe"
 
-#: i18n.cpp:120
+#: i18n.cpp:121
 msgid "&Analyze"
 msgstr "&Analysieren"
 
-#: i18n.cpp:121
+#: i18n.cpp:122
 msgid "&Defragment"
 msgstr "&Defragmentieren"
 
-#: i18n.cpp:122
+#: i18n.cpp:123
 msgid "&Quick optimization"
 msgstr "&Schnelloptimierung"
 
-#: i18n.cpp:123
+#: i18n.cpp:124
 msgid "&Full optimization"
 msgstr "&Komplettoptimierung"
 
-#: i18n.cpp:124
+#: i18n.cpp:125
 msgid "&Optimize MFT"
 msgstr "&Optimiere MFT"
 
-#: i18n.cpp:125
+#: i18n.cpp:126
 msgid "Pa&use"
 msgstr "Pa&use"
 
-#: i18n.cpp:126
+#: i18n.cpp:127
 msgid "&Stop"
 msgstr "&Stopp"
 
-#: i18n.cpp:127
+#: i18n.cpp:128
 msgid "Re&peat action"
 msgstr "Vorgang &wiederholen"
 
-#: i18n.cpp:128
+#: i18n.cpp:129
 msgid "Skip removable &media"
 msgstr "Wechselmedien &ignorieren"
 
-#: i18n.cpp:129
+#: i18n.cpp:130
 msgid "&Rescan drives"
 msgstr "Laufwerke &aktualisieren"
 
-#: i18n.cpp:130
+#: i18n.cpp:131
 msgid "Repair dri&ves"
 msgstr "Laufwerke &reparieren"
 
-#: i18n.cpp:131
+#: i18n.cpp:133
 msgid "&When done"
 msgstr "&Nach Abschluss"
 
-#: i18n.cpp:132 i18n.cpp:135
+#: i18n.cpp:135 i18n.cpp:139
 msgid "E&xit"
 msgstr "&Beenden"
 
-#: i18n.cpp:134 i18n.cpp:175
+#: i18n.cpp:138
 msgid "&None"
 msgstr "&Nichts unternehmen"
 
-#: i18n.cpp:136
+#: i18n.cpp:140
 msgid "Stan&dby"
 msgstr "&Energie sparen"
 
-#: i18n.cpp:137
+#: i18n.cpp:141
 msgid "&Hibernate"
 msgstr "&Ruhezustand"
 
-#: i18n.cpp:138
+#: i18n.cpp:142
 msgid "&Logoff"
 msgstr "&Abmelden"
 
-#: i18n.cpp:139
+#: i18n.cpp:143
 msgid "&Reboot"
 msgstr "&Neu starten"
 
-#: i18n.cpp:140
+#: i18n.cpp:144
 msgid "&Shutdown"
 msgstr "&Herunterfahren"
 
-#: i18n.cpp:142
+#: i18n.cpp:147
 msgid "&Show report"
 msgstr "Bericht &anzeigen"
 
-#: i18n.cpp:144
+#: i18n.cpp:150
 msgid "&Language"
 msgstr "&Sprache"
 
-#: i18n.cpp:145
+#: i18n.cpp:151
 msgid "&Graphical interface"
 msgstr "&Grafische Benutzeroberfläche"
 
-#: i18n.cpp:146 i18n.cpp:185
+#: i18n.cpp:152 i18n.cpp:200
 msgid "&Boot time scan"
 msgstr "&Überprüfung beim Windows-Start"
 
-#: i18n.cpp:147
+#: i18n.cpp:153
 msgid "&Sorting"
 msgstr "&Sortierung"
 
-#: i18n.cpp:148
+#: i18n.cpp:155
 msgid "&Reports"
 msgstr "&Berichte"
 
-#: i18n.cpp:150
+#: i18n.cpp:158
 msgid "&View change log"
 msgstr "Änderungs&protokoll anzeigen"
 
-#: i18n.cpp:151
+#: i18n.cpp:159
 msgid "View translation &report"
 msgstr "Übersetzungs&bericht anzeigen"
 
-#: i18n.cpp:152
+#: i18n.cpp:160
 msgid "&Translations folder"
 msgstr "Übersetzungs&ordner"
 
-#: i18n.cpp:153
+#: i18n.cpp:161
 msgid "&Submit current translation"
 msgstr "&Aktuelle Übersetzung einreichen"
 
-#: i18n.cpp:155
+#: i18n.cpp:164
 msgid "&Font"
 msgstr "&Zeichensatz"
 
-#: i18n.cpp:156
+#: i18n.cpp:165
 msgid "&Options"
 msgstr "&Einstellungen"
 
-#: i18n.cpp:158
+#: i18n.cpp:168
 msgid "&Enable"
 msgstr "&Aktivieren"
 
-#: i18n.cpp:159
+#: i18n.cpp:169
 msgid "&Script"
 msgstr "&Skript"
 
-#: i18n.cpp:161
+#: i18n.cpp:172
 msgid "By &path"
 msgstr "Nach &Pfad"
 
-#: i18n.cpp:162
+#: i18n.cpp:173
 msgid "By &size"
 msgstr "Nach &Größe"
 
-#: i18n.cpp:163
+#: i18n.cpp:174
 msgid "By &creation time"
 msgstr "Nach &Erstelldatum"
 
-#: i18n.cpp:164
+#: i18n.cpp:175
 msgid "By last &modification time"
 msgstr "Nach Än&derungszeit"
 
-#: i18n.cpp:165
+#: i18n.cpp:176
 msgid "By &last access time"
 msgstr "Nach letzter &Zugriffszeit"
 
-#: i18n.cpp:166
+#: i18n.cpp:177
 msgid "In &ascending order"
 msgstr "&Aufsteigend"
 
-#: i18n.cpp:167
+#: i18n.cpp:178
 msgid "In &descending order"
 msgstr "A&bsteigend"
 
-#: i18n.cpp:169
+#: i18n.cpp:181
 msgid "&Contents"
 msgstr "&Inhalt"
 
-#: i18n.cpp:170
+#: i18n.cpp:182
 msgid "Best &practice"
 msgstr "Empfohlene &Verwendung"
 
-#: i18n.cpp:171
+#: i18n.cpp:183
 msgid "&Frequently asked questions"
 msgstr "Häufig gestellte &Fragen"
 
-#: i18n.cpp:172
+#: i18n.cpp:184
 msgid "Cluster map &legend"
 msgstr "&Zuordnungstabellenerklärung"
 
-#: i18n.cpp:173
+#: i18n.cpp:186
 msgid "&Debug"
 msgstr "&Problem berichten"
 
-#: i18n.cpp:174 upgrade.cpp:111
+#: i18n.cpp:187 upgrade.cpp:160
 msgid "&Upgrade"
 msgstr "&Aktualisieren"
 
-#: i18n.cpp:176
-msgid "&Only stable release"
-msgstr "&Nur stabile Versionen"
+#: i18n.cpp:189
+msgid "&Never check"
+msgstr "&Niemals prüfen"
 
-#: i18n.cpp:177
-msgid "&All releases"
-msgstr "&Alle Versionen"
+#: i18n.cpp:190
+msgid "Check stable releases &only"
+msgstr "Nur auf &stabiele Versionen prüfen"
 
-#: i18n.cpp:178
+#: i18n.cpp:191
+msgid "Check &all releases"
+msgstr "Auf &alle Versionen prüfen"
+
+#: i18n.cpp:192
 msgid "&Check now"
 msgstr "&Jetzt überprüfen"
 
-#: i18n.cpp:179
+#: i18n.cpp:193
 msgid "&About"
 msgstr "&Über"
 
-#: i18n.cpp:181 utils.cpp:247
+#: i18n.cpp:196 utils.cpp:316
 msgid "Open &log"
 msgstr "&Protokoll öffnen"
 
-#: i18n.cpp:182
+#: i18n.cpp:197
 msgid "Send bug &report"
 msgstr "Problembericht &senden"
 
-#: i18n.cpp:187
+#: i18n.cpp:202
 msgid "Boot time script"
 msgstr "Windows-Start-Skript"
 
-#: upgrade.cpp:108
+#: upgrade.cpp:157
 msgid "release is available for download!"
 msgstr "Neue Version zum Herunterladen vorhanden!"
 
-#: upgrade.cpp:110
+#: upgrade.cpp:159
 msgid "You can upgrade me ^-^"
 msgstr "Du kannst mich aktualisieren ^-^"
 
-#: upgrade.cpp:111 utils.cpp:251
+#: upgrade.cpp:160 utils.cpp:320
 msgid "&Cancel"
 msgstr "&Abbrechen"
 
-#: utils.cpp:250
+#: utils.cpp:319
 msgid "Error!"
 msgstr "Fehler!"
