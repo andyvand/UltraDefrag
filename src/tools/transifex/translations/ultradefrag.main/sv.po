@@ -1,0 +1,283 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR UltraDefrag Development Team
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-28 22:25+0100\n"
+"PO-Revision-Date: 2013-01-29 21:05+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr ""
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "Aktiviteter"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "Rapport"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "Inställningar"
+
+#: i18n.cpp:118 i18n.cpp:204
+msgid "&Help"
+msgstr "Hjälp"
+
+#: i18n.cpp:121
+msgid "&Analyze"
+msgstr "Analysera"
+
+#: i18n.cpp:122
+msgid "&Defragment"
+msgstr "Defragmentera"
+
+#: i18n.cpp:123
+msgid "&Quick optimization"
+msgstr "Snabb optimering"
+
+#: i18n.cpp:124
+msgid "&Full optimization"
+msgstr "Utförlig optimering"
+
+#: i18n.cpp:125
+msgid "&Optimize MFT"
+msgstr "Optimera MFT"
+
+#: i18n.cpp:126
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:127
+msgid "&Stop"
+msgstr "Stoppa"
+
+#: i18n.cpp:128
+msgid "Re&peat action"
+msgstr "Upprepande aktivitet"
+
+#: i18n.cpp:129
+msgid "Skip removable &media"
+msgstr "Hoppa över flyttbara medier"
+
+#: i18n.cpp:130
+msgid "&Rescan drives"
+msgstr "Uppdatera enhetslistan"
+
+#: i18n.cpp:131
+msgid "Repair dri&ves"
+msgstr "Reparera enheter"
+
+#: i18n.cpp:133
+msgid "&When done"
+msgstr "Avslutande åtgärd"
+
+#: i18n.cpp:135 i18n.cpp:139
+msgid "E&xit"
+msgstr "Avsluta"
+
+#: i18n.cpp:138
+msgid "&None"
+msgstr "Gör inget"
+
+#: i18n.cpp:140
+msgid "Stan&dby"
+msgstr "Strömsparläge"
+
+#: i18n.cpp:141
+msgid "&Hibernate"
+msgstr "Viloläge"
+
+#: i18n.cpp:142
+msgid "&Logoff"
+msgstr "Logga ut"
+
+#: i18n.cpp:143
+msgid "&Reboot"
+msgstr "Starta om"
+
+#: i18n.cpp:144
+msgid "&Shutdown"
+msgstr "Stäng av"
+
+#: i18n.cpp:147
+msgid "&Show report"
+msgstr "Visa rapport"
+
+#: i18n.cpp:150
+msgid "&Language"
+msgstr "Språk"
+
+#: i18n.cpp:151
+msgid "&Graphical interface"
+msgstr "Grafiskt användargränssnitt"
+
+#: i18n.cpp:152 i18n.cpp:200
+msgid "&Boot time scan"
+msgstr "Boot-skanning"
+
+#: i18n.cpp:153
+msgid "&Sorting"
+msgstr ""
+
+#: i18n.cpp:155
+msgid "&Reports"
+msgstr "Rapporter"
+
+#: i18n.cpp:158
+msgid "&View change log"
+msgstr "&Visa Ändra logg"
+
+#: i18n.cpp:159
+msgid "View translation &report"
+msgstr "Visa översättning &rapport"
+
+#: i18n.cpp:160
+msgid "&Translations folder"
+msgstr "Översättningsmapp"
+
+#: i18n.cpp:161
+msgid "&Submit current translation"
+msgstr "&Lämna ström översättning"
+
+#: i18n.cpp:164
+msgid "&Font"
+msgstr "Teckensnitt"
+
+#: i18n.cpp:165
+msgid "&Options"
+msgstr "Inställningar"
+
+#: i18n.cpp:168
+msgid "&Enable"
+msgstr "Aktivera"
+
+#: i18n.cpp:169
+msgid "&Script"
+msgstr "Redigera skript"
+
+#: i18n.cpp:172
+msgid "By &path"
+msgstr ""
+
+#: i18n.cpp:173
+msgid "By &size"
+msgstr ""
+
+#: i18n.cpp:174
+msgid "By &creation time"
+msgstr ""
+
+#: i18n.cpp:175
+msgid "By last &modification time"
+msgstr ""
+
+#: i18n.cpp:176
+msgid "By &last access time"
+msgstr ""
+
+#: i18n.cpp:177
+msgid "In &ascending order"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "In &descending order"
+msgstr ""
+
+#: i18n.cpp:181
+msgid "&Contents"
+msgstr "Innehåll"
+
+#: i18n.cpp:182
+msgid "Best &practice"
+msgstr "Tips och råd"
+
+#: i18n.cpp:183
+msgid "&Frequently asked questions"
+msgstr "Vanliga frågor"
+
+#: i18n.cpp:184
+msgid "Cluster map &legend"
+msgstr "Förklaring av klusterkarta"
+
+#: i18n.cpp:186
+msgid "&Debug"
+msgstr ""
+
+#: i18n.cpp:187 upgrade.cpp:160
+msgid "&Upgrade"
+msgstr ""
+
+#: i18n.cpp:189
+msgid "&Never check"
+msgstr ""
+
+#: i18n.cpp:190
+msgid "Check stable releases &only"
+msgstr ""
+
+#: i18n.cpp:191
+msgid "Check &all releases"
+msgstr ""
+
+#: i18n.cpp:192
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:193
+msgid "&About"
+msgstr "Om"
+
+#: i18n.cpp:196 utils.cpp:316
+msgid "Open &log"
+msgstr "Öppna &logg"
+
+#: i18n.cpp:197
+msgid "Send bug &report"
+msgstr "Skicka &felrapport"
+
+#: i18n.cpp:202
+msgid "Boot time script"
+msgstr "Redigera boot-skript"
+
+#: upgrade.cpp:157
+msgid "release is available for download!"
+msgstr "Ny version finns tillgänglig!"
+
+#: upgrade.cpp:159
+msgid "You can upgrade me ^-^"
+msgstr "Du kan uppdatera mig ^-^"
+
+#: upgrade.cpp:160 utils.cpp:320
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:319
+msgid "Error!"
+msgstr ""

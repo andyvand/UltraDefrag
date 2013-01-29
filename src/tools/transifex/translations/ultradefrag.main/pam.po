@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-29 18:03+0100\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,266 +16,300 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: about.cpp:45
-msgid "About UltraDefrag"
-msgstr ""
 
-#: about.cpp:56
-msgid "An open source defragmentation utility."
-msgstr ""
-
-#: about.cpp:58
-msgid "Credits and licenses are listed in the handbook."
-msgstr ""
-
-#: about.cpp:61
-msgid "UltraDefrag website"
-msgstr ""
-
-#: i18n.cpp:114
 msgid "&Action"
-msgstr ""
+msgstr "&Gawan"
 
-#: i18n.cpp:115
 msgid "&Report"
-msgstr ""
+msgstr "&Ulat"
 
-#: i18n.cpp:116
 msgid "&Settings"
-msgstr ""
+msgstr "&Setting"
 
-#: i18n.cpp:117 i18n.cpp:203
 msgid "&Help"
-msgstr ""
+msgstr "&Saup"
 
-#: i18n.cpp:120
 msgid "&Analyze"
-msgstr ""
+msgstr "&Suryan/Analisan"
 
-#: i18n.cpp:121
 msgid "&Defragment"
-msgstr ""
+msgstr "&Piaben-abayan"
 
-#: i18n.cpp:122
 msgid "&Quick optimization"
-msgstr ""
+msgstr "&Samasan yang malagwa"
 
-#: i18n.cpp:123
 msgid "&Full optimization"
-msgstr ""
+msgstr "&Samasan yang laganas"
 
-#: i18n.cpp:124
 msgid "&Optimize MFT"
+msgstr "&Samasan ya ing MFT"
+
+msgid "&Pause"
 msgstr ""
 
-#: i18n.cpp:125
-msgid "Pa&use"
-msgstr ""
-
-#: i18n.cpp:126
 msgid "&Stop"
-msgstr ""
+msgstr "&Ituknang"
 
-#: i18n.cpp:127
 msgid "Re&peat action"
-msgstr ""
+msgstr "&Pasibaywan/Ulitan"
 
-#: i18n.cpp:128
 msgid "Skip removable &media"
-msgstr ""
+msgstr "&Lakton la reng mediang milalako"
 
-#: i18n.cpp:129
 msgid "&Rescan drives"
-msgstr ""
+msgstr "&Lawan lang pasibayu deng drive"
 
-#: i18n.cpp:130
 msgid "Repair dri&ves"
-msgstr ""
+msgstr "Repair drives"
 
-#: i18n.cpp:132
 msgid "&When done"
-msgstr ""
+msgstr "&Kayari..."
 
-#: i18n.cpp:134 i18n.cpp:138
 msgid "E&xit"
-msgstr ""
+msgstr "&Lumwal"
 
-#: i18n.cpp:137
 msgid "&None"
-msgstr ""
+msgstr "&Ala"
 
-#: i18n.cpp:139
 msgid "Stan&dby"
-msgstr ""
+msgstr "&Manaya"
 
-#: i18n.cpp:140
 msgid "&Hibernate"
-msgstr ""
+msgstr "&Matudtud"
 
-#: i18n.cpp:141
 msgid "&Logoff"
-msgstr ""
+msgstr "&Mag-logoff"
 
-#: i18n.cpp:142
 msgid "&Reboot"
-msgstr ""
+msgstr "&Magumpisang pasibayu"
 
-#: i18n.cpp:143
 msgid "&Shutdown"
-msgstr ""
+msgstr "&Manyara"
 
-#: i18n.cpp:146
 msgid "&Show report"
-msgstr ""
+msgstr "&Pakit ya ing ulat"
 
-#: i18n.cpp:149
 msgid "&Language"
-msgstr ""
+msgstr "&Amanu/Lenggwahi"
 
-#: i18n.cpp:150
 msgid "&Graphical interface"
-msgstr ""
+msgstr "&Interface"
 
-#: i18n.cpp:151 i18n.cpp:199
 msgid "&Boot time scan"
-msgstr ""
+msgstr "&Pamag-scan keng umpisa"
 
-#: i18n.cpp:152
+msgid "&Reports"
+msgstr "&Ulat"
+
 msgid "&Sorting"
 msgstr ""
 
-#: i18n.cpp:154
-msgid "&Reports"
-msgstr ""
-
-#: i18n.cpp:157
 msgid "&View change log"
 msgstr ""
 
-#: i18n.cpp:158
 msgid "View translation &report"
 msgstr ""
 
-#: i18n.cpp:159
 msgid "&Translations folder"
-msgstr ""
+msgstr "&Pamaglikas/Translations"
 
-#: i18n.cpp:160
 msgid "&Submit current translation"
 msgstr ""
 
-#: i18n.cpp:163
 msgid "&Font"
 msgstr ""
 
-#: i18n.cpp:164
 msgid "&Options"
-msgstr ""
+msgstr "&Option/Pipamilinan"
 
-#: i18n.cpp:167
 msgid "&Enable"
-msgstr ""
+msgstr "&Paintulutan/Papalyaryan"
 
-#: i18n.cpp:168
 msgid "&Script"
 msgstr ""
 
-#: i18n.cpp:171
 msgid "By &path"
 msgstr ""
 
-#: i18n.cpp:172
 msgid "By &size"
 msgstr ""
 
-#: i18n.cpp:173
 msgid "By &creation time"
 msgstr ""
 
-#: i18n.cpp:174
 msgid "By last &modification time"
 msgstr ""
 
-#: i18n.cpp:175
 msgid "By &last access time"
 msgstr ""
 
-#: i18n.cpp:176
 msgid "In &ascending order"
 msgstr ""
 
-#: i18n.cpp:177
 msgid "In &descending order"
 msgstr ""
 
-#: i18n.cpp:180
 msgid "&Contents"
-msgstr ""
+msgstr "&Kalamnan"
 
-#: i18n.cpp:181
 msgid "Best &practice"
-msgstr ""
+msgstr "&Mayap a Palakad"
 
-#: i18n.cpp:182
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "&Maralas a Kutang"
 
-#: i18n.cpp:183
 msgid "Cluster map &legend"
 msgstr ""
 
-#: i18n.cpp:185
-msgid "&Debug"
+msgid "De&bug"
 msgstr ""
 
-#: i18n.cpp:186 upgrade.cpp:160
-msgid "&Upgrade"
+msgid "Check for &update"
 msgstr ""
 
-#: i18n.cpp:188
-msgid "&Never check"
-msgstr ""
-
-#: i18n.cpp:189
-msgid "Check &stable releases only"
-msgstr ""
-
-#: i18n.cpp:190
-msgid "Check &all releases"
-msgstr ""
-
-#: i18n.cpp:191
-msgid "&Check now"
-msgstr ""
-
-#: i18n.cpp:192
 msgid "&About"
-msgstr ""
+msgstr "&Tungkul king"
 
-#: i18n.cpp:195 utils.cpp:316
 msgid "Open &log"
 msgstr ""
 
-#: i18n.cpp:196
 msgid "Send bug &report"
 msgstr ""
 
-#: i18n.cpp:201
 msgid "Boot time script"
+msgstr "Script king Pamagumpisa"
+
+msgid "Drive"
+msgstr "Volume"
+
+msgid "Status"
+msgstr "Kabilyan"
+
+msgid "Fragmentation"
 msgstr ""
 
-#: upgrade.cpp:157
-msgid "release is available for download!"
+msgid "Total Space"
+msgstr "Kapasidad/Pangkabilugan"
+
+msgid "Free Space"
+msgstr "Ilibri/Itimawa"
+
+msgid "% free"
+msgstr "% a libri o timawa"
+
+msgid "Executing"
+msgstr "Gagana"
+
+msgid "Analyzed"
+msgstr "Mesuri"
+
+msgid "Defragmented"
+msgstr "Piaben-abayan"
+
+msgid "Optimized"
+msgstr "Misamasan"
+
+msgid "Disk needs to be repaired"
 msgstr ""
 
-#: upgrade.cpp:159
+msgid "folders"
+msgstr "Folder"
+
+msgid "files"
+msgstr "Simpan/File"
+
+msgid "fragmented"
+msgstr "Pira-pirasu"
+
+msgid "compressed"
+msgstr "Mesiksik"
+
+msgid "About Ultra Defragmenter"
+msgstr "Tungkul king Ultra Defragmenter"
+
+msgid "&Credits"
+msgstr "&Deng sinaup"
+
+msgid "&License"
+msgstr "&Lisensya"
+
+msgid "Please Confirm"
+msgstr "Kumpirman/Patunayan"
+
+msgid "Do you really want to shutdown when done?"
+msgstr "Bisa kang manyara kayari na?"
+
+msgid "Do you really want to hibernate when done?"
+msgstr "Buri meng patudturan kayari na?"
+
+msgid "Do you really want to log off when done?"
+msgstr "Bisa kang mag-logoff kayari na?"
+
+msgid "Do you really want to reboot when done?"
+msgstr "Bisa kang magumpisang pasibayu kayari na?"
+
+msgid "seconds until shutdown"
+msgstr "segundu bayu manyara"
+
+msgid "seconds until hibernation"
+msgstr "segundu bayu ya patudturan"
+
+msgid "seconds until logoff"
+msgstr "segundu bayu mag-logoff"
+
+msgid "seconds until reboot"
+msgstr "segundu bayu magumpisang pasibayu"
+
+msgid "&Yes"
+msgstr "&Wa"
+
+msgid "&No"
+msgstr "&Ali"
+
 msgid "You can upgrade me ^-^"
 msgstr ""
 
-#: upgrade.cpp:160 utils.cpp:320
-msgid "&Cancel"
+msgid "release is available for download!"
 msgstr ""
 
-#: utils.cpp:319
-msgid "Error!"
+msgid "A job is running"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Fragmented files on"
+msgstr ""
+
+msgid "Visit our Homepage"
+msgstr ""
+
+msgid "View report options"
+msgstr ""
+
+msgid "Powered by Lua"
+msgstr ""
+
+msgid "Fragments"
+msgstr "fragments"
+
+msgid "Size"
+msgstr "size"
+
+msgid "Filename"
+msgstr "filename"
+
+msgid "Comment"
+msgstr "comment"
+
+msgid "locked"
+msgstr ""
+
+msgid "move failed"
+msgstr ""
+
+msgid "invalid"
 msgstr ""

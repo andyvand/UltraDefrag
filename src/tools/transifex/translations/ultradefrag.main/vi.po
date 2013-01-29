@@ -1,0 +1,283 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR UltraDefrag Development Team
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#  <stefan.pendl.71@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: ultradefrag\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-01-28 22:25+0100\n"
+"PO-Revision-Date: 2013-01-29 21:10+0000\n"
+"Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: vi\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: about.cpp:45
+msgid "About UltraDefrag"
+msgstr ""
+
+#: about.cpp:56
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:58
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:61
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:115
+msgid "&Action"
+msgstr "&Thao tác"
+
+#: i18n.cpp:116
+msgid "&Report"
+msgstr "&Báo cáo"
+
+#: i18n.cpp:117
+msgid "&Settings"
+msgstr "Thiết &lập"
+
+#: i18n.cpp:118 i18n.cpp:204
+msgid "&Help"
+msgstr "Trợ &giúp"
+
+#: i18n.cpp:121
+msgid "&Analyze"
+msgstr "&Phân tích"
+
+#: i18n.cpp:122
+msgid "&Defragment"
+msgstr "&Chống phân mảnh"
+
+#: i18n.cpp:123
+msgid "&Quick optimization"
+msgstr "Tối ưu hóa &nhanh"
+
+#: i18n.cpp:124
+msgid "&Full optimization"
+msgstr "Tối ưu hóa &toàn bộ"
+
+#: i18n.cpp:125
+msgid "&Optimize MFT"
+msgstr "Tối ưu hóa &MFT"
+
+#: i18n.cpp:126
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:127
+msgid "&Stop"
+msgstr "&Dừng"
+
+#: i18n.cpp:128
+msgid "Re&peat action"
+msgstr "&Lặp lại hành động"
+
+#: i18n.cpp:129
+msgid "Skip removable &media"
+msgstr "&Bỏ qua các thiết bị di động"
+
+#: i18n.cpp:130
+msgid "&Rescan drives"
+msgstr "&Quét ổ đĩa"
+
+#: i18n.cpp:131
+msgid "Repair dri&ves"
+msgstr "&Sửa chữa ổ đĩa"
+
+#: i18n.cpp:133
+msgid "&When done"
+msgstr "&Khi hoàn tất"
+
+#: i18n.cpp:135 i18n.cpp:139
+msgid "E&xit"
+msgstr "T&hoát"
+
+#: i18n.cpp:138
+msgid "&None"
+msgstr "&Không làm gì cả"
+
+#: i18n.cpp:140
+msgid "Stan&dby"
+msgstr "Về chế độ &Chờ"
+
+#: i18n.cpp:141
+msgid "&Hibernate"
+msgstr "Về chế độ &Ngủ đông"
+
+#: i18n.cpp:142
+msgid "&Logoff"
+msgstr "&Đăng xuất khỏi máy"
+
+#: i18n.cpp:143
+msgid "&Reboot"
+msgstr "Khởi động &lại"
+
+#: i18n.cpp:144
+msgid "&Shutdown"
+msgstr "&Tắt máy tính"
+
+#: i18n.cpp:147
+msgid "&Show report"
+msgstr "&Xem báo cáo"
+
+#: i18n.cpp:150
+msgid "&Language"
+msgstr "&Ngôn ngữ"
+
+#: i18n.cpp:151
+msgid "&Graphical interface"
+msgstr "&Giao diện người dùng"
+
+#: i18n.cpp:152 i18n.cpp:200
+msgid "&Boot time scan"
+msgstr "&Quét khi khởi động"
+
+#: i18n.cpp:153
+msgid "&Sorting"
+msgstr ""
+
+#: i18n.cpp:155
+msgid "&Reports"
+msgstr "&Báo cáo"
+
+#: i18n.cpp:158
+msgid "&View change log"
+msgstr "&Xem các thay đổi"
+
+#: i18n.cpp:159
+msgid "View translation &report"
+msgstr "Xem &báo cáo dịch"
+
+#: i18n.cpp:160
+msgid "&Translations folder"
+msgstr "&Thư mục bản dịch"
+
+#: i18n.cpp:161
+msgid "&Submit current translation"
+msgstr "&Gửi bản dịch hiện tại"
+
+#: i18n.cpp:164
+msgid "&Font"
+msgstr "Thay đổi &phông chữ"
+
+#: i18n.cpp:165
+msgid "&Options"
+msgstr "&Tùy chọn"
+
+#: i18n.cpp:168
+msgid "&Enable"
+msgstr "&Kích hoạt"
+
+#: i18n.cpp:169
+msgid "&Script"
+msgstr "&Chỉnh sửa"
+
+#: i18n.cpp:172
+msgid "By &path"
+msgstr ""
+
+#: i18n.cpp:173
+msgid "By &size"
+msgstr ""
+
+#: i18n.cpp:174
+msgid "By &creation time"
+msgstr ""
+
+#: i18n.cpp:175
+msgid "By last &modification time"
+msgstr ""
+
+#: i18n.cpp:176
+msgid "By &last access time"
+msgstr ""
+
+#: i18n.cpp:177
+msgid "In &ascending order"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "In &descending order"
+msgstr ""
+
+#: i18n.cpp:181
+msgid "&Contents"
+msgstr "&Nội dung trợ giúp"
+
+#: i18n.cpp:182
+msgid "Best &practice"
+msgstr "&Thủ thuật"
+
+#: i18n.cpp:183
+msgid "&Frequently asked questions"
+msgstr "&Câu hỏi thường gặp"
+
+#: i18n.cpp:184
+msgid "Cluster map &legend"
+msgstr "Chú &giải các nhóm tập tin"
+
+#: i18n.cpp:186
+msgid "&Debug"
+msgstr ""
+
+#: i18n.cpp:187 upgrade.cpp:160
+msgid "&Upgrade"
+msgstr ""
+
+#: i18n.cpp:189
+msgid "&Never check"
+msgstr ""
+
+#: i18n.cpp:190
+msgid "Check stable releases &only"
+msgstr ""
+
+#: i18n.cpp:191
+msgid "Check &all releases"
+msgstr ""
+
+#: i18n.cpp:192
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:193
+msgid "&About"
+msgstr "G&iới thiệu"
+
+#: i18n.cpp:196 utils.cpp:316
+msgid "Open &log"
+msgstr "&Mở báo cáo lỗi"
+
+#: i18n.cpp:197
+msgid "Send bug &report"
+msgstr "&Gửi báo cáo lỗi"
+
+#: i18n.cpp:202
+msgid "Boot time script"
+msgstr "Sửa tham số quét khi khởi động"
+
+#: upgrade.cpp:157
+msgid "release is available for download!"
+msgstr "Đã có phiên bản mới để tải về !"
+
+#: upgrade.cpp:159
+msgid "You can upgrade me ^-^"
+msgstr "Bạn có thể nâng cấp tôi ^-^"
+
+#: upgrade.cpp:160 utils.cpp:320
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:319
+msgid "Error!"
+msgstr ""
