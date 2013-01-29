@@ -136,32 +136,32 @@ static int ParseVersionString(char *version)
     if(version == NULL) return -1;
     
     string = _strdup(version);
-    if(string){
-        _strlwr(string);
-        res = sscanf(string,"%u.%u.%u alpha%u",&mj,&mn,&i,&uv);
+    if(!string) return -1;
+    
+    _strlwr(string);
+    res = sscanf(string,"%u.%u.%u alpha%u",&mj,&mn,&i,&uv);
+    if(res == 4){
+        uv += 100;
+    } else {
+        res = sscanf(string,"%u.%u.%u beta%u",&mj,&mn,&i,&uv);
         if(res == 4){
-            uv += 100;
+            uv += 200;
         } else {
-            res = sscanf(string,"%u.%u.%u beta%u",&mj,&mn,&i,&uv);
+            res = sscanf(string,"%u.%u.%u rc%u",&mj,&mn,&i,&uv);
             if(res == 4){
-                uv += 200;
+                uv += 300;
             } else {
-                res = sscanf(string,"%u.%u.%u rc%u",&mj,&mn,&i,&uv);
-                if(res == 4){
-                    uv += 300;
+                res = sscanf(string,"%u.%u.%u",&mj,&mn,&i);
+                if(res == 3){
+                    uv = 999;
                 } else {
-                    res = sscanf(string,"%u.%u.%u",&mj,&mn,&i);
-                    if(res == 3){
-                        uv = 999;
-                    } else {
-                        etrace("parsing of '%s' failed",version);
-                        return -1;
-                    }
+                    etrace("parsing of '%s' failed",version);
+                    return -1;
                 }
             }
         }
-        free(string);
     }
+    free(string);
     
     /* 5.0.0 > 4.99.99 rc10*/
     return mj * 10000000 + mn * 100000 + i * 1000 + uv;
