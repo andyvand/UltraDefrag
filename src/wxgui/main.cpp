@@ -569,7 +569,7 @@ void MainFrame::OnShowReport(wxCommandEvent& WXUNUSED(event))
 // settings menu handlers
 void MainFrame::OnLangOpenTransifex(wxCommandEvent& WXUNUSED(event))
 {
-    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/"));
+    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/resource/main/"));
     if(!wxLaunchDefaultBrowser(url))
         Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
 }
