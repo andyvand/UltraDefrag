@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-22 02:16+0100\n"
-"PO-Revision-Date: 2013-01-26 10:26+0000\n"
+"POT-Creation-Date: 2013-01-28 22:25+0100\n"
+"PO-Revision-Date: 2013-01-29 13:55+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,234 +46,238 @@ msgstr "&Report"
 msgid "&Settings"
 msgstr "&Settings"
 
-#: i18n.cpp:118 i18n.cpp:189
+#: i18n.cpp:118 i18n.cpp:204
 msgid "&Help"
 msgstr "&Help"
 
-#: i18n.cpp:120
+#: i18n.cpp:121
 msgid "&Analyze"
 msgstr "&Analyse"
 
-#: i18n.cpp:121
+#: i18n.cpp:122
 msgid "&Defragment"
 msgstr "&Defragment"
 
-#: i18n.cpp:122
+#: i18n.cpp:123
 msgid "&Quick optimization"
 msgstr "&Quick optimisation"
 
-#: i18n.cpp:123
+#: i18n.cpp:124
 msgid "&Full optimization"
 msgstr "&Full optimisation"
 
-#: i18n.cpp:124
+#: i18n.cpp:125
 msgid "&Optimize MFT"
 msgstr "&Optimise MFT"
 
-#: i18n.cpp:125
+#: i18n.cpp:126
 msgid "Pa&use"
 msgstr "Pa&use"
 
-#: i18n.cpp:126
+#: i18n.cpp:127
 msgid "&Stop"
 msgstr "&Stop"
 
-#: i18n.cpp:127
+#: i18n.cpp:128
 msgid "Re&peat action"
 msgstr "Re&peat action"
 
-#: i18n.cpp:128
+#: i18n.cpp:129
 msgid "Skip removable &media"
 msgstr "Skip removable &media"
 
-#: i18n.cpp:129
+#: i18n.cpp:130
 msgid "&Rescan drives"
 msgstr "&Rescan drives"
 
-#: i18n.cpp:130
+#: i18n.cpp:131
 msgid "Repair dri&ves"
 msgstr "Repair dri&ves"
 
-#: i18n.cpp:131
+#: i18n.cpp:133
 msgid "&When done"
 msgstr "&When done"
 
-#: i18n.cpp:132 i18n.cpp:135
+#: i18n.cpp:135 i18n.cpp:139
 msgid "E&xit"
 msgstr "E&xit"
 
-#: i18n.cpp:134 i18n.cpp:175
+#: i18n.cpp:138
 msgid "&None"
 msgstr "&None"
 
-#: i18n.cpp:136
+#: i18n.cpp:140
 msgid "Stan&dby"
 msgstr "Stan&dby"
 
-#: i18n.cpp:137
+#: i18n.cpp:141
 msgid "&Hibernate"
 msgstr "&Hibernate"
 
-#: i18n.cpp:138
+#: i18n.cpp:142
 msgid "&Logoff"
 msgstr "&Logoff"
 
-#: i18n.cpp:139
+#: i18n.cpp:143
 msgid "&Reboot"
 msgstr "&Reboot"
 
-#: i18n.cpp:140
+#: i18n.cpp:144
 msgid "&Shutdown"
 msgstr "&Shutdown"
 
-#: i18n.cpp:142
+#: i18n.cpp:147
 msgid "&Show report"
 msgstr "&Show report"
 
-#: i18n.cpp:144
+#: i18n.cpp:150
 msgid "&Language"
 msgstr "&Language"
 
-#: i18n.cpp:145
+#: i18n.cpp:151
 msgid "&Graphical interface"
 msgstr "&Graphical interface"
 
-#: i18n.cpp:146 i18n.cpp:185
+#: i18n.cpp:152 i18n.cpp:200
 msgid "&Boot time scan"
 msgstr "&Boot time scan"
 
-#: i18n.cpp:147
+#: i18n.cpp:153
 msgid "&Sorting"
 msgstr "&Sorting"
 
-#: i18n.cpp:148
+#: i18n.cpp:155
 msgid "&Reports"
 msgstr "&Reports"
 
-#: i18n.cpp:150
+#: i18n.cpp:158
 msgid "&View change log"
 msgstr "&View change log"
 
-#: i18n.cpp:151
+#: i18n.cpp:159
 msgid "View translation &report"
 msgstr "View translation &report"
 
-#: i18n.cpp:152
+#: i18n.cpp:160
 msgid "&Translations folder"
 msgstr "&Translations folder"
 
-#: i18n.cpp:153
+#: i18n.cpp:161
 msgid "&Submit current translation"
 msgstr "&Submit current translation"
 
-#: i18n.cpp:155
+#: i18n.cpp:164
 msgid "&Font"
 msgstr "&Font"
 
-#: i18n.cpp:156
+#: i18n.cpp:165
 msgid "&Options"
 msgstr "&Options"
 
-#: i18n.cpp:158
+#: i18n.cpp:168
 msgid "&Enable"
 msgstr "&Enable"
 
-#: i18n.cpp:159
+#: i18n.cpp:169
 msgid "&Script"
 msgstr "&Script"
 
-#: i18n.cpp:161
+#: i18n.cpp:172
 msgid "By &path"
 msgstr "By &path"
 
-#: i18n.cpp:162
+#: i18n.cpp:173
 msgid "By &size"
 msgstr "By &size"
 
-#: i18n.cpp:163
+#: i18n.cpp:174
 msgid "By &creation time"
 msgstr "By &creation time"
 
-#: i18n.cpp:164
+#: i18n.cpp:175
 msgid "By last &modification time"
 msgstr "By last &modification time"
 
-#: i18n.cpp:165
+#: i18n.cpp:176
 msgid "By &last access time"
 msgstr "By &last access time"
 
-#: i18n.cpp:166
+#: i18n.cpp:177
 msgid "In &ascending order"
 msgstr "In &ascending order"
 
-#: i18n.cpp:167
+#: i18n.cpp:178
 msgid "In &descending order"
 msgstr "In &descending order"
 
-#: i18n.cpp:169
+#: i18n.cpp:181
 msgid "&Contents"
 msgstr "&Contents"
 
-#: i18n.cpp:170
+#: i18n.cpp:182
 msgid "Best &practice"
 msgstr "Best &practice"
 
-#: i18n.cpp:171
+#: i18n.cpp:183
 msgid "&Frequently asked questions"
 msgstr "&Frequently asked questions"
 
-#: i18n.cpp:172
+#: i18n.cpp:184
 msgid "Cluster map &legend"
 msgstr "Cluster map &legend"
 
-#: i18n.cpp:173
+#: i18n.cpp:186
 msgid "&Debug"
 msgstr "&Debug"
 
-#: i18n.cpp:174 upgrade.cpp:111
+#: i18n.cpp:187 upgrade.cpp:160
 msgid "&Upgrade"
 msgstr "&Upgrade"
 
-#: i18n.cpp:176
-msgid "&Only stable release"
-msgstr "&Only stable release"
+#: i18n.cpp:189
+msgid "&Never check"
+msgstr "&Never check"
 
-#: i18n.cpp:177
-msgid "&All releases"
-msgstr "&All releases"
+#: i18n.cpp:190
+msgid "Check stable releases &only"
+msgstr "Check stable releases &only"
 
-#: i18n.cpp:178
+#: i18n.cpp:191
+msgid "Check &all releases"
+msgstr "Check &all releases"
+
+#: i18n.cpp:192
 msgid "&Check now"
 msgstr "&Check now"
 
-#: i18n.cpp:179
+#: i18n.cpp:193
 msgid "&About"
 msgstr "&About"
 
-#: i18n.cpp:181 utils.cpp:247
+#: i18n.cpp:196 utils.cpp:316
 msgid "Open &log"
 msgstr "Open &log"
 
-#: i18n.cpp:182
+#: i18n.cpp:197
 msgid "Send bug &report"
 msgstr "Send bug &report"
 
-#: i18n.cpp:187
+#: i18n.cpp:202
 msgid "Boot time script"
 msgstr "Boot time script"
 
-#: upgrade.cpp:108
+#: upgrade.cpp:157
 msgid "release is available for download!"
 msgstr "release is available for download!"
 
-#: upgrade.cpp:110
+#: upgrade.cpp:159
 msgid "You can upgrade me ^-^"
 msgstr "You can upgrade me ^-^"
 
-#: upgrade.cpp:111 utils.cpp:251
+#: upgrade.cpp:160 utils.cpp:320
 msgid "&Cancel"
 msgstr "&Cancel"
 
-#: utils.cpp:250
+#: utils.cpp:319
 msgid "Error!"
 msgstr "Error!"
