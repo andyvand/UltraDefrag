@@ -413,7 +413,7 @@ MainFrame::MainFrame()
 
     // set localized text
     wxCommandEvent event;
-    event.SetId(ID_LocaleChange+m_locale->GetLanguage());
+    event.SetId(ID_LocaleChange+g_MyLocale->GetLanguage());
     OnLocaleChange(event);
 }
 
@@ -430,7 +430,7 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/height"),(long)m_height);
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
 
-    cfg->Write(wxT("/Language/Selected"),(long)m_locale->GetLanguage());
+    cfg->Write(wxT("/Language/Selected"),(long)g_MyLocale->GetLanguage());
 
     cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
@@ -443,7 +443,6 @@ MainFrame::~MainFrame()
     delete m_btdThread;
 
     // free resources
-    delete m_locale;
     delete m_title;
 }
 
@@ -490,6 +489,9 @@ void MainFrame::OnDefrag(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnQuickOpt(wxCommandEvent& WXUNUSED(event))
 {
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowUpgradeDialog);
+    event.SetString(wxT(VERSIONINTITLE));
+    wxPostEvent(g_MainFrame,event);
 }
 
 void MainFrame::OnFullOpt(wxCommandEvent& WXUNUSED(event))
@@ -589,7 +591,7 @@ void MainFrame::OnLangSubmit(wxCommandEvent& WXUNUSED(event))
     }
 
     if(wxDirExists(AppLocaleDir)){
-        wxString localeDir = m_locale->GetCanonicalName();
+        wxString localeDir = g_MyLocale->GetCanonicalName();
 
         if(!wxDirExists(AppLocaleDir + wxT("/") + localeDir)){
             wxLogMessage(wxT("locale dir not found: %ls"), localeDir.wc_str());

@@ -120,7 +120,7 @@ void MainFrame::InitMenu()
 
     if(!dir.IsOpened()){
         wxLogMessage(wxT("can't open lang dir: %ls"), AppLocaleDir.wc_str());
-        info = m_locale->FindLanguageInfo(wxT("en_US"));
+        info = g_MyLocale->FindLanguageInfo(wxT("en_US"));
         m_menuLanguage->AppendRadioItem(ID_LocaleChange \
             + info->Language, info->Description);
     } else {
@@ -130,7 +130,7 @@ void MainFrame::InitMenu()
         bool cont = dir.GetFirst(&folder, wxT("*"), wxDIR_DIRS);
 
         while(cont){
-            info = m_locale->FindLanguageInfo(folder);
+            info = g_MyLocale->FindLanguageInfo(folder);
             if(info){
                 if(info->Description == wxT("Chinese")){
                     langArray.Add(wxT("Chinese (Traditional)"));
@@ -156,7 +156,7 @@ void MainFrame::InitMenu()
         wxLogMessage(wxT("languages: %d, break count: %d, delta: %d"),
             langArray.Count(), breakCnt, breakDelta);
         for(unsigned int i = 0;i < langArray.Count();i++){
-            info = m_locale->FindLanguageInfo(langArray[i]);
+            info = g_MyLocale->FindLanguageInfo(langArray[i]);
             m_menuLanguage->AppendRadioItem(ID_LocaleChange \
                 + info->Language, info->Description);
             if((i+1) % breakCnt == 0){
@@ -284,7 +284,7 @@ void MainFrame::InitMenu()
     cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 
-    int id = m_locale->GetLanguage();
+    int id = g_MyLocale->GetLanguage();
     wxMenuItem *item = m_menuBar->FindItem(ID_LocaleChange + id);
     if(item) item->Check(true);
 }
