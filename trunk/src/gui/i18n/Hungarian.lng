@@ -81,16 +81,14 @@ ENABLE                    = Bekapcsolva
 SCRIPT                    = Szkript
 
 ; --- --- Sorting submenu
-;
-; the "rendezés" word might be omitted if it is unabigously expressed in the top level menu. (LG)
-;
-SORT_BY_PATH              = rendezés útvonal szerint
-SORT_BY_SIZE              = rendezés méret szerint
-SORT_BY_C_TIME            = rendezés létrehozási dátum szerint
-SORT_BY_M_TIME            = rendezés módosítási dátum szerint
-SORT_BY_A_TIME            = rendezés hozzáférési dátum szerint
-SORT_ASCENDING            = rendezés növekvő sorrendben
-SORT_DESCENDING           = rendezés csökkenő sorrrendben
+
+SORT_BY_PATH              = útvonal szerint
+SORT_BY_SIZE              = méret szerint
+SORT_BY_C_TIME            = létrehozási dátum szerint
+SORT_BY_M_TIME            = módosítási dátum szerint
+SORT_BY_A_TIME            = hozzáférési dátum szerint
+SORT_ASCENDING            = növekvő sorrendben
+SORT_DESCENDING           = csökkenő sorrrendben
 
 ; --- Help Menu
 
