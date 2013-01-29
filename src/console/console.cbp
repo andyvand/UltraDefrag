@@ -61,6 +61,7 @@
 		<Unit filename="getopt.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="getopt.h" />
 		<Unit filename="getopt1.c">
 			<Option compilerVar="CC" />
 		</Unit>

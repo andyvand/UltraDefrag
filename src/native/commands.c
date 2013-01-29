@@ -942,15 +942,15 @@ static wchar_t *expand_environment_variables(wchar_t *command)
         L"%04i-%02i-%02i",(int)t.year,(int)t.month,(int)t.day);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
     if(winx_setenv(L"DATE",buffer) < 0){
-        etrace("cannot set %DATE% environment variable");
-        winx_printf("\ncannot set %DATE% environment variable\n\n");
+        etrace("cannot set %%DATE%% environment variable");
+        winx_printf("\ncannot set %%DATE%% environment variable\n\n");
     }
     _snwprintf(buffer,sizeof(buffer)/sizeof(wchar_t),
         L"%02i-%02i",(int)t.hour,(int)t.minute);
     buffer[sizeof(buffer)/sizeof(wchar_t) - 1] = 0;
     if(winx_setenv(L"TIME",buffer) < 0){
-        etrace("cannot set %TIME% environment variable");
-        winx_printf("\ncannot set %TIME% environment variable\n\n");
+        etrace("cannot set %%TIME%% environment variable");
+        winx_printf("\ncannot set %%TIME%% environment variable\n\n");
     }
 
     /* expand environment variables */
