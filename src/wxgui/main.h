@@ -220,7 +220,6 @@ private:
 
     wxString   *m_title;
     wxToolBar  *m_toolBar;
-    wxLocale   *m_locale;
     wxMenuBar  *m_menuBar;
     wxMenuItem *m_subMenuWhenDone;
     wxMenuItem *m_subMenuLanguage;
@@ -365,5 +364,6 @@ enum {
 
 extern MainFrame *g_MainFrame;
 extern double g_fScale;
+extern wxLocale *g_MyLocale;
 
 #endif /* _UDEFRAG_GUI_MAIN_H_ */

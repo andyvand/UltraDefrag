@@ -61,7 +61,7 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
         _("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
 
     // Burmese needs Padauk font for display
-    if(m_locale->GetCanonicalName().Left(2) == wxT("my")){
+    if(g_MyLocale->GetCanonicalName().Left(2) == wxT("my")){
         wxFont textFont = description->GetFont();
         textFont.SetFaceName(wxT("Padauk"));
         textFont.SetPointSize(textFont.GetPointSize() + 2);

@@ -37,6 +37,12 @@
 #include "main.h"
 
 // =======================================================================
+//                            Global variables
+// =======================================================================
+
+wxLocale *g_MyLocale = NULL;
+
+// =======================================================================
 //                         Internationalization
 // =======================================================================
 
@@ -47,7 +53,7 @@
     info.LayoutDirection = layout;                        \
     info.Description = wxT(desc);                         \
     info.WinLang = winlang, info.WinSublang = winsublang; \
-    m_locale->AddLanguage(info);
+    g_MyLocale->AddLanguage(info);
 
 #define UD_UpdateMenuItemLabel(id,label,accel) \
     if(::strlen(accel)){ \
@@ -67,7 +73,7 @@
 
 void MainFrame::InitLocale()
 {
-    m_locale = new wxLocale();
+    g_MyLocale = new wxLocale();
 
     // add translations missing from wxWidgets
     wxLanguageInfo info;
@@ -83,7 +89,7 @@ void MainFrame::InitLocale()
     if(cfg->HasGroup(wxT("Language"))){
         id = (int)cfg->Read(wxT("/Language/Selected"),id);
     } else {
-        id = m_locale->GetSystemLanguage();
+        id = g_MyLocale->GetSystemLanguage();
         if(id == wxLANGUAGE_UNKNOWN)
             id = wxLANGUAGE_ENGLISH_US;
     }
@@ -94,14 +100,14 @@ void MainFrame::InitLocale()
 void MainFrame::SetLocale(int id)
 {
     // apply language selection
-    m_locale->Init(id,wxLOCALE_CONV_ENCODING);
-    m_locale->AddCatalogLookupPathPrefix(wxT("locale"));
+    g_MyLocale->Init(id,wxLOCALE_CONV_ENCODING);
+    g_MyLocale->AddCatalogLookupPathPrefix(wxT("locale"));
 
     // locations for development
-    m_locale->AddCatalogLookupPathPrefix(wxT("../wxgui/locale"));
-    m_locale->AddCatalogLookupPathPrefix(wxT("../../wxgui/locale"));
+    g_MyLocale->AddCatalogLookupPathPrefix(wxT("../wxgui/locale"));
+    g_MyLocale->AddCatalogLookupPathPrefix(wxT("../../wxgui/locale"));
 
-    m_locale->AddCatalog(wxT("UltraDefrag"));
+    g_MyLocale->AddCatalog(wxT("UltraDefrag"));
 }
 
 void MainFrame::OnLocaleChange(wxCommandEvent& event)
