@@ -22,20 +22,18 @@
  * Dmitri Arkhangelski (dmitriar@users.sourceforge.net).
  *
  * <h2>Table of Contents</h2>
- * <ol>
- * <li> @subpage Introduction </li>
- * <li> @subpage Installation </li>
- * <li> @subpage Console </li>
- * <li> @subpage Schedule </li>
- * <li> @subpage GUI </li>
- * <li> @subpage Boot </li>
- * <li> @subpage Reports </li>
- * <li> @subpage Tips </li>
- * <li> @subpage FAQ </li>
- * <li> @subpage ReportingBugs </li>
- * <li> @subpage Credits </li>
- * <li> <a href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html" class="simple"><b>Development</b></a> </li>
- * </ol>
+ * -# @subpage Introduction
+ * -# @subpage Installation
+ * -# @subpage Console
+ * -# @subpage Schedule
+ * -# @subpage GUI
+ * -# @subpage Boot
+ * -# @subpage Reports
+ * -# @subpage Tips
+ * -# @subpage FAQ
+ * -# @subpage ReportingBugs
+ * -# @subpage Credits
+ * -# <a href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html" class="simple"><b>Development</b></a>
  *
  * <h2>License</h2>
  * UltraDefrag is licensed under the terms of the @ref GPL .
