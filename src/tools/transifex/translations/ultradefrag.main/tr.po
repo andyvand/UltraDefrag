@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-28 22:25+0100\n"
-"PO-Revision-Date: 2013-01-29 20:21+0000\n"
+"POT-Creation-Date: 2013-01-29 22:20+0100\n"
+"PO-Revision-Date: 2013-01-30 09:25+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,235 +33,235 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: i18n.cpp:115
+#: i18n.cpp:114
 msgid "&Action"
 msgstr "&Eylemler"
 
-#: i18n.cpp:116
+#: i18n.cpp:115
 msgid "&Report"
 msgstr "&Rapor"
 
-#: i18n.cpp:117
+#: i18n.cpp:116
 msgid "&Settings"
 msgstr "&Ayarlar"
 
-#: i18n.cpp:118 i18n.cpp:204
+#: i18n.cpp:117 i18n.cpp:203
 msgid "&Help"
 msgstr "&Yardım"
 
-#: i18n.cpp:121
+#: i18n.cpp:120
 msgid "&Analyze"
 msgstr "&İncele"
 
-#: i18n.cpp:122
+#: i18n.cpp:121
 msgid "&Defragment"
 msgstr "&Birleştir"
 
-#: i18n.cpp:123
+#: i18n.cpp:122
 msgid "&Quick optimization"
 msgstr "&Hızlı eniyileme"
 
-#: i18n.cpp:124
+#: i18n.cpp:123
 msgid "&Full optimization"
 msgstr "&Tam eniyileme"
 
-#: i18n.cpp:125
+#: i18n.cpp:124
 msgid "&Optimize MFT"
 msgstr "&MFT eniyileme"
 
-#: i18n.cpp:126
+#: i18n.cpp:125
 msgid "Pa&use"
 msgstr ""
 
-#: i18n.cpp:127
+#: i18n.cpp:126
 msgid "&Stop"
 msgstr "Du&r"
 
-#: i18n.cpp:128
+#: i18n.cpp:127
 msgid "Re&peat action"
 msgstr "&İşlemi tekrarla"
 
-#: i18n.cpp:129
+#: i18n.cpp:128
 msgid "Skip removable &media"
 msgstr "Çıkarılabilir sürücüleri &gizle"
 
-#: i18n.cpp:130
+#: i18n.cpp:129
 msgid "&Rescan drives"
 msgstr "Sürücü listesini &yenile"
 
-#: i18n.cpp:131
+#: i18n.cpp:130
 msgid "Repair dri&ves"
 msgstr "Sürücüyü &onar"
 
-#: i18n.cpp:133
+#: i18n.cpp:132
 msgid "&When done"
 msgstr "İşlem &bittiğinde..."
 
-#: i18n.cpp:135 i18n.cpp:139
+#: i18n.cpp:134 i18n.cpp:138
 msgid "E&xit"
 msgstr "Çı&kış"
 
-#: i18n.cpp:138
+#: i18n.cpp:137
 msgid "&None"
 msgstr "&Bekle"
 
-#: i18n.cpp:140
+#: i18n.cpp:139
 msgid "Stan&dby"
 msgstr "&Uyku moduna gir"
 
-#: i18n.cpp:141
+#: i18n.cpp:140
 msgid "&Hibernate"
 msgstr "&Hazırda beklet"
 
-#: i18n.cpp:142
+#: i18n.cpp:141
 msgid "&Logoff"
 msgstr "O&turumu kapat"
 
-#: i18n.cpp:143
+#: i18n.cpp:142
 msgid "&Reboot"
 msgstr "Ye&niden başlat"
 
-#: i18n.cpp:144
+#: i18n.cpp:143
 msgid "&Shutdown"
 msgstr "Bilgisayarı &kapat"
 
-#: i18n.cpp:147
+#: i18n.cpp:146
 msgid "&Show report"
 msgstr "&Raporu göster"
 
-#: i18n.cpp:150
+#: i18n.cpp:149
 msgid "&Language"
 msgstr "&Dil"
 
-#: i18n.cpp:151
+#: i18n.cpp:150
 msgid "&Graphical interface"
 msgstr "&Grafiksel arabirim"
 
-#: i18n.cpp:152 i18n.cpp:200
+#: i18n.cpp:151 i18n.cpp:199
 msgid "&Boot time scan"
 msgstr "&Açılışta çalış"
 
-#: i18n.cpp:153
+#: i18n.cpp:152
 msgid "&Sorting"
 msgstr "&Sıralama"
 
-#: i18n.cpp:155
+#: i18n.cpp:154
 msgid "&Reports"
 msgstr "&Raporlar"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&View change log"
 msgstr "Çeviri &değişikliklerini görüntüle"
 
-#: i18n.cpp:159
+#: i18n.cpp:158
 msgid "View translation &report"
 msgstr "Çeviri &raporunu görüntle"
 
-#: i18n.cpp:160
+#: i18n.cpp:159
 msgid "&Translations folder"
 msgstr "&Çeviri klasörü"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&Submit current translation"
 msgstr "&Şimdiki çeviriyi gönder"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Font"
 msgstr "&Yazı tipi"
 
-#: i18n.cpp:165
+#: i18n.cpp:164
 msgid "&Options"
 msgstr "&Seçenekler"
 
-#: i18n.cpp:168
+#: i18n.cpp:167
 msgid "&Enable"
 msgstr "&Etkinleştir"
 
-#: i18n.cpp:169
+#: i18n.cpp:168
 msgid "&Script"
 msgstr "&Betiği düzenle"
 
-#: i18n.cpp:172
+#: i18n.cpp:171
 msgid "By &path"
 msgstr "&Adrese göre sırala"
 
-#: i18n.cpp:173
+#: i18n.cpp:172
 msgid "By &size"
 msgstr "&Boyuta göre sırala"
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &creation time"
 msgstr "&Oluşturma zamanına göre sırala"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By last &modification time"
 msgstr "Son &değiştirme zamanına göre sırala"
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &last access time"
 msgstr "Son &erişim zamanına göre sırala"
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "In &ascending order"
 msgstr "A&rtan sıralama"
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "In &descending order"
 msgstr "A&zalan sıralama"
 
-#: i18n.cpp:181
+#: i18n.cpp:180
 msgid "&Contents"
 msgstr "&Yardım konuları"
 
-#: i18n.cpp:182
+#: i18n.cpp:181
 msgid "Best &practice"
 msgstr "&En doğru kullanım şekli"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Frequently asked questions"
 msgstr "&Sıkça sorulan sorular"
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Cluster map &legend"
 msgstr "&Küme haritası işaretleri"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "&Debug"
 msgstr ""
 
-#: i18n.cpp:187 upgrade.cpp:160
+#: i18n.cpp:186 upgrade.cpp:160
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:189
+#: i18n.cpp:188
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:190
-msgid "Check stable releases &only"
+#: i18n.cpp:189
+msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&About"
 msgstr "&Hakkında"
 
-#: i18n.cpp:196 utils.cpp:316
+#: i18n.cpp:195 utils.cpp:316
 msgid "Open &log"
 msgstr "&Günlüğü görüntüle"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "Send bug &report"
 msgstr "Hata raporu &gönder"
 
-#: i18n.cpp:202
+#: i18n.cpp:201
 msgid "Boot time script"
 msgstr "Çalıştırma Betiğini Düze&nle"
 
