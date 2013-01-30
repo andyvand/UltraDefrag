@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-28 22:25+0100\n"
-"PO-Revision-Date: 2013-01-29 17:43+0000\n"
+"POT-Creation-Date: 2013-01-29 22:20+0100\n"
+"PO-Revision-Date: 2013-01-30 09:25+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,235 +34,235 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: i18n.cpp:115
+#: i18n.cpp:114
 msgid "&Action"
 msgstr "Feladatok"
 
-#: i18n.cpp:116
+#: i18n.cpp:115
 msgid "&Report"
 msgstr "Jelentés"
 
-#: i18n.cpp:117
+#: i18n.cpp:116
 msgid "&Settings"
 msgstr "Beállítások"
 
-#: i18n.cpp:118 i18n.cpp:204
+#: i18n.cpp:117 i18n.cpp:203
 msgid "&Help"
 msgstr "Segítség"
 
-#: i18n.cpp:121
+#: i18n.cpp:120
 msgid "&Analyze"
 msgstr "Elemzés"
 
-#: i18n.cpp:122
+#: i18n.cpp:121
 msgid "&Defragment"
 msgstr "Indítás"
 
-#: i18n.cpp:123
+#: i18n.cpp:122
 msgid "&Quick optimization"
 msgstr "Gyors optimalizálás"
 
-#: i18n.cpp:124
+#: i18n.cpp:123
 msgid "&Full optimization"
 msgstr "Teljes optimalizálás"
 
-#: i18n.cpp:125
+#: i18n.cpp:124
 msgid "&Optimize MFT"
 msgstr "MFT optimalizálás"
 
-#: i18n.cpp:126
+#: i18n.cpp:125
 msgid "Pa&use"
 msgstr "&Szünet"
 
-#: i18n.cpp:127
+#: i18n.cpp:126
 msgid "&Stop"
 msgstr "Megáll"
 
-#: i18n.cpp:128
+#: i18n.cpp:127
 msgid "Re&peat action"
 msgstr "Művelet ismétlése"
 
-#: i18n.cpp:129
+#: i18n.cpp:128
 msgid "Skip removable &media"
 msgstr "Hordozható meghajtók kihagyása"
 
-#: i18n.cpp:130
+#: i18n.cpp:129
 msgid "&Rescan drives"
 msgstr "Frissítés"
 
-#: i18n.cpp:131
+#: i18n.cpp:130
 msgid "Repair dri&ves"
 msgstr "Meghajtók javítása"
 
-#: i18n.cpp:133
+#: i18n.cpp:132
 msgid "&When done"
 msgstr "Ha kész"
 
-#: i18n.cpp:135 i18n.cpp:139
+#: i18n.cpp:134 i18n.cpp:138
 msgid "E&xit"
 msgstr "Kilépés"
 
-#: i18n.cpp:138
+#: i18n.cpp:137
 msgid "&None"
 msgstr "nincs"
 
-#: i18n.cpp:140
+#: i18n.cpp:139
 msgid "Stan&dby"
 msgstr "Készenlét"
 
-#: i18n.cpp:141
+#: i18n.cpp:140
 msgid "&Hibernate"
 msgstr "Hibernálás"
 
-#: i18n.cpp:142
+#: i18n.cpp:141
 msgid "&Logoff"
 msgstr "Kijelentkezés"
 
-#: i18n.cpp:143
+#: i18n.cpp:142
 msgid "&Reboot"
 msgstr "Újraindítás"
 
-#: i18n.cpp:144
+#: i18n.cpp:143
 msgid "&Shutdown"
 msgstr "Kikapcsolás"
 
-#: i18n.cpp:147
+#: i18n.cpp:146
 msgid "&Show report"
 msgstr "Jelentés megtekintése"
 
-#: i18n.cpp:150
+#: i18n.cpp:149
 msgid "&Language"
 msgstr "Nyelv"
 
-#: i18n.cpp:151
+#: i18n.cpp:150
 msgid "&Graphical interface"
 msgstr "Grafikus felület"
 
-#: i18n.cpp:152 i18n.cpp:200
+#: i18n.cpp:151 i18n.cpp:199
 msgid "&Boot time scan"
 msgstr "Vizsgálat rendszerinduláskor"
 
-#: i18n.cpp:153
+#: i18n.cpp:152
 msgid "&Sorting"
 msgstr "Rendezé&s"
 
-#: i18n.cpp:155
+#: i18n.cpp:154
 msgid "&Reports"
 msgstr "Jelentések"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&View change log"
 msgstr "&Változásnapló megtekintése"
 
-#: i18n.cpp:159
+#: i18n.cpp:158
 msgid "View translation &report"
 msgstr "Fo&rdítási napló megtekintése"
 
-#: i18n.cpp:160
+#: i18n.cpp:159
 msgid "&Translations folder"
 msgstr "Fordítások mappa"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&Submit current translation"
 msgstr "Aktuális fordítás beküldé&se"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Font"
 msgstr "Betű típus"
 
-#: i18n.cpp:165
+#: i18n.cpp:164
 msgid "&Options"
 msgstr "Opciók"
 
-#: i18n.cpp:168
+#: i18n.cpp:167
 msgid "&Enable"
 msgstr "Bekapcsolva"
 
-#: i18n.cpp:169
+#: i18n.cpp:168
 msgid "&Script"
 msgstr "Szkript"
 
-#: i18n.cpp:172
+#: i18n.cpp:171
 msgid "By &path"
 msgstr "útvonal szerint"
 
-#: i18n.cpp:173
+#: i18n.cpp:172
 msgid "By &size"
 msgstr "méret szerint"
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &creation time"
 msgstr "létrehozási dátum szerint"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By last &modification time"
 msgstr "módosítási dátum szerint"
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &last access time"
 msgstr "hozzáférési dátum szerint"
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "In &ascending order"
 msgstr "növekvő sorrendben"
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "In &descending order"
 msgstr "csökkenő sorrrendben"
 
-#: i18n.cpp:181
+#: i18n.cpp:180
 msgid "&Contents"
 msgstr "Tartalom"
 
-#: i18n.cpp:182
+#: i18n.cpp:181
 msgid "Best &practice"
 msgstr "Bevált gyakorlat"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Frequently asked questions"
 msgstr ""
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Cluster map &legend"
 msgstr "Klaszter térkép &magyarázat"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "&Debug"
 msgstr "Hi&bakeresés"
 
-#: i18n.cpp:187 upgrade.cpp:160
+#: i18n.cpp:186 upgrade.cpp:160
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:189
+#: i18n.cpp:188
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:190
-msgid "Check stable releases &only"
+#: i18n.cpp:189
+msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&About"
 msgstr "Névjegy"
 
-#: i18n.cpp:196 utils.cpp:316
+#: i18n.cpp:195 utils.cpp:316
 msgid "Open &log"
 msgstr "Nap&ló megnyitása"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "Send bug &report"
 msgstr "Hibajelentés küldése"
 
-#: i18n.cpp:202
+#: i18n.cpp:201
 msgid "Boot time script"
 msgstr "Rendszerinduláskor lefutó szkript"
 

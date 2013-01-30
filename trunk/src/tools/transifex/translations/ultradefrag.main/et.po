@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-28 22:25+0100\n"
-"PO-Revision-Date: 2013-01-29 09:23+0000\n"
+"POT-Creation-Date: 2013-01-29 22:20+0100\n"
+"PO-Revision-Date: 2013-01-30 09:25+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,235 +34,235 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: i18n.cpp:115
+#: i18n.cpp:114
 msgid "&Action"
 msgstr "Tegevus"
 
-#: i18n.cpp:116
+#: i18n.cpp:115
 msgid "&Report"
 msgstr "Raport"
 
-#: i18n.cpp:117
+#: i18n.cpp:116
 msgid "&Settings"
 msgstr "Seaded"
 
-#: i18n.cpp:118 i18n.cpp:204
+#: i18n.cpp:117 i18n.cpp:203
 msgid "&Help"
 msgstr "Abi"
 
-#: i18n.cpp:121
+#: i18n.cpp:120
 msgid "&Analyze"
 msgstr "Analüüsi"
 
-#: i18n.cpp:122
+#: i18n.cpp:121
 msgid "&Defragment"
 msgstr "Defragmendi"
 
-#: i18n.cpp:123
+#: i18n.cpp:122
 msgid "&Quick optimization"
 msgstr "Kiire optimeerimine"
 
-#: i18n.cpp:124
+#: i18n.cpp:123
 msgid "&Full optimization"
 msgstr "Täielik optimeerimine"
 
-#: i18n.cpp:125
+#: i18n.cpp:124
 msgid "&Optimize MFT"
 msgstr "MFT optimeerimine"
 
-#: i18n.cpp:126
+#: i18n.cpp:125
 msgid "Pa&use"
 msgstr ""
 
-#: i18n.cpp:127
+#: i18n.cpp:126
 msgid "&Stop"
 msgstr "Peata"
 
-#: i18n.cpp:128
+#: i18n.cpp:127
 msgid "Re&peat action"
 msgstr "Korda tegevust"
 
-#: i18n.cpp:129
+#: i18n.cpp:128
 msgid "Skip removable &media"
 msgstr "Jäta vahele eemaldatav meedia"
 
-#: i18n.cpp:130
+#: i18n.cpp:129
 msgid "&Rescan drives"
 msgstr "Taasskänni kettaid"
 
-#: i18n.cpp:131
+#: i18n.cpp:130
 msgid "Repair dri&ves"
 msgstr "Remont kõvakettad"
 
-#: i18n.cpp:133
+#: i18n.cpp:132
 msgid "&When done"
 msgstr "Kui teha"
 
-#: i18n.cpp:135 i18n.cpp:139
+#: i18n.cpp:134 i18n.cpp:138
 msgid "E&xit"
 msgstr "Välju"
 
-#: i18n.cpp:138
+#: i18n.cpp:137
 msgid "&None"
 msgstr "Ükski"
 
-#: i18n.cpp:140
+#: i18n.cpp:139
 msgid "Stan&dby"
 msgstr ""
 
-#: i18n.cpp:141
+#: i18n.cpp:140
 msgid "&Hibernate"
 msgstr "Talveuni"
 
-#: i18n.cpp:142
+#: i18n.cpp:141
 msgid "&Logoff"
 msgstr "Logi välja"
 
-#: i18n.cpp:143
+#: i18n.cpp:142
 msgid "&Reboot"
 msgstr "Taaskäivitage arvuti"
 
-#: i18n.cpp:144
+#: i18n.cpp:143
 msgid "&Shutdown"
 msgstr "Sulgemine"
 
-#: i18n.cpp:147
+#: i18n.cpp:146
 msgid "&Show report"
 msgstr "Kuva aruanne"
 
-#: i18n.cpp:150
+#: i18n.cpp:149
 msgid "&Language"
 msgstr "Keel"
 
-#: i18n.cpp:151
+#: i18n.cpp:150
 msgid "&Graphical interface"
 msgstr "Graafiline kasutajaliides"
 
-#: i18n.cpp:152 i18n.cpp:200
+#: i18n.cpp:151 i18n.cpp:199
 msgid "&Boot time scan"
 msgstr "Windowsi bootimise aja skänn"
 
-#: i18n.cpp:153
+#: i18n.cpp:152
 msgid "&Sorting"
 msgstr ""
 
-#: i18n.cpp:155
+#: i18n.cpp:154
 msgid "&Reports"
 msgstr "Raportid"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&View change log"
 msgstr "&Vaata muuta log"
 
-#: i18n.cpp:159
+#: i18n.cpp:158
 msgid "View translation &report"
 msgstr "Vaata tõlke &aruanne"
 
-#: i18n.cpp:160
+#: i18n.cpp:159
 msgid "&Translations folder"
 msgstr "&Tõlked kausta"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&Submit current translation"
 msgstr "&Esitama praegune tõlge"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Font"
 msgstr "&Fondi"
 
-#: i18n.cpp:165
+#: i18n.cpp:164
 msgid "&Options"
 msgstr "Valikud"
 
-#: i18n.cpp:168
+#: i18n.cpp:167
 msgid "&Enable"
 msgstr "Võimalda"
 
-#: i18n.cpp:169
+#: i18n.cpp:168
 msgid "&Script"
 msgstr "Skript"
 
-#: i18n.cpp:172
+#: i18n.cpp:171
 msgid "By &path"
 msgstr ""
 
-#: i18n.cpp:173
+#: i18n.cpp:172
 msgid "By &size"
 msgstr ""
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &creation time"
 msgstr ""
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By last &modification time"
 msgstr ""
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &last access time"
 msgstr ""
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "In &ascending order"
 msgstr ""
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "In &descending order"
 msgstr ""
 
-#: i18n.cpp:181
+#: i18n.cpp:180
 msgid "&Contents"
 msgstr "Sisu"
 
-#: i18n.cpp:182
+#: i18n.cpp:181
 msgid "Best &practice"
 msgstr "Parimate tavade"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Frequently asked questions"
 msgstr ""
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Cluster map &legend"
 msgstr "Cluster kaart legend"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "&Debug"
 msgstr "Siluda"
 
-#: i18n.cpp:187 upgrade.cpp:160
+#: i18n.cpp:186 upgrade.cpp:160
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:189
+#: i18n.cpp:188
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:190
-msgid "Check stable releases &only"
+#: i18n.cpp:189
+msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&About"
 msgstr "Info"
 
-#: i18n.cpp:196 utils.cpp:316
+#: i18n.cpp:195 utils.cpp:316
 msgid "Open &log"
 msgstr "Avage &log"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "Send bug &report"
 msgstr "&Saada vearaport"
 
-#: i18n.cpp:202
+#: i18n.cpp:201
 msgid "Boot time script"
 msgstr "Skripti käivitamise aeg"
 
