@@ -34,7 +34,6 @@ appicon ICON DISCARDABLE "res/app.ico"
 
 // bitmaps
 ship      BITMAP DISCARDABLE "res/ship.bmp"
-ship_8bit BITMAP DISCARDABLE "res/ship_8bit.bmp"
 
 //////////////////////////////////////////////////////////////////////////
 // Toolbar and menu icons were copied from:

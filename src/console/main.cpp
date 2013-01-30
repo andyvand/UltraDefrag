@@ -287,10 +287,10 @@ void update_progress(udefrag_progress_info *pi, void *p)
 
     if(pi->completion_status != 0 && g_show_vol_info){
         /* print results of the completed job */
-        char *results = udefrag_get_default_formatted_results(pi);
+        char *results = udefrag_get_results(pi);
         if(results){
             printf("\n%s",results);
-            udefrag_release_default_formatted_results(results);
+            udefrag_release_results(results);
         }
     }
 }
@@ -530,6 +530,14 @@ bool init(int argc, char **argv)
         cleanup();
         return false;
     }
+
+    // initialize debug log
+    wxString logpath;
+    if(wxGetEnv(wxT("UD_LOG_FILE_PATH"),&logpath)){
+        wxFileName file(logpath); file.Normalize();
+        wxSetEnv(wxT("UD_LOG_FILE_PATH"),file.GetFullPath());
+    }
+    udefrag_set_log_file_path();
 
     // initialize logging
     g_Log = new Log();

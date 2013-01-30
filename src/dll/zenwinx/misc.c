@@ -60,17 +60,12 @@ void winx_sleep(int msec)
  */
 int winx_get_os_version(void)
 {
-    typedef NTSTATUS (__stdcall *RTLGETVERSION_PROC)(OSVERSIONINFOW *version_info);
-    RTLGETVERSION_PROC pRtlGetVersion;
-    OSVERSIONINFOW ver;
+    OSVERSIONINFOW v;
     
-    ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOW);
+    v.dwOSVersionInfoSize = sizeof(v);
+    RtlGetVersion(&v);
 
-    pRtlGetVersion = (RTLGETVERSION_PROC)winx_get_proc_address(L"ntdll.dll","RtlGetVersion");
-    if(pRtlGetVersion == NULL) return WINDOWS_NT;
-    /* it seems to be impossible for it to fail */
-    (void)pRtlGetVersion(&ver);
-    return (ver.dwMajorVersion * 10 + ver.dwMinorVersion);
+    return (v.dwMajorVersion * 10 + v.dwMinorVersion);
 }
 
 /**

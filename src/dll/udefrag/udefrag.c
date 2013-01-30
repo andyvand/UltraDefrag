@@ -421,14 +421,14 @@ done:
 }
 
 /**
- * @brief Retrieves the default formatted results 
+ * @brief Retrieves default formatted results 
  * of the completed disk defragmentation job.
  * @param[in] pi pointer to udefrag_progress_info structure.
  * @return A string containing default formatted results
  * of the disk defragmentation job. NULL indicates failure.
  * @note This function is used in console and native applications.
  */
-char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
+char *udefrag_get_results(udefrag_progress_info *pi)
 {
     #define MSG_LENGTH 4095
     char *msg;
@@ -475,10 +475,10 @@ char *udefrag_get_default_formatted_results(udefrag_progress_info *pi)
 
 /**
  * @brief Releases memory allocated
- * by udefrag_get_default_formatted_results.
+ * by udefrag_get_results.
  * @param[in] results the string to be released.
  */
-void udefrag_release_default_formatted_results(char *results)
+void udefrag_release_results(char *results)
 {
     winx_free(results);
 }
@@ -573,22 +573,13 @@ static void write_log_file_header(wchar_t *path)
  * <b>\%tmp\%\\UltraDefrag_Logs</b> folder.
  * @return Zero for success, negative value
  * otherwise.
+ * @note The environment variable mentioned
+ * above must contain the full path of the log file.
  */
 int udefrag_set_log_file_path(void)
 {
-    wchar_t *path, *longpath, *fullpath;
-    int conversion_result;
-    wchar_t *native_path, *path_copy, *filename;
+    wchar_t *path, *native_path, *path_copy, *filename;
     int result;
-
-    typedef DWORD (__stdcall *GETLONGPATHNAME_PROC)(
-        wchar_t *lpszShortPath,wchar_t *lpszLongPath,
-        DWORD cchBuffer);
-    GETLONGPATHNAME_PROC pGetLongPathNameW = NULL;
-    typedef DWORD (__stdcall *GETFULLPATHNAME_PROC)(
-        wchar_t *lpFileName,DWORD nBufferLength,
-        wchar_t *lpBuffer,wchar_t **lpFilePart);
-    GETFULLPATHNAME_PROC pGetFullPathNameW = NULL;
     
     path = winx_getenv(L"UD_LOG_FILE_PATH");
     if(path == NULL){
@@ -597,66 +588,9 @@ int udefrag_set_log_file_path(void)
         return 0;
     }
     
-    longpath = winx_malloc((MAX_PATH + 1) * sizeof(wchar_t));
-    if(longpath == NULL){
-        winx_free(path);
-        return UDEFRAG_NO_MEM;
-    }
-
-    fullpath = winx_malloc((MAX_PATH + 1) * sizeof(wchar_t));
-    if(fullpath == NULL){
-        winx_free(longpath);
-        winx_free(path);
-        return UDEFRAG_NO_MEM;
-    }
-    
-    /* convert to the full path whenever possible */
-    pGetLongPathNameW = (GETLONGPATHNAME_PROC)
-        winx_get_proc_address(L"kernel32.dll",
-        "GetLongPathNameW");
-    conversion_result = -1;
-    if(pGetLongPathNameW){
-        result = pGetLongPathNameW(path,longpath,MAX_PATH + 1);
-        if(result == 0){
-            etrace("GetLongPathNameW failed");
-        } else if(result > MAX_PATH + 1){
-            etrace("path %ws is too long",path);
-        } else {
-            longpath[MAX_PATH] = 0;
-            conversion_result = 0;
-        }
-    }
-    if(conversion_result < 0){
-        wcsncpy(longpath,path,MAX_PATH);
-        longpath[MAX_PATH] = 0;
-    }
-
-    pGetFullPathNameW = (GETFULLPATHNAME_PROC)
-        winx_get_proc_address(L"kernel32.dll",
-        "GetFullPathNameW");
-    conversion_result = -1;
-    if(pGetFullPathNameW){
-        result = pGetFullPathNameW(longpath,MAX_PATH + 1,fullpath,NULL);
-        if(result == 0){
-            etrace("GetFullPathNameW failed");
-        } else if(result > MAX_PATH + 1){
-            etrace("path %ws is too long",path);
-        } else {
-            fullpath[MAX_PATH] = 0;
-            conversion_result = 0;
-        }
-    }
-    if(conversion_result < 0){
-        wcsncpy(fullpath,longpath,MAX_PATH);
-        fullpath[MAX_PATH] = 0;
-    }
-
-    winx_free(longpath);
-    winx_free(path);
-    
     /* convert to native path */
-    native_path = winx_swprintf(L"\\??\\%ws",fullpath);
-    winx_free(fullpath);
+    native_path = winx_swprintf(L"\\??\\%ws",path);
+    winx_free(path);
     if(native_path == NULL){
         etrace("cannot build native path");
         return (-1);
