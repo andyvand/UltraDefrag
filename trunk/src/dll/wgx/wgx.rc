@@ -21,6 +21,7 @@
  *  wgx.dll version resource.
  */
 
+#include <windows.h>
 #include "../../include/version.h"
 
 VS_VERSION_INFO VERSIONINFO

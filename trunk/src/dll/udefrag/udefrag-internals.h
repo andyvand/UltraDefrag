@@ -22,8 +22,10 @@
 
 #include "../zenwinx/ntndk.h"
 #include "../zenwinx/zenwinx.h"
+
 #include "udefrag.h"
-#include "../../include/ultradfgver.h"
+
+#include "../../include/version.h"
 
 #define DEFAULT_COLOR SYSTEM_SPACE
 
