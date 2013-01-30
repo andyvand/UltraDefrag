@@ -212,8 +212,9 @@ bool App::OnInit()
     }
 
     // initialize debug log
-    wxString logpath(wxT(".\\logs\\ultradefrag.log"));
-    wxSetEnv(wxT("UD_LOG_FILE_PATH"),logpath);
+    wxFileName logpath(wxT(".\\logs\\ultradefrag.log"));
+    logpath.Normalize();
+    wxSetEnv(wxT("UD_LOG_FILE_PATH"),logpath.GetFullPath());
     ::udefrag_set_log_file_path();
 
     // initialize logging

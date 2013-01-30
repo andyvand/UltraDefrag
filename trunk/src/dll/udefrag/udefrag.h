@@ -142,8 +142,8 @@ typedef int   (*udefrag_terminator)(void *p);
 int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
     int cluster_map_size,udefrag_progress_callback cb,udefrag_terminator t,void *p);
 
-char *udefrag_get_default_formatted_results(udefrag_progress_info *pi);
-void udefrag_release_default_formatted_results(char *results);
+char *udefrag_get_results(udefrag_progress_info *pi);
+void udefrag_release_results(char *results);
 
 char *udefrag_get_error_description(int error_code);
 

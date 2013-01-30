@@ -147,10 +147,10 @@ void RedrawProgress(udefrag_progress_info *pi)
 
     if(pi->completion_status != 0){
         /* print results of the completed job */
-        results = udefrag_get_default_formatted_results(pi);
+        results = udefrag_get_results(pi);
         if(results){
             winx_printf("\n\n%s\n",results);
-            udefrag_release_default_formatted_results(results);
+            udefrag_release_results(results);
         }
     }
 }

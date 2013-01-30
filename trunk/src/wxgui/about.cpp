@@ -88,9 +88,7 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     text->AddSpacer(space);
 
     wxDisplay display;
-    wxStaticBitmap *bmp = new wxStaticBitmap(&dlg,wxID_ANY,
-        display.GetCurrentMode().GetDepth() > 8 ? \
-        wxBITMAP(ship) : wxBITMAP(ship_8bit));
+    wxStaticBitmap *bmp = new wxStaticBitmap(&dlg,wxID_ANY,wxBITMAP(ship));
 
     wxSizer *contents = new wxBoxSizer(wxHORIZONTAL);
     contents->Add(bmp,wxSizerFlags().Center().Border());

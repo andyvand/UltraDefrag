@@ -297,12 +297,12 @@ bool parse_cmdline(int argc, char **argv)
         udefrag_progress_info pi;
         memset(&pi,0,sizeof(udefrag_progress_info));
 
-        char *results = udefrag_get_default_formatted_results(&pi);
+        char *results = udefrag_get_results(&pi);
         if(results){
             g_extra_lines = 1;
             for(int i = 0; results[i]; i++)
                 if(results[i] == '\n') g_extra_lines ++;
-            udefrag_release_default_formatted_results(results);
+            udefrag_release_results(results);
         }
 
         CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -325,7 +325,15 @@ bool parse_cmdline(int argc, char **argv)
 
     if(g_shellex){
         bool result = set_shellex_options();
-        (void)udefrag_set_log_file_path();
+
+        // reset debug log
+        wxString logpath;
+        if(wxGetEnv(wxT("UD_LOG_FILE_PATH"),&logpath)){
+            wxFileName file(logpath); file.Normalize();
+            wxSetEnv(wxT("UD_LOG_FILE_PATH"),file.GetFullPath());
+        }
+        udefrag_set_log_file_path();
+
         if(!result) return result;
     }
 
