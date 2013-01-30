@@ -88,7 +88,7 @@
 
 #include "../dll/zenwinx/zenwinx.h"
 #include "../dll/udefrag/udefrag.h"
-#include "../include/ultradfgver.h"
+#include "../include/version.h"
 
 #define WgxTraceHandler winx_dbg_print
 #include "../dll/wgx/wgx.h"

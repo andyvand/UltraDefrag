@@ -21,6 +21,7 @@
 * GUI resources.
 */
 
+#include <windows.h>
 #include "../include/version.h"
 #include "resource.h"
 

@@ -24,9 +24,12 @@
 //                          Console resources
 // =======================================================================
 
-#include "../include/version.h"
-
 appicon ICON DISCARDABLE "res/console_app.ico"
+
+#define wxUSE_NO_MANIFEST 1
+#include <wx/msw/wx.rc>
+
+#include "../include/version.h"
 
 /* manifests for all targets produces make-manifests.cmd script */
 1 24 "console.manifest"
@@ -63,6 +66,3 @@ BEGIN
         VALUE "Translation", 0x409, 1200
     END
 END
-
-#define wxUSE_NO_MANIFEST 1
-#include <wx/msw/wx.rc>

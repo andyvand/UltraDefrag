@@ -24,10 +24,13 @@
 //                            GUI resources
 // =======================================================================
 
-#include "../include/version.h"
-
 // application icon (must be first icon)
 appicon ICON DISCARDABLE "res/app.ico"
+
+#define wxUSE_NO_MANIFEST 1
+#include <wx/msw/wx.rc>
+
+#include "../include/version.h"
 
 // bitmaps
 ship      BITMAP DISCARDABLE "res/ship.bmp"
@@ -146,6 +149,3 @@ BEGIN
         VALUE "Translation", 0x409, 1200
     END
 END
-
-#define wxUSE_NO_MANIFEST 1
-#include <wx/msw/wx.rc>
