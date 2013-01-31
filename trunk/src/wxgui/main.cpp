@@ -198,12 +198,14 @@ void *StatThread::Entry()
 //                    Application startup and shutdown
 // =======================================================================
 
+#if !defined(__GNUC__)
 static int out_of_memory_handler(size_t n)
 {
     MessageBox(g_MainFrame ? (HWND)g_MainFrame->GetHandle() : NULL,
         wxT("Out of memory!"),wxT("UltraDefrag"),MB_OK | MB_ICONHAND);
     exit(3); return 0;
 }
+#endif
 
 /**
  * @brief Initializes the application.

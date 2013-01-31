@@ -601,6 +601,7 @@ void cleanup(void)
 //                             Entry point
 // =======================================================================
 
+#if !defined(__GNUC__)
 static int out_of_memory_handler(size_t n)
 {
     if(g_out) color(FOREGROUND_RED | FOREGROUND_INTENSITY);
@@ -608,6 +609,7 @@ static int out_of_memory_handler(size_t n)
     if(g_out) color(g_default_color);
     exit(3); return 0;
 }
+#endif
 
 int __cdecl main(int argc, char **argv)
 {
