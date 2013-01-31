@@ -80,7 +80,7 @@ void MainFrame::InitToolbar()
     m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_ShowReport      , report  )
     m_toolBar->AddSeparator();
-    UD_MakeToolItem(ID_GuiOptions      , wrench  )
+    UD_MakeToolItem(ID_GuiOptions      , gear    )
     m_toolBar->AddSeparator();
     UD_MakeToolCheckItem(ID_BootEnable , terminal)
     UD_MakeToolItem(ID_BootScript      , script  )

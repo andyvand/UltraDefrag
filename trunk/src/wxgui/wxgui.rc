@@ -38,13 +38,13 @@ ship      BITMAP DISCARDABLE "res/ship.bmp"
 //////////////////////////////////////////////////////////////////////////
 // Toolbar and menu icons were copied from:
 // - glass icon - from NSIS compiler's frontend
-// - stop, config, mft optimization icons -
-//   from Silk icon set 1.3 http://www.famfamfam.com/lab/icons/silk/
-// - report, script icons -
+// - table, stop icons - from Silk icon set 1.3
+//   http://www.famfamfam.com/lab/icons/silk/
+// - report icon -
 //   from http://brandspankingnew.net/download.php?file=doc_types_v2.zip
 // - repeat icon - by Interactivemania
 //   http://www.iconfinder.com/icondetails/49846/16/alt_media_repeat_icon
-// - large stop, script; pause, terminal, help, light bulb,
+// - large stop; pause, gear, terminal, script, help, light bulb,
 //   star icons - from Fugue icon set http://p.yusukekamiyamane.com/
 // All icons are licensed under the terms permitting their use
 // for non commercial purposes.
@@ -58,7 +58,7 @@ mft16      RCDATA "res/16x16/mft.png"
 pause16    RCDATA "res/16x16/pause.png"
 stop16     RCDATA "res/16x16/stop.png"
 report16   RCDATA "res/16x16/report.png"
-wrench16   RCDATA "res/16x16/wrench.png"
+gear16     RCDATA "res/16x16/gear.png"
 terminal16 RCDATA "res/16x16/terminal.png"
 script16   RCDATA "res/16x16/script.png"
 help16     RCDATA "res/16x16/help.png"
@@ -74,7 +74,7 @@ mft20      RCDATA "res/20x20/mft.png"
 pause20    RCDATA "res/20x20/pause.png"
 stop20     RCDATA "res/20x20/stop.png"
 report20   RCDATA "res/20x20/report.png"
-wrench20   RCDATA "res/20x20/wrench.png"
+gear20     RCDATA "res/20x20/gear.png"
 terminal20 RCDATA "res/20x20/terminal.png"
 script20   RCDATA "res/20x20/script.png"
 help20     RCDATA "res/20x20/help.png"
@@ -90,7 +90,7 @@ mft24      RCDATA "res/24x24/mft.png"
 pause24    RCDATA "res/24x24/pause.png"
 stop24     RCDATA "res/24x24/stop.png"
 report24   RCDATA "res/24x24/report.png"
-wrench24   RCDATA "res/24x24/wrench.png"
+gear24     RCDATA "res/24x24/gear.png"
 terminal24 RCDATA "res/24x24/terminal.png"
 script24   RCDATA "res/24x24/script.png"
 help24     RCDATA "res/24x24/help.png"
@@ -106,7 +106,7 @@ mft32      RCDATA "res/32x32/mft.png"
 pause32    RCDATA "res/32x32/pause.png"
 stop32     RCDATA "res/32x32/stop.png"
 report32   RCDATA "res/32x32/report.png"
-wrench32   RCDATA "res/32x32/wrench.png"
+gear32     RCDATA "res/32x32/gear.png"
 terminal32 RCDATA "res/32x32/terminal.png"
 script32   RCDATA "res/32x32/script.png"
 help32     RCDATA "res/32x32/help.png"
