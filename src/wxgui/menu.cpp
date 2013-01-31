@@ -253,7 +253,7 @@ void MainFrame::InitMenu()
     else if(size < 32) size = 24;
     else size = 32;
 
-    //size = 24;
+    //size = 32;
 
     wxBitmap *pic; wxString string;
     UD_SetMenuIcon(ID_Analyze         , glass )
@@ -263,7 +263,7 @@ void MainFrame::InitMenu()
     UD_SetMenuIcon(ID_MftOpt          , mft   )
     UD_SetMenuIcon(ID_Stop            , stop  )
     UD_SetMenuIcon(ID_ShowReport      , report)
-    UD_SetMenuIcon(ID_GuiOptions      , wrench)
+    UD_SetMenuIcon(ID_GuiOptions      , gear  )
     UD_SetMenuIcon(ID_BootScript      , script)
     UD_SetMenuIcon(ID_HelpContents    , help  )
     UD_SetMenuIcon(ID_HelpBestPractice, light )
