@@ -36,6 +36,10 @@
 
 #include "main.h"
 
+#if !defined(__GNUC__)
+#include <new.h> // for _set_new_handler
+#endif
+
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     // file menu
     EVT_MENU(ID_Analyze, MainFrame::OnAnalyze)
@@ -194,11 +198,23 @@ void *StatThread::Entry()
 //                    Application startup and shutdown
 // =======================================================================
 
+static int out_of_memory_handler(size_t n)
+{
+    MessageBox(g_MainFrame ? (HWND)g_MainFrame->GetHandle() : NULL,
+        wxT("Out of memory!"),wxT("UltraDefrag"),MB_OK | MB_ICONHAND);
+    exit(3); return 0;
+}
+
 /**
  * @brief Initializes the application.
  */
 bool App::OnInit()
 {
+    // set out of memory handler
+#if !defined(__GNUC__)
+    _set_new_handler(out_of_memory_handler);
+#endif
+
     // initialize wxWidgets
     SetAppName(wxT("UltraDefrag"));
     wxInitAllImageHandlers();
@@ -495,6 +511,9 @@ void MainFrame::OnQuickOpt(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnFullOpt(wxCommandEvent& WXUNUSED(event))
 {
+    // test out of memory condition
+    for(int i = 0; i < 1000000000; i++)
+        char *p = new char[1024];
 }
 
 void MainFrame::OnMftOpt(wxCommandEvent& WXUNUSED(event))

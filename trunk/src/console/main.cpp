@@ -36,6 +36,10 @@
 
 #include "main.h"
 
+#if !defined(__GNUC__)
+#include <new.h> // for _set_new_handler
+#endif
+
 #define MAX_ENV_VAR_LENGTH 32767 // as MSDN states
 
 void cleanup(void);
@@ -597,8 +601,21 @@ void cleanup(void)
 //                             Entry point
 // =======================================================================
 
+static int out_of_memory_handler(size_t n)
+{
+    if(g_out) color(FOREGROUND_RED | FOREGROUND_INTENSITY);
+    printf("\nOut of memory!\n");
+    if(g_out) color(g_default_color);
+    exit(3); return 0;
+}
+
 int __cdecl main(int argc, char **argv)
 {
+    // set out of memory handler
+#if !defined(__GNUC__)
+    _set_new_handler(out_of_memory_handler);
+#endif
+
     if(!init(argc,argv))
         return 1;
 
@@ -612,6 +629,10 @@ int __cdecl main(int argc, char **argv)
         "UltraDefrag comes with ABSOLUTELY NO WARRANTY. This is free software, \n"
         "and you are welcome to redistribute it under certain conditions.\n\n"
     );
+
+    // uncomment to test out of memory condition
+    /*for(int i = 0; i < 1000000000; i++)
+        char *p = new char[1024];*/
 
     int result;
 
