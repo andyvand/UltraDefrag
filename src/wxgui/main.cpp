@@ -201,9 +201,17 @@ void *StatThread::Entry()
 #if !defined(__GNUC__)
 static int out_of_memory_handler(size_t n)
 {
-    MessageBox(g_MainFrame ? (HWND)g_MainFrame->GetHandle() : NULL,
-        wxT("Out of memory!"),wxT("UltraDefrag"),MB_OK | MB_ICONHAND);
-    exit(3); return 0;
+    int choice = MessageBox(
+        g_MainFrame ? (HWND)g_MainFrame->GetHandle() : NULL,
+        wxT("Try to release some memory by closing\n")
+        wxT("other applications and click Retry then\n")
+        wxT("or click Cancel to terminate the program."),
+        wxT("UltraDefrag: out of memory!"),MB_RETRYCANCEL | MB_ICONHAND);
+    if(choice == IDCANCEL){
+        exit(3);
+        return 0;
+    }
+    return 1;
 }
 #endif
 
@@ -215,6 +223,7 @@ bool App::OnInit()
     // set out of memory handler
 #if !defined(__GNUC__)
     _set_new_handler(out_of_memory_handler);
+    _set_new_mode(1);
 #endif
 
     // initialize wxWidgets
@@ -514,8 +523,11 @@ void MainFrame::OnQuickOpt(wxCommandEvent& WXUNUSED(event))
 void MainFrame::OnFullOpt(wxCommandEvent& WXUNUSED(event))
 {
     // test out of memory condition
-    for(int i = 0; i < 1000000000; i++)
-        char *p = new char[1024];
+    for(int i = 0; i < 1000000000; i++){
+        //char *p = new char[1024];
+        char *p = (char *)malloc(1024);
+        *p = 0x1;
+    }
 }
 
 void MainFrame::OnMftOpt(wxCommandEvent& WXUNUSED(event))
