@@ -615,7 +615,9 @@ int __cdecl main(int argc, char **argv)
 {
     // set out of memory handler
 #if !defined(__GNUC__)
+    winx_set_killer(out_of_memory_handler);
     _set_new_handler(out_of_memory_handler);
+    _set_new_mode(1);
 #endif
 
     if(!init(argc,argv))

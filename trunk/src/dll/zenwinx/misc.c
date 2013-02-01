@@ -213,7 +213,7 @@ wchar_t *winx_get_windows_boot_options(void)
         return NULL;
     }
     data_size += sizeof(wchar_t);
-    data = winx_malloc(data_size);
+    data = winx_tmalloc(data_size);
     if(data == NULL){
         etrace("cannot allocate %u bytes of memory",data_size);
         winx_printf("%s: cannot allocate %u bytes of memory\n\n",__FUNCTION__,data_size);
@@ -240,7 +240,7 @@ wchar_t *winx_get_windows_boot_options(void)
         buffer_size = 1 * sizeof(wchar_t);
     }
 
-    boot_options = winx_malloc(buffer_size);
+    boot_options = winx_tmalloc(buffer_size);
     if(!boot_options){
         etrace("cannot allocate %u bytes of memory",buffer_size);
         winx_printf("%s: cannot allocate %u bytes of memory\n\n",__FUNCTION__,buffer_size);

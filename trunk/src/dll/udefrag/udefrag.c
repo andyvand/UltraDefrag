@@ -439,8 +439,6 @@ char *udefrag_get_results(udefrag_progress_info *pi)
     
     /* allocate memory */
     msg = winx_malloc(MSG_LENGTH + 1);
-    if(msg == NULL)
-        return msg;
 
     (void)winx_bytes_to_hr(pi->total_space,2,total_space,sizeof(total_space));
     (void)winx_bytes_to_hr(pi->free_space,2,free_space,sizeof(free_space));

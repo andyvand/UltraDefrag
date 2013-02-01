@@ -51,6 +51,15 @@ int exit_flag = 0;
 /* forward declarations */
 static void set_dbg_log(char *name);
 
+static int out_of_memory_handler(size_t n)
+{
+    winx_print("\nOut of memory!\n");
+    
+    /* terminate process with exit code 3 */
+    NtTerminateProcess(NtCurrentProcess(),3);
+    return 0;
+}
+
 /**
  * @brief Initializes the native application.
  */
@@ -61,6 +70,7 @@ static int native_app_init(void)
     (void)NtInitializeRegistry(0);
 #endif
 
+    winx_set_killer(out_of_memory_handler);
     if(udefrag_init_library() < 0)
         return (-1);
     

@@ -51,10 +51,6 @@ wchar_t *winx_getenv(wchar_t *name)
     DbgCheck1(name,NULL);
     
     value = winx_malloc(MAX_ENV_VALUE_LENGTH * sizeof(wchar_t));
-    if(value == NULL){
-        etrace("not enough memory for %ws",name);
-        return NULL;
-    }
 
     RtlInitUnicodeString(&n,name);
     v.Buffer = value;

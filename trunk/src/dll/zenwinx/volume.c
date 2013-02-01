@@ -250,8 +250,6 @@ static int get_filesystem_name(HANDLE hRoot,winx_volume_information *v)
 
     fs_attr_info_size = MAX_PATH * sizeof(WCHAR) + sizeof(FILE_FS_ATTRIBUTE_INFORMATION);
     pfa = winx_malloc(fs_attr_info_size);
-    if(pfa == NULL)
-        return(-1);
     
     RtlZeroMemory(pfa,fs_attr_info_size);
     status = NtQueryVolumeInformationFile(hRoot,&IoStatusBlock,pfa,
@@ -324,8 +322,6 @@ static void get_volume_label(HANDLE hRoot,winx_volume_information *v)
     /* allocate memory */
     buffer_size = (sizeof(FILE_FS_VOLUME_INFORMATION) - sizeof(wchar_t)) + (MAX_PATH + 1) * sizeof(wchar_t);
     ffvi = winx_malloc(buffer_size);
-    if(ffvi == NULL)
-        return;
     
     /* try to get actual label */
     RtlZeroMemory(ffvi,buffer_size);
@@ -504,8 +500,6 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
     
     /* allocate memory */
     bitmap = winx_malloc(BITMAPSIZE);
-    if(bitmap == NULL)
-        return NULL;
     
     /* open volume */
     f = winx_vopen(volume_letter);

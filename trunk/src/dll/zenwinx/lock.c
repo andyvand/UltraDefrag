@@ -56,11 +56,6 @@ winx_spin_lock *winx_init_spin_lock(char *name)
     }
         
     sl = winx_malloc(sizeof(winx_spin_lock));
-    if(sl == NULL){
-        etrace("not enough memory for %s (case 2)",name);
-        winx_free(fullname);
-        return NULL;
-    }
     
     if(winx_create_event(fullname,SynchronizationEvent,&sl->hEvent) < 0){
         etrace("cannot create synchronization event");

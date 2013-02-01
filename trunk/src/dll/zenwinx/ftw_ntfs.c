@@ -341,10 +341,6 @@ static wchar_t * get_attribute_name(ATTRIBUTE *attr,mft_scan_parameters *sp)
     
     /* allocate memory */
     attr_name = winx_malloc((MAX_PATH + 1) * sizeof(wchar_t));
-    if(attr_name == NULL){
-        sp->errors ++;
-        return NULL;
-    }
     
     attr_name[0] = 0;
     if(attr->NameLength){
@@ -408,7 +404,7 @@ static int get_number_of_file_records(mft_scan_parameters *sp)
     sp->ml.number_of_file_records = 0;
     
     /* allocate memory */
-    nfrob = winx_malloc(sp->ml.file_record_buffer_size);
+    nfrob = winx_tmalloc(sp->ml.file_record_buffer_size);
     if(nfrob == NULL){
         etrace("cannot allocate %u bytes of memory",
             sp->ml.file_record_buffer_size);
@@ -475,8 +471,6 @@ static int get_mft_layout(mft_scan_parameters *sp)
 
     /* allocate memory */
     ntfs_data = winx_malloc(sizeof(NTFS_DATA));
-    if(ntfs_data == NULL)
-        return (-1);
 
     /* get ntfs data */
     if(winx_ioctl(sp->f_volume,FSCTL_GET_NTFS_VOLUME_DATA,
@@ -641,7 +635,7 @@ static void analyze_attribute_from_mft_record(ULONGLONG mft_id,ATTRIBUTE_TYPE at
     }
     
     /* allocate memory for a single mft record */
-    nfrob = winx_malloc(sp->ml.file_record_buffer_size);
+    nfrob = winx_tmalloc(sp->ml.file_record_buffer_size);
     if(nfrob == NULL){
         etrace("cannot allocate %u bytes of memory",
             sp->ml.file_record_buffer_size);
@@ -722,12 +716,6 @@ static void analyze_attribute_from_attribute_list(ATTRIBUTE_LIST *attr_list_entr
     
     if(!empty_name){
         attr_name = winx_malloc((length + 1) * sizeof(wchar_t));
-        if(attr_name == NULL){
-            etrace("cannot allocate %u bytes of memory",
-                (length + 1) * sizeof(wchar_t));
-            sp->errors ++;
-            return;
-        }
         wcsncpy(attr_name,name_src,length);
         attr_name[length] = 0;
     }
@@ -964,7 +952,7 @@ static void analyze_non_resident_attribute_list(winx_file_info *f,ULONGLONG list
     cluster_size = sp->ml.cluster_size;
     clusters_to_read = list_size / cluster_size;
     if(list_size % cluster_size) clusters_to_read ++;
-    cluster = (char *)winx_malloc((SIZE_T)(cluster_size * clusters_to_read));
+    cluster = (char *)winx_tmalloc((SIZE_T)(cluster_size * clusters_to_read));
     if(!cluster){
         etrace("cannot allocate %I64u bytes of memory",
             cluster_size * clusters_to_read);
@@ -1264,12 +1252,6 @@ static int update_stream_name(winx_file_info *f,mft_scan_parameters *sp)
     
     length = (int)wcslen(f->name) + (int)wcslen(sp->mfi.Name) + 1;
     new_name = winx_malloc((length + 1) * sizeof(wchar_t));
-    if(new_name == NULL){
-        etrace("cannot allocate %u bytes of memory",
-            (length + 1) * sizeof(wchar_t));
-        sp->errors ++;
-        return (-1);
-    }
     
     if(f->name[0]) /* stream name is not empty */
         _snwprintf(new_name,length + 1,L"%ws:%ws",sp->mfi.Name,f->name);
@@ -1575,8 +1557,6 @@ static int build_full_paths(mft_scan_parameters *sp)
     
     /* allocate memory */
     p = winx_malloc(sizeof(path_parts));
-    if(p == NULL)
-        return (-1);
 
     /* prepare data for fast binary search */
     for(f = *sp->filelist; f != NULL; f = f->next){
@@ -1585,7 +1565,7 @@ static int build_full_paths(mft_scan_parameters *sp)
     }
 
     if(n_entries){
-        f_array = winx_malloc(n_entries * sizeof(file_entry));
+        f_array = winx_tmalloc(n_entries * sizeof(file_entry));
         if(f_array == NULL){
             etrace("cannot allocate %u bytes of memory",
                 n_entries * sizeof(file_entry));
@@ -1661,7 +1641,7 @@ fail:
     }
 
     /* allocate memory */
-    nfrob = winx_malloc(sp->ml.file_record_buffer_size);
+    nfrob = winx_tmalloc(sp->ml.file_record_buffer_size);
     if(nfrob == NULL){
         etrace("cannot allocate %u bytes of memory",
             sp->ml.file_record_buffer_size);

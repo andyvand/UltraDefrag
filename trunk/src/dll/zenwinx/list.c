@@ -49,7 +49,6 @@ list_entry *winx_list_insert(list_entry **phead,list_entry *prev,long size)
         return NULL;
 
     new_item = (list_entry *)winx_malloc(size);
-    if(new_item == NULL) return NULL;
 
     /* is list empty? */
     if(*phead == NULL){

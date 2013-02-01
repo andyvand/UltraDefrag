@@ -67,7 +67,7 @@ NTSTATUS NTAPI query_routine(PWSTR ValueName,
         return STATUS_UNSUCCESSFUL;
     }
 
-    cmd = winx_malloc(ValueLength + sizeof(wchar_t));
+    cmd = winx_tmalloc(ValueLength + sizeof(wchar_t));
     if(cmd == NULL){
         mtrace();
         return STATUS_NO_MEMORY;
@@ -164,10 +164,6 @@ static int save_boot_exec_list(struct cmd *list)
         if(c->next == list) break;
     }
     commands = winx_malloc(length * sizeof(wchar_t));
-    if(commands == NULL){
-        mtrace();
-        return (-1);
-    }
     memset(commands,0,length * sizeof(wchar_t));
     for(c = list, p = commands; c; c = c->next){
         if(c->cmd[0]){

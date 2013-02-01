@@ -261,8 +261,22 @@ int winx_release_spin_lock(winx_spin_lock *sl);
 void winx_destroy_spin_lock(winx_spin_lock *sl);
 
 /* mem.c */
-void *winx_malloc(size_t size);
-void winx_free(void *addr);
+void *winx_heap_alloc(size_t size,int flags);
+void winx_heap_free(void *addr);
+
+/* flags for winx_heap_alloc */
+#define MALLOC_ABORT_ON_FAILURE 0x1
+
+/* aborts the application in case of allocation failure */
+#define winx_malloc(n) winx_heap_alloc(n,MALLOC_ABORT_ON_FAILURE)
+
+/* this form is tolerant for allocation failures */
+#define winx_tmalloc(n) winx_heap_alloc(n,0)
+
+#define winx_free winx_heap_free
+
+typedef int (*winx_killer)(size_t n);
+void winx_set_killer(winx_killer k);
 
 /* misc.c */
 void winx_sleep(int msec);

@@ -345,10 +345,6 @@ int winx_prompt(char *prompt,char *string,int n,winx_history *h)
     if(!prompt) prompt = "";
     buffer_length = (int)strlen(prompt) + n;
     buffer = winx_malloc(buffer_length);
-    if(buffer == NULL){
-        winx_printf("\nwinx_prompt: not enough memory!\n");
-        return (-1);
-    }
     
     winx_printf("%s",prompt);
     
@@ -573,19 +569,9 @@ int winx_print_strings(char **strings,int line_width,
     
     /* allocate memory for line buffer */
     line_buffer = winx_malloc(line_width + 1);
-    if(!line_buffer){
-        etrace("cannot allocate %u bytes of memory",
-            line_width + 1);
-        return (-1);
-    }
+
     /* allocate memory for second ancillary buffer */
     second_buffer = winx_malloc(line_width + 1);
-    if(!second_buffer){
-        etrace("cannot allocate %u bytes of memory",
-            line_width + 1);
-        winx_free(line_buffer);
-        return (-1);
-    }
     
     /* start to display strings */
     rows_printed = 0;

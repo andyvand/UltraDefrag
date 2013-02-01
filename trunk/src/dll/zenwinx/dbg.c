@@ -421,7 +421,7 @@ void winx_dbg_print(int flags, const char *format, ...)
             } else {
                 length = ((int)wcslen((wchar_t *)err_msg) + 1) * sizeof(wchar_t);
                 length *= 2; /* enough to hold UTF-8 string */
-                cnv_msg = winx_malloc(length);
+                cnv_msg = winx_tmalloc(length);
                 if(cnv_msg){
                     /* write message to log in UTF-8 encoding */
                     winx_to_utf8(cnv_msg,length,(wchar_t *)err_msg);
@@ -507,7 +507,7 @@ void winx_dbg_print_header(char ch, int width, const char *format, ...)
                 winx_dbg_print(0,"%s",string);
             } else {
                 /* allocate buffer for entire string */
-                buffer = winx_malloc(width + 1);
+                buffer = winx_tmalloc(width + 1);
                 if(buffer == NULL){
                     /* print string not decorated */
                     winx_dbg_print(0,"%s",string);

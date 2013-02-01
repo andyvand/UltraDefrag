@@ -124,7 +124,7 @@ wchar_t *winx_get_module_filename(void)
     
     us = &pi.PebBaseAddress->ProcessParameters->ImagePathName;
     size = us->MaximumLength + sizeof(wchar_t);
-    path = winx_malloc(size);
+    path = winx_tmalloc(size);
     if(path == NULL){
         mtrace();
         return NULL;

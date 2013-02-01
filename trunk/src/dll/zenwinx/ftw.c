@@ -159,10 +159,6 @@ int winx_ftw_dump_file(winx_file_info *f,
     
     /* allocate memory */
     filemap = winx_malloc(FILE_MAP_SIZE);
-    if(filemap == NULL){
-        winx_defrag_fclose(hFile);
-        return (-1);
-    }
     
     /* dump the file */
     startVcn = 0;
@@ -291,7 +287,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
         return f;
     
     /* extract filename */
-    f->name = winx_malloc(file_entry->FileNameLength + sizeof(wchar_t));
+    f->name = winx_tmalloc(file_entry->FileNameLength + sizeof(wchar_t));
     if(f->name == NULL){
         etrace("cannot allocate %u bytes of memory",
             file_entry->FileNameLength + sizeof(wchar_t));
@@ -310,7 +306,7 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     length += (int)wcslen(f->name) + 1;
     if(!is_rootdir)
         length ++;
-    f->path = winx_malloc(length * sizeof(wchar_t));
+    f->path = winx_tmalloc(length * sizeof(wchar_t));
     if(f->path == NULL){
         etrace("cannot allocate %u bytes of memory",
             length * sizeof(wchar_t));
@@ -388,21 +384,10 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     /* build path */
     length = (int)wcslen(path) + 1;
     f->path = winx_malloc(length * sizeof(wchar_t));
-    if(f->path == NULL){
-        etrace("cannot allocate %u bytes of memory",
-            length * sizeof(wchar_t));
-        winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
-        return (-1);
-    }
     wcscpy(f->path,path);
     
     /* save . filename */
     f->name = winx_malloc(2 * sizeof(wchar_t));
-    if(f->name == NULL){
-        winx_free(f->path);
-        winx_list_remove((list_entry **)(void *)filelist,(list_entry *)f);
-        return (-1);
-    }
     f->name[0] = '.';
     f->name[1] = 0;
     
@@ -517,10 +502,6 @@ static int ftw_helper(wchar_t *path, int flags,
     
     /* allocate memory */
     file_listing = winx_malloc(FILE_LISTING_SIZE);
-    if(file_listing == NULL){
-        NtClose(hDir);
-        return (-1);
-    }
     
     /* reset buffer */
     memset((void *)file_listing,0,FILE_LISTING_SIZE);
