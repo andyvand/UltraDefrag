@@ -37,6 +37,7 @@ ship      BITMAP DISCARDABLE "res/ship.bmp"
 
 //////////////////////////////////////////////////////////////////////////
 // Toolbar and menu icons were copied from:
+//
 // - glass icon - from NSIS compiler's frontend
 // - table, stop icons - from Silk icon set 1.3
 //   http://www.famfamfam.com/lab/icons/silk/
@@ -46,8 +47,11 @@ ship      BITMAP DISCARDABLE "res/ship.bmp"
 //   http://www.iconfinder.com/icondetails/49846/16/alt_media_repeat_icon
 // - large stop; pause, gear, terminal, script, help, light bulb,
 //   star icons - from Fugue icon set http://p.yusukekamiyamane.com/
-// All icons are licensed under the terms permitting their use
-// for non commercial purposes.
+//
+// Everything is licensed under the terms permitting its use
+// for non-commercial purposes.
+//
+// All the icons have been adjusted, of course, for better appearance.
 //////////////////////////////////////////////////////////////////////////
 glass16    RCDATA "res/16x16/glass.png"
 repeat16   RCDATA "res/16x16/repeat.png"
