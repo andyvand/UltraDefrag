@@ -114,7 +114,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     #define MAX_UTF8_PATH_LENGTH (256 * 1024)
     char *utf8_path;
     
-    utf8_path = winx_malloc(MAX_UTF8_PATH_LENGTH);
+    utf8_path = winx_tmalloc(MAX_UTF8_PATH_LENGTH);
     if(utf8_path == NULL){
         mtrace();
         return (-1);

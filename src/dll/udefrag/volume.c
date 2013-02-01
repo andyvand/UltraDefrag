@@ -61,8 +61,6 @@ volume_info *udefrag_get_vollist(int skip_removable)
     
     /* allocate memory */
     v = winx_malloc((MAX_DOS_DRIVES + 1) * sizeof(volume_info));
-    if(v == NULL)
-        return v;
 
     /* set error mode to ignore missing removable drives */
     if(winx_set_system_error_mode(INTERNAL_SEM_FAILCRITICALERRORS) < 0){

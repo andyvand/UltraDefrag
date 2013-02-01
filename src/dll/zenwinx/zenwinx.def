@@ -52,7 +52,6 @@ EXPORTS
     winx_flush_dbg_log
     winx_fopen
     winx_fread
-    winx_free
     winx_fsize
     winx_ftw
     winx_ftw_dump_file
@@ -73,6 +72,8 @@ EXPORTS
     winx_get_volume_information
     winx_get_windows_boot_options
     winx_get_windows_directory
+    winx_heap_alloc
+    winx_heap_free
     winx_hr_to_bytes
     winx_init_history
     winx_init_library
@@ -84,7 +85,6 @@ EXPORTS
     winx_list_destroy
     winx_list_insert
     winx_list_remove
-    winx_malloc
     winx_open_event
     winx_open_mutex
     winx_patcmp
@@ -109,6 +109,7 @@ EXPORTS
     winx_scan_disk
     winx_setenv
     winx_set_dbg_log
+    winx_set_killer
     winx_set_system_error_mode
     winx_shutdown
     winx_sleep

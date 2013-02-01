@@ -89,11 +89,6 @@ WINX_FILE *winx_fopen(const wchar_t *filename,const char *mode)
         return NULL;
     }
     f = (WINX_FILE *)winx_malloc(sizeof(WINX_FILE));
-    if(!f){
-        NtClose(hFile);
-        etrace("cannot open %ws: not enough memory",filename);
-        return NULL;
-    }
     f->hFile = hFile;
     f->roffset.QuadPart = 0;
     f->woffset.QuadPart = 0;
@@ -125,7 +120,7 @@ WINX_FILE *winx_fbopen(const wchar_t *filename,const char *mode,int buffer_size)
         return f;
     
     /* allocate memory */
-    f->io_buffer = winx_malloc(buffer_size);
+    f->io_buffer = winx_tmalloc(buffer_size);
     if(f->io_buffer == NULL){
         etrace("cannot allocate %u bytes of memory"
             " for %ws",buffer_size,filename);
@@ -485,7 +480,7 @@ void *winx_get_file_contents(const wchar_t *filename,size_t *bytes_read)
 #endif
     length = (size_t)size;
     
-    contents = winx_malloc(length + 2);
+    contents = winx_tmalloc(length + 2);
     if(contents == NULL){
         winx_printf("\n%ws: Cannot allocate %u bytes of memory!\n\n",
             filename,length + 2);

@@ -235,14 +235,7 @@ static int history_handler(int argc,wchar_t **argv,wchar_t **envp)
     
     /* convert list of strings to array */
     strings = winx_malloc((history.n_entries + 3) * sizeof(char *));
-    if(strings == NULL){
-        winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-            argv[0],(history.n_entries + 3) * sizeof(char *));
-        return (-1);
-    }
-    strings[0] = "Typed commands history:";
-    strings[1] = "";
-    i = 2;
+    strings[0] = "Typed commands history:"; strings[1] = ""; i = 2;
     for(entry = history.head; i < history.n_entries; entry = entry->next){
         if(entry->string){
             strings[i] = entry->string;
@@ -341,11 +334,6 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
         for(i = 1; i < argc; i++)
             length += (int)wcslen(argv[i]) + 1;
         filename = winx_malloc(length * sizeof(wchar_t));
-        if(filename == NULL){
-            winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-                argv[0],length * sizeof(wchar_t));
-            return (-1);
-        }
         filename[0] = 0;
         for(i = 1; i < argc; i++){
             wcscat(filename,argv[i]);
@@ -375,7 +363,7 @@ static int type_handler(int argc,wchar_t **argv,wchar_t **envp)
 
     /* print file contents */
     if(unicode_detected){
-        second_buffer = winx_malloc(filesize + 1);
+        second_buffer = winx_tmalloc(filesize + 1);
         if(second_buffer == NULL){
             winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
                 argv[0],filesize + 1);
@@ -436,11 +424,6 @@ static int hexview_handler(int argc,wchar_t **argv,wchar_t **envp)
     for(i = 1; i < argc; i++)
         length += (int)wcslen(argv[i]) + 1;
     filename = winx_malloc(length * sizeof(wchar_t));
-    if(filename == NULL){
-        winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-            argv[0],length * sizeof(wchar_t));
-        return (-1);
-    }
     filename[0] = 0;
     for(i = 1; i < argc; i++){
         wcscat(filename,argv[i]);
@@ -564,22 +547,12 @@ static int list_environment_variables(int argc,wchar_t **argv,wchar_t **envp)
     /* convert envp to array of ANSI strings */
     for(n = 0; envp[n] != NULL; n++) {}
     strings = winx_malloc((n + 1) * sizeof(char *));
-    if(strings == NULL){
-        winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-            argv[0],(n + 1) * sizeof(char *));
-        return (-1);
-    }
     RtlZeroMemory((void *)strings,(n + 1) * sizeof(char *));
     for(i = 0, j = 0; i < n; i++){
         if(filter_strings && winx_wcsistr(envp[i],argv[1]) != (wchar_t *)envp[i])
             continue;
         length = (int)wcslen(envp[i]);
         strings[j] = winx_malloc((length + 1) * sizeof(char));
-        if(strings[j] == NULL){
-            winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-                argv[0],(length + 1) * sizeof(char));
-            goto fail;
-        }
         (void)_snprintf(strings[j],length + 1,"%ws",envp[i]);
         strings[j][length] = 0;
         j++;
@@ -648,20 +621,8 @@ static int set_handler(int argc,wchar_t **argv,wchar_t **envp)
             value_length += 1 + (int)wcslen(argv[i]);
         /* allocate memory */
         name = winx_malloc((name_length + 1) * sizeof(wchar_t));
-        if(name == NULL){
-            winx_printf("\n%ws: cannot allocate %u bytes of memory\n",
-                argv[0],(name_length + 1) * sizeof(wchar_t));
-            return (-1);
-        }
-        if(value_length){
+        if(value_length)
             value = winx_malloc((value_length + 1) * sizeof(wchar_t));
-            if(value == NULL){
-                winx_printf("\n%ws: cannot allocate %u bytes of memory\n",
-                    argv[0],(value_length + 1) * sizeof(wchar_t));
-                winx_free(name);
-                return (-1);
-            }
-        }
         /* extract name and value */
         n = (int)wcslen(argv[1]);
         for(i = 0; i < n; i++){
@@ -885,11 +846,6 @@ static int call_handler(int argc,wchar_t **argv,wchar_t **envp)
         for(i = 1; i < argc; i++)
             length += (int)wcslen(argv[i]) + 1;
         filename = winx_malloc(length * sizeof(wchar_t));
-        if(filename == NULL){
-            winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-                argv[0],length * sizeof(wchar_t));
-            return (-1);
-        }
         filename[0] = 0;
         for(i = 1; i < argc; i++){
             wcscat(filename,argv[i]);
@@ -960,7 +916,7 @@ static wchar_t *expand_environment_variables(wchar_t *command)
     number_of_bytes = 0;
     status = RtlExpandEnvironmentStrings_U(NULL,
         &in,&out,&number_of_bytes);
-    expanded_string = winx_malloc(number_of_bytes + sizeof(wchar_t));
+    expanded_string = winx_tmalloc(number_of_bytes + sizeof(wchar_t));
     length = (number_of_bytes + sizeof(wchar_t)) / sizeof(wchar_t);
     if(expanded_string){
         RtlInitUnicodeString(&in,command);
@@ -1093,12 +1049,6 @@ int parse_command(wchar_t *cmdline)
     }
     /* c. allocate memory for argv array */
     argv = winx_malloc(sizeof(wchar_t *) * argc);
-    if(argv == NULL){
-        winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-            cmdline,sizeof(wchar_t *) * argc);
-        winx_free(cmdline_copy);
-        return (-1);
-    }
     /* d. fill argv array */
     j = 0; arg_detected = 0;
     for(i = 0; i < n; i++){
@@ -1127,19 +1077,14 @@ int parse_command(wchar_t *cmdline)
                 }
                 if(n > 0){
                     envp = winx_malloc((n + 1) * sizeof(wchar_t *));
-                    if(envp == NULL){
-                        winx_printf("\n%ws: cannot allocate %u bytes of memory\n\n",
-                            cmdline,(n + 1) * sizeof(wchar_t *));
-                    } else {
-                        RtlZeroMemory((void *)envp,(n + 1) * sizeof(wchar_t *));
-                        string = peb->ProcessParameters->Environment;
-                        for(i = 0; i < n; i++){
-                            /* empty line indicates the end of environment */
-                            if(string[0] == 0) break;
-                            envp[i] = string;
-                            length = (int)wcslen(string);
-                            string += length + 1;
-                        }
+                    RtlZeroMemory((void *)envp,(n + 1) * sizeof(wchar_t *));
+                    string = peb->ProcessParameters->Environment;
+                    for(i = 0; i < n; i++){
+                        /* empty line indicates the end of environment */
+                        if(string[0] == 0) break;
+                        envp[i] = string;
+                        length = (int)wcslen(string);
+                        string += length + 1;
                     }
                 }
             }

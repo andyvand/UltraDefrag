@@ -264,11 +264,6 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
         return (-1);
 
     fb = winx_malloc(sizeof *fb);
-    if(fb == NULL){
-        destroy_file_blocks_tree(jp);
-        return UDEFRAG_NO_MEM;
-    }
-    
     fb->file = file;
     fb->block = block;
     p = prb_probe(jp->file_blocks,(void *)fb);

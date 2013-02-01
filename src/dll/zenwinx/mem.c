@@ -27,29 +27,70 @@
 #include "ntndk.h"
 #include "zenwinx.h"
 
+int default_killer(size_t n);
+
 HANDLE hGlobalHeap = NULL;
+winx_killer killer = default_killer;
 
 /**
- * @brief Allocates a block of memory from the global growable heap.
+ * @brief Aborts the application in the out of memory condition case
+ * when no custom killer is set by the winx_set_killer routine.
+ */
+int default_killer(size_t n)
+{
+    /* terminate process with exit code 3 */
+    NtTerminateProcess(NtCurrentProcess(),3);
+    return 0;
+}
+
+/**
+ * @brief Sets custom routine to be called
+ * in the out of memory condition case.
+ * @details The killer should either abort
+ * the application and return zero or 
+ * return a nonzero value. In the latter case
+ * zenwinx library will try to allocate memory
+ * again.
+ */
+void winx_set_killer(winx_killer k)
+{
+    killer = k;
+}
+
+/**
+ * @brief Allocates a block of memory from a global growable heap.
  * @param size the size of the block to be allocated, in bytes.
  * Note that the allocated block may be bigger than the requested size.
+ * @param flags combination of MALLOC_XXX flags defined in zenwinx.h file.
  * @return A pointer to the allocated block. NULL indicates failure.
  */
-void *winx_malloc(size_t size)
+void *winx_heap_alloc(size_t size,int flags)
 {
+    void *p = NULL;
+
     /*
     * Avoid winx_dbg_xxx calls here
     * to avoid recursion.
     */
-    if(hGlobalHeap == NULL) return NULL;
-    return RtlAllocateHeap(hGlobalHeap,0,size);
+    
+    if(!hGlobalHeap) return NULL;
+
+    if(!(flags & MALLOC_ABORT_ON_FAILURE))
+        return RtlAllocateHeap(hGlobalHeap,0,size);
+    
+    do {
+        p = RtlAllocateHeap(hGlobalHeap,0,size);
+        if(!p) if(!killer(size)) break;
+    } while(!p);
+    
+    return p;
 }
 
 /**
- * @brief Frees memory allocated by winx_malloc_ex.
+ * @brief Frees memory allocated by winx_heap_alloc.
  * @param[in] addr the address of the memory block.
  */
-void winx_free(void *addr)
+void winx_heap_free(void *addr)
 {
     /*
     * Avoid winx_dbg_xxx calls here
