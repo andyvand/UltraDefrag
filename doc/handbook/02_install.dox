@@ -55,12 +55,6 @@
  * The log file is located in the temporary folder of the executing user: <b>\%TMP\%\\UltraDefrag_Install.log</b>
  *
  * The following additional command line switches are supported:
- * @par /LANG
- * Select the language to be installed. For example, 
- * use <b>/LANG="German"</b> to install the German language pack.<br/>
- * Valid language names can be found at the 
- * <a href="http://ultradefrag.wikispaces.com/Translation+Report">Translation Wiki</a>
- *
  * @par /FULL=1
  * Install the full edition, which includes all components and icons.
  *
@@ -108,10 +102,9 @@
  * It must be the last parameter used in the command line and must not contain any quotes, even if the path contains spaces.<br/>
  * Only absolute paths are supported. The destination folder must be empty or contain a previous UltraDefrag installation.
  *
- * Example command line to silently install the full edition in "Burmese (Padauk)" with only the start menu icon:
+ * Example command line to silently install the full edition with only the start menu icon:
  * @code
- * ultradefrag.bin.i386.exe /S /LANG="Burmese (Padauk)" /FULL=1 /ICONS=0 /STARTMENUICON=1
- *     /D=C:\Program Files\UltraDefrag
+ * ultradefrag.bin.i386.exe /S /FULL=1 /ICONS=0 /STARTMENUICON=1 /D=C:\Program Files\UltraDefrag
  * @endcode
  * To check the result of the command line switches omit the <b>/S</b> switch,
  * which opens the interactive installer and allows checking the selections

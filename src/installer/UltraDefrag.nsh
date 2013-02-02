@@ -190,10 +190,10 @@
         Abort
     ${EndIf}
 
-    ; we only support Windows NT4 and above
-    ${IfNot} ${AtLeastWinNT4}
+    ; we only support Windows XP and above
+    ${IfNot} ${AtLeastWinXP}
         ${LogAndDisplayAbort} \
-            "This program is not supported on Windows versions below NT4!"
+            "This program is not supported on Windows versions below XP!"
         Abort
     ${EndIf}
 
@@ -569,13 +569,12 @@ SkipMove:
     ${DisableX64FSRedirection}
 
     DetailPrint "Installing GUI interface..."
-    SetOutPath "$INSTDIR\i18n"
-        File /nonfatal "${ROOTDIR}\src\gui\i18n\*.lng"
-        File /nonfatal "${ROOTDIR}\src\gui\i18n\*.template"
+    SetOutPath "$INSTDIR"
+        File /nonfatal /r /x *.po /x *.header /x *.pot "${ROOTDIR}\src\wxgui\locale"
 
     SetOutPath "$INSTDIR"
-        Delete "$INSTDIR\ultradefrag.exe"
-        File "ultradefrag.exe"
+        Delete "$INSTDIR\wxultradefrag.exe"
+        File "wxultradefrag.exe"
 
     Push $R0
     Push $0
@@ -605,18 +604,6 @@ SkipMove:
         ${EndIf}
     ${EndIf}
 
-    ClearErrors
-    ReadRegStr $R0 HKCR ".lng" ""
-    ${If} ${Errors}
-        WriteRegStr HKCR ".lng" "" "LanguagePack"
-        WriteRegStr HKCR "LanguagePack" "" "Language Pack"
-        WriteRegStr HKCR "LanguagePack\shell\open" "" "Open"
-        WriteRegStr HKCR "LanguagePack\DefaultIcon" "" "shell32.dll,0"
-        WriteRegStr HKCR "LanguagePack\shell\open\command" "" "notepad.exe %1"
-
-        WriteRegStr HKLM ${UD_UNINSTALL_REG_KEY} "Registered.lng" "1"
-    ${EndIf}
-
     Pop $0
     Pop $R0
 
@@ -633,9 +620,9 @@ SkipMove:
     ${DisableX64FSRedirection}
 
     DetailPrint "Removing GUI interface..."
-    RMDir /r "$INSTDIR\i18n"
+    RMDir /r "$INSTDIR\locale"
 
-    Delete "$INSTDIR\ultradefrag.exe"
+    Delete "$INSTDIR\wxultradefrag.exe"
 
     Push $R0
 
@@ -660,16 +647,6 @@ SkipMove:
                 DeleteRegKey HKCR "$R0\shell\Edit"
                 DeleteRegValue HKLM ${UD_UNINSTALL_REG_KEY} "Registered.lua.edit"
             ${EndUnless}
-        ${EndIf}
-    ${EndUnless}
-
-    ClearErrors
-    ReadRegStr $R0 HKLM ${UD_UNINSTALL_REG_KEY} "Registered.lng"
-    ${Unless} ${Errors}
-        ${If} $R0 == "1"
-            DeleteRegKey HKCR "LanguagePack"
-            DeleteRegKey HKCR ".lng"
-            DeleteRegValue HKLM ${UD_UNINSTALL_REG_KEY} "Registered.lng"
         ${EndIf}
     ${EndUnless}
 
@@ -888,7 +865,7 @@ SkipMove:
     ; because all important information can be easily
     ; accessed from the GUI
     CreateShortCut "$SMPROGRAMS\UltraDefrag.lnk" \
-        "$INSTDIR\ultradefrag.exe"
+        "$INSTDIR\wxultradefrag.exe"
 
     ${EnableX64FSRedirection}
 
@@ -922,7 +899,7 @@ SkipMove:
     SetShellVarContext all
     SetOutPath $INSTDIR
     CreateShortCut "$DESKTOP\UltraDefrag.lnk" \
-        "$INSTDIR\ultradefrag.exe"
+        "$INSTDIR\wxultradefrag.exe"
 
     ${EnableX64FSRedirection}
 
@@ -956,7 +933,7 @@ SkipMove:
     SetShellVarContext all
     SetOutPath $INSTDIR
     CreateShortCut "$QUICKLAUNCH\UltraDefrag.lnk" \
-        "$INSTDIR\ultradefrag.exe"
+        "$INSTDIR\wxultradefrag.exe"
 
     ${EnableX64FSRedirection}
 
@@ -1013,12 +990,7 @@ SkipMove:
     RMDir /r "$INSTDIR\presets"
     RMDir /r "$INSTDIR\logs"
     RMDir /r "$INSTDIR\portable_${ULTRADFGARCH}_package"
-    RMDir /r "$INSTDIR\i18n\gui"
-    RMDir /r "$INSTDIR\i18n\gui-config"
-
-    Delete "$INSTDIR\i18n\French (FR).lng"
-    Delete "$INSTDIR\i18n\Vietnamese (VI).lng"
-    Delete "$INSTDIR\i18n\Bosanski.lng"
+    RMDir /r "$INSTDIR\i18n"
 
     Delete "$INSTDIR\scripts\udctxhandler.lua"
 
@@ -1039,6 +1011,8 @@ SkipMove:
     Delete "$INSTDIR\*.lng"
     Delete "$INSTDIR\udefrag-gui-config.exe"
     Delete "$INSTDIR\LanguageSelector.exe"
+    Delete "$INSTDIR\ultradefrag.exe"
+    Delete "$INSTDIR\lang.ini"
 
     Delete "$INSTDIR\shellex.ico"
     Delete "$INSTDIR\shellex-folder.ico"
@@ -1057,6 +1031,17 @@ SkipMove:
     DeleteRegKey HKLM "SYSTEM\ControlSet001\Enum\Root\LEGACY_ULTRADFG"
     DeleteRegKey HKLM "SYSTEM\ControlSet002\Enum\Root\LEGACY_ULTRADFG"
     DeleteRegKey HKLM "SYSTEM\ControlSet003\Enum\Root\LEGACY_ULTRADFG"
+
+    ; remove obsolete file associations
+    ClearErrors
+    ReadRegStr $R0 HKLM ${UD_UNINSTALL_REG_KEY} "Registered.lng"
+    ${Unless} ${Errors}
+        ${If} $R0 == "1"
+            DeleteRegKey HKCR "LanguagePack"
+            DeleteRegKey HKCR ".lng"
+            DeleteRegValue HKLM ${UD_UNINSTALL_REG_KEY} "Registered.lng"
+        ${EndIf}
+    ${EndUnless}
 
 !macroend
 
