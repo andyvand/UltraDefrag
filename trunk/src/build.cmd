@@ -43,8 +43,8 @@ call build-targets.cmd %* || goto fail
 :: build documentation
 call build-docs.cmd %* || goto fail
 
-:: update installer lang.ini
-call make-lang-ini.cmd || goto fail
+:: update translations
+call update-translations.cmd --no-extract || goto fail
 
 :: build installers and portable packages
 echo Build installers and/or portable packages...
