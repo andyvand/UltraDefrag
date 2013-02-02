@@ -272,15 +272,6 @@ int Utils::MessageDialog(wxFrame *parent,
     wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message,
         wxDefaultPosition,wxDefaultSize,wxALIGN_CENTRE);
 
-    // Burmese needs Padauk font for display
-    if(g_MyLocale->GetCanonicalName().Left(2) == wxT("my")){
-        wxFont textFont = msg->GetFont();
-        textFont.SetFaceName(wxT("Padauk"));
-        textFont.SetPointSize(textFont.GetPointSize() + 2);
-
-        msg->SetFont(textFont);
-    }
-
     wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
     contents->Add(pic, wxGBPosition(0, 0), wxDefaultSpan,
@@ -290,6 +281,17 @@ int Utils::MessageDialog(wxFrame *parent,
 
     wxButton *ok = new wxButton(&dlg,wxID_OK,text1);
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,text2);
+
+    // Burmese needs Padauk font for display
+    if(g_MyLocale->GetCanonicalName().Left(2) == wxT("my")){
+        wxFont textFont = msg->GetFont();
+        textFont.SetFaceName(wxT("Padauk"));
+        textFont.SetPointSize(textFont.GetPointSize() + 2);
+
+        msg->SetFont(textFont);
+        ok->SetFont(textFont);
+        cancel->SetFont(textFont);
+    }
 
     wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
     buttons->Add(ok,wxSizerFlags(1).Border(wxRIGHT));
