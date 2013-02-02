@@ -35,6 +35,7 @@ set PATH=%GNUWIN32_DIR%;%PATH%
 
 pushd "%~dp0\wxgui"
 
+if "%~1" == "--no-extract" goto skip_extract
 :: extract translations
 copy /v /y locale\UltraDefrag.header locale\UltraDefrag.pot
 xgettext -C -j --copyright-holder="UltraDefrag Development Team" --msgid-bugs-address="http://sourceforge.net/p/ultradefrag/bugs/" -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot *.cpp || goto fail
@@ -46,6 +47,7 @@ pushd "%~dp0\tools\transifex"
 if exist tx.exe tx.exe pull -a || popd && goto fail
 echo.
 popd
+:skip_extract
 
 :: update translations
 for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do call :check_translation "%%~F" || goto fail
