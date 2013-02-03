@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-01-30 22:28+0100\n"
-"PO-Revision-Date: 2013-02-02 15:32+0000\n"
+"POT-Creation-Date: 2013-02-02 20:28+0100\n"
+"PO-Revision-Date: 2013-02-03 09:23+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -254,7 +254,7 @@ msgstr ""
 msgid "&About"
 msgstr "အကြောင်းအရာ"
 
-#: i18n.cpp:201 utils.cpp:325
+#: i18n.cpp:201 utils.cpp:327
 msgid "Open &log"
 msgstr "ဖွင့်ပြီး မှတ်တမ်းတင်ရန်"
 
@@ -267,17 +267,18 @@ msgid "Boot time script"
 msgstr "စက်အစ အညွှန်းစာတို"
 
 #: upgrade.cpp:157
-msgid "release is available for download!"
-msgstr "ဒေါင်းဆွဲချရန် ထုတ်ထားလိုက်ပါပြီ"
+#, c-format
+msgid "Release %ls is available for download!"
+msgstr ""
 
 #: upgrade.cpp:159
 msgid "You can upgrade me ^-^"
 msgstr "သင်ငါ့ကို အဆင့်မြှင့်နိုင်သည် ^-^"
 
-#: upgrade.cpp:160 utils.cpp:329
+#: upgrade.cpp:160 utils.cpp:331
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:328
+#: utils.cpp:330
 msgid "Error!"
 msgstr ""
