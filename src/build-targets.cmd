@@ -259,6 +259,15 @@ exit /B 0
     cd ..\wxgui
     %UD_BUILD_TOOL% wxgui.build || goto fail
 
+    :success
+    set UD_BUILD_TOOL=
+    set WX_CONFIG=
+    set WXWIDGETS_INC_PATH=
+    set WXWIDGETS_INC2_PATH=
+    set WXWIDGETS_LIB_PATH=
+    popd
+    exit /B 0
+
     :fail
     set UD_BUILD_TOOL=
     set WX_CONFIG=
@@ -268,12 +277,4 @@ exit /B 0
     popd
     exit /B 1
     
-    :success
-    set UD_BUILD_TOOL=
-    set WX_CONFIG=
-    set WXWIDGETS_INC_PATH=
-    set WXWIDGETS_INC2_PATH=
-    set WXWIDGETS_LIB_PATH=
-    popd
-
 exit /B 0
