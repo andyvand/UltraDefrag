@@ -25,7 +25,7 @@ if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%U
 
 if not exist "%CODEBLOCKS_EXE%" goto cb_missing
 
-"%CODEBLOCKS_EXE%" "UltraDefrag.workspace"
+start "" "%CODEBLOCKS_EXE%" "UltraDefrag.workspace"
 
 :success
 exit /B 0
