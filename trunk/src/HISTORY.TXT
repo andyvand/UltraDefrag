@@ -4,6 +4,7 @@
   ------------------------------------------------------------------------------
     beta1:
     - GUI and command line tool reimplemented on top of wxWidgets library
+    - initial language selection is now done by the GUI instead of the installer
     - internal GUI settings moved from guiopts-internals.lua to gui.ini file
     - Windows NT 4.0 and Windows 2000 support dropped due to a poor system API
     - Internals: Windows Driver Kit support dropped because of its
@@ -13,6 +14,11 @@
 
   Version 6.0.0 2013-02-
   ------------------------------------------------------------------------------
+    - log creation in case of out of memory condition added
+    - the following translations were updated:
+
+      Chinese (Traditional)
+
     RC2:
     - upgrade check now better supports development releases
     - out of memory condition handling added
