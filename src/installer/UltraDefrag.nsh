@@ -570,7 +570,7 @@ SkipMove:
 
     DetailPrint "Installing GUI interface..."
     SetOutPath "$INSTDIR"
-        File /nonfatal /r /x *.po /x *.header /x *.pot "${ROOTDIR}\src\wxgui\locale"
+        File /nonfatal /r /x *.po /x *.header "${ROOTDIR}\src\wxgui\locale"
 
     SetOutPath "$INSTDIR"
         Delete "$INSTDIR\wxultradefrag.exe"
