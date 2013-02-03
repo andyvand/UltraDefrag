@@ -33,13 +33,13 @@
  *      Use <b>Chinese (Taiwan)</b> instead.
  *
  * <h1>Offline translation</h1>
- * -# Open the file <b>"%UD_INSTALL_DIR%\locale\UltraDefrag.pot"</b> in your favorite text editor
+ * -# Open the file <b>"%UD_INSTALL_DIR%\locale\UltraDefrag.pot"</b> in <a href="http://www.poedit.net/">PoEdit</a>
  *    and save it as <b>{language name}.po</b>.
  * -# The lines starting with <b>msgid</b> contain the original string. <b><i>Don't change them!</i></b>
  * -# The lines starting with <b>msgstr</b> must be updated to contain the translation between the double
  *    quotes (").
  *    @par Example:
- *        - msgid "Release %ls is available for download!"
+ *        - msgid  "Release %ls is available for download!"
  *        - msgstr "Version %ls ist zum Herunterladen verfügbar!"
  *
  *    In this example there is another special case where a placeholder <b>\%ls</b> is included.\n
