@@ -24,7 +24,6 @@ echo.
 
 call :make_default .                    || goto fail
 call :make_default .\dll\udefrag        || goto fail
-call :make_default .\dll\wgx            || goto fail
 call :make_default .\dll\zenwinx        || goto fail
 call :make_default ..\doc\handbook      || goto fail
 

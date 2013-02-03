@@ -173,7 +173,6 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     copy /Y lua5.1a.dll         %PORTABLE_DIR%\
     copy /Y lua5.1a.exe         %PORTABLE_DIR%\
     copy /Y lua5.1a_gui.exe     %PORTABLE_DIR%\
-    copy /Y wgx.dll             %PORTABLE_DIR%\
     mkdir %PORTABLE_DIR%\handbook
     copy /Y "%~dp0\..\doc\handbook\doxy-doc\html\*.*" %PORTABLE_DIR%\handbook\
     mkdir %PORTABLE_DIR%\scripts
@@ -239,14 +238,10 @@ rem by removing all intermediate files.
     rd /s /q lib
     rd /s /q obj
     rd /s /q doxy-doc
-    rd /s /q gui\doxy-doc
-    rd /s /q dll\wgx\doxy-doc
     rd /s /q dll\udefrag\doxy-doc
     rd /s /q dll\zenwinx\doxy-doc
     rd /s /q ..\doc\handbook\doxy-doc
     rd /s /q doxy-defaults
-    rd /s /q gui\doxy-defaults
-    rd /s /q dll\wgx\doxy-defaults
     rd /s /q dll\udefrag\doxy-defaults
     rd /s /q dll\zenwinx\doxy-defaults
     rd /s /q ..\doc\handbook\doxy-defaults
@@ -258,7 +253,6 @@ rem by removing all intermediate files.
 
     del /f /q ..\..\web\doxy-doc\html\*.*
     del /f /q ..\..\web\doxy-doc\udefrag.dll\html\*.*
-    del /f /q ..\..\web\doxy-doc\wgx\html\*.*
 
     for %%F in ( "..\..\web\handbook\*.*" ) do if not "%%~nxF" == ".htaccess" del /f /q "%%~F"
 

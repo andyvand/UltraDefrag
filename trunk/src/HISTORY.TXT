@@ -10,6 +10,7 @@
     - Internals: Windows Driver Kit support dropped because of its
       unreliable development environment - use Windows SDK v7.1 instead
     - winx_vswprintf and winx_swprintf routines added to zenwinx library
+    - wgx library removed entirely
 
 
   Version 6.0.0 2013-02-

@@ -24,7 +24,6 @@ echo.
 
 call :upgrade_config .                    || goto fail
 call :upgrade_config .\dll\udefrag        || goto fail
-call :upgrade_config .\dll\wgx            || goto fail
 call :upgrade_config .\dll\zenwinx        || goto fail
 call :upgrade_config ..\doc\handbook      || goto fail
 

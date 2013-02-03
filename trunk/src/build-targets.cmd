@@ -63,10 +63,7 @@ xcopy .\bootexctrl  .\obj\bootexctrl  /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\console     .\obj\console     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\console\res .\obj\console\res /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\dll\udefrag .\obj\udefrag     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\dll\wgx     .\obj\wgx         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\dll\zenwinx .\obj\zenwinx     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\gui         .\obj\gui         /I /Y /Q /EXCLUDE:%~n0_exclude.txt
-xcopy .\gui\res     .\obj\gui\res     /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\wxgui       .\obj\wxgui       /I /Y /Q /EXCLUDE:%~n0_exclude.txt
 xcopy .\wxgui\res   .\obj\wxgui\res   /I /Y /Q /S /EXCLUDE:%~n0_exclude.txt
 xcopy .\hibernate   .\obj\hibernate   /I /Y /Q /EXCLUDE:%~n0_exclude.txt
@@ -92,8 +89,6 @@ del /Q .\obj\native\zenwinx.rc
 mkdir obj\dll
 mkdir obj\dll\udefrag
 copy /Y obj\udefrag\udefrag.h obj\dll\udefrag
-mkdir obj\dll\wgx
-copy /Y obj\wgx\wgx.h obj\dll\wgx
 mkdir obj\dll\zenwinx
 copy /Y obj\zenwinx\*.h obj\dll\zenwinx\
 
@@ -104,9 +99,7 @@ dir /S /B *.h >headers || exit /B 1
 copy /Y .\headers .\bootexctrl || exit /B 1
 copy /Y .\headers .\console    || exit /B 1
 copy /Y .\headers .\udefrag    || exit /B 1
-copy /Y .\headers .\wgx        || exit /B 1
 copy /Y .\headers .\zenwinx    || exit /B 1
-copy /Y .\headers .\gui        || exit /B 1
 copy /Y .\headers .\wxgui      || exit /B 1
 copy /Y .\headers .\hibernate  || exit /B 1
 copy /Y .\headers .\lua5.1     || exit /B 1
@@ -257,21 +250,14 @@ exit /B 0
     %UD_BUILD_TOOL% lua.build || goto fail
     cd ..\lua-gui
     %UD_BUILD_TOOL% lua-gui.build || goto fail
-    cd ..\wgx
-    %UD_BUILD_TOOL% wgx.build ||  goto fail
-    echo Compile other modules...
     cd ..\bootexctrl
     %UD_BUILD_TOOL% bootexctrl.build || goto fail
     cd ..\hibernate
     %UD_BUILD_TOOL% hibernate.build || goto fail
     cd ..\console
     %UD_BUILD_TOOL% console.build || goto fail
-
     cd ..\wxgui
     %UD_BUILD_TOOL% wxgui.build || goto fail
-
-    cd ..\gui
-    %UD_BUILD_TOOL% ultradefrag.build && goto success
 
     :fail
     set UD_BUILD_TOOL=
