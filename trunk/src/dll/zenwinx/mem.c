@@ -30,6 +30,7 @@
 int default_killer(size_t n);
 
 HANDLE hGlobalHeap = NULL;
+char *reserved_memory = NULL;
 winx_killer killer = default_killer;
 
 /**
@@ -117,6 +118,9 @@ int winx_create_global_heap(void)
         winx_print("\nCannot create global memory heap!\n");
         return (-1);
     }
+    
+    /* reserve 1 MB of memory for the out of memory condition handling */
+    reserved_memory = (char *)winx_tmalloc(1024 * 1024);
     return 0;
 }
 

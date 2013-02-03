@@ -88,7 +88,15 @@ WINX_FILE *winx_fopen(const wchar_t *filename,const char *mode)
         strace(status,"cannot open %ws",filename);
         return NULL;
     }
-    f = (WINX_FILE *)winx_malloc(sizeof(WINX_FILE));
+
+    /* use winx_tmalloc just for winx_flush_dbg_log */
+    f = (WINX_FILE *)winx_tmalloc(sizeof(WINX_FILE));
+    if(f == NULL){
+        mtrace();
+        NtClose(hFile);
+        return NULL;
+    }
+    
     f->hFile = hFile;
     f->roffset.QuadPart = 0;
     f->woffset.QuadPart = 0;

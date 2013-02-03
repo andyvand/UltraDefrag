@@ -56,9 +56,8 @@ int winx_init_library(void)
 /**
  * @brief Releases resources 
  * acquired by zenwinx library.
- * @note Not intended to be called
- * before winx_exit - it'll take
- * care itself.
+ * @note Call it ONLY if you know
+ * what you're doing.
  */
 void winx_unload_library(void)
 {
@@ -98,8 +97,7 @@ void winx_exit(int exit_code)
     NTSTATUS Status;
     
     kb_close();
-    winx_flush_dbg_log();
-    winx_unload_library();
+    winx_flush_dbg_log(0);
     Status = NtTerminateProcess(NtCurrentProcess(),exit_code);
     if(!NT_SUCCESS(Status)){
         print_post_scriptum("winx_exit: cannot terminate process",Status);
@@ -119,7 +117,7 @@ void winx_reboot(void)
     kb_close();
     MarkWindowsBootAsSuccessful();
     (void)winx_enable_privilege(SE_SHUTDOWN_PRIVILEGE);
-    winx_flush_dbg_log();
+    winx_flush_dbg_log(0);
     Status = NtShutdownSystem(ShutdownReboot);
     if(!NT_SUCCESS(Status)){
         print_post_scriptum("winx_reboot: cannot reboot the computer",Status);
@@ -139,7 +137,7 @@ void winx_shutdown(void)
     kb_close();
     MarkWindowsBootAsSuccessful();
     (void)winx_enable_privilege(SE_SHUTDOWN_PRIVILEGE);
-    winx_flush_dbg_log();
+    winx_flush_dbg_log(0);
     Status = NtShutdownSystem(ShutdownPowerOff);
     if(!NT_SUCCESS(Status)){
         print_post_scriptum("winx_shutdown: cannot shut down the computer",Status);

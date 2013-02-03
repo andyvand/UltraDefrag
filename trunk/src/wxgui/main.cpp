@@ -154,7 +154,7 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     case wxLOG_FatalError:
         // XXX: fatal errors pass by actually
         ::winx_dbg_print(0,ERROR_FMT,msg);
-        ::winx_flush_dbg_log();
+        ::winx_flush_dbg_log(0);
         break;
     case wxLOG_Error:
         ::winx_dbg_print(0,ERROR_FMT,msg);
@@ -209,8 +209,8 @@ static int out_of_memory_handler(size_t n)
         wxT("UltraDefrag: out of memory!"),
         MB_RETRYCANCEL | MB_ICONHAND);
     if(choice == IDCANCEL){
-        exit(3);
-        return 0;
+        winx_flush_dbg_log(FLUSH_IN_OUT_OF_MEMORY);
+        exit(3); return 0;
     }
     return 1;
 }
@@ -221,24 +221,24 @@ static int out_of_memory_handler(size_t n)
  */
 bool App::OnInit()
 {
-    // set out of memory handler
-#if !defined(__GNUC__)
-    winx_set_killer(out_of_memory_handler);
-    _set_new_handler(out_of_memory_handler);
-    _set_new_mode(1);
-#endif
-
     // initialize wxWidgets
     SetAppName(wxT("UltraDefrag"));
     wxInitAllImageHandlers();
     if(!wxApp::OnInit())
         return false;
 
-    // initialize udefrag.dll library
-    if(::udefrag_init_library() < 0){
+    // initialize zenwinx library
+    if(::winx_init_library() < 0){
         wxLogError(wxT("Initialization failed!"));
         return false;
     }
+
+    // set out of memory handler
+#if !defined(__GNUC__)
+    winx_set_killer(out_of_memory_handler);
+    _set_new_handler(out_of_memory_handler);
+    _set_new_mode(1);
+#endif
 
     // initialize debug log
     wxFileName logpath(wxT(".\\logs\\ultradefrag.log"));
@@ -292,10 +292,8 @@ void App::Cleanup()
     delete m_statThread;
 
     // deinitialize logging
+    winx_flush_dbg_log(0);
     delete m_log;
-
-    // free udefrag.dll library
-    ::udefrag_unload_library();
 }
 
 /**
@@ -707,7 +705,7 @@ void MainFrame::OnDebugLog(wxCommandEvent& WXUNUSED(event))
     } else {
         wxFileName file(logpath);
         file.Normalize();
-        ::winx_flush_dbg_log();
+        winx_flush_dbg_log(0);
         logpath = file.GetFullPath();
         if(!wxLaunchDefaultBrowser(logpath))
             Utils::ShowError(wxT("Cannot open %ls!"),logpath.wc_str());

@@ -85,7 +85,6 @@ int __cdecl main(int argc,char **argv)
     if(winx_enable_privilege(SE_SHUTDOWN_PRIVILEGE) < 0){
         fprintf(stderr,"Cannot enable shutdown privilege!\n"
             "Use DbgView program to get more information.\n");
-        winx_unload_library();
         return EXIT_FAILURE;
     }
 
@@ -94,9 +93,7 @@ int __cdecl main(int argc,char **argv)
         letrace("cannot hibernate the computer");
         fprintf(stderr,"Cannot hibernate the computer!\n"
             "Use DbgView program to get more information.\n");
-        winx_unload_library();
         return EXIT_FAILURE;
     }
-    winx_unload_library();
     return EXIT_SUCCESS;
 }
