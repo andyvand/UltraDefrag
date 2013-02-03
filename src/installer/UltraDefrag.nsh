@@ -571,8 +571,8 @@ SkipMove:
         File /nonfatal /r /x *.po /x *.header "${ROOTDIR}\src\wxgui\locale"
 
     SetOutPath "$INSTDIR"
-        Delete "$INSTDIR\wxultradefrag.exe"
-        File "wxultradefrag.exe"
+        Delete "$INSTDIR\ultradefrag.exe"
+        File "ultradefrag.exe"
 
     Push $R0
     Push $0
@@ -620,7 +620,7 @@ SkipMove:
     DetailPrint "Removing GUI interface..."
     RMDir /r "$INSTDIR\locale"
 
-    Delete "$INSTDIR\wxultradefrag.exe"
+    Delete "$INSTDIR\ultradefrag.exe"
 
     Push $R0
 
@@ -863,7 +863,7 @@ SkipMove:
     ; because all important information can be easily
     ; accessed from the GUI
     CreateShortCut "$SMPROGRAMS\UltraDefrag.lnk" \
-        "$INSTDIR\wxultradefrag.exe"
+        "$INSTDIR\ultradefrag.exe"
 
     ${EnableX64FSRedirection}
 
@@ -897,7 +897,7 @@ SkipMove:
     SetShellVarContext all
     SetOutPath $INSTDIR
     CreateShortCut "$DESKTOP\UltraDefrag.lnk" \
-        "$INSTDIR\wxultradefrag.exe"
+        "$INSTDIR\ultradefrag.exe"
 
     ${EnableX64FSRedirection}
 
@@ -931,7 +931,7 @@ SkipMove:
     SetShellVarContext all
     SetOutPath $INSTDIR
     CreateShortCut "$QUICKLAUNCH\UltraDefrag.lnk" \
-        "$INSTDIR\wxultradefrag.exe"
+        "$INSTDIR\ultradefrag.exe"
 
     ${EnableX64FSRedirection}
 
@@ -993,6 +993,7 @@ SkipMove:
 
     Delete "$INSTDIR\scripts\udctxhandler.lua"
 
+    Delete "$INSTDIR\options\guiopts-internals.lua"
     Delete "$INSTDIR\options\udreportopts-custom.lua"
 
     Delete "$INSTDIR\dfrg.exe"
@@ -1010,8 +1011,8 @@ SkipMove:
     Delete "$INSTDIR\*.lng"
     Delete "$INSTDIR\udefrag-gui-config.exe"
     Delete "$INSTDIR\LanguageSelector.exe"
-    Delete "$INSTDIR\ultradefrag.exe"
     Delete "$INSTDIR\lang.ini"
+    Delete "$INSTDIR\wxultradefrag.exe"
 
     Delete "$INSTDIR\shellex.ico"
     Delete "$INSTDIR\shellex-folder.ico"

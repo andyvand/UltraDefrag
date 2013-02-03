@@ -403,28 +403,6 @@ os.setenv("UD_DRY_RUN",dry_run)
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ]]
 
-int_config_file_contents = [[
--- the settings below are not changeable by the user,
--- they are always overwritten when the program ends
-rx = $rx
-ry = $ry
-rwidth = $rwidth
-rheight = $rheight
-maximized = $maximized
-
-skip_removable = $skip_removable
-repeat_action = $repeat_action
-
-column1_width = $column1_width
-column2_width = $column2_width
-column3_width = $column3_width
-column4_width = $column4_width
-column5_width = $column5_width
-list_height = $list_height
-
-job_flags = $job_flags
-]]
-
 function expand (s)
   s = string.gsub(s, "$([%w_]+)", function (n)
         return string.gsub(tostring(_G[n]), "\\", "\\\\")
@@ -434,10 +412,6 @@ end
 
 function save_preferences(f)
     f:write(expand(config_file_contents))
-end
-
-function save_internal_preferences(f)
-    f:write(expand(int_config_file_contents))
 end
 
 function get_preferences()
@@ -577,13 +551,4 @@ if version < current_version then
     f = assert(io.open(path, "w"))
     save_preferences(f)
     f:close()
-
-    -- save guiopts-internals.lua when needed
-    if old_version == 0 then
-        if rx then
-            f = assert(io.open(instdir .. "\\options\\guiopts-internals.lua", "w"))
-            save_internal_preferences(f)
-            f:close()
-        end
-    end
 end

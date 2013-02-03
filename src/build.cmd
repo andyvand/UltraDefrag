@@ -169,7 +169,7 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     copy /Y udefrag.dll         %PORTABLE_DIR%\
     copy /Y udefrag.exe         %PORTABLE_DIR%\
     copy /Y zenwinx.dll         %PORTABLE_DIR%\
-    copy /Y wxultradefrag.exe   %PORTABLE_DIR%
+    copy /Y ultradefrag.exe     %PORTABLE_DIR%
     copy /Y lua5.1a.dll         %PORTABLE_DIR%\
     copy /Y lua5.1a.exe         %PORTABLE_DIR%\
     copy /Y lua5.1a_gui.exe     %PORTABLE_DIR%\

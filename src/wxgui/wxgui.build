@@ -1,6 +1,6 @@
 -- this is the UltraDefrag GUI build options
 
-name        = "wxultradefrag"
+name        = "ultradefrag"
 target_type = "gui"
 
 -- list of directories containing headers the program relies on
