@@ -345,6 +345,8 @@ enum {
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640
 #define MAIN_WINDOW_DEFAULT_HEIGHT 480
+#define DEFAULT_LIST_HEIGHT        130
+#define MIN_PANEL_HEIGHT            40
 
 /* user defined language IDs
    Important: never change their order when adding new translations
