@@ -6,7 +6,7 @@ set VERSION_MAJOR=7
 set VERSION_MINOR=0
 set VERSION_REVISION=0
 
-:: alpha1, beta2, rc3 etc.
+:: alpha1, beta2, rc3, etc.
 :: unset for the final releases
 set RELEASE_STAGE=beta1
 
