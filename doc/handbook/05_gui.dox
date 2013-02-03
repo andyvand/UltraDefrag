@@ -24,12 +24,12 @@
  * \par\begin{center}\begin{xtabular}{|c|p{0.9\linewidth}|}
  * \hline
  * @endlatexonly
- * @image html "Analysis.png"
+ * @image html "glass.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Analysis.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{glass.png}} &
  * @endlatexonly
  * @par Analyze (F5; Enter)
  * This analyzes the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -41,12 +41,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "Defragment.png"
+ * @image html "defrag.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Defragment.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{defrag.png}} &
  * @endlatexonly
  * @par Defragment (F6)
  * This defragments the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -58,12 +58,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "QuickOptimize.png"
+ * @image html "quick.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{QuickOptimize.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{quick.png}} &
  * @endlatexonly
  * @par Quick optimization (F7)
  * This optimizes the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -75,12 +75,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "FullOptimize.png"
+ * @image html "full.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{FullOptimize.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{full.png}} &
  * @endlatexonly
  * @par Full optimization (Ctrl+F7)
  * This optimizes the currently selected disk(s), constantly updates the cluster map and status bar, and generates a report.<br/>
@@ -93,12 +93,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "OptimizeMFT.png"
+ * @image html "mft.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{OptimizeMFT.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{mft.png}} &
  * @endlatexonly
  * @par Optimize MFT (Shift+F7)
  * This optimizes the MFT by placing its fragments as close to each other as possible.
@@ -109,12 +109,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "Pause.png"
+ * @image html "pause.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Pause.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{pause.png}} &
  * @endlatexonly
  * @par Pause (Space)
  * This pauses the currently running process at any stage, currently pending move operations will be completed to avoid corruption.
@@ -126,12 +126,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "Stop.png"
+ * @image html "stop.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Stop.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{stop.png}} &
  * @endlatexonly
  * @par Stop (Ctrl+C)
  * This aborts the currently running process at any stage, currently pending move operations will be completed to avoid corruption.
@@ -142,12 +142,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "Repeat.png"
+ * @image html "repeat.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Repeat.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{repeat.png}} &
  * @endlatexonly
  * @par Repeat action (Shift+R)
  * If this is set, the current operation will be repeated multiple times in a row until there is nothing left that can be moved.
@@ -258,12 +258,12 @@
  * \par\begin{center}\begin{tabular}{|c|p{0.9\linewidth}|}
  * \hline
  * @endlatexonly
- * @image html "Report.png"
+ * @image html "report.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Report.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{report.png}} &
  * @endlatexonly
  * @par Show report (F8)
  * This displays the report generated for the selected disk(s) in a browser window.
@@ -326,12 +326,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "Options.png"
+ * @image html "gear.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Options.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{gear.png}} &
  * @endlatexonly
  * @par Graphical interface &mdash;&gt; Options (F10)
  * This will open a text editor window with the script loaded mentioned in the section <b>Configuring</b> below,
@@ -343,12 +343,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "BootTimeScan.png"
+ * @image html "terminal.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{BootTimeScan.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{terminal.png}} &
  * @endlatexonly
  * @par Boot time scan &mdash;&gt; Enable (F11)
  * This enables or disables the boot time processing.<br/>
@@ -360,12 +360,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "BootTimeScript.png"
+ * @image html "script.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{BootTimeScript.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{script.png}} &
  * @endlatexonly
  * @par Boot time scan &mdash;&gt; Script (F12)
  * This opens a text editor window with the script loaded mentioned in the chapter @ref Boot,
@@ -427,12 +427,12 @@
  * \par\begin{center}\begin{xtabular}{|c|p{0.9\linewidth}|}
  * \hline
  * @endlatexonly
- * @image html "Help.png"
+ * @image html "help.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{Help.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{help.png}} &
  * @endlatexonly
  * @par Contents (F1)
  * This launches the handbook you are currently reading.
@@ -443,12 +443,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "BestPractice.png"
+ * @image html "light.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{BestPractice.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{light.png}} &
  * @endlatexonly
  * @par Best practice (F2)
  * This launches the @ref Tips chapter of this handbook.
@@ -529,12 +529,12 @@
  * @latexonly
  * \\ \hline
  * @endlatexonly
- * @image html "About.png"
+ * @image html "star.png"
  * @htmlonly
  * </td><td style="width: 90%;">
  * @endhtmlonly
  * @latexonly
- * \raisebox{-1.5\height}{\includegraphics{About.png}} &
+ * \raisebox{-1.5\height}{\includegraphics{star.png}} &
  * @endlatexonly
  * @par About (F4)
  * This opens the about window.
