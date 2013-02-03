@@ -357,7 +357,6 @@ SkipMove:
         File "lua5.1a.dll"
         File "zenwinx.dll"
         File "udefrag.dll"
-        File "wgx.dll"
         File /oname=hibernate4win.exe "hibernate.exe"
         File "${ROOTDIR}\src\installer\ud-help.cmd"
 
@@ -429,7 +428,6 @@ SkipMove:
 
     Delete "$SYSDIR\zenwinx.dll"
     Delete "$SYSDIR\udefrag.dll"
-    Delete "$SYSDIR\wgx.dll"
     Delete "$SYSDIR\lua5.1a.dll"
     Delete "$SYSDIR\hibernate4win.exe"
     Delete "$SYSDIR\ud-help.cmd"
@@ -985,6 +983,7 @@ SkipMove:
     Delete "$SYSDIR\lua5.1a_gui.exe"
     Delete "$SYSDIR\udctxhandler.cmd"
     Delete "$SYSDIR\udctxhandler.vbs"
+    Delete "$SYSDIR\wgx.dll"
 
     RMDir /r "$INSTDIR\doc"
     RMDir /r "$INSTDIR\presets"

@@ -60,29 +60,6 @@
 #include "udefrag-internals.h"
 
 /**
- * @brief Initializes udefrag library.
- * @details This routine needs to be called
- * before any use of other routines.
- * @return Zero for success, negative value otherwise.
- * @note This routine initializes zenwinx library as well.
- */
-int udefrag_init_library(void)
-{
-    return winx_init_library();
-}
-
-/**
- * @brief Releases resources 
- * acquired by udefrag library.
- * @note Releases zenwinx resources
- * as well.
- */
-void udefrag_unload_library(void)
-{
-    winx_unload_library();
-}
-
-/**
  * @brief Delivers progress information to the caller.
  * @note 
  * - completion_status parameter becomes delivered to the caller
