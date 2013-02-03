@@ -382,12 +382,25 @@ MainFrame::MainFrame()
     // create tool bar
     InitToolbar();
 
+    // create status bar
+    CreateStatusBar();
+    SetStatusText(wxT("Welcome to wxUltraDefrag!"));
+
     // create list of volumes and cluster map
     m_splitter = new wxSplitterWindow(this,wxID_ANY,
         wxDefaultPosition,wxDefaultSize,
         wxSP_3D | wxSP_LIVE_UPDATE);
+    m_splitter->SetMinimumPaneSize(DPI(MIN_PANEL_HEIGHT));
     InitVolList(); InitMap();
     m_splitter->SplitHorizontally(m_vList,m_cMap);
+
+    int pos = (int)cfg->Read(wxT("/MainFrame/SeparatorPosition"),
+        (long)DPI(DEFAULT_LIST_HEIGHT));
+    int width, height; GetClientSize(&width,&height);
+    int maxPanelHeight = height - DPI(MIN_PANEL_HEIGHT) - m_splitter->GetSashSize();
+    if(pos < DPI(MIN_PANEL_HEIGHT)) pos = DPI(MIN_PANEL_HEIGHT);
+    else if(pos > maxPanelHeight) pos = maxPanelHeight;
+    m_splitter->SetSashPosition(pos);
 
     // check the boot time defragmenter presence
     wxFileName btdFile(wxT("%SystemRoot%\\system32\\defrag_native.exe"));
@@ -433,10 +446,6 @@ MainFrame::MainFrame()
     m_toolBar->EnableTool(ID_BootEnable,false);
     m_toolBar->EnableTool(ID_BootScript,false);*/
 
-    // create status bar
-    CreateStatusBar();
-    SetStatusText(wxT("Welcome to wxUltraDefrag!"));
-
     // set localized text
     wxCommandEvent event;
     event.SetId(ID_LocaleChange+g_MyLocale->GetLanguage());
@@ -455,6 +464,8 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/width"),(long)m_width);
     cfg->Write(wxT("/MainFrame/height"),(long)m_height);
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
+    cfg->Write(wxT("/MainFrame/SeparatorPosition"),
+        (long)m_splitter->GetSashPosition());
 
     cfg->Write(wxT("/Language/Selected"),(long)g_MyLocale->GetLanguage());
 
