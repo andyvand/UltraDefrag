@@ -112,7 +112,7 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     case wxLOG_FatalError:
         // XXX: fatal errors pass by actually
         ::winx_dbg_print(0,ERROR_FMT,msg);
-        ::winx_flush_dbg_log();
+        ::winx_flush_dbg_log(0);
         break;
     case wxLOG_Error:
         ::winx_dbg_print(0,ERROR_FMT,msg);
@@ -528,13 +528,6 @@ bool init(int argc, char **argv)
         return false;
     }
 
-    // initialize udefrag.dll library
-    if(::udefrag_init_library() < 0){
-        wxLogError(wxT("Initialization failed!"));
-        cleanup();
-        return false;
-    }
-
     // initialize debug log
     wxString logpath;
     if(wxGetEnv(wxT("UD_LOG_FILE_PATH"),&logpath)){
@@ -581,13 +574,11 @@ void cleanup(void)
     delete g_statThread;
 
     // deinitialize logging
+    winx_flush_dbg_log(0);
     delete g_Log;
 
     // deinitialize wxWidgets
     wxUninitialize();
-
-    // free udefrag.dll library
-    ::udefrag_unload_library();
 
     // restore text color
     color(g_default_color);
@@ -607,12 +598,19 @@ static int out_of_memory_handler(size_t n)
     if(g_out) color(FOREGROUND_RED | FOREGROUND_INTENSITY);
     printf("\nOut of memory!\n");
     if(g_out) color(g_default_color);
+    winx_flush_dbg_log(FLUSH_IN_OUT_OF_MEMORY);
     exit(3); return 0;
 }
 #endif
 
 int __cdecl main(int argc, char **argv)
 {
+    // initialize zenwinx library
+    if(winx_init_library() < 0){
+        fprintf(stderr,"Initialization failed!\n");
+        return 1;
+    }
+
     // set out of memory handler
 #if !defined(__GNUC__)
     winx_set_killer(out_of_memory_handler);

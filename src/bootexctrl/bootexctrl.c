@@ -142,7 +142,6 @@ int __cdecl main(int argc,char **argv)
     if(!check_admin_rights()){
         error("Administrative rights are "
             "needed to run the program!");
-        winx_unload_library();
         return EXIT_FAILURE;
     }
 
@@ -150,7 +149,6 @@ int __cdecl main(int argc,char **argv)
     ucmd = winx_swprintf(L"%hs",cmd);
     if(!ucmd){
         error("Not enough memory!");
-        winx_unload_library();
         return EXIT_FAILURE;
     }
 
@@ -168,6 +166,5 @@ int __cdecl main(int argc,char **argv)
         }
     }
     winx_free(ucmd);
-    winx_unload_library();
     return (result == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

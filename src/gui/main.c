@@ -676,7 +676,7 @@ void OpenLog(void)
         letrace("cannot query UD_LOG_FILE_PATH environment variable");
         MessageBox(hWindow,"The log_file_path option is not set.","Cannot open log file!",MB_OK | MB_ICONHAND);
     } else {
-        winx_flush_dbg_log();
+        winx_flush_dbg_log(0);
         (void)WgxShellExecute(hWindow,L"open",env_buffer2,
             NULL,NULL,SW_SHOW,WSH_ALLOW_DEFAULT_ACTION);
     }

@@ -98,7 +98,13 @@ extern "C" {
 void winx_set_dbg_log(wchar_t *path);
 #define winx_enable_dbg_log(path) winx_set_dbg_log(path)
 #define winx_disable_dbg_log()    winx_set_dbg_log(NULL)
-void winx_flush_dbg_log(void);
+
+/* flags for winx_flush_dbg_log */
+#define FLUSH_ALREADY_SYNCHRONIZED 0x1 /* for internal use only */
+#define FLUSH_IN_OUT_OF_MEMORY     0x2 /* flush in the out of memory condition */
+
+void winx_flush_dbg_log(int flags);
+
 void winx_dbg_print(int flags, const char *format, ...);
 void winx_dbg_print_header(char ch, int width, const char *format, ...);
 
@@ -266,6 +272,19 @@ void winx_heap_free(void *addr);
 
 /* flags for winx_heap_alloc */
 #define MALLOC_ABORT_ON_FAILURE 0x1
+
+/*
+* If a small amount of memory is needed,
+* call winx_malloc and don't care on the 
+* returned value correctness. In case of
+* allocation failure it'll simply abort
+* the application.
+* On the other hand, it some big amount
+* of memory needs to be allocated,
+* winx_tmalloc needs to be called and then
+* its returned value needs to be checked for
+* being equal to zero.
+*/
 
 /* aborts the application in case of allocation failure */
 #define winx_malloc(n) winx_heap_alloc(n,MALLOC_ABORT_ON_FAILURE)

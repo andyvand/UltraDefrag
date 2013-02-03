@@ -55,9 +55,9 @@ static int out_of_memory_handler(size_t n)
 {
     winx_print("\nOut of memory!\n");
     
+    winx_flush_dbg_log(FLUSH_IN_OUT_OF_MEMORY);
     /* terminate process with exit code 3 */
-    NtTerminateProcess(NtCurrentProcess(),3);
-    return 0;
+    winx_exit(3); return 0;
 }
 
 /**
@@ -70,9 +70,8 @@ static int native_app_init(void)
     (void)NtInitializeRegistry(0);
 #endif
 
+    if(winx_init_library() < 0) return (-1);
     winx_set_killer(out_of_memory_handler);
-    if(udefrag_init_library() < 0)
-        return (-1);
     
     /* start initial logging */
     set_dbg_log("startup-phase");

@@ -37,6 +37,12 @@
 #include "ntndk.h"
 #include "zenwinx.h"
 
+/*
+* Note: to avoid recursion all the code in this file should
+* call with care either winx_malloc (handling the out of memory
+* condition in a special way) or tracing functions as well.
+*/
+
 /* controls whether the messages will be collected or not */
 int logging_enabled = 0;
 
@@ -54,11 +60,74 @@ typedef struct _winx_dbg_log_entry {
 
 /* all the messages will be collected to this list */
 winx_dbg_log_entry *dbg_log = NULL;
-/* synchronization event for the log list access */
-winx_spin_lock *dbg_lock = NULL;
 
-static int init_dbg_log(void);
-static void close_dbg_log(void);
+wchar_t *log_path = NULL;
+HANDLE hListSynchEvent = NULL;
+HANDLE hLogSynchEvent = NULL;
+
+extern char *reserved_memory;
+
+/*
+**************************************************************
+*                   auxiliary functions                      *
+*     (independent from winx_malloc and tracing calls)       *
+**************************************************************
+*/
+
+list_entry *dbg_list_insert(list_entry **phead,list_entry *prev,long size)
+{
+    list_entry *new_item;
+    
+    new_item = (list_entry *)winx_tmalloc(size);
+    if(new_item == NULL)
+        return new_item;
+
+    /* is list empty? */
+    if(*phead == NULL){
+        *phead = new_item;
+        new_item->prev = new_item->next = new_item;
+        return new_item;
+    }
+
+    /* insert as the new head? */
+    if(prev == NULL){
+        prev = (*phead)->prev;
+        *phead = new_item;
+    }
+
+    /* insert after the item specified by prev argument */
+    new_item->prev = prev;
+    new_item->next = prev->next;
+    new_item->prev->next = new_item;
+    new_item->next->prev = new_item;
+    return new_item;
+}
+
+int dbg_get_local_time(winx_time *t)
+{
+    LARGE_INTEGER SystemTime;
+    LARGE_INTEGER LocalTime;
+    TIME_FIELDS TimeFields;
+    NTSTATUS status;
+    
+    status = NtQuerySystemTime(&SystemTime);
+    if(status != STATUS_SUCCESS) return (-1);
+    
+    status = RtlSystemTimeToLocalTime(&SystemTime,&LocalTime);
+    if(status != STATUS_SUCCESS) return (-1);
+    
+    RtlTimeToTimeFields(&LocalTime,&TimeFields);
+    t->year = TimeFields.Year;
+    t->month = TimeFields.Month;
+    t->day = TimeFields.Day;
+    t->hour = TimeFields.Hour;
+    t->minute = TimeFields.Minute;
+    t->second = TimeFields.Second;
+    t->milliseconds = TimeFields.Milliseconds;
+    t->weekday = TimeFields.Weekday;
+    return 0;
+}
+
 
 /**
  * @internal
@@ -69,11 +138,47 @@ static void close_dbg_log(void);
  */
 int winx_dbg_init(void)
 {
-    if(dbg_lock == NULL)
-        dbg_lock = winx_init_spin_lock("winx_dbg_lock");
-    if(dbg_lock == NULL)
-        return (-1);
-    return init_dbg_log();
+    unsigned int id;
+    wchar_t *name;
+    UNICODE_STRING us;
+    OBJECT_ATTRIBUTES oa;
+    NTSTATUS status;
+
+    if(!hListSynchEvent){
+        /* attach PID to lock the current process only */
+        id = (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess);
+        name = winx_swprintf(L"\\winx_dbg_list_lock_%u",id);
+        if(name == NULL) return (-1);
+        
+        RtlInitUnicodeString(&us,name);
+        InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
+        status = NtCreateEvent(&hListSynchEvent,STANDARD_RIGHTS_ALL | 0x1ff,
+            &oa,SynchronizationEvent,1);
+        if(!NT_SUCCESS(status)){
+            hListSynchEvent = NULL;
+            return (-1);
+        }
+    }
+    if(!hLogSynchEvent){
+        /* attach PID to lock the current process only */
+        id = (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess);
+        name = winx_swprintf(L"\\winx_dbg_log_lock_%u",id);
+        if(name == NULL){
+            NtCloseSafe(hListSynchEvent);
+            return (-1);
+        }
+        
+        RtlInitUnicodeString(&us,name);
+        InitializeObjectAttributes(&oa,&us,0,NULL,NULL);
+        status = NtCreateEvent(&hLogSynchEvent,STANDARD_RIGHTS_ALL | 0x1ff,
+            &oa,SynchronizationEvent,1);
+        if(!NT_SUCCESS(status)){
+            hLogSynchEvent = NULL;
+            NtCloseSafe(hListSynchEvent);
+            return (-1);
+        }
+    }
+    return 0;
 }
 
 /**
@@ -83,9 +188,13 @@ int winx_dbg_init(void)
  */
 void winx_dbg_close(void)
 {
-    close_dbg_log();
-    winx_destroy_spin_lock(dbg_lock);
-    dbg_lock = NULL;
+    winx_flush_dbg_log(0);
+    if(log_path){
+        winx_free(log_path);
+        log_path = NULL;
+    }
+    NtCloseSafe(hListSynchEvent);
+    NtCloseSafe(hLogSynchEvent);
 }
 
 /**
@@ -94,16 +203,17 @@ void winx_dbg_close(void)
  */
 static void add_dbg_log_entry(char *msg)
 {
+    LARGE_INTEGER interval;
     winx_dbg_log_entry *new_log_entry = NULL;
     winx_dbg_log_entry *last_log_entry = NULL;
 
     /* synchronize with other threads */
-    if(winx_acquire_spin_lock(dbg_lock,INFINITE) == 0){
+    interval.QuadPart = MAX_WAIT_INTERVAL;
+    if(NtWaitForSingleObject(hListSynchEvent,FALSE,&interval) == WAIT_OBJECT_0){
         if(logging_enabled){
-            if(dbg_log)
-                last_log_entry = dbg_log->prev;
-                new_log_entry = (winx_dbg_log_entry *)winx_list_insert((list_entry **)(void *)&dbg_log,
-                    (list_entry *)last_log_entry,sizeof(winx_dbg_log_entry));
+            if(dbg_log) last_log_entry = dbg_log->prev;
+            new_log_entry = (winx_dbg_log_entry *)dbg_list_insert((list_entry **)(void *)&dbg_log,
+                (list_entry *)last_log_entry,sizeof(winx_dbg_log_entry));
             if(new_log_entry == NULL){
                 /* not enough memory */
             } else {
@@ -113,11 +223,11 @@ static void add_dbg_log_entry(char *msg)
                     winx_list_remove((list_entry **)(void *)&dbg_log,(list_entry *)new_log_entry);
                 } else {
                     memset(&new_log_entry->time_stamp,0,sizeof(winx_time));
-                    (void)winx_get_local_time(&new_log_entry->time_stamp);
+                    (void)dbg_get_local_time(&new_log_entry->time_stamp);
                 }
             }
         }
-        winx_release_spin_lock(dbg_lock);
+        NtSetEvent(hListSynchEvent,NULL);
     }
 }
 
@@ -533,85 +643,54 @@ void winx_dbg_print_header(char ch, int width, const char *format, ...)
     }
 }
 
-/* logging to the file */
-
-wchar_t *log_path = NULL;
-
-/* synchronization event for the log path access */
-winx_spin_lock *path_lock = NULL;
-
 /**
- * @internal
- * @brief Initializes logging to the file.
- * @return Zero for success, negative value otherwise.
- */
-static int init_dbg_log(void)
-{
-    if(path_lock == NULL)
-        path_lock = winx_init_spin_lock("winx_dbg_logpath_lock");
-    return (path_lock == NULL) ? (-1) : (0);
-}
-
-/**
- * @internal
  * @brief Appends all collected debugging
  * information to the log file.
- * @param[in] already_synchronized an internal
- * flag, used in winx_enable_dbg_log only.
- * Should be always set to zero in other cases.
+ * @param[in] flags combination of FLUSH_XXX
+ * flags defined in zenwinx.h file.
  */
-static void flush_dbg_log(int already_synchronized)
+void winx_flush_dbg_log(int flags)
 {
     #define DBG_BUFFER_SIZE (100 * 1024) /* 100 KB */
-    WINX_FILE *f;
-    wchar_t *lb;
+    LARGE_INTEGER interval;
     winx_dbg_log_entry *old_dbg_log, *log_entry;
-    int length;
+    char out_of_memory[] = "\r\n*** Out of memory! ***\r\n";
     char crlf[] = "\r\n";
     char *time_stamp;
+    WINX_FILE *f;
+    int length;
 
     /* synchronize with other threads */
-    if(!already_synchronized){
-        if(winx_acquire_spin_lock(path_lock,INFINITE) < 0){
-            etrace("synchronization failed");
+    if(!(flags & FLUSH_ALREADY_SYNCHRONIZED)){
+        interval.QuadPart = MAX_WAIT_INTERVAL;
+        if(NtWaitForSingleObject(hLogSynchEvent,FALSE,&interval) != WAIT_OBJECT_0){
             winx_print("\nflush_dbg_log: synchronization failed!\n");
             return;
         }
     }
     
+    /* release reserved memory  */
+    winx_free(reserved_memory);
+    
     /* disable parallel access to dbg_log list */
-    if(winx_acquire_spin_lock(dbg_lock,INFINITE) < 0){
-        if(!already_synchronized)
-            winx_release_spin_lock(path_lock);
-        return;
-    }
+    interval.QuadPart = MAX_WAIT_INTERVAL;
+    if(NtWaitForSingleObject(hListSynchEvent,FALSE,&interval) != WAIT_OBJECT_0) goto done;
     old_dbg_log = dbg_log;
     dbg_log = NULL;
-    winx_release_spin_lock(dbg_lock);
+    NtSetEvent(hListSynchEvent,NULL);
     
-    if(!old_dbg_log || !log_path)
-        goto done;
-    
-    if(log_path[0] == 0)
-        goto done;
+    if(!old_dbg_log || !log_path) goto done;
+    if(log_path[0] == 0) goto done;
     
     /* open log file */
     f = winx_fbopen(log_path,"a",DBG_BUFFER_SIZE);
-    if(f == NULL){
-        /* recreate path if it does not exist */
-        lb = wcsrchr(log_path,'\\');
-        if(lb) *lb = 0;
-        if(winx_create_path(log_path) < 0){
-            etrace("cannot create directory tree for log path");
-            winx_print("\nflush_old_dbg_log: cannot create directory tree for log path\n");
-        }
-        if(lb) *lb = '\\';
-        f = winx_fbopen(log_path,"a",DBG_BUFFER_SIZE);
-    }
+    if(f == NULL)
+        f = winx_fopen(log_path,"a");
 
     /* save log */
     if(f != NULL){
         winx_printf("\nWriting log file \"%ws\" ...\n",&log_path[4]);
+
         for(log_entry = old_dbg_log; log_entry; log_entry = log_entry->next){
             if(log_entry->buffer){
                 length = (int)strlen(log_entry->buffer);
@@ -636,23 +715,21 @@ static void flush_dbg_log(int already_synchronized)
             }
             if(log_entry->next == old_dbg_log) break;
         }
+        
+        if(flags & FLUSH_IN_OUT_OF_MEMORY)
+            (void)winx_fwrite(out_of_memory,sizeof(char),strlen(out_of_memory),f);
+        
         winx_fclose(f);
         winx_list_destroy((list_entry **)(void *)&old_dbg_log);
     }
 
 done:
+    /* reserve memory for the out of memory condition handling again */
+    reserved_memory = (char *)winx_tmalloc(1024 * 1024);
+    
     /* end of synchronization */
-    if(!already_synchronized)
-        winx_release_spin_lock(path_lock);
-}
-
-/**
- * @brief Appends all collected debugging
- * information to the log file.
- */
-void winx_flush_dbg_log(void)
-{
-    flush_dbg_log(0);
+    if(!(flags & FLUSH_ALREADY_SYNCHRONIZED))
+        NtSetEvent(hLogSynchEvent,NULL);
 }
 
 /**
@@ -665,14 +742,29 @@ void winx_flush_dbg_log(void)
  */
 void winx_set_dbg_log(wchar_t *path)
 {
+    LARGE_INTEGER interval;
+    wchar_t *lb;
+    
     if(path == NULL){
         logging_enabled = 0;
     } else {
         logging_enabled = path[0] ? 1 : 0;
     }
     
+    if(logging_enabled){
+        /* create path */
+        lb = wcsrchr(path,'\\');
+        if(lb) *lb = 0;
+        if(winx_create_path(path) < 0){
+            etrace("cannot create directory tree for log path");
+            winx_print("\nwinx_set_dbg_log: cannot create directory tree for log path\n");
+        }
+        if(lb) *lb = '\\';
+    }
+    
     /* synchronize with other threads */
-    if(winx_acquire_spin_lock(path_lock,INFINITE) < 0){
+    interval.QuadPart = MAX_WAIT_INTERVAL;
+    if(NtWaitForSingleObject(hLogSynchEvent,FALSE,&interval) != WAIT_OBJECT_0){
         etrace("synchronization failed");
         winx_print("\nwinx_enable_dbg_log: synchronization failed!\n");
         return;
@@ -680,10 +772,8 @@ void winx_set_dbg_log(wchar_t *path)
     
     /* flush old log to disk */
     if(path || log_path){
-        if(!path || !log_path)
-            flush_dbg_log(1);
-        else if(wcscmp(path,log_path))
-            flush_dbg_log(1);
+        if(!path || !log_path) winx_flush_dbg_log(FLUSH_ALREADY_SYNCHRONIZED);
+        else if(wcscmp(path,log_path)) winx_flush_dbg_log(FLUSH_ALREADY_SYNCHRONIZED);
     }
     
     /* set new log path */
@@ -702,22 +792,7 @@ void winx_set_dbg_log(wchar_t *path)
     }
     
     /* end of synchronization */
-    winx_release_spin_lock(path_lock);
-}
-
-/**
- * @internal
- * @brief Deinitializes logging to the file.
- */
-static void close_dbg_log(void)
-{
-    winx_flush_dbg_log();
-    if(log_path){
-        winx_free(log_path);
-        log_path = NULL;
-    }
-    winx_destroy_spin_lock(path_lock);
-    path_lock = NULL;
+    NtSetEvent(hLogSynchEvent,NULL);
 }
 
 /** @} */

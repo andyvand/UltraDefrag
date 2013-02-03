@@ -51,10 +51,10 @@ winx_spin_lock *winx_init_spin_lock(char *name)
     id = (unsigned int)(DWORD_PTR)(NtCurrentTeb()->ClientId.UniqueProcess);
     fullname = winx_swprintf(L"\\%hs_%u",name,id);
     if(fullname == NULL){
-        etrace("not enough memory for %s (case 1)",name);
+        etrace("not enough memory for %s",name);
         return NULL;
     }
-        
+
     sl = winx_malloc(sizeof(winx_spin_lock));
     
     if(winx_create_event(fullname,SynchronizationEvent,&sl->hEvent) < 0){
