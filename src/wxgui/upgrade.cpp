@@ -154,7 +154,7 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& event)
 void MainFrame::OnShowUpgradeDialog(wxCommandEvent& event)
 {
     wxString message = wxString();
-    message.Printf(_("Release %s is available for download!"),event.GetString());
+    message.Printf(_("Release %ls is available for download!"),event.GetString().wc_str());
 
     if(Utils::MessageDialog(this,_("You can upgrade me ^-^"),
       wxART_INFORMATION,_("&Upgrade"),_("&Cancel"),message) == wxID_OK)
