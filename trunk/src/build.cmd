@@ -169,7 +169,7 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     copy /Y udefrag.dll         %PORTABLE_DIR%\
     copy /Y udefrag.exe         %PORTABLE_DIR%\
     copy /Y zenwinx.dll         %PORTABLE_DIR%\
-    copy /Y ultradefrag.exe     %PORTABLE_DIR%
+    copy /Y wxultradefrag.exe   %PORTABLE_DIR%
     copy /Y lua5.1a.dll         %PORTABLE_DIR%\
     copy /Y lua5.1a.exe         %PORTABLE_DIR%\
     copy /Y lua5.1a_gui.exe     %PORTABLE_DIR%\
@@ -184,9 +184,9 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     mkdir %PORTABLE_DIR%\options
     lua "%~dp0\scripts\upgrade-guiopts.lua"  %PORTABLE_DIR%
     lua "%~dp0\scripts\upgrade-rptopts.lua"  %PORTABLE_DIR%
-    mkdir %PORTABLE_DIR%\i18n
-    copy /Y "%~dp0\gui\i18n\*.lng"           %PORTABLE_DIR%\i18n\
-    copy /Y "%~dp0\gui\i18n\*.template"      %PORTABLE_DIR%\i18n\
+    xcopy "%~dp0\wxgui\locale" %PORTABLE_DIR%\locale /I /Y /Q /S
+    del /Q %PORTABLE_DIR%\locale\*.header
+    del /Q %PORTABLE_DIR%\locale\*.pot
 
     "%SEVENZIP_PATH%\7z.exe" a -r -mx9 -tzip ultradefrag-portable-%UDVERSION_SUFFIX%.bin.%2.zip %PORTABLE_DIR%
     if %errorlevel% neq 0 (
