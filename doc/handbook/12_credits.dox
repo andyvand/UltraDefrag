@@ -511,6 +511,7 @@
  * <tr><td>                          </td><td> </td><td> More effective defragmenting algorithms.</td></tr>
  * <tr><td>• Andrei Maksimov         </td><td>-</td><td> GUI improvements.</td></tr>
  * <tr><td>                          </td><td> </td><td> A lot of other interesting ideas.</td></tr>
+ * <tr><td>• Brian Gaff              </td><td>-</td><td> More comfortable GUI design.</td></tr>
  * <tr><td>• Bryan Kirk              </td><td>-</td><td> Better GUI appearance (new list of drives).</td></tr>
  * <tr><td>                          </td><td> </td><td> Autodefrag feature (not implemented yet).</td></tr>
  * <tr><td>• Christopher Naegel      </td><td>-</td><td> A partial solution for kernel mode driver loading problem on Vista.</td></tr>
@@ -542,6 +543,7 @@
  *                            &   & More effective defragmenting algorithms. \\
  * • Andrei Maksimov          & - & GUI improvements. \\
  *                            &   & A lot of other interesting ideas. \\
+ * • Brian Gaff               & - & More comfortable GUI design. \\
  * • Bryan Kirk               & - & Better GUI appearance (new list of drives). \\
  *                            &   & Autodefrag feature (not implemented yet). \\
  * • Christopher Naegel       & - & A partial solution for kernel mode driver loading problem on Vista. \\
