@@ -270,6 +270,8 @@ msgstr "Igsumat it &bug"
 msgid "Boot time script"
 msgstr "Iskrip ha pagtikang"
 
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct position
 #: upgrade.cpp:157
 #, c-format
 msgid "Release %ls is available for download!"

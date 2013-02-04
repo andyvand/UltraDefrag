@@ -1,15 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR UltraDefrag Development Team
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 #  <stefan.pendl.71@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-02 20:28+0100\n"
-"PO-Revision-Date: 2013-02-03 20:03+0100\n"
+"POT-Creation-Date: 2013-02-03 20:36+0100\n"
+"PO-Revision-Date: 2013-02-04 09:24+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.5.4\n"
 
 #: about.cpp:45
 msgid "About UltraDefrag"
