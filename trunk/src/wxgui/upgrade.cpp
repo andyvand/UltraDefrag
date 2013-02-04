@@ -154,6 +154,8 @@ void MainFrame::OnHelpUpdate(wxCommandEvent& event)
 void MainFrame::OnShowUpgradeDialog(wxCommandEvent& event)
 {
     wxString message = wxString();
+    //: This expands to "Release 7.0.0 is available for download!"
+    //: Make sure that "%ls" is included in the translated string at the correct position
     message.Printf(_("Release %ls is available for download!"),event.GetString().wc_str());
 
     if(Utils::MessageDialog(this,_("You can upgrade me ^-^"),

@@ -38,7 +38,7 @@ pushd "%~dp0\wxgui"
 if "%~1" == "--no-extract" goto skip_extract
 :: extract translations
 copy /v /y locale\UltraDefrag.header locale\UltraDefrag.pot
-xgettext -C -j --copyright-holder="UltraDefrag Development Team" --msgid-bugs-address="http://sourceforge.net/p/ultradefrag/bugs/" -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot *.cpp || goto fail
+xgettext -C -j --add-comments=: --copyright-holder="UltraDefrag Development Team" --msgid-bugs-address="http://sourceforge.net/p/ultradefrag/bugs/" -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot *.cpp || goto fail
 echo.
 
 :: download all translations from transifex
