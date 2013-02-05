@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _;UD_UpdateMenuItemLabel:2;wxTRANSLATE;wxPLURAL:1,2\n"
-"X-Poedit-Basepath: D:\\Repository\\SVN_v1.7\\UltraDefrag\\trunk\\src\\wxgui\n"
+"X-Poedit-Basepath: ..\\..\\..\\..\\wxgui\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -272,139 +272,19 @@ msgstr "Iskrip ha pagtikang"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct position
-#: upgrade.cpp:157
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
-msgstr "Puyde mo ako ig-upgrade ^-^"
+msgstr ""
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr ""
 
 #: utils.cpp:330
 msgid "Error!"
 msgstr ""
-
-#~ msgid "Drive"
-#~ msgstr "Drayb"
-
-#~ msgid "Status"
-#~ msgstr "Kahímtang"
-
-#~ msgid "Total Space"
-#~ msgstr "Kabug-osan"
-
-#~ msgid "Free Space"
-#~ msgstr "Libre"
-
-#~ msgid "% free"
-#~ msgstr "% nga libre"
-
-#~ msgid "Executing"
-#~ msgstr "Ginpapadalagan"
-
-#~ msgid "Analyzed"
-#~ msgstr "Ginhimay"
-
-#~ msgid "Defragmented"
-#~ msgstr "Ginbug-os"
-
-#~ msgid "Optimized"
-#~ msgstr "Ginpaurupay"
-
-#~ msgid "folders"
-#~ msgstr "folder"
-
-#~ msgid "files"
-#~ msgstr "fayl"
-
-#~ msgid "fragmented"
-#~ msgstr "ginpinitpinit"
-
-#~ msgid "compressed"
-#~ msgstr "gindasok"
-
-#~ msgid "&Credits"
-#~ msgstr "&Pagkilala"
-
-#~ msgid "&License"
-#~ msgstr "&Lisensya"
-
-#~ msgid "Please Confirm"
-#~ msgstr "Alayon pagpamatuod"
-
-#~ msgid "Do you really want to shutdown when done?"
-#~ msgstr "¿Karúyag mo ba parongon kun humán na?"
-
-#~ msgid "Do you really want to hibernate when done?"
-#~ msgstr "¿Karúyag mo ba pakaturogon kun humán na?"
-
-#~ msgid "Do you really want to log off when done?"
-#~ msgstr "¿Karúyag mo ba gumawas kun humán na?"
-
-#~ msgid "Do you really want to reboot when done?"
-#~ msgstr "¿Karúyag mo ba bumalik pagtikáng kun humán na?"
-
-#~ msgid "seconds until shutdown"
-#~ msgstr "ka segundo ugsa pumárong"
-
-#~ msgid "seconds until hibernation"
-#~ msgstr "ka segundo ugsa pakaturógon"
-
-#~ msgid "seconds until logoff"
-#~ msgstr "ka segundo ugsa gumawás"
-
-#~ msgid "seconds until reboot"
-#~ msgstr "ka segundo ugsa bumálik pagtikáng"
-
-#~ msgid "&Yes"
-#~ msgstr "&Oo"
-
-#~ msgid "&No"
-#~ msgstr "&Diri"
-
-#~ msgid "A job is running"
-#~ msgstr "Mayda buruhaton nga ginpapadalagan"
-
-#~ msgid "Show"
-#~ msgstr "Igpakita"
-
-#~ msgid "Hide"
-#~ msgstr "Tago-a"
-
-#~ msgid "Fragmented files on"
-#~ msgstr "Mga ginpinitpinit nga mga fayl ha"
-
-#~ msgid "Visit our Homepage"
-#~ msgstr "Bisitaha an amon baláyan"
-
-#~ msgid "View report options"
-#~ msgstr "Kitaa an pagpipili-an hin mga súmat"
-
-#~ msgid "Powered by Lua"
-#~ msgstr "Ginpapadalágan han Lua"
-
-#~ msgid "Fragments"
-#~ msgstr "nga mga pinitpinit"
-
-#~ msgid "Size"
-#~ msgstr "kadako"
-
-#~ msgid "Filename"
-#~ msgstr "ngaran han fayl"
-
-#~ msgid "Comment"
-#~ msgstr "panhinabi"
-
-#~ msgid "locked"
-#~ msgstr "ginkandadohan"
-
-#~ msgid "move failed"
-#~ msgstr "waray mabalhin"
-
-#~ msgid "invalid"
-#~ msgstr "diri mahihimo"

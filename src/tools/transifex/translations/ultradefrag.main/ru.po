@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-03 20:36+0100\n"
-"PO-Revision-Date: 2013-02-04 09:24+0000\n"
+"POT-Creation-Date: 2013-02-04 23:26+0100\n"
+"PO-Revision-Date: 2013-02-05 22:15+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: i18n.cpp:120
 msgid "&Action"
-msgstr "&Файл"
+msgstr "&Действия"
 
 #: i18n.cpp:121
 msgid "&Report"
@@ -64,11 +64,11 @@ msgstr "&Быстрая оптимизация"
 
 #: i18n.cpp:129
 msgid "&Full optimization"
-msgstr "&Полная оптимизация"
+msgstr "По&лная оптимизация"
 
 #: i18n.cpp:130
 msgid "&Optimize MFT"
-msgstr "&Оптимизация MFT"
+msgstr "Оптимизация &МFT"
 
 #: i18n.cpp:131
 msgid "Pa&use"
@@ -88,11 +88,11 @@ msgstr "Пропустить &сменные носители"
 
 #: i18n.cpp:135
 msgid "&Rescan drives"
-msgstr "Пересканировать &диски"
+msgstr "П&ересканировать диски"
 
 #: i18n.cpp:136
 msgid "Repair dri&ves"
-msgstr "Исправить диски"
+msgstr "&Исправить диски"
 
 #: i18n.cpp:138
 msgid "&When done"
@@ -144,7 +144,7 @@ msgstr "&Запуск перед загрузкой Windows"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr ""
+msgstr "&Сортировка"
 
 #: i18n.cpp:160
 msgid "&Reports"
@@ -160,7 +160,7 @@ msgstr "Смотреть &отчёт перевода"
 
 #: i18n.cpp:165
 msgid "&Translations folder"
-msgstr "&Каталог переводов"
+msgstr "&Папка переводов"
 
 #: i18n.cpp:166
 msgid "&Submit current translation"
@@ -184,31 +184,31 @@ msgstr "&Сценарий"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr ""
+msgstr "Сортировать по &пути (path)"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr ""
+msgstr "Сортировать по &размеру (size)"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr ""
+msgstr "Сортировать по дате &создания"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr ""
+msgstr "Сортировать по дате &модификации"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr ""
+msgstr "Сортировать по дате &доступа (last access)"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr ""
+msgstr "Сортировать в &возрастающем порядке"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr ""
+msgstr "Сортировать в &убывающем порядке"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -220,7 +220,7 @@ msgstr "&Полезные советы"
 
 #: i18n.cpp:188
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "&Часто задаваемые вопросы"
 
 #: i18n.cpp:189
 msgid "Cluster map &legend"
@@ -230,7 +230,7 @@ msgstr "&Легенда карты кластеров"
 msgid "&Debug"
 msgstr "От&ладка"
 
-#: i18n.cpp:192 upgrade.cpp:160
+#: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
@@ -266,16 +266,19 @@ msgstr "Отправить &сообщение об ошибке"
 msgid "Boot time script"
 msgstr "Сценарий работы перед загрузкой Windows"
 
-#: upgrade.cpp:157
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct
+#. position
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
 msgstr "Вы можете меня обновить ^-^"
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr ""
 

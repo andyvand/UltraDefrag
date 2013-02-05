@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-03 20:36+0100\n"
-"PO-Revision-Date: 2013-02-04 09:24+0000\n"
+"POT-Creation-Date: 2013-02-04 23:26+0100\n"
+"PO-Revision-Date: 2013-02-05 22:11+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -184,31 +184,31 @@ msgstr "&სცენარი"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr "&მისამართით"
+msgstr "დახარისხება &მისამართით"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr "&ზომით"
+msgstr "დახარისხება &ზომით"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr "&შექმნის დროით"
+msgstr "დახარისხება &შექმნის დროით"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr "&შ&ეცვლის დროით"
+msgstr "დახარისხება &შ&ეცვლის დროით"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr "&ბოლო წვდომის დროით"
+msgstr "დახარისხება &ბოლო წვდომის დროით"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr "ზრდადობით"
+msgstr "დახარისხება ზრდადობით"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr "კლებადობით"
+msgstr "დახარისხება კლებადობით"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -230,7 +230,7 @@ msgstr "კლასტერების რუკის ლეგენდა"
 msgid "&Debug"
 msgstr "გას&წორება"
 
-#: i18n.cpp:192 upgrade.cpp:160
+#: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
@@ -266,16 +266,19 @@ msgstr "შეცდომის &შეტყობინება"
 msgid "Boot time script"
 msgstr "ჩატვირთვის დროს სკანირების სცენარი"
 
-#: upgrade.cpp:157
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct
+#. position
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
 msgstr "შეგიძლია გამაუმჯობესო ^_^"
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr ""
 
