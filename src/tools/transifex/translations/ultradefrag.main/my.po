@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-02-04 23:26+0100\n"
-"PO-Revision-Date: 2013-02-05 22:10+0000\n"
+"PO-Revision-Date: 2013-02-05 22:34+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: about.cpp:58
 msgid "Credits and licenses are listed in the handbook."
-msgstr "မင်းသားများ and လိုင်စင် are listed in the handbook."
+msgstr ""
 
 #: about.cpp:61
 msgid "UltraDefrag website"
@@ -232,7 +232,7 @@ msgstr "ပြသာနာရှင်း"
 
 #: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
-msgstr "သင်ငါ့ကို"
+msgstr ""
 
 #: i18n.cpp:194
 msgid "&Never check"
