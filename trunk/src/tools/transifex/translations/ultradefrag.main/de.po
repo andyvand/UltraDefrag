@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-03 20:36+0100\n"
-"PO-Revision-Date: 2013-02-04 09:24+0000\n"
+"POT-Creation-Date: 2013-02-04 23:26+0100\n"
+"PO-Revision-Date: 2013-02-05 21:55+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,7 @@ msgstr "&Zuordnungstabellenerklärung"
 msgid "&Debug"
 msgstr "&Problem berichten"
 
-#: i18n.cpp:192 upgrade.cpp:160
+#: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr "&Aktualisieren"
 
@@ -266,16 +266,19 @@ msgstr "Problembericht &senden"
 msgid "Boot time script"
 msgstr "Windows-Start-Skript"
 
-#: upgrade.cpp:157
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct
+#. position
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Version %ls ist zum Herunterladen verfügbar!"
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
 msgstr "Du kannst mich aktualisieren ^-^"
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr "&Abbrechen"
 

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-03 20:36+0100\n"
-"PO-Revision-Date: 2013-02-04 09:24+0000\n"
+"POT-Creation-Date: 2013-02-04 23:26+0100\n"
+"PO-Revision-Date: 2013-02-05 22:10+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -184,31 +184,31 @@ msgstr "ညွှန်စာ"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr "လမ်း‌ကြောင်း"
+msgstr "လမ်း‌ကြောင်း နှင့်ရှင်း"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr "အရွယ် ပမာဏ"
+msgstr "အရွယ် ပမာဏ နှင့်ရှင်း"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr "ဖန်တိးချိန်"
+msgstr "ဖန်တိးချိန် နှင့်ရှင်း"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr "နောက်ဆုံး ပြုပြင်ချိန်"
+msgstr "နောက်ဆုံး ပြုပြင်ချိန် နှင့်ရှင်း"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr "နောက်ဆုံး အသုံးပြုချိန်"
+msgstr "နောက်ဆုံး အသုံးပြုချိန် နှင့်ရှင်း"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr "အောက်မှအထက်သို့"
+msgstr "အောက်မှအထက်သို့ အတိုင်းနှင့်ရှင်း"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr "အထက်မှအောက်သို့"
+msgstr "အထက်မှအောက်သို့ အတိုင်းနှင့်ရှင်း"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -230,7 +230,7 @@ msgstr "စုပြုံလိုက် ပုံနှင့် ဖြစ်�
 msgid "&Debug"
 msgstr "ပြသာနာရှင်း"
 
-#: i18n.cpp:192 upgrade.cpp:160
+#: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr "သင်ငါ့ကို"
 
@@ -266,16 +266,19 @@ msgstr "ပြသာနာ အကြောင်းကြားရန်"
 msgid "Boot time script"
 msgstr "စက်အစ အညွှန်းစာတို"
 
-#: upgrade.cpp:157
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct
+#. position
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
 msgstr "သင်ငါ့ကို အဆင့်မြှင့်နိုင်သည် ^-^"
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr ""
 

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-03 20:36+0100\n"
-"PO-Revision-Date: 2013-02-04 09:24+0000\n"
+"POT-Creation-Date: 2013-02-04 23:26+0100\n"
+"PO-Revision-Date: 2013-02-05 22:10+0000\n"
 "Last-Translator: StefanPendl <stefan.pendl.71@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,39 +36,39 @@ msgstr ""
 
 #: i18n.cpp:120
 msgid "&Action"
-msgstr "操作"
+msgstr "操作(&A)"
 
 #: i18n.cpp:121
 msgid "&Report"
-msgstr "报告"
+msgstr "报告(&R)"
 
 #: i18n.cpp:122
 msgid "&Settings"
-msgstr "设置"
+msgstr "设置(&S)"
 
 #: i18n.cpp:123 i18n.cpp:209
 msgid "&Help"
-msgstr "帮助"
+msgstr "帮助(&H)"
 
 #: i18n.cpp:126
 msgid "&Analyze"
-msgstr "分析"
+msgstr "分析(&A)"
 
 #: i18n.cpp:127
 msgid "&Defragment"
-msgstr "整理"
+msgstr "碎片整理(&D)"
 
 #: i18n.cpp:128
 msgid "&Quick optimization"
-msgstr "快速优化"
+msgstr "快速优化(&Q)"
 
 #: i18n.cpp:129
 msgid "&Full optimization"
-msgstr "全面优化"
+msgstr "全面优化(&F)"
 
 #: i18n.cpp:130
 msgid "&Optimize MFT"
-msgstr "优化 MFT"
+msgstr "优化 MFT(&O)"
 
 #: i18n.cpp:131
 msgid "Pa&use"
@@ -76,161 +76,161 @@ msgstr ""
 
 #: i18n.cpp:132
 msgid "&Stop"
-msgstr "停止"
+msgstr "停止(&S)"
 
 #: i18n.cpp:133
 msgid "Re&peat action"
-msgstr "重复操作"
+msgstr "重复操作(&P)"
 
 #: i18n.cpp:134
 msgid "Skip removable &media"
-msgstr "忽略移动磁盘"
+msgstr "跳过可移动媒体(&M)"
 
 #: i18n.cpp:135
 msgid "&Rescan drives"
-msgstr "重新扫描"
+msgstr "重新扫描驱动器(&R)"
 
 #: i18n.cpp:136
 msgid "Repair dri&ves"
-msgstr "修复磁盘"
+msgstr "修复驱动器(&V)"
 
 #: i18n.cpp:138
 msgid "&When done"
-msgstr "整理完成后"
+msgstr "完成后(&W)"
 
 #: i18n.cpp:140 i18n.cpp:144
 msgid "E&xit"
-msgstr "退出"
+msgstr "退出(&X)"
 
 #: i18n.cpp:143
 msgid "&None"
-msgstr "不做任何操作"
+msgstr "无操作(&N)"
 
 #: i18n.cpp:145
 msgid "Stan&dby"
-msgstr "待机"
+msgstr "待机(&D)"
 
 #: i18n.cpp:146
 msgid "&Hibernate"
-msgstr "休眠"
+msgstr "休眠(&H)"
 
 #: i18n.cpp:147
 msgid "&Logoff"
-msgstr "注销"
+msgstr "注销(&L)"
 
 #: i18n.cpp:148
 msgid "&Reboot"
-msgstr "重启"
+msgstr "重新启动(&R)"
 
 #: i18n.cpp:149
 msgid "&Shutdown"
-msgstr "关机"
+msgstr "关机(&S)"
 
 #: i18n.cpp:152
 msgid "&Show report"
-msgstr "显示报告"
+msgstr "显示报告(&S)"
 
 #: i18n.cpp:155
 msgid "&Language"
-msgstr "语言"
+msgstr "语言(&L)"
 
 #: i18n.cpp:156
 msgid "&Graphical interface"
-msgstr "图形界面"
+msgstr "图形界面(&G)"
 
 #: i18n.cpp:157 i18n.cpp:205
 msgid "&Boot time scan"
-msgstr "启动时扫描"
+msgstr "启动时扫描(&B)"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr ""
+msgstr "排序(&S)"
 
 #: i18n.cpp:160
 msgid "&Reports"
-msgstr "报告"
+msgstr "报告(&R)"
 
 #: i18n.cpp:163
 msgid "&View change log"
-msgstr "查看更新记录"
+msgstr "查看变更日志(&V)"
 
 #: i18n.cpp:164
 msgid "View translation &report"
-msgstr "查看翻译报告"
+msgstr "查看翻译报告(&R)"
 
 #: i18n.cpp:165
 msgid "&Translations folder"
-msgstr "语言包文件夹"
+msgstr "语言包文件夹(&T)"
 
 #: i18n.cpp:166
 msgid "&Submit current translation"
-msgstr "提交当前翻译"
+msgstr "提交当前翻译(&S)"
 
 #: i18n.cpp:169
 msgid "&Font"
-msgstr "字体"
+msgstr "字体(&F)"
 
 #: i18n.cpp:170
 msgid "&Options"
-msgstr "选项"
+msgstr "选项(&O)"
 
 #: i18n.cpp:173
 msgid "&Enable"
-msgstr "开启"
+msgstr "启用(&E)"
 
 #: i18n.cpp:174
 msgid "&Script"
-msgstr "脚本"
+msgstr "脚本(&S)"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr ""
+msgstr "按路径排序(&P)"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr ""
+msgstr "按大小排序(&S)"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr ""
+msgstr "按创建时间排序(&C)"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr ""
+msgstr "按修改时间排序(&M)"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr ""
+msgstr "按访问时间排序(&L)"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr ""
+msgstr "升序排序(&A)"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr ""
+msgstr "降序排序(&D)"
 
 #: i18n.cpp:186
 msgid "&Contents"
-msgstr "目录"
+msgstr "目录(&C)"
 
 #: i18n.cpp:187
 msgid "Best &practice"
-msgstr "最佳方法"
+msgstr "最佳方法(&P)"
 
 #: i18n.cpp:188
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "常见问题(&F)"
 
 #: i18n.cpp:189
 msgid "Cluster map &legend"
-msgstr "群集地图图例"
+msgstr "簇地图说明(&L)"
 
 #: i18n.cpp:191
 msgid "&Debug"
 msgstr "调试"
 
-#: i18n.cpp:192 upgrade.cpp:160
+#: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
@@ -252,30 +252,33 @@ msgstr ""
 
 #: i18n.cpp:198
 msgid "&About"
-msgstr "关于"
+msgstr "关于(&A)"
 
 #: i18n.cpp:201 utils.cpp:327
 msgid "Open &log"
-msgstr "打开日志"
+msgstr "打开日志(&L)"
 
 #: i18n.cpp:202
 msgid "Send bug &report"
-msgstr "发送错误报告"
+msgstr "发送错误报告(&R)"
 
 #: i18n.cpp:207
 msgid "Boot time script"
-msgstr "系统启动脚本"
+msgstr "启动时扫描脚本"
 
-#: upgrade.cpp:157
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct
+#. position
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
 msgstr "升级吧 ^-^"
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr ""
 
