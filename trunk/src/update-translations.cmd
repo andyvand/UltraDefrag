@@ -41,6 +41,13 @@ copy /v /y locale\UltraDefrag.header locale\UltraDefrag.pot
 xgettext -C -j --add-comments=: --copyright-holder="UltraDefrag Development Team" --msgid-bugs-address="http://sourceforge.net/p/ultradefrag/bugs/" -k_ -kwxPLURAL:1,2 -kwxTRANSLATE -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot *.cpp || goto fail
 echo.
 
+:: update languages not yet avaiable at Transifex
+for %%T in ( pam war ) do (
+    echo %%T
+    msgmerge --update --backup=none --no-fuzzy-matching --verbose "%~dp0\tools\transifex\translations\ultradefrag.main\%%T.po" locale\UltraDefrag.pot
+    echo.
+)
+
 :: download all translations from transifex
 pushd "%~dp0\tools\transifex"
 if exist tx.exe tx.exe pull -a || popd && goto fail
@@ -84,7 +91,7 @@ exit /B 1
 
     rem compile the .PO file into a .MO file
     echo ... compiling
-    msgfmt -v -o "locale\%~n1\UltraDefrag.mo" "%~1" || goto check_fail
+    msgfmt --verbose -o "locale\%~n1\UltraDefrag.mo" "%~1" || goto check_fail
 
     :check_success
     echo ... suceeded
