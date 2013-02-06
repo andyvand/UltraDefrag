@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-03 20:36+0100\n"
-"PO-Revision-Date: 2013-02-04 09:24+0000\n"
-"Last-Translator: jui <appukonrad@gmail.com>\n"
+"POT-Creation-Date: 2013-02-06 21:50+0100\n"
+"PO-Revision-Date: 2013-02-06 22:17+0000\n"
+"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -161,7 +161,7 @@ msgstr "Zobrazit protokol překladu"
 
 #: i18n.cpp:165
 msgid "&Translations folder"
-msgstr "Složka překladů"
+msgstr "Jazyková složka"
 
 #: i18n.cpp:166
 msgid "&Submit current translation"
@@ -185,31 +185,31 @@ msgstr "Skript"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr "Podle umístění"
+msgstr "Řadit dle cesty"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr "Podle velikosti"
+msgstr "Řadit dle velikosti"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr "Podle času vytvoření"
+msgstr "Řadit dle vytvoření"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr "Podle času poslední úpravy"
+msgstr "Řadit dle změny"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr "Podle posledního času použití"
+msgstr "Řadit dle přístupu"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr "Ve  vzestupném pořadí"
+msgstr "Řadit vzestupnně"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr "V  sestupném pořadí"
+msgstr "Řadit sestupně"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -231,7 +231,7 @@ msgstr "Legenda k mapě svazku"
 msgid "&Debug"
 msgstr "Ladit"
 
-#: i18n.cpp:192 upgrade.cpp:160
+#: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr "Aktualizace"
 
@@ -267,16 +267,44 @@ msgstr "Odeslat chybový protokol"
 msgid "Boot time script"
 msgstr "Skript při startu OS"
 
-#: upgrade.cpp:157
+#: i18n.cpp:214
+msgid "Disk"
+msgstr ""
+
+#: i18n.cpp:215
+msgid "Status"
+msgstr "Stav"
+
+#: i18n.cpp:216
+msgid "Fragmentation"
+msgstr "Fragmentace"
+
+#: i18n.cpp:217
+msgid "Total space"
+msgstr "Kapacita"
+
+#: i18n.cpp:218
+msgid "Free space"
+msgstr "Volné místo"
+
+#: i18n.cpp:219
+#, c-format
+msgid "% free"
+msgstr "% volného místa"
+
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct
+#. position
+#: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:159
+#: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
 msgstr "Je možné mě aktualizovat ^-^"
 
-#: upgrade.cpp:160 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
 msgstr "Storno"
 
