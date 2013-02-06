@@ -191,6 +191,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     m_subMenuDebug->SetItemLabel(_("&Debug"));
     m_subMenuUpgrade->SetItemLabel(_("&Upgrade"));
 
+    // upgrade sub-menu
     UD_UpdateMenuItemLabel(ID_HelpUpdateNone   , "&Never check"                , "");
     UD_UpdateMenuItemLabel(ID_HelpUpdateStable , "Check &stable releases only" , "");
     UD_UpdateMenuItemLabel(ID_HelpUpdateAll    , "Check &all releases"         , "");
@@ -209,9 +210,9 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     ItemLabel = _("&Help"); ItemLabel << wxT(" (F1)");
     m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
 
-    // update list columns labels
+    // update list column labels
     wxListItem item; item.SetMask(wxLIST_MASK_TEXT);
-    item.SetText(_("Disk"));          m_vList->SetColumn(0,item);
+    item.SetText(_("Drive"));         m_vList->SetColumn(0,item);
     item.SetText(_("Status"));        m_vList->SetColumn(1,item);
     item.SetText(_("Fragmentation")); m_vList->SetColumn(2,item);
     item.SetText(_("Total space"));   m_vList->SetColumn(3,item);
