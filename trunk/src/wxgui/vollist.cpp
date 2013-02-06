@@ -61,12 +61,12 @@ void MainFrame::InitVolList()
 
     m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
 
-    m_vList->InsertColumn(0, _("Disk"),          wxLIST_FORMAT_LEFT,  w1);
-    m_vList->InsertColumn(1, _("Status"),        wxLIST_FORMAT_LEFT,  w2);
-    m_vList->InsertColumn(2, _("Fragmentation"), wxLIST_FORMAT_RIGHT, w3);
-    m_vList->InsertColumn(3, _("Total space"),   wxLIST_FORMAT_RIGHT, w4);
-    m_vList->InsertColumn(4, _("Free space"),    wxLIST_FORMAT_RIGHT, w5);
-    m_vList->InsertColumn(5, _("% free"),        wxLIST_FORMAT_RIGHT, w6);
+    m_vList->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT,  w1);
+    m_vList->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT,  w2);
+    m_vList->InsertColumn(2, wxEmptyString, wxLIST_FORMAT_RIGHT, w3);
+    m_vList->InsertColumn(3, wxEmptyString, wxLIST_FORMAT_RIGHT, w4);
+    m_vList->InsertColumn(4, wxEmptyString, wxLIST_FORMAT_RIGHT, w5);
+    m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
 }
 
 // =======================================================================
