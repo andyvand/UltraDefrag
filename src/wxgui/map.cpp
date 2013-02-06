@@ -42,8 +42,6 @@
 
 void MainFrame::InitMap()
 {
-    m_cMap = new wxStaticText(m_splitter,wxID_ANY,
-        wxT("The cluster map will be here"));
 }
 
 /** @} */

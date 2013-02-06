@@ -59,6 +59,8 @@
 #define wxCharStringFmtSpec "%hs"
 #endif
 
+#include <commctrl.h>
+
 #include "../include/version.h"
 #include "../dll/zenwinx/zenwinx.h"
 #include "../dll/udefrag/udefrag.h"
@@ -345,6 +347,8 @@ enum {
 
 #define MAIN_WINDOW_DEFAULT_WIDTH  640
 #define MAIN_WINDOW_DEFAULT_HEIGHT 480
+#define MAIN_WINDOW_MIN_WIDTH      500
+#define MAIN_WINDOW_MIN_HEIGHT     375
 #define DEFAULT_LIST_HEIGHT        130
 #define MIN_PANEL_HEIGHT            40
 

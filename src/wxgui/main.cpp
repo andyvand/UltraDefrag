@@ -352,10 +352,10 @@ MainFrame::MainFrame()
         DPI(MAIN_WINDOW_DEFAULT_HEIGHT));
     // validate width and height
     wxDisplay display;
-    if(m_width < 0 || m_width > display.GetClientArea().width)
-        m_width = DPI(MAIN_WINDOW_DEFAULT_WIDTH);
-    if(m_height < 0 || m_height > display.GetClientArea().height)
-        m_height = DPI(MAIN_WINDOW_DEFAULT_HEIGHT);
+    if(m_width < DPI(MAIN_WINDOW_MIN_WIDTH)) m_width = DPI(MAIN_WINDOW_MIN_WIDTH);
+    if(m_width > display.GetClientArea().width) m_width = DPI(MAIN_WINDOW_DEFAULT_WIDTH);
+    if(m_height < DPI(MAIN_WINDOW_MIN_HEIGHT)) m_height = DPI(MAIN_WINDOW_MIN_HEIGHT);
+    if(m_height > display.GetClientArea().height) m_height = DPI(MAIN_WINDOW_DEFAULT_HEIGHT);
     // validate x and y
     if(m_x < 0) m_x = 0; if(m_y < 0) m_y = 0;
     if(m_x > display.GetClientArea().width - 130)
@@ -373,6 +373,8 @@ MainFrame::MainFrame()
         Maximize(true);
     }
 
+    SetMinSize(wxSize(DPI(MAIN_WINDOW_MIN_WIDTH),DPI(MAIN_WINDOW_MIN_HEIGHT)));
+
     // i18n support
     InitLocale();
 
@@ -389,9 +391,16 @@ MainFrame::MainFrame()
     // create list of volumes and cluster map
     m_splitter = new wxSplitterWindow(this,wxID_ANY,
         wxDefaultPosition,wxDefaultSize,
-        wxSP_3D | wxSP_LIVE_UPDATE);
+        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
     m_splitter->SetMinimumPaneSize(DPI(MIN_PANEL_HEIGHT));
-    InitVolList(); InitMap();
+
+    m_vList = new wxListView(m_splitter,wxID_ANY,wxDefaultPosition,wxDefaultSize,
+        wxLC_REPORT | wxLC_NO_SORT_HEADER | wxLC_HRULES | wxLC_VRULES | wxBORDER_NONE);
+    LONG_PTR style = ::GetWindowLongPtr((HWND)m_vList->GetHandle(),GWL_STYLE);
+    style |= LVS_SHOWSELALWAYS; ::SetWindowLongPtr((HWND)m_vList->GetHandle(),GWL_STYLE,style);
+
+    m_cMap = new wxStaticText(m_splitter,wxID_ANY,wxT("The cluster map will be here"));
+
     m_splitter->SplitHorizontally(m_vList,m_cMap);
 
     int pos = (int)cfg->Read(wxT("/MainFrame/SeparatorPosition"),
@@ -401,6 +410,14 @@ MainFrame::MainFrame()
     if(pos < DPI(MIN_PANEL_HEIGHT)) pos = DPI(MIN_PANEL_HEIGHT);
     else if(pos > maxPanelHeight) pos = maxPanelHeight;
     m_splitter->SetSashPosition(pos);
+
+    // update frame layout so we'll be
+    // able to initialize list of volumes
+    // and cluster map properly
+    wxSizeEvent evt(wxSize(m_width,m_height));
+    ProcessEvent(evt); m_splitter->UpdateSize();
+
+    InitVolList(); InitMap();
 
     // check the boot time defragmenter presence
     wxFileName btdFile(wxT("%SystemRoot%\\system32\\defrag_native.exe"));
@@ -466,6 +483,13 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
     cfg->Write(wxT("/MainFrame/SeparatorPosition"),
         (long)m_splitter->GetSashPosition());
+
+    cfg->Write(wxT("/DrivesList/width1"),(long)m_vList->GetColumnWidth(0));
+    cfg->Write(wxT("/DrivesList/width2"),(long)m_vList->GetColumnWidth(1));
+    cfg->Write(wxT("/DrivesList/width3"),(long)m_vList->GetColumnWidth(2));
+    cfg->Write(wxT("/DrivesList/width4"),(long)m_vList->GetColumnWidth(3));
+    cfg->Write(wxT("/DrivesList/width5"),(long)m_vList->GetColumnWidth(4));
+    cfg->Write(wxT("/DrivesList/width6"),(long)m_vList->GetColumnWidth(5));
 
     cfg->Write(wxT("/Language/Selected"),(long)g_MyLocale->GetLanguage());
 
