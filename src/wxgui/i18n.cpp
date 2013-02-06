@@ -208,6 +208,15 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     m_toolBar->SetToolShortHelp(ID_BootScript,ItemLabel);
     ItemLabel = _("&Help"); ItemLabel << wxT(" (F1)");
     m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
+
+    // update list columns labels
+    wxListItem item; item.SetMask(wxLIST_MASK_TEXT);
+    item.SetText(_("Disk"));          m_vList->SetColumn(0,item);
+    item.SetText(_("Status"));        m_vList->SetColumn(1,item);
+    item.SetText(_("Fragmentation")); m_vList->SetColumn(2,item);
+    item.SetText(_("Total space"));   m_vList->SetColumn(3,item);
+    item.SetText(_("Free space"));    m_vList->SetColumn(4,item);
+    item.SetText(_("% free"));        m_vList->SetColumn(5,item);
 }
 
 #undef UD_UpdateMenuItemLabel
