@@ -202,6 +202,8 @@ public:
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
+    void OnListSize(wxSizeEvent& event);
+
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
 
