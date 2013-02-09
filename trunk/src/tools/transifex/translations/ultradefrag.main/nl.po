@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:36+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 15:46+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "&Instellingen"
 
 #: i18n.cpp:123 i18n.cpp:209
 msgid "&Help"
-msgstr "&Hulp"
+msgstr "&Help"
 
 #: i18n.cpp:126
 msgid "&Analyze"
@@ -60,7 +60,7 @@ msgstr "&Defragmenteren"
 
 #: i18n.cpp:128
 msgid "&Quick optimization"
-msgstr "Snel &optimaliseren"
+msgstr "&Snel optimaliseren"
 
 #: i18n.cpp:129
 msgid "&Full optimization"
@@ -80,7 +80,7 @@ msgstr "&Stoppen"
 
 #: i18n.cpp:133
 msgid "Re&peat action"
-msgstr "Actie he&rhalen"
+msgstr "&Actie herhalen"
 
 #: i18n.cpp:134
 msgid "Skip removable &media"
@@ -108,7 +108,7 @@ msgstr "&Niets"
 
 #: i18n.cpp:145
 msgid "Stan&dby"
-msgstr "Computer in &sluimerstand zetten"
+msgstr "&Computer in sluimerstand zetten"
 
 #: i18n.cpp:146
 msgid "&Hibernate"
@@ -124,11 +124,11 @@ msgstr "&Opnieuw starten"
 
 #: i18n.cpp:149
 msgid "&Shutdown"
-msgstr "Computer u&itschakelen"
+msgstr "&Computer uitschakelen"
 
 #: i18n.cpp:152
 msgid "&Show report"
-msgstr "Toon &logboek"
+msgstr "&Toon logboek"
 
 #: i18n.cpp:155
 msgid "&Language"
@@ -144,7 +144,7 @@ msgstr "&Defragmenteren tijdens opstarten Windows"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr ""
+msgstr "&Sortering"
 
 #: i18n.cpp:160
 msgid "&Reports"
@@ -152,11 +152,11 @@ msgstr "&Logboeken"
 
 #: i18n.cpp:163
 msgid "&View change log"
-msgstr "&Bekijk veranderingen"
+msgstr "&Rapport met veranderingen"
 
 #: i18n.cpp:164
 msgid "View translation &report"
-msgstr "Bekijk vertaald &rapport"
+msgstr "&Bekijk vertalingsrapport"
 
 #: i18n.cpp:165
 msgid "&Translations folder"
@@ -180,39 +180,39 @@ msgstr "&Activeren"
 
 #: i18n.cpp:174
 msgid "&Script"
-msgstr ""
+msgstr "&Script"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr ""
+msgstr "&Sorteren op pad"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr ""
+msgstr "&Sorteren op grootte"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr ""
+msgstr "&Sorteren op aanmmaakdatum"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr ""
+msgstr "&Sorteren op wijzigingsdatum"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr ""
+msgstr "&Sorteren op laatste gebruik"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr ""
+msgstr "&Aflopend sorteren"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr ""
+msgstr "&Oplopend sorteren"
 
 #: i18n.cpp:186
 msgid "&Contents"
-msgstr "In&houd"
+msgstr "&Inhoud"
 
 #: i18n.cpp:187
 msgid "Best &practice"
@@ -220,11 +220,11 @@ msgstr "&Beste aanpak"
 
 #: i18n.cpp:188
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "&Veelgestelde vragen"
 
 #: i18n.cpp:189
 msgid "Cluster map &legend"
-msgstr "Cluster kaart &legende"
+msgstr "&legenda Clusterkaart"
 
 #: i18n.cpp:191
 msgid "&Debug"
@@ -256,40 +256,40 @@ msgstr "&Info"
 
 #: i18n.cpp:201 utils.cpp:327
 msgid "Open &log"
-msgstr ""
+msgstr "&Open rapport"
 
 #: i18n.cpp:202
 msgid "Send bug &report"
-msgstr "Verstuur fout&rapport"
+msgstr "&Verstuur foutrapport"
 
 #: i18n.cpp:207
 msgid "Boot time script"
 msgstr "Opstarttijd script"
 
 #: i18n.cpp:214
-msgid "Disk"
-msgstr ""
+msgid "Drive"
+msgstr "Schijf"
 
 #: i18n.cpp:215
 msgid "Status"
-msgstr ""
+msgstr "Staat"
 
 #: i18n.cpp:216
 msgid "Fragmentation"
-msgstr ""
+msgstr "Fragmentatie"
 
 #: i18n.cpp:217
 msgid "Total space"
-msgstr ""
+msgstr "Capaciteit"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr ""
+msgstr "Beschikbare/vrije ruimte"
 
 #: i18n.cpp:219
 #, c-format
 msgid "% free"
-msgstr ""
+msgstr "% vrij"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:36+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 15:21+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,19 +196,19 @@ msgstr "Сортировать по дате &создания"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr "Сортировать по дате &модификации"
+msgstr "Сортировать по дате &изменения"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr "Сортировать по дате &доступа (last access)"
+msgstr "Сортировать по дате &доступа"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr "Сортировать в &возрастающем порядке"
+msgstr "Сортировать по &возрастанию"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr "Сортировать в &убывающем порядке"
+msgstr "Сортировать по &убыванию"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -267,29 +267,29 @@ msgid "Boot time script"
 msgstr "Сценарий работы перед загрузкой Windows"
 
 #: i18n.cpp:214
-msgid "Disk"
-msgstr ""
+msgid "Drive"
+msgstr "Раздел"
 
 #: i18n.cpp:215
 msgid "Status"
-msgstr ""
+msgstr "Состояние"
 
 #: i18n.cpp:216
 msgid "Fragmentation"
-msgstr ""
+msgstr "Фрагментация"
 
 #: i18n.cpp:217
 msgid "Total space"
-msgstr ""
+msgstr "Всего"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr ""
+msgstr "Свободно"
 
 #: i18n.cpp:219
 #, c-format
 msgid "% free"
-msgstr ""
+msgstr "В процентах"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
