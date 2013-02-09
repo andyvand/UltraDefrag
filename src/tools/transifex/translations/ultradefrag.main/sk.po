@@ -4,12 +4,13 @@
 # 
 # Translators:
 #  <stefan.pendl.71@gmail.com>, 2013.
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:36+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 18:18+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +41,7 @@ msgstr "Akcia"
 
 #: i18n.cpp:121
 msgid "&Report"
-msgstr "Report"
+msgstr ""
 
 #: i18n.cpp:122
 msgid "&Settings"
@@ -168,7 +169,7 @@ msgstr "Odoslať váš preklad"
 
 #: i18n.cpp:169
 msgid "&Font"
-msgstr "Font"
+msgstr ""
 
 #: i18n.cpp:170
 msgid "&Options"
@@ -267,29 +268,29 @@ msgid "Boot time script"
 msgstr "Skript pri spustení OS"
 
 #: i18n.cpp:214
-msgid "Disk"
-msgstr ""
+msgid "Drive"
+msgstr "Jednotka"
 
 #: i18n.cpp:215
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 #: i18n.cpp:216
 msgid "Fragmentation"
-msgstr ""
+msgstr "Roztrieštenia"
 
 #: i18n.cpp:217
 msgid "Total space"
-msgstr ""
+msgstr "Celková veľkosť"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr ""
+msgstr "Voľná veľkosť"
 
 #: i18n.cpp:219
 #, c-format
 msgid "% free"
-msgstr ""
+msgstr "Percent"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:36+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 15:35+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: i18n.cpp:120
 msgid "&Action"
-msgstr ""
+msgstr "&Action"
 
 #: i18n.cpp:121
 msgid "&Report"
@@ -144,7 +144,7 @@ msgstr "&Analyse au démarrage de Windows"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr ""
+msgstr "&Trier"
 
 #: i18n.cpp:160
 msgid "&Reports"
@@ -180,35 +180,35 @@ msgstr "&Activer"
 
 #: i18n.cpp:174
 msgid "&Script"
-msgstr ""
+msgstr "&Script"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr ""
+msgstr "Trier par c&hemin"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr ""
+msgstr "Trier par &taille"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr ""
+msgstr "Trier par date de &création"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr ""
+msgstr "Trier par date de &modification"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr ""
+msgstr "Trier par date de d&ernier accès"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr ""
+msgstr "Trier par ordre croiss&ant"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr ""
+msgstr "Trier par ordre &décroissant"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -220,7 +220,7 @@ msgstr "A&stuces"
 
 #: i18n.cpp:188
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "&Foire aux questions"
 
 #: i18n.cpp:189
 msgid "Cluster map &legend"
@@ -267,12 +267,12 @@ msgid "Boot time script"
 msgstr "Script lancé au démarrage de Windows"
 
 #: i18n.cpp:214
-msgid "Disk"
-msgstr ""
+msgid "Drive"
+msgstr "Volume"
 
 #: i18n.cpp:215
 msgid "Status"
-msgstr ""
+msgstr "État"
 
 #: i18n.cpp:216
 msgid "Fragmentation"
@@ -280,16 +280,16 @@ msgstr ""
 
 #: i18n.cpp:217
 msgid "Total space"
-msgstr ""
+msgstr "Espace total"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr ""
+msgstr "Espace libre"
 
 #: i18n.cpp:219
 #, c-format
 msgid "% free"
-msgstr ""
+msgstr "Pourcentage libre"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:36+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 15:24+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -266,29 +266,29 @@ msgid "Boot time script"
 msgstr "Skriptas OS įkrovai"
 
 #: i18n.cpp:214
-msgid "Disk"
-msgstr ""
+msgid "Drive"
+msgstr "Diskas"
 
 #: i18n.cpp:215
 msgid "Status"
-msgstr ""
+msgstr "Statusas"
 
 #: i18n.cpp:216
 msgid "Fragmentation"
-msgstr ""
+msgstr "Skilimas"
 
 #: i18n.cpp:217
 msgid "Total space"
-msgstr ""
+msgstr "Bendras dydis"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr ""
+msgstr "Laisva"
 
 #: i18n.cpp:219
 #, c-format
 msgid "% free"
-msgstr ""
+msgstr "% laisva"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct

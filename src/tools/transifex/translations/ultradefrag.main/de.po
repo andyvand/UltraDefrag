@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:39+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 15:06+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,15 +60,15 @@ msgstr "&Defragmentieren"
 
 #: i18n.cpp:128
 msgid "&Quick optimization"
-msgstr "&Schnelloptimierung"
+msgstr "&Schnell Optimieren"
 
 #: i18n.cpp:129
 msgid "&Full optimization"
-msgstr "&Komplettoptimierung"
+msgstr "&Komplett Optimieren"
 
 #: i18n.cpp:130
 msgid "&Optimize MFT"
-msgstr "&Optimiere MFT"
+msgstr "&MFT optimieren"
 
 #: i18n.cpp:131
 msgid "Pa&use"
@@ -76,23 +76,23 @@ msgstr "Pa&use"
 
 #: i18n.cpp:132
 msgid "&Stop"
-msgstr "&Stopp"
+msgstr "&Abbrechen"
 
 #: i18n.cpp:133
 msgid "Re&peat action"
-msgstr "Vorgang &wiederholen"
+msgstr "&Vorgang wiederholen"
 
 #: i18n.cpp:134
 msgid "Skip removable &media"
-msgstr "Wechselmedien &ignorieren"
+msgstr "&Wechselmedien ignorieren"
 
 #: i18n.cpp:135
 msgid "&Rescan drives"
-msgstr "Laufwerke &aktualisieren"
+msgstr "&Laufwerke aktualisieren"
 
 #: i18n.cpp:136
 msgid "Repair dri&ves"
-msgstr "Laufwerke &reparieren"
+msgstr "Lauf&werke reparieren"
 
 #: i18n.cpp:138
 msgid "&When done"
@@ -120,7 +120,7 @@ msgstr "&Abmelden"
 
 #: i18n.cpp:148
 msgid "&Reboot"
-msgstr "&Neu starten"
+msgstr "Neu&start"
 
 #: i18n.cpp:149
 msgid "&Shutdown"
@@ -128,7 +128,7 @@ msgstr "&Herunterfahren"
 
 #: i18n.cpp:152
 msgid "&Show report"
-msgstr "Bericht &anzeigen"
+msgstr "&Anzeigen"
 
 #: i18n.cpp:155
 msgid "&Language"
@@ -184,31 +184,31 @@ msgstr "&Skript"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr "Nach &Pfad"
+msgstr "Nach &Pfad sortieren"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr "Nach &Größe"
+msgstr "Nach &Größe sortieren"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr "Nach &Erstelldatum"
+msgstr "Nach &Erstellzeit sortieren"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr "Nach Än&derungszeit"
+msgstr "Nach Än&derungszeit sortieren"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr "Nach letzter &Zugriffszeit"
+msgstr "Nach letzter &Zugriffszeit sortieren"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr "&Aufsteigend"
+msgstr "&Aufsteigend sortieren"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr "A&bsteigend"
+msgstr "A&bsteigend sortieren"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -267,7 +267,7 @@ msgid "Boot time script"
 msgstr "Windows-Start-Skript"
 
 #: i18n.cpp:214
-msgid "Disk"
+msgid "Drive"
 msgstr "Laufwerk"
 
 #: i18n.cpp:215
@@ -284,7 +284,7 @@ msgstr "Gesamtgröße"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr "Freier Speicherplatz"
+msgstr "Frei"
 
 #: i18n.cpp:219
 #, c-format

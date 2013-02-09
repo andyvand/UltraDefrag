@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 21:50+0100\n"
-"PO-Revision-Date: 2013-02-06 21:36+0000\n"
+"POT-Creation-Date: 2013-02-06 23:18+0100\n"
+"PO-Revision-Date: 2013-02-09 18:14+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +76,7 @@ msgstr ""
 
 #: i18n.cpp:132
 msgid "&Stop"
-msgstr "Stop"
+msgstr ""
 
 #: i18n.cpp:133
 msgid "Re&peat action"
@@ -167,7 +168,7 @@ msgstr "Trimite traducerea curentă"
 
 #: i18n.cpp:169
 msgid "&Font"
-msgstr "Font"
+msgstr ""
 
 #: i18n.cpp:170
 msgid "&Options"
@@ -179,7 +180,7 @@ msgstr "Activează"
 
 #: i18n.cpp:174
 msgid "&Script"
-msgstr "Script"
+msgstr ""
 
 #: i18n.cpp:177
 msgid "By &path"
@@ -266,29 +267,29 @@ msgid "Boot time script"
 msgstr "Script pentru pornirea sistemului"
 
 #: i18n.cpp:214
-msgid "Disk"
-msgstr ""
+msgid "Drive"
+msgstr "Volum"
 
 #: i18n.cpp:215
 msgid "Status"
-msgstr ""
+msgstr "Stadiu"
 
 #: i18n.cpp:216
 msgid "Fragmentation"
-msgstr ""
+msgstr "Fragmentarea"
 
 #: i18n.cpp:217
 msgid "Total space"
-msgstr ""
+msgstr "Spațiu total"
 
 #: i18n.cpp:218
 msgid "Free space"
-msgstr ""
+msgstr "Spațiu liber"
 
 #: i18n.cpp:219
 #, c-format
 msgid "% free"
-msgstr ""
+msgstr "% liber"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
