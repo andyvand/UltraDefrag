@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-09 15:25+0000\n"
+"PO-Revision-Date: 2013-02-09 21:09+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -143,7 +143,7 @@ msgstr "Escanear al Arrancar"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr "&Ordenación"
+msgstr "&Ordenar"
 
 #: i18n.cpp:160
 msgid "&Reports"
