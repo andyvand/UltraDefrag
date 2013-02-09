@@ -73,6 +73,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     // settings menu
     EVT_MENU_RANGE(ID_LangShowLog, ID_LangSubmit,
         MainFrame::OnLangOpenTransifex)
+    EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
 
     EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange + \
         wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)

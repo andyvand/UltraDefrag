@@ -173,7 +173,7 @@ public:
 
     // settings menu handlers
     void OnLangOpenTransifex(wxCommandEvent& event);
-    void OnLangSubmit(wxCommandEvent& event);
+    void OnLangOpenFolder(wxCommandEvent& event);
 
     void OnGuiFont(wxCommandEvent& event);
     void OnGuiOptions(wxCommandEvent& event);
@@ -216,6 +216,7 @@ private:
     void SetLocale(int id);
     void InitVolList();
     void InitMap();
+    bool GetLocaleFolder(wxString& CurrentLocaleDir);
 
     int m_x;
     int m_y;
@@ -302,8 +303,9 @@ enum {
     // settings menu identifiers
     ID_LangShowLog,
     ID_LangShowReport,
-    ID_LangOpenFolder,
     ID_LangSubmit,
+    // items above share the Transifex event handler
+    ID_LangOpenFolder,
 
     ID_GuiFont,
     ID_GuiOptions,

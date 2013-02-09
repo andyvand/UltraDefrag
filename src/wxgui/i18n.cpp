@@ -160,9 +160,9 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_ReportOptions    , "&Reports"             , "Ctrl+R");
 
     // language sub-menu
-    UD_UpdateMenuItemLabel(ID_LangShowLog      , "&View change log"     , "");
-    UD_UpdateMenuItemLabel(ID_LangShowReport   , "View translation &report", "");
-    UD_UpdateMenuItemLabel(ID_LangOpenFolder   , "&Translations folder"    , "");
+    UD_UpdateMenuItemLabel(ID_LangShowLog      , "&View change log"           , "");
+    UD_UpdateMenuItemLabel(ID_LangShowReport   , "View translation &report"   , "");
+    UD_UpdateMenuItemLabel(ID_LangOpenFolder   , "&Translations folder"       , "");
     UD_UpdateMenuItemLabel(ID_LangSubmit       , "&Submit current translation", "");
 
     // graphical interface sub-menu
@@ -220,52 +220,64 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     item.SetText(_("% free"));        m_vList->SetColumn(5,item);
 }
 
+bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
+{
+    wxString AppLocaleDir(wxGetCwd() + wxT("/locale"));
+    if(!wxDirExists(AppLocaleDir)){
+        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        AppLocaleDir = wxGetCwd() + wxT("/../wxgui/locale");
+    }
+    if(!wxDirExists(AppLocaleDir)){
+        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        AppLocaleDir = wxGetCwd() + wxT("/../../wxgui/locale");
+    }
+
+    if(wxDirExists(AppLocaleDir)){
+        CurrentLocaleDir = g_MyLocale->GetCanonicalName();
+
+        if(!wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
+            wxLogMessage(wxT("locale dir not found: %ls"), CurrentLocaleDir.wc_str());
+            CurrentLocaleDir = CurrentLocaleDir.Left(2);
+        }
+
+        if(wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
+            return true;
+        } else {
+            wxLogMessage(wxT("locale dir not found: %ls"), CurrentLocaleDir.wc_str());
+        }
+    }
+    return false;
+}
+
+void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
+{
+    wxString AppPoDir(wxGetCwd() + wxT("/po"));
+
+    if(!wxDirExists(AppPoDir)){
+        wxLogMessage(wxT("po dir not found: %ls"), AppPoDir.wc_str());
+    } else {
+        if(!wxLaunchDefaultBrowser(AppPoDir))
+            Utils::ShowError(wxT("Cannot open %ls!"),AppPoDir.wc_str());
+    }
+}
+
 void MainFrame::OnLangOpenTransifex(wxCommandEvent& event)
 {
     wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/resource/main/"));
+    wxString localeDir(wxT(""));
 
     switch(event.GetId()){
-        case ID_LangOpenFolder:
-        case ID_LangShowReport:
-            if(!wxLaunchDefaultBrowser(url))
-                Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
-            break;
         case ID_LangShowLog:
+            if(GetLocaleFolder(localeDir))
+                url << wxT("l/") << localeDir << wxT("/view/");
+            break;
         case ID_LangSubmit:
-            wxString AppLocaleDir(wxGetCwd() + wxT("/locale"));
-            if(!wxDirExists(AppLocaleDir)){
-                wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
-                AppLocaleDir = wxGetCwd() + wxT("/../wxgui/locale");
-            }
-            if(!wxDirExists(AppLocaleDir)){
-                wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
-                AppLocaleDir = wxGetCwd() + wxT("/../../wxgui/locale");
-            }
-
-            if(wxDirExists(AppLocaleDir)){
-                wxString localeDir = g_MyLocale->GetCanonicalName();
-
-                if(!wxDirExists(AppLocaleDir + wxT("/") + localeDir)){
-                    wxLogMessage(wxT("locale dir not found: %ls"), localeDir.wc_str());
-                    localeDir = localeDir.Left(2);
-                }
-
-                if(wxDirExists(AppLocaleDir + wxT("/") + localeDir)){
-                    switch(event.GetId()){
-                        case ID_LangShowLog:
-                            url << wxT("l/") << localeDir << wxT("/view/");
-                            break;
-                        case ID_LangSubmit:
-                            url << wxT("l/") << localeDir << wxT("/");
-                    }
-
-                    if(!wxLaunchDefaultBrowser(url))
-                        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
-                } else {
-                    wxLogMessage(wxT("locale dir not found: %ls"), localeDir.wc_str());
-                }
-            }
+            if(GetLocaleFolder(localeDir))
+                url << wxT("l/") << localeDir << wxT("/");
     }
+
+    if(!wxLaunchDefaultBrowser(url))
+        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
 }
 
 #undef UD_UpdateMenuItemLabel
