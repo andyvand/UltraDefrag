@@ -568,10 +568,11 @@ SkipMove:
 
     DetailPrint "Installing GUI interface..."
     SetOutPath "$INSTDIR"
-        File /nonfatal /r /x *.header "${ROOTDIR}\src\wxgui\locale"
+        File /nonfatal /r /x *.pot /x *.header "${ROOTDIR}\src\wxgui\locale"
 
     SetOutPath "$INSTDIR\po"
         File /nonfatal "${ROOTDIR}\src\tools\transifex\translations\ultradefrag.main\*.po"
+        File /nonfatal "${ROOTDIR}\src\wxgui\locale\*.pot"
 
     SetOutPath "$INSTDIR"
         Delete "$INSTDIR\ultradefrag.exe"
