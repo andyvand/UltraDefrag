@@ -285,9 +285,5 @@ rem Displays usage information.
     echo Without parameters the build command uses MinGW to build
     echo a 32-bit regular installer.
     echo.
-    echo * To use MinGW run mingw_patch.cmd before:
-    echo dll\zenwinx\mingw_patch.cmd {path to mingw installation}
-    echo.
-    echo * To use Windows SDK run winsdk_patch.cmd before:
-    echo dll\zenwinx\winsdk_patch.cmd {path to sdk installation}
+    echo * Run patch-tools.cmd before starting development!
 goto :EOF
