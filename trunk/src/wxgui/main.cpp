@@ -333,20 +333,9 @@ MainFrame::MainFrame()
     m_upgradeThread->m_check = true;
     m_upgradeThread->Run();
 
-    // track the boot time defragmenter registration
     m_btdThread = new BtdThread();
     m_btdThread->m_stop = btd ? false : true;
     m_btdThread->Run();
-
-    // uncomment to test grayed out images
-    /*m_toolBar->EnableTool(ID_Analyze,false);
-    m_toolBar->EnableTool(ID_Repeat,false);
-    m_toolBar->EnableTool(ID_Defrag,false);
-    m_toolBar->EnableTool(ID_QuickOpt,false);
-    m_toolBar->EnableTool(ID_FullOpt,false);
-    m_toolBar->EnableTool(ID_MftOpt,false);
-    m_toolBar->EnableTool(ID_BootEnable,false);
-    m_toolBar->EnableTool(ID_BootScript,false);*/
 
     // set localized text
     wxCommandEvent event;
