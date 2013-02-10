@@ -26,25 +26,40 @@
  * <h1>Currently not all languages are supported by Transifex for online translation</h1>
  * @par Kapampangan and Wáray-Wáray
  *      Use the offline translation and request the current translation file from the translation maintainer
- *      <span class="simple">(stefanpe@users.sourceforge.net)</span>
+ *      <span class="simple">(stefanpe@users.sourceforge.net)</span>\n
+ *      The folder <b>"%UD_INSTALL_DIR%\po"</b> contains the translation resources at the release date.\n
+ *      The files are saved as <b>{language code}.po</b>, where the language codes are based on the
+ *      <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 Language Code List</a>.
  * @par Chinese (Simplified)
  *      Use <b>Chinese (China)</b> instead.
  * @par Chinese (Traditional)
  *      Use <b>Chinese (Taiwan)</b> instead.
  *
  * <h1>Offline translation</h1>
- * -# Open the file <b>"%UD_INSTALL_DIR%\locale\UltraDefrag.pot"</b> in <a href="http://www.poedit.net/">PoEdit</a>
- *    and save it as <b>{language name}.po</b>.
- * -# The lines starting with <b>msgid</b> contain the original string. <b><i>Don't change them!</i></b>
- * -# The lines starting with <b>msgstr</b> must be updated to contain the translation between the double
- *    quotes (").
- *    @par Example:
- *        - msgid  "Release %ls is available for download!"
- *        - msgstr "Version %ls ist zum Herunterladen verfügbar!"
+ * @par Prerequisites
+ *      - Download and install <a href="http://www.poedit.net/">PoEdit</a>
+ *      - Run PoEdit
+ *      - Enter your name and e-mail address under <b>File => Preferences => Personalise => Identity</b>
  *
- *    In this example there is another special case where a placeholder <b>\%ls</b> is included.\n
- *    The original string would expand to <b>"Release 7.0.0 is available for download!"</b>, so you need
- *    to place the placeholder in the correct position regarding to your translation.
+ * @par Editing an existing translation
+ * -# Open the file <b>"%UD_INSTALL_DIR%\po\{language code}.po"</b>.\n
+ *    The language codes are based on the
+ *    <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 Language Code List</a>.
+ * -# During translation pay attention to the <b>Notes for translators</b>.
+ * -# Now send the translation file to the translation maintainer <span class="simple">(stefanpe@users.sourceforge.net)</span>
+ * -# Your changes will be applied to the next release of UltraDefrag.
+ *
+ * @par Creating a new translation
+ * -# Use <b>File => New catalogue from POT file</b> and select <b>"%UD_INSTALL_DIR%\po\UltraDefrag.pot"</b>
+ *    as the translation template.
+ * -# Enter the following information in the catalog properties dialog:
+ *      - Project name and version: <b>ultradefrag</b>
+ *      - Language: The language code based on the
+ *        <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 Language Code List</a>.
+ *      - Charset: <b>UTF-8</b>
+ *      - Optionally you can fill in the plural forms.
+ * -# As the file name use the <b>language code</b> you entered in the language field.
+ * -# During translation pay attention to the <b>Notes for translators</b>.
  * -# Now send the translation file to the translation maintainer <span class="simple">(stefanpe@users.sourceforge.net)</span>
  * -# Your changes will be applied to the next release of UltraDefrag.
  *
