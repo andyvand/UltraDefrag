@@ -211,13 +211,13 @@ void MainFrame::InitMenu()
     // create upgrade menu
     wxMenu *menuUpgrade = new wxMenu;
     menuUpgrade->AppendRadioItem( \
-        ID_HelpUpdateNone, wxEmptyString);
+        ID_HelpUpgradeNone, wxEmptyString);
     menuUpgrade->AppendRadioItem( \
-        ID_HelpUpdateStable, wxEmptyString);
+        ID_HelpUpgradeStable, wxEmptyString);
     menuUpgrade->AppendRadioItem( \
-        ID_HelpUpdateAll, wxEmptyString);
+        ID_HelpUpgradeAll, wxEmptyString);
     menuUpgrade->AppendSeparator();
-    menuUpgrade->Append(ID_HelpUpdateCheck);
+    menuUpgrade->Append(ID_HelpUpgradeCheck);
 
     // create help menu
     wxMenu *menuHelp = new wxMenu;

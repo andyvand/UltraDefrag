@@ -325,7 +325,7 @@ MainFrame::MainFrame()
     m_crashInfoThread->Run();
 
     unsigned int ulevel = (unsigned int)cfg->Read(wxT("/Upgrade/Level"),1);
-    wxMenuItem *item = m_menuBar->FindItem(ID_HelpUpdateNone + ulevel);
+    wxMenuItem *item = m_menuBar->FindItem(ID_HelpUpgradeNone + ulevel);
     if(item) item->Check();
 
     m_upgradeThread = new UpgradeThread();
@@ -458,8 +458,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_DebugLog, MainFrame::OnDebugLog)
     EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
 
-    EVT_MENU_RANGE(ID_HelpUpdateNone,
-        ID_HelpUpdateCheck, MainFrame::OnHelpUpdate)
+    EVT_MENU_RANGE(ID_HelpUpgradeNone,
+        ID_HelpUpgradeCheck, MainFrame::OnHelpUpgrade)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
 
     // event handlers

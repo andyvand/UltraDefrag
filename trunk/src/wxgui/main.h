@@ -206,7 +206,7 @@ public:
     void OnDebugLog(wxCommandEvent& event);
     void OnDebugSend(wxCommandEvent& event);
 
-    void OnHelpUpdate(wxCommandEvent& event);
+    void OnHelpUpgrade(wxCommandEvent& event);
     void OnHelpAbout(wxCommandEvent& event);
 
     // event handlers
@@ -347,10 +347,10 @@ enum {
     ID_DebugLog,
     ID_DebugSend,
 
-    ID_HelpUpdateNone,
-    ID_HelpUpdateStable,
-    ID_HelpUpdateAll,
-    ID_HelpUpdateCheck,
+    ID_HelpUpgradeNone,
+    ID_HelpUpgradeStable,
+    ID_HelpUpgradeAll,
+    ID_HelpUpgradeCheck,
 
     ID_HelpAbout,
 
