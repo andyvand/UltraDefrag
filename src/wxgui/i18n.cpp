@@ -249,6 +249,10 @@ bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
     return false;
 }
 
+// =======================================================================
+//                            Event handlers
+// =======================================================================
+
 void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
 {
     wxString AppPoDir(wxGetCwd() + wxT("/po"));
