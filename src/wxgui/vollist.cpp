@@ -67,6 +67,20 @@ void MainFrame::InitVolList()
     m_vList->InsertColumn(3, wxEmptyString, wxLIST_FORMAT_RIGHT, w4);
     m_vList->InsertColumn(4, wxEmptyString, wxLIST_FORMAT_RIGHT, w5);
     m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
+
+    // attach drive icons
+    int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+    if(size < 20) size = 16;
+    else if(size < 24) size = 20;
+    else if(size < 32) size = 24;
+    else size = 32;
+
+    wxImageList *list = new wxImageList(size,size);
+    list->Add(wxIcon(wxT("fixed")           , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    list->Add(wxIcon(wxT("fixed_dirty")     , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    list->Add(wxIcon(wxT("removable")       , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    list->Add(wxIcon(wxT("removable_dirty") , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    m_vList->SetImageList(list,wxIMAGE_LIST_SMALL);
 }
 
 // =======================================================================
@@ -129,12 +143,25 @@ void MainFrame::PopulateList(wxCommandEvent& event)
             wxString::Format(wxT("%c: [%hs]"),
             v[i].letter,v[i].fsname).wc_str(),
             v[i].label);
-        m_vList->InsertItem(i,label);
+        int imageIndex = v[i].is_removable ? 2 : 0;
+        if(v[i].is_dirty) imageIndex ++;
+        m_vList->InsertItem(i,label,imageIndex);
     }
 
     m_vList->Select(0);
 
     udefrag_release_vollist(v);
+}
+
+void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
+{
+    m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
+    m_listThread->m_rescan = true;
+}
+
+void MainFrame::OnRescan(wxCommandEvent& WXUNUSED(event))
+{
+    m_listThread->m_rescan = true;
 }
 
 // =======================================================================
