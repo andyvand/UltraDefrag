@@ -134,19 +134,19 @@ int UpgradeThread::ParseVersionString(const char *version)
 //                           Event handlers
 // =======================================================================
 
-void MainFrame::OnHelpUpdate(wxCommandEvent& event)
+void MainFrame::OnHelpUpgrade(wxCommandEvent& event)
 {
     switch(event.GetId()){
-        case ID_HelpUpdateNone:
+        case ID_HelpUpgradeNone:
             // disable checks
             m_upgradeThread->m_level = 0;
             break;
-        case ID_HelpUpdateStable:
-        case ID_HelpUpdateAll:
+        case ID_HelpUpgradeStable:
+        case ID_HelpUpgradeAll:
             // enable the check...
-            m_upgradeThread->m_level = event.GetId() - ID_HelpUpdateNone;
+            m_upgradeThread->m_level = event.GetId() - ID_HelpUpgradeNone;
             // ...and check it now
-        case ID_HelpUpdateCheck:
+        case ID_HelpUpgradeCheck:
             m_upgradeThread->m_check = true;
     }
 }
