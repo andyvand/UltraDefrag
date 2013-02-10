@@ -187,6 +187,9 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     xcopy "%~dp0\wxgui\locale" %PORTABLE_DIR%\locale /I /Y /Q /S
     del /Q %PORTABLE_DIR%\locale\*.header
     del /Q %PORTABLE_DIR%\locale\*.pot
+    mkdir %PORTABLE_DIR%\po
+    copy /Y "%~dp0\wxgui\locale\*.pot" %PORTABLE_DIR%\po
+    copy /Y "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" %PORTABLE_DIR%\po
 
     "%SEVENZIP_PATH%\7z.exe" a -r -mx9 -tzip ultradefrag-portable-%UDVERSION_SUFFIX%.bin.%2.zip %PORTABLE_DIR%
     if %errorlevel% neq 0 (
