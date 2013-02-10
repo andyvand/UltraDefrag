@@ -32,6 +32,12 @@ appicon ICON DISCARDABLE "res/app.ico"
 
 #include "../include/version.h"
 
+// drive icons
+fixed           ICON DISCARDABLE "res/fixed.ico"
+fixed_dirty     ICON DISCARDABLE "res/fixed-dirty.ico"
+removable       ICON DISCARDABLE "res/removable.ico"
+removable_dirty ICON DISCARDABLE "res/removable-dirty.ico"
+
 // bitmaps
 ship      BITMAP DISCARDABLE "res/ship.bmp"
 

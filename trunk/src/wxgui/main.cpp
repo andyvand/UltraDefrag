@@ -540,15 +540,6 @@ void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
     m_toolBar->ToggleTool(ID_Repeat,m_repeat);
 }
 
-void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
-{
-    m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
-}
-
-void MainFrame::OnRescan(wxCommandEvent& WXUNUSED(event))
-{
-}
-
 void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
 {
 }
