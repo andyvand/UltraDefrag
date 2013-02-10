@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-09 18:32+0000\n"
+"PO-Revision-Date: 2013-02-10 13:11+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -229,7 +229,7 @@ msgstr "Chú &giải các nhóm tập tin"
 
 #: i18n.cpp:191
 msgid "&Debug"
-msgstr ""
+msgstr "Tìm &lỗi"
 
 #: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"

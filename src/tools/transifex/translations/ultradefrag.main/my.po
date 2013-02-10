@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-09 17:25+0000\n"
+"PO-Revision-Date: 2013-02-10 12:48+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "MFT  ကိုအဆင့်မြင့်ဆုံး စေခြင
 
 #: i18n.cpp:131
 msgid "Pa&use"
-msgstr "&u ခေတ္တနား"
+msgstr "ခေတ္တနား"
 
 #: i18n.cpp:132
 msgid "&Stop"
