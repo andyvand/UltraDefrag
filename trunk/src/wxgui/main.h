@@ -124,6 +124,17 @@ public:
     bool m_stop;
 };
 
+class ListThread: public wxThread {
+public:
+    ListThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    ~ListThread() { m_stop = true; Wait(); }
+
+    virtual void *Entry();
+
+    bool m_stop;
+    bool m_rescan;
+};
+
 class UpgradeThread: public wxThread {
 public:
     UpgradeThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
@@ -203,11 +214,15 @@ public:
     void OnSize(wxSizeEvent& event);
 
     void OnListSize(wxSizeEvent& event);
+    void PopulateList(wxCommandEvent& event);
 
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
 
     void OnShowUpgradeDialog(wxCommandEvent& event);
+
+    bool m_repeat;
+    bool m_skipRem;
 
 private:
     void InitToolbar();
@@ -236,17 +251,15 @@ private:
     wxMenu     *m_menuLanguage;
 
     wxSplitterWindow *m_splitter;
-    wxListView *m_vList;
-    wxStaticText *m_cMap;
-
-    bool m_repeat;
-    bool m_skipRem;
+    wxListView       *m_vList;
+    wxStaticText     *m_cMap;
 
     bool m_btdEnabled;
     BtdThread *m_btdThread;
 
+    ListThread      *m_listThread;
     CrashInfoThread *m_crashInfoThread;
-    UpgradeThread *m_upgradeThread;
+    UpgradeThread   *m_upgradeThread;
 
     DECLARE_EVENT_TABLE()
 };
@@ -344,6 +357,7 @@ enum {
     // event identifiers
     ID_BootChange,
     ID_ShowUpgradeDialog,
+    ID_PopulateList,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange
