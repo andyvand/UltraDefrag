@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-09 15:21+0000\n"
+"PO-Revision-Date: 2013-02-10 12:55+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "優化MFT(&O)"
 
 #: i18n.cpp:131
 msgid "Pa&use"
-msgstr ""
+msgstr "暫停(&P)"
 
 #: i18n.cpp:132
 msgid "&Stop"
@@ -228,7 +228,7 @@ msgstr "磁碟叢集圖例(&L)"
 
 #: i18n.cpp:191
 msgid "&Debug"
-msgstr "除蟲"
+msgstr "除錯(&B)"
 
 #: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
