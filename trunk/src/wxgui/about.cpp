@@ -42,7 +42,7 @@
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxDialog dlg(g_MainFrame,wxID_ANY,_("About UltraDefrag"));
+    wxDialog dlg(this,wxID_ANY,_("About UltraDefrag"));
 
     wxStaticText *version = new wxStaticText(&dlg,wxID_ANY,wxT(VERSIONINTITLE));
     wxFont fontBig(*wxNORMAL_FONT);
@@ -95,7 +95,7 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     contents->Add(text,wxSizerFlags(1).Center().Border());
     dlg.SetSizerAndFit(contents);
 
-    if(!g_MainFrame->IsIconized()) dlg.Center();
+    if(!IsIconized()) dlg.Center();
     else dlg.CenterOnScreen();
 
     dlg.ShowModal();

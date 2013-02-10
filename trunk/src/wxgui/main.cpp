@@ -195,6 +195,8 @@ IMPLEMENT_APP(App)
 MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
+    g_MainFrame = this;
+
     // set main window icon
     SetIcons(wxICON(appicon));
 
@@ -505,7 +507,7 @@ void MainFrame::OnQuickOpt(wxCommandEvent& WXUNUSED(event))
 {
     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowUpgradeDialog);
     event.SetString(wxT(VERSIONINTITLE));
-    wxPostEvent(g_MainFrame,event);
+    wxPostEvent(this,event);
 }
 
 void MainFrame::OnFullOpt(wxCommandEvent& WXUNUSED(event))
