@@ -104,4 +104,46 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     event.Skip();
 }
 
+void MainFrame::PopulateList(wxCommandEvent& event)
+{
+    volume_info *v = (volume_info *)event.GetClientData();
+
+    m_vList->DeleteAllItems();
+
+    for(int i = 0; v[i].letter; i++){
+        /*wxString label;
+        label.Printf(wxT("%-10ls %ls"),
+            wxString::Format(wxT("%c: [%hs]"),
+            v[i].letter,v[i].fsname).wc_str(),
+            v[i].label);
+        m_vList->InsertItem(i,label);*/
+    }
+
+    m_vList->Select(0);
+
+    udefrag_release_vollist(v);
+}
+
+// =======================================================================
+//                            Drives scanner
+// =======================================================================
+
+void *ListThread::Entry()
+{
+    while(!m_stop){
+        if(m_rescan){
+            volume_info *v = udefrag_get_vollist(g_MainFrame->m_skipRem);
+            if(v){
+                wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_PopulateList);
+                event.SetClientData((void *)v);
+                wxPostEvent(g_MainFrame,event);
+            }
+            m_rescan = false;
+        }
+        Sleep(300);
+    }
+
+    return NULL;
+}
+
 /** @} */

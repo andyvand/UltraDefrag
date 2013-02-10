@@ -40,135 +40,12 @@
 #include <new.h> // for _set_new_handler
 #endif
 
-BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-    // file menu
-    EVT_MENU(ID_Analyze, MainFrame::OnAnalyze)
-    EVT_MENU(ID_Defrag, MainFrame::OnDefrag)
-    EVT_MENU(ID_QuickOpt, MainFrame::OnQuickOpt)
-    EVT_MENU(ID_FullOpt, MainFrame::OnFullOpt)
-    EVT_MENU(ID_MftOpt, MainFrame::OnMftOpt)
-    EVT_MENU(ID_Pause, MainFrame::OnPause)
-    EVT_MENU(ID_Stop, MainFrame::OnStop)
-
-    EVT_MENU(ID_Repeat, MainFrame::OnRepeat)
-
-    EVT_MENU(ID_SkipRem, MainFrame::OnSkipRem)
-    EVT_MENU(ID_Rescan, MainFrame::OnRescan)
-
-    EVT_MENU(ID_Repair, MainFrame::OnRepair)
-
-    EVT_MENU(ID_WhenDoneNone, MainFrame::OnWhenDoneNone)
-    EVT_MENU(ID_WhenDoneExit, MainFrame::OnWhenDoneExit)
-    EVT_MENU(ID_WhenDoneStandby, MainFrame::OnWhenDoneStandby)
-    EVT_MENU(ID_WhenDoneHibernate, MainFrame::OnWhenDoneHibernate)
-    EVT_MENU(ID_WhenDoneLogoff, MainFrame::OnWhenDoneLogoff)
-    EVT_MENU(ID_WhenDoneReboot, MainFrame::OnWhenDoneReboot)
-    EVT_MENU(ID_WhenDoneShutdown, MainFrame::OnWhenDoneShutdown)
-
-    EVT_MENU(ID_Exit, MainFrame::OnExit)
-
-    // report menu
-    EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
-
-    // settings menu
-    EVT_MENU_RANGE(ID_LangShowLog, ID_LangSubmit,
-        MainFrame::OnLangOpenTransifex)
-    EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
-
-    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange + \
-        wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
-
-    EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
-    EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
-
-    EVT_MENU(ID_BootEnable, MainFrame::OnBootEnable)
-    EVT_MENU(ID_BootScript, MainFrame::OnBootScript)
-
-    EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
-
-    EVT_MENU_RANGE(ID_SortByPath,
-        ID_SortByLastAccessDate, MainFrame::OnSortCriteriaChange)
-
-    EVT_MENU_RANGE(ID_SortAscending,
-        ID_SortDescending, MainFrame::OnSortOrderChange)
-
-    // help menu
-    EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
-    EVT_MENU(ID_HelpBestPractice, MainFrame::OnHelpBestPractice)
-    EVT_MENU(ID_HelpFaq, MainFrame::OnHelpFaq)
-    EVT_MENU(ID_HelpLegend, MainFrame::OnHelpLegend)
-
-    EVT_MENU(ID_DebugLog, MainFrame::OnDebugLog)
-    EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
-
-    EVT_MENU_RANGE(ID_HelpUpdateNone,
-        ID_HelpUpdateCheck, MainFrame::OnHelpUpdate)
-    EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
-
-    // event handlers
-    EVT_MOVE(MainFrame::OnMove)
-    EVT_SIZE(MainFrame::OnSize)
-
-    EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
-    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::OnShowUpgradeDialog)
-END_EVENT_TABLE()
-
-IMPLEMENT_APP(App)
-
 // =======================================================================
 //                            Global variables
 // =======================================================================
 
 MainFrame *g_MainFrame = NULL;
 double g_fScale = 1.0f;
-
-// =======================================================================
-//                                Logging
-// =======================================================================
-
-/**
- * @brief Sets up custom logging.
- */
-Log::Log()
-{
-    delete SetActiveTarget(this);
-}
-
-/**
- * @brief Restores default logging.
- */
-Log::~Log()
-{
-    SetActiveTarget(NULL);
-}
-
-/**
- * @brief Performs logging.
- */
-void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
-{
-    #define INFO_FMT  (I wxCharStringFmtSpec)
-    #define DEBUG_FMT (D wxCharStringFmtSpec)
-    #define ERROR_FMT (E wxCharStringFmtSpec)
-
-    switch(level){
-    case wxLOG_FatalError:
-        // XXX: fatal errors pass by actually
-        ::winx_dbg_print(0,ERROR_FMT,msg);
-        ::winx_flush_dbg_log(0);
-        break;
-    case wxLOG_Error:
-        ::winx_dbg_print(0,ERROR_FMT,msg);
-        break;
-    case wxLOG_Warning:
-    case wxLOG_Info:
-        ::winx_dbg_print(0,DEBUG_FMT,msg);
-        break;
-    default:
-        ::winx_dbg_print(0,INFO_FMT,msg);
-        break;
-    }
-}
 
 // =======================================================================
 //                             Web statistics
@@ -306,6 +183,8 @@ int App::OnExit()
     return wxApp::OnExit();
 }
 
+IMPLEMENT_APP(App)
+
 // =======================================================================
 //                             Main window
 // =======================================================================
@@ -420,6 +299,11 @@ MainFrame::MainFrame()
 
     InitVolList(); InitMap();
 
+    // populate list of volumes
+    m_listThread = new ListThread();
+    m_listThread->m_rescan = true;
+    m_listThread->Run();
+
     // check the boot time defragmenter presence
     wxFileName btdFile(wxT("%SystemRoot%\\system32\\defrag_native.exe"));
     btdFile.Normalize();
@@ -500,6 +384,7 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/Upgrade/Level"),(long)m_upgradeThread->m_level);
 
     // terminate threads
+    delete m_listThread;
     delete m_crashInfoThread;
     delete m_upgradeThread;
     delete m_btdThread;
@@ -507,6 +392,84 @@ MainFrame::~MainFrame()
     // free resources
     delete m_title;
 }
+
+// =======================================================================
+//                             Event table
+// =======================================================================
+
+BEGIN_EVENT_TABLE(MainFrame, wxFrame)
+    // file menu
+    EVT_MENU(ID_Analyze, MainFrame::OnAnalyze)
+    EVT_MENU(ID_Defrag, MainFrame::OnDefrag)
+    EVT_MENU(ID_QuickOpt, MainFrame::OnQuickOpt)
+    EVT_MENU(ID_FullOpt, MainFrame::OnFullOpt)
+    EVT_MENU(ID_MftOpt, MainFrame::OnMftOpt)
+    EVT_MENU(ID_Pause, MainFrame::OnPause)
+    EVT_MENU(ID_Stop, MainFrame::OnStop)
+
+    EVT_MENU(ID_Repeat, MainFrame::OnRepeat)
+
+    EVT_MENU(ID_SkipRem, MainFrame::OnSkipRem)
+    EVT_MENU(ID_Rescan, MainFrame::OnRescan)
+
+    EVT_MENU(ID_Repair, MainFrame::OnRepair)
+
+    EVT_MENU(ID_WhenDoneNone, MainFrame::OnWhenDoneNone)
+    EVT_MENU(ID_WhenDoneExit, MainFrame::OnWhenDoneExit)
+    EVT_MENU(ID_WhenDoneStandby, MainFrame::OnWhenDoneStandby)
+    EVT_MENU(ID_WhenDoneHibernate, MainFrame::OnWhenDoneHibernate)
+    EVT_MENU(ID_WhenDoneLogoff, MainFrame::OnWhenDoneLogoff)
+    EVT_MENU(ID_WhenDoneReboot, MainFrame::OnWhenDoneReboot)
+    EVT_MENU(ID_WhenDoneShutdown, MainFrame::OnWhenDoneShutdown)
+
+    EVT_MENU(ID_Exit, MainFrame::OnExit)
+
+    // report menu
+    EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
+
+    // settings menu
+    EVT_MENU_RANGE(ID_LangShowLog, ID_LangSubmit,
+        MainFrame::OnLangOpenTransifex)
+    EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
+
+    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange + \
+        wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
+
+    EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
+    EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
+
+    EVT_MENU(ID_BootEnable, MainFrame::OnBootEnable)
+    EVT_MENU(ID_BootScript, MainFrame::OnBootScript)
+
+    EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
+
+    EVT_MENU_RANGE(ID_SortByPath,
+        ID_SortByLastAccessDate, MainFrame::OnSortCriteriaChange)
+
+    EVT_MENU_RANGE(ID_SortAscending,
+        ID_SortDescending, MainFrame::OnSortOrderChange)
+
+    // help menu
+    EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
+    EVT_MENU(ID_HelpBestPractice, MainFrame::OnHelpBestPractice)
+    EVT_MENU(ID_HelpFaq, MainFrame::OnHelpFaq)
+    EVT_MENU(ID_HelpLegend, MainFrame::OnHelpLegend)
+
+    EVT_MENU(ID_DebugLog, MainFrame::OnDebugLog)
+    EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
+
+    EVT_MENU_RANGE(ID_HelpUpdateNone,
+        ID_HelpUpdateCheck, MainFrame::OnHelpUpdate)
+    EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
+
+    // event handlers
+    EVT_MOVE(MainFrame::OnMove)
+    EVT_SIZE(MainFrame::OnSize)
+
+    EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
+    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::OnShowUpgradeDialog)
+    EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
+END_EVENT_TABLE()
 
 // =======================================================================
 //                            Event handlers
@@ -681,30 +644,6 @@ void MainFrame::OnHelpFaq(wxCommandEvent& WXUNUSED(event))
 void MainFrame::OnHelpLegend(wxCommandEvent& WXUNUSED(event))
 {
     Utils::OpenHandbook(wxT("GUI.html"),wxT("cluster_map_legend"));
-}
-
-void MainFrame::OnDebugLog(wxCommandEvent& WXUNUSED(event))
-{
-    wxString logpath;
-    if(!wxGetEnv(wxT("UD_LOG_FILE_PATH"),&logpath)){
-        wxMessageBox(wxT("Logging to a file is turned off."),
-            wxT("Cannot open log file!"),wxOK | wxICON_HAND,
-            g_MainFrame);
-    } else {
-        wxFileName file(logpath);
-        file.Normalize();
-        winx_flush_dbg_log(0);
-        logpath = file.GetFullPath();
-        if(!wxLaunchDefaultBrowser(logpath))
-            Utils::ShowError(wxT("Cannot open %ls!"),logpath.wc_str());
-    }
-}
-
-void MainFrame::OnDebugSend(wxCommandEvent& WXUNUSED(event))
-{
-    wxString url(wxT("http://sourceforge.net/p/ultradefrag/bugs/"));
-    if(!wxLaunchDefaultBrowser(url))
-        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
 }
 
 /** @} */
