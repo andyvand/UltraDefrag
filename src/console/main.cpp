@@ -111,18 +111,18 @@ void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
     switch(level){
     case wxLOG_FatalError:
         // XXX: fatal errors pass by actually
-        ::winx_dbg_print(0,ERROR_FMT,msg);
-        ::winx_flush_dbg_log(0);
+        winx_dbg_print(0,ERROR_FMT,msg);
+        winx_flush_dbg_log(0);
         break;
     case wxLOG_Error:
-        ::winx_dbg_print(0,ERROR_FMT,msg);
+        winx_dbg_print(0,ERROR_FMT,msg);
         break;
     case wxLOG_Warning:
     case wxLOG_Info:
-        ::winx_dbg_print(0,DEBUG_FMT,msg);
+        winx_dbg_print(0,DEBUG_FMT,msg);
         break;
     default:
-        ::winx_dbg_print(0,INFO_FMT,msg);
+        winx_dbg_print(0,INFO_FMT,msg);
         break;
     }
 }
