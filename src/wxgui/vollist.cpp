@@ -91,6 +91,10 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     w1 *= scale; w2 *= scale; w3 *= scale; w4 *= scale; w5 *= scale;
     w6 = w - w1 - w2 - w3 - w4 - w5;
 
+    // block further size change events
+    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler
+        (MainFrame::OnBlockedListSize),NULL,this);
+
     m_vList->SetColumnWidth(0,w1);
     m_vList->SetColumnWidth(1,w2);
     m_vList->SetColumnWidth(2,w3);
@@ -101,7 +105,16 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     // avoid horizontal scroll-bar appearance
     m_vList->ScrollList(0,0);
 
+    // allow further size change events
+    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler
+        (MainFrame::OnListSize),NULL,this);
+
     event.Skip();
+}
+
+void MainFrame::OnBlockedListSize(wxSizeEvent& event)
+{
+    // just ignore the event
 }
 
 void MainFrame::PopulateList(wxCommandEvent& event)

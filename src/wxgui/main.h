@@ -214,6 +214,7 @@ public:
     void OnSize(wxSizeEvent& event);
 
     void OnListSize(wxSizeEvent& event);
+    void OnBlockedListSize(wxSizeEvent& event);
     void PopulateList(wxCommandEvent& event);
 
     void OnBootChange(wxCommandEvent& event);
