@@ -27,10 +27,10 @@
  * - <a href="http://www.etree.org/md5com.html">md5sum tool</a> to create the checksums
  * - <a href="http://upx.sf.net/">UPX</a> to reduce the size of the installers
  * - <a href="http://help.transifex.com/features/client/index.html#windows-version">Transifex Client</a>
- * to download the updated translations from the
- * <a href="https://www.transifex.com/projects/p/ultradefrag/">translation project</a>
+ *   to download the updated translations from the
+ *   <a href="https://www.transifex.com/projects/p/ultradefrag/">translation project</a>
  * - <a href="http://sourceforge.net/projects/gnuwin32/files/gettext/">GNU gettext</a>
- * to extract and compile the translations
+ *   to extract and compile the translations
  * 
  * - Install wxWidgets, NSIS, 7-zip, Doxygen and optionally MiKTeX and "GNU gettext".
  * - Extract Lua to some directory on your <b>\%PATH\%</b>, e.g. to <b>C:\\Windows</b>.
