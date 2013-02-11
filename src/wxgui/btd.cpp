@@ -76,7 +76,7 @@ void *BtdThread::Entry()
                         result > 0 ? "enabled" : "disabled");
                     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_BootChange);
                     event.SetInt(result > 0 ? true : false);
-                    wxPostEvent(g_MainFrame,event);
+                    wxPostEvent(g_mainFrame,event);
                 }
                 break;
             }

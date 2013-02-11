@@ -69,12 +69,7 @@ void MainFrame::InitVolList()
     m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
 
     // attach drive icons
-    int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
-    if(size < 20) size = 16;
-    else if(size < 24) size = 20;
-    else if(size < 32) size = 24;
-    else size = 32;
-
+    int size = g_iconSize;
     wxImageList *list = new wxImageList(size,size);
     list->Add(wxIcon(wxT("fixed")           , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
     list->Add(wxIcon(wxT("fixed_dirty")     , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
@@ -172,11 +167,11 @@ void *ListThread::Entry()
 {
     while(!m_stop){
         if(m_rescan){
-            volume_info *v = udefrag_get_vollist(g_MainFrame->m_skipRem);
+            volume_info *v = udefrag_get_vollist(g_mainFrame->m_skipRem);
             if(v){
                 wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_PopulateList);
                 event.SetClientData((void *)v);
-                wxPostEvent(g_MainFrame,event);
+                wxPostEvent(g_mainFrame,event);
             }
             m_rescan = false;
         }

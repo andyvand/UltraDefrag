@@ -37,7 +37,7 @@
 #include "main.h"
 
 #define UD_SetMenuIcon(id, icon) \
-    string.Printf(wxT("%hs%u"),#icon,size); \
+    string.Printf(wxT("%hs%u"),#icon,g_iconSize); \
     pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic) m_menuBar->FindItem(id)->SetBitmap(*pic); \
     delete pic;
@@ -46,7 +46,7 @@
     list = menu->GetMenuItems(); \
     count = list.GetCount(); \
     for(index = 0; index < count; index++) \
-        list.Item(index)->GetData()->SetMarginWidth(size);
+        list.Item(index)->GetData()->SetMarginWidth(g_iconSize);
 
 // =======================================================================
 //                        Menu for main window
@@ -120,7 +120,7 @@ void MainFrame::InitMenu()
 
     if(!dir.IsOpened()){
         wxLogMessage(wxT("can't open lang dir: %ls"), AppLocaleDir.wc_str());
-        info = g_MyLocale->FindLanguageInfo(wxT("en_US"));
+        info = g_locale->FindLanguageInfo(wxT("en_US"));
         m_menuLanguage->AppendRadioItem(ID_LocaleChange \
             + info->Language, info->Description);
     } else {
@@ -130,7 +130,7 @@ void MainFrame::InitMenu()
         bool cont = dir.GetFirst(&folder, wxT("*"), wxDIR_DIRS);
 
         while(cont){
-            info = g_MyLocale->FindLanguageInfo(folder);
+            info = g_locale->FindLanguageInfo(folder);
             if(info){
                 if(info->Description == wxT("Chinese")){
                     langArray.Add(wxT("Chinese (Traditional)"));
@@ -156,7 +156,7 @@ void MainFrame::InitMenu()
         wxLogMessage(wxT("languages: %d, break count: %d, delta: %d"),
             langArray.Count(), breakCnt, breakDelta);
         for(unsigned int i = 0;i < langArray.Count();i++){
-            info = g_MyLocale->FindLanguageInfo(langArray[i]);
+            info = g_locale->FindLanguageInfo(langArray[i]);
             m_menuLanguage->AppendRadioItem(ID_LocaleChange \
                 + info->Language, info->Description);
             if((i+1) % breakCnt == 0){
@@ -247,14 +247,6 @@ void MainFrame::InitMenu()
     SetMenuBar(m_menuBar);
 
     // set menu icons
-    int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
-    if(size < 20) size = 16;
-    else if(size < 24) size = 20;
-    else if(size < 32) size = 24;
-    else size = 32;
-
-    //size = 32;
-
     wxBitmap *pic; wxString string;
     UD_SetMenuIcon(ID_Analyze         , glass )
     UD_SetMenuIcon(ID_Defrag          , defrag)
@@ -284,7 +276,7 @@ void MainFrame::InitMenu()
     cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 
-    int id = g_MyLocale->GetLanguage();
+    int id = g_locale->GetLanguage();
     wxMenuItem *item = m_menuBar->FindItem(ID_LocaleChange + id);
     if(item) item->Check(true);
 }

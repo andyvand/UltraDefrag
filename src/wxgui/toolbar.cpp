@@ -42,7 +42,7 @@
 
 #define UD_MakeToolItem(id, icon) { \
     wxString string; \
-    string.Printf(wxT("%hs%u"),#icon,size); \
+    string.Printf(wxT("%hs%u"),#icon,g_iconSize); \
     wxBitmap *pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic){ \
         wxImage img = pic->ConvertToImage(); \
@@ -54,7 +54,7 @@
 
 #define UD_MakeToolCheckItem(id, icon) { \
     wxString string; \
-    string.Printf(wxT("%hs%u"),#icon,size); \
+    string.Printf(wxT("%hs%u"),#icon,g_iconSize); \
     wxBitmap *pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic){ \
         wxImage img = pic->ConvertToImage(); \
@@ -69,16 +69,8 @@
  */
 void MainFrame::InitToolbar()
 {
-    int size = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
-    if(size < 20) size = 16;
-    else if(size < 24) size = 20;
-    else if(size < 32) size = 24;
-    else size = 32;
-
-    //size = 32;
-
     m_toolBar = CreateToolBar();
-    m_toolBar->SetToolBitmapSize(wxSize(size,size));
+    m_toolBar->SetToolBitmapSize(wxSize(g_iconSize,g_iconSize));
 
     UD_MakeToolItem(ID_Analyze         , glass   )
     UD_MakeToolCheckItem(ID_Repeat     , repeat  )

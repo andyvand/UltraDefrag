@@ -72,7 +72,7 @@ void *UpgradeThread::Entry()
                 if(last && current && last > current){
                     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowUpgradeDialog);
                     event.SetString(lv);
-                    wxPostEvent(g_MainFrame,event);
+                    wxPostEvent(g_mainFrame,event);
                 }
 
                 // remove file from cache
