@@ -44,8 +44,9 @@
 //                            Global variables
 // =======================================================================
 
-MainFrame *g_MainFrame = NULL;
-double g_fScale = 1.0f;
+MainFrame *g_mainFrame = NULL;
+double g_scaleFactor = 1.0f;
+int g_iconSize; // small icon size
 
 // =======================================================================
 //                             Web statistics
@@ -80,7 +81,7 @@ void *StatThread::Entry()
 static int out_of_memory_handler(size_t n)
 {
     int choice = MessageBox(
-        g_MainFrame ? (HWND)g_MainFrame->GetHandle() : NULL,
+        g_mainFrame ? (HWND)g_mainFrame->GetHandle() : NULL,
         wxT("Try to release some memory by closing\n")
         wxT("other applications and click Retry then\n")
         wxT("or click Cancel to terminate the program."),
@@ -147,14 +148,19 @@ bool App::OnInit()
     // keep things DPI-aware
     HDC hdc = ::GetDC(NULL);
     if(hdc){
-        g_fScale = (double)::GetDeviceCaps(hdc,LOGPIXELSX) / 96.0f;
+        g_scaleFactor = (double)::GetDeviceCaps(hdc,LOGPIXELSX) / 96.0f;
         ::ReleaseDC(NULL,hdc);
     }
+    g_iconSize = wxSystemSettings::GetMetric(wxSYS_SMALLICON_X);
+    if(g_iconSize < 20) g_iconSize = 16;
+    else if(g_iconSize < 24) g_iconSize = 20;
+    else if(g_iconSize < 32) g_iconSize = 24;
+    else g_iconSize = 32;
 
     // create main window
-    g_MainFrame = new MainFrame();
-    g_MainFrame->Show(true);
-    SetTopWindow(g_MainFrame);
+    g_mainFrame = new MainFrame();
+    g_mainFrame->Show(true);
+    SetTopWindow(g_mainFrame);
     return true;
 }
 
@@ -195,7 +201,7 @@ IMPLEMENT_APP(App)
 MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
-    g_MainFrame = this;
+    g_mainFrame = this;
 
     // set main window icon
     SetIcons(wxICON(appicon));
@@ -341,7 +347,7 @@ MainFrame::MainFrame()
 
     // set localized text
     wxCommandEvent event;
-    event.SetId(ID_LocaleChange+g_MyLocale->GetLanguage());
+    event.SetId(ID_LocaleChange+g_locale->GetLanguage());
     OnLocaleChange(event);
 }
 
@@ -367,7 +373,7 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/DrivesList/width5"),(long)m_vList->GetColumnWidth(4));
     cfg->Write(wxT("/DrivesList/width6"),(long)m_vList->GetColumnWidth(5));
 
-    cfg->Write(wxT("/Language/Selected"),(long)g_MyLocale->GetLanguage());
+    cfg->Write(wxT("/Language/Selected"),(long)g_locale->GetLanguage());
 
     cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);

@@ -283,7 +283,7 @@ int Utils::MessageDialog(wxFrame *parent,
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,text2);
 
     // Burmese needs Padauk font for display
-    if(g_MyLocale->GetCanonicalName().Left(2) == wxT("my")){
+    if(g_locale->GetCanonicalName().Left(2) == wxT("my")){
         wxFont textFont = msg->GetFont();
         textFont.SetFaceName(wxT("Padauk"));
         textFont.SetPointSize(textFont.GetPointSize() + 2);
@@ -327,11 +327,11 @@ void Utils::ShowError(const wxChar* format, ...)
     wxString log = _("Open &log");
     log.Replace(wxT("&"),wxT(""));
 
-    if(MessageDialog(g_MainFrame,_("Error!"),
+    if(MessageDialog(g_mainFrame,_("Error!"),
       wxART_ERROR,log,_("&Cancel"),message) == wxID_OK)
     {
         wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_DebugLog);
-        wxPostEvent(g_MainFrame,event);
+        wxPostEvent(g_mainFrame,event);
     }
 }
 

@@ -70,7 +70,7 @@
 // =======================================================================
 
 /* converts pixels from 96 DPI to the current one */
-#define DPI(x) ((int)((double)x * g_fScale))
+#define DPI(x) ((int)((double)x * g_scaleFactor))
 
 // =======================================================================
 //                            Declarations
@@ -387,8 +387,9 @@ enum {
 //                           Global variables
 // =======================================================================
 
-extern MainFrame *g_MainFrame;
-extern double g_fScale;
-extern wxLocale *g_MyLocale;
+extern MainFrame *g_mainFrame;
+extern wxLocale *g_locale;
+extern double g_scaleFactor;
+extern int g_iconSize;
 
 #endif /* _UDEFRAG_GUI_MAIN_H_ */

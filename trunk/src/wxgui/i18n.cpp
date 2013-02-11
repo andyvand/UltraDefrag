@@ -40,7 +40,7 @@
 //                            Global variables
 // =======================================================================
 
-wxLocale *g_MyLocale = NULL;
+wxLocale *g_locale = NULL;
 
 // =======================================================================
 //                         Internationalization
@@ -53,7 +53,7 @@ wxLocale *g_MyLocale = NULL;
     info.LayoutDirection = layout;                        \
     info.Description = wxT(desc);                         \
     info.WinLang = winlang, info.WinSublang = winsublang; \
-    g_MyLocale->AddLanguage(info);
+    g_locale->AddLanguage(info);
 
 #define UD_UpdateMenuItemLabel(id,label,accel) \
     if(::strlen(accel)){ \
@@ -73,7 +73,7 @@ wxLocale *g_MyLocale = NULL;
 
 void MainFrame::InitLocale()
 {
-    g_MyLocale = new wxLocale();
+    g_locale = new wxLocale();
 
     // add translations missing from wxWidgets
     wxLanguageInfo info;
@@ -89,7 +89,7 @@ void MainFrame::InitLocale()
     if(cfg->HasGroup(wxT("Language"))){
         id = (int)cfg->Read(wxT("/Language/Selected"),id);
     } else {
-        id = g_MyLocale->GetSystemLanguage();
+        id = g_locale->GetSystemLanguage();
         if(id == wxLANGUAGE_UNKNOWN)
             id = wxLANGUAGE_ENGLISH_US;
     }
@@ -100,14 +100,14 @@ void MainFrame::InitLocale()
 void MainFrame::SetLocale(int id)
 {
     // apply language selection
-    g_MyLocale->Init(id,wxLOCALE_CONV_ENCODING);
-    g_MyLocale->AddCatalogLookupPathPrefix(wxT("locale"));
+    g_locale->Init(id,wxLOCALE_CONV_ENCODING);
+    g_locale->AddCatalogLookupPathPrefix(wxT("locale"));
 
     // locations for development
-    g_MyLocale->AddCatalogLookupPathPrefix(wxT("../wxgui/locale"));
-    g_MyLocale->AddCatalogLookupPathPrefix(wxT("../../wxgui/locale"));
+    g_locale->AddCatalogLookupPathPrefix(wxT("../wxgui/locale"));
+    g_locale->AddCatalogLookupPathPrefix(wxT("../../wxgui/locale"));
 
-    g_MyLocale->AddCatalog(wxT("UltraDefrag"));
+    g_locale->AddCatalog(wxT("UltraDefrag"));
 }
 
 void MainFrame::OnLocaleChange(wxCommandEvent& event)
@@ -233,7 +233,7 @@ bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
     }
 
     if(wxDirExists(AppLocaleDir)){
-        CurrentLocaleDir = g_MyLocale->GetCanonicalName();
+        CurrentLocaleDir = g_locale->GetCanonicalName();
 
         if(!wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
             wxLogMessage(wxT("locale dir not found: %ls"), CurrentLocaleDir.wc_str());
