@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-10 13:13+0000\n"
+"POT-Creation-Date: 2013-02-10 14:21+0100\n"
+"PO-Revision-Date: 2013-02-11 10:20+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: about.cpp:45
 msgid "About UltraDefrag"
-msgstr ""
+msgstr "Maipapan iti UltraDefrag"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
@@ -47,7 +47,7 @@ msgstr "&Padamag"
 msgid "&Settings"
 msgstr "Pagalaga&den"
 
-#: i18n.cpp:123 i18n.cpp:209
+#: i18n.cpp:123 i18n.cpp:210
 msgid "&Help"
 msgstr "&Tulong"
 
@@ -139,13 +139,13 @@ msgstr "Pagsa&sao"
 msgid "&Graphical interface"
 msgstr "&Bista"
 
-#: i18n.cpp:157 i18n.cpp:205
+#: i18n.cpp:157 i18n.cpp:206
 msgid "&Boot time scan"
 msgstr "&Usigen iti Apagrugi"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr ""
+msgstr "&Panagidalimanek"
 
 #: i18n.cpp:160
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "Pa&mayaan"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr ""
+msgstr "Idalimanek iti &danas"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr ""
+msgstr "Idalimanek iti &kadakkel"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr ""
+msgstr "Idalimanek iti i&paparsua"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr ""
+msgstr "Idalimanek iti i&babaliw"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr ""
+msgstr "Idalimanek iti &naudi a pannakaaramat"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr ""
+msgstr "Idalimanek nga agpangat&o"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr ""
+msgstr "Idali&manek nga agpababa"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -235,59 +235,59 @@ msgstr "&Depura"
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:195
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:195
+#: i18n.cpp:196
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:197
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:198
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:198
+#: i18n.cpp:199
 msgid "&About"
 msgstr "&Maipapan iti"
 
-#: i18n.cpp:201 utils.cpp:327
+#: i18n.cpp:202 utils.cpp:327
 msgid "Open &log"
 msgstr "Ilukat ti &Rehistro"
 
-#: i18n.cpp:202
+#: i18n.cpp:203
 msgid "Send bug &report"
 msgstr "Itulod ti &Padamag ti Kammali"
 
-#: i18n.cpp:207
+#: i18n.cpp:208
 msgid "Boot time script"
 msgstr "Pamayaan iti Panagrugi"
 
-#: i18n.cpp:214
+#: i18n.cpp:215
 msgid "Drive"
 msgstr "Tomo"
 
-#: i18n.cpp:215
+#: i18n.cpp:216
 msgid "Status"
 msgstr "Kasasaad"
 
-#: i18n.cpp:216
+#: i18n.cpp:217
 msgid "Fragmentation"
 msgstr "Panagpisi"
 
-#: i18n.cpp:217
+#: i18n.cpp:218
 msgid "Total space"
 msgstr "Laon"
 
-#: i18n.cpp:218
+#: i18n.cpp:219
 msgid "Free space"
 msgstr "Nawaya"
 
-#: i18n.cpp:219
+#: i18n.cpp:220
 #, c-format
 msgid "% free"
 msgstr "% ti Nawaya"
