@@ -84,6 +84,10 @@ void MainFrame::InitVolList()
 
 void MainFrame::OnListSize(wxSizeEvent& event)
 {
+    // block further size change events
+    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler
+        (MainFrame::OnBlockedListSize),NULL,this);
+
     // scale columns
     int w1 = m_vList->GetColumnWidth(0);
     int w2 = m_vList->GetColumnWidth(1);
@@ -99,10 +103,6 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     double scale = (double)w / (w1 + w2 + w3 + w4 + w5 + w6);
     w1 *= scale; w2 *= scale; w3 *= scale; w4 *= scale; w5 *= scale;
     w6 = w - w1 - w2 - w3 - w4 - w5;
-
-    // block further size change events
-    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler
-        (MainFrame::OnBlockedListSize),NULL,this);
 
     m_vList->SetColumnWidth(0,w1);
     m_vList->SetColumnWidth(1,w2);
@@ -121,7 +121,7 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     event.Skip();
 }
 
-void MainFrame::OnBlockedListSize(wxSizeEvent& event)
+void MainFrame::OnBlockedListSize(wxSizeEvent& WXUNUSED(event))
 {
     // just ignore the event
 }
