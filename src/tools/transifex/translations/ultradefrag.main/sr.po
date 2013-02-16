@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-10 13:10+0000\n"
+"POT-Creation-Date: 2013-02-11 23:14+0100\n"
+"PO-Revision-Date: 2013-02-16 14:53+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: about.cpp:45
 msgid "About UltraDefrag"
-msgstr ""
+msgstr "О програму"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
@@ -47,7 +47,7 @@ msgstr "Извештај"
 msgid "&Settings"
 msgstr "Подешавања"
 
-#: i18n.cpp:123 i18n.cpp:209
+#: i18n.cpp:123 i18n.cpp:210
 msgid "&Help"
 msgstr "Помоћ"
 
@@ -139,7 +139,7 @@ msgstr "Језик"
 msgid "&Graphical interface"
 msgstr "Графички интерфејс"
 
-#: i18n.cpp:157 i18n.cpp:205
+#: i18n.cpp:157 i18n.cpp:206
 msgid "&Boot time scan"
 msgstr "Старт током преузети Windows"
 
@@ -235,59 +235,59 @@ msgstr "Отклонити неисправност"
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:195
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:195
+#: i18n.cpp:196
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:197
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:198
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:198
+#: i18n.cpp:199
 msgid "&About"
 msgstr "О програму"
 
-#: i18n.cpp:201 utils.cpp:327
+#: i18n.cpp:202 utils.cpp:327
 msgid "Open &log"
 msgstr "Отвори дневник"
 
-#: i18n.cpp:202
+#: i18n.cpp:203
 msgid "Send bug &report"
 msgstr "Пошаљи извештај о грешци"
 
-#: i18n.cpp:207
+#: i18n.cpp:208
 msgid "Boot time script"
 msgstr "Покретању система скрипта"
 
-#: i18n.cpp:214
+#: i18n.cpp:215
 msgid "Drive"
 msgstr "Партиција"
 
-#: i18n.cpp:215
+#: i18n.cpp:216
 msgid "Status"
 msgstr "Статус"
 
-#: i18n.cpp:216
+#: i18n.cpp:217
 msgid "Fragmentation"
 msgstr "Фрагментација"
 
-#: i18n.cpp:217
+#: i18n.cpp:218
 msgid "Total space"
 msgstr "Капацитет"
 
-#: i18n.cpp:218
+#: i18n.cpp:219
 msgid "Free space"
 msgstr "Слободног места"
 
-#: i18n.cpp:219
+#: i18n.cpp:220
 #, c-format
 msgid "% free"
 msgstr "Проценат"
