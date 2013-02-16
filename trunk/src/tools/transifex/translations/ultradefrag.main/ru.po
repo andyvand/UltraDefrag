@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Nikolay Parukhin <parukhin@gmail.com>, 2013.
 #  <stefan.pendl.71@gmail.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-10 12:55+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"POT-Creation-Date: 2013-02-11 23:14+0100\n"
+"PO-Revision-Date: 2013-02-16 11:53+0000\n"
+"Last-Translator: Nikolay Parukhin <parukhin@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +25,15 @@ msgstr "О программе UltraDefrag"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Утилита дефрагментации с открытым исходным кодом"
 
 #: about.cpp:58
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Участники и лицензии перечислены в справочнике."
 
 #: about.cpp:61
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Сайт UltraDefrag"
 
 #: i18n.cpp:120
 msgid "&Action"
@@ -46,7 +47,7 @@ msgstr "&Отчёт"
 msgid "&Settings"
 msgstr "&Настройки"
 
-#: i18n.cpp:123 i18n.cpp:209
+#: i18n.cpp:123 i18n.cpp:210
 msgid "&Help"
 msgstr "&Справка"
 
@@ -138,7 +139,7 @@ msgstr "&Язык"
 msgid "&Graphical interface"
 msgstr "&Графический интерфейс"
 
-#: i18n.cpp:157 i18n.cpp:205
+#: i18n.cpp:157 i18n.cpp:206
 msgid "&Boot time scan"
 msgstr "&Запуск перед загрузкой Windows"
 
@@ -232,61 +233,61 @@ msgstr "От&ладка"
 
 #: i18n.cpp:192 upgrade.cpp:162
 msgid "&Upgrade"
-msgstr ""
-
-#: i18n.cpp:194
-msgid "&Never check"
-msgstr ""
+msgstr "Обновить"
 
 #: i18n.cpp:195
-msgid "Check &stable releases only"
-msgstr ""
+msgid "&Never check"
+msgstr "Никогда не проверять"
 
 #: i18n.cpp:196
-msgid "Check &all releases"
-msgstr ""
+msgid "Check &stable releases only"
+msgstr "Проверять только стабильные версии"
 
 #: i18n.cpp:197
-msgid "&Check now"
-msgstr ""
+msgid "Check &all releases"
+msgstr "Проверять все версии"
 
 #: i18n.cpp:198
+msgid "&Check now"
+msgstr "Проверить сейчас"
+
+#: i18n.cpp:199
 msgid "&About"
 msgstr "&О программе"
 
-#: i18n.cpp:201 utils.cpp:327
+#: i18n.cpp:202 utils.cpp:327
 msgid "Open &log"
 msgstr "Открыть &журнал"
 
-#: i18n.cpp:202
+#: i18n.cpp:203
 msgid "Send bug &report"
 msgstr "Отправить &сообщение об ошибке"
 
-#: i18n.cpp:207
+#: i18n.cpp:208
 msgid "Boot time script"
 msgstr "Сценарий работы перед загрузкой Windows"
 
-#: i18n.cpp:214
+#: i18n.cpp:215
 msgid "Drive"
 msgstr "Раздел"
 
-#: i18n.cpp:215
+#: i18n.cpp:216
 msgid "Status"
 msgstr "Состояние"
 
-#: i18n.cpp:216
+#: i18n.cpp:217
 msgid "Fragmentation"
 msgstr "Фрагментация"
 
-#: i18n.cpp:217
+#: i18n.cpp:218
 msgid "Total space"
 msgstr "Всего"
 
-#: i18n.cpp:218
+#: i18n.cpp:219
 msgid "Free space"
 msgstr "Свободно"
 
-#: i18n.cpp:219
+#: i18n.cpp:220
 #, c-format
 msgid "% free"
 msgstr "В процентах"
@@ -297,7 +298,7 @@ msgstr "В процентах"
 #: upgrade.cpp:159
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Для загрузки доступна версия %ls"
 
 #: upgrade.cpp:161
 msgid "You can upgrade me ^-^"
@@ -305,8 +306,8 @@ msgstr "Вы можете меня обновить ^-^"
 
 #: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: utils.cpp:330
 msgid "Error!"
-msgstr ""
+msgstr "Ошибка!"
