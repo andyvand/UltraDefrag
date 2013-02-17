@@ -59,7 +59,11 @@ void MainFrame::InitVolList()
     w1 *= scale; w2 *= scale; w3 *= scale; w4 *= scale; w5 *= scale;
     w6 = w - w1 - w2 - w3 - w4 - w5;
 
-    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
+    Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
+    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGING,
+        wxSplitterEventHandler(MainFrame::OnSplitChanging),NULL,this);
+    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
+        wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
 
     m_vList->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT,  w1);
     m_vList->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT,  w2);
@@ -82,13 +86,40 @@ void MainFrame::InitVolList()
 //                            Event handlers
 // =======================================================================
 
+void MainFrame::OnSplitChanging(wxSplitterEvent& event)
+{
+    event.Skip();
+}
+
+void MainFrame::OnSplitChanged(wxSplitterEvent& event)
+{
+    // ensure that the vertical scroll-bar will not spoil the list appearance
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
+    evt.SetInt(-1); wxPostEvent(this,evt);
+
+    event.Skip();
+}
+
 void MainFrame::OnListSize(wxSizeEvent& event)
 {
-    // block further size change events
-    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler
-        (MainFrame::OnBlockedListSize),NULL,this);
+    // scale columns; use some tricks to avoid horizontal scroll-bar appearance
+    int new_width = GetClientSize().GetWidth();
+    new_width -= 2 * wxSystemSettings::GetMetric(wxSYS_EDGE_X);
+    new_width -= wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
+    int old_width = m_vList->GetClientSize().GetWidth();
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
+    evt.SetInt(new_width);
+    if(new_width <= old_width) ProcessEvent(evt);
+    else wxPostEvent(this,evt);
 
-    // scale columns
+    // adjust widths once again later when the list will be scaled actually
+    evt.SetInt(-1); wxPostEvent(this,evt);
+
+    event.Skip();
+}
+
+void MainFrame::AdjustListColumns(wxCommandEvent& event)
+{
     int w1 = m_vList->GetColumnWidth(0);
     int w2 = m_vList->GetColumnWidth(1);
     int w3 = m_vList->GetColumnWidth(2);
@@ -99,10 +130,11 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     if(!w1) w1 = 110; if(!w2) w2 = 110; if(!w3) w3 = 110;
     if(!w4) w4 = 110; if(!w5) w5 = 110; if(!w6) w6 = 65;
 
-    int w, h; m_vList->GetClientSize(&w,&h);
-    double scale = (double)w / (w1 + w2 + w3 + w4 + w5 + w6);
+    int width = event.GetInt();
+    if(width < 0) width = m_vList->GetClientSize().GetWidth();
+    double scale = (double)width / (w1 + w2 + w3 + w4 + w5 + w6);
     w1 *= scale; w2 *= scale; w3 *= scale; w4 *= scale; w5 *= scale;
-    w6 = w - w1 - w2 - w3 - w4 - w5;
+    w6 = width - w1 - w2 - w3 - w4 - w5;
 
     m_vList->SetColumnWidth(0,w1);
     m_vList->SetColumnWidth(1,w2);
@@ -110,53 +142,6 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     m_vList->SetColumnWidth(3,w4);
     m_vList->SetColumnWidth(4,w5);
     m_vList->SetColumnWidth(5,w6);
-
-    // avoid horizontal scroll-bar appearance
-    m_vList->ScrollList(0,0);
-
-    // allow further size change events
-    m_vList->Connect(wxEVT_SIZE,wxSizeEventHandler
-        (MainFrame::OnListSize),NULL,this);
-
-    event.Skip();
-}
-
-void MainFrame::OnBlockedListSize(wxSizeEvent& WXUNUSED(event))
-{
-    // just ignore the event
-}
-
-void MainFrame::PopulateList(wxCommandEvent& event)
-{
-    volume_info *v = (volume_info *)event.GetClientData();
-
-    m_vList->DeleteAllItems();
-
-    for(int i = 0; v[i].letter; i++){
-        wxString label;
-        label.Printf(wxT("%-10ls %ls"),
-            wxString::Format(wxT("%c: [%hs]"),
-            v[i].letter,v[i].fsname).wc_str(),
-            v[i].label);
-        int imageIndex = v[i].is_removable ? 2 : 0;
-        if(v[i].is_dirty) imageIndex ++;
-        m_vList->InsertItem(i,label,imageIndex);
-    }
-
-    m_vList->Select(0);
-
-    udefrag_release_vollist(v);
-}
-
-void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
-{
-    m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
-    m_listThread->m_rescan = true;
-}
-
-void MainFrame::OnRescan(wxCommandEvent& WXUNUSED(event))
-{
-    m_listThread->m_rescan = true;
 }
 
 // =======================================================================
@@ -179,6 +164,43 @@ void *ListThread::Entry()
     }
 
     return NULL;
+}
+
+void MainFrame::PopulateList(wxCommandEvent& event)
+{
+    volume_info *v = (volume_info *)event.GetClientData();
+
+    m_vList->DeleteAllItems();
+
+    for(int i = 0; v[i].letter; i++){
+        wxString label;
+        label.Printf(wxT("%-10ls %ls"),
+            wxString::Format(wxT("%c: [%hs]"),
+            v[i].letter,v[i].fsname).wc_str(),
+            v[i].label);
+        int imageIndex = v[i].is_removable ? 2 : 0;
+        if(v[i].is_dirty) imageIndex ++;
+        m_vList->InsertItem(i,label,imageIndex);
+    }
+
+    m_vList->Select(0);
+
+    // ensure that the vertical scroll-bar will not spoil the list appearance
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
+    evt.SetInt(m_vList->GetClientSize().GetWidth()); ProcessEvent(evt);
+
+    udefrag_release_vollist(v);
+}
+
+void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
+{
+    m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
+    m_listThread->m_rescan = true;
+}
+
+void MainFrame::OnRescan(wxCommandEvent& WXUNUSED(event))
+{
+    m_listThread->m_rescan = true;
 }
 
 /** @} */
