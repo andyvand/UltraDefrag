@@ -164,13 +164,9 @@ static winx_blockmap *add_fragment(winx_blockmap **fragments,
     
     fragment = (winx_blockmap *)winx_list_insert((list_entry **)(void *)fragments,
         (list_entry *)*prev_fragment,sizeof(winx_blockmap));
-    if(fragment == NULL){
-        release_fragments_list(fragments);
-    } else {
-        fragment->vcn = vcn;
-        fragment->lcn = lcn;
-        fragment->length = length;
-    }
+    fragment->vcn = vcn;
+    fragment->lcn = lcn;
+    fragment->length = length;
     *prev_fragment = fragment;
     return fragment;
 }

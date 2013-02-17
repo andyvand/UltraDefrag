@@ -545,17 +545,11 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
                     /* add free region to the list */
                     rgn = (winx_volume_region *)winx_list_insert((list_entry **)(void *)&rlist,
                         (list_entry *)rgn,sizeof(winx_volume_region));
-                    if(rgn == NULL){
-                        /* return if partial results aren't allowed */
-                        if(!(flags & WINX_GVR_ALLOW_PARTIAL_SCAN))
-                            goto fail;
-                    } else {
-                        rgn->lcn = free_rgn_start;
-                        rgn->length = start + i - free_rgn_start;
-                        if(cb != NULL){
-                            if(cb(rgn,user_defined_data))
-                                goto done;
-                        }
+                    rgn->lcn = free_rgn_start;
+                    rgn->length = start + i - free_rgn_start;
+                    if(cb != NULL){
+                        if(cb(rgn,user_defined_data))
+                            goto done;
                     }
                     free_rgn_start = LLINVALID;
                 }
@@ -570,17 +564,11 @@ winx_volume_region *winx_get_free_volume_regions(char volume_letter,
         /* add free region to the list */
         rgn = (winx_volume_region *)winx_list_insert((list_entry **)(void *)&rlist,
             (list_entry *)rgn,sizeof(winx_volume_region));
-        if(rgn == NULL){
-            /* return if partial results aren't allowed */
-            if(!(flags & WINX_GVR_ALLOW_PARTIAL_SCAN))
-                goto fail;
-        } else {
-            rgn->lcn = free_rgn_start;
-            rgn->length = start + i - free_rgn_start;
-            if(cb != NULL){
-                if(cb(rgn,user_defined_data))
-                    goto done;
-            }
+        rgn->lcn = free_rgn_start;
+        rgn->length = start + i - free_rgn_start;
+        if(cb != NULL){
+            if(cb(rgn,user_defined_data))
+                goto done;
         }
         free_rgn_start = LLINVALID;
     }
@@ -652,9 +640,6 @@ winx_volume_region *winx_add_volume_region(winx_volume_region *rlist,
     
     r = (winx_volume_region *)winx_list_insert((list_entry **)(void *)&rlist,
         (list_entry *)rprev,sizeof(winx_volume_region));
-    if(r == NULL)
-        return rlist;
-    
     r->lcn = lcn;
     r->length = length;
     return rlist;

@@ -769,9 +769,6 @@ int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
     
     ff = (udefrag_fragmented_file *)winx_list_insert((list_entry **)(void *)&jp->fragmented_files,
             (list_entry *)ffprev,sizeof(udefrag_fragmented_file));
-    if(ff == NULL)
-        return UDEFRAG_NO_MEM;
-
     ff->f = f;
     return 0;
 }
