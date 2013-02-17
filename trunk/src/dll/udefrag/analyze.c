@@ -799,10 +799,14 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
 {
     winx_file_info *f;
     ULONGLONG bad_fragments = 0;
+    ULONGLONG counter = 0;
     
     for(f = jp->filelist; f; f = f->next){
         if(is_fragmented(f) && !is_excluded(f)){
             expand_fragmented_files_list(f,jp);
+            if(counter && !(counter % 1000))
+                dtrace(">>> %I64u files added to the fragmented files list",counter);
+            /* more precise calculation seems to be too slow */
             /* more precise calculation seems to be too slow */
             bad_fragments += f->disp.fragments;
         }
