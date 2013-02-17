@@ -41,7 +41,7 @@
  *      - Run PoEdit
  *      - Enter your name and e-mail address under <b>File => Preferences => Personalise => Identity</b>
  *      - Open the translations folder <b>"%UD_INSTALL_DIR%\po"</b> using <b>Settings => Language => Translations folder</b>
- *        from the GUI menu.
+ *        from the UltraDefrag GUI menu.
  *
  * @par Editing an existing translation
  * -# Open the file <b>"%UD_INSTALL_DIR%\po\{language code}.po"</b>.\n
