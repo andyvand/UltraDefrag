@@ -34,7 +34,8 @@
  * @param[in] prev pointer to an item preceeding to the new item.
  * If this parameter is NULL, the new head will be inserted.
  * @param[in] size the size of the item to be inserted, in bytes.
- * @return Pointer to the inserted list item. NULL indicates failure.
+ * @return Pointer to the inserted list item. In case of allocation failure
+ * this routine calls the killer registered by winx_set_killer and returns NULL then.
  */
 list_entry *winx_list_insert(list_entry **phead,list_entry *prev,long size)
 {

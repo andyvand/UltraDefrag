@@ -209,8 +209,6 @@ int winx_ftw_dump_file(winx_file_info *f,
             
             block = (winx_blockmap *)winx_list_insert((list_entry **)&f->disp.blockmap,
                 (list_entry *)block,sizeof(winx_blockmap));
-            if(block == NULL)
-                goto dump_failed;
             block->lcn = filemap->Pair[i].Lcn;
             block->length = filemap->Pair[i].Vcn - startVcn;
             block->vcn = startVcn;
@@ -283,8 +281,6 @@ static winx_file_info * ftw_add_entry_to_filelist(wchar_t *path,
     /* insert new item to the file list */
     f = (winx_file_info *)winx_list_insert((list_entry **)(void *)filelist,
         NULL,sizeof(winx_file_info));
-    if(f == NULL)
-        return f;
     
     /* extract filename */
     f->name = winx_tmalloc(file_entry->FileNameLength + sizeof(wchar_t));
@@ -378,8 +374,6 @@ static int ftw_add_root_directory(wchar_t *path, int flags,
     /* insert new item to the file list */
     f = (winx_file_info *)winx_list_insert((list_entry **)(void *)filelist,
         NULL,sizeof(winx_file_info));
-    if(f == NULL)
-        return (-1);
     
     /* build path */
     length = (int)wcslen(path) + 1;

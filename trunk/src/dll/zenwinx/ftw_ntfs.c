@@ -1048,10 +1048,6 @@ static winx_file_info * find_filelist_entry(wchar_t *attr_name,mft_scan_paramete
     }
     
     f = (winx_file_info *)winx_list_insert((list_entry **)(void *)sp->filelist,NULL,sizeof(winx_file_info));
-    if(f == NULL){
-        sp->errors ++;
-        return NULL;
-    }
 
     /* initialize structure */
     f->name = winx_wcsdup(attr_name);
@@ -1083,10 +1079,6 @@ static void process_run(winx_file_info *f,ULONGLONG vcn,ULONGLONG lcn,ULONGLONG 
     if(f->disp.blockmap) prev_block = f->disp.blockmap->prev;
     block = (winx_blockmap *)winx_list_insert((list_entry **)&f->disp.blockmap,
         (list_entry *)prev_block,sizeof(winx_blockmap));
-    if(block == NULL){
-        sp->errors ++;
-        return;
-    }
     
     block->vcn = vcn;
     block->lcn = lcn;

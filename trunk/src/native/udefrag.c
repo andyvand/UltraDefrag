@@ -592,12 +592,8 @@ static void add_path(wchar_t *buffer)
         if(paths) last_item = paths->prev;
         new_item = (object_path *)winx_list_insert((list_entry **)(void *)&paths,
             (list_entry *)last_item,sizeof(object_path));
-        if(new_item == NULL){
-            winx_printf("add_path: not enough memory!\n");
-        } else {
-            new_item->processed = 0;
-            wcsncpy(new_item->path,buffer,MAX_LONG_PATH);
-            new_item->path[MAX_LONG_PATH] = 0;
-        }
+        new_item->processed = 0;
+        wcsncpy(new_item->path,buffer,MAX_LONG_PATH);
+        new_item->path[MAX_LONG_PATH] = 0;
     }
 }
