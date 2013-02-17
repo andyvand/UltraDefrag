@@ -277,9 +277,10 @@ MainFrame::MainFrame()
     SetStatusText(wxT("Welcome to wxUltraDefrag!"));
 
     // create list of volumes and cluster map
+    // don't use live update style to avoid horizontal scrollbar appearance on list resizing
     m_splitter = new wxSplitterWindow(this,wxID_ANY,
         wxDefaultPosition,wxDefaultSize,
-        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN);
+        wxSP_3D/* | wxSP_LIVE_UPDATE*/ | wxCLIP_CHILDREN);
     m_splitter->SetMinimumPaneSize(DPI(MIN_PANEL_HEIGHT));
 
     m_vList = new wxListView(m_splitter,wxID_ANY,wxDefaultPosition,wxDefaultSize,
@@ -465,6 +466,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
     EVT_MENU(ID_ShowUpgradeDialog, MainFrame::OnShowUpgradeDialog)
+    EVT_MENU(ID_AdjustListColumns, MainFrame::AdjustListColumns)
     EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
 END_EVENT_TABLE()
 

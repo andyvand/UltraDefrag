@@ -213,8 +213,11 @@ public:
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
+    void OnSplitChanging(wxSplitterEvent& event);
+    void OnSplitChanged(wxSplitterEvent& event);
+
     void OnListSize(wxSizeEvent& event);
-    void OnBlockedListSize(wxSizeEvent& event);
+    void AdjustListColumns(wxCommandEvent& event);
     void PopulateList(wxCommandEvent& event);
 
     void OnBootChange(wxCommandEvent& event);
@@ -226,13 +229,15 @@ public:
     bool m_skipRem;
 
 private:
-    void InitToolbar();
-    void InitMenu();
     void InitLocale();
     void SetLocale(int id);
-    void InitVolList();
-    void InitMap();
     bool GetLocaleFolder(wxString& CurrentLocaleDir);
+
+    void InitMenu();
+    void InitToolbar();
+
+    void InitMap();
+    void InitVolList();
 
     int m_x;
     int m_y;
@@ -359,6 +364,7 @@ enum {
     ID_BootChange,
     ID_ShowUpgradeDialog,
     ID_PopulateList,
+    ID_AdjustListColumns,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange
