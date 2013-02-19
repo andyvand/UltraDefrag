@@ -804,8 +804,8 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
             if(counter && !(counter % 1000))
                 dtrace(">>> %I64u files added to the fragmented files list",counter);
             /* more precise calculation seems to be too slow */
-            /* more precise calculation seems to be too slow */
             bad_fragments += f->disp.fragments;
+            counter += 1;
         }
         if(f->next == jp->filelist) break;
     }
