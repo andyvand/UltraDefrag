@@ -43,27 +43,25 @@
 void MainFrame::InitVolList()
 {
     wxConfigBase *cfg = wxConfigBase::Get();
-    int w1 = (int)cfg->Read(wxT("/DrivesList/width1"),0l);
-    int w2 = (int)cfg->Read(wxT("/DrivesList/width2"),0l);
-    int w3 = (int)cfg->Read(wxT("/DrivesList/width3"),0l);
-    int w4 = (int)cfg->Read(wxT("/DrivesList/width4"),0l);
-    int w5 = (int)cfg->Read(wxT("/DrivesList/width5"),0l);
-    int w6 = (int)cfg->Read(wxT("/DrivesList/width6"),0l);
+    cfg->Read(wxT("/DrivesList/width1"), &m_w1, 0.0);
+    cfg->Read(wxT("/DrivesList/width2"), &m_w2, 0.0);
+    cfg->Read(wxT("/DrivesList/width3"), &m_w3, 0.0);
+    cfg->Read(wxT("/DrivesList/width4"), &m_w4, 0.0);
+    cfg->Read(wxT("/DrivesList/width5"), &m_w5, 0.0);
+    cfg->Read(wxT("/DrivesList/width6"), &m_w6, 0.0);
 
-    if(!w1) w1 = 110; if(!w2) w2 = 110; if(!w3) w3 = 110;
-    if(!w4) w4 = 110; if(!w5) w5 = 110; if(!w6) w6 = 65;
+    if(!m_w1) m_w1 = 110; if(!m_w2) m_w2 = 110; if(!m_w3) m_w3 = 110;
+    if(!m_w4) m_w4 = 110; if(!m_w5) m_w5 = 110; if(!m_w6) m_w6 = 65;
 
     // adjust widths so all the columns will fit to the window
-    int w, h; m_vList->GetClientSize(&w,&h);
-    double scale = (double)w / (w1 + w2 + w3 + w4 + w5 + w6);
-    w1 *= scale; w2 *= scale; w3 *= scale; w4 *= scale; w5 *= scale;
-    w6 = w - w1 - w2 - w3 - w4 - w5;
+    int width = m_vList->GetClientSize().GetWidth();
+    double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
+    m_w1 *= scale; m_w2 *= scale; m_w3 *= scale; m_w4 *= scale; m_w5 *= scale;
+    m_w6 *= scale;
 
-    Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
-    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGING,
-        wxSplitterEventHandler(MainFrame::OnSplitChanging),NULL,this);
-    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
-        wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
+    int w1 = (int)floor(m_w1); int w2 = (int)floor(m_w2);
+    int w3 = (int)floor(m_w3); int w4 = (int)floor(m_w4);
+    int w5 = (int)floor(m_w5); int w6 = width - w1 - w2 - w3 - w4 - w5;
 
     m_vList->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT,  w1);
     m_vList->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT,  w2);
@@ -71,6 +69,12 @@ void MainFrame::InitVolList()
     m_vList->InsertColumn(3, wxEmptyString, wxLIST_FORMAT_RIGHT, w4);
     m_vList->InsertColumn(4, wxEmptyString, wxLIST_FORMAT_RIGHT, w5);
     m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
+
+    Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
+    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGING,
+        wxSplitterEventHandler(MainFrame::OnSplitChanging),NULL,this);
+    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
+        wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
 
     // attach drive icons
     int size = g_iconSize;
@@ -120,21 +124,16 @@ void MainFrame::OnListSize(wxSizeEvent& event)
 
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
 {
-    int w1 = m_vList->GetColumnWidth(0);
-    int w2 = m_vList->GetColumnWidth(1);
-    int w3 = m_vList->GetColumnWidth(2);
-    int w4 = m_vList->GetColumnWidth(3);
-    int w5 = m_vList->GetColumnWidth(4);
-    int w6 = m_vList->GetColumnWidth(5);
-
-    if(!w1) w1 = 110; if(!w2) w2 = 110; if(!w3) w3 = 110;
-    if(!w4) w4 = 110; if(!w5) w5 = 110; if(!w6) w6 = 65;
-
     int width = event.GetInt();
     if(width < 0) width = m_vList->GetClientSize().GetWidth();
-    double scale = (double)width / (w1 + w2 + w3 + w4 + w5 + w6);
-    w1 *= scale; w2 *= scale; w3 *= scale; w4 *= scale; w5 *= scale;
-    w6 = width - w1 - w2 - w3 - w4 - w5;
+
+    double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
+    m_w1 *= scale; m_w2 *= scale; m_w3 *= scale; m_w4 *= scale; m_w5 *= scale;
+    m_w6 *= scale;
+
+    int w1 = (int)floor(m_w1); int w2 = (int)floor(m_w2);
+    int w3 = (int)floor(m_w3); int w4 = (int)floor(m_w4);
+    int w5 = (int)floor(m_w5); int w6 = width - w1 - w2 - w3 - w4 - w5;
 
     m_vList->SetColumnWidth(0,w1);
     m_vList->SetColumnWidth(1,w2);

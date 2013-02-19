@@ -244,6 +244,14 @@ private:
     int m_width;
     int m_height;
 
+    // precise list column widths
+    double m_w1;
+    double m_w2;
+    double m_w3;
+    double m_w4;
+    double m_w5;
+    double m_w6;
+
     wxString   *m_title;
     wxToolBar  *m_toolBar;
     wxMenuBar  *m_menuBar;
