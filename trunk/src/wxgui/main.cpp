@@ -367,12 +367,12 @@ MainFrame::~MainFrame()
     cfg->Write(wxT("/MainFrame/SeparatorPosition"),
         (long)m_splitter->GetSashPosition());
 
-    cfg->Write(wxT("/DrivesList/width1"),(long)m_vList->GetColumnWidth(0));
-    cfg->Write(wxT("/DrivesList/width2"),(long)m_vList->GetColumnWidth(1));
-    cfg->Write(wxT("/DrivesList/width3"),(long)m_vList->GetColumnWidth(2));
-    cfg->Write(wxT("/DrivesList/width4"),(long)m_vList->GetColumnWidth(3));
-    cfg->Write(wxT("/DrivesList/width5"),(long)m_vList->GetColumnWidth(4));
-    cfg->Write(wxT("/DrivesList/width6"),(long)m_vList->GetColumnWidth(5));
+    cfg->Write(wxT("/DrivesList/width1"),m_w1);
+    cfg->Write(wxT("/DrivesList/width2"),m_w2);
+    cfg->Write(wxT("/DrivesList/width3"),m_w3);
+    cfg->Write(wxT("/DrivesList/width4"),m_w4);
+    cfg->Write(wxT("/DrivesList/width5"),m_w5);
+    cfg->Write(wxT("/DrivesList/width6"),m_w6);
 
     cfg->Write(wxT("/Language/Selected"),(long)g_locale->GetLanguage());
 
