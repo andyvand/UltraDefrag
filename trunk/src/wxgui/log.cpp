@@ -40,25 +40,6 @@
 //                                Logging
 // =======================================================================
 
-/**
- * @brief Sets up custom logging.
- */
-Log::Log()
-{
-    delete SetActiveTarget(this);
-}
-
-/**
- * @brief Restores default logging.
- */
-Log::~Log()
-{
-    SetActiveTarget(NULL);
-}
-
-/**
- * @brief Performs logging.
- */
 void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
 {
     #define INFO_FMT  (I wxCharStringFmtSpec)
@@ -97,7 +78,7 @@ void MainFrame::OnDebugLog(wxCommandEvent& WXUNUSED(event))
     } else {
         wxFileName file(logpath);
         file.Normalize();
-        winx_flush_dbg_log(0);
+        ::winx_flush_dbg_log(0);
         logpath = file.GetFullPath();
         if(!wxLaunchDefaultBrowser(logpath))
             Utils::ShowError(wxT("Cannot open %ls!"),logpath.wc_str());

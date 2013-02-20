@@ -229,7 +229,7 @@ static int save_lua_report(udefrag_job_parameters *jp)
     (void)strcpy(buffer,"}\r\n");
     (void)winx_fwrite(buffer,1,strlen(buffer),f);
 
-    trace(I"report saved to %ws",path);
+    itrace("report saved to %ws",path);
     winx_fclose(f);
     winx_free(path);
     winx_free(utf8_path);

@@ -370,14 +370,14 @@ bool set_shellex_options(void)
     wxFileName path(wxT("%UD_INSTALL_DIR%\\options\\guiopts.lua"));
     path.Normalize();
     if(!path.FileExists()){
-        wxLogError(wxT("%ls file not found"),
+        etrace("%ls file not found",
             path.GetFullPath().wc_str());
         return true;
     }
 
     lua_State *L = lua_open();
     if(!L){
-        wxLogError(wxT("Lua initialization failed"));
+        etrace("Lua initialization failed");
         fprintf(stderr,"Lua initialization failed!\n");
         return false;
     }
@@ -391,14 +391,14 @@ bool set_shellex_options(void)
     lua_setglobal(L,"shellex_flag");
     int status = luaL_dofile(L,path.GetFullPath().char_str());
     if(status != 0){
-        wxLogError(wxT("cannot interprete %ls"),
+        etrace("cannot interprete %ls",
             path.GetFullPath().wc_str());
         fprintf(stderr,"Cannot interprete %ls!\n",
             path.GetFullPath().wc_str());
         if(!lua_isnil(L,-1)){
             const char *msg = lua_tostring(L,-1);
             if(!msg) msg = "(error object is not a string)";
-            wxLogError(wxT("%hs"),msg);
+            etrace("%hs",msg);
             fprintf(stderr,"%s\n",msg);
             lua_pop(L, 1);
         }

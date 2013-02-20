@@ -212,7 +212,7 @@ void print_unicode(wchar_t *string)
  */
 wxString download(const wxString& url)
 {
-    wxLogMessage(wxT("downloading %ls"),url.wc_str());
+    itrace("downloading %ls",url.wc_str());
 
     wxDynamicLibrary lib(wxT("urlmon"));
     wxDYNLIB_FUNCTION(URLMON_PROCEDURE,
@@ -224,7 +224,7 @@ wxString download(const wxString& url)
     wchar_t buffer[MAX_PATH + 1];
     HRESULT result = pfnURLDownloadToCacheFileW(NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
     if(result != S_OK){
-        wxLogError(wxT("URLDownloadToCacheFile failed with code 0x%x"),(UINT)result);
+        etrace("URLDownloadToCacheFile failed with code 0x%x",(UINT)result);
         return wxEmptyString;
     }
 

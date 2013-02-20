@@ -115,7 +115,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     SetLocale(event.GetId() - ID_LocaleChange);
 
     // update menu labels and tool bar tool-tips
-    wxString ItemLabel;
+
     // main menu
     m_menuBar->SetMenuLabel(0, _("&Action"));
     m_menuBar->SetMenuLabel(1, _("&Report"));
@@ -203,6 +203,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_DebugSend        , "Send bug &report"     , "");
 
     // update tool-tips that differ from menu labels
+    wxString ItemLabel;
     ItemLabel = _("&Boot time scan"); ItemLabel << wxT(" (F11)");
     m_toolBar->SetToolShortHelp(ID_BootEnable,ItemLabel);
     ItemLabel = _("Boot time script"); ItemLabel << wxT(" (F12)");
@@ -224,11 +225,11 @@ bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
 {
     wxString AppLocaleDir(wxGetCwd() + wxT("/locale"));
     if(!wxDirExists(AppLocaleDir)){
-        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        itrace("lang dir not found: %ls",AppLocaleDir.wc_str());
         AppLocaleDir = wxGetCwd() + wxT("/../wxgui/locale");
     }
     if(!wxDirExists(AppLocaleDir)){
-        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        itrace("lang dir not found: %ls",AppLocaleDir.wc_str());
         AppLocaleDir = wxGetCwd() + wxT("/../../wxgui/locale");
     }
 
@@ -236,14 +237,14 @@ bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
         CurrentLocaleDir = g_locale->GetCanonicalName();
 
         if(!wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
-            wxLogMessage(wxT("locale dir not found: %ls"), CurrentLocaleDir.wc_str());
+            itrace("locale dir not found: %ls",CurrentLocaleDir.wc_str());
             CurrentLocaleDir = CurrentLocaleDir.Left(2);
         }
 
         if(wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
             return true;
         } else {
-            wxLogMessage(wxT("locale dir not found: %ls"), CurrentLocaleDir.wc_str());
+            etrace("locale dir not found: %ls",CurrentLocaleDir.wc_str());
         }
     }
     return false;
@@ -258,7 +259,7 @@ void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
     wxString AppPoDir(wxGetCwd() + wxT("/po"));
 
     if(!wxDirExists(AppPoDir)){
-        wxLogMessage(wxT("po dir not found: %ls"), AppPoDir.wc_str());
+        etrace("po dir not found: %ls",AppPoDir.wc_str());
     } else {
         if(!wxLaunchDefaultBrowser(AppPoDir))
             Utils::ShowError(wxT("Cannot open %ls!"),AppPoDir.wc_str());

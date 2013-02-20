@@ -70,6 +70,8 @@ void MainFrame::InitVolList()
     m_vList->InsertColumn(4, wxEmptyString, wxLIST_FORMAT_RIGHT, w5);
     m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
 
+    m_vListHeight = 0; // zero is used to avoid recursion in OnSplitChanged and AdjustListHeight calls
+
     Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
     m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGING,
         wxSplitterEventHandler(MainFrame::OnSplitChanging),NULL,this);
@@ -100,6 +102,9 @@ void MainFrame::OnSplitChanged(wxSplitterEvent& event)
     // ensure that the vertical scroll-bar will not spoil the list appearance
     wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
     evt.SetInt(-1); wxPostEvent(this,evt);
+
+    // ensure that the list control covers integral number of items
+    evt.SetId(ID_AdjustListHeight); wxPostEvent(this,evt);
 
     event.Skip();
 }
@@ -143,6 +148,51 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
     m_vList->SetColumnWidth(5,w6);
 }
 
+void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
+{
+    // get client height of the list
+    int height = m_splitter->GetSashPosition();
+    height -= 2 * wxSystemSettings::GetMetric(wxSYS_BORDER_Y);
+
+    if(height == m_vListHeight) return;
+
+    bool expand = (height > m_vListHeight) ? true : false;
+    m_vListHeight = height;
+
+    if(!m_vList->GetColumnCount()) return;
+
+    // get height of the list header
+    HWND header = (HWND)(LONG_PTR)::SendMessage(
+        (HWND)m_vList->GetHandle(),LVM_GETHEADER,0,0
+    );
+    if(!header){
+        letrace("cannot get list header"); return;
+    }
+
+    RECT rc;
+    if(!::SendMessage(header,HDM_GETITEMRECT,0,(LRESULT)&rc)){
+        letrace("cannot get list header size"); return;
+    }
+
+    int header_height = rc.bottom - rc.top;
+
+    // get height of a single row
+    wxRect rect; if(!m_vList->GetItemRect(0,rect)) return;
+    int item_height = rect.GetHeight();
+
+    // force list to cover integral number of items
+    int items = (height - header_height) / item_height;
+    int new_height = header_height + items * item_height;// + 2;
+    if(expand && new_height < height){
+        items ++; new_height += item_height;
+    }
+
+    m_vListHeight = new_height;
+
+    new_height += 2 * wxSystemSettings::GetMetric(wxSYS_BORDER_Y);
+    m_splitter->SetSashPosition(new_height);
+}
+
 // =======================================================================
 //                            Drives scanner
 // =======================================================================
@@ -151,7 +201,7 @@ void *ListThread::Entry()
 {
     while(!m_stop){
         if(m_rescan){
-            volume_info *v = udefrag_get_vollist(g_mainFrame->m_skipRem);
+            volume_info *v = ::udefrag_get_vollist(g_mainFrame->m_skipRem);
             if(v){
                 wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_PopulateList);
                 event.SetClientData((void *)v);
@@ -188,7 +238,10 @@ void MainFrame::PopulateList(wxCommandEvent& event)
     wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
     evt.SetInt(m_vList->GetClientSize().GetWidth()); ProcessEvent(evt);
 
-    udefrag_release_vollist(v);
+    // ensure that the list control covers integral number of items
+    evt.SetId(ID_AdjustListHeight); ProcessEvent(evt);
+
+    ::udefrag_release_vollist(v);
 }
 
 void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))

@@ -99,7 +99,7 @@ void validate_blockmap(winx_file_info *f)
         if(b1->vcn == b2->vcn){
             etrace("%ws: wrong map detected:", f->path);
             for(b1 = f->disp.blockmap; b1; b1 = b1->next){
-                trace(E"VCN = %I64u, LCN = %I64u, LEN = %I64u",
+                etrace("VCN = %I64u, LCN = %I64u, LEN = %I64u",
                     b1->vcn, b1->lcn, b1->length);
                 if(b1->next == f->disp.blockmap) break;
             }

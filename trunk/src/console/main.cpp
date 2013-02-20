@@ -83,25 +83,6 @@ bool g_stop = false;
 //                                Logging
 // =======================================================================
 
-/**
- * @brief Sets up custom logging.
- */
-Log::Log()
-{
-    delete SetActiveTarget(this);
-}
-
-/**
- * @brief Restores default logging.
- */
-Log::~Log()
-{
-    SetActiveTarget(NULL);
-}
-
-/**
- * @brief Performs logging.
- */
 void Log::DoLog(wxLogLevel level,const wxChar *msg,time_t timestamp)
 {
     #define INFO_FMT  (I wxCharStringFmtSpec)
@@ -372,7 +353,7 @@ static int process_volumes(void)
 
         if(path.Len() > MAX_ENV_VAR_LENGTH){
             // path is too long to be put into environment variable
-            wxLogError(wxT("%ls path is too long"),path.wc_str());
+            etrace("%ls path is too long",path.wc_str());
             display_error(wxString::Format(
                 wxT("%ls path is too long"),
                 path.wc_str()).char_str());
