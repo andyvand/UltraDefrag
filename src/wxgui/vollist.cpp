@@ -236,7 +236,7 @@ void MainFrame::PopulateList(wxCommandEvent& event)
 
     // ensure that the vertical scroll-bar will not spoil the list appearance
     wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
-    evt.SetInt(m_vList->GetClientSize().GetWidth()); ProcessEvent(evt);
+    evt.SetInt(-1); ProcessEvent(evt);
 
     // ensure that the list control covers integral number of items
     evt.SetId(ID_AdjustListHeight); ProcessEvent(evt);
