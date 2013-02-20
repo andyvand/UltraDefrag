@@ -59,6 +59,47 @@
 
 #include "udefrag-internals.h"
 
+HANDLE hMutex = NULL;
+
+/**
+ * @brief Initializes udefrag library.
+ * @details This routine needs to be called
+ * before any use of other routines.
+ * @return Zero for success, negative value otherwise.
+ * @note This routine initializes zenwinx library as well.
+ */
+int udefrag_init_library(void)
+{
+    if(winx_init_library() < 0)
+        return (-1);
+
+    /* deny installation/upgrade */
+    if(winx_get_os_version() >= WINDOWS_VISTA){
+        (void)winx_create_mutex(L"\\Sessions\\1"
+            L"\\BaseNamedObjects\\ultradefrag_mutex",
+            &hMutex);
+    } else {
+        (void)winx_create_mutex(L"\\BaseNamedObjects"
+            L"\\ultradefrag_mutex",&hMutex);
+    }
+    return 0;
+}
+
+/**
+ * @brief Releases resources 
+ * acquired by udefrag library.
+ * @note
+ * - Releases zenwinx resources as well.
+ * - Call it ONLY if you know what you're doing.
+ */
+void udefrag_unload_library(void)
+{
+    /* allow installation/upgrade */
+    winx_destroy_mutex(hMutex);
+
+    winx_unload_library();
+}
+
 /**
  * @brief Delivers progress information to the caller.
  * @note 

@@ -106,8 +106,8 @@ bool App::OnInit()
     if(!wxApp::OnInit())
         return false;
 
-    // initialize zenwinx library
-    if(::winx_init_library() < 0){
+    // initialize udefrag library
+    if(::udefrag_init_library() < 0){
         wxLogError(wxT("Initialization failed!"));
         return false;
     }

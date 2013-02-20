@@ -586,8 +586,8 @@ static int out_of_memory_handler(size_t n)
 
 int __cdecl main(int argc, char **argv)
 {
-    // initialize zenwinx library
-    if(winx_init_library() < 0){
+    // initialize udefrag library
+    if(udefrag_init_library() < 0){
         fprintf(stderr,"Initialization failed!\n");
         return 1;
     }
