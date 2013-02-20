@@ -115,6 +115,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     SetLocale(event.GetId() - ID_LocaleChange);
 
     // update menu labels and tool bar tool-tips
+    wxString ItemLabel;
 
     // main menu
     m_menuBar->SetMenuLabel(0, _("&Action"));
@@ -203,7 +204,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_DebugSend        , "Send bug &report"     , "");
 
     // update tool-tips that differ from menu labels
-    wxString ItemLabel;
     ItemLabel = _("&Boot time scan"); ItemLabel << wxT(" (F11)");
     m_toolBar->SetToolShortHelp(ID_BootEnable,ItemLabel);
     ItemLabel = _("Boot time script"); ItemLabel << wxT(" (F12)");
