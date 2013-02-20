@@ -66,8 +66,8 @@
 
 class Log: public wxLog {
 public:
-    Log();
-    ~Log();
+    Log()  { delete SetActiveTarget(this); };
+    ~Log() { SetActiveTarget(NULL); };
 
     virtual void DoLog(wxLogLevel level,
         const wxChar *msg,time_t timestamp);

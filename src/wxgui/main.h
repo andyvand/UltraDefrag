@@ -59,6 +59,14 @@
 #define wxCharStringFmtSpec "%hs"
 #endif
 
+/*
+* Next definition is very important for mingw:
+* _WIN32_IE must be no less than 0x0400
+* to include some important constant definitions.
+*/
+#ifndef _WIN32_IE
+#define _WIN32_IE 0x0400
+#endif
 #include <commctrl.h>
 
 #include "../include/version.h"
@@ -78,8 +86,8 @@
 
 class Log: public wxLog {
 public:
-    Log();
-    ~Log();
+    Log()  { delete SetActiveTarget(this); };
+    ~Log() { SetActiveTarget(NULL); };
 
     virtual void DoLog(wxLogLevel level,
         const wxChar *msg,time_t timestamp);
@@ -116,7 +124,9 @@ public:
 
 class CrashInfoThread: public wxThread {
 public:
-    CrashInfoThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    CrashInfoThread() : wxThread(wxTHREAD_JOINABLE) {
+        m_stop = false; Create(); Run();
+    }
     ~CrashInfoThread() { m_stop = true; Wait(); }
 
     virtual void *Entry();
@@ -126,7 +136,9 @@ public:
 
 class ListThread: public wxThread {
 public:
-    ListThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    ListThread() : wxThread(wxTHREAD_JOINABLE) {
+        m_stop = false; m_rescan = true; Create(); Run();
+    }
     ~ListThread() { m_stop = true; Wait(); }
 
     virtual void *Entry();
@@ -137,7 +149,9 @@ public:
 
 class UpgradeThread: public wxThread {
 public:
-    UpgradeThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
+    UpgradeThread(int level) : wxThread(wxTHREAD_JOINABLE) {
+        m_stop = false; m_level = level; m_check = true; Create(); Run();
+    }
     ~UpgradeThread() { m_stop = true; Wait(); }
 
     virtual void *Entry();
@@ -145,7 +159,7 @@ public:
 
     bool m_stop;
     bool m_check;
-    unsigned int m_level;
+    int m_level;
 };
 
 class MainFrame: public wxFrame {
@@ -218,6 +232,7 @@ public:
 
     void OnListSize(wxSizeEvent& event);
     void AdjustListColumns(wxCommandEvent& event);
+    void AdjustListHeight(wxCommandEvent& event);
     void PopulateList(wxCommandEvent& event);
 
     void OnBootChange(wxCommandEvent& event);
@@ -251,6 +266,9 @@ private:
     double m_w4;
     double m_w5;
     double m_w6;
+
+    // list height
+    int m_vListHeight;
 
     wxString   *m_title;
     wxToolBar  *m_toolBar;
@@ -373,6 +391,7 @@ enum {
     ID_ShowUpgradeDialog,
     ID_PopulateList,
     ID_AdjustListColumns,
+    ID_AdjustListHeight,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange

@@ -71,7 +71,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     jp->pi.cluster_map_size = 0;
     memset(&jp->cluster_map,0,sizeof(cmap));
     
-    trace(I"map size = %u",map_size);
+    itrace("map size = %u",map_size);
     if(map_size == 0)
         return 0;
     

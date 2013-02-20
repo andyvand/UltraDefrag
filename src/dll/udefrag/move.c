@@ -185,7 +185,7 @@ static int move_file_clusters(winx_file_info *f,HANDLE hFile,ULONGLONG startVcn,
     ULONGLONG clusters_to_move;
 
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
-        trace(I"sVcn: %I64u,tLcn: %I64u,n: %u",
+        itrace("sVcn: %I64u,tLcn: %I64u,n: %u",
              startVcn,targetLcn,n_clusters);
     }
     
@@ -287,7 +287,7 @@ static void DbgPrintBlocksOfFile(winx_blockmap *blockmap)
     winx_blockmap *block;
     
     for(block = blockmap; block; block = block->next){
-        trace(I"VCN: %I64u, LCN: %I64u, LENGTH: %u",
+        itrace("VCN: %I64u, LCN: %I64u, LENGTH: %u",
             block->vcn,block->lcn,block->length);
         if(block->next == blockmap) break;
     }
@@ -528,8 +528,8 @@ int move_file(winx_file_info *f,
     
     path = f->path ? f->path : L"(null)";
     if(jp->udo.dbgprint_level >= DBG_DETAILED){
-        trace(I"%ws",path);
-        trace(I"vcn = %I64u, length = %I64u, target = %I64u",vcn,length,target);
+        itrace("%ws",path);
+        itrace("vcn = %I64u, length = %I64u, target = %I64u",vcn,length,target);
     }
     
     if(length == 0){
@@ -611,15 +611,15 @@ int move_file(winx_file_info *f,
         memcpy(&new_file_info,&desired_file_info,sizeof(winx_file_info));
         moving_result = CALCULATED_MOVING_SUCCESS;
     } else {
-        /*trace(D"OLD MAP:");
+        /*dtrace("OLD MAP:");
         for(block = f->disp.blockmap; block; block = block->next){
-            trace(D"VCN = %I64u, LCN = %I64u, LEN = %I64u",
+            dtrace("VCN = %I64u, LCN = %I64u, LEN = %I64u",
                 block->vcn, block->lcn, block->length);
             if(block->next == f->disp.blockmap) break;
         }
-        trace(D"NEW MAP:");
+        dtrace("NEW MAP:");
         for(block = new_file_info.disp.blockmap; block; block = block->next){
-            trace(D"VCN = %I64u, LCN = %I64u, LEN = %I64u",
+            dtrace("VCN = %I64u, LCN = %I64u, LEN = %I64u",
                 block->vcn, block->lcn, block->length);
             if(block->next == new_file_info.disp.blockmap) break;
         }*/

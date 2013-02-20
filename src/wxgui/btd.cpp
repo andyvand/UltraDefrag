@@ -42,37 +42,36 @@
 
 void *BtdThread::Entry()
 {
-    wxLogMessage(wxT("boot registration tracking started"));
+    itrace("boot registration tracking started");
 
     HKEY hKey;
-    if(RegOpenKeyExW(HKEY_LOCAL_MACHINE,
+    if(::RegOpenKeyExW(HKEY_LOCAL_MACHINE,
       L"SYSTEM\\CurrentControlSet\\Control\\Session Manager",
       0,KEY_NOTIFY,&hKey) != ERROR_SUCCESS){
-        wxLogSysError(wxT("cannot open SMSS key"));
+        letrace("cannot open SMSS key");
         return NULL;
     }
 
-    HANDLE hEvent = CreateEvent(NULL,FALSE,FALSE,NULL);
+    HANDLE hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
     if(hEvent == NULL){
-        wxLogSysError(wxT("cannot create ")
-            wxT("event for SMSS key tracking"));
-        RegCloseKey(hKey);
+        letrace("cannot create event for SMSS key tracking");
+        ::RegCloseKey(hKey);
         return NULL;
     }
 
     while(!m_stop){
-        LONG error = RegNotifyChangeKeyValue(hKey,FALSE,
+        LONG error = ::RegNotifyChangeKeyValue(hKey,FALSE,
             REG_NOTIFY_CHANGE_LAST_SET,hEvent,TRUE);
         if(error != ERROR_SUCCESS){
             ::SetLastError(error);
-            wxLogSysError(wxT("RegNotifyChangeKeyValue failed"));
+            letrace("RegNotifyChangeKeyValue failed");
             break;
         }
         while(!m_stop){
-            if(WaitForSingleObject(hEvent,100) == WAIT_OBJECT_0){
+            if(::WaitForSingleObject(hEvent,100) == WAIT_OBJECT_0){
                 int result = ::winx_bootex_check(L"defrag_native");
                 if(result >= 0){
-                    wxLogMessage(wxT("boot time defragmenter %hs"),
+                    itrace("boot time defragmenter %hs",
                         result > 0 ? "enabled" : "disabled");
                     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_BootChange);
                     event.SetInt(result > 0 ? true : false);
@@ -83,9 +82,9 @@ void *BtdThread::Entry()
         }
     }
 
-    wxLogMessage(wxT("boot registration tracking stopped"));
-    CloseHandle(hEvent);
-    RegCloseKey(hKey);
+    itrace("boot registration tracking stopped");
+    ::CloseHandle(hEvent);
+    ::RegCloseKey(hKey);
     return NULL;
 }
 

@@ -62,7 +62,7 @@ void *CrashInfoThread::Entry()
     // collect information on application crashes
     HANDLE hLog = ::OpenEventLog(NULL,wxT("Application"));
     if(!hLog){
-        wxLogSysError(wxT("cannot open the Application event log"));
+        letrace("cannot open the Application event log");
         goto done;
     }
 
@@ -74,15 +74,15 @@ void *CrashInfoThread::Entry()
             // handle errors
             switch(::GetLastError()){
             case ERROR_INSUFFICIENT_BUFFER:
-                wxLogMessage(wxT("%u bytes of memory is needed ")
-                    wxT("for the event log reading"),bytes_needed);
+                itrace("%u bytes of memory is needed "
+                    "for the event log reading",bytes_needed);
                 bytes_to_read = bytes_needed;
                 delete buffer; buffer = new char[bytes_to_read];
                 break;
             case ERROR_HANDLE_EOF:
                 goto save_info;
             default:
-                wxLogSysError(wxT("cannot read the Application event log"));
+                letrace("cannot read the Application event log");
                 goto save_info;
             }
         } else {
@@ -100,7 +100,7 @@ void *CrashInfoThread::Entry()
                     data[rec->DataLength] = 0;
                     // handle UltraDefrag GUI and command line tool crashes only
                     if(strstr(data,"ultradefrag.exe") || strstr(data,"udefrag.exe")){
-                        wxLogMessage(wxT("crashed in the past: %hs"),data);
+                        dtrace("crashed in the past: %hs",data);
                         wxString s; s.Printf(wxT("%hs"),data); s.Trim(); info.Add(s);
                         if(rec->TimeGenerated > new_time_stamp)
                             new_time_stamp = rec->TimeGenerated;

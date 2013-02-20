@@ -365,10 +365,10 @@ static int optimize_directories(udefrag_job_parameters *jp)
     }
     
     /* display amount of moved data and number of optimized directories */
-    trace(I"%I64u directories optimized",optimized_dirs);
-    trace(I"%I64u clusters moved",jp->pi.moved_clusters);
+    itrace("%I64u directories optimized",optimized_dirs);
+    itrace("%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    trace(I"%s moved",buffer);
+    itrace("%s moved",buffer);
     stop_timing("directories optimization",time,jp);
 
     /* cleanup */
@@ -387,8 +387,7 @@ static void list_mft_blocks(winx_file_info *mft_file)
     ULONGLONG i;
 
     for(block = mft_file->disp.blockmap, i = 0; block; block = block->next, i++){
-        trace(I"mft part #%I64u start: %I64u, length: %I64u",
-            i,block->lcn,block->length);
+        itrace("mft part #%I64u start: %I64u, length: %I64u",i,block->lcn,block->length);
         if(block->next == mft_file->disp.blockmap) break;
     }
 }
@@ -466,9 +465,9 @@ static int optimize_mft_routine(udefrag_job_parameters *jp)
     }
 
     /* display amount of moved data */
-    trace(I"%I64u clusters moved",jp->pi.moved_clusters);
+    itrace("%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    trace(I"%s moved",buffer);
+    itrace("%s moved",buffer);
     stop_timing("mft optimization",time,jp);
 
     /* cleanup */
@@ -602,9 +601,9 @@ static void move_files_to_front(udefrag_job_parameters *jp,
     }
     
     /* display amount of moved data */
-    trace(I"%I64u clusters moved",jp->pi.moved_clusters);
+    itrace("%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    trace(I"%s moved",buffer);
+    itrace("%s moved",buffer);
     stop_timing("file moving to front",time,jp);
 }
 
@@ -703,9 +702,9 @@ static void move_files_to_back(udefrag_job_parameters *jp,ULONGLONG *start_lcn)
 
 done:
     /* display amount of moved data */
-    trace(I"%I64u clusters moved",jp->pi.moved_clusters);
+    itrace("%I64u clusters moved",jp->pi.moved_clusters);
     winx_bytes_to_hr(jp->pi.moved_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    trace(I"%s moved",buffer);
+    itrace("%s moved",buffer);
     stop_timing("file moving to end",time,jp);
 }
 
@@ -853,9 +852,9 @@ static void cut_off_sorted_out_files(udefrag_job_parameters *jp,struct prb_table
     }
 
 done:
-    trace(I"%I64u clusters skipped",jp->already_optimized_clusters);
+    itrace("%I64u clusters skipped",jp->already_optimized_clusters);
     winx_bytes_to_hr(jp->already_optimized_clusters * jp->v_info.bytes_per_cluster,1,buffer,sizeof(buffer));
-    trace(I"%s skipped",buffer);
+    itrace("%s skipped",buffer);
     stop_timing("cutting off sorted out files",time,jp);
 }
 
@@ -1090,7 +1089,7 @@ int optimize_mft(udefrag_job_parameters *jp)
 
     /* mft optimization is NTFS specific task */
     if(jp->fs_type != FS_NTFS){
-        trace(E"MFT can be optimized on NTFS disks only");
+        etrace("MFT can be optimized on NTFS disks only");
         jp->pi.processed_clusters = 0;
         jp->pi.clusters_to_process = 1;
         jp->pi.current_operation = VOLUME_OPTIMIZATION;

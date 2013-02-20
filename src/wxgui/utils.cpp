@@ -58,9 +58,9 @@ typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
 bool Utils::CheckAdminRights(void)
 {
     HANDLE hToken;
-    if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
+    if(!::OpenThreadToken(::GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
         letrace("cannot open access token of the thread");
-        if(!OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&hToken)){
+        if(!::OpenProcessToken(::GetCurrentProcess(),TOKEN_QUERY,&hToken)){
             letrace("cannot open access token of the process");
             return false;
         }
@@ -68,23 +68,23 @@ bool Utils::CheckAdminRights(void)
 
     PSID psid = NULL;
     SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
-    if(!AllocateAndInitializeSid(&SystemSidAuthority,2,
+    if(!::AllocateAndInitializeSid(&SystemSidAuthority,2,
       SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
       0,0,0,0,0,0,&psid)){
         letrace("cannot create the security identifier");
-        CloseHandle(hToken);
+        ::CloseHandle(hToken);
         return false;
     }
 
     BOOL is_member = false;
-    if(!CheckTokenMembership(NULL,psid,&is_member)){
+    if(!::CheckTokenMembership(NULL,psid,&is_member)){
         letrace("cannot check token membership");
-        if(psid) FreeSid(psid); CloseHandle(hToken);
+        if(psid) ::FreeSid(psid); ::CloseHandle(hToken);
         return false;
     }
 
     if(!is_member) itrace("the user is not a member of administrators group");
-    if(psid) FreeSid(psid); CloseHandle(hToken);
+    if(psid) ::FreeSid(psid); ::CloseHandle(hToken);
     return (is_member == 0) ? false : true;
 }
 
@@ -96,7 +96,7 @@ bool Utils::CheckAdminRights(void)
  */
 wxString Utils::DownloadFile(const wxString& url)
 {
-    wxLogMessage(wxT("downloading %ls"),url.wc_str());
+    itrace("downloading %ls",url.wc_str());
 
     wxDynamicLibrary lib(wxT("urlmon"));
     wxDYNLIB_FUNCTION(URLMON_PROCEDURE,
@@ -108,7 +108,7 @@ wxString Utils::DownloadFile(const wxString& url)
     wchar_t buffer[MAX_PATH + 1];
     HRESULT result = pfnURLDownloadToCacheFileW(NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
     if(result != S_OK){
-        wxLogError(wxT("URLDownloadToCacheFile failed with code 0x%x"),(UINT)result);
+        etrace("URLDownloadToCacheFile failed with code 0x%x",(UINT)result);
         return wxEmptyString;
     }
 
@@ -161,25 +161,25 @@ wxBitmap * Utils::LoadPngResource(const wchar_t *name)
 {
     HRSRC resource = ::FindResource(NULL,name,RT_RCDATA);
     if(!resource){
-        wxLogSysError(wxT("cannot find %ls resource"),name);
+        letrace("cannot find %ls resource",name);
         return NULL;
     }
 
     HGLOBAL handle = ::LoadResource(NULL,resource);
     if(!handle){
-        wxLogSysError(wxT("cannot load %ls resource"),name);
+        letrace("cannot load %ls resource",name);
         return NULL;
     }
 
     char *data = (char *)::LockResource(handle);
     if(!data){
-        wxLogSysError(wxT("cannot lock %ls resource"),name);
+        letrace("cannot lock %ls resource",name);
         return NULL;
     }
 
     DWORD size = ::SizeofResource(NULL,resource);
     if(!size){
-        wxLogSysError(wxT("cannot get size of %ls resource"),name);
+        letrace("cannot get size of %ls resource",name);
         return NULL;
     }
 
@@ -236,7 +236,7 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
     url.Create(path);
     path = url.BuildURI();
 
-    wxLogMessage(wxT("%ls"),path.wc_str());
+    itrace("%ls",path.wc_str());
     if(!wxLaunchDefaultBrowser(path))
         ShowError(wxT("Cannot open %ls!"),path.wc_str());
 }

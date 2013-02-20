@@ -382,7 +382,7 @@ static void get_number_of_file_records_callback(PATTRIBUTE pattr,mft_scan_parame
         pnr_attr = (PNONRESIDENT_ATTRIBUTE)pattr;
         if(sp->ml.file_record_size)
             sp->ml.number_of_file_records = pnr_attr->DataSize / sp->ml.file_record_size;
-        trace(I"mft contains %I64u records",sp->ml.number_of_file_records);
+        itrace("mft contains %I64u records",sp->ml.number_of_file_records);
     }
 }
 
@@ -602,7 +602,7 @@ static void analyze_single_attribute(ULONGLONG mft_id,FILE_RECORD_HEADER *frh,
             /* uncomment next lines if you need debugging information on attribute list entries */
             /*if(attr->Nonresident) resident_status = "Nonresident";
             else resident_status = "Resident";
-            trace(D"AttrListEntry: Base MftId = %I64u, MftId = %I64u, Attribute Type = 0x%x, Attribute Number = %u, %s",
+            dtrace("AttrListEntry: Base MftId = %I64u, MftId = %I64u, Attribute Type = 0x%x, Attribute Number = %u, %s",
                 sp->mfi.BaseMftId,mft_id,(UINT)attr_type,(UINT)attr_number,resident_status);
             */
             if(attr->Nonresident) analyze_non_resident_stream((PNONRESIDENT_ATTRIBUTE)attr,sp);
@@ -941,7 +941,7 @@ static void analyze_non_resident_attribute_list(winx_file_info *f,ULONGLONG list
     USHORT length;
 
 #ifdef SHOW_ATTR_LISTS_INFO
-    trace(D"allocated size = %I64u bytes",list_size);
+    dtrace("allocated size = %I64u bytes",list_size);
 #endif
     if(list_size == 0){
         etrace("empty nonresident attribute list found");
@@ -994,7 +994,7 @@ analyze_list:
     }
 
 #ifdef SHOW_ATTR_LISTS_INFO
-    trace(D"attribute list analysis started...");
+    dtrace("attribute list analysis started...");
 #endif
     attr_list_entry = (PATTRIBUTE_LIST)cluster;
 
@@ -1012,7 +1012,7 @@ analyze_list:
         attr_list_entry = (PATTRIBUTE_LIST)((char *)attr_list_entry + length);
     }
 #ifdef SHOW_ATTR_LISTS_INFO
-    trace(D"attribute list analysis completed");
+    dtrace("attribute list analysis completed");
 #endif
 
 scan_done:    
@@ -1208,7 +1208,7 @@ static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan
     attr_type = pnr_attr->Attribute.AttributeType;
     if(attr_type == AttributeAttributeList){
 #ifdef SHOW_ATTR_LISTS_INFO
-        trace(D"nonresident attribute list found");
+        dtrace("nonresident attribute list found");
 #endif
         NonResidentAttrListFound = TRUE;
     }
@@ -1222,7 +1222,7 @@ static void analyze_non_resident_stream(PNONRESIDENT_ATTRIBUTE pnr_attr,mft_scan
     
 #ifdef SHOW_ATTR_LISTS_INFO
     if(NonResidentAttrListFound)
-        trace(D"%ws:%ws",sp->mfi.Name,attr_name);
+        dtrace("%ws:%ws",sp->mfi.Name,attr_name);
 #endif
 
     process_run_list(attr_name,pnr_attr,sp,NonResidentAttrListFound);
@@ -1295,7 +1295,7 @@ static void analyze_file_record(NTFS_FILE_RECORD_OUTPUT_BUFFER *nfrob,
         return; /* skip free records */
     
     /*if(frh->Flags & 0x2)
-        trace(D"directory"); // may be wrong?
+        dtrace("directory"); // may be wrong?
     */
     
     /* skip child records, we'll scan them later */
@@ -1544,7 +1544,7 @@ static int build_full_paths(mft_scan_parameters *sp)
     ULONG i;
     ULONGLONG time;
     
-    trace(I"build_full_paths started...");
+    itrace("build_full_paths started...");
     time = winx_xtime();
     
     /* allocate memory */
@@ -1578,9 +1578,9 @@ static int build_full_paths(mft_scan_parameters *sp)
             i++;
             if(f->next == *sp->filelist) break;
         }
-        trace(I"fast binary search will be used");
+        itrace("fast binary search will be used");
     } else {
-        trace(I"slow linear search will be used");
+        itrace("slow linear search will be used");
     }
     
     for(f = *sp->filelist; f != NULL; f = f->next){
@@ -1592,7 +1592,7 @@ static int build_full_paths(mft_scan_parameters *sp)
     /* free allocated resources */
     winx_free(f_array);
     winx_free(p);
-    trace(I"build_full_paths completed in %I64u ms",winx_xtime() - time);
+    itrace("build_full_paths completed in %I64u ms",winx_xtime() - time);
     return 0;
 }
 
@@ -1617,18 +1617,18 @@ static int scan_mft(mft_scan_parameters *sp)
     NTSTATUS status;
     int result;
     
-    trace(I"mft scan started");
+    itrace("mft scan started");
     start_time = winx_xtime();
     
 #ifdef TEST_NTFS_SCANNER
-    trace(D"NTFS SCANNER TEST STARTED");
+    dtrace("NTFS SCANNER TEST STARTED");
     srnd(1);
 #endif
     
     /* get mft layout */
     if(get_mft_layout(sp) < 0){
 fail:
-        trace(E"mft scan failed");
+        etrace("mft scan failed");
         return (-1);
     }
 
@@ -1673,9 +1673,9 @@ fail:
         }
     }
 
-    trace(I"%u attribute list entries have been processed totally",
+    itrace("%u attribute list entries have been processed totally",
         sp->processed_attr_list_entries);
-    trace(I"file records scan completed in %I64u ms",
+    itrace("file records scan completed in %I64u ms",
         winx_xtime() - start_time);
     
     /* build full paths */
@@ -1684,10 +1684,10 @@ fail:
     winx_free(nfrob);
 
 #ifdef TEST_NTFS_SCANNER
-    trace(D"NTFS SCANNER TEST PASSED");
+    dtrace("NTFS SCANNER TEST PASSED");
 #endif
 
-    trace(I"mft scan completed in %I64u ms",
+    itrace("mft scan completed in %I64u ms",
         winx_xtime() - start_time);
     return result;
 }

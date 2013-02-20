@@ -107,11 +107,11 @@ void MainFrame::InitMenu()
     wxString AppLocaleDir(wxGetCwd());
     AppLocaleDir.Append(wxT("/locale"));
     if(!wxDirExists(AppLocaleDir)){
-        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        itrace("lang dir not found: %ls",AppLocaleDir.wc_str());
         AppLocaleDir = wxGetCwd() + wxT("/../wxgui/locale");
     }
     if(!wxDirExists(AppLocaleDir)){
-        wxLogMessage(wxT("lang dir not found: %ls"), AppLocaleDir.wc_str());
+        etrace("lang dir not found: %ls",AppLocaleDir.wc_str());
         AppLocaleDir = wxGetCwd() + wxT("/../../wxgui/locale");
     }
 
@@ -119,7 +119,7 @@ void MainFrame::InitMenu()
     const wxLanguageInfo *info;
 
     if(!dir.IsOpened()){
-        wxLogMessage(wxT("can't open lang dir: %ls"), AppLocaleDir.wc_str());
+        etrace("can't open lang dir: %ls",AppLocaleDir.wc_str());
         info = g_locale->FindLanguageInfo(wxT("en_US"));
         m_menuLanguage->AppendRadioItem(ID_LocaleChange \
             + info->Language, info->Description);
@@ -142,7 +142,7 @@ void MainFrame::InitMenu()
                     }
                 }
             } else {
-                wxLogMessage(wxT("can't find locale info for %ls"), folder.wc_str());
+                etrace("can't find locale info for %ls",folder.wc_str());
             }
             cont = dir.GetNext(&folder);
         }
@@ -153,7 +153,7 @@ void MainFrame::InitMenu()
         unsigned int breakDelta = (unsigned int)ceil((double) \
             (langArray.Count() + langArray.Count() % 2 + 4) / 3);
         unsigned int breakCnt = breakDelta - 4;
-        wxLogMessage(wxT("languages: %d, break count: %d, delta: %d"),
+        itrace("languages: %d, break count: %d, delta: %d",
             langArray.Count(), breakCnt, breakDelta);
         for(unsigned int i = 0;i < langArray.Count();i++){
             info = g_locale->FindLanguageInfo(langArray[i]);

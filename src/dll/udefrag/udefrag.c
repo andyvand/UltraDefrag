@@ -199,7 +199,7 @@ static DWORD WINAPI start_job(LPVOID p)
 
     /* check job flags */
     if(jp->udo.job_flags & UD_JOB_REPEAT)
-        trace(I"repeat action until nothing left to move");
+        itrace("repeat action until nothing left to move");
     
     /* do the job */
     if(jp->job_type == DEFRAGMENTATION_JOB) action = "defragmenting";

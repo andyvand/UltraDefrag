@@ -1112,7 +1112,7 @@ int parse_command(wchar_t *cmdline)
     */
     if(cmd_table[i].cmd_handler == NULL){
         winx_printf("\nUnknown command: %ws!\n\n",full_cmdline);
-        trace(E"Unknown command: %ws!",full_cmdline);
+        etrace("Unknown command: %ws!",full_cmdline);
         winx_free(argv);
         winx_free(envp);
         winx_free(cmdline_copy);

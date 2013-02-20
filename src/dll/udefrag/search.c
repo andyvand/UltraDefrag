@@ -229,7 +229,7 @@ static void free_item (void *prb_item, void *prb_param)
  */
 int create_file_blocks_tree(udefrag_job_parameters *jp)
 {
-    trace(I"create_file_blocks_tree called");
+    itrace("create_file_blocks_tree called");
     
     if(jp == NULL)
         return (-1);
@@ -318,7 +318,7 @@ int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap
  */
 void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 {
-    trace(I"destroy_file_blocks_tree called");
+    itrace("destroy_file_blocks_tree called");
     if(jp){
         if(jp->file_blocks){
             prb_destroy(jp->file_blocks,free_item);

@@ -176,7 +176,7 @@ void App::Cleanup()
     delete m_statThread;
 
     // deinitialize logging
-    winx_flush_dbg_log(0);
+    ::winx_flush_dbg_log(0);
     delete m_log;
 }
 
@@ -212,15 +212,15 @@ MainFrame::MainFrame()
         wxStandardPaths stdpaths;
         wxFileName exepath(stdpaths.GetExecutablePath());
         wxString cd = exepath.GetPath();
-        wxLogMessage(wxT("current directory: %ls"),cd.wc_str());
-        wxLogMessage(wxT("installation directory: %ls"),instdir->wc_str());
+        itrace("current directory: %ls",cd.wc_str());
+        itrace("installation directory: %ls",instdir->wc_str());
         if(cd.CmpNoCase(*instdir) == 0){
-            wxLogMessage(wxT("current directory matches ")
-                wxT("installation location, so it isn't portable"));
+            itrace("current directory matches "
+                "installation location, so it isn't portable");
             m_title = new wxString(wxT(VERSIONINTITLE));
         } else {
-            wxLogMessage(wxT("current directory differs from ")
-                wxT("installation location, so it is portable"));
+            itrace("current directory differs from "
+                "installation location, so it is portable");
             m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
         }
     } else {
@@ -310,8 +310,6 @@ MainFrame::MainFrame()
 
     // populate list of volumes
     m_listThread = new ListThread();
-    m_listThread->m_rescan = true;
-    m_listThread->Run();
 
     // check the boot time defragmenter presence
     wxFileName btdFile(wxT("%SystemRoot%\\system32\\defrag_native.exe"));
@@ -331,16 +329,12 @@ MainFrame::MainFrame()
 
     // launch threads for the time consuming operations
     m_crashInfoThread = new CrashInfoThread();
-    m_crashInfoThread->Run();
 
-    unsigned int ulevel = (unsigned int)cfg->Read(wxT("/Upgrade/Level"),1);
+    int ulevel = (int)cfg->Read(wxT("/Upgrade/Level"),1);
     wxMenuItem *item = m_menuBar->FindItem(ID_HelpUpgradeNone + ulevel);
     if(item) item->Check();
 
-    m_upgradeThread = new UpgradeThread();
-    m_upgradeThread->m_level = ulevel;
-    m_upgradeThread->m_check = true;
-    m_upgradeThread->Run();
+    m_upgradeThread = new UpgradeThread(ulevel);
 
     m_btdThread = new BtdThread();
     m_btdThread->m_stop = btd ? false : true;
@@ -467,6 +461,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
     EVT_MENU(ID_ShowUpgradeDialog, MainFrame::OnShowUpgradeDialog)
     EVT_MENU(ID_AdjustListColumns, MainFrame::AdjustListColumns)
+    EVT_MENU(ID_AdjustListHeight, MainFrame::AdjustListHeight)
     EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
 END_EVENT_TABLE()
 
