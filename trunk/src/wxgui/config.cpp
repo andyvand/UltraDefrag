@@ -81,6 +81,16 @@ void MainFrame::ReadAppConfiguration()
         (long)DPI(DEFAULT_LIST_HEIGHT)
     );
 
+    cfg->Read(wxT("/DrivesList/width1"), &m_w1, 0.0);
+    cfg->Read(wxT("/DrivesList/width2"), &m_w2, 0.0);
+    cfg->Read(wxT("/DrivesList/width3"), &m_w3, 0.0);
+    cfg->Read(wxT("/DrivesList/width4"), &m_w4, 0.0);
+    cfg->Read(wxT("/DrivesList/width5"), &m_w5, 0.0);
+    cfg->Read(wxT("/DrivesList/width6"), &m_w6, 0.0);
+
+    if(!m_w1) m_w1 = 110; if(!m_w2) m_w2 = 110; if(!m_w3) m_w3 = 110;
+    if(!m_w4) m_w4 = 110; if(!m_w5) m_w5 = 110; if(!m_w6) m_w6 = 65;
+
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
 }
