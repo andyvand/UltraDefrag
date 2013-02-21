@@ -233,6 +233,7 @@ public:
     void AdjustListColumns(wxCommandEvent& event);
     void AdjustListHeight(wxCommandEvent& event);
     void PopulateList(wxCommandEvent& event);
+    void UpdateVolumeInformation(wxCommandEvent& event);
 
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
@@ -395,6 +396,7 @@ enum {
     ID_BootChange,
     ID_ShowUpgradeDialog,
     ID_PopulateList,
+    ID_UpdateVolumeInformation,
     ID_AdjustListColumns,
     ID_AdjustListHeight,
 

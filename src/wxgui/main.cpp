@@ -421,6 +421,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_AdjustListColumns, MainFrame::AdjustListColumns)
     EVT_MENU(ID_AdjustListHeight, MainFrame::AdjustListHeight)
     EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
+    EVT_MENU(ID_UpdateVolumeInformation, MainFrame::UpdateVolumeInformation)
 END_EVENT_TABLE()
 
 // =======================================================================
