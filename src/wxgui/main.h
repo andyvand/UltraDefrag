@@ -227,7 +227,6 @@ public:
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
-    void OnSplitChanging(wxSplitterEvent& event);
     void OnSplitChanged(wxSplitterEvent& event);
 
     void OnListSize(wxSizeEvent& event);

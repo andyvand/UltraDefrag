@@ -42,17 +42,6 @@
 
 void MainFrame::InitVolList()
 {
-    wxConfigBase *cfg = wxConfigBase::Get();
-    cfg->Read(wxT("/DrivesList/width1"), &m_w1, 0.0);
-    cfg->Read(wxT("/DrivesList/width2"), &m_w2, 0.0);
-    cfg->Read(wxT("/DrivesList/width3"), &m_w3, 0.0);
-    cfg->Read(wxT("/DrivesList/width4"), &m_w4, 0.0);
-    cfg->Read(wxT("/DrivesList/width5"), &m_w5, 0.0);
-    cfg->Read(wxT("/DrivesList/width6"), &m_w6, 0.0);
-
-    if(!m_w1) m_w1 = 110; if(!m_w2) m_w2 = 110; if(!m_w3) m_w3 = 110;
-    if(!m_w4) m_w4 = 110; if(!m_w5) m_w5 = 110; if(!m_w6) m_w6 = 65;
-
     // adjust widths so all the columns will fit to the window
     int width = m_vList->GetClientSize().GetWidth();
     double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
@@ -70,14 +59,6 @@ void MainFrame::InitVolList()
     m_vList->InsertColumn(4, wxEmptyString, wxLIST_FORMAT_RIGHT, w5);
     m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
 
-    m_vListHeight = 0; // zero is used to avoid recursion in OnSplitChanged and AdjustListHeight calls
-
-    Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
-    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGING,
-        wxSplitterEventHandler(MainFrame::OnSplitChanging),NULL,this);
-    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
-        wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
-
     // attach drive icons
     int size = g_iconSize;
     wxImageList *list = new wxImageList(size,size);
@@ -86,46 +67,21 @@ void MainFrame::InitVolList()
     list->Add(wxIcon(wxT("removable")       , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
     list->Add(wxIcon(wxT("removable_dirty") , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
     m_vList->SetImageList(list,wxIMAGE_LIST_SMALL);
+
+    // ensure that the list will cover integral number of items
+    m_vListHeight = 0xFFFFFFFF; // prevent expansion of the list
+    m_vList->InsertItem(0,wxT("hi"),0);
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListHeight);
+    ProcessEvent(evt);
+
+    Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
+    m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
+        wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
 }
 
 // =======================================================================
 //                            Event handlers
 // =======================================================================
-
-void MainFrame::OnSplitChanging(wxSplitterEvent& event)
-{
-    event.Skip();
-}
-
-void MainFrame::OnSplitChanged(wxSplitterEvent& event)
-{
-    // ensure that the vertical scroll-bar will not spoil the list appearance
-    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
-    evt.SetInt(-1); wxPostEvent(this,evt);
-
-    // ensure that the list control covers integral number of items
-    evt.SetId(ID_AdjustListHeight); wxPostEvent(this,evt);
-
-    event.Skip();
-}
-
-void MainFrame::OnListSize(wxSizeEvent& event)
-{
-    // scale columns; use some tricks to avoid horizontal scroll-bar appearance
-    int new_width = GetClientSize().GetWidth();
-    new_width -= 2 * wxSystemSettings::GetMetric(wxSYS_EDGE_X);
-    new_width -= wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
-    int old_width = m_vList->GetClientSize().GetWidth();
-    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
-    evt.SetInt(new_width);
-    if(new_width <= old_width) ProcessEvent(evt);
-    else wxPostEvent(this,evt);
-
-    // adjust widths once again later when the list will be scaled actually
-    evt.SetInt(-1); wxPostEvent(this,evt);
-
-    event.Skip();
-}
 
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
 {
@@ -154,26 +110,21 @@ void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
     int height = m_splitter->GetSashPosition();
     height -= 2 * wxSystemSettings::GetMetric(wxSYS_BORDER_Y);
 
+    // avoid recursion
     if(height == m_vListHeight) return;
-
     bool expand = (height > m_vListHeight) ? true : false;
     m_vListHeight = height;
 
     if(!m_vList->GetColumnCount()) return;
 
     // get height of the list header
-    HWND header = (HWND)(LONG_PTR)::SendMessage(
-        (HWND)m_vList->GetHandle(),LVM_GETHEADER,0,0
-    );
-    if(!header){
-        letrace("cannot get list header"); return;
-    }
+    HWND header = ListView_GetHeader((HWND)m_vList->GetHandle());
+    if(!header){ letrace("cannot get list header"); return; }
 
     RECT rc;
-    if(!::SendMessage(header,HDM_GETITEMRECT,0,(LRESULT)&rc)){
+    if(!Header_GetItemRect(header,0,&rc)){
         letrace("cannot get list header size"); return;
     }
-
     int header_height = rc.bottom - rc.top;
 
     // get height of a single row
@@ -189,8 +140,46 @@ void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
 
     m_vListHeight = new_height;
 
+    // adjust client height of the list
     new_height += 2 * wxSystemSettings::GetMetric(wxSYS_BORDER_Y);
     m_splitter->SetSashPosition(new_height);
+}
+
+void MainFrame::OnSplitChanged(wxSplitterEvent& event)
+{
+    // shrink the last list column so the vertical
+    // scrollbar will not pull horizontal one out
+    if(m_vList->GetCountPerPage() >= m_vList->GetItemCount())
+        m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
+
+    // ensure that the list control will cover integral number of items
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListHeight);
+    wxPostEvent(this,evt);
+
+    // adjust list columns once again to reflect the actual layout
+    evt.SetId(ID_AdjustListColumns); evt.SetInt(-1); wxPostEvent(this,evt);
+
+    event.Skip();
+}
+
+void MainFrame::OnListSize(wxSizeEvent& event)
+{
+    int old_width = m_vList->GetClientSize().GetWidth();
+    int new_width = this->GetClientSize().GetWidth();
+    new_width -= 2 * wxSystemSettings::GetMetric(wxSYS_EDGE_X);
+    if(m_vList->GetCountPerPage() < m_vList->GetItemCount())
+        new_width -= wxSystemSettings::GetMetric(wxSYS_VSCROLL_X);
+
+    // scale list columns; avoid horizontal scrollbar appearance
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
+    evt.SetInt(new_width);
+    if(new_width <= old_width){
+        ProcessEvent(evt);
+    } else {
+        wxPostEvent(this,evt);
+    }
+
+    event.Skip();
 }
 
 // =======================================================================
@@ -221,6 +210,10 @@ void MainFrame::PopulateList(wxCommandEvent& event)
 
     m_vList->DeleteAllItems();
 
+    // shrink the last list column so the vertical
+    // scrollbar will not pull horizontal one out
+    m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
+
     for(int i = 0; v[i].letter; i++){
         wxString label;
         label.Printf(wxT("%-10ls %ls"),
@@ -232,14 +225,11 @@ void MainFrame::PopulateList(wxCommandEvent& event)
         m_vList->InsertItem(i,label,imageIndex);
     }
 
-    m_vList->Select(0);
-
-    // ensure that the vertical scroll-bar will not spoil the list appearance
+    // adjust list columns once again to reflect the actual layout
     wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
     evt.SetInt(-1); ProcessEvent(evt);
 
-    // ensure that the list control covers integral number of items
-    evt.SetId(ID_AdjustListHeight); ProcessEvent(evt);
+    m_vList->Select(0);
 
     ::udefrag_release_vollist(v);
 }
