@@ -502,10 +502,6 @@ void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
     m_toolBar->ToggleTool(ID_Repeat,m_repeat);
 }
 
-void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
-{
-}
-
 void MainFrame::OnWhenDoneNone(wxCommandEvent& WXUNUSED(event))
 {
 }

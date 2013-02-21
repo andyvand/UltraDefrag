@@ -70,6 +70,7 @@
 		<Unit filename="config.cpp" />
 		<Unit filename="crash.cpp" />
 		<Unit filename="i18n.cpp" />
+		<Unit filename="job.cpp" />
 		<Unit filename="log.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
