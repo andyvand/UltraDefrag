@@ -36,6 +36,11 @@
 
 #include "main.h"
 
+int g_fixedIcon;
+int g_fixedDirtyIcon;
+int g_removableIcon;
+int g_removableDirtyIcon;
+
 // =======================================================================
 //                           List of volumes
 // =======================================================================
@@ -62,10 +67,10 @@ void MainFrame::InitVolList()
     // attach drive icons
     int size = g_iconSize;
     wxImageList *list = new wxImageList(size,size);
-    list->Add(wxIcon(wxT("fixed")           , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
-    list->Add(wxIcon(wxT("fixed_dirty")     , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
-    list->Add(wxIcon(wxT("removable")       , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
-    list->Add(wxIcon(wxT("removable_dirty") , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    g_fixedIcon          = list->Add(wxIcon(wxT("fixed")           , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    g_fixedDirtyIcon     = list->Add(wxIcon(wxT("fixed_dirty")     , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    g_removableIcon      = list->Add(wxIcon(wxT("removable")       , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
+    g_removableDirtyIcon = list->Add(wxIcon(wxT("removable_dirty") , wxBITMAP_TYPE_ICO_RESOURCE, size, size));
     m_vList->SetImageList(list,wxIMAGE_LIST_SMALL);
 
     // ensure that the list will cover integral number of items
@@ -204,6 +209,36 @@ void *ListThread::Entry()
     return NULL;
 }
 
+void MainFrame::UpdateVolumeInformation(wxCommandEvent& event)
+{
+    int index = event.GetInt();
+    volume_info *v = (volume_info *)event.GetClientData();
+
+    if(v->is_dirty){
+        if(v->is_removable) m_vList->SetItemImage(index,g_removableDirtyIcon);
+        else m_vList->SetItemImage(index,g_fixedDirtyIcon);
+        m_vList->SetItem(index,1,_("Disk needs to be repaired"));
+    } else {
+        if(v->is_removable) m_vList->SetItemImage(index,g_removableIcon);
+        else m_vList->SetItemImage(index,g_fixedIcon);
+    }
+
+    char s[32]; wxString string;
+    ::winx_bytes_to_hr((ULONGLONG)(v->total_space.QuadPart),2,s,sizeof(s));
+    string.Printf(wxT("%hs"),s); m_vList->SetItem(index,3,string);
+
+    ::winx_bytes_to_hr((ULONGLONG)(v->free_space.QuadPart),2,s,sizeof(s));
+    string.Printf(wxT("%hs"),s); m_vList->SetItem(index,4,string);
+
+    double total = (double)v->total_space.QuadPart;
+    double free = (double)v->free_space.QuadPart;
+    double d = (total > 0) ? free / total : 0;
+    int p = (int)(100 * d);
+    string.Printf(wxT("%u %%"),p); m_vList->SetItem(index,5,string);
+
+    delete v;
+}
+
 void MainFrame::PopulateList(wxCommandEvent& event)
 {
     volume_info *v = (volume_info *)event.GetClientData();
@@ -220,9 +255,11 @@ void MainFrame::PopulateList(wxCommandEvent& event)
             wxString::Format(wxT("%c: [%hs]"),
             v[i].letter,v[i].fsname).wc_str(),
             v[i].label);
-        int imageIndex = v[i].is_removable ? 2 : 0;
-        if(v[i].is_dirty) imageIndex ++;
-        m_vList->InsertItem(i,label,imageIndex);
+        m_vList->InsertItem(i,label);
+        wxCommandEvent e(wxEVT_COMMAND_MENU_SELECTED,ID_UpdateVolumeInformation);
+        volume_info *v_copy = new volume_info;
+        memcpy(v_copy,&v[i],sizeof(volume_info));
+        e.SetInt(i); e.SetClientData((void *)v_copy); ProcessEvent(e);
     }
 
     // adjust list columns once again to reflect the actual layout
