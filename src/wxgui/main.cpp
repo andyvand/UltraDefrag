@@ -206,6 +206,9 @@ MainFrame::MainFrame()
     // set main window icon
     SetIcons(wxICON(appicon));
 
+    // read saved configuration
+    ReadAppConfiguration();
+
     // set main window title
     wxString *instdir = new wxString();
     if(wxGetEnv(wxT("UD_INSTALL_DIR"),instdir)){
@@ -230,40 +233,17 @@ MainFrame::MainFrame()
     delete instdir;
 
     // set main window size and position
-    wxConfigBase *cfg = wxConfigBase::Get();
-    bool saved = cfg->HasGroup(wxT("MainFrame"));
-    m_x = (int)cfg->Read(wxT("/MainFrame/x"),0l);
-    m_y = (int)cfg->Read(wxT("/MainFrame/y"),0l);
-    m_width = (int)cfg->Read(wxT("/MainFrame/width"),
-        DPI(MAIN_WINDOW_DEFAULT_WIDTH));
-    m_height = (int)cfg->Read(wxT("/MainFrame/height"),
-        DPI(MAIN_WINDOW_DEFAULT_HEIGHT));
-    // validate width and height
-    wxDisplay display;
-    if(m_width < DPI(MAIN_WINDOW_MIN_WIDTH)) m_width = DPI(MAIN_WINDOW_MIN_WIDTH);
-    if(m_width > display.GetClientArea().width) m_width = DPI(MAIN_WINDOW_DEFAULT_WIDTH);
-    if(m_height < DPI(MAIN_WINDOW_MIN_HEIGHT)) m_height = DPI(MAIN_WINDOW_MIN_HEIGHT);
-    if(m_height > display.GetClientArea().height) m_height = DPI(MAIN_WINDOW_DEFAULT_HEIGHT);
-    // validate x and y
-    if(m_x < 0) m_x = 0; if(m_y < 0) m_y = 0;
-    if(m_x > display.GetClientArea().width - 130)
-        m_x = display.GetClientArea().width - 130;
-    if(m_y > display.GetClientArea().height - 50)
-        m_y = display.GetClientArea().height - 50;
-    // now the window is surely inside of the screen
     SetSize(m_width,m_height);
-    if(!saved){
+    if(!m_saved){
         CenterOnScreen();
         GetPosition(&m_x,&m_y);
     }
     Move(m_x,m_y);
-    if(cfg->Read(wxT("/MainFrame/maximized"),0l)){
-        Maximize(true);
-    }
+    if(m_maximized) Maximize(true);
 
     SetMinSize(wxSize(DPI(MAIN_WINDOW_MIN_WIDTH),DPI(MAIN_WINDOW_MIN_HEIGHT)));
 
-    // i18n support
+    // enable i18n support
     InitLocale();
 
     // create menu
@@ -292,17 +272,15 @@ MainFrame::MainFrame()
 
     m_splitter->SplitHorizontally(m_vList,m_cMap);
 
-    int pos = (int)cfg->Read(wxT("/MainFrame/SeparatorPosition"),
-        (long)DPI(DEFAULT_LIST_HEIGHT));
-    int width, height; GetClientSize(&width,&height);
+    int height = GetClientSize().GetHeight();
     int maxPanelHeight = height - DPI(MIN_PANEL_HEIGHT) - m_splitter->GetSashSize();
-    if(pos < DPI(MIN_PANEL_HEIGHT)) pos = DPI(MIN_PANEL_HEIGHT);
-    else if(pos > maxPanelHeight) pos = maxPanelHeight;
-    m_splitter->SetSashPosition(pos);
+    if(m_separatorPosition < DPI(MIN_PANEL_HEIGHT)) m_separatorPosition = DPI(MIN_PANEL_HEIGHT);
+    else if(m_separatorPosition > maxPanelHeight) m_separatorPosition = maxPanelHeight;
+    m_splitter->SetSashPosition(m_separatorPosition);
 
-    // update frame layout so we'll be
-    // able to initialize list of volumes
-    // and cluster map properly
+    // update frame layout so we'll be able
+    // to initialize list of volumes and
+    // cluster map properly
     wxSizeEvent evt(wxSize(m_width,m_height));
     ProcessEvent(evt); m_splitter->UpdateSize();
 
@@ -327,9 +305,10 @@ MainFrame::MainFrame()
         m_btdEnabled = false;
     }
 
-    // launch threads for the time consuming operations
+    // launch threads for time consuming operations
     m_crashInfoThread = new CrashInfoThread();
 
+    wxConfigBase *cfg = wxConfigBase::Get();
     int ulevel = (int)cfg->Read(wxT("/Upgrade/Level"),1);
     wxMenuItem *item = m_menuBar->FindItem(ID_HelpUpgradeNone + ulevel);
     if(item) item->Check();
@@ -351,29 +330,8 @@ MainFrame::MainFrame()
  */
 MainFrame::~MainFrame()
 {
-    // save main window size and position
-    wxConfigBase *cfg = wxConfigBase::Get();
-    cfg->Write(wxT("/MainFrame/x"),(long)m_x);
-    cfg->Write(wxT("/MainFrame/y"),(long)m_y);
-    cfg->Write(wxT("/MainFrame/width"),(long)m_width);
-    cfg->Write(wxT("/MainFrame/height"),(long)m_height);
-    cfg->Write(wxT("/MainFrame/maximized"),(long)IsMaximized());
-    cfg->Write(wxT("/MainFrame/SeparatorPosition"),
-        (long)m_splitter->GetSashPosition());
-
-    cfg->Write(wxT("/DrivesList/width1"),m_w1);
-    cfg->Write(wxT("/DrivesList/width2"),m_w2);
-    cfg->Write(wxT("/DrivesList/width3"),m_w3);
-    cfg->Write(wxT("/DrivesList/width4"),m_w4);
-    cfg->Write(wxT("/DrivesList/width5"),m_w5);
-    cfg->Write(wxT("/DrivesList/width6"),m_w6);
-
-    cfg->Write(wxT("/Language/Selected"),(long)g_locale->GetLanguage());
-
-    cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
-    cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
-
-    cfg->Write(wxT("/Upgrade/Level"),(long)m_upgradeThread->m_level);
+    // save configuration
+    SaveAppConfiguration();
 
     // terminate threads
     delete m_listThread;
@@ -582,31 +540,6 @@ void MainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 
 // report menu handlers
 void MainFrame::OnShowReport(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-// settings menu handlers
-void MainFrame::OnGuiFont(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnGuiOptions(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnSortCriteriaChange(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnSortOrderChange(wxCommandEvent& WXUNUSED(event))
 {
 }
 

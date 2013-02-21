@@ -93,8 +93,6 @@ void MainFrame::InitToolbar()
     m_toolBar->Realize();
 
     // initial settings (must be after realize)
-    wxConfigBase *cfg = wxConfigBase::Get();
-    cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     m_toolBar->ToggleTool(ID_Repeat,m_repeat);
 }
 

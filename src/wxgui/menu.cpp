@@ -269,11 +269,7 @@ void MainFrame::InitMenu()
     UD_SetMarginWidth(menuBootConfig)
 
     // initial settings
-    wxConfigBase *cfg = wxConfigBase::Get();
-    cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
-
-    cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
     m_menuBar->FindItem(ID_SkipRem)->Check(m_skipRem);
 
     int id = g_locale->GetLanguage();
