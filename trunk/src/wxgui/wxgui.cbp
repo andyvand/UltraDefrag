@@ -67,6 +67,7 @@
 		</Linker>
 		<Unit filename="about.cpp" />
 		<Unit filename="btd.cpp" />
+		<Unit filename="config.cpp" />
 		<Unit filename="crash.cpp" />
 		<Unit filename="i18n.cpp" />
 		<Unit filename="log.cpp" />

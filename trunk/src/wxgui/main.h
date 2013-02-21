@@ -244,6 +244,9 @@ public:
     bool m_skipRem;
 
 private:
+    void ReadAppConfiguration();
+    void SaveAppConfiguration();
+
     void InitLocale();
     void SetLocale(int id);
     bool GetLocaleFolder(wxString& CurrentLocaleDir);
@@ -254,10 +257,13 @@ private:
     void InitMap();
     void InitVolList();
 
-    int m_x;
-    int m_y;
-    int m_width;
-    int m_height;
+    int  m_x;
+    int  m_y;
+    int  m_width;
+    int  m_height;
+    bool m_saved;
+    bool m_maximized;
+    int  m_separatorPosition;
 
     // precise list column widths
     double m_w1;
