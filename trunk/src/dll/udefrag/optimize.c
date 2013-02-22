@@ -936,24 +936,12 @@ static int optimize_routine(udefrag_job_parameters *jp)
 
     /* build tree of files sorted by the requested criteria */
     pt = prb_create(files_compare,(void *)jp,NULL);
-    if(pt == NULL){
-        etrace("cannot create binary tree");
-        result = UDEFRAG_NO_MEM;
-        goto done;
-    }
     for(f = jp->filelist; f; f = f->next){
         if(f->disp.clusters * jp->v_info.bytes_per_cluster \
           < jp->udo.optimizer_size_limit){
             if(can_move_entirely(f,jp)){
                 p = prb_probe(pt,(void *)f);
-                if(p == NULL){
-                    etrace("cannot add file to the tree");
-                    result = UDEFRAG_NO_MEM;
-                    goto done;
-                }
-                if(*p != f){
-                    etrace("a duplicate found for %ws",f->path);
-                }
+                if(*p != f) etrace("a duplicate found for %ws",f->path);
             }
         }
         if(f->next == jp->filelist) break;

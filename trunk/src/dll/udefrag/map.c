@@ -63,9 +63,6 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     int array_size;
     ULONGLONG used_cells;
     
-    if(jp == NULL)
-        return (-1);
-    
     /* reset all internal data */
     jp->pi.cluster_map = NULL;
     jp->pi.cluster_map_size = 0;
@@ -137,9 +134,6 @@ void reset_cluster_map(udefrag_job_parameters *jp)
 {
     ULONGLONG i, j;
     
-    if(jp == NULL)
-        return;
-    
     if(jp->cluster_map.array == NULL)
         return;
 
@@ -170,8 +164,6 @@ void colorize_map_region(udefrag_job_parameters *jp,
     ULONGLONG *c;
     
     /* validate parameters */
-    if(jp == NULL)
-        return;
     if(jp->cluster_map.array == NULL)
         return;
     if(!check_region(jp,lcn,length))
@@ -236,7 +228,7 @@ int is_mft(winx_file_info *f,udefrag_job_parameters *jp)
     int length;
     wchar_t mft_name[] = L"$Mft";
 
-    if(f == NULL || jp == NULL)
+    if(f == NULL)
         return 0;
     
     if(jp->fs_type != FS_NTFS)
@@ -300,7 +292,7 @@ void colorize_file(udefrag_job_parameters *jp, winx_file_info *f, int old_color)
     winx_blockmap *block;
     int new_color;
     
-    if(jp == NULL || f == NULL)
+    if(f == NULL)
         return;
     
     new_color = get_file_color(jp,f);
@@ -316,13 +308,11 @@ void colorize_file(udefrag_job_parameters *jp, winx_file_info *f, int old_color)
  */
 void free_map(udefrag_job_parameters *jp)
 {
-    if(jp != NULL){
-        winx_free(jp->pi.cluster_map);
-        winx_free(jp->cluster_map.array);
-        jp->pi.cluster_map = NULL;
-        jp->pi.cluster_map_size = 0;
-        memset(&jp->cluster_map,0,sizeof(cmap));
-    }
+    winx_free(jp->pi.cluster_map);
+    winx_free(jp->cluster_map.array);
+    jp->pi.cluster_map = NULL;
+    jp->pi.cluster_map_size = 0;
+    memset(&jp->cluster_map,0,sizeof(cmap));
 }
 
 /** @} */
