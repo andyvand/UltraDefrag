@@ -519,7 +519,7 @@ int move_file(winx_file_info *f,
     jp->last_move_status = 0;
     
     /* validate parameters */
-    if(f == NULL || jp == NULL){
+    if(f == NULL){
         etrace("invalid parameter");
         f->user_defined_flags |= UD_FILE_IMPROPER_STATE;
         jp->p_counters.moving_time += winx_xtime() - time;

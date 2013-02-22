@@ -45,9 +45,6 @@ int get_options(udefrag_job_parameters *jp)
         "last modification time", "last access time"
     };
 
-    if(jp == NULL)
-        return (-1);
-    
     /* reset all options */
     memset(&jp->udo,0,sizeof(udefrag_options));
     jp->udo.refresh_interval = DEFAULT_REFRESH_INTERVAL;
@@ -247,10 +244,8 @@ int get_options(udefrag_job_parameters *jp)
  */
 void release_options(udefrag_job_parameters *jp)
 {
-    if(jp){
-        winx_patfree(&jp->udo.in_filter);
-        winx_patfree(&jp->udo.ex_filter);
-    }
+    winx_patfree(&jp->udo.in_filter);
+    winx_patfree(&jp->udo.ex_filter);
 }
 
 /** @} */

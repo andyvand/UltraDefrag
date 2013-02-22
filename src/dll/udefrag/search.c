@@ -230,18 +230,8 @@ static void free_item (void *prb_item, void *prb_param)
 int create_file_blocks_tree(udefrag_job_parameters *jp)
 {
     itrace("create_file_blocks_tree called");
-    
-    if(jp == NULL)
-        return (-1);
-    
-    if(jp->file_blocks)
-        destroy_file_blocks_tree(jp);
-    
+    if(jp->file_blocks) destroy_file_blocks_tree(jp);
     jp->file_blocks = prb_create(blocks_compare,NULL,NULL);
-    if(jp->file_blocks == NULL){
-        etrace("tree creation failed");
-        return (-1);
-    }
     return 0;
 }
 
@@ -257,7 +247,7 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     struct file_block *fb;
     void **p;
     
-    if(jp == NULL || file == NULL || block == NULL)
+    if(file == NULL || block == NULL)
         return (-1);
     
     if(jp->file_blocks == NULL)
@@ -267,11 +257,6 @@ int add_block_to_file_blocks_tree(udefrag_job_parameters *jp, winx_file_info *fi
     fb->file = file;
     fb->block = block;
     p = prb_probe(jp->file_blocks,(void *)fb);
-    if(p == NULL){
-        winx_free(fb);
-        destroy_file_blocks_tree(jp);
-        return UDEFRAG_NO_MEM;
-    }
     /* if a duplicate item exists... */
     if(*p != fb){
         etrace("a duplicate found");
@@ -291,7 +276,7 @@ int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap
     struct file_block *fb;
     struct file_block b;
     
-    if(jp == NULL || block == NULL)
+    if(block == NULL)
         return (-1);
     
     if(jp->file_blocks == NULL)
@@ -319,11 +304,9 @@ int remove_block_from_file_blocks_tree(udefrag_job_parameters *jp, winx_blockmap
 void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 {
     itrace("destroy_file_blocks_tree called");
-    if(jp){
-        if(jp->file_blocks){
-            prb_destroy(jp->file_blocks,free_item);
-            jp->file_blocks = NULL;
-        }
+    if(jp->file_blocks){
+        prb_destroy(jp->file_blocks,free_item);
+        jp->file_blocks = NULL;
     }
 }
 
@@ -354,27 +337,20 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
     ULONGLONG lcn;
     ULONGLONG tm = winx_xtime();
     
-    if(jp == NULL || min_lcn == NULL || first_file == NULL)
+    if(min_lcn == NULL || first_file == NULL)
         return NULL;
     
     /* use fast binary tree search if possible */
-    if(jp->file_blocks == NULL) goto slow_search;
     found_file = NULL; first_block = NULL;
     b.lcn = *min_lcn; fb.block = &b;
     prb_t_init(&t,jp->file_blocks);
     item = prb_t_insert(&t,jp->file_blocks,&fb);
-    if(item == NULL){
-        /* insertion failed, let's go to the slow search */
-        itrace("slow search will be used");
-        goto slow_search;
-    }
     if(item == &fb){
         /* block at min_lcn not found */
         item = prb_t_next(&t);
         if(prb_delete(jp->file_blocks,&fb) == NULL){
-            /* removing failed, let's go to the slow search */
-            itrace("slow search will be used");
-            goto slow_search;
+            etrace("cannot remove block from the tree");
+            winx_flush_dbg_log(); /* 'cause error is critical */
         }
     }
     if(item){
@@ -408,44 +384,6 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
         if(item == NULL) break;
         found_file = item->file;
         first_block = item->block;
-    }
-    *first_file = NULL;
-    jp->p_counters.searching_time += winx_xtime() - tm;
-    return NULL;
-
-slow_search:
-    if(jp->file_blocks) destroy_file_blocks_tree(jp);
-    while(!jp->termination_router((void *)jp)){
-        found_file = NULL; first_block = NULL; lcn = jp->v_info.total_clusters;
-        for(file = jp->filelist; file; file = file->next){
-            if(flags & SKIP_PARTIALLY_MOVABLE_FILES){
-                movable_file = can_move_entirely(file,jp);
-            } else {
-                movable_file = can_move(file,jp);
-            }
-            if(movable_file){
-                for(block = file->disp.blockmap; block; block = block->next){
-                    if(block->lcn >= *min_lcn && block->lcn < lcn && block->length){
-                        /* skip first fragments of FAT directories */
-                        if(!jp->is_fat || !is_directory(file) || block != file->disp.blockmap){
-                            found_file = file;
-                            first_block = block;
-                            lcn = block->lcn;
-                        }
-                    }
-                    if(block->next == file->disp.blockmap) break;
-                }
-            }
-            if(file->next == jp->filelist) break;
-        }
-        if(found_file == NULL) break;
-        if(is_file_locked(found_file,jp)) continue;
-        
-        /* desired block found */
-        *min_lcn = first_block->lcn + 1; /* the current block will be skipped later anyway in this case */
-        *first_file = found_file;
-        jp->p_counters.searching_time += winx_xtime() - tm;
-        return first_block;
     }
     *first_file = NULL;
     jp->p_counters.searching_time += winx_xtime() - tm;
