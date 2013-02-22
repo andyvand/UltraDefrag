@@ -138,7 +138,7 @@ void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
 
     // force list to cover integral number of items
     int items = (height - header_height) / item_height;
-    int new_height = header_height + items * item_height;// + 2;
+    int new_height = header_height + items * item_height;
     if(expand && new_height < height){
         items ++; new_height += item_height;
     }
