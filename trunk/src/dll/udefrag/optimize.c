@@ -304,14 +304,17 @@ done:
  */
 static ULONGLONG opt_dirs_cc_routine(udefrag_job_parameters *jp)
 {
-    udefrag_fragmented_file *f;
+    struct prb_traverser t;
+    winx_file_info *file;
     ULONGLONG n = 0;
     
-    for(f = jp->fragmented_files; f; f = f->next){
+    prb_t_init(&t,jp->fragmented_files);
+    file = prb_t_first(&t,jp->fragmented_files);
+    while(file){
         if(jp->termination_router((void *)jp)) break;
-        if(is_directory(f->f) && can_move(f->f,jp))
-            n += f->f->disp.clusters * 2;
-        if(f->next == jp->fragmented_files) break;
+        if(is_directory(file) && can_move(file,jp))
+            n += file->disp.clusters * 2;
+        file = prb_t_next(&t);
     }
     return n;
 }
@@ -324,8 +327,8 @@ static ULONGLONG opt_dirs_cc_routine(udefrag_job_parameters *jp)
  */
 static int optimize_directories(udefrag_job_parameters *jp)
 {
-    udefrag_fragmented_file *f, *head, *next;
-    winx_file_info *file;
+    struct prb_traverser t;
+    winx_file_info *file, *next_file;
     ULONGLONG optimized_dirs;
     char buffer[32];
     ULONGLONG time;
@@ -349,19 +352,17 @@ static int optimize_directories(udefrag_job_parameters *jp)
     time = start_timing("directories optimization",jp);
 
     optimized_dirs = 0;
-    for(f = jp->fragmented_files; f; f = next){
+    prb_t_init(&t,jp->fragmented_files);
+    file = prb_t_first(&t,jp->fragmented_files);
+    while(file){
         if(jp->termination_router((void *)jp)) break;
-        head = jp->fragmented_files;
-        next = f->next;
-        file = f->f; /* f will be destroyed by move_file */
+        next_file = prb_t_next(&t);
         if(is_directory(file) && can_move(file,jp)){
             if(optimize_file(file,jp) > 0)
                 optimized_dirs ++;
         }
         file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-        /* go to the next file */
-        if(jp->fragmented_files == NULL) break;
-        if(next == head) break;
+        file = next_file;
     }
     
     /* display amount of moved data and number of optimized directories */

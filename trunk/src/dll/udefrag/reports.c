@@ -104,11 +104,12 @@ static int save_lua_report(udefrag_job_parameters *jp)
     wchar_t compname[MAX_COMPUTERNAME_LENGTH + 1];
     char utf8_compname[(MAX_COMPUTERNAME_LENGTH + 1) * 4];
     char buffer[512];
-    udefrag_fragmented_file *file;
+    struct prb_traverser t;
+    winx_file_info *file;
     char *comment;
     char *status;
     int length;
-    winx_time t;
+    winx_time tm;
     
     /* should be enough for any path in UTF-8 encoding */
     #define MAX_UTF8_PATH_LENGTH (256 * 1024)
@@ -144,8 +145,8 @@ static int save_lua_report(udefrag_job_parameters *jp)
         wcscpy(compname,L"nil");
     }
     winx_to_utf8(utf8_compname,sizeof(utf8_compname),compname);
-    memset(&t,0,sizeof(winx_time));
-    (void)winx_get_local_time(&t);
+    memset(&tm,0,sizeof(winx_time));
+    (void)winx_get_local_time(&tm);
     (void)_snprintf(buffer,sizeof(buffer),
         "-- UltraDefrag report for disk %c:\r\n\r\n"
         "format_version = 7\r\n\r\n"
@@ -162,67 +163,68 @@ static int save_lua_report(udefrag_job_parameters *jp)
         "}\r\n\r\n"
         "files = {\r\n",
         jp->volume_letter, jp->volume_letter,utf8_compname,
-        (int)t.year,(int)t.month,(int)t.day,
-        (int)t.hour,(int)t.minute,(int)t.second
+        (int)tm.year,(int)tm.month,(int)tm.day,
+        (int)tm.hour,(int)tm.minute,(int)tm.second
         );
     buffer[sizeof(buffer) - 1] = 0;
     (void)winx_fwrite(buffer,1,strlen(buffer),f);
     
     /* print body */
-    for(file = jp->fragmented_files; file; file = file->next){
-        if(!is_excluded(file->f)){
-            if(is_directory(file->f))
-                comment = "[DIR]";
-            else if(is_compressed(file->f))
-                comment = "[CMP]";
-            else if(is_over_limit(file->f))
-                comment = "[OVR]";
-            else
-                comment = " - ";
-            
-            /*
-            * On change of status strings don't forget
-            * also to adjust write_file_status routine
-            * in udreportcnv.lua file.
-            */
-            if(is_locked(file->f))
-                status = "locked";
-            else if(is_moving_failed(file->f))
-                status = "move failed";
-            else if(is_in_improper_state(file->f))
-                status = "invalid";
-            else
-                status = " - ";
-            
-            (void)_snprintf(buffer, sizeof(buffer),
-                "\t{fragments = %u,"
-                "size = %I64u,"
-                "comment = \"%s\","
-                "status = \"%s\","
-                "path = \"",
-                (UINT)file->f->disp.fragments,
-                file->f->disp.clusters * jp->v_info.bytes_per_cluster,
-                comment,
-                status
-                );
-            buffer[sizeof(buffer) - 1] = 0;
-            (void)winx_fwrite(buffer,1,strlen(buffer),f);
+    prb_t_init(&t,jp->fragmented_files);
+    file = prb_t_first(&t,jp->fragmented_files);
+    while(file){
+        if(is_directory(file))
+            comment = "[DIR]";
+        else if(is_compressed(file))
+            comment = "[CMP]";
+        else if(is_over_limit(file))
+            comment = "[OVR]";
+        else
+            comment = " - ";
+        
+        /*
+        * On change of status strings don't forget
+        * also to adjust write_file_status routine
+        * in udreportcnv.lua file.
+        */
+        if(is_locked(file))
+            status = "locked";
+        else if(is_moving_failed(file))
+            status = "move failed";
+        else if(is_in_improper_state(file))
+            status = "invalid";
+        else
+            status = " - ";
+        
+        (void)_snprintf(buffer, sizeof(buffer),
+            "\t{fragments = %u,"
+            "size = %I64u,"
+            "comment = \"%s\","
+            "status = \"%s\","
+            "path = \"",
+            (UINT)file->disp.fragments,
+            file->disp.clusters * jp->v_info.bytes_per_cluster,
+            comment,
+            status
+            );
+        buffer[sizeof(buffer) - 1] = 0;
+        (void)winx_fwrite(buffer,1,strlen(buffer),f);
 
-            if(file->f->path != NULL){
-                /* skip \??\ sequence in the beginning of the path */
-                length = (int)wcslen(file->f->path);
-                if(length > 4){
-                    convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->f->path + 4);
-                } else {
-                    convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->f->path);
-                }
-                (void)winx_fwrite(utf8_path,1,strlen(utf8_path),f);
+        if(file->path != NULL){
+            /* skip \??\ sequence in the beginning of the path */
+            length = (int)wcslen(file->path);
+            if(length > 4){
+                convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->path + 4);
+            } else {
+                convert_to_utf8_path(utf8_path,MAX_UTF8_PATH_LENGTH,file->path);
             }
-
-            (void)strcpy(buffer,"\"},\r\n");
-            (void)winx_fwrite(buffer,1,strlen(buffer),f);
+            (void)winx_fwrite(utf8_path,1,strlen(utf8_path),f);
         }
-        if(file->next == jp->fragmented_files) break;
+
+        (void)strcpy(buffer,"\"},\r\n");
+        (void)winx_fwrite(buffer,1,strlen(buffer),f);
+
+        file = prb_t_next(&t);
     }
     
     /* print footer */

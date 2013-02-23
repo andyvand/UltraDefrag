@@ -746,30 +746,38 @@ static void redraw_well_known_locked_files(udefrag_job_parameters *jp)
 }
 
 /**
+ * @brief Defines rules for the fragmented files list sorting.
+ */
+static int fragmented_files_compare(const void *prb_a, const void *prb_b, void *prb_param)
+{
+    winx_file_info *a, *b;
+    //udefrag_job_parameters *jp;
+    
+    a = (winx_file_info *)prb_a;
+    b = (winx_file_info *)prb_b;
+    //jp = (udefrag_job_parameters *)prb_param;
+
+    /* sort files in descending order by number of fragments */
+    if(a->disp.fragments != b->disp.fragments)
+        return (a->disp.fragments < b->disp.fragments) ? 1 : (-1);
+
+    /* if files have equal number of fragments, sort 'em by path */
+    return winx_wcsicmp(a->path, b->path);
+}
+
+/**
  * @brief Adds file to the list of fragmented files.
+ * @note Ignores files excluded from the disk processing.
  */
 int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
 {
-    udefrag_fragmented_file *ff, *ffprev = NULL;
+    void **p;
     
     /* don't include filtered out files, for better performance */
-    if(is_excluded(f)) return 0;
-
-    for(ff = jp->fragmented_files; ff; ff = ff->next){
-        if(ff->f->disp.fragments <= f->disp.fragments){
-            if(ff != jp->fragmented_files)
-                ffprev = ff->prev;
-            break;
-        }
-        if(ff->next == jp->fragmented_files){
-            ffprev = ff;
-            break;
-        }
+    if(!is_excluded(f)){
+        p = prb_probe(jp->fragmented_files,(void *)f);
+        if(*p != f) etrace("a duplicate found for %ws",f->path);
     }
-    
-    ff = (udefrag_fragmented_file *)winx_list_insert((list_entry **)(void *)&jp->fragmented_files,
-            (list_entry *)ffprev,sizeof(udefrag_fragmented_file));
-    ff->f = f;
     return 0;
 }
 
@@ -778,15 +786,8 @@ int expand_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
  */
 void truncate_fragmented_files_list(winx_file_info *f,udefrag_job_parameters *jp)
 {
-    udefrag_fragmented_file *ff;
-    
-    for(ff = jp->fragmented_files; ff; ff = ff->next){
-        if(ff->f == f){
-            winx_list_remove((list_entry **)(void *)&jp->fragmented_files,(list_entry *)ff);
-            break;
-        }
-        if(ff->next == jp->fragmented_files) break;
-    }
+    if(!prb_delete(jp->fragmented_files,(void *)f))
+        etrace("%ws is not found in the tree",f->path);
 }
 
 /**
@@ -798,6 +799,7 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
     ULONGLONG bad_fragments = 0;
     ULONGLONG counter = 0;
     
+    jp->fragmented_files = prb_create(fragmented_files_compare,(void *)jp,NULL);
     for(f = jp->filelist; f; f = f->next){
         if(is_fragmented(f) && !is_excluded(f)){
             expand_fragmented_files_list(f,jp);
@@ -805,7 +807,7 @@ static void produce_list_of_fragmented_files(udefrag_job_parameters *jp)
                 dtrace(">>> %I64u files added to the fragmented files list",counter);
             /* more precise calculation seems to be too slow */
             bad_fragments += f->disp.fragments;
-            counter += 1;
+            counter ++;
         }
         if(f->next == jp->filelist) break;
     }

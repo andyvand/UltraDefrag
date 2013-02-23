@@ -240,18 +240,18 @@ void clear_currently_excluded_flag(udefrag_job_parameters *jp)
  */
 static ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp)
 {
-    udefrag_fragmented_file *f;
+    struct prb_traverser t;
+    winx_file_info *file;
     ULONGLONG n = 0;
     
     /* fine calculation will take too much time */
-    for(f = jp->fragmented_files; f; f = f->next){
+    prb_t_init(&t,jp->fragmented_files);
+    file = prb_t_first(&t,jp->fragmented_files);
+    while(file){
         if(jp->termination_router((void *)jp)) break;
-        /*
-        * Count all fragmented files which can be processed.
-        */
-        if(can_defragment(f->f,jp))
-            n += f->f->disp.clusters;
-        if(f->next == jp->fragmented_files) break;
+        /* count all fragmented files which can be processed */
+        if(can_defragment(file,jp)) n += file->disp.clusters;
+        file = prb_t_next(&t);
     }
     return n;
 }
@@ -262,9 +262,9 @@ static ULONGLONG defrag_cc_routine(udefrag_job_parameters *jp)
  */
 static int defrag_routine(udefrag_job_parameters *jp)
 {
-    udefrag_fragmented_file *f, *head, *next;
     winx_volume_region *rgn, *largest_rgn;
-    winx_file_info *file;
+    struct prb_traverser t;
+    winx_file_info *file, *next_file;
     int move_entirely;
     ULONGLONG defragmented_files;
     ULONGLONG defragmented_entirely = 0, defragmented_partially = 0;
@@ -306,11 +306,11 @@ static int defrag_routine(udefrag_job_parameters *jp)
     * the most fragmented files first of all.
     */
     defragmented_files = 0;
-    for(f = jp->fragmented_files; f; f = next){
+    prb_t_init(&t,jp->fragmented_files);
+    file = prb_t_first(&t,jp->fragmented_files);
+    while(file){
         if(jp->termination_router((void *)jp)) break;
-        head = jp->fragmented_files;
-        next = f->next;
-        file = f->f; /* f will be destroyed by move_file */
+        next_file = prb_t_next(&t);
         if(can_defragment(file,jp)){
             move_entirely = 0;
             if(file->disp.clusters * jp->v_info.bytes_per_cluster \
@@ -439,9 +439,7 @@ move_clusters:
         }
 completed:
         file->user_defined_flags |= UD_FILE_CURRENTLY_EXCLUDED;
-        /* go to the next file */
-        if(jp->fragmented_files == NULL) break;
-        if(next == head) break;
+        file = next_file;
     }
     
     /*
@@ -546,7 +544,8 @@ static int defrag_sequence(udefrag_job_parameters *jp)
 int defragment(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
-    udefrag_fragmented_file *f;
+    struct prb_traverser t;
+    winx_file_info *file;
     int second_attempt = 0;
     ULONGLONG time;
     
@@ -580,12 +579,15 @@ int defragment(udefrag_job_parameters *jp)
     * was already in use at the moment of the move.
     * So, let's give them another chance.
     */
-    for(f = jp->fragmented_files; f; f = f->next){
-        if(is_moving_failed(f->f)){
+    prb_t_init(&t,jp->fragmented_files);
+    file = prb_t_first(&t,jp->fragmented_files);
+    while(file){
+        if(jp->termination_router((void *)jp)) break;
+        if(is_moving_failed(file)){
             second_attempt = 1;
-            f->f->user_defined_flags &= ~UD_FILE_MOVING_FAILED;
+            file->user_defined_flags &= ~UD_FILE_MOVING_FAILED;
         }
-        if(f->next == jp->fragmented_files) break;
+        file = prb_t_next(&t);
     }
     if(second_attempt){
         result = defrag_sequence(jp);
