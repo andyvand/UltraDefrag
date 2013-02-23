@@ -298,9 +298,7 @@ void destroy_lists(udefrag_job_parameters *jp)
 {
     winx_scan_disk_release(jp->filelist);
     winx_release_free_volume_regions(jp->free_regions);
-    winx_list_destroy((list_entry **)(void *)&jp->fragmented_files);
-    jp->filelist = NULL;
-    jp->free_regions = NULL;
+    if(jp->fragmented_files) prb_destroy(jp->fragmented_files,NULL);
 }
 
 /**

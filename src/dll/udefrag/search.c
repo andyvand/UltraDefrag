@@ -328,13 +328,12 @@ void destroy_file_blocks_tree(udefrag_job_parameters *jp)
 winx_blockmap *find_first_block(udefrag_job_parameters *jp,
     ULONGLONG *min_lcn, int flags, winx_file_info **first_file)
 {
-    winx_file_info *found_file, *file;
-    winx_blockmap *first_block, *block;
+    winx_file_info *found_file;
+    winx_blockmap *first_block;
     winx_blockmap b;
     struct file_block fb, *item;
     struct prb_traverser t;
     int movable_file;
-    ULONGLONG lcn;
     ULONGLONG tm = winx_xtime();
     
     if(min_lcn == NULL || first_file == NULL)
@@ -350,7 +349,7 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
         item = prb_t_next(&t);
         if(prb_delete(jp->file_blocks,&fb) == NULL){
             etrace("cannot remove block from the tree");
-            winx_flush_dbg_log(); /* 'cause error is critical */
+            winx_flush_dbg_log(0); /* 'cause error is critical */
         }
     }
     if(item){

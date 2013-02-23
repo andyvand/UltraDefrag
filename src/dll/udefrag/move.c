@@ -651,6 +651,12 @@ int move_file(winx_file_info *f,
     }
 
     /*
+    * Remove file from the list of fragmented files
+    * till its number of fragments is not changed.
+    */
+    if(was_fragmented) truncate_fragmented_files_list(f,jp);
+    
+    /*
     * Something has been moved, therefore we need to redraw 
     * space, update free space pool and adjust statistics.
     */
@@ -741,7 +747,6 @@ int move_file(winx_file_info *f,
     }
 
     /* update list of fragmented files */
-    truncate_fragmented_files_list(f,jp);
     if(is_fragmented(f) && !is_excluded(f))
         expand_fragmented_files_list(f,jp);
 

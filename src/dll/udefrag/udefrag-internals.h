@@ -166,12 +166,6 @@ typedef struct _udefrag_options {
     double fragmentation_threshold; /* fragmentation level threshold */
 } udefrag_options;
 
-typedef struct _udefrag_fragmented_file {
-    struct _udefrag_fragmented_file *next;
-    struct _udefrag_fragmented_file *prev;
-    winx_file_info *f;
-} udefrag_fragmented_file;
-
 struct _mft_zone {
     ULONGLONG start;
     ULONGLONG length;
@@ -244,7 +238,7 @@ typedef struct _udefrag_job_parameters {
     file_system_type fs_type;                   /* type of volume file system */
     int is_fat;                                 /* nonzero value indicates that the file system is a kind of FAT */
     winx_file_info *filelist;                   /* list of files */
-    udefrag_fragmented_file *fragmented_files;  /* list of fragmented files; does not contain filtered out files */
+    struct prb_table *fragmented_files;         /* list of fragmented files; does not contain filtered out files */
     winx_volume_region *free_regions;           /* list of free space regions */
     unsigned long free_regions_count;           /* number of free space regions */
     ULONGLONG clusters_at_once;                 /* number of clusters to be moved at once */
