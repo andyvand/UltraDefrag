@@ -16,6 +16,8 @@
   Version 6.0.0 2013-02-
   ------------------------------------------------------------------------------
     - log creation in case of out of memory condition added
+    - performance of analysis for fragmented files count above 30000 was
+      improved dramatically
     - the following translations were updated:
 
       Chinese (Traditional), Dutch, Iloko, Italian, Russian, Spanish (ES),
@@ -72,7 +74,7 @@
     - FAT optimization was implemented
     - ability to sort files on the disk by the disk optimization was added;
       files can be sorted by path, size, creation time, last modification time,
-      last access time - in eighter ascending or descending order
+      last access time - in either ascending or descending order
     - ability to filter out files by size of their fragments was added
       (fragment_size_threshold option in GUI; UD_FRAGMENT_SIZE_THRESHOLD
       environment variable in command line tool and boot time interface)
