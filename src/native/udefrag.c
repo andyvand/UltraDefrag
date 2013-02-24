@@ -76,6 +76,7 @@ int GetDebugLevel()
 }
 
 char old_op_name[15] = {0};
+int old_p1 = 0;
 
 /**
  * @brief Redraws the progress information.
@@ -113,6 +114,15 @@ void RedrawProgress(udefrag_progress_info *pi)
         p1 = 100;
         p2 = 0;
     }
+
+    /* prevent showing stage finished at 0% */
+    if(old_p1 > 0 && p1 == 0 && pi->current_operation == VOLUME_ANALYSIS){
+        p1 = 100;
+        p2 = 0;
+    } else {
+        old_p1 = p1;
+    }
+
     if(pi->current_operation == VOLUME_OPTIMIZATION && !abort_flag && pi->completion_status == 0){
         /* display number of moves */
         if(pi->pass_number > 1)
@@ -134,9 +144,11 @@ void RedrawProgress(udefrag_progress_info *pi)
         }
     }
 
+    /* allow display of all process stages for better verification */
     if(!winx_stristr(old_op_name,op_name)){
         winx_printf("\n");
         strncpy(old_op_name,op_name,sizeof(old_op_name)-1);
+        old_p1 = 0;
     }
 
     s[sizeof(s) - 1] = 0;
