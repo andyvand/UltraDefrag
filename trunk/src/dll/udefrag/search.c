@@ -339,7 +339,6 @@ winx_blockmap *find_first_block(udefrag_job_parameters *jp,
     if(min_lcn == NULL || first_file == NULL)
         return NULL;
     
-    /* use fast binary tree search if possible */
     found_file = NULL; first_block = NULL;
     b.lcn = *min_lcn; fb.block = &b;
     prb_t_init(&t,jp->file_blocks);
