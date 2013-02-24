@@ -37,6 +37,7 @@
  * <tr><td>• Albanian                     </td><td>-</td><td> Fitim I. HALILI</td></tr>
  * <tr><td>• Arabic                       </td><td>-</td><td> Ahmed Arbaoui</td></tr>
  * <tr><td>                               </td><td>-</td><td> Awadh A Al-Ghaamdi</td></tr>
+ * <tr><td>                               </td><td>-</td><td> Karam Al-Shorbassi</td></tr>
  * <tr><td>• Belarusian                   </td><td>-</td><td> Dmitri Arkhangelski</td></tr>
  * <tr><td>• Bengali                      </td><td>-</td><td> Sayem Chaklader</td></tr>
  * <tr><td>• Bosanski                     </td><td>-</td><td> Timur Ljubunčić</td></tr>
@@ -168,6 +169,7 @@
  * • Albanian                      & - & Fitim I. HALILI \\
  * • Arabic                        & - & Ahmed Arbaoui \\
  *                                 & - & Awadh A Al-Ghaamdi \\
+ *                                 & - & Karam Al-Shorbassi \\
  * • Belarusian                    & - & Dmitri Arkhangelski \\
  * • Bengali                       & - & Sayem Chaklader \\
  * • Bosanski                      & - & Timur Ljubunčić \\
@@ -589,7 +591,7 @@
  * - Patrick Palm
  * - Reynald Didier, Robert Jr, Rodrigo Lopes Paitach
  * - Seph, SMHA
- * - Timo VJ Lähde, translucens
+ * - Timo VJ Lähde, Tjeerd van Sas, translucens
  * - Zirikkanen
  *
  * Special thanks for extensive testing (in alphabetical order):

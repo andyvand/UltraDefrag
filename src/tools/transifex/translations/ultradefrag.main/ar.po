@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-09 16:35+0000\n"
+"POT-Creation-Date: 2013-02-18 09:12+0100\n"
+"PO-Revision-Date: 2013-02-24 10:17+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "&تقرير"
 msgid "&Settings"
 msgstr "&إعدادات"
 
-#: i18n.cpp:123 i18n.cpp:209
+#: i18n.cpp:123 i18n.cpp:210
 msgid "&Help"
 msgstr "تعل&يمات"
 
@@ -139,13 +139,13 @@ msgstr "&اللغة"
 msgid "&Graphical interface"
 msgstr "&واجهة رسومية"
 
-#: i18n.cpp:157 i18n.cpp:205
+#: i18n.cpp:157 i18n.cpp:206
 msgid "&Boot time scan"
 msgstr "&فحص عند الإقلاع"
 
 #: i18n.cpp:158
 msgid "&Sorting"
-msgstr ""
+msgstr "ت&رتيب"
 
 #: i18n.cpp:160
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "&برنامج نصي"
 
 #: i18n.cpp:177
 msgid "By &path"
-msgstr ""
+msgstr "ترتيب حسب ال&مسار"
 
 #: i18n.cpp:178
 msgid "By &size"
-msgstr ""
+msgstr "ترتيب حسب ال&حجم"
 
 #: i18n.cpp:179
 msgid "By &creation time"
-msgstr ""
+msgstr "ترتيب حسب وقت الإ&نشاء"
 
 #: i18n.cpp:180
 msgid "By last &modification time"
-msgstr ""
+msgstr "ترتيب حسب وقت ال&تعديل"
 
 #: i18n.cpp:181
 msgid "By &last access time"
-msgstr ""
+msgstr "ترتيب حسب وقت آخر &دخول"
 
 #: i18n.cpp:182
 msgid "In &ascending order"
-msgstr ""
+msgstr "ترتيب ت&صاعدي"
 
 #: i18n.cpp:183
 msgid "In &descending order"
-msgstr ""
+msgstr "ترتيب ت&نازلي"
 
 #: i18n.cpp:186
 msgid "&Contents"
@@ -235,59 +235,59 @@ msgstr "ت&صحيح"
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:195
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:195
+#: i18n.cpp:196
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:197
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:198
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:198
+#: i18n.cpp:199
 msgid "&About"
 msgstr "&حول"
 
-#: i18n.cpp:201 utils.cpp:327
+#: i18n.cpp:202 utils.cpp:327
 msgid "Open &log"
 msgstr "&فتح السجل"
 
-#: i18n.cpp:202
+#: i18n.cpp:203
 msgid "Send bug &report"
 msgstr "إ&رسال نقرير عن مشكلة"
 
-#: i18n.cpp:207
+#: i18n.cpp:208
 msgid "Boot time script"
 msgstr "البرنامج النصي عند الإقلاع"
 
-#: i18n.cpp:214
+#: i18n.cpp:215
 msgid "Drive"
 msgstr "القرص"
 
-#: i18n.cpp:215
+#: i18n.cpp:216
 msgid "Status"
 msgstr "الحالة"
 
-#: i18n.cpp:216
+#: i18n.cpp:217
 msgid "Fragmentation"
 msgstr "التجزئة"
 
-#: i18n.cpp:217
+#: i18n.cpp:218
 msgid "Total space"
 msgstr "المساحة الكلية"
 
-#: i18n.cpp:218
+#: i18n.cpp:219
 msgid "Free space"
 msgstr "المساحة الحرة"
 
-#: i18n.cpp:219
+#: i18n.cpp:220
 #, c-format
 msgid "% free"
 msgstr "% الحرة"
