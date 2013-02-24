@@ -1,6 +1,6 @@
 ﻿HISTORY
 
-  Version 7.0.0 2013-02-
+  Version 7.0.0 2013-03-
   ------------------------------------------------------------------------------
     beta1:
     - GUI and command line tool reimplemented on top of wxWidgets library
@@ -13,8 +13,9 @@
     - wgx library removed entirely
 
 
-  Version 6.0.0 2013-02-
+  Version 6.0.0 2013-03-
   ------------------------------------------------------------------------------
+    RC3:
     - log creation in case of out of memory condition added
     - performance of analysis for fragmented files count above 30000 was
       improved dramatically
