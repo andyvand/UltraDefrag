@@ -654,7 +654,8 @@ int move_file(winx_file_info *f,
     * Remove file from the list of fragmented files
     * till its number of fragments is not changed.
     */
-    if(was_fragmented) truncate_fragmented_files_list(f,jp);
+    if(was_fragmented && !was_excluded)
+        truncate_fragmented_files_list(f,jp);
     
     /*
     * Something has been moved, therefore we need to redraw 
