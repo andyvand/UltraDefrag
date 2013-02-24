@@ -18,7 +18,8 @@
     - log creation in case of out of memory condition added
     - the following translations were updated:
 
-      Chinese (Traditional), Iloko, Italian, Russian, Spanish (ES), Spanish (MEX)
+      Chinese (Traditional), Dutch, Iloko, Italian, Russian, Spanish (ES),
+      Spanish (MEX)
 
     RC2:
     - upgrade check now better supports development releases
