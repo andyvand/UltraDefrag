@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-06 23:18+0100\n"
-"PO-Revision-Date: 2013-02-10 12:49+0000\n"
+"POT-Creation-Date: 2013-02-24 11:18+0100\n"
+"PO-Revision-Date: 2013-02-24 15:41+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,259 +35,259 @@ msgstr "Kredity a licence jsou uvedeny v návodu."
 msgid "UltraDefrag website"
 msgstr "UltraDefrag website"
 
-#: i18n.cpp:120
+#: i18n.cpp:121
 msgid "&Action"
 msgstr "Akce"
 
-#: i18n.cpp:121
+#: i18n.cpp:122
 msgid "&Report"
 msgstr "Zpráva"
 
-#: i18n.cpp:122
+#: i18n.cpp:123
 msgid "&Settings"
 msgstr "Nastavení"
 
-#: i18n.cpp:123 i18n.cpp:209
+#: i18n.cpp:124 i18n.cpp:211
 msgid "&Help"
 msgstr "Nápověda"
 
-#: i18n.cpp:126
+#: i18n.cpp:127
 msgid "&Analyze"
 msgstr "Analýza"
 
-#: i18n.cpp:127
+#: i18n.cpp:128
 msgid "&Defragment"
 msgstr "Defragmentace"
 
-#: i18n.cpp:128
+#: i18n.cpp:129
 msgid "&Quick optimization"
 msgstr "Rychlá optimalizace"
 
-#: i18n.cpp:129
+#: i18n.cpp:130
 msgid "&Full optimization"
 msgstr "Plná optimalizace"
 
-#: i18n.cpp:130
+#: i18n.cpp:131
 msgid "&Optimize MFT"
 msgstr "Optimalizovat MFT"
 
-#: i18n.cpp:131
+#: i18n.cpp:132
 msgid "Pa&use"
 msgstr "Pauza"
 
-#: i18n.cpp:132
+#: i18n.cpp:133
 msgid "&Stop"
 msgstr "Zastavit"
 
-#: i18n.cpp:133
+#: i18n.cpp:134
 msgid "Re&peat action"
 msgstr "Opakovat akci"
 
-#: i18n.cpp:134
+#: i18n.cpp:135
 msgid "Skip removable &media"
 msgstr "Přeskočit vyměnitelná média"
 
-#: i18n.cpp:135
+#: i18n.cpp:136
 msgid "&Rescan drives"
 msgstr "Aktualizovat jednotky"
 
-#: i18n.cpp:136
+#: i18n.cpp:137
 msgid "Repair dri&ves"
 msgstr "Opravit jednotky"
 
-#: i18n.cpp:138
+#: i18n.cpp:139
 msgid "&When done"
 msgstr "Po dokončení"
 
-#: i18n.cpp:140 i18n.cpp:144
+#: i18n.cpp:141 i18n.cpp:145
 msgid "E&xit"
 msgstr "Konec"
 
-#: i18n.cpp:143
+#: i18n.cpp:144
 msgid "&None"
 msgstr "Nic nedělat"
 
-#: i18n.cpp:145
+#: i18n.cpp:146
 msgid "Stan&dby"
 msgstr "Úsporný režim"
 
-#: i18n.cpp:146
+#: i18n.cpp:147
 msgid "&Hibernate"
 msgstr "Režim spánku"
 
-#: i18n.cpp:147
+#: i18n.cpp:148
 msgid "&Logoff"
 msgstr "Odhlásit uživatele"
 
-#: i18n.cpp:148
+#: i18n.cpp:149
 msgid "&Reboot"
 msgstr "Restartovat"
 
-#: i18n.cpp:149
+#: i18n.cpp:150
 msgid "&Shutdown"
 msgstr "Vypnout"
 
-#: i18n.cpp:152
+#: i18n.cpp:153
 msgid "&Show report"
 msgstr "Ukázat zprávu"
 
-#: i18n.cpp:155
+#: i18n.cpp:156
 msgid "&Language"
 msgstr "Jazyk"
 
-#: i18n.cpp:156
+#: i18n.cpp:157
 msgid "&Graphical interface"
 msgstr "Grafické uživatelské rozhraní"
 
-#: i18n.cpp:157 i18n.cpp:205
+#: i18n.cpp:158 i18n.cpp:207
 msgid "&Boot time scan"
 msgstr "Defragmentace při startu OS"
 
-#: i18n.cpp:158
+#: i18n.cpp:159
 msgid "&Sorting"
 msgstr "Řazení"
 
-#: i18n.cpp:160
+#: i18n.cpp:161
 msgid "&Reports"
 msgstr "Zprávy"
 
-#: i18n.cpp:163
+#: i18n.cpp:164
 msgid "&View change log"
 msgstr "Zobrazit změny překladu"
 
-#: i18n.cpp:164
+#: i18n.cpp:165
 msgid "View translation &report"
 msgstr "Zobrazit protokol překladu"
 
-#: i18n.cpp:165
+#: i18n.cpp:166
 msgid "&Translations folder"
 msgstr "Jazyková složka"
 
-#: i18n.cpp:166
+#: i18n.cpp:167
 msgid "&Submit current translation"
 msgstr "Potvrdit aktuální překlad"
 
-#: i18n.cpp:169
+#: i18n.cpp:170
 msgid "&Font"
 msgstr "Písmo"
 
-#: i18n.cpp:170
+#: i18n.cpp:171
 msgid "&Options"
 msgstr "Možnosti"
 
-#: i18n.cpp:173
+#: i18n.cpp:174
 msgid "&Enable"
 msgstr "Povolit"
 
-#: i18n.cpp:174
+#: i18n.cpp:175
 msgid "&Script"
 msgstr "Skript"
 
-#: i18n.cpp:177
+#: i18n.cpp:178
 msgid "By &path"
 msgstr "Řadit dle cesty"
 
-#: i18n.cpp:178
+#: i18n.cpp:179
 msgid "By &size"
 msgstr "Řadit dle velikosti"
 
-#: i18n.cpp:179
+#: i18n.cpp:180
 msgid "By &creation time"
 msgstr "Řadit dle vytvoření"
 
-#: i18n.cpp:180
+#: i18n.cpp:181
 msgid "By last &modification time"
 msgstr "Řadit dle změny"
 
-#: i18n.cpp:181
+#: i18n.cpp:182
 msgid "By &last access time"
 msgstr "Řadit dle přístupu"
 
-#: i18n.cpp:182
+#: i18n.cpp:183
 msgid "In &ascending order"
 msgstr "Řadit vzestupnně"
 
-#: i18n.cpp:183
+#: i18n.cpp:184
 msgid "In &descending order"
 msgstr "Řadit sestupně"
 
-#: i18n.cpp:186
+#: i18n.cpp:187
 msgid "&Contents"
 msgstr "Obsah"
 
-#: i18n.cpp:187
+#: i18n.cpp:188
 msgid "Best &practice"
 msgstr "Osvědčené postupy"
 
-#: i18n.cpp:188
+#: i18n.cpp:189
 msgid "&Frequently asked questions"
 msgstr "Často kladené otázky"
 
-#: i18n.cpp:189
+#: i18n.cpp:190
 msgid "Cluster map &legend"
 msgstr "Legenda k mapě svazku"
 
-#: i18n.cpp:191
+#: i18n.cpp:192
 msgid "&Debug"
 msgstr "Ladit"
 
-#: i18n.cpp:192 upgrade.cpp:162
+#: i18n.cpp:193 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr "Aktualizace"
 
-#: i18n.cpp:194
+#: i18n.cpp:196
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:195
+#: i18n.cpp:197
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:198
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:199
 msgid "&Check now"
 msgstr "Zjistit nyní"
 
-#: i18n.cpp:198
+#: i18n.cpp:200
 msgid "&About"
 msgstr "O aplikaci"
 
-#: i18n.cpp:201 utils.cpp:327
+#: i18n.cpp:203 utils.cpp:327
 msgid "Open &log"
 msgstr "Otevřít log"
 
-#: i18n.cpp:202
+#: i18n.cpp:204
 msgid "Send bug &report"
 msgstr "Odeslat chybový protokol"
 
-#: i18n.cpp:207
+#: i18n.cpp:209
 msgid "Boot time script"
 msgstr "Skript při startu OS"
 
-#: i18n.cpp:214
+#: i18n.cpp:216
 msgid "Drive"
 msgstr "Jednotka"
 
-#: i18n.cpp:215
+#: i18n.cpp:217
 msgid "Status"
 msgstr "Stav"
 
-#: i18n.cpp:216
+#: i18n.cpp:218
 msgid "Fragmentation"
 msgstr "Fragmentace"
 
-#: i18n.cpp:217
+#: i18n.cpp:219
 msgid "Total space"
 msgstr "Kapacita"
 
-#: i18n.cpp:218
+#: i18n.cpp:220
 msgid "Free space"
 msgstr "Volné místo"
 
-#: i18n.cpp:219
+#: i18n.cpp:221
 #, c-format
 msgid "% free"
 msgstr "% volného místa"
@@ -311,3 +311,7 @@ msgstr "Storno"
 #: utils.cpp:330
 msgid "Error!"
 msgstr "Chyba!"
+
+#: vollist.cpp:220
+msgid "Disk needs to be repaired"
+msgstr ""
