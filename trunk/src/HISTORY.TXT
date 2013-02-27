@@ -15,6 +15,10 @@
 
   Version 6.0.0 2013-03-
   ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Chinese (Traditional)
+
     RC3:
     - fixed bug #175 "End of stage shows completion at 0.0%"
     - log creation in case of out of memory condition added

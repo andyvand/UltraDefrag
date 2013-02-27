@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-24 11:18+0100\n"
-"PO-Revision-Date: 2013-02-24 15:41+0000\n"
+"POT-Creation-Date: 2013-02-25 22:51+0100\n"
+"PO-Revision-Date: 2013-02-27 19:49+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "優化MFT(&O)"
 
 #: i18n.cpp:132
 msgid "Pa&use"
-msgstr "暫停(&P)"
+msgstr "暫停(&U)"
 
 #: i18n.cpp:133
 msgid "&Stop"
@@ -140,7 +140,7 @@ msgstr "圖形介面(&G)"
 
 #: i18n.cpp:158 i18n.cpp:207
 msgid "&Boot time scan"
-msgstr "開機時進行重組(&B)"
+msgstr "開機重組(&B)"
 
 #: i18n.cpp:159
 msgid "&Sorting"
@@ -276,7 +276,7 @@ msgstr "狀態"
 
 #: i18n.cpp:218
 msgid "Fragmentation"
-msgstr "分散"
+msgstr "分散率"
 
 #: i18n.cpp:219
 msgid "Total space"
@@ -289,7 +289,7 @@ msgstr "可用空間"
 #: i18n.cpp:221
 #, c-format
 msgid "% free"
-msgstr "%可用"
+msgstr "％可用"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
@@ -313,4 +313,4 @@ msgstr ""
 
 #: vollist.cpp:220
 msgid "Disk needs to be repaired"
-msgstr ""
+msgstr "磁碟需要修復"
