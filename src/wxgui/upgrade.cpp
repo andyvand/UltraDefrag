@@ -42,7 +42,7 @@ enum {
     UPGRADE_ALL
 };
 
-#define VERSION_URL "http://ultradefrag.sourceforge.net/version.ini"
+#define VERSION_URL        "http://ultradefrag.sourceforge.net/version.ini"
 #define STABLE_VERSION_URL "http://ultradefrag.sourceforge.net/stable-version.ini"
 
 // =======================================================================
@@ -66,7 +66,7 @@ void *UpgradeThread::Entry()
                 const char *cv = VERSIONINTITLE;
                 int current = ParseVersionString(&cv[12]);
 
-                itrace("last version   : UltraDefrag %ls",lv.wc_str());
+                itrace("latest version : UltraDefrag %ls",lv.wc_str());
                 itrace("current version: %hs",cv);
 
                 if(last && current && last > current){
