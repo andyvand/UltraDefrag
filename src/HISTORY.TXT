@@ -13,7 +13,7 @@
     - wgx library removed entirely
 
 
-  Version 6.0.0 2013-03-
+  Version 6.0.0 2013-03-02
   ------------------------------------------------------------------------------
     - the following translations were updated:
 
