@@ -1,16 +1,23 @@
 ﻿HISTORY
 
-  Version 7.0.0 2013-03-
+  Version 7.0.0 2013-06-
   ------------------------------------------------------------------------------
     beta1:
     - GUI and command line tool reimplemented on top of wxWidgets library
     - initial language selection is now done by the GUI instead of the installer
     - internal GUI settings moved from guiopts-internals.lua to gui.ini file
-    - Windows NT 4.0 and Windows 2000 support dropped due to a poor system API
+    - Windows NT 4.0 and Windows 2000 support dropped due to poor API support
     - Internals: Windows Driver Kit support dropped because of its
       unreliable development environment - use Windows SDK v7.1 instead
     - winx_vswprintf and winx_swprintf routines added to zenwinx library
-    - wgx library removed entirely
+    - wgx library replaced by wxWidgets library
+
+
+  Version 6.0.1 2013-04-
+  ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Ukrainian
 
 
   Version 6.0.0 2013-03-02
