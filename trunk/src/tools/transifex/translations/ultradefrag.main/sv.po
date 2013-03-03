@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:47+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 15:31+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "Boot-skanning"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "sortering"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "Redigera skript"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "genom väg"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "efter storlek"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "Genom att skapa tid"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "Genom senaste ändring tid"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "Av förra åtkomsttid"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "I stigande ordning"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "I fallande ordning"
 
 #: i18n.cpp:187
 msgid "&Contents"

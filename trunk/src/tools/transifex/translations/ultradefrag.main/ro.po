@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:44+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 15:16+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr "Pauzã"
 
 #: i18n.cpp:133
 msgid "&Stop"
-msgstr ""
+msgstr "oprire"
 
 #: i18n.cpp:134
 msgid "Re&peat action"
@@ -168,7 +168,7 @@ msgstr "Trimite traducerea curentă"
 
 #: i18n.cpp:170
 msgid "&Font"
-msgstr ""
+msgstr "fontul"
 
 #: i18n.cpp:171
 msgid "&Options"
@@ -180,7 +180,7 @@ msgstr "Activează"
 
 #: i18n.cpp:175
 msgid "&Script"
-msgstr ""
+msgstr "scriptul"
 
 #: i18n.cpp:178
 msgid "By &path"

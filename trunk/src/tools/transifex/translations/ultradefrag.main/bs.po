@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-24 11:18+0100\n"
-"PO-Revision-Date: 2013-02-24 15:41+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 10:45+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgstr "&Ništa"
 
 #: i18n.cpp:146
 msgid "Stan&dby"
-msgstr ""
+msgstr "pripravnost"
 
 #: i18n.cpp:147
 msgid "&Hibernate"
@@ -145,7 +145,7 @@ msgstr "&Skeniranje pri pokretanju računara"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "sortiranje"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -153,11 +153,11 @@ msgstr "&Izvještaji"
 
 #: i18n.cpp:164
 msgid "&View change log"
-msgstr ""
+msgstr "Pogledajte promijeniti zapisnik"
 
 #: i18n.cpp:165
 msgid "View translation &report"
-msgstr ""
+msgstr "Pogledajte prijevod izvještaj"
 
 #: i18n.cpp:166
 msgid "&Translations folder"
@@ -165,7 +165,7 @@ msgstr "&Prevodi"
 
 #: i18n.cpp:167
 msgid "&Submit current translation"
-msgstr ""
+msgstr "Slanje trenutni prijevod"
 
 #: i18n.cpp:170
 msgid "&Font"
@@ -225,7 +225,7 @@ msgstr "&Česta pitanja i odgovori"
 
 #: i18n.cpp:190
 msgid "Cluster map &legend"
-msgstr ""
+msgstr "Klaster karta legenda"
 
 #: i18n.cpp:192
 msgid "&Debug"
@@ -257,11 +257,11 @@ msgstr "&O programu"
 
 #: i18n.cpp:203 utils.cpp:327
 msgid "Open &log"
-msgstr ""
+msgstr "Otvorite log"
 
 #: i18n.cpp:204
 msgid "Send bug &report"
-msgstr ""
+msgstr "Pošalji bug izvještaj"
 
 #: i18n.cpp:209
 msgid "Boot time script"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:38+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 13:01+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "起動時のスキャン"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "ソーティング"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "起動時の設定"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "パスによる"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "サイズによって"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "作成時間によって"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "最終更新時刻によって"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "最後のアクセス時間"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "昇順に"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "降順で"
 
 #: i18n.cpp:187
 msgid "&Contents"
@@ -221,7 +221,7 @@ msgstr "使い方のヒント"
 
 #: i18n.cpp:189
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "よくある質問"
 
 #: i18n.cpp:190
 msgid "Cluster map &legend"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:39+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 14:22+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "&Effectus per Windows initium"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "voluptua"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -165,7 +165,7 @@ msgstr "Liber &translationis"
 
 #: i18n.cpp:167
 msgid "&Submit current translation"
-msgstr ""
+msgstr "Submittere currenti translatio"
 
 #: i18n.cpp:170
 msgid "&Font"
@@ -185,31 +185,31 @@ msgstr "&Scriptum"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "per semitam"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "per moles"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "Per creationem tempus"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "Per ultimo modificatio tempus"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "Per ultimo accessum tempus"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "In ascendendo ordinem"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "In descendendo ordinem"
 
 #: i18n.cpp:187
 msgid "&Contents"
@@ -261,7 +261,7 @@ msgstr "&Aperire stipes"
 
 #: i18n.cpp:204
 msgid "Send bug &report"
-msgstr ""
+msgstr "Mittere mendum auditui"
 
 #: i18n.cpp:209
 msgid "Boot time script"
