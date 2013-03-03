@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:48+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 15:34+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "&துவக்க நேரத்தில் ஸ்கேன்"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "வரிசையாக்க"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "&லிபி"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "கிளை வழி"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "அளவு மூலம்"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "உருவாக்கம் நேரம்"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "கடந்த மாற்றும் நேரம் மூலம்"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "கடந்த அணுகல் முறை"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "ஏறுவரிசையில் உள்ள"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "இறங்கு வரிசையில்"
 
 #: i18n.cpp:187
 msgid "&Contents"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:33+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 11:02+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "&Skannaus Windows-käynnistyksen myötä"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "lajittelu"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -257,11 +257,11 @@ msgstr "&Ohjelmasta"
 
 #: i18n.cpp:203 utils.cpp:327
 msgid "Open &log"
-msgstr ""
+msgstr "Avaa loki"
 
 #: i18n.cpp:204
 msgid "Send bug &report"
-msgstr ""
+msgstr "Lähetä vikailmoitus"
 
 #: i18n.cpp:209
 msgid "Boot time script"

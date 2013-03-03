@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:45+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 15:21+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "Akcia"
 
 #: i18n.cpp:122
 msgid "&Report"
-msgstr ""
+msgstr "správa"
 
 #: i18n.cpp:123
 msgid "&Settings"
@@ -145,7 +145,7 @@ msgstr "Defragmentovať pri štarte OS"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "Triedenie"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -169,7 +169,7 @@ msgstr "Odoslať váš preklad"
 
 #: i18n.cpp:170
 msgid "&Font"
-msgstr ""
+msgstr "písmo"
 
 #: i18n.cpp:171
 msgid "&Options"
@@ -185,31 +185,31 @@ msgstr "Skript"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "podľa cesty"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "podľa veľkosti"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "Podľa času vytvorenia"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "Do poslednej zmeny času"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "Do posledného prístupu dobe"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "Vo vzostupnom poradí"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "V zostupnom poradí"
 
 #: i18n.cpp:187
 msgid "&Contents"

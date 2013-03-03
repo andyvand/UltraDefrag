@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:37+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 11:09+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "&Waktu scan boot"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "penyortiran"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "&Naskah"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "dengan jalan"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "dengan ukuran"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "Pada waktu penciptaan"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "Pada waktu modifikasi terakhir"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "Dengan waktu akses terakhir"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "Dalam urutan menaik"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "Dalam urutan"
 
 #: i18n.cpp:187
 msgid "&Contents"
@@ -221,7 +221,7 @@ msgstr "&Praktek Terbaik"
 
 #: i18n.cpp:189
 msgid "&Frequently asked questions"
-msgstr ""
+msgstr "Pertanyaan yang sering diajukan"
 
 #: i18n.cpp:190
 msgid "Cluster map &legend"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:48+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 15:39+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "&Pagiiskan sa Simula"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "paghihiwalay"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -169,7 +169,7 @@ msgstr "&Isumite ang kasalukuyang pagsasalin"
 
 #: i18n.cpp:170
 msgid "&Font"
-msgstr ""
+msgstr "benditahan"
 
 #: i18n.cpp:171
 msgid "&Options"

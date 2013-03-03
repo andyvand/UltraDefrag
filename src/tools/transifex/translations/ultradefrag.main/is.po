@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:36+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 11:29+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "Greindu"
 
 #: i18n.cpp:128
 msgid "&Defragment"
-msgstr ""
+msgstr "samstykkjun"
 
 #: i18n.cpp:129
 msgid "&Quick optimization"
@@ -117,7 +117,7 @@ msgstr "Leggjast í vetrardvala"
 
 #: i18n.cpp:148
 msgid "&Logoff"
-msgstr ""
+msgstr "aftengja"
 
 #: i18n.cpp:149
 msgid "&Reboot"
@@ -145,7 +145,7 @@ msgstr "Windows stígvél tími grannskoða"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "Flokkun"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "Skrifletur"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "Með leið"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "eftir stærð"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "Eftir tíma sköpun"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "Eftir síðustu breytingar tíma"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "Eftir síðasta aðgang sinn"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "Í hækkandi röð"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "Í röð"
 
 #: i18n.cpp:187
 msgid "&Contents"

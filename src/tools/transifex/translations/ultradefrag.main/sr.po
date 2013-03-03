@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:45+0000\n"
+"POT-Creation-Date: 2013-03-02 11:53+0100\n"
+"PO-Revision-Date: 2013-03-03 15:27+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "Старт током преузети Windows"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr ""
+msgstr "сортирање"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "Сценарио"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr ""
+msgstr "По путу"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "По величини"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr ""
+msgstr "До време креирања"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr ""
+msgstr "До последњег модификације времена"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr ""
+msgstr "До последњег времена приступа"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr ""
+msgstr "У навише"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr ""
+msgstr "У опадајућем редоследу"
 
 #: i18n.cpp:187
 msgid "&Contents"
