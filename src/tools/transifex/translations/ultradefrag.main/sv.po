@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-02 11:53+0100\n"
-"PO-Revision-Date: 2013-03-03 15:31+0000\n"
+"POT-Creation-Date: 2013-03-03 19:26+0100\n"
+"PO-Revision-Date: 2013-03-04 22:07+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "Optimera MFT"
 
 #: i18n.cpp:132
 msgid "Pa&use"
-msgstr ""
+msgstr "&Paus"
 
 #: i18n.cpp:133
 msgid "&Stop"
@@ -145,7 +145,7 @@ msgstr "Boot-skanning"
 
 #: i18n.cpp:159
 msgid "&Sorting"
-msgstr "sortering"
+msgstr "&Sortera"
 
 #: i18n.cpp:161
 msgid "&Reports"
@@ -185,31 +185,31 @@ msgstr "Redigera skript"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr "genom väg"
+msgstr "Sortera efter &sökväg"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr "efter storlek"
+msgstr "Sortera efter &storlek"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr "Genom att skapa tid"
+msgstr "Sortera efter &skapande datum"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr "Genom senaste ändring tid"
+msgstr "Sortera efter last &modifierings datum"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr "Av förra åtkomsttid"
+msgstr "Sortera efter &senast använd datum"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr "I stigande ordning"
+msgstr "Sortera efter &stigande ordning"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr "I fallande ordning"
+msgstr "Sortera efter &fallande ordning"
 
 #: i18n.cpp:187
 msgid "&Contents"
