@@ -963,6 +963,7 @@ SkipMove:
 ;-----------------------------------------
 
 !macro RemoveObsoleteFiles
+    DetailPrint "Removing obsolete files and settings..."
 
     ; remove files of previous installations
     DeleteRegKey HKLM "SYSTEM\UltraDefrag"
@@ -1086,6 +1087,7 @@ SkipMove:
 ;-----------------------------------------
 
 !macro UpdateUninstallSizeValue
+    DetailPrint "Calculating installation size..."
 
     push $R0
     push $0

@@ -180,7 +180,7 @@ VIAddVersionKey  "FileVersion"     "${ULTRADFGVER}"
  * Component Sections
  */
 
-Section "Ultra Defrag core files (required)" SecCore
+Section "!UltraDefrag core files (required)" SecCore
 
     SectionIn 1 2 RO
 
@@ -263,6 +263,19 @@ SectionGroupEnd
 Section "Turn off usage tracking" SecUsageTracking
 
     ${InstallUsageTracking}
+
+SectionEnd
+
+; this must always be the last install section
+Section "-Finalize" SecFinalize
+
+    SectionIn 1 2 RO
+
+    ${RemoveObsoleteFiles}
+
+    ${WriteTheUninstaller}
+
+    ${UpdateUninstallSizeValue}
 
 SectionEnd
 
@@ -350,12 +363,6 @@ FunctionEnd
 Function .onInstSuccess
 
     ${PreserveInRegistry}
-
-    ${WriteTheUninstaller}
-
-    ${RemoveObsoleteFiles}
-
-    ${UpdateUninstallSizeValue}
 
     ${RegisterInstallationFolder}
 
