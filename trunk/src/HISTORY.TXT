@@ -18,7 +18,7 @@
     - shortened the delay after hitting the finish button of the installer
     - the following translations were updated:
 
-      Italian, Ukrainian
+      Chinese (Traditional), Italian, Portuguese, Ukrainian
 
 
   Version 6.0.0 2013-03-02
