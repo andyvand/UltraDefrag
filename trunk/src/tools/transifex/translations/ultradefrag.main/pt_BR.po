@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-02 11:53+0100\n"
-"PO-Revision-Date: 2013-03-03 15:02+0000\n"
+"POT-Creation-Date: 2013-03-04 23:12+0100\n"
+"PO-Revision-Date: 2013-03-05 21:27+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,31 +185,31 @@ msgstr "&Script"
 
 #: i18n.cpp:178
 msgid "By &path"
-msgstr "por caminho"
+msgstr "Ordenar por &caminho"
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr "por dimensão"
+msgstr "Ordenar por %tamanho"
 
 #: i18n.cpp:180
 msgid "By &creation time"
-msgstr "Por tempo de criação"
+msgstr "Ordenar por data de c&riação"
 
 #: i18n.cpp:181
 msgid "By last &modification time"
-msgstr "Por hora da última modificação"
+msgstr "Ordenar por data de &modificação"
 
 #: i18n.cpp:182
 msgid "By &last access time"
-msgstr "Por último tempo de acesso"
+msgstr "Ordenar por data de &acesso"
 
 #: i18n.cpp:183
 msgid "In &ascending order"
-msgstr "Em ordem crescente"
+msgstr "Ordem c&rescente"
 
 #: i18n.cpp:184
 msgid "In &descending order"
-msgstr "Em ordem decrescente"
+msgstr "Ordem &decrescente"
 
 #: i18n.cpp:187
 msgid "&Contents"

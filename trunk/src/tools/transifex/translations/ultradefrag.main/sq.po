@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# hahaha <1mail2me@gmail.com>, 2013.
 #  <stefan.pendl.71@gmail.com>, 2013.
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-02 11:53+0100\n"
-"PO-Revision-Date: 2013-03-03 15:26+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"POT-Creation-Date: 2013-03-04 23:12+0100\n"
+"PO-Revision-Date: 2013-03-05 00:12+0000\n"
+"Last-Translator: Skender Mustafi <1mail2me@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -189,7 +190,7 @@ msgstr ""
 
 #: i18n.cpp:179
 msgid "By &size"
-msgstr ""
+msgstr "Sipas &madhësisë"
 
 #: i18n.cpp:180
 msgid "By &creation time"
@@ -233,7 +234,7 @@ msgstr "Korrigjo"
 
 #: i18n.cpp:193 upgrade.cpp:162
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Ngrite në version"
 
 #: i18n.cpp:196
 msgid "&Never check"
@@ -306,11 +307,11 @@ msgstr "Ju mund të bëni upgrade/përditësim ^-^"
 
 #: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
-msgstr ""
+msgstr "&Ndalo"
 
 #: utils.cpp:330
 msgid "Error!"
-msgstr ""
+msgstr "Gadim!"
 
 #: vollist.cpp:220
 msgid "Disk needs to be repaired"
