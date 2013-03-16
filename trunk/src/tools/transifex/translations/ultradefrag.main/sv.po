@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+#  <mafa1005@gmail.com>, 2013.
 #  <stefan.pendl.71@gmail.com>, 2013.
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-03 19:26+0100\n"
-"PO-Revision-Date: 2013-03-04 22:07+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"POT-Creation-Date: 2013-03-14 11:07+0100\n"
+"PO-Revision-Date: 2013-03-14 15:14+0000\n"
+"Last-Translator: MAFA1005 <mafa1005@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr ""
 
 #: about.cpp:61
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag hemsida"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -233,7 +234,7 @@ msgstr ""
 
 #: i18n.cpp:193 upgrade.cpp:162
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Uppgradera"
 
 #: i18n.cpp:196
 msgid "&Never check"
@@ -306,11 +307,11 @@ msgstr "Du kan uppdatera mig ^-^"
 
 #: upgrade.cpp:162 utils.cpp:331
 msgid "&Cancel"
-msgstr ""
+msgstr "&Avbryt"
 
 #: utils.cpp:330
 msgid "Error!"
-msgstr ""
+msgstr "Error!"
 
 #: vollist.cpp:220
 msgid "Disk needs to be repaired"
