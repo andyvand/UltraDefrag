@@ -16,6 +16,7 @@
   Version 6.0.1 2013-04-
   ------------------------------------------------------------------------------
     - shortened the delay after hitting the finish button of the installer
+    - increased Windows 8 compatibility
     - the following translations were added:
 
       Armenian

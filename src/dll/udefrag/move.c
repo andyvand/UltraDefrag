@@ -73,6 +73,7 @@ int can_move(winx_file_info *f,udefrag_job_parameters *jp)
         L"*\\BootAuth?.sys", /* DriveCrypt (http://www.securstar.com/) */
         L"*\\$dcsys$",       /* DiskCryptor (Diskencryption Software) */
         L"*\\bootstat.dat",  /* part of Windows */
+        L"*\\bootsqm.dat",   /* part of Windows */
         NULL
     };
     int i;
