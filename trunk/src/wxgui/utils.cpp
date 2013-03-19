@@ -267,8 +267,32 @@ int Utils::MessageDialog(wxFrame *parent,
 
     wxDialog dlg(parent,wxID_ANY,caption);
 
-    wxStaticBitmap *pic = new wxStaticBitmap(&dlg,wxID_ANY,
-        wxArtProvider::GetIcon(icon,wxART_MESSAGE_BOX));
+    // wxAppProvider performs double icon conversion:
+    // once from icon to bitmap and then back to icon;
+    // since it causes the icon to look untidy we're using
+    // direct icon loading here
+    LPCWSTR id = NULL;
+    if(icon == wxART_QUESTION) id = IDI_QUESTION;
+    else if(icon == wxART_WARNING) id = IDI_EXCLAMATION;
+    else if(icon == wxART_ERROR) id = IDI_HAND;
+    else if(icon == wxART_INFORMATION) id = IDI_ASTERISK;
+
+    HICON hIcon = NULL;
+    if(id){
+        hIcon = ::LoadIcon(NULL,id);
+        if(!hIcon) letrace("cannot load icon for \"%ls\"",caption.wc_str());
+    }
+
+    wxIcon messageIcon;
+    if(hIcon){
+        wxSize size = wxGetHiconSize(hIcon);
+        messageIcon.SetSize(size.x, size.y);
+        messageIcon.SetHICON((WXHICON)hIcon);
+    } else {
+        messageIcon = wxArtProvider::GetIcon(icon,wxART_MESSAGE_BOX);
+    }
+
+    wxStaticBitmap *pic = new wxStaticBitmap(&dlg,wxID_ANY,messageIcon);
     wxStaticText *msg = new wxStaticText(&dlg,wxID_ANY,message,
         wxDefaultPosition,wxDefaultSize,wxALIGN_CENTRE);
 
