@@ -319,7 +319,7 @@ bool parse_cmdline(int argc, char **argv)
                 (void)SetConsoleWindowInfo(h,false,&sr);
             }
         } else {
-            letrace("CalculateClusterMapDimensions failed");
+            letrace("cannot get console window size");
         }
     }
 
