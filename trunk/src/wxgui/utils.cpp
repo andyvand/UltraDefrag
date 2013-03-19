@@ -280,7 +280,7 @@ int Utils::MessageDialog(wxFrame *parent,
     HICON hIcon = NULL;
     if(id){
         hIcon = ::LoadIcon(NULL,id);
-        if(!hIcon) letrace("cannot load icon for \"%ls\"",caption.wc_str());
+        if(!hIcon) letrace("cannot load icon for \"%ls\"",icon.wc_str());
     }
 
     wxIcon messageIcon;
