@@ -87,7 +87,6 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     text->Add(homepage,flags);
     text->AddSpacer(space);
 
-    wxDisplay display;
     wxStaticBitmap *bmp = new wxStaticBitmap(&dlg,wxID_ANY,wxBITMAP(ship));
 
     wxSizer *contents = new wxBoxSizer(wxHORIZONTAL);

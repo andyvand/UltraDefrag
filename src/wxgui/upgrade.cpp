@@ -66,8 +66,8 @@ void *UpgradeThread::Entry()
                 const char *cv = VERSIONINTITLE;
                 int current = ParseVersionString(&cv[12]);
 
-                itrace("latest version : UltraDefrag %ls",lv.wc_str());
-                itrace("current version: %hs",cv);
+                itrace("latest version : %ls",lv.wc_str());
+                itrace("current version: %hs",&cv[12]);
 
                 if(last && current && last > current){
                     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowUpgradeDialog);

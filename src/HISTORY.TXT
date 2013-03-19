@@ -12,6 +12,7 @@
     - winx_vswprintf and winx_swprintf routines added to zenwinx library
     - wgx library replaced by wxWidgets library
 
+                                    ***
 
   Version 6.0.1 2013-04-
   ------------------------------------------------------------------------------
@@ -117,6 +118,7 @@
     - Windows Server 2003 DDK needs to be patched in order to compile
       the program; look at rsc/compilation.dox for details
 
+                                    ***
 
   Version 5.1.2  2012-12-18
   ------------------------------------------------------------------------------
