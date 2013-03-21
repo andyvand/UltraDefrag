@@ -36,6 +36,13 @@
 
 #include "main.h"
 
+extern "C" {
+#define lua_c
+#include "../lua5.1/lua.h"
+#include "../lua5.1/lauxlib.h"
+#include "../lua5.1/lualib.h"
+}
+
 // =======================================================================
 //                      Application configuration
 // =======================================================================
@@ -133,9 +140,180 @@ void MainFrame::SaveAppConfiguration()
 //                          User preferences
 // =======================================================================
 
+#define UD_AdjustOption(name) { \
+    if(!wxGetEnv(wxT("UD_") wxT(#name),NULL)) \
+        wxSetEnv(wxT("UD_") wxT(#name), \
+            wxString::Format(wxT("%u"),DEFAULT_##name)); \
+}
+
+void MainFrame::ReadUserPreferences()
+{
+    /*
+    * The program should be configurable
+    * through guiopts.lua file only.
+    */
+    wxUnsetEnv(wxT("UD_DBGPRINT_LEVEL"));
+    wxUnsetEnv(wxT("UD_DISABLE_REPORTS"));
+    wxUnsetEnv(wxT("UD_DRY_RUN"));
+    wxUnsetEnv(wxT("UD_EX_FILTER"));
+    wxUnsetEnv(wxT("UD_FILE_SIZE_THRESHOLD"));
+    wxUnsetEnv(wxT("UD_FRAGMENT_SIZE_THRESHOLD"));
+    wxUnsetEnv(wxT("UD_FRAGMENTATION_THRESHOLD"));
+    wxUnsetEnv(wxT("UD_FRAGMENTS_THRESHOLD"));
+    wxUnsetEnv(wxT("UD_FREE_COLOR_R"));
+    wxUnsetEnv(wxT("UD_FREE_COLOR_G"));
+    wxUnsetEnv(wxT("UD_FREE_COLOR_B"));
+    wxUnsetEnv(wxT("UD_GRID_COLOR_R"));
+    wxUnsetEnv(wxT("UD_GRID_COLOR_G"));
+    wxUnsetEnv(wxT("UD_GRID_COLOR_B"));
+    wxUnsetEnv(wxT("UD_GRID_LINE_WIDTH"));
+    wxUnsetEnv(wxT("UD_IN_FILTER"));
+    wxUnsetEnv(wxT("UD_LOG_FILE_PATH"));
+    wxUnsetEnv(wxT("UD_MAP_BLOCK_SIZE"));
+    wxUnsetEnv(wxT("UD_MINIMIZE_TO_SYSTEM_TRAY"));
+    wxUnsetEnv(wxT("UD_OPTIMIZER_FILE_SIZE_THRESHOLD"));
+    wxUnsetEnv(wxT("UD_REFRESH_INTERVAL"));
+    wxUnsetEnv(wxT("UD_SECONDS_FOR_SHUTDOWN_REJECTION"));
+    wxUnsetEnv(wxT("UD_SHOW_MENU_ICONS"));
+    wxUnsetEnv(wxT("UD_SHOW_PROGRESS_IN_TASKBAR"));
+    wxUnsetEnv(wxT("UD_SHOW_TASKBAR_ICON_OVERLAY"));
+    wxUnsetEnv(wxT("UD_SORTING"));
+    wxUnsetEnv(wxT("UD_SORTING_ORDER"));
+    wxUnsetEnv(wxT("UD_TIME_LIMIT"));
+
+    /* interprete guiopts.lua file */
+    lua_State *L; int status;
+    wxFileName path(wxT(".\\options\\guiopts.lua"));
+    path.Normalize();
+    if(!path.FileExists()){
+        etrace("%ls file not found",
+            path.GetFullPath().wc_str());
+        goto done;
+    }
+
+    L = lua_open();
+    if(!L){
+        etrace("Lua initialization failed");
+        goto done;
+    }
+
+    /* stop collector during initialization */
+    lua_gc(L,LUA_GCSTOP,0);
+    luaL_openlibs(L);
+    lua_gc(L,LUA_GCRESTART,0);
+
+    status = luaL_dofile(L,path.GetFullPath().char_str());
+    if(status != 0){
+        wxString error = wxT("cannot interprete ") + path.GetFullPath();
+        etrace("%ls",error.wc_str());
+        if(!lua_isnil(L,-1)){
+            const char *msg = lua_tostring(L,-1);
+            if(!msg) msg = "(error object is not a string)";
+            etrace("%hs",msg);
+            error += wxString::Format(wxT("\n%hs"),msg);
+            lua_pop(L, 1);
+        }
+        wxMessageDialog dlg(NULL,error,
+            wxT("UltraDefrag"),wxOK | wxICON_ERROR);
+        dlg.ShowModal();
+    }
+
+    lua_close(L);
+
+done:
+    // ensure that GUI specific options are always set
+    UD_AdjustOption(DRY_RUN);
+    UD_AdjustOption(GRID_COLOR_R);
+    UD_AdjustOption(GRID_COLOR_G);
+    UD_AdjustOption(GRID_COLOR_B);
+    UD_AdjustOption(GRID_LINE_WIDTH);
+    UD_AdjustOption(FREE_COLOR_R);
+    UD_AdjustOption(FREE_COLOR_G);
+    UD_AdjustOption(FREE_COLOR_B);
+    UD_AdjustOption(MAP_BLOCK_SIZE);
+    UD_AdjustOption(MINIMIZE_TO_SYSTEM_TRAY);
+    UD_AdjustOption(SECONDS_FOR_SHUTDOWN_REJECTION);
+    UD_AdjustOption(SHOW_MENU_ICONS);
+    UD_AdjustOption(SHOW_PROGRESS_IN_TASKBAR);
+    UD_AdjustOption(SHOW_TASKBAR_ICON_OVERLAY);
+
+    // reset log file path
+    wxString v;
+    if(wxGetEnv(wxT("UD_LOG_FILE_PATH"),&v)){
+        wxFileName logpath(v); logpath.Normalize();
+        wxSetEnv(wxT("UD_LOG_FILE_PATH"),logpath.GetFullPath());
+    }
+    ::udefrag_set_log_file_path();
+}
+
+// checks whether an option has non-zero value or not
+bool MainFrame::CheckOption(const wxString& name)
+{
+    wxString value;
+    if(wxGetEnv(name,&value)){
+        unsigned long v;
+        if(value.ToULong(&v))
+            return v;
+    }
+    return false;
+}
+
+#undef UD_AdjustOption
+
 // =======================================================================
 //                      User preferences tracking
 // =======================================================================
+
+void *ConfigThread::Entry()
+{
+    ULONGLONG counter = 0;
+
+    itrace("configuration tracking started");
+
+    HANDLE h = FindFirstChangeNotification(wxT(".\\options"),
+        FALSE,FILE_NOTIFY_CHANGE_LAST_WRITE);
+    if(h == INVALID_HANDLE_VALUE){
+        letrace("FindFirstChangeNotification failed");
+        goto done;
+    }
+
+    while(!m_stop){
+        DWORD status = WaitForSingleObject(h,100);
+        if(status == WAIT_OBJECT_0){
+            if(!(counter % 2)){
+                /*
+                * Do nothing, 'cause
+                * "If a change occurs after a call
+                * to FindFirstChangeNotification but
+                * before a call to FindNextChangeNotification,
+                * the operating system records the change.
+                * When FindNextChangeNotification is executed,
+                * the recorded change immediately satisfies
+                * a wait for the change notification." (MSDN)
+                * And so on... it happens between
+                * FindNextChangeNotification calls too.
+                *
+                * However, everything mentioned above is false
+                * when the program modifies the file itself.
+                */
+            } else {
+                itrace("configuration has been changed");
+            }
+            counter ++;
+            /* wait for the next notification */
+            if(!FindNextChangeNotification(h)){
+                letrace("FindNextChangeNotification failed");
+                break;
+            }
+        }
+    }
+
+    FindCloseChangeNotification(h);
+
+done:
+    itrace("configuration tracking stopped");
+    return NULL;
+}
 
 // =======================================================================
 //                            Event handlers

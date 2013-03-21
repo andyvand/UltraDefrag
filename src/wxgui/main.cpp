@@ -169,7 +169,7 @@ bool App::OnInit()
  */
 void App::Cleanup()
 {
-    // save internal settings
+    // flush configuration to disk
     delete wxConfigBase::Set(NULL);
 
     // stop web statistics
@@ -206,8 +206,9 @@ MainFrame::MainFrame()
     // set main window icon
     SetIcons(wxICON(appicon));
 
-    // read saved configuration
+    // read configuration
     ReadAppConfiguration();
+    ReadUserPreferences();
 
     // set main window title
     wxString *instdir = new wxString();
@@ -229,6 +230,8 @@ MainFrame::MainFrame()
     } else {
         m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
     }
+    if(CheckOption(wxT("UD_DRY_RUN")))
+       *m_title += wxT(" (dry run)");
     SetTitle(*m_title);
     delete instdir;
 
@@ -319,6 +322,8 @@ MainFrame::MainFrame()
     m_btdThread->m_stop = btd ? false : true;
     m_btdThread->Run();
 
+    m_configThread = new ConfigThread();
+
     // set localized text
     wxCommandEvent event;
     event.SetId(ID_LocaleChange+g_locale->GetLanguage());
@@ -331,6 +336,7 @@ MainFrame::MainFrame()
 MainFrame::~MainFrame()
 {
     // save configuration
+    delete m_configThread;
     SaveAppConfiguration();
 
     // terminate threads

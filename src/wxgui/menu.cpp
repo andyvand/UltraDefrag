@@ -247,26 +247,28 @@ void MainFrame::InitMenu()
     SetMenuBar(m_menuBar);
 
     // set menu icons
-    wxBitmap *pic; wxString string;
-    UD_SetMenuIcon(ID_Analyze         , glass )
-    UD_SetMenuIcon(ID_Defrag          , defrag)
-    UD_SetMenuIcon(ID_QuickOpt        , quick )
-    UD_SetMenuIcon(ID_FullOpt         , full  )
-    UD_SetMenuIcon(ID_MftOpt          , mft   )
-    UD_SetMenuIcon(ID_Stop            , stop  )
-    UD_SetMenuIcon(ID_ShowReport      , report)
-    UD_SetMenuIcon(ID_GuiOptions      , gear  )
-    UD_SetMenuIcon(ID_BootScript      , script)
-    UD_SetMenuIcon(ID_HelpContents    , help  )
-    UD_SetMenuIcon(ID_HelpBestPractice, light )
-    UD_SetMenuIcon(ID_HelpAbout       , star  )
+    if(CheckOption(wxT("UD_SHOW_MENU_ICONS"))){
+        wxBitmap *pic; wxString string;
+        UD_SetMenuIcon(ID_Analyze         , glass )
+        UD_SetMenuIcon(ID_Defrag          , defrag)
+        UD_SetMenuIcon(ID_QuickOpt        , quick )
+        UD_SetMenuIcon(ID_FullOpt         , full  )
+        UD_SetMenuIcon(ID_MftOpt          , mft   )
+        UD_SetMenuIcon(ID_Stop            , stop  )
+        UD_SetMenuIcon(ID_ShowReport      , report)
+        UD_SetMenuIcon(ID_GuiOptions      , gear  )
+        UD_SetMenuIcon(ID_BootScript      , script)
+        UD_SetMenuIcon(ID_HelpContents    , help  )
+        UD_SetMenuIcon(ID_HelpBestPractice, light )
+        UD_SetMenuIcon(ID_HelpAbout       , star  )
 
-    wxMenuItemList list; size_t count, index;
-    UD_SetMarginWidth(m_menuBar->GetMenu(0))
-    UD_SetMarginWidth(m_menuBar->GetMenu(1))
-    UD_SetMarginWidth(m_menuBar->GetMenu(3))
-    UD_SetMarginWidth(menuGUIconfig)
-    UD_SetMarginWidth(menuBootConfig)
+        wxMenuItemList list; size_t count, index;
+        UD_SetMarginWidth(m_menuBar->GetMenu(0))
+        UD_SetMarginWidth(m_menuBar->GetMenu(1))
+        UD_SetMarginWidth(m_menuBar->GetMenu(3))
+        UD_SetMarginWidth(menuGUIconfig)
+        UD_SetMarginWidth(menuBootConfig)
+    }
 
     // initial settings
     m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);

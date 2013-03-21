@@ -259,29 +259,7 @@ dry_run = $dry_run
 seconds_for_shutdown_rejection = $seconds_for_shutdown_rejection
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Set disable_latest_version_check parameter to 1 to disable the automatic
--- check for the latest available version of the program on startup.
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-disable_latest_version_check = $disable_latest_version_check
-
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Set scale_by_dpi parameter to 0 to not scale the buttons and text
--- according to the screens DPI settings.
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-scale_by_dpi = $scale_by_dpi
-
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Set restore_default_window_size parameter to 1
--- to restore default window size on the next startup.
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-restore_default_window_size = $restore_default_window_size
-
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- Set show_menu_icons parameter to 1 to show menu icons
--- on Vista and more recent Windows editions.
+-- Set show_menu_icons parameter to 0 if menu icons look untidy on your system.
 -- Note: restart the program after this parameter adjustment.
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -359,6 +337,21 @@ if shellex_flag then
 end
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- V. Notes
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Instead of obsolete disable_latest_version_check parameter
+-- use Help -> Upgrade menu.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- Instead of obsolete restore_default_window_size parameter use
+-- remove width and height parameters from gui.ini file to restore
+-- default window size on the next startup.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- this number helps to upgrade configuration file correctly, don't change it
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -384,6 +377,7 @@ if include_video ~= 0 then in_filter = in_filter .. ";" .. video_patterns end
 -- this code initializes the environment for UltraDefrag, don't modify it
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+-- common options
 os.setenv("UD_IN_FILTER",in_filter)
 os.setenv("UD_EX_FILTER",ex_filter)
 os.setenv("UD_FRAGMENT_SIZE_THRESHOLD",fragment_size_threshold)
@@ -397,6 +391,21 @@ os.setenv("UD_DISABLE_REPORTS",disable_reports)
 os.setenv("UD_DBGPRINT_LEVEL",dbgprint_level)
 os.setenv("UD_LOG_FILE_PATH",log_file_path)
 os.setenv("UD_DRY_RUN",dry_run)
+
+-- GUI specific options
+os.setenv("UD_SECONDS_FOR_SHUTDOWN_REJECTION",seconds_for_shutdown_rejection)
+os.setenv("UD_SHOW_MENU_ICONS",show_menu_icons)
+os.setenv("UD_SHOW_TASKBAR_ICON_OVERLAY",show_taskbar_icon_overlay)
+os.setenv("UD_SHOW_PROGRESS_IN_TASKBAR",show_progress_in_taskbar)
+os.setenv("UD_MINIMIZE_TO_SYSTEM_TRAY",minimize_to_system_tray)
+os.setenv("UD_MAP_BLOCK_SIZE",map_block_size)
+os.setenv("UD_GRID_LINE_WIDTH",grid_line_width)
+os.setenv("UD_GRID_COLOR_R",grid_color_r)
+os.setenv("UD_GRID_COLOR_G",grid_color_g)
+os.setenv("UD_GRID_COLOR_B",grid_color_b)
+os.setenv("UD_FREE_COLOR_R",free_color_r)
+os.setenv("UD_FREE_COLOR_G",free_color_g)
+os.setenv("UD_FREE_COLOR_B",free_color_b)
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- END OF FILE
@@ -447,9 +456,6 @@ function get_preferences()
     log_file_path = ".\\logs\\ultradefrag.log"
     dry_run = 0
     seconds_for_shutdown_rejection = 60
-    disable_latest_version_check = 0
-    scale_by_dpi = 1
-    restore_default_window_size = 0
     show_menu_icons = 1
     show_taskbar_icon_overlay = 1
     show_progress_in_taskbar = 1
@@ -494,7 +500,8 @@ end
 
 -- THE MAIN CODE STARTS HERE
 -- current version of configuration file
-current_version = 115
+-- 0 - 99 for v5; 100 - 199 for v6; 200+ for v7
+current_version = 200
 shellex_options = ""
 _G_copy = {}
 
