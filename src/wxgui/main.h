@@ -236,6 +236,9 @@ public:
     void OnHelpAbout(wxCommandEvent& event);
 
     // event handlers
+    void ReadUserPreferences(wxCommandEvent& event);
+    void SetWindowTitle(wxCommandEvent& event);
+
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
@@ -414,6 +417,8 @@ enum {
     ID_UpdateVolumeInformation,
     ID_AdjustListColumns,
     ID_AdjustListHeight,
+    ID_ReadUserPreferences,
+    ID_SetWindowTitle,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange

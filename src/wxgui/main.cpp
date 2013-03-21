@@ -208,7 +208,9 @@ MainFrame::MainFrame()
 
     // read configuration
     ReadAppConfiguration();
-    ReadUserPreferences();
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,
+        ID_ReadUserPreferences);
+    ReadUserPreferences(event);
 
     // set main window title
     wxString *instdir = new wxString();
@@ -230,9 +232,9 @@ MainFrame::MainFrame()
     } else {
         m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
     }
-    if(CheckOption(wxT("UD_DRY_RUN")))
-       *m_title += wxT(" (dry run)");
-    SetTitle(*m_title);
+    event.SetId(ID_SetWindowTitle);
+    event.SetString(wxT(""));
+    ProcessEvent(event);
     delete instdir;
 
     // set main window size and position
@@ -325,7 +327,6 @@ MainFrame::MainFrame()
     m_configThread = new ConfigThread();
 
     // set localized text
-    wxCommandEvent event;
     event.SetId(ID_LocaleChange+g_locale->GetLanguage());
     OnLocaleChange(event);
 }
@@ -428,11 +429,26 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_AdjustListHeight, MainFrame::AdjustListHeight)
     EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
     EVT_MENU(ID_UpdateVolumeInformation, MainFrame::UpdateVolumeInformation)
+    EVT_MENU(ID_ReadUserPreferences, MainFrame::ReadUserPreferences)
+    EVT_MENU(ID_SetWindowTitle, MainFrame::SetWindowTitle)
 END_EVENT_TABLE()
 
 // =======================================================================
 //                            Event handlers
 // =======================================================================
+
+void MainFrame::SetWindowTitle(wxCommandEvent& event)
+{
+    if(event.GetString().IsEmpty()){
+        if(CheckOption(wxT("UD_DRY_RUN"))){
+            SetTitle(*m_title + wxT(" (dry run)"));
+        } else {
+            SetTitle(*m_title);
+        }
+    } else {
+        SetTitle(event.GetString());
+    }
+}
 
 void MainFrame::OnMove(wxMoveEvent& event)
 {
