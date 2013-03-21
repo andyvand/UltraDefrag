@@ -134,6 +134,18 @@ public:
     bool m_stop;
 };
 
+class ConfigThread: public wxThread {
+public:
+    ConfigThread() : wxThread(wxTHREAD_JOINABLE) {
+        m_stop = false; Create(); Run();
+    }
+    ~ConfigThread() { m_stop = true; Wait(); }
+
+    virtual void *Entry();
+
+    bool m_stop;
+};
+
 class ListThread: public wxThread {
 public:
     ListThread() : wxThread(wxTHREAD_JOINABLE) {
@@ -246,6 +258,8 @@ public:
 private:
     void ReadAppConfiguration();
     void SaveAppConfiguration();
+    void ReadUserPreferences();
+    bool CheckOption(const wxString& name);
 
     void InitLocale();
     void SetLocale(int id);
@@ -295,8 +309,9 @@ private:
     bool m_btdEnabled;
     BtdThread *m_btdThread;
 
-    ListThread      *m_listThread;
+    ConfigThread    *m_configThread;
     CrashInfoThread *m_crashInfoThread;
+    ListThread      *m_listThread;
     UpgradeThread   *m_upgradeThread;
 
     DECLARE_EVENT_TABLE()
@@ -410,6 +425,21 @@ enum {
 #define MAIN_WINDOW_MIN_HEIGHT     375
 #define DEFAULT_LIST_HEIGHT        130
 #define MIN_PANEL_HEIGHT            40
+
+#define DEFAULT_DRY_RUN          0
+#define DEFAULT_FREE_COLOR_R   255
+#define DEFAULT_FREE_COLOR_G   255
+#define DEFAULT_FREE_COLOR_B   255
+#define DEFAULT_GRID_COLOR_R     0
+#define DEFAULT_GRID_COLOR_G     0
+#define DEFAULT_GRID_COLOR_B     0
+#define DEFAULT_GRID_LINE_WIDTH  1
+#define DEFAULT_MAP_BLOCK_SIZE   4
+#define DEFAULT_MINIMIZE_TO_SYSTEM_TRAY          0
+#define DEFAULT_SECONDS_FOR_SHUTDOWN_REJECTION  60
+#define DEFAULT_SHOW_MENU_ICONS                  1
+#define DEFAULT_SHOW_PROGRESS_IN_TASKBAR         1
+#define DEFAULT_SHOW_TASKBAR_ICON_OVERLAY        1
 
 /* user defined language IDs
    Important: never change their order when adding new translations
