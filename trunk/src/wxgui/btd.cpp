@@ -44,19 +44,19 @@ void *BtdThread::Entry()
 {
     itrace("boot registration tracking started");
 
-    HKEY hKey;
+    HKEY hKey; HANDLE hEvent;
     if(::RegOpenKeyExW(HKEY_LOCAL_MACHINE,
       L"SYSTEM\\CurrentControlSet\\Control\\Session Manager",
       0,KEY_NOTIFY,&hKey) != ERROR_SUCCESS){
         letrace("cannot open SMSS key");
-        return NULL;
+        goto done;
     }
 
-    HANDLE hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
+    hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
     if(hEvent == NULL){
         letrace("cannot create event for SMSS key tracking");
         ::RegCloseKey(hKey);
-        return NULL;
+        goto done;
     }
 
     while(!m_stop){
@@ -82,9 +82,11 @@ void *BtdThread::Entry()
         }
     }
 
-    itrace("boot registration tracking stopped");
     ::CloseHandle(hEvent);
     ::RegCloseKey(hKey);
+
+done:
+    itrace("boot registration tracking stopped");
     return NULL;
 }
 
