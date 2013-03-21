@@ -146,7 +146,7 @@ void MainFrame::SaveAppConfiguration()
             wxString::Format(wxT("%u"),DEFAULT_##name)); \
 }
 
-void MainFrame::ReadUserPreferences()
+void MainFrame::ReadUserPreferences(wxCommandEvent& WXUNUSED(event))
 {
     /*
     * The program should be configurable
@@ -298,6 +298,14 @@ void *ConfigThread::Entry()
                 */
             } else {
                 itrace("configuration has been changed");
+                wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,
+                    ID_ReadUserPreferences);
+                wxPostEvent(g_mainFrame,event);
+
+                // adjust window title
+                event.SetId(ID_SetWindowTitle);
+                event.SetString(wxT(""));
+                wxPostEvent(g_mainFrame,event);
             }
             counter ++;
             /* wait for the next notification */
