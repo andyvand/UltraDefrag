@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-16 16:45+0100\n"
+"POT-Creation-Date: 2013-03-22 00:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,7 +252,7 @@ msgstr ""
 msgid "&About"
 msgstr ""
 
-#: i18n.cpp:203 utils.cpp:327
+#: i18n.cpp:203 utils.cpp:351
 msgid "Open &log"
 msgstr ""
 
@@ -300,11 +300,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr ""
 
-#: upgrade.cpp:162 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:355
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:330
+#: utils.cpp:354
 msgid "Error!"
 msgstr ""
 
