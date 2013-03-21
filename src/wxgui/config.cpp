@@ -253,7 +253,7 @@ bool MainFrame::CheckOption(const wxString& name)
     if(wxGetEnv(name,&value)){
         unsigned long v;
         if(value.ToULong(&v))
-            return v;
+            return (v != 0 ? true : false);
     }
     return false;
 }
