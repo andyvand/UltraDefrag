@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-24 11:18+0100\n"
+"POT-Creation-Date: 2013-03-22 00:12+0100\n"
 "PO-Revision-Date: 2013-02-06 23:11+0100\n"
 "Last-Translator: Stefan Pendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -258,7 +258,7 @@ msgstr ""
 msgid "&About"
 msgstr "&Bahin han"
 
-#: i18n.cpp:203 utils.cpp:327
+#: i18n.cpp:203 utils.cpp:351
 msgid "Open &log"
 msgstr "Buklará &an talaan"
 
@@ -306,11 +306,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr ""
 
-#: upgrade.cpp:162 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:355
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:330
+#: utils.cpp:354
 msgid "Error!"
 msgstr ""
 
