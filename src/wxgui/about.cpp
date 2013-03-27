@@ -44,6 +44,8 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxDialog dlg(this,wxID_ANY,_("About UltraDefrag"));
 
+    wxStaticBitmap *bmp = new wxStaticBitmap(&dlg,wxID_ANY,wxBITMAP(ship));
+
     wxStaticText *version = new wxStaticText(&dlg,wxID_ANY,wxT(VERSIONINTITLE));
     wxFont fontBig(*wxNORMAL_FONT);
     fontBig.SetPointSize(fontBig.GetPointSize() + 2);
@@ -71,31 +73,39 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
         homepage->SetFont(textFont);
     }
 
-    wxSizerFlags flags;
-    flags.Center().Border(wxLEFT & wxRIGHT);
-    int space = DPI(11);
+    wxSizerFlags flags; flags.Center();
+
+    wxSizer *bmpblock = new wxBoxSizer(wxVERTICAL);
+    bmpblock->AddSpacer(SMALL_SPACING);
+    bmpblock->Add(bmp,flags);
+    bmpblock->AddSpacer(SMALL_SPACING);
 
     wxSizer *text = new wxBoxSizer(wxVERTICAL);
-    text->AddSpacer(space);
+    text->AddSpacer(LARGE_SPACING);
     text->Add(version,flags);
-    text->AddSpacer(space);
+    text->AddSpacer(LARGE_SPACING);
     text->Add(copyright,flags);
-    text->AddSpacer(space);
+    text->AddSpacer(LARGE_SPACING);
     text->Add(description,flags);
     text->Add(credits,flags);
-    text->AddSpacer(space);
+    text->AddSpacer(LARGE_SPACING);
     text->Add(homepage,flags);
-    text->AddSpacer(space);
-
-    wxStaticBitmap *bmp = new wxStaticBitmap(&dlg,wxID_ANY,wxBITMAP(ship));
+    text->AddSpacer(LARGE_SPACING);
 
     wxSizer *contents = new wxBoxSizer(wxHORIZONTAL);
-    contents->Add(bmp,wxSizerFlags().Center().Border());
-    contents->Add(text,wxSizerFlags(1).Center().Border());
+    contents->AddSpacer(SMALL_SPACING);
+    contents->Add(bmpblock,wxSizerFlags().Center());
+    contents->AddSpacer(SMALL_SPACING);
+    contents->AddSpacer(SMALL_SPACING);
+    contents->Add(text,wxSizerFlags(1).Center());
+    contents->AddSpacer(SMALL_SPACING);
     dlg.SetSizerAndFit(contents);
 
     if(!IsIconized()) dlg.Center();
     else dlg.CenterOnScreen();
+
+    // TODO: find a way to close dialog on Escape
+    // and open the web site on Enter key hits
 
     dlg.ShowModal();
 }

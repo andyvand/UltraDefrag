@@ -431,6 +431,10 @@ enum {
 #define DEFAULT_LIST_HEIGHT        130
 #define MIN_PANEL_HEIGHT            40
 
+// dialog layout constants
+#define SMALL_SPACING  DPI(5)
+#define LARGE_SPACING  DPI(11)
+
 #define DEFAULT_DRY_RUN          0
 #define DEFAULT_FREE_COLOR_R   255
 #define DEFAULT_FREE_COLOR_G   255
