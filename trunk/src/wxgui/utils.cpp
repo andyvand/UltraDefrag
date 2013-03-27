@@ -309,12 +309,15 @@ int Utils::MessageDialog(wxFrame *parent,
     // Burmese needs Padauk font for display
     if(g_locale->GetCanonicalName().Left(2) == wxT("my")){
         wxFont textFont = msg->GetFont();
-        textFont.SetFaceName(wxT("Padauk"));
-        textFont.SetPointSize(textFont.GetPointSize() + 2);
+        if(!textFont.SetFaceName(wxT("Padauk"))){
+            etrace("Padauk font needed for correct Burmese text display not found");
+        } else {
+            textFont.SetPointSize(textFont.GetPointSize() + 2);
 
-        msg->SetFont(textFont);
-        ok->SetFont(textFont);
-        cancel->SetFont(textFont);
+            msg->SetFont(textFont);
+            ok->SetFont(textFont);
+            cancel->SetFont(textFont);
+        }
     }
 
     wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);

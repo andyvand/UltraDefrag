@@ -65,12 +65,15 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     // Burmese needs Padauk font for display
     if(g_locale->GetCanonicalName().Left(2) == wxT("my")){
         wxFont textFont = description->GetFont();
-        textFont.SetFaceName(wxT("Padauk"));
-        textFont.SetPointSize(textFont.GetPointSize() + 2);
+        if(!textFont.SetFaceName(wxT("Padauk"))){
+            etrace("Padauk font needed for correct Burmese text display not found");
+        } else {
+            textFont.SetPointSize(textFont.GetPointSize() + 2);
 
-        description->SetFont(textFont);
-        credits->SetFont(textFont);
-        homepage->SetFont(textFont);
+            description->SetFont(textFont);
+            credits->SetFont(textFont);
+            homepage->SetFont(textFont);
+        }
     }
 
     wxSizerFlags flags; flags.Center();
