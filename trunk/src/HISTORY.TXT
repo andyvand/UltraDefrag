@@ -27,7 +27,7 @@
 
     - the following translations were updated:
 
-      Chinese (Traditional), Italian, Portuguese, Ukrainian
+      Chinese (Traditional), Italian, Portuguese, Spanish (AR), Ukrainian
 
 
   Version 6.0.0 2013-03-02
