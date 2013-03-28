@@ -170,14 +170,14 @@ int MainFrame::ShowShutdownDialog(int action)
 
     wxBoxSizer *bottom = new wxBoxSizer(wxHORIZONTAL);
     bottom->AddSpacer(LARGE_SPACING);
-    bottom->Add(yes,flags);
+    bottom->Add(yes,wxSizerFlags(1).Center());
     bottom->AddSpacer(LARGE_SPACING);
-    bottom->Add(no,flags);
+    bottom->Add(no,wxSizerFlags(1).Center());
     bottom->AddSpacer(LARGE_SPACING);
 
     wxSizer *contents = new wxBoxSizer(wxVERTICAL);
     contents->AddSpacer(LARGE_SPACING);
-    contents->Add(top,flags);
+    contents->Add(top,wxSizerFlags().Left());
     contents->AddSpacer(LARGE_SPACING);
     contents->Add(bottom,flags);
     contents->AddSpacer(LARGE_SPACING);
