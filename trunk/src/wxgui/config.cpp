@@ -333,14 +333,24 @@ void MainFrame::OnGuiFont(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnGuiOptions(wxCommandEvent& WXUNUSED(event))
 {
+    if(m_title->Find(wxT("Portable")) != wxNOT_FOUND)
+        Utils::ShellExec(wxT("notepad"),wxT("open"),wxT(".\\options\\guiopts.lua"));
+    else
+        Utils::ShellExec(wxT(".\\options\\guiopts.lua"),wxT("edit"));
 }
 
 void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
 {
+    wxFileName script(wxT("%SystemRoot%\\system32\\ud-boot-time.cmd"));
+    script.Normalize(); Utils::ShellExec(script.GetFullPath(),wxT("edit"));
 }
 
 void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
 {
+    if(m_title->Find(wxT("Portable")) != wxNOT_FOUND)
+        Utils::ShellExec(wxT("notepad"),wxT("open"),wxT(".\\options\\udreportopts.lua"));
+    else
+        Utils::ShellExec(wxT(".\\options\\udreportopts.lua"),wxT("edit"));
 }
 
 void MainFrame::OnSortCriteriaChange(wxCommandEvent& WXUNUSED(event))
