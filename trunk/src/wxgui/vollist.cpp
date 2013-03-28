@@ -82,6 +82,9 @@ void MainFrame::InitVolList()
     Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
     m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
         wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
+
+    // save default font used for the list
+    m_vListFont = new wxFont(m_vList->GetFont());
 }
 
 // =======================================================================

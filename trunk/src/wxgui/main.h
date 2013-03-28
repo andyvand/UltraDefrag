@@ -290,6 +290,8 @@ private:
     // list height
     int m_vListHeight;
 
+    wxFont     *m_vListFont;
+
     wxString   *m_title;
     wxToolBar  *m_toolBar;
     wxMenuBar  *m_menuBar;

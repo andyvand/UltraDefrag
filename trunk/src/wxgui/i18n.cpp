@@ -214,6 +214,17 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     item.SetText(_("Total space"));   m_vList->SetColumn(3,item);
     item.SetText(_("Free space"));    m_vList->SetColumn(4,item);
     item.SetText(_("% free"));        m_vList->SetColumn(5,item);
+
+    // set monospace font for the list unless Burmese translation is selected
+    if(g_locale->GetCanonicalName().Left(2) != wxT("my")){
+        wxFont font = m_vList->GetFont();
+        if(font.SetFaceName(wxT("Courier New"))){
+            font.SetPointSize(DPI(9));
+            m_vList->SetFont(font);
+        }
+    } else {
+        m_vList->SetFont(*m_vListFont);
+    }
 }
 
 bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
