@@ -164,7 +164,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_LangSubmit     , "&Submit current translation" , "");
 
     // graphical interface sub-menu
-    UD_UpdateMenuItemLabel(ID_GuiFont    , "&Font"    , "F9");
     UD_UpdateMenuItemLabel(ID_GuiOptions , "&Options" , "F10");
 
     // boot time scan sub-menu

@@ -206,7 +206,6 @@ public:
     void OnLangOpenTransifex(wxCommandEvent& event);
     void OnLangOpenFolder(wxCommandEvent& event);
 
-    void OnGuiFont(wxCommandEvent& event);
     void OnGuiOptions(wxCommandEvent& event);
 
     void OnBootEnable(wxCommandEvent& event);
@@ -385,7 +384,6 @@ enum {
 
     ID_LangOpenFolder,
 
-    ID_GuiFont,
     ID_GuiOptions,
 
     ID_BootEnable,

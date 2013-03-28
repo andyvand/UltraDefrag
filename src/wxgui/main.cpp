@@ -390,7 +390,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
                    ID_LocaleChange + wxUD_LANGUAGE_LAST,
                    MainFrame::OnLocaleChange)
 
-    EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
     EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
 
     EVT_MENU(ID_BootEnable, MainFrame::OnBootEnable)
