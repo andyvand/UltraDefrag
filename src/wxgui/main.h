@@ -332,8 +332,16 @@ public:
         const wxChar* format, ...);
     static void OpenHandbook(const wxString& page,
         const wxString& anchor = wxEmptyString);
+    static void ShellExec(const wxString& file,
+        const wxString& action = wxT("open"),
+        const wxString& parameters = wxEmptyString,
+        int show = SW_SHOW, int flags = 0);
     static void ShowError(const wxChar* format, ...);
 };
+
+/* flags for Utils::ShellExec */
+#define SHELLEX_SILENT  0x1
+#define SHELLEX_NOASYNC 0x2
 
 // =======================================================================
 //                              Constants

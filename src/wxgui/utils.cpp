@@ -242,6 +242,42 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
 }
 
 /**
+ * @brief Windows ShellExecute analog.
+ */
+void Utils::ShellExec(
+    const wxString& file,
+    const wxString& action,
+    const wxString& parameters,
+    int show, int flags)
+{
+    SHELLEXECUTEINFO se;
+    memset(&se,0,sizeof(se));
+    se.cbSize = sizeof(se);
+
+    se.fMask = SEE_MASK_FLAG_NO_UI;
+    if(flags & SHELLEX_NOASYNC)
+        se.fMask |= SEE_MASK_FLAG_DDEWAIT;
+
+    se.lpVerb = action.wc_str();
+    se.lpFile = file.wc_str();
+    if(!parameters.IsEmpty())
+        se.lpParameters = parameters.wc_str();
+
+    se.nShow = show;
+
+    if(!ShellExecuteEx(&se)){
+        letrace("cannot %ls %ls %ls",
+            action.wc_str(), file.wc_str(),
+            parameters.wc_str());
+        if(!(flags & SHELLEX_SILENT)){
+            ShowError(wxT("Cannot %ls %ls %ls"),
+                action.wc_str(), file.wc_str(),
+                parameters.wc_str());
+        }
+    }
+}
+
+/**
  * @brief wxMessageDialog analog,
  * but with custom button labels
  * and with ability to center dialog
