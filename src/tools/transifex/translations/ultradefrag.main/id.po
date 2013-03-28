@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Catur Susetyo <satyafree@gmail.com>, 2013.
 #  <stefan.pendl.71@gmail.com>, 2013.
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-02 11:53+0100\n"
-"PO-Revision-Date: 2013-03-03 11:09+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"POT-Creation-Date: 2013-03-24 11:38+0100\n"
+"PO-Revision-Date: 2013-03-27 08:39+0000\n"
+"Last-Translator: mascatur <satyafree@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +26,7 @@ msgstr "Tentang UltraDefrag"
 
 #: about.cpp:56
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Alat defrag yang bebas"
 
 #: about.cpp:58
 msgid "Credits and licenses are listed in the handbook."
@@ -33,7 +34,7 @@ msgstr ""
 
 #: about.cpp:61
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Laman web UltraDefrag"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -255,7 +256,7 @@ msgstr ""
 msgid "&About"
 msgstr "&Tentang"
 
-#: i18n.cpp:203 utils.cpp:327
+#: i18n.cpp:203 utils.cpp:351
 msgid "Open &log"
 msgstr "Buka &log"
 
@@ -304,11 +305,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "Anda dapat meng-upgrade saya ^-^"
 
-#: upgrade.cpp:162 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:355
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:330
+#: utils.cpp:354
 msgid "Error!"
 msgstr ""
 
