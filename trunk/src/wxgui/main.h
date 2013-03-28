@@ -195,13 +195,7 @@ public:
 
     void OnRepair(wxCommandEvent& event);
 
-    void OnWhenDoneNone(wxCommandEvent& event);
-    void OnWhenDoneExit(wxCommandEvent& event);
-    void OnWhenDoneStandby(wxCommandEvent& event);
-    void OnWhenDoneHibernate(wxCommandEvent& event);
-    void OnWhenDoneLogoff(wxCommandEvent& event);
-    void OnWhenDoneReboot(wxCommandEvent& event);
-    void OnWhenDoneShutdown(wxCommandEvent& event);
+    void OnWhenDoneChange(wxCommandEvent& event);
 
     void OnExit(wxCommandEvent& event);
 
@@ -253,7 +247,9 @@ public:
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
 
-    void OnShowUpgradeDialog(wxCommandEvent& event);
+    void ShowUpgradeDialog(wxCommandEvent& event);
+
+    void Shutdown(wxCommandEvent& event);
 
     bool m_repeat;
     bool m_skipRem;
@@ -273,6 +269,8 @@ private:
 
     void InitMap();
     void InitVolList();
+
+    int  ShowShutdownDialog(int action);
 
     int  m_x;
     int  m_y;
@@ -364,6 +362,7 @@ enum {
 
     ID_Repair,
 
+    // NOTE: they share a single event handler
     ID_WhenDoneNone,
     ID_WhenDoneExit,
     ID_WhenDoneStandby,
@@ -378,10 +377,12 @@ enum {
     ID_ShowReport,
 
     // settings menu identifiers
+
+    // NOTE: they share a single event handler
     ID_LangShowLog,
     ID_LangShowReport,
     ID_LangSubmit,
-    // items above share the Transifex event handler
+
     ID_LangOpenFolder,
 
     ID_GuiFont,
@@ -392,13 +393,14 @@ enum {
 
     ID_ReportOptions,
 
-    // event registration must be modified to match range
+    // NOTE: they share a single event handler
     ID_SortByPath,
     ID_SortBySize,
     ID_SortByCreationDate,
     ID_SortByModificationDate,
     ID_SortByLastAccessDate,
 
+    // NOTE: they share a single event handler
     ID_SortAscending,
     ID_SortDescending,
 
@@ -411,6 +413,7 @@ enum {
     ID_DebugLog,
     ID_DebugSend,
 
+    // NOTE: they share a single event handler
     ID_HelpUpgradeNone,
     ID_HelpUpgradeStable,
     ID_HelpUpgradeAll,
@@ -427,6 +430,7 @@ enum {
     ID_AdjustListHeight,
     ID_ReadUserPreferences,
     ID_SetWindowTitle,
+    ID_Shutdown,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange

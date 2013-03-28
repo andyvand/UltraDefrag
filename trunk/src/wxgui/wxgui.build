@@ -9,7 +9,7 @@ includes = { "wxgui", "include", "lua5.1", "udefrag" }
 libs = {
     "kernel32", "user32", "gdi32", "comctl32",
     "shell32", "msvcrt", "comdlg32", "advapi32",
-    "ole32", "oleaut32", "uuid"
+    "ole32", "oleaut32", "uuid", "powrprof"
 }
 adlibs = { 
     "$(UDEFRAG_LIB_PATH)\\zenwinx", 

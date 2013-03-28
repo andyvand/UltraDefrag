@@ -371,13 +371,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_Repair, MainFrame::OnRepair)
 
-    EVT_MENU(ID_WhenDoneNone, MainFrame::OnWhenDoneNone)
-    EVT_MENU(ID_WhenDoneExit, MainFrame::OnWhenDoneExit)
-    EVT_MENU(ID_WhenDoneStandby, MainFrame::OnWhenDoneStandby)
-    EVT_MENU(ID_WhenDoneHibernate, MainFrame::OnWhenDoneHibernate)
-    EVT_MENU(ID_WhenDoneLogoff, MainFrame::OnWhenDoneLogoff)
-    EVT_MENU(ID_WhenDoneReboot, MainFrame::OnWhenDoneReboot)
-    EVT_MENU(ID_WhenDoneShutdown, MainFrame::OnWhenDoneShutdown)
+    EVT_MENU_RANGE(ID_WhenDoneNone,
+                   ID_WhenDoneShutdown,
+                   MainFrame::OnWhenDoneChange)
 
     EVT_MENU(ID_Exit, MainFrame::OnExit)
 
@@ -385,12 +381,14 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
 
     // settings menu
-    EVT_MENU_RANGE(ID_LangShowLog, ID_LangSubmit,
-        MainFrame::OnLangOpenTransifex)
+    EVT_MENU_RANGE(ID_LangShowLog,
+                   ID_LangSubmit,
+                   MainFrame::OnLangOpenTransifex)
     EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
 
-    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange + \
-        wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
+    EVT_MENU_RANGE(ID_LocaleChange,
+                   ID_LocaleChange + wxUD_LANGUAGE_LAST,
+                   MainFrame::OnLocaleChange)
 
     EVT_MENU(ID_GuiFont, MainFrame::OnGuiFont)
     EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
@@ -401,10 +399,12 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
 
     EVT_MENU_RANGE(ID_SortByPath,
-        ID_SortByLastAccessDate, MainFrame::OnSortCriteriaChange)
+                   ID_SortByLastAccessDate,
+                   MainFrame::OnSortCriteriaChange)
 
     EVT_MENU_RANGE(ID_SortAscending,
-        ID_SortDescending, MainFrame::OnSortOrderChange)
+                   ID_SortDescending,
+                   MainFrame::OnSortOrderChange)
 
     // help menu
     EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
@@ -416,21 +416,27 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
 
     EVT_MENU_RANGE(ID_HelpUpgradeNone,
-        ID_HelpUpgradeCheck, MainFrame::OnHelpUpgrade)
+                   ID_HelpUpgradeCheck,
+                   MainFrame::OnHelpUpgrade)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
 
     // event handlers
+    EVT_MENU(ID_ReadUserPreferences, MainFrame::ReadUserPreferences)
+    EVT_MENU(ID_SetWindowTitle, MainFrame::SetWindowTitle)
+
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
 
-    EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
-    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::OnShowUpgradeDialog)
     EVT_MENU(ID_AdjustListColumns, MainFrame::AdjustListColumns)
     EVT_MENU(ID_AdjustListHeight, MainFrame::AdjustListHeight)
     EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
     EVT_MENU(ID_UpdateVolumeInformation, MainFrame::UpdateVolumeInformation)
-    EVT_MENU(ID_ReadUserPreferences, MainFrame::ReadUserPreferences)
-    EVT_MENU(ID_SetWindowTitle, MainFrame::SetWindowTitle)
+
+    EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
+
+    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
+
+    EVT_MENU(ID_Shutdown, MainFrame::Shutdown)
 END_EVENT_TABLE()
 
 // =======================================================================
@@ -507,6 +513,8 @@ void MainFrame::OnFullOpt(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnMftOpt(wxCommandEvent& WXUNUSED(event))
 {
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Shutdown);
+    wxPostEvent(this,event);
 }
 
 void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))
@@ -522,34 +530,6 @@ void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
     m_repeat = m_repeat ? false : true;
     m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
     m_toolBar->ToggleTool(ID_Repeat,m_repeat);
-}
-
-void MainFrame::OnWhenDoneNone(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnWhenDoneExit(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnWhenDoneStandby(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnWhenDoneHibernate(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnWhenDoneLogoff(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnWhenDoneReboot(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnWhenDoneShutdown(wxCommandEvent& WXUNUSED(event))
-{
 }
 
 void MainFrame::OnExit(wxCommandEvent& WXUNUSED(event))

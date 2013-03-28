@@ -60,6 +60,7 @@
 			<Add library="libole32.a" />
 			<Add library="liboleaut32.a" />
 			<Add library="libuuid.a" />
+			<Add library="libpowrprof.a" />
 			<Add library="libcomctl32.a" />
 			<Add library="libwsock32.a" />
 			<Add library="libodbc32.a" />
@@ -77,6 +78,7 @@
 		<Unit filename="main.h" />
 		<Unit filename="map.cpp" />
 		<Unit filename="menu.cpp" />
+		<Unit filename="shutdown.cpp" />
 		<Unit filename="toolbar.cpp" />
 		<Unit filename="upgrade.cpp" />
 		<Unit filename="utils.cpp" />
