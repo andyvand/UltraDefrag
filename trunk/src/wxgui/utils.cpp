@@ -335,9 +335,11 @@ int Utils::MessageDialog(wxFrame *parent,
     wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
     contents->Add(pic, wxGBPosition(0, 0), wxDefaultSpan,
-        (wxBOTTOM)|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 10);
+        (wxBOTTOM) | wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL,
+        LARGE_SPACING);
     contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
-        (wxALL & ~wxTOP)|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 10);
+        (wxALL & ~wxTOP) | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL,
+        LARGE_SPACING);
 
     wxButton *ok = new wxButton(&dlg,wxID_OK,text1);
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,text2);
@@ -357,14 +359,22 @@ int Utils::MessageDialog(wxFrame *parent,
     }
 
     wxBoxSizer *buttons = new wxBoxSizer(wxHORIZONTAL);
-    buttons->Add(ok,wxSizerFlags(1).Border(wxRIGHT));
-    buttons->Add(cancel,wxSizerFlags(1).Border(wxLEFT));
+    buttons->Add(ok,wxSizerFlags(1));
+    buttons->AddSpacer(LARGE_SPACING);
+    buttons->Add(cancel,wxSizerFlags(1));
 
     contents->Add(buttons, wxGBPosition(1, 0), wxGBSpan(1, 2),
         wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL);
 
-    wxBoxSizer *space = new wxBoxSizer(wxHORIZONTAL);
-    space->Add(contents,wxSizerFlags().DoubleBorder());
+    wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+    hbox->AddSpacer(LARGE_SPACING);
+    hbox->Add(contents,wxSizerFlags());
+    hbox->AddSpacer(LARGE_SPACING);
+
+    wxBoxSizer *space = new wxBoxSizer(wxVERTICAL);
+    space->AddSpacer(LARGE_SPACING);
+    space->Add(hbox,wxSizerFlags());
+    space->AddSpacer(LARGE_SPACING);
 
     dlg.SetSizerAndFit(space);
     space->SetSizeHints(&dlg);
