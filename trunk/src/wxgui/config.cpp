@@ -327,10 +327,6 @@ done:
 //                            Event handlers
 // =======================================================================
 
-void MainFrame::OnGuiFont(wxCommandEvent& WXUNUSED(event))
-{
-}
-
 void MainFrame::OnGuiOptions(wxCommandEvent& WXUNUSED(event))
 {
     if(m_title->Find(wxT("Portable")) != wxNOT_FOUND)

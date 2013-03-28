@@ -168,7 +168,6 @@ void MainFrame::InitMenu()
 
     // create GUI configuration menu
     wxMenu *menuGUIconfig = new wxMenu;
-    menuGUIconfig->Append(ID_GuiFont);
     menuGUIconfig->Append(ID_GuiOptions);
 
     // create boot configuration menu
