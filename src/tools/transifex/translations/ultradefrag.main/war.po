@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-28 23:02+0100\n"
+"POT-Creation-Date: 2013-03-28 23:40+0100\n"
 "PO-Revision-Date: 2013-02-06 23:11+0100\n"
 "Last-Translator: Stefan Pendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -50,7 +50,7 @@ msgstr "&Súmat"
 msgid "&Settings"
 msgstr "S&eting"
 
-#: i18n.cpp:124 i18n.cpp:207
+#: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
 msgstr "B&ulig"
 
@@ -142,7 +142,7 @@ msgstr "&Pinulongan"
 msgid "&Graphical interface"
 msgstr ""
 
-#: i18n.cpp:156 i18n.cpp:203
+#: i18n.cpp:156 i18n.cpp:202
 msgid "&Boot time scan"
 msgstr "Pag-scan &ha pagtikang"
 
@@ -171,126 +171,122 @@ msgid "&Submit current translation"
 msgstr "&Igsumite an yana nga ginhubad"
 
 #: i18n.cpp:167
-msgid "&Font"
-msgstr ""
-
-#: i18n.cpp:168
 msgid "&Options"
 msgstr "&Pagpipilian"
 
-#: i18n.cpp:171
+#: i18n.cpp:170
 msgid "&Enable"
 msgstr "&Tugoti"
 
-#: i18n.cpp:172
+#: i18n.cpp:171
 msgid "&Script"
 msgstr "&Iskrip"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By &path"
 msgstr ""
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &size"
 msgstr ""
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "By &creation time"
 msgstr ""
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "By last &modification time"
 msgstr ""
 
-#: i18n.cpp:179
+#: i18n.cpp:178
 msgid "By &last access time"
 msgstr ""
 
-#: i18n.cpp:180
+#: i18n.cpp:179
 msgid "In &ascending order"
 msgstr ""
 
-#: i18n.cpp:181
+#: i18n.cpp:180
 msgid "In &descending order"
 msgstr ""
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "&Contents"
 msgstr "&Sulod"
 
-#: i18n.cpp:185
+#: i18n.cpp:184
 msgid "Best &practice"
 msgstr "Gimaupayi &nga buhat"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "&Frequently asked questions"
 msgstr "&Agsob Ginpapakiana"
 
-#: i18n.cpp:187
+#: i18n.cpp:186
 msgid "Cluster map &legend"
 msgstr ""
 
-#: i18n.cpp:190 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:193
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:195
+#: i18n.cpp:194
 msgid "&About"
 msgstr "&Bahin han"
 
-#: i18n.cpp:198
+#: i18n.cpp:197
 msgid "&Debug"
 msgstr ""
 
-#: i18n.cpp:199 utils.cpp:390
+#: i18n.cpp:198 utils.cpp:400
 msgid "Open &log"
 msgstr "Buklará &an talaan"
 
-#: i18n.cpp:200
+#: i18n.cpp:199
 msgid "Send bug &report"
 msgstr "Igsumat it &bug"
 
-#: i18n.cpp:205
+#: i18n.cpp:204
 msgid "Boot time script"
 msgstr "Iskrip ha pagtikang"
 
-#: i18n.cpp:212
+#: i18n.cpp:211
 msgid "Drive"
 msgstr "Drayb"
 
-#: i18n.cpp:213
+#: i18n.cpp:212
 msgid "Status"
 msgstr "Kahímtang"
 
-#: i18n.cpp:214
+#: i18n.cpp:213
 msgid "Fragmentation"
 msgstr ""
 
-#: i18n.cpp:215
+#: i18n.cpp:214
 msgid "Total space"
 msgstr "Kabug-osan"
 
-#: i18n.cpp:216
+#: i18n.cpp:215
 msgid "Free space"
 msgstr "Libre"
 
-#: i18n.cpp:217
+#: i18n.cpp:216
 #, c-format
 msgid "% free"
 msgstr "% nga libre"
@@ -362,11 +358,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr ""
 
-#: upgrade.cpp:162 utils.cpp:394
+#: upgrade.cpp:162 utils.cpp:404
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:393
+#: utils.cpp:403
 msgid "Error!"
 msgstr ""
 
