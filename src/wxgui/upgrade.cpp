@@ -151,7 +151,7 @@ void MainFrame::OnHelpUpgrade(wxCommandEvent& event)
     }
 }
 
-void MainFrame::OnShowUpgradeDialog(wxCommandEvent& event)
+void MainFrame::ShowUpgradeDialog(wxCommandEvent& event)
 {
     wxString message = wxString();
     //: This expands to "Release 7.0.0 is available for download!"
