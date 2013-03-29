@@ -174,17 +174,26 @@ public:
     int m_level;
 };
 
+class JobThread: public wxThread {
+public:
+    JobThread() : wxThread(wxTHREAD_JOINABLE) {
+        m_launch = false; m_stop = false; Create(); Run();
+    }
+    ~JobThread() { m_stop = true; Wait(); }
+
+    virtual void *Entry();
+
+    bool m_launch;
+    bool m_stop;
+};
+
 class MainFrame: public wxFrame {
 public:
     MainFrame();
     ~MainFrame();
 
     // file menu handlers
-    void OnAnalyze(wxCommandEvent& event);
-    void OnDefrag(wxCommandEvent& event);
-    void OnQuickOpt(wxCommandEvent& event);
-    void OnFullOpt(wxCommandEvent& event);
-    void OnMftOpt(wxCommandEvent& event);
+    void OnStartJob(wxCommandEvent& event);
     void OnPause(wxCommandEvent& event);
     void OnStop(wxCommandEvent& event);
 
@@ -250,8 +259,11 @@ public:
 
     void Shutdown(wxCommandEvent& event);
 
+    void OnJobCompletion(wxCommandEvent& event);
+
     bool m_repeat;
     bool m_skipRem;
+    bool m_busy;
 
 private:
     void ReadAppConfiguration();
@@ -315,6 +327,7 @@ private:
     CrashInfoThread *m_crashInfoThread;
     ListThread      *m_listThread;
     UpgradeThread   *m_upgradeThread;
+    JobThread       *m_jobThread;
 
     DECLARE_EVENT_TABLE()
 };
@@ -348,11 +361,14 @@ public:
 
 enum {
     // file menu identifiers
+
+    // NOTE: they share a single event handler
     ID_Analyze = 1,
     ID_Defrag,
     ID_QuickOpt,
     ID_FullOpt,
     ID_MftOpt,
+
     ID_Pause,
     ID_Stop,
 
@@ -431,6 +447,7 @@ enum {
     ID_ReadUserPreferences,
     ID_SetWindowTitle,
     ID_Shutdown,
+    ID_JobCompletion,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange
