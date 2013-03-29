@@ -81,6 +81,7 @@
 		<Unit filename="report.cpp" />
 		<Unit filename="shutdown.cpp" />
 		<Unit filename="toolbar.cpp" />
+		<Unit filename="tray.cpp" />
 		<Unit filename="upgrade.cpp" />
 		<Unit filename="utils.cpp" />
 		<Unit filename="vollist.cpp" />

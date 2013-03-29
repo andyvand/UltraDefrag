@@ -89,6 +89,8 @@ static int out_of_memory_handler(size_t n)
         MB_RETRYCANCEL | MB_ICONHAND);
     if(choice == IDCANCEL){
         winx_flush_dbg_log(FLUSH_IN_OUT_OF_MEMORY);
+        if(g_mainFrame) // remove system tray icon
+            delete g_mainFrame->m_systemTrayIcon;
         exit(3); return 0;
     }
     return 1;
@@ -326,13 +328,21 @@ MainFrame::MainFrame()
 
     m_configThread = new ConfigThread();
 
+    // set system tray icon
+    m_systemTrayIcon = new SystemTrayIcon();
+    if(!m_systemTrayIcon->IsOk()){
+        etrace("system tray icon initialization failed");
+        wxSetEnv(wxT("UD_MINIMIZE_TO_SYSTEM_TRAY"),wxT("0"));
+    }
+    SetSystemTrayIcon(wxT("tray"));
+
     // set localized text
     event.SetId(ID_LocaleChange+g_locale->GetLanguage());
     OnLocaleChange(event);
 
     // allow disk processing
     m_jobThread = new JobThread();
-    m_busy = false;
+    m_busy = false; m_paused = false;
 }
 
 /**
@@ -350,6 +360,9 @@ MainFrame::~MainFrame()
     delete m_crashInfoThread;
     delete m_upgradeThread;
     delete m_btdThread;
+
+    // remove system tray icon
+    delete m_systemTrayIcon;
 
     // free resources
     delete m_title;
@@ -420,8 +433,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
 
     // event handlers
-    EVT_MENU(ID_ReadUserPreferences, MainFrame::ReadUserPreferences)
-    EVT_MENU(ID_SetWindowTitle,      MainFrame::SetWindowTitle)
+    EVT_MENU(ID_ReadUserPreferences,  MainFrame::ReadUserPreferences)
+    EVT_MENU(ID_SetWindowTitle,       MainFrame::SetWindowTitle)
+    EVT_MENU(ID_AdjustSystemTrayIcon, MainFrame::AdjustSystemTrayIcon)
 
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
@@ -463,6 +477,10 @@ void MainFrame::OnMove(wxMoveEvent& event)
         GetPosition(&m_x,&m_y);
         GetSize(&m_width,&m_height);
     }
+
+    // hide window on minimization if system tray icon is turned on
+    if(CheckOption(wxT("UD_MINIMIZE_TO_SYSTEM_TRAY")) && IsIconized()) Hide();
+
     event.Skip();
 }
 

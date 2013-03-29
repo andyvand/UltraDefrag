@@ -94,6 +94,8 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
     UD_DisableTool(ID_ShowReport);
     m_subMenuSortingConfig->Enable(false);
 
+    SetSystemTrayIcon(wxT("tray_running"));
+
     // launch the job
     m_jobThread->m_launch = true;
 }
@@ -113,6 +115,8 @@ void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
     UD_EnableTool(ID_ShowReport);
     m_subMenuSortingConfig->Enable(true);
     m_busy = false;
+
+    SetSystemTrayIcon(wxT("tray"));
 
     // shutdown when requested
     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Shutdown);
