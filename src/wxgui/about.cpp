@@ -36,9 +36,40 @@
 
 #include "main.h"
 
+#define HOMEPAGE wxT("http://ultradefrag.sourceforge.net")
+
+class HomePageLink: public wxHyperlinkCtrl {
+public:
+    HomePageLink(wxWindow* parent,const wxString& title,const wxString& url)
+      : wxHyperlinkCtrl(parent,wxID_ANY,title,url){}
+    ~HomePageLink() {}
+
+    void OnKeyUp(wxKeyEvent& event);
+
+private:
+    DECLARE_EVENT_TABLE()
+};
+
+BEGIN_EVENT_TABLE(HomePageLink, wxHyperlinkCtrl)
+    EVT_KEY_UP(HomePageLink::OnKeyUp)
+END_EVENT_TABLE()
+
 // =======================================================================
 //                            Event handlers
 // =======================================================================
+
+void HomePageLink::OnKeyUp(wxKeyEvent& event)
+{
+    switch(event.GetKeyCode()){
+    case WXK_ESCAPE:
+        GetParent()->Destroy();
+        return;
+    case WXK_RETURN:
+        wxLaunchDefaultBrowser(HOMEPAGE);
+        return;
+    }
+    event.Skip();
+}
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
@@ -59,8 +90,8 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     wxStaticText *credits = new wxStaticText(&dlg,wxID_ANY,
         _("Credits and licenses are listed in the handbook."));
 
-    wxHyperlinkCtrl *homepage = new wxHyperlinkCtrl(&dlg,wxID_ANY,
-        _("UltraDefrag website"),wxT("http://ultradefrag.sourceforge.net"));
+    HomePageLink *homepage = new HomePageLink(&dlg,
+        _("UltraDefrag website"),HOMEPAGE);
 
     // Burmese needs Padauk font for display
     if(g_locale->GetCanonicalName().Left(2) == wxT("my")){
@@ -107,8 +138,7 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
     if(!IsIconized()) dlg.Center();
     else dlg.CenterOnScreen();
 
-    // TODO: find a way to close dialog on Escape
-    // and open the web site on Enter key hits
+    homepage->SetFocus();
 
     dlg.ShowModal();
 }
