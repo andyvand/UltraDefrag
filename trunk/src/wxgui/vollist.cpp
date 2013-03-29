@@ -47,6 +47,18 @@ int g_removableDirtyIcon;
 
 void MainFrame::InitVolList()
 {
+    // save default font used for the list
+    m_vListFont = new wxFont(m_vList->GetFont());
+
+    // set monospace font for the list unless Burmese translation is selected
+    if(g_locale->GetCanonicalName().Left(2) != wxT("my")){
+        wxFont font = m_vList->GetFont();
+        if(font.SetFaceName(wxT("Courier New"))){
+            font.SetPointSize(DPI(9));
+            m_vList->SetFont(font);
+        }
+    }
+
     // adjust widths so all the columns will fit to the window
     int width = m_vList->GetClientSize().GetWidth();
     double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
@@ -82,9 +94,6 @@ void MainFrame::InitVolList()
     Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
     m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
         wxSplitterEventHandler(MainFrame::OnSplitChanged),NULL,this);
-
-    // save default font used for the list
-    m_vListFont = new wxFont(m_vList->GetFont());
 }
 
 // =======================================================================
