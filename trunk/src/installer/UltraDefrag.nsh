@@ -980,8 +980,11 @@ SkipMove:
 
     Delete "$INSTDIR\scripts\udctxhandler.lua"
 
+    Delete "$INSTDIR\options\font.lua"
     Delete "$INSTDIR\options\guiopts-internals.lua"
+    Delete "$INSTDIR\options\guiopts.lua.old"
     Delete "$INSTDIR\options\udreportopts-custom.lua"
+    Delete "$INSTDIR\options\udreportopts.lua.old"
 
     Delete "$INSTDIR\dfrg.exe"
     Delete "$INSTDIR\INSTALL.TXT"
