@@ -306,6 +306,10 @@ void *ConfigThread::Entry()
                 event.SetId(ID_SetWindowTitle);
                 event.SetString(wxT(""));
                 wxPostEvent(g_mainFrame,event);
+
+                // adjust system tray icon
+                event.SetId(ID_AdjustSystemTrayIcon);
+                wxPostEvent(g_mainFrame,event);
             }
             counter ++;
             /* wait for the next notification */

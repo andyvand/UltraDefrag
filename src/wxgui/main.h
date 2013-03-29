@@ -48,6 +48,7 @@
 #include <wx/splitter.h>
 #include <wx/stdpaths.h>
 #include <wx/sysopt.h>
+#include <wx/taskbar.h>
 #include <wx/textfile.h>
 #include <wx/thread.h>
 #include <wx/toolbar.h>
@@ -187,6 +188,19 @@ public:
     bool m_stop;
 };
 
+class SystemTrayIcon: public wxTaskBarIcon {
+public:
+    virtual wxMenu *CreatePopupMenu();
+
+    void OnMenuShowHide(wxCommandEvent& event);
+    void OnMenuPause(wxCommandEvent& event);
+    void OnMenuExit(wxCommandEvent& event);
+
+    void OnLeftButtonUp(wxTaskBarIconEvent& event);
+
+    DECLARE_EVENT_TABLE()
+};
+
 class MainFrame: public wxFrame {
 public:
     MainFrame();
@@ -240,6 +254,7 @@ public:
     // event handlers
     void ReadUserPreferences(wxCommandEvent& event);
     void SetWindowTitle(wxCommandEvent& event);
+    void AdjustSystemTrayIcon(wxCommandEvent& event);
 
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
@@ -264,12 +279,14 @@ public:
     bool m_repeat;
     bool m_skipRem;
     bool m_busy;
+    bool m_paused;
 
 private:
     void ReadAppConfiguration();
     void SaveAppConfiguration();
     void ReadUserPreferences();
     bool CheckOption(const wxString& name);
+    void SetSystemTrayIcon(const wxString& icon);
 
     void InitLocale();
     void SetLocale(int id);
@@ -319,6 +336,8 @@ private:
     wxSplitterWindow *m_splitter;
     wxListView       *m_vList;
     wxStaticText     *m_cMap;
+
+    SystemTrayIcon   *m_systemTrayIcon;
 
     bool m_btdEnabled;
     BtdThread *m_btdThread;
@@ -446,8 +465,14 @@ enum {
     ID_AdjustListHeight,
     ID_ReadUserPreferences,
     ID_SetWindowTitle,
+    ID_AdjustSystemTrayIcon,
     ID_Shutdown,
     ID_JobCompletion,
+
+    // tray icon menu identifiers
+    ID_ShowHideMenu,
+    ID_PauseMenu,
+    ID_ExitMenu,
 
     // language selection menu item, must always be last in the list
     ID_LocaleChange
