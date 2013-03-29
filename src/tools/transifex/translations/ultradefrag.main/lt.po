@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-27 20:50+0100\n"
-"PO-Revision-Date: 2013-03-02 10:40+0000\n"
+"POT-Creation-Date: 2013-03-28 23:40+0100\n"
+"PO-Revision-Date: 2013-03-29 12:49+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,15 @@ msgstr ""
 msgid "About UltraDefrag"
 msgstr "Apie UltraDefrag"
 
-#: about.cpp:56
+#: about.cpp:58
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:58
+#: about.cpp:60
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:61
+#: about.cpp:63
 msgid "UltraDefrag website"
 msgstr ""
 
@@ -45,7 +45,7 @@ msgstr "&Ataskaita"
 msgid "&Settings"
 msgstr "&Nuostatos"
 
-#: i18n.cpp:124 i18n.cpp:211
+#: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
 msgstr "&Pagalba"
 
@@ -93,202 +93,258 @@ msgstr "Pe&rskanuoti diskus"
 msgid "Repair dri&ves"
 msgstr "Tva&rkyti diskus"
 
-#: i18n.cpp:139
-msgid "&When done"
-msgstr "&Užbaigus"
-
-#: i18n.cpp:141 i18n.cpp:145
+#: i18n.cpp:138 i18n.cpp:143
 msgid "E&xit"
 msgstr "&Išeiti"
 
-#: i18n.cpp:144
+#: i18n.cpp:141
+msgid "&When done"
+msgstr "&Užbaigus"
+
+#: i18n.cpp:142
 msgid "&None"
 msgstr "&Nieko"
 
-#: i18n.cpp:146
+#: i18n.cpp:144
 msgid "Stan&dby"
 msgstr "Pristab&dyti"
 
-#: i18n.cpp:147
+#: i18n.cpp:145
 msgid "&Hibernate"
 msgstr "&Hibernuoti"
 
-#: i18n.cpp:148
+#: i18n.cpp:146
 msgid "&Logoff"
 msgstr "&Atjungti vartotoją"
 
-#: i18n.cpp:149
+#: i18n.cpp:147
 msgid "&Reboot"
 msgstr "&Perkrauti"
 
-#: i18n.cpp:150
+#: i18n.cpp:148
 msgid "&Shutdown"
 msgstr "Išjun&gti"
 
-#: i18n.cpp:153
+#: i18n.cpp:151
 msgid "&Show report"
 msgstr "&Rodyti ataskaitą"
 
-#: i18n.cpp:156
+#: i18n.cpp:154
 msgid "&Language"
 msgstr "Ka&lba"
 
-#: i18n.cpp:157
+#: i18n.cpp:155
 msgid "&Graphical interface"
 msgstr "&Grafinė sąsaja"
 
-#: i18n.cpp:158 i18n.cpp:207
+#: i18n.cpp:156 i18n.cpp:202
 msgid "&Boot time scan"
 msgstr "&Skanuoti OS krovimo metu"
 
-#: i18n.cpp:159
+#: i18n.cpp:157
 msgid "&Sorting"
 msgstr "&Rikiavimas"
 
-#: i18n.cpp:161
+#: i18n.cpp:158
 msgid "&Reports"
 msgstr "&Ataskaitos"
 
-#: i18n.cpp:164
+#: i18n.cpp:161
 msgid "&View change log"
 msgstr "&Pakeitimai"
 
-#: i18n.cpp:165
+#: i18n.cpp:162
 msgid "View translation &report"
 msgstr "Vertimo &ataskaita"
 
-#: i18n.cpp:166
+#: i18n.cpp:163
 msgid "&Translations folder"
 msgstr "Vertimų &katalogas"
 
-#: i18n.cpp:167
+#: i18n.cpp:164
 msgid "&Submit current translation"
 msgstr "&Siųsti vertimą"
 
-#: i18n.cpp:170
-msgid "&Font"
-msgstr "&Šriftas"
-
-#: i18n.cpp:171
+#: i18n.cpp:167
 msgid "&Options"
 msgstr "&Parinktys"
 
-#: i18n.cpp:174
+#: i18n.cpp:170
 msgid "&Enable"
 msgstr "&Paleisti"
 
-#: i18n.cpp:175
+#: i18n.cpp:171
 msgid "&Script"
 msgstr "&Skriptas"
 
-#: i18n.cpp:178
+#: i18n.cpp:174
 msgid "By &path"
 msgstr "Rikiuoti pagal &kelią"
 
-#: i18n.cpp:179
+#: i18n.cpp:175
 msgid "By &size"
 msgstr "Rikiuoti pagal &dydį"
 
-#: i18n.cpp:180
+#: i18n.cpp:176
 msgid "By &creation time"
 msgstr "Rikiuoti pagal &sukūrimo laiką"
 
-#: i18n.cpp:181
+#: i18n.cpp:177
 msgid "By last &modification time"
 msgstr "Rikiuoti pagal paskutinį &modifikacijos laiką"
 
-#: i18n.cpp:182
+#: i18n.cpp:178
 msgid "By &last access time"
 msgstr "Rikiuoti pagal &paskutinį kreipties laiką"
 
-#: i18n.cpp:183
+#: i18n.cpp:179
 msgid "In &ascending order"
 msgstr "Rikiuoti &didėjimo tvarka"
 
-#: i18n.cpp:184
+#: i18n.cpp:180
 msgid "In &descending order"
 msgstr "Rikiuoti &mažėjimo tvarka"
 
-#: i18n.cpp:187
+#: i18n.cpp:183
 msgid "&Contents"
 msgstr "&Turinys"
 
-#: i18n.cpp:188
+#: i18n.cpp:184
 msgid "Best &practice"
 msgstr "Geroji &praktika"
 
-#: i18n.cpp:189
+#: i18n.cpp:185
 msgid "&Frequently asked questions"
 msgstr "&DUK"
 
-#: i18n.cpp:190
+#: i18n.cpp:186
 msgid "Cluster map &legend"
 msgstr "Klasterių išdėstymo &legenda"
 
-#: i18n.cpp:192
-msgid "&Debug"
-msgstr "De&rinti"
-
-#: i18n.cpp:193 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:190
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:191
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:198
+#: i18n.cpp:192
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:199
+#: i18n.cpp:193
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:200
+#: i18n.cpp:194
 msgid "&About"
 msgstr "&Apie"
 
-#: i18n.cpp:203 utils.cpp:327
+#: i18n.cpp:197
+msgid "&Debug"
+msgstr "De&rinti"
+
+#: i18n.cpp:198 utils.cpp:400
 msgid "Open &log"
 msgstr "Atverti žurna&lą"
 
-#: i18n.cpp:204
+#: i18n.cpp:199
 msgid "Send bug &report"
 msgstr "Pranešti apie &klaidą"
 
-#: i18n.cpp:209
+#: i18n.cpp:204
 msgid "Boot time script"
 msgstr "Skriptas OS įkrovai"
 
-#: i18n.cpp:216
+#: i18n.cpp:211
 msgid "Drive"
 msgstr "Diskas"
 
-#: i18n.cpp:217
+#: i18n.cpp:212
 msgid "Status"
 msgstr "Statusas"
 
-#: i18n.cpp:218
+#: i18n.cpp:213
 msgid "Fragmentation"
 msgstr "Skilimas"
 
-#: i18n.cpp:219
+#: i18n.cpp:214
 msgid "Total space"
 msgstr "Bendras dydis"
 
-#: i18n.cpp:220
+#: i18n.cpp:215
 msgid "Free space"
 msgstr "Laisva"
 
-#: i18n.cpp:221
+#: i18n.cpp:216
 #, c-format
 msgid "% free"
 msgstr "% laisva"
+
+#: shutdown.cpp:100
+msgid "Please confirm"
+msgstr "Patvirtinkite"
+
+#: shutdown.cpp:107
+msgid "Do you really want to hibernate when done?"
+msgstr "Ar tikrai pabaigus darbą hibernuoti?"
+
+#. : This expands to "60 seconds until hibernation"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:110
+#, c-format
+msgid "%lu seconds until hibernation"
+msgstr "%lu sekundžių iki hibernavimo"
+
+#: shutdown.cpp:113
+msgid "Do you really want to log off when done?"
+msgstr "Ar tikrai pabaigus darbą atjungti vartotoją?"
+
+#. : This expands to "60 seconds until logoff"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:116
+#, c-format
+msgid "%lu seconds until logoff"
+msgstr "%lu sekundžių iki vartotojo atjungimo"
+
+#: shutdown.cpp:119
+msgid "Do you really want to reboot when done?"
+msgstr "Ar tikrai pabaigus darbą perkrauti OS?"
+
+#. : This expands to "60 seconds until reboot"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:122
+#, c-format
+msgid "%lu seconds until reboot"
+msgstr "%lu sekundžių iki OS perkrovimo"
+
+#: shutdown.cpp:125
+msgid "Do you really want to shutdown when done?"
+msgstr "Ar tikrai išjungti pabaigus darbą?"
+
+#. : This expands to "60 seconds until shutdown"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:128
+#, c-format
+msgid "%lu seconds until shutdown"
+msgstr "%lu sekundžių iki išjungimo"
+
+#: shutdown.cpp:140
+msgid "&Yes"
+msgstr "&Taip"
+
+#: shutdown.cpp:141
+msgid "&No"
+msgstr "&Ne"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
@@ -302,11 +358,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "O mane galima atnaujnti ^-^"
 
-#: upgrade.cpp:162 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:404
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:330
+#: utils.cpp:403
 msgid "Error!"
 msgstr ""
 

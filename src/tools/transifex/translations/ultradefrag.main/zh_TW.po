@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-02-25 22:51+0100\n"
-"PO-Revision-Date: 2013-02-27 19:49+0000\n"
+"POT-Creation-Date: 2013-03-28 23:40+0100\n"
+"PO-Revision-Date: 2013-03-29 12:50+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "About UltraDefrag"
 msgstr "關於UltraDefrag"
 
-#: about.cpp:56
+#: about.cpp:58
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:58
+#: about.cpp:60
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:61
+#: about.cpp:63
 msgid "UltraDefrag website"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgstr "報告(&R)"
 msgid "&Settings"
 msgstr "設定(&S)"
 
-#: i18n.cpp:124 i18n.cpp:211
+#: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
 msgstr "說明(&H)"
 
@@ -94,202 +94,258 @@ msgstr "更新磁碟機清單(&R)"
 msgid "Repair dri&ves"
 msgstr "修復磁碟(&V)"
 
-#: i18n.cpp:139
-msgid "&When done"
-msgstr "當作業完成後(&W)"
-
-#: i18n.cpp:141 i18n.cpp:145
+#: i18n.cpp:138 i18n.cpp:143
 msgid "E&xit"
 msgstr "離開(&X)"
 
-#: i18n.cpp:144
+#: i18n.cpp:141
+msgid "&When done"
+msgstr "當作業完成後(&W)"
+
+#: i18n.cpp:142
 msgid "&None"
 msgstr "無動作(&N)"
 
-#: i18n.cpp:146
+#: i18n.cpp:144
 msgid "Stan&dby"
 msgstr "進入待機模式(&D)"
 
-#: i18n.cpp:147
+#: i18n.cpp:145
 msgid "&Hibernate"
 msgstr "進入休眠模式(&H)"
 
-#: i18n.cpp:148
+#: i18n.cpp:146
 msgid "&Logoff"
 msgstr "登出(&L)"
 
-#: i18n.cpp:149
+#: i18n.cpp:147
 msgid "&Reboot"
 msgstr "重新開機(&R)"
 
-#: i18n.cpp:150
+#: i18n.cpp:148
 msgid "&Shutdown"
 msgstr "關機(&S)"
 
-#: i18n.cpp:153
+#: i18n.cpp:151
 msgid "&Show report"
 msgstr "顯示報告(&S)"
 
-#: i18n.cpp:156
+#: i18n.cpp:154
 msgid "&Language"
 msgstr "語系(&L)"
 
-#: i18n.cpp:157
+#: i18n.cpp:155
 msgid "&Graphical interface"
 msgstr "圖形介面(&G)"
 
-#: i18n.cpp:158 i18n.cpp:207
+#: i18n.cpp:156 i18n.cpp:202
 msgid "&Boot time scan"
 msgstr "開機重組(&B)"
 
-#: i18n.cpp:159
+#: i18n.cpp:157
 msgid "&Sorting"
 msgstr "排序(&S)"
 
-#: i18n.cpp:161
+#: i18n.cpp:158
 msgid "&Reports"
 msgstr "報告(&R)"
 
-#: i18n.cpp:164
+#: i18n.cpp:161
 msgid "&View change log"
 msgstr "查看更新日誌(&V)"
 
-#: i18n.cpp:165
+#: i18n.cpp:162
 msgid "View translation &report"
 msgstr "查看翻譯報告(&R)"
 
-#: i18n.cpp:166
+#: i18n.cpp:163
 msgid "&Translations folder"
 msgstr "語系檔資料夾(&T)"
 
-#: i18n.cpp:167
+#: i18n.cpp:164
 msgid "&Submit current translation"
 msgstr "提交當前的翻譯(&S)"
 
-#: i18n.cpp:170
-msgid "&Font"
-msgstr "字型(&F)"
-
-#: i18n.cpp:171
+#: i18n.cpp:167
 msgid "&Options"
 msgstr "選項(&O)"
 
-#: i18n.cpp:174
+#: i18n.cpp:170
 msgid "&Enable"
 msgstr "啟用(&E)"
 
-#: i18n.cpp:175
+#: i18n.cpp:171
 msgid "&Script"
 msgstr "指令碼(&S)"
 
-#: i18n.cpp:178
+#: i18n.cpp:174
 msgid "By &path"
 msgstr "依照路徑排序(&P)"
 
-#: i18n.cpp:179
+#: i18n.cpp:175
 msgid "By &size"
 msgstr "依照容量排序(&S)"
 
-#: i18n.cpp:180
+#: i18n.cpp:176
 msgid "By &creation time"
 msgstr "依照建立時間排序(&C)"
 
-#: i18n.cpp:181
+#: i18n.cpp:177
 msgid "By last &modification time"
 msgstr "依照最後修改時間排序(&M)"
 
-#: i18n.cpp:182
+#: i18n.cpp:178
 msgid "By &last access time"
 msgstr "依照最後存取時間排序(&L)"
 
-#: i18n.cpp:183
+#: i18n.cpp:179
 msgid "In &ascending order"
 msgstr "升序排序(&A)"
 
-#: i18n.cpp:184
+#: i18n.cpp:180
 msgid "In &descending order"
 msgstr "降序排序(&D)"
 
-#: i18n.cpp:187
+#: i18n.cpp:183
 msgid "&Contents"
 msgstr "目錄(&C)"
 
-#: i18n.cpp:188
+#: i18n.cpp:184
 msgid "Best &practice"
 msgstr "最佳方法(&P)"
 
-#: i18n.cpp:189
+#: i18n.cpp:185
 msgid "&Frequently asked questions"
 msgstr "常見問答集(&F)"
 
-#: i18n.cpp:190
+#: i18n.cpp:186
 msgid "Cluster map &legend"
 msgstr "磁碟叢集圖例(&L)"
 
-#: i18n.cpp:192
-msgid "&Debug"
-msgstr "除錯(&B)"
-
-#: i18n.cpp:193 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:190
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:191
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:198
+#: i18n.cpp:192
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:199
+#: i18n.cpp:193
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:200
+#: i18n.cpp:194
 msgid "&About"
 msgstr "關於(&A)"
 
-#: i18n.cpp:203 utils.cpp:327
+#: i18n.cpp:197
+msgid "&Debug"
+msgstr "除錯(&B)"
+
+#: i18n.cpp:198 utils.cpp:400
 msgid "Open &log"
 msgstr "開啟記錄檔(&L)"
 
-#: i18n.cpp:204
+#: i18n.cpp:199
 msgid "Send bug &report"
 msgstr "發送錯誤報告(&R)"
 
-#: i18n.cpp:209
+#: i18n.cpp:204
 msgid "Boot time script"
 msgstr "開機重組指令碼"
 
-#: i18n.cpp:216
+#: i18n.cpp:211
 msgid "Drive"
 msgstr "磁碟"
 
-#: i18n.cpp:217
+#: i18n.cpp:212
 msgid "Status"
 msgstr "狀態"
 
-#: i18n.cpp:218
+#: i18n.cpp:213
 msgid "Fragmentation"
 msgstr "分散率"
 
-#: i18n.cpp:219
+#: i18n.cpp:214
 msgid "Total space"
 msgstr "磁碟大小"
 
-#: i18n.cpp:220
+#: i18n.cpp:215
 msgid "Free space"
 msgstr "可用空間"
 
-#: i18n.cpp:221
+#: i18n.cpp:216
 #, c-format
 msgid "% free"
 msgstr "％可用"
+
+#: shutdown.cpp:100
+msgid "Please confirm"
+msgstr "請確認"
+
+#: shutdown.cpp:107
+msgid "Do you really want to hibernate when done?"
+msgstr "確定要在作業完成後進入休眠嗎？"
+
+#. : This expands to "60 seconds until hibernation"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:110
+#, c-format
+msgid "%lu seconds until hibernation"
+msgstr "%lu 秒後進入休眠"
+
+#: shutdown.cpp:113
+msgid "Do you really want to log off when done?"
+msgstr "確定要在作業完成後登出嗎？"
+
+#. : This expands to "60 seconds until logoff"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:116
+#, c-format
+msgid "%lu seconds until logoff"
+msgstr "%lu 秒後登出"
+
+#: shutdown.cpp:119
+msgid "Do you really want to reboot when done?"
+msgstr "確定要在作業完成後重新開機嗎？"
+
+#. : This expands to "60 seconds until reboot"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:122
+#, c-format
+msgid "%lu seconds until reboot"
+msgstr "%lu 秒後重新開機"
+
+#: shutdown.cpp:125
+msgid "Do you really want to shutdown when done?"
+msgstr "確定要在作業完成後關機嗎？"
+
+#. : This expands to "60 seconds until shutdown"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:128
+#, c-format
+msgid "%lu seconds until shutdown"
+msgstr "%lu 秒後關機"
+
+#: shutdown.cpp:140
+msgid "&Yes"
+msgstr "是(&Y)"
+
+#: shutdown.cpp:141
+msgid "&No"
+msgstr "否(&N)"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
@@ -303,11 +359,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "您可升級我 ^-^"
 
-#: upgrade.cpp:162 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:404
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:330
+#: utils.cpp:403
 msgid "Error!"
 msgstr ""
 

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-02 11:53+0100\n"
-"PO-Revision-Date: 2013-03-03 15:21+0000\n"
+"POT-Creation-Date: 2013-03-28 23:40+0100\n"
+"PO-Revision-Date: 2013-03-29 12:51+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,15 +23,15 @@ msgstr ""
 msgid "About UltraDefrag"
 msgstr "O programe"
 
-#: about.cpp:56
+#: about.cpp:58
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:58
+#: about.cpp:60
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:61
+#: about.cpp:63
 msgid "UltraDefrag website"
 msgstr ""
 
@@ -47,7 +47,7 @@ msgstr "správa"
 msgid "&Settings"
 msgstr "Nastavenia"
 
-#: i18n.cpp:124 i18n.cpp:211
+#: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
 msgstr "Pomoc"
 
@@ -95,202 +95,258 @@ msgstr "Obnoviť jednotky"
 msgid "Repair dri&ves"
 msgstr "Opravy diskov"
 
-#: i18n.cpp:139
-msgid "&When done"
-msgstr "Po dokončení"
-
-#: i18n.cpp:141 i18n.cpp:145
+#: i18n.cpp:138 i18n.cpp:143
 msgid "E&xit"
 msgstr "Skončiť"
 
-#: i18n.cpp:144
+#: i18n.cpp:141
+msgid "&When done"
+msgstr "Po dokončení"
+
+#: i18n.cpp:142
 msgid "&None"
 msgstr "Nerobiť nič"
 
-#: i18n.cpp:146
+#: i18n.cpp:144
 msgid "Stan&dby"
 msgstr "Pohotovostný režim"
 
-#: i18n.cpp:147
+#: i18n.cpp:145
 msgid "&Hibernate"
 msgstr "Hibernovať"
 
-#: i18n.cpp:148
+#: i18n.cpp:146
 msgid "&Logoff"
 msgstr "Odhlásiť"
 
-#: i18n.cpp:149
+#: i18n.cpp:147
 msgid "&Reboot"
 msgstr "Reštartovať"
 
-#: i18n.cpp:150
+#: i18n.cpp:148
 msgid "&Shutdown"
 msgstr "Vypnúť PC"
 
-#: i18n.cpp:153
+#: i18n.cpp:151
 msgid "&Show report"
 msgstr "Zobraziť report"
 
-#: i18n.cpp:156
+#: i18n.cpp:154
 msgid "&Language"
 msgstr "Jazyk"
 
-#: i18n.cpp:157
+#: i18n.cpp:155
 msgid "&Graphical interface"
 msgstr "Grafické rozhranie"
 
-#: i18n.cpp:158 i18n.cpp:207
+#: i18n.cpp:156 i18n.cpp:202
 msgid "&Boot time scan"
 msgstr "Defragmentovať pri štarte OS"
 
-#: i18n.cpp:159
+#: i18n.cpp:157
 msgid "&Sorting"
 msgstr "Triedenie"
 
-#: i18n.cpp:161
+#: i18n.cpp:158
 msgid "&Reports"
 msgstr "Reporty"
 
-#: i18n.cpp:164
+#: i18n.cpp:161
 msgid "&View change log"
 msgstr "Zobraziť zoznam zmien"
 
-#: i18n.cpp:165
+#: i18n.cpp:162
 msgid "View translation &report"
 msgstr "Zobraziť report prekladu"
 
-#: i18n.cpp:166
+#: i18n.cpp:163
 msgid "&Translations folder"
 msgstr "Priečinok s jazykovými prekladmi"
 
-#: i18n.cpp:167
+#: i18n.cpp:164
 msgid "&Submit current translation"
 msgstr "Odoslať váš preklad"
 
-#: i18n.cpp:170
-msgid "&Font"
-msgstr "písmo"
-
-#: i18n.cpp:171
+#: i18n.cpp:167
 msgid "&Options"
 msgstr "Možnosti"
 
-#: i18n.cpp:174
+#: i18n.cpp:170
 msgid "&Enable"
 msgstr "Povoliť"
 
-#: i18n.cpp:175
+#: i18n.cpp:171
 msgid "&Script"
 msgstr "Skript"
 
-#: i18n.cpp:178
+#: i18n.cpp:174
 msgid "By &path"
 msgstr "podľa cesty"
 
-#: i18n.cpp:179
+#: i18n.cpp:175
 msgid "By &size"
 msgstr "podľa veľkosti"
 
-#: i18n.cpp:180
+#: i18n.cpp:176
 msgid "By &creation time"
 msgstr "Podľa času vytvorenia"
 
-#: i18n.cpp:181
+#: i18n.cpp:177
 msgid "By last &modification time"
 msgstr "Do poslednej zmeny času"
 
-#: i18n.cpp:182
+#: i18n.cpp:178
 msgid "By &last access time"
 msgstr "Do posledného prístupu dobe"
 
-#: i18n.cpp:183
+#: i18n.cpp:179
 msgid "In &ascending order"
 msgstr "Vo vzostupnom poradí"
 
-#: i18n.cpp:184
+#: i18n.cpp:180
 msgid "In &descending order"
 msgstr "V zostupnom poradí"
 
-#: i18n.cpp:187
+#: i18n.cpp:183
 msgid "&Contents"
 msgstr "Obsah"
 
-#: i18n.cpp:188
+#: i18n.cpp:184
 msgid "Best &practice"
 msgstr "Vhodné použitie"
 
-#: i18n.cpp:189
+#: i18n.cpp:185
 msgid "&Frequently asked questions"
 msgstr "Časté otázky"
 
-#: i18n.cpp:190
+#: i18n.cpp:186
 msgid "Cluster map &legend"
 msgstr "Legenda cluster mapy"
 
-#: i18n.cpp:192
-msgid "&Debug"
-msgstr "Ladiť"
-
-#: i18n.cpp:193 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:162
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:196
+#: i18n.cpp:190
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:197
+#: i18n.cpp:191
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:198
+#: i18n.cpp:192
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:199
+#: i18n.cpp:193
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:200
+#: i18n.cpp:194
 msgid "&About"
 msgstr "O programe"
 
-#: i18n.cpp:203 utils.cpp:327
+#: i18n.cpp:197
+msgid "&Debug"
+msgstr "Ladiť"
+
+#: i18n.cpp:198 utils.cpp:400
 msgid "Open &log"
 msgstr "Otvorte záznam"
 
-#: i18n.cpp:204
+#: i18n.cpp:199
 msgid "Send bug &report"
 msgstr "Zaslanie správy o chybe"
 
-#: i18n.cpp:209
+#: i18n.cpp:204
 msgid "Boot time script"
 msgstr "Skript pri spustení OS"
 
-#: i18n.cpp:216
+#: i18n.cpp:211
 msgid "Drive"
 msgstr "Jednotka"
 
-#: i18n.cpp:217
+#: i18n.cpp:212
 msgid "Status"
 msgstr "Stav"
 
-#: i18n.cpp:218
+#: i18n.cpp:213
 msgid "Fragmentation"
 msgstr "Roztrieštenia"
 
-#: i18n.cpp:219
+#: i18n.cpp:214
 msgid "Total space"
 msgstr "Celková veľkosť"
 
-#: i18n.cpp:220
+#: i18n.cpp:215
 msgid "Free space"
 msgstr "Voľná veľkosť"
 
-#: i18n.cpp:221
+#: i18n.cpp:216
 #, c-format
 msgid "% free"
 msgstr "Percent"
+
+#: shutdown.cpp:100
+msgid "Please confirm"
+msgstr "Prosím potvrďte"
+
+#: shutdown.cpp:107
+msgid "Do you really want to hibernate when done?"
+msgstr "Naozaj chcete uspať počítač po dokončení?"
+
+#. : This expands to "60 seconds until hibernation"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:110
+#, c-format
+msgid "%lu seconds until hibernation"
+msgstr "%lu sekúnd do uspatia počítača"
+
+#: shutdown.cpp:113
+msgid "Do you really want to log off when done?"
+msgstr "Naozaj sa chcete po dokončení odhlásiť?"
+
+#. : This expands to "60 seconds until logoff"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:116
+#, c-format
+msgid "%lu seconds until logoff"
+msgstr "%lu sekúnd do odhlásenia používateľa"
+
+#: shutdown.cpp:119
+msgid "Do you really want to reboot when done?"
+msgstr "Naozaj chcete po dokončení reštartovať počítač?"
+
+#. : This expands to "60 seconds until reboot"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:122
+#, c-format
+msgid "%lu seconds until reboot"
+msgstr "%lu sekúnd do reštartovania počítača"
+
+#: shutdown.cpp:125
+msgid "Do you really want to shutdown when done?"
+msgstr "Naozaj chcete vypnúť počítač po dokončení?"
+
+#. : This expands to "60 seconds until shutdown"
+#. : Make sure that "%lu" is included in the translated string at the correct
+#. position
+#: shutdown.cpp:128
+#, c-format
+msgid "%lu seconds until shutdown"
+msgstr "%lu sekúnd do vypnutia počítača"
+
+#: shutdown.cpp:140
+msgid "&Yes"
+msgstr "áno"
+
+#: shutdown.cpp:141
+msgid "&No"
+msgstr "nie"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
@@ -304,11 +360,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "Môžete ma aktualizovať ^-^"
 
-#: upgrade.cpp:162 utils.cpp:331
+#: upgrade.cpp:162 utils.cpp:404
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:330
+#: utils.cpp:403
 msgid "Error!"
 msgstr ""
 
