@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-28 23:40+0100\n"
+"POT-Creation-Date: 2013-03-29 14:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: about.cpp:45
+#: about.cpp:76
 msgid "About UltraDefrag"
 msgstr ""
 
-#: about.cpp:58
+#: about.cpp:89
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:60
+#: about.cpp:91
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:63
+#: about.cpp:94
 msgid "UltraDefrag website"
 msgstr ""
 
@@ -360,6 +360,6 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:220
+#: vollist.cpp:232
 msgid "Disk needs to be repaired"
 msgstr ""
