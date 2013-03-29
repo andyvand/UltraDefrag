@@ -351,10 +351,12 @@ void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnSortCriteriaChange(wxCommandEvent& WXUNUSED(event))
 {
+    if(!m_busy) {}
 }
 
 void MainFrame::OnSortOrderChange(wxCommandEvent& WXUNUSED(event))
 {
+    if(!m_busy) {}
 }
 
 /** @} */

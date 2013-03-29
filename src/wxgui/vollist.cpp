@@ -285,13 +285,15 @@ void MainFrame::PopulateList(wxCommandEvent& event)
 
 void MainFrame::OnSkipRem(wxCommandEvent& WXUNUSED(event))
 {
-    m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
-    m_listThread->m_rescan = true;
+    if(!m_busy){
+        m_skipRem = m_menuBar->FindItem(ID_SkipRem)->IsChecked();
+        m_listThread->m_rescan = true;
+    }
 }
 
 void MainFrame::OnRescan(wxCommandEvent& WXUNUSED(event))
 {
-    m_listThread->m_rescan = true;
+    if(!m_busy) m_listThread->m_rescan = true;
 }
 
 /** @} */

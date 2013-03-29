@@ -329,6 +329,10 @@ MainFrame::MainFrame()
     // set localized text
     event.SetId(ID_LocaleChange+g_locale->GetLanguage());
     OnLocaleChange(event);
+
+    // allow disk processing
+    m_jobThread = new JobThread();
+    m_busy = false;
 }
 
 /**
@@ -341,6 +345,7 @@ MainFrame::~MainFrame()
     SaveAppConfiguration();
 
     // terminate threads
+    delete m_jobThread;
     delete m_listThread;
     delete m_crashInfoThread;
     delete m_upgradeThread;
@@ -356,20 +361,17 @@ MainFrame::~MainFrame()
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     // file menu
-    EVT_MENU(ID_Analyze, MainFrame::OnAnalyze)
-    EVT_MENU(ID_Defrag, MainFrame::OnDefrag)
-    EVT_MENU(ID_QuickOpt, MainFrame::OnQuickOpt)
-    EVT_MENU(ID_FullOpt, MainFrame::OnFullOpt)
-    EVT_MENU(ID_MftOpt, MainFrame::OnMftOpt)
+    EVT_MENU_RANGE(ID_Analyze, ID_MftOpt,
+                   MainFrame::OnStartJob)
     EVT_MENU(ID_Pause, MainFrame::OnPause)
-    EVT_MENU(ID_Stop, MainFrame::OnStop)
+    EVT_MENU(ID_Stop,  MainFrame::OnStop)
 
-    EVT_MENU(ID_Repeat, MainFrame::OnRepeat)
+    EVT_MENU(ID_Repeat,  MainFrame::OnRepeat)
 
     EVT_MENU(ID_SkipRem, MainFrame::OnSkipRem)
-    EVT_MENU(ID_Rescan, MainFrame::OnRescan)
+    EVT_MENU(ID_Rescan,  MainFrame::OnRescan)
 
-    EVT_MENU(ID_Repair, MainFrame::OnRepair)
+    EVT_MENU(ID_Repair,  MainFrame::OnRepair)
 
     EVT_MENU_RANGE(ID_WhenDoneNone,
                    ID_WhenDoneShutdown,
@@ -381,14 +383,12 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
 
     // settings menu
-    EVT_MENU_RANGE(ID_LangShowLog,
-                   ID_LangSubmit,
+    EVT_MENU_RANGE(ID_LangShowLog, ID_LangSubmit,
                    MainFrame::OnLangOpenTransifex)
     EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
 
-    EVT_MENU_RANGE(ID_LocaleChange,
-                   ID_LocaleChange + wxUD_LANGUAGE_LAST,
-                   MainFrame::OnLocaleChange)
+    EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange \
+        + wxUD_LANGUAGE_LAST, MainFrame::OnLocaleChange)
 
     EVT_MENU(ID_GuiOptions, MainFrame::OnGuiOptions)
 
@@ -406,12 +406,12 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
                    MainFrame::OnSortOrderChange)
 
     // help menu
-    EVT_MENU(ID_HelpContents, MainFrame::OnHelpContents)
+    EVT_MENU(ID_HelpContents,     MainFrame::OnHelpContents)
     EVT_MENU(ID_HelpBestPractice, MainFrame::OnHelpBestPractice)
-    EVT_MENU(ID_HelpFaq, MainFrame::OnHelpFaq)
-    EVT_MENU(ID_HelpLegend, MainFrame::OnHelpLegend)
+    EVT_MENU(ID_HelpFaq,          MainFrame::OnHelpFaq)
+    EVT_MENU(ID_HelpLegend,       MainFrame::OnHelpLegend)
 
-    EVT_MENU(ID_DebugLog, MainFrame::OnDebugLog)
+    EVT_MENU(ID_DebugLog,  MainFrame::OnDebugLog)
     EVT_MENU(ID_DebugSend, MainFrame::OnDebugSend)
 
     EVT_MENU_RANGE(ID_HelpUpgradeNone,
@@ -421,21 +421,23 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     // event handlers
     EVT_MENU(ID_ReadUserPreferences, MainFrame::ReadUserPreferences)
-    EVT_MENU(ID_SetWindowTitle, MainFrame::SetWindowTitle)
+    EVT_MENU(ID_SetWindowTitle,      MainFrame::SetWindowTitle)
 
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
 
     EVT_MENU(ID_AdjustListColumns, MainFrame::AdjustListColumns)
-    EVT_MENU(ID_AdjustListHeight, MainFrame::AdjustListHeight)
-    EVT_MENU(ID_PopulateList, MainFrame::PopulateList)
+    EVT_MENU(ID_AdjustListHeight,  MainFrame::AdjustListHeight)
+    EVT_MENU(ID_PopulateList,      MainFrame::PopulateList)
     EVT_MENU(ID_UpdateVolumeInformation, MainFrame::UpdateVolumeInformation)
 
-    EVT_MENU(ID_BootChange, MainFrame::OnBootChange)
+    EVT_MENU(ID_BootChange,        MainFrame::OnBootChange)
 
     EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
 
-    EVT_MENU(ID_Shutdown, MainFrame::Shutdown)
+    EVT_MENU(ID_Shutdown,          MainFrame::Shutdown)
+
+    EVT_MENU(ID_JobCompletion,     MainFrame::OnJobCompletion)
 END_EVENT_TABLE()
 
 // =======================================================================
@@ -475,70 +477,9 @@ void MainFrame::OnSize(wxSizeEvent& event)
 //                            Menu handlers
 // =======================================================================
 
-// file menu handlers
-void MainFrame::OnAnalyze(wxCommandEvent& WXUNUSED(event))
-{
-    Utils::ShowError(wxT("Cannot open the file!"));
-}
-
-void MainFrame::OnDefrag(wxCommandEvent& WXUNUSED(event))
-{
-    wxFileName file(Utils::DownloadFile(
-        wxT("http://ultradefrag.sourceforge.net/version.ini")));
-    file.Normalize();
-    wxString path = file.GetFullPath();
-    if(!wxLaunchDefaultBrowser(path))
-        Utils::ShowError(wxT("Cannot open %ls!"),path.wc_str());
-    //wxRemoveFile(path);
-}
-
-void MainFrame::OnQuickOpt(wxCommandEvent& WXUNUSED(event))
-{
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowUpgradeDialog);
-    event.SetString(wxT(VERSIONINTITLE));
-    wxPostEvent(this,event);
-}
-
-void MainFrame::OnFullOpt(wxCommandEvent& WXUNUSED(event))
-{
-    // test out of memory condition
-    for(int i = 0; i < 1000000000; i++){
-        //char *p = new char[1024];
-        //char *p = (char *)malloc(1024);
-        char *p = (char *)winx_malloc(1024);
-        *p = 0x1;
-    }
-}
-
-void MainFrame::OnMftOpt(wxCommandEvent& WXUNUSED(event))
-{
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Shutdown);
-    wxPostEvent(this,event);
-}
-
-void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
-{
-    m_repeat = m_repeat ? false : true;
-    m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
-    m_toolBar->ToggleTool(ID_Repeat,m_repeat);
-}
-
 void MainFrame::OnExit(wxCommandEvent& WXUNUSED(event))
 {
     Close(true);
-}
-
-// report menu handlers
-void MainFrame::OnShowReport(wxCommandEvent& WXUNUSED(event))
-{
 }
 
 // help menu handlers

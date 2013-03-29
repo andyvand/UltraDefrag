@@ -36,14 +36,111 @@
 
 #include "main.h"
 
+#define UD_EnableTool(id) { \
+    wxMenuItem *item = m_menuBar->FindItem(id); \
+    if(item) item->Enable(true); \
+    if(m_toolBar->FindById(id)) \
+        m_toolBar->EnableTool(id,true); \
+}
+
+#define UD_DisableTool(id) { \
+    wxMenuItem *item = m_menuBar->FindItem(id); \
+    if(item) item->Enable(false); \
+    if(m_toolBar->FindById(id)) \
+        m_toolBar->EnableTool(id,false); \
+}
+
+// =======================================================================
+//                          Job startup thread
+// =======================================================================
+
+void *JobThread::Entry()
+{
+    while(!m_stop){
+        if(m_launch){
+            // do the job
+            Sleep(5000);
+
+            // complete the job
+            wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_JobCompletion);
+            wxPostEvent(g_mainFrame,event);
+            m_launch = false;
+        }
+        Sleep(300);
+    }
+
+    return NULL;
+}
+
 // =======================================================================
 //                            Event handlers
 // =======================================================================
 
+void MainFrame::OnStartJob(wxCommandEvent& event)
+{
+    if(m_busy) return;
+
+    // lock everything till the job completion
+    m_busy = true;
+    UD_DisableTool(ID_Analyze);
+    UD_DisableTool(ID_Defrag);
+    UD_DisableTool(ID_QuickOpt);
+    UD_DisableTool(ID_FullOpt);
+    UD_DisableTool(ID_MftOpt);
+    UD_DisableTool(ID_Repeat);
+    UD_DisableTool(ID_SkipRem);
+    UD_DisableTool(ID_Rescan);
+    UD_DisableTool(ID_Repair);
+    UD_DisableTool(ID_ShowReport);
+    m_subMenuSortingConfig->Enable(false);
+
+    // launch the job
+    m_jobThread->m_launch = true;
+}
+
+void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
+{
+    // unlock everything after the job completion
+    UD_EnableTool(ID_Analyze);
+    UD_EnableTool(ID_Defrag);
+    UD_EnableTool(ID_QuickOpt);
+    UD_EnableTool(ID_FullOpt);
+    UD_EnableTool(ID_MftOpt);
+    UD_EnableTool(ID_Repeat);
+    UD_EnableTool(ID_SkipRem);
+    UD_EnableTool(ID_Rescan);
+    UD_EnableTool(ID_Repair);
+    UD_EnableTool(ID_ShowReport);
+    m_subMenuSortingConfig->Enable(true);
+    m_busy = false;
+
+    // shutdown when requested
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Shutdown);
+    ProcessEvent(event);
+}
+
+void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
+{
+    if(!m_busy){
+        m_repeat = m_repeat ? false : true;
+        m_menuBar->FindItem(ID_Repeat)->Check(m_repeat);
+        m_toolBar->ToggleTool(ID_Repeat,m_repeat);
+    }
+}
+
 void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
 {
-    wxString args;
+    if(m_busy) return;
 
+    wxString args;
     long i = m_vList->GetFirstSelected();
     while(i != -1){
         char *label = _strdup(m_vList->GetItemText(i).char_str());
@@ -76,5 +173,8 @@ void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
     itrace("Command Line: %ls", cmd.wc_str());
     if(!wxExecute(cmd)) Utils::ShowError(wxT("Cannot execute cmd.exe program!"));
 }
+
+#undef UD_EnableTool
+#undef UD_DisableTool
 
 /** @} */

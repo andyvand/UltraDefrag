@@ -78,6 +78,7 @@
 		<Unit filename="main.h" />
 		<Unit filename="map.cpp" />
 		<Unit filename="menu.cpp" />
+		<Unit filename="report.cpp" />
 		<Unit filename="shutdown.cpp" />
 		<Unit filename="toolbar.cpp" />
 		<Unit filename="upgrade.cpp" />
