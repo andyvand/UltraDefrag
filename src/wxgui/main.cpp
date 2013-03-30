@@ -204,6 +204,8 @@ MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
     g_mainFrame = this;
+    m_busy = false;
+    m_paused = false;
 
     // set main window icon
     SetIcons(wxICON(appicon));
@@ -342,7 +344,6 @@ MainFrame::MainFrame()
 
     // allow disk processing
     m_jobThread = new JobThread();
-    m_busy = false; m_paused = false;
 }
 
 /**
