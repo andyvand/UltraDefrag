@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-30 22:47+0100\n"
+"POT-Creation-Date: 2013-03-30 23:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr ""
 msgid "&Optimize MFT"
 msgstr ""
 
-#: i18n.cpp:132
+#: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Repair dri&ves"
 msgstr ""
 
-#: i18n.cpp:138 i18n.cpp:143
+#: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
 msgstr ""
 
@@ -355,14 +355,6 @@ msgstr ""
 
 #: tray.cpp:72
 msgid "Hide"
-msgstr ""
-
-#: tray.cpp:80
-msgid "Pause"
-msgstr ""
-
-#: tray.cpp:85
-msgid "Exit"
 msgstr ""
 
 #. : This expands to "Release 7.0.0 is available for download!"
