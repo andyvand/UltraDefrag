@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-29 14:10+0100\n"
+"POT-Creation-Date: 2013-03-30 22:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -248,7 +248,7 @@ msgstr ""
 msgid "&Debug"
 msgstr ""
 
-#: i18n.cpp:198 utils.cpp:400
+#: i18n.cpp:198 utils.cpp:421
 msgid "Open &log"
 msgstr ""
 
@@ -283,6 +283,14 @@ msgstr ""
 #: i18n.cpp:216
 #, c-format
 msgid "% free"
+msgstr ""
+
+#: i18n.cpp:235 job.cpp:155
+msgid "The job is paused"
+msgstr ""
+
+#: i18n.cpp:240 job.cpp:109 job.cpp:166
+msgid "The job is running"
 msgstr ""
 
 #: shutdown.cpp:100
@@ -341,6 +349,22 @@ msgstr ""
 msgid "&No"
 msgstr ""
 
+#: tray.cpp:70
+msgid "Show"
+msgstr ""
+
+#: tray.cpp:72
+msgid "Hide"
+msgstr ""
+
+#: tray.cpp:80
+msgid "Pause"
+msgstr ""
+
+#: tray.cpp:85
+msgid "Exit"
+msgstr ""
+
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct position
 #: upgrade.cpp:159
@@ -352,11 +376,11 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr ""
 
-#: upgrade.cpp:162 utils.cpp:404
+#: upgrade.cpp:162 utils.cpp:425
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:403
+#: utils.cpp:424
 msgid "Error!"
 msgstr ""
 
