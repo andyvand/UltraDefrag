@@ -106,6 +106,12 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
     ReleasePause();
 
     SetSystemTrayIcon(wxT("tray_running"));
+    SetTaskbarIconOverlay(wxT("overlay_running"),_("The job is running"));
+    /* set overall progress: normal 0% */
+    if(CheckOption(wxT("UD_SHOW_PROGRESS_IN_TASKBAR"))){
+        SetTaskbarProgressValue(0,1);
+        SetTaskbarProgressState(TBPF_NORMAL);
+    }
 
     // launch the job
     m_jobThread->m_launch = true;
@@ -130,6 +136,8 @@ void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
     ReleasePause();
 
     SetSystemTrayIcon(wxT("tray"));
+    RemoveTaskbarIconOverlay();
+    SetTaskbarProgressState(TBPF_NOPROGRESS);
 
     // shutdown when requested
     wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Shutdown);
@@ -144,6 +152,7 @@ void MainFrame::SetPause()
     Utils::SetProcessPriority(IDLE_PRIORITY_CLASS);
 
     SetSystemTrayIcon(m_busy ? wxT("tray_paused") : wxT("tray"));
+    if(m_busy) SetTaskbarIconOverlay(wxT("overlay_paused"),_("The job is paused"));
 }
 
 void MainFrame::ReleasePause()
@@ -154,6 +163,8 @@ void MainFrame::ReleasePause()
     Utils::SetProcessPriority(NORMAL_PRIORITY_CLASS);
 
     SetSystemTrayIcon(m_busy ? wxT("tray_running") : wxT("tray"));
+    if(m_busy) SetTaskbarIconOverlay(wxT("overlay_running"),_("The job is running"));
+    else RemoveTaskbarIconOverlay();
 }
 
 void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))

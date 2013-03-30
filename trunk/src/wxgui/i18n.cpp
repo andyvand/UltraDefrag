@@ -225,6 +225,22 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     } else {
         m_vList->SetFont(*m_vListFont);
     }
+
+    // update taskbar icon overlay
+    RemoveTaskbarIconOverlay();
+    if(m_busy){
+        if(m_paused){
+            SetTaskbarIconOverlay(
+                wxT("overlay_paused"),
+                _("The job is paused")
+            );
+        } else {
+            SetTaskbarIconOverlay(
+                wxT("overlay_running"),
+                _("The job is running")
+            );
+        }
+    }
 }
 
 bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)

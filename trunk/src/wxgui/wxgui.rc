@@ -38,6 +38,13 @@ fixed_dirty     ICON DISCARDABLE "res/fixed-dirty.ico"
 removable       ICON DISCARDABLE "res/removable.ico"
 removable_dirty ICON DISCARDABLE "res/removable-dirty.ico"
 
+/*
+* These icons are based on Fugue icon set: http://p.yusukekamiyamane.com/
+* It is licensed under a Creative Commons Attribution 3.0 License.
+*/
+overlay_running ICON DISCARDABLE "res/overlay.ico"
+overlay_paused  ICON DISCARDABLE "res/overlay_paused.ico"
+
 tray            ICON DISCARDABLE "res/tray.ico"
 tray_running    ICON DISCARDABLE "res/tray_running.ico"
 tray_paused     ICON DISCARDABLE "res/tray_paused.ico"

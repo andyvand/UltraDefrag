@@ -80,6 +80,7 @@
 		<Unit filename="menu.cpp" />
 		<Unit filename="report.cpp" />
 		<Unit filename="shutdown.cpp" />
+		<Unit filename="taskbar.cpp" />
 		<Unit filename="toolbar.cpp" />
 		<Unit filename="tray.cpp" />
 		<Unit filename="upgrade.cpp" />

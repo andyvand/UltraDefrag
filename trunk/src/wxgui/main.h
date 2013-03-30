@@ -70,6 +70,14 @@
 #endif
 #include <commctrl.h>
 
+typedef enum {
+    TBPF_NOPROGRESS	= 0,
+    TBPF_INDETERMINATE	= 0x1,
+    TBPF_NORMAL	= 0x2,
+    TBPF_ERROR	= 0x4,
+    TBPF_PAUSED	= 0x8
+} TBPFLAG;
+
 #include "../include/version.h"
 #include "../dll/zenwinx/zenwinx.h"
 #include "../dll/udefrag/udefrag.h"
@@ -287,7 +295,12 @@ private:
     void SaveAppConfiguration();
     void ReadUserPreferences();
     bool CheckOption(const wxString& name);
+
     void SetSystemTrayIcon(const wxString& icon);
+    void SetTaskbarIconOverlay(const wxString& icon, const wxString& text);
+    void RemoveTaskbarIconOverlay();
+    void SetTaskbarProgressState(TBPFLAG flag);
+    void SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total);
 
     void InitLocale();
     void SetLocale(int id);
