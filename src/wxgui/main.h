@@ -290,6 +290,8 @@ public:
     bool m_busy;
     bool m_paused;
 
+    SystemTrayIcon *m_systemTrayIcon;
+
 private:
     void ReadAppConfiguration();
     void SaveAppConfiguration();
@@ -353,8 +355,6 @@ private:
     wxSplitterWindow *m_splitter;
     wxListView       *m_vList;
     wxStaticText     *m_cMap;
-
-    SystemTrayIcon   *m_systemTrayIcon;
 
     bool m_btdEnabled;
     BtdThread *m_btdThread;
