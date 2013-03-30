@@ -186,6 +186,7 @@ public:
 
     bool m_launch;
     bool m_stop;
+    long m_counter;
 };
 
 class SystemTrayIcon: public wxTaskBarIcon {
@@ -298,6 +299,9 @@ private:
     void InitMap();
     void InitVolList();
 
+    void SetPause();
+    void ReleasePause();
+
     int  ShowShutdownDialog(int action);
 
     int  m_x;
@@ -363,6 +367,7 @@ public:
         const wxChar* format, ...);
     static void OpenHandbook(const wxString& page,
         const wxString& anchor = wxEmptyString);
+    static bool SetProcessPriority(int priority);
     static void ShellExec(const wxString& file,
         const wxString& action = wxT("open"),
         const wxString& parameters = wxEmptyString,
