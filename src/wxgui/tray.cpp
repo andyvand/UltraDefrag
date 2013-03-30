@@ -77,12 +77,12 @@ wxMenu *SystemTrayIcon::CreatePopupMenu()
 
     menu->AppendSeparator();
 
-    item = menu->Append(ID_PauseMenu,_("Pause"));
+    item = menu->Append(ID_PauseMenu,_("Pa&use"));
     if(g_mainFrame->m_paused) item->Check(true);
 
     menu->AppendSeparator();
 
-    menu->Append(ID_ExitMenu,_("Exit"));
+    menu->Append(ID_ExitMenu,_("E&xit"));
     return menu;
 }
 
