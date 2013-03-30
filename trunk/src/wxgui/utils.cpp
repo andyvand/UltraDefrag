@@ -259,7 +259,7 @@ bool Utils::SetProcessPriority(int priority)
     if(!result) letrace("cannot set process priority");
 
     ::CloseHandle(hProcess);
-    return result;
+    return (result != 0 ? true : false);
 }
 
 /**
