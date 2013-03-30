@@ -74,7 +74,8 @@ void MainFrame::InitMenu()
     m_menuAction->Append(ID_QuickOpt);
     m_menuAction->Append(ID_FullOpt);
     m_menuAction->Append(ID_MftOpt);
-    m_menuAction->Append(ID_Pause);
+    m_menuAction->AppendCheckItem( \
+        ID_Pause, wxEmptyString);
     m_menuAction->Append(ID_Stop);
     m_menuAction->AppendSeparator();
     m_menuAction->AppendCheckItem( \

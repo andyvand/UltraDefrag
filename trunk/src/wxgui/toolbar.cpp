@@ -78,7 +78,7 @@ void MainFrame::InitToolbar()
     UD_MakeToolItem(ID_QuickOpt        , quick   )
     UD_MakeToolItem(ID_FullOpt         , full    )
     UD_MakeToolItem(ID_MftOpt          , mft     )
-    UD_MakeToolItem(ID_Pause           , pause   )
+    UD_MakeToolCheckItem(ID_Pause      , pause   )
     UD_MakeToolItem(ID_Stop            , stop    )
     m_toolBar->AddSeparator();
     UD_MakeToolItem(ID_ShowReport      , report  )

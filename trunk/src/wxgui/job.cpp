@@ -80,8 +80,17 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
 {
     if(m_busy) return;
 
+    // if nothing is selected in the list return
+    m_jobThread->m_counter = 0;
+    long i = m_vList->GetFirstSelected();
+    while(i != -1){
+        m_jobThread->m_counter ++;
+        i = m_vList->GetNextSelected(i);
+    }
+    if(!m_jobThread->m_counter) return;
+
     // lock everything till the job completion
-    m_busy = true;
+    m_busy = true; m_paused = false;
     UD_DisableTool(ID_Analyze);
     UD_DisableTool(ID_Defrag);
     UD_DisableTool(ID_QuickOpt);
@@ -93,6 +102,8 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
     UD_DisableTool(ID_Repair);
     UD_DisableTool(ID_ShowReport);
     m_subMenuSortingConfig->Enable(false);
+
+    ReleasePause();
 
     SetSystemTrayIcon(wxT("tray_running"));
 
@@ -116,6 +127,8 @@ void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
     m_subMenuSortingConfig->Enable(true);
     m_busy = false;
 
+    ReleasePause();
+
     SetSystemTrayIcon(wxT("tray"));
 
     // shutdown when requested
@@ -123,8 +136,30 @@ void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
     ProcessEvent(event);
 }
 
+void MainFrame::SetPause()
+{
+    m_menuBar->FindItem(ID_Pause)->Check(true);
+    m_toolBar->ToggleTool(ID_Pause,true);
+
+    Utils::SetProcessPriority(IDLE_PRIORITY_CLASS);
+
+    SetSystemTrayIcon(m_busy ? wxT("tray_paused") : wxT("tray"));
+}
+
+void MainFrame::ReleasePause()
+{
+    m_menuBar->FindItem(ID_Pause)->Check(false);
+    m_toolBar->ToggleTool(ID_Pause,false);
+
+    Utils::SetProcessPriority(NORMAL_PRIORITY_CLASS);
+
+    SetSystemTrayIcon(m_busy ? wxT("tray_running") : wxT("tray"));
+}
+
 void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 {
+    m_paused = m_paused ? false : true;
+    if(m_paused) SetPause(); else ReleasePause();
 }
 
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))

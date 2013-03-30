@@ -242,6 +242,27 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
 }
 
 /**
+ * @brief Sets priority for the current process.
+ * @param[in] priority process priority class.
+ * Read MSDN article on SetPriorityClass for details.
+ */
+bool Utils::SetProcessPriority(int priority)
+{
+    HANDLE hProcess = ::OpenProcess(PROCESS_SET_INFORMATION,
+        FALSE,::GetCurrentProcessId());
+    if(!hProcess){
+        letrace("cannot open current process");
+        return false;
+    }
+
+    BOOL result = ::SetPriorityClass(hProcess,(DWORD)priority);
+    if(!result) letrace("cannot set process priority");
+
+    ::CloseHandle(hProcess);
+    return result;
+}
+
+/**
  * @brief Windows ShellExecute analog.
  */
 void Utils::ShellExec(
