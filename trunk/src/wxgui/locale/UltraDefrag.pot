@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-30 23:52+0100\n"
+"POT-Creation-Date: 2013-03-31 17:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -285,11 +285,11 @@ msgstr ""
 msgid "% free"
 msgstr ""
 
-#: i18n.cpp:235 job.cpp:155
+#: i18n.cpp:235 job.cpp:153
 msgid "The job is paused"
 msgstr ""
 
-#: i18n.cpp:240 job.cpp:109 job.cpp:166
+#: i18n.cpp:240 job.cpp:108 job.cpp:164
 msgid "The job is running"
 msgstr ""
 
@@ -376,6 +376,6 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:232
+#: vollist.cpp:231
 msgid "Disk needs to be repaired"
 msgstr ""

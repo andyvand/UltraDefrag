@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-28 23:40+0100\n"
-"PO-Revision-Date: 2013-03-29 11:56+0000\n"
+"POT-Creation-Date: 2013-03-30 23:52+0100\n"
+"PO-Revision-Date: 2013-03-31 09:14+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,19 +20,19 @@ msgstr ""
 "Language: my\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: about.cpp:45
+#: about.cpp:76
 msgid "About UltraDefrag"
 msgstr "UltraDefrag အကြောင်း"
 
-#: about.cpp:58
+#: about.cpp:89
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:60
+#: about.cpp:91
 msgid "Credits and licenses are listed in the handbook."
 msgstr "Credits နှင့်လိုင်စင်များကို လက်စွဲစာအုပ်ထဲတွင်တွေ့နိုင်သည်။"
 
-#: about.cpp:63
+#: about.cpp:94
 msgid "UltraDefrag website"
 msgstr "UltraDefrag website"
 
@@ -72,7 +72,7 @@ msgstr "အပြည့် အဆင့်မြင့်ဆုံး လုပ�
 msgid "&Optimize MFT"
 msgstr "MFT  ကိုအဆင့်မြင့်ဆုံး စေခြင်း"
 
-#: i18n.cpp:132
+#: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
 msgstr "ခေတ္တနား"
 
@@ -96,7 +96,7 @@ msgstr "ဋ္ဌာနေများပြန်စစ်"
 msgid "Repair dri&ves"
 msgstr "ဋ္ဌာနေများ ပြင်ရန်"
 
-#: i18n.cpp:138 i18n.cpp:143
+#: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
 msgstr "ထွက်"
 
@@ -252,7 +252,7 @@ msgstr "အကြောင်းအရာ"
 msgid "&Debug"
 msgstr "ပြသာနာရှင်း"
 
-#: i18n.cpp:198 utils.cpp:400
+#: i18n.cpp:198 utils.cpp:421
 msgid "Open &log"
 msgstr "ဖွင့်ပြီး မှတ်တမ်းတင်ရန်"
 
@@ -288,6 +288,14 @@ msgstr "လွတ်လပ် နေရာ"
 #, c-format
 msgid "% free"
 msgstr "% လွတ်လပ်"
+
+#: i18n.cpp:235 job.cpp:155
+msgid "The job is paused"
+msgstr ""
+
+#: i18n.cpp:240 job.cpp:109 job.cpp:166
+msgid "The job is running"
+msgstr ""
 
 #: shutdown.cpp:100
 msgid "Please confirm"
@@ -349,6 +357,14 @@ msgstr "ဟုတ်ပြီ"
 msgid "&No"
 msgstr "မဟုတ်ဘူး"
 
+#: tray.cpp:70
+msgid "Show"
+msgstr ""
+
+#: tray.cpp:72
+msgid "Hide"
+msgstr ""
+
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
 #. position
@@ -361,14 +377,14 @@ msgstr "%ls သည်ဒေါင်းလုတ်ပြုလုပ်ရန�
 msgid "You can upgrade me ^-^"
 msgstr "သင်ငါ့ကို အဆင့်မြှင့်နိုင်သည် ^-^"
 
-#: upgrade.cpp:162 utils.cpp:404
+#: upgrade.cpp:162 utils.cpp:425
 msgid "&Cancel"
 msgstr "&C ပယ်ဖျက်မည်"
 
-#: utils.cpp:403
+#: utils.cpp:424
 msgid "Error!"
 msgstr "အမှားအယွင်း"
 
-#: vollist.cpp:220
+#: vollist.cpp:232
 msgid "Disk needs to be repaired"
 msgstr "ချပ်ပြား ပြင်ရန်လိုအပ်သည်"
