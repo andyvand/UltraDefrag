@@ -298,18 +298,14 @@ void *ConfigThread::Entry()
                 */
             } else {
                 itrace("configuration has been changed");
-                wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,
-                    ID_ReadUserPreferences);
-                wxPostEvent(g_mainFrame,event);
+                PostCommandEvent(g_mainFrame,ID_ReadUserPreferences);
 
                 // adjust window title
-                event.SetId(ID_SetWindowTitle);
-                event.SetString(wxT(""));
-                wxPostEvent(g_mainFrame,event);
+                wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_SetWindowTitle);
+                event.SetString(wxT("")); wxPostEvent(g_mainFrame,event);
 
                 // adjust system tray icon
-                event.SetId(ID_AdjustSystemTrayIcon);
-                wxPostEvent(g_mainFrame,event);
+                PostCommandEvent(g_mainFrame,ID_AdjustSystemTrayIcon);
             }
             counter ++;
             /* wait for the next notification */

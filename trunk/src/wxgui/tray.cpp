@@ -104,20 +104,17 @@ void SystemTrayIcon::OnMenuShowHide(wxCommandEvent& WXUNUSED(event))
 
 void SystemTrayIcon::OnMenuPause(wxCommandEvent& WXUNUSED(event))
 {
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Pause);
-    wxPostEvent(g_mainFrame,event);
+    PostCommandEvent(g_mainFrame,ID_Pause);
 }
 
 void SystemTrayIcon::OnMenuExit(wxCommandEvent& WXUNUSED(event))
 {
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Exit);
-    wxPostEvent(g_mainFrame,event);
+    PostCommandEvent(g_mainFrame,ID_Exit);
 }
 
 void SystemTrayIcon::OnLeftButtonUp(wxTaskBarIconEvent& WXUNUSED(event))
 {
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_ShowHideMenu);
-    ProcessEvent(event);
+    ProcessCommandEvent(ID_ShowHideMenu);
 }
 
 // =======================================================================

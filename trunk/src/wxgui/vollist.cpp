@@ -88,8 +88,7 @@ void MainFrame::InitVolList()
     // ensure that the list will cover integral number of items
     m_vListHeight = 0xFFFFFFFF; // prevent expansion of the list
     m_vList->InsertItem(0,wxT("hi"),0);
-    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListHeight);
-    ProcessEvent(evt);
+    ProcessCommandEvent(ID_AdjustListHeight);
 
     Connect(wxEVT_SIZE,wxSizeEventHandler(MainFrame::OnListSize),NULL,this);
     m_splitter->Connect(wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED,
@@ -170,11 +169,11 @@ void MainFrame::OnSplitChanged(wxSplitterEvent& event)
         m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
 
     // ensure that the list control will cover integral number of items
-    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListHeight);
-    wxPostEvent(this,evt);
+    PostCommandEvent(this,ID_AdjustListHeight);
 
     // adjust list columns once again to reflect the actual layout
-    evt.SetId(ID_AdjustListColumns); evt.SetInt(-1); wxPostEvent(this,evt);
+    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
+    evt.SetInt(-1); wxPostEvent(this,evt);
 
     event.Skip();
 }
