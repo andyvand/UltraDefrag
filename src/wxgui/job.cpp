@@ -56,7 +56,7 @@
 
 void *JobThread::Entry()
 {
-    while(!m_stop){
+    while(!g_mainFrame->CheckForTermination(200)){
         if(m_launch){
             // do the job
             Sleep(5000);
@@ -65,7 +65,6 @@ void *JobThread::Entry()
             PostCommandEvent(g_mainFrame,ID_JobCompletion);
             m_launch = false;
         }
-        Sleep(300);
     }
 
     return NULL;

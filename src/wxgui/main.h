@@ -103,6 +103,14 @@ typedef enum {
 //                            Declarations
 // =======================================================================
 
+class StatThread: public wxThread {
+public:
+    StatThread() : wxThread(wxTHREAD_JOINABLE) { Create(); Run(); }
+    ~StatThread() { Wait(); }
+
+    virtual void *Entry();
+};
+
 class Log: public wxLog {
 public:
     Log()  { delete SetActiveTarget(this); };
@@ -110,14 +118,6 @@ public:
 
     virtual void DoLog(wxLogLevel level,
         const wxChar *msg,time_t timestamp);
-};
-
-class StatThread: public wxThread {
-public:
-    StatThread() : wxThread(wxTHREAD_JOINABLE) { Create(); Run(); }
-    ~StatThread() { Wait(); }
-
-    virtual void *Entry();
 };
 
 class App: public wxApp {
@@ -133,78 +133,65 @@ private:
 
 class BtdThread: public wxThread {
 public:
-    BtdThread() : wxThread(wxTHREAD_JOINABLE) { m_stop = false; Create(); }
-    ~BtdThread() { m_stop = true; Wait(); }
+    BtdThread() : wxThread(wxTHREAD_JOINABLE) { Create(); Run(); }
+    ~BtdThread() { Wait(); }
 
     virtual void *Entry();
-
-    bool m_stop;
-};
-
-class CrashInfoThread: public wxThread {
-public:
-    CrashInfoThread() : wxThread(wxTHREAD_JOINABLE) {
-        m_stop = false; Create(); Run();
-    }
-    ~CrashInfoThread() { m_stop = true; Wait(); }
-
-    virtual void *Entry();
-
-    bool m_stop;
 };
 
 class ConfigThread: public wxThread {
 public:
-    ConfigThread() : wxThread(wxTHREAD_JOINABLE) {
-        m_stop = false; Create(); Run();
+    ConfigThread() : wxThread(wxTHREAD_JOINABLE) { Create(); Run(); }
+    ~ConfigThread() { Wait(); }
+
+    virtual void *Entry();
+};
+
+class CrashInfoThread: public wxThread {
+public:
+    CrashInfoThread() : wxThread(wxTHREAD_JOINABLE) { Create(); Run(); }
+    ~CrashInfoThread() { Wait(); }
+
+    virtual void *Entry();
+};
+
+class JobThread: public wxThread {
+public:
+    JobThread() : wxThread(wxTHREAD_JOINABLE) {
+        m_launch = false; Create(); Run();
     }
-    ~ConfigThread() { m_stop = true; Wait(); }
+    ~JobThread() { Wait(); }
 
     virtual void *Entry();
 
-    bool m_stop;
+    bool m_launch;
+    long m_counter;
 };
 
 class ListThread: public wxThread {
 public:
     ListThread() : wxThread(wxTHREAD_JOINABLE) {
-        m_stop = false; m_rescan = true; Create(); Run();
+        m_rescan = true; Create(); Run();
     }
-    ~ListThread() { m_stop = true; Wait(); }
+    ~ListThread() { Wait(); }
 
     virtual void *Entry();
 
-    bool m_stop;
     bool m_rescan;
 };
 
 class UpgradeThread: public wxThread {
 public:
     UpgradeThread(int level) : wxThread(wxTHREAD_JOINABLE) {
-        m_stop = false; m_level = level; m_check = true; Create(); Run();
+        m_level = level; m_check = true; Create(); Run();
     }
-    ~UpgradeThread() { m_stop = true; Wait(); }
+    ~UpgradeThread() { Wait(); }
 
     virtual void *Entry();
     int ParseVersionString(const char *version);
 
-    bool m_stop;
     bool m_check;
     int m_level;
-};
-
-class JobThread: public wxThread {
-public:
-    JobThread() : wxThread(wxTHREAD_JOINABLE) {
-        m_launch = false; m_stop = false; Create(); Run();
-    }
-    ~JobThread() { m_stop = true; Wait(); }
-
-    virtual void *Entry();
-
-    bool m_launch;
-    bool m_stop;
-    long m_counter;
 };
 
 class SystemTrayIcon: public wxTaskBarIcon {
@@ -224,6 +211,8 @@ class MainFrame: public wxFrame {
 public:
     MainFrame();
     ~MainFrame();
+
+    bool CheckForTermination(int time);
 
     // file menu handlers
     void OnStartJob(wxCommandEvent& event);
@@ -552,5 +541,6 @@ extern MainFrame *g_mainFrame;
 extern wxLocale *g_locale;
 extern double g_scaleFactor;
 extern int g_iconSize;
+extern HANDLE g_synchEvent;
 
 #endif /* _UDEFRAG_GUI_MAIN_H_ */

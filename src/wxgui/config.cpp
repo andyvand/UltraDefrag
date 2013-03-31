@@ -277,7 +277,7 @@ void *ConfigThread::Entry()
         goto done;
     }
 
-    while(!m_stop){
+    while(!g_mainFrame->CheckForTermination(1)){
         DWORD status = WaitForSingleObject(h,100);
         if(status == WAIT_OBJECT_0){
             if(!(counter % 2)){

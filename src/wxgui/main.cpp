@@ -45,8 +45,9 @@
 // =======================================================================
 
 MainFrame *g_mainFrame = NULL;
-double g_scaleFactor = 1.0f;
-int g_iconSize; // small icon size
+double g_scaleFactor = 1.0f;   // DPI-aware scaling factor
+int g_iconSize;                // small icon size
+HANDLE g_synchEvent = NULL;    // synchronization for threads
 
 // =======================================================================
 //                             Web statistics
@@ -137,7 +138,20 @@ bool App::OnInit()
     if(!Utils::CheckAdminRights()){
         wxMessageDialog dlg(NULL,
             wxT("Administrative rights are needed to run the program!"),
-            wxT("UltraDefrag"),wxOK | wxICON_ERROR);
+            wxT("UltraDefrag"),wxOK | wxICON_ERROR
+        );
+        dlg.ShowModal(); Cleanup();
+        return false;
+    }
+
+    // create synchronization event
+    g_synchEvent = ::CreateEvent(NULL,TRUE,FALSE,NULL);
+    if(!g_synchEvent){
+        letrace("cannot create synchronization event");
+        wxMessageDialog dlg(NULL,
+            wxT("Cannot create synchronization event!"),
+            wxT("UltraDefrag"),wxOK | wxICON_ERROR
+        );
         dlg.ShowModal(); Cleanup();
         return false;
     }
@@ -314,6 +328,8 @@ MainFrame::MainFrame()
     }
 
     // launch threads for time consuming operations
+    m_btdThread = btd ? new BtdThread() : NULL;
+    m_configThread = new ConfigThread();
     m_crashInfoThread = new CrashInfoThread();
 
     wxConfigBase *cfg = wxConfigBase::Get();
@@ -322,12 +338,6 @@ MainFrame::MainFrame()
     if(item) item->Check();
 
     m_upgradeThread = new UpgradeThread(ulevel);
-
-    m_btdThread = new BtdThread();
-    m_btdThread->m_stop = btd ? false : true;
-    m_btdThread->Run();
-
-    m_configThread = new ConfigThread();
 
     // set system tray icon
     m_systemTrayIcon = new SystemTrayIcon();
@@ -350,22 +360,40 @@ MainFrame::MainFrame()
  */
 MainFrame::~MainFrame()
 {
-    // save configuration
-    delete m_configThread;
-    SaveAppConfiguration();
-
     // terminate threads
+    ::SetEvent(g_synchEvent);
+    delete m_btdThread;
+    delete m_configThread;
+    delete m_crashInfoThread;
     delete m_jobThread;
     delete m_listThread;
-    delete m_crashInfoThread;
     delete m_upgradeThread;
-    delete m_btdThread;
+
+    // save configuration
+    SaveAppConfiguration();
 
     // remove system tray icon
     delete m_systemTrayIcon;
 
     // free resources
+    ::CloseHandle(g_synchEvent);
     delete m_title;
+}
+
+/**
+ * @brief Returns true if the program
+ * is going to be terminated.
+ * @param[in] time timeout interval,
+ * in milliseconds.
+ */
+bool MainFrame::CheckForTermination(int time)
+{
+    DWORD result = ::WaitForSingleObject(g_synchEvent,(DWORD)time);
+    if(result == WAIT_FAILED){
+        letrace("synchronization failed");
+        return true;
+    }
+    return result == WAIT_OBJECT_0 ? true : false;
 }
 
 // =======================================================================
