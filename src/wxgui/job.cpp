@@ -62,8 +62,7 @@ void *JobThread::Entry()
             Sleep(5000);
 
             // complete the job
-            wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_JobCompletion);
-            wxPostEvent(g_mainFrame,event);
+            PostCommandEvent(g_mainFrame,ID_JobCompletion);
             m_launch = false;
         }
         Sleep(300);
@@ -140,8 +139,7 @@ void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
     SetTaskbarProgressState(TBPF_NOPROGRESS);
 
     // shutdown when requested
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Shutdown);
-    ProcessEvent(event);
+    ProcessCommandEvent(ID_Shutdown);
 }
 
 void MainFrame::SetPause()

@@ -89,6 +89,16 @@ typedef enum {
 /* converts pixels from 96 DPI to the current one */
 #define DPI(x) ((int)((double)x * g_scaleFactor))
 
+#define PostCommandEvent(window,id) { \
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,id); \
+    wxPostEvent(window,event); \
+}
+
+#define ProcessCommandEvent(id) { \
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,id); \
+    ProcessEvent(event); \
+}
+
 // =======================================================================
 //                            Declarations
 // =======================================================================

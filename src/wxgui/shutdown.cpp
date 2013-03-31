@@ -230,8 +230,7 @@ void MainFrame::Shutdown(wxCommandEvent& WXUNUSED(event))
     ::winx_flush_dbg_log(0);
 
     // close the window after the request completion
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Exit);
-    wxPostEvent(this,event);
+    PostCommandEvent(this,ID_Exit);
 
     // There is an opinion that SetSuspendState call
     // is more reliable than SetSystemPowerState:

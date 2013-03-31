@@ -212,8 +212,7 @@ MainFrame::MainFrame()
 
     // read configuration
     ReadAppConfiguration();
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,
-        ID_ReadUserPreferences);
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,0);
     ReadUserPreferences(event);
 
     // set main window title
