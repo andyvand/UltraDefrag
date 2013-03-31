@@ -66,7 +66,7 @@ void *CrashInfoThread::Entry()
         goto done;
     }
 
-    while(!m_stop){
+    while(!g_mainFrame->CheckForTermination(1)){
         BOOL result = ::ReadEventLog(hLog,
             EVENTLOG_SEQUENTIAL_READ | EVENTLOG_BACKWARDS_READ,
             0,buffer,bytes_to_read,&bytes_read,&bytes_needed);
@@ -114,7 +114,7 @@ void *CrashInfoThread::Entry()
 
     // save information to a file
 save_info:
-    if(!m_stop && !info.IsEmpty()){
+    if(!g_mainFrame->CheckForTermination(1) && !info.IsEmpty()){
         wxTextFile log;
         log.Create(wxT("crash-info.log"));
         log.AddLine(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
@@ -132,7 +132,7 @@ save_info:
     }
 
     // open the file in default browser
-    if(!m_stop && !info.IsEmpty()){
+    if(!g_mainFrame->CheckForTermination(1) && !info.IsEmpty()){
         wxFileName file(wxT("./crash-info.log"));
         file.Normalize();
         wxString logpath = file.GetFullPath();
@@ -141,7 +141,8 @@ save_info:
     }
 
     // save time stamp of the last processed event
-    if(!m_stop) cfg->Write(wxT("/LastProcessedEvent/TimeStamp"),(long)new_time_stamp);
+    if(!g_mainFrame->CheckForTermination(1))
+        cfg->Write(wxT("/LastProcessedEvent/TimeStamp"),(long)new_time_stamp);
 
 done:
     if(hLog) ::CloseEventLog(hLog);

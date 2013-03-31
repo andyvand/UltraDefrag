@@ -204,7 +204,7 @@ void MainFrame::OnListSize(wxSizeEvent& event)
 
 void *ListThread::Entry()
 {
-    while(!m_stop){
+    while(!g_mainFrame->CheckForTermination(200)){
         if(m_rescan){
             volume_info *v = ::udefrag_get_vollist(g_mainFrame->m_skipRem);
             if(v){
@@ -214,7 +214,6 @@ void *ListThread::Entry()
             }
             m_rescan = false;
         }
-        Sleep(300);
     }
 
     return NULL;

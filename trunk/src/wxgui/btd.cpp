@@ -44,7 +44,7 @@ void *BtdThread::Entry()
 {
     itrace("boot registration tracking started");
 
-    HKEY hKey; HANDLE hEvent;
+    HKEY hKey = NULL; HANDLE hEvent = NULL;
     if(::RegOpenKeyExW(HKEY_LOCAL_MACHINE,
       L"SYSTEM\\CurrentControlSet\\Control\\Session Manager",
       0,KEY_NOTIFY,&hKey) != ERROR_SUCCESS){
@@ -55,11 +55,10 @@ void *BtdThread::Entry()
     hEvent = ::CreateEvent(NULL,FALSE,FALSE,NULL);
     if(hEvent == NULL){
         letrace("cannot create event for SMSS key tracking");
-        ::RegCloseKey(hKey);
         goto done;
     }
 
-    while(!m_stop){
+    while(!g_mainFrame->CheckForTermination(1)){
         LONG error = ::RegNotifyChangeKeyValue(hKey,FALSE,
             REG_NOTIFY_CHANGE_LAST_SET,hEvent,TRUE);
         if(error != ERROR_SUCCESS){
@@ -67,7 +66,7 @@ void *BtdThread::Entry()
             letrace("RegNotifyChangeKeyValue failed");
             break;
         }
-        while(!m_stop){
+        while(!g_mainFrame->CheckForTermination(1)){
             if(::WaitForSingleObject(hEvent,100) == WAIT_OBJECT_0){
                 int result = ::winx_bootex_check(L"defrag_native");
                 if(result >= 0){
@@ -82,10 +81,9 @@ void *BtdThread::Entry()
         }
     }
 
-    ::CloseHandle(hEvent);
-    ::RegCloseKey(hKey);
-
 done:
+    if(hEvent) ::CloseHandle(hEvent);
+    if(hKey) ::RegCloseKey(hKey);
     itrace("boot registration tracking stopped");
     return NULL;
 }

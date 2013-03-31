@@ -51,7 +51,7 @@ enum {
 
 void *UpgradeThread::Entry()
 {
-    while(!m_stop){
+    while(!g_mainFrame->CheckForTermination(200)){
         if(m_check && m_level){
             wxString path = Utils::DownloadFile(
                 m_level == UPGRADE_ALL ? wxT(VERSION_URL) :
@@ -80,7 +80,6 @@ void *UpgradeThread::Entry()
             }
             m_check = false;
         }
-        Sleep(300);
     }
 
     return NULL;
