@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-28 23:40+0100\n"
-"PO-Revision-Date: 2013-03-29 12:49+0000\n"
+"POT-Creation-Date: 2013-03-30 23:52+0100\n"
+"PO-Revision-Date: 2013-03-31 09:14+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: about.cpp:45
+#: about.cpp:76
 msgid "About UltraDefrag"
 msgstr "O aplikaci UltraDefrag"
 
-#: about.cpp:58
+#: about.cpp:89
 msgid "An open source defragmentation utility."
 msgstr "Open source defragmentační nástroj."
 
-#: about.cpp:60
+#: about.cpp:91
 msgid "Credits and licenses are listed in the handbook."
 msgstr "Kredity a licence jsou uvedeny v návodu."
 
-#: about.cpp:63
+#: about.cpp:94
 msgid "UltraDefrag website"
 msgstr "UltraDefrag website"
 
@@ -71,7 +71,7 @@ msgstr "Plná optimalizace"
 msgid "&Optimize MFT"
 msgstr "Optimalizovat MFT"
 
-#: i18n.cpp:132
+#: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
 msgstr "Pauza"
 
@@ -95,7 +95,7 @@ msgstr "Aktualizovat jednotky"
 msgid "Repair dri&ves"
 msgstr "Opravit jednotky"
 
-#: i18n.cpp:138 i18n.cpp:143
+#: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
 msgstr "Konec"
 
@@ -251,7 +251,7 @@ msgstr "O aplikaci"
 msgid "&Debug"
 msgstr "Ladit"
 
-#: i18n.cpp:198 utils.cpp:400
+#: i18n.cpp:198 utils.cpp:421
 msgid "Open &log"
 msgstr "Otevřít log"
 
@@ -287,6 +287,14 @@ msgstr "Volné místo"
 #, c-format
 msgid "% free"
 msgstr "% volného místa"
+
+#: i18n.cpp:235 job.cpp:155
+msgid "The job is paused"
+msgstr ""
+
+#: i18n.cpp:240 job.cpp:109 job.cpp:166
+msgid "The job is running"
+msgstr ""
 
 #: shutdown.cpp:100
 msgid "Please confirm"
@@ -348,6 +356,14 @@ msgstr "Ano"
 msgid "&No"
 msgstr "Ne"
 
+#: tray.cpp:70
+msgid "Show"
+msgstr ""
+
+#: tray.cpp:72
+msgid "Hide"
+msgstr ""
+
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
 #. position
@@ -360,14 +376,14 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "Je možné mě aktualizovat ^-^"
 
-#: upgrade.cpp:162 utils.cpp:404
+#: upgrade.cpp:162 utils.cpp:425
 msgid "&Cancel"
 msgstr "Storno"
 
-#: utils.cpp:403
+#: utils.cpp:424
 msgid "Error!"
 msgstr "Chyba!"
 
-#: vollist.cpp:220
+#: vollist.cpp:232
 msgid "Disk needs to be repaired"
 msgstr "Disk potřebuje opravit"
