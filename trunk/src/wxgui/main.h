@@ -275,6 +275,8 @@ public:
     void PopulateList(wxCommandEvent& event);
     void UpdateVolumeInformation(wxCommandEvent& event);
 
+    void UpdateStatusBar(wxCommandEvent& event);
+
     void OnBootChange(wxCommandEvent& event);
     void OnLocaleChange(wxCommandEvent& event);
 
@@ -309,6 +311,7 @@ private:
 
     void InitMenu();
     void InitToolbar();
+    void InitStatusBar();
 
     void InitMap();
     void InitVolList();
@@ -474,17 +477,18 @@ enum {
     ID_HelpAbout,
 
     // event identifiers
-    ID_BootChange,
-    ID_ShowUpgradeDialog,
-    ID_PopulateList,
-    ID_UpdateVolumeInformation,
     ID_AdjustListColumns,
     ID_AdjustListHeight,
+    ID_AdjustSystemTrayIcon,
+    ID_BootChange,
+    ID_JobCompletion,
+    ID_PopulateList,
     ID_ReadUserPreferences,
     ID_SetWindowTitle,
-    ID_AdjustSystemTrayIcon,
+    ID_ShowUpgradeDialog,
     ID_Shutdown,
-    ID_JobCompletion,
+    ID_UpdateStatusBar,
+    ID_UpdateVolumeInformation,
 
     // tray icon menu identifiers
     ID_ShowHideMenu,
