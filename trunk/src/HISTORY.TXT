@@ -17,7 +17,7 @@
 
                                     ***
 
-  Version 6.0.1 2013-04-
+  Version 6.0.1 2013-04-01
   ------------------------------------------------------------------------------
     - Installer no longer warns about Windows 8 being untested
     - shortened the delay after hitting the finish button of the installer
@@ -28,8 +28,8 @@
 
     - the following translations were updated:
 
-      Chinese (Traditional), Italian, Portuguese, Spanish (AR), Ukrainian,
-      Vietnamese
+      Chinese (Traditional), Filipino (Tagalog), Italian, Portuguese, Spanish (AR),
+      Ukrainian, Vietnamese
 
 
   Version 6.0.0 2013-03-02
