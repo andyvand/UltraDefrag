@@ -190,6 +190,10 @@ void MainFrame::SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total)
 
 void MainFrame::AdjustTaskbarIconOverlay(wxCommandEvent& WXUNUSED(event))
 {
+    if(!CheckOption(wxT("UD_SHOW_TASKBAR_ICON_OVERLAY"))){
+        RemoveTaskbarIconOverlay(); return;
+    }
+
     if(m_busy){
         if(m_paused){
             SetTaskbarIconOverlay(
