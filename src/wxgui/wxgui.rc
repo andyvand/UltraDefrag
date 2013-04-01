@@ -34,9 +34,16 @@ appicon ICON DISCARDABLE "res/app.ico"
 
 // drive icons
 fixed           ICON DISCARDABLE "res/fixed.ico"
-fixed_dirty     ICON DISCARDABLE "res/fixed-dirty.ico"
+fixed_dirty     ICON DISCARDABLE "res/fixed_dirty.ico"
 removable       ICON DISCARDABLE "res/removable.ico"
-removable_dirty ICON DISCARDABLE "res/removable-dirty.ico"
+removable_dirty ICON DISCARDABLE "res/removable_dirty.ico"
+
+// status bar icons
+directory       ICON DISCARDABLE "res/directory.ico"
+unfragmented    ICON DISCARDABLE "res/unfragmented.ico"
+fragmented      ICON DISCARDABLE "res/fragmented.ico"
+compressed      ICON DISCARDABLE "res/compressed.ico"
+mft             ICON DISCARDABLE "res/mft.ico"
 
 /*
 * These icons are based on Fugue icon set: http://p.yusukekamiyamane.com/
