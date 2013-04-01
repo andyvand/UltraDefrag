@@ -226,8 +226,7 @@ MainFrame::MainFrame()
 
     // read configuration
     ReadAppConfiguration();
-    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,0);
-    ReadUserPreferences(event);
+    ProcessCommandEvent(ID_ReadUserPreferences);
 
     // set main window title
     wxString *instdir = new wxString();
@@ -249,9 +248,7 @@ MainFrame::MainFrame()
     } else {
         m_title = new wxString(wxT(VERSIONINTITLE_PORTABLE));
     }
-    event.SetId(ID_SetWindowTitle);
-    event.SetString(wxT(""));
-    ProcessEvent(event);
+    ProcessCommandEvent(ID_SetWindowTitle);
     delete instdir;
 
     // set main window size and position
@@ -348,8 +345,8 @@ MainFrame::MainFrame()
     SetSystemTrayIcon(wxT("tray"));
 
     // set localized text
-    event.SetId(ID_LocaleChange+g_locale->GetLanguage());
-    OnLocaleChange(event);
+    ProcessCommandEvent(ID_LocaleChange \
+        + g_locale->GetLanguage());
 
     // allow disk processing
     m_jobThread = new JobThread();

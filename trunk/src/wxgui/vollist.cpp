@@ -102,7 +102,7 @@ void MainFrame::InitVolList()
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
 {
     int width = event.GetInt();
-    if(width < 0) width = m_vList->GetClientSize().GetWidth();
+    if(!width) width = m_vList->GetClientSize().GetWidth();
 
     double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
     m_w1 *= scale; m_w2 *= scale; m_w3 *= scale; m_w4 *= scale; m_w5 *= scale;
@@ -172,8 +172,7 @@ void MainFrame::OnSplitChanged(wxSplitterEvent& event)
     PostCommandEvent(this,ID_AdjustListHeight);
 
     // adjust list columns once again to reflect the actual layout
-    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
-    evt.SetInt(-1); wxPostEvent(this,evt);
+    PostCommandEvent(this,ID_AdjustListColumns);
 
     event.Skip();
 }
@@ -273,8 +272,7 @@ void MainFrame::PopulateList(wxCommandEvent& event)
     }
 
     // adjust list columns once again to reflect the actual layout
-    wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
-    evt.SetInt(-1); ProcessEvent(evt);
+    ProcessCommandEvent(ID_AdjustListColumns);
 
     m_vList->Select(0);
 

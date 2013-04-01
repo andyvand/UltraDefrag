@@ -206,8 +206,7 @@ void MainFrame::Shutdown(wxCommandEvent& WXUNUSED(event))
         return;
     } else if(m_menuBar->FindItem(ID_WhenDoneExit)->IsChecked()){
         // just close the window
-        wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_Exit);
-        ProcessEvent(event);
+        ProcessCommandEvent(ID_Exit);
         return;
     } else if(m_menuBar->FindItem(ID_WhenDoneStandby)->IsChecked()){
         action = WHEN_DONE_STANDBY;
