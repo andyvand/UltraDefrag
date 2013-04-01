@@ -263,6 +263,7 @@ public:
     void ReadUserPreferences(wxCommandEvent& event);
     void SetWindowTitle(wxCommandEvent& event);
     void AdjustSystemTrayIcon(wxCommandEvent& event);
+    void AdjustTaskbarIconOverlay(wxCommandEvent& event);
 
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
@@ -480,6 +481,7 @@ enum {
     ID_AdjustListColumns,
     ID_AdjustListHeight,
     ID_AdjustSystemTrayIcon,
+    ID_AdjustTaskbarIconOverlay,
     ID_BootChange,
     ID_JobCompletion,
     ID_PopulateList,
