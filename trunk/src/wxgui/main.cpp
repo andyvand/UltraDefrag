@@ -357,10 +357,10 @@ MainFrame::~MainFrame()
     delete m_crashInfoThread;
     delete m_jobThread;
     delete m_listThread;
-    delete m_upgradeThread;
 
     // save configuration
     SaveAppConfiguration();
+    delete m_upgradeThread;
 
     // remove system tray icon
     delete m_systemTrayIcon;
