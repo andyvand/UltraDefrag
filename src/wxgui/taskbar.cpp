@@ -188,4 +188,23 @@ void MainFrame::SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total)
 //                           Event handlers
 // =======================================================================
 
+void MainFrame::AdjustTaskbarIconOverlay(wxCommandEvent& WXUNUSED(event))
+{
+    if(m_busy){
+        if(m_paused){
+            SetTaskbarIconOverlay(
+                wxT("overlay_paused"),
+                _("The job is paused")
+            );
+        } else {
+            SetTaskbarIconOverlay(
+                wxT("overlay_running"),
+                _("The job is running")
+            );
+        }
+    } else {
+        RemoveTaskbarIconOverlay();
+    }
+}
+
 /** @} */

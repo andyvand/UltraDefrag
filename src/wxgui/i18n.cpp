@@ -227,20 +227,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     }
 
     // update taskbar icon overlay
-    RemoveTaskbarIconOverlay();
-    if(m_busy){
-        if(m_paused){
-            SetTaskbarIconOverlay(
-                wxT("overlay_paused"),
-                _("The job is paused")
-            );
-        } else {
-            SetTaskbarIconOverlay(
-                wxT("overlay_running"),
-                _("The job is running")
-            );
-        }
-    }
+    ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
 }
 
 bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
