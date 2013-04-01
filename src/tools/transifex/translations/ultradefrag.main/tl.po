@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-03-30 23:52+0100\n"
-"PO-Revision-Date: 2013-03-31 09:14+0000\n"
+"PO-Revision-Date: 2013-04-01 09:07+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,15 +37,15 @@ msgstr ""
 
 #: i18n.cpp:121
 msgid "&Action"
-msgstr "&Utos"
+msgstr "&Aksyon"
 
 #: i18n.cpp:122
 msgid "&Report"
-msgstr "Ul&at"
+msgstr "&Ulat"
 
 #: i18n.cpp:123
 msgid "&Settings"
-msgstr "&Seting"
+msgstr "&Pagkontrol"
 
 #: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
@@ -57,31 +57,31 @@ msgstr "Mag&suri"
 
 #: i18n.cpp:128
 msgid "&Defragment"
-msgstr "Mag&buo"
+msgstr "&Muling Ibuo"
 
 #: i18n.cpp:129
 msgid "&Quick optimization"
-msgstr "Magpahusay na &Mabilis"
+msgstr "Ma&bilis na pagpapahusay"
 
 #: i18n.cpp:130
 msgid "&Full optimization"
-msgstr "M&agpahusay ng Buo"
+msgstr "Mas&using pagpapahusay"
 
 #: i18n.cpp:131
 msgid "&Optimize MFT"
-msgstr "Pahusayan ang M&FT"
+msgstr "Paghusayan sa M&FT"
 
 #: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
-msgstr ""
+msgstr "&Pansamantalang Itigil"
 
 #: i18n.cpp:133
 msgid "&Stop"
-msgstr "&Tigilin"
+msgstr "&Ihinto"
 
 #: i18n.cpp:134
 msgid "Re&peat action"
-msgstr "Mag-&ulit"
+msgstr "&Ulitin"
 
 #: i18n.cpp:135
 msgid "Skip removable &media"
@@ -89,7 +89,7 @@ msgstr "Laktawan ang Matatanggal na &Media"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
-msgstr "Magaliksik ng mga &Drive"
+msgstr "Tignan ang mga &Drive para sa sira"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
@@ -145,7 +145,7 @@ msgstr "&Pagiiskan sa Simula"
 
 #: i18n.cpp:157
 msgid "&Sorting"
-msgstr "paghihiwalay"
+msgstr "&Pagka-ayos ayos"
 
 #: i18n.cpp:158
 msgid "&Reports"
@@ -153,15 +153,15 @@ msgstr "&Ulat"
 
 #: i18n.cpp:161
 msgid "&View change log"
-msgstr "&Tingnan baguhin log"
+msgstr "&Tignan ang pagbabago sa log"
 
 #: i18n.cpp:162
 msgid "View translation &report"
-msgstr "Tingnan ang pagsasalin &ulat"
+msgstr "Tignan ang  &ulat ng pagsasalin"
 
 #: i18n.cpp:163
 msgid "&Translations folder"
-msgstr "&Pagsasalin"
+msgstr "&Mga Pagsasalin"
 
 #: i18n.cpp:164
 msgid "&Submit current translation"
@@ -169,7 +169,7 @@ msgstr "&Isumite ang kasalukuyang pagsasalin"
 
 #: i18n.cpp:167
 msgid "&Options"
-msgstr "&Opsyon"
+msgstr "&Mga Opsyon"
 
 #: i18n.cpp:170
 msgid "&Enable"
@@ -181,31 +181,31 @@ msgstr "I&skrip"
 
 #: i18n.cpp:174
 msgid "By &path"
-msgstr ""
+msgstr "&I-Ayos base sa kung saan nakalagay"
 
 #: i18n.cpp:175
 msgid "By &size"
-msgstr ""
+msgstr "&I-ayos base sa kalakihan"
 
 #: i18n.cpp:176
 msgid "By &creation time"
-msgstr ""
+msgstr "&I-ayos base sa kung kylan ginawa"
 
 #: i18n.cpp:177
 msgid "By last &modification time"
-msgstr ""
+msgstr "&I-ayos base sa kung kylan pinalitan"
 
 #: i18n.cpp:178
 msgid "By &last access time"
-msgstr ""
+msgstr "&I-ayos base sa kung kylan tiningnan"
 
 #: i18n.cpp:179
 msgid "In &ascending order"
-msgstr ""
+msgstr "&I-ayos base sa una hanggang huli"
 
 #: i18n.cpp:180
 msgid "In &descending order"
-msgstr ""
+msgstr "&I-ayos base sa huli hanggang una"
 
 #: i18n.cpp:183
 msgid "&Contents"
@@ -213,7 +213,7 @@ msgstr "&Nilalaman"
 
 #: i18n.cpp:184
 msgid "Best &practice"
-msgstr "&Mahusay na Palakad"
+msgstr "&Pagpapatakbo ng maayos"
 
 #: i18n.cpp:185
 msgid "&Frequently asked questions"
@@ -221,7 +221,7 @@ msgstr "Ma&dalas na Tanong"
 
 #: i18n.cpp:186
 msgid "Cluster map &legend"
-msgstr "&Cluster Mapa Alamat"
+msgstr "&Mapa ng Cluster"
 
 #: i18n.cpp:189 upgrade.cpp:162
 msgid "&Upgrade"
@@ -265,7 +265,7 @@ msgstr "Iskrip sa Pagsisimula"
 
 #: i18n.cpp:211
 msgid "Drive"
-msgstr "Aklat"
+msgstr "Mga Drives"
 
 #: i18n.cpp:212
 msgid "Status"
@@ -273,7 +273,7 @@ msgstr "Katayuan"
 
 #: i18n.cpp:213
 msgid "Fragmentation"
-msgstr "Pagkapira-piraso"
+msgstr "Mga Kapiraso"
 
 #: i18n.cpp:214
 msgid "Total space"
@@ -281,12 +281,12 @@ msgstr "Kapasidad"
 
 #: i18n.cpp:215
 msgid "Free space"
-msgstr "Palayaing"
+msgstr "Lamang Natitira"
 
 #: i18n.cpp:216
 #, c-format
 msgid "% free"
-msgstr "% ng Palayain"
+msgstr "% ng Lamang Natitira"
 
 #: i18n.cpp:235 job.cpp:155
 msgid "The job is paused"
@@ -302,7 +302,7 @@ msgstr "Patunayan"
 
 #: shutdown.cpp:107
 msgid "Do you really want to hibernate when done?"
-msgstr "Gusto mo ba patulugin kapagtapos na?"
+msgstr "Gusto mo bang patulugin kapagtapos na?"
 
 #. : This expands to "60 seconds until hibernation"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -310,11 +310,11 @@ msgstr "Gusto mo ba patulugin kapagtapos na?"
 #: shutdown.cpp:110
 #, c-format
 msgid "%lu seconds until hibernation"
-msgstr "%lu segundo bagong patulugin"
+msgstr "%lu Segundo bago patulugin"
 
 #: shutdown.cpp:113
 msgid "Do you really want to log off when done?"
-msgstr "Gusto mo ba mag-logoff kapagtapos na?"
+msgstr "Gusto mo bang mag-logoff kapagtapos na?"
 
 #. : This expands to "60 seconds until logoff"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -322,11 +322,11 @@ msgstr "Gusto mo ba mag-logoff kapagtapos na?"
 #: shutdown.cpp:116
 #, c-format
 msgid "%lu seconds until logoff"
-msgstr "%lu segundo bagong mag-logoff"
+msgstr "%lu Segundo bago mag-logoff"
 
 #: shutdown.cpp:119
 msgid "Do you really want to reboot when done?"
-msgstr "Gusto mo ba magmuling-simula kapagtapos na?"
+msgstr "Gusto mo bang magmuling-simula kapagtapos na?"
 
 #. : This expands to "60 seconds until reboot"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -334,11 +334,11 @@ msgstr "Gusto mo ba magmuling-simula kapagtapos na?"
 #: shutdown.cpp:122
 #, c-format
 msgid "%lu seconds until reboot"
-msgstr "%lu segundo bagong magsimula-muli"
+msgstr "%lu Segundo bago magsimula-muli"
 
 #: shutdown.cpp:125
 msgid "Do you really want to shutdown when done?"
-msgstr "Gusto mo ba magsara kapagtapos na?"
+msgstr "Gusto mo bang magsara kapagtapos na?"
 
 #. : This expands to "60 seconds until shutdown"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -346,7 +346,7 @@ msgstr "Gusto mo ba magsara kapagtapos na?"
 #: shutdown.cpp:128
 #, c-format
 msgid "%lu seconds until shutdown"
-msgstr "%lu segundo bagong magsara"
+msgstr "%lu Segundo bago magsara"
 
 #: shutdown.cpp:140
 msgid "&Yes"
@@ -358,11 +358,11 @@ msgstr "&Hindi"
 
 #: tray.cpp:70
 msgid "Show"
-msgstr ""
+msgstr "Ipakita"
 
 #: tray.cpp:72
 msgid "Hide"
-msgstr ""
+msgstr "Itago"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
