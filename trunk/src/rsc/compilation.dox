@@ -38,6 +38,8 @@
  * - Extract upx.exe into the <b>src\\tools\\upx</b> folder of the source code distribution.
  * - Place tx.exe into the <b>src\\tools\\transifex</b> folder of the source code distribution.
  *
+ * If you need an IDE for development install <a href="http://www.codeblocks.org/">Code::Blocks</a> as well.
+ *
  * To properly set up the build environment edit the <b>setvars.cmd</b> script and then type:
  * @code patch-tools @endcode
  *
@@ -61,6 +63,9 @@
  *
  * To select one of the predefined build actions type:
  * @code build-menu @endcode
+ *
+ * To start Code::Blocks IDE type:
+ * @code start-CodeBlocks @endcode
  *
  * If you'd like to know, how the build process works, look at .cmd files -
  * they contain the complete information.

@@ -549,7 +549,7 @@ SkipMove:
 
     DetailPrint "Installing GUI interface..."
     SetOutPath "$INSTDIR"
-        File /nonfatal /r /x *.pot /x *.header "${ROOTDIR}\src\wxgui\locale"
+        File /nonfatal /r /x *.pot /x *.header /x *.svn "${ROOTDIR}\src\wxgui\locale"
 
     SetOutPath "$INSTDIR\po"
         File /nonfatal "${ROOTDIR}\src\tools\transifex\translations\ultradefrag.main\*.po"
