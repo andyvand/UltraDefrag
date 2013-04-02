@@ -17,6 +17,13 @@
 
                                     ***
 
+  Version 6.0.2 2013-05-
+  ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Indonesian (Bahasa Indonesia), Javanese, Portuguese (BR)
+
+
   Version 6.0.1 2013-04-01
   ------------------------------------------------------------------------------
     - Installer no longer warns about Windows 8 being untested
