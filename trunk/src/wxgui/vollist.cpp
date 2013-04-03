@@ -99,6 +99,26 @@ void MainFrame::InitVolList()
 //                            Event handlers
 // =======================================================================
 
+BEGIN_EVENT_TABLE(DrivesList, wxListView)
+    EVT_KEY_DOWN(DrivesList::OnKeyDown)
+    EVT_MOUSE_EVENTS(DrivesList::OnMouse)
+END_EVENT_TABLE()
+
+void DrivesList::OnKeyDown(wxKeyEvent& event)
+{
+    if(!g_mainFrame->m_busy) event.Skip();
+}
+
+void DrivesList::OnMouse(wxMouseEvent& event)
+{
+    if(!g_mainFrame->m_busy){
+        // left double click starts default action
+        if(event.GetEventType() == wxEVT_LEFT_DCLICK)
+            PostCommandEvent(g_mainFrame,ID_DefaultAction);
+        event.Skip();
+    }
+}
+
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
 {
     int width = event.GetInt();
@@ -222,6 +242,22 @@ void MainFrame::UpdateVolumeInformation(wxCommandEvent& event)
 {
     int index = event.GetInt();
     volume_info *v = (volume_info *)event.GetClientData();
+
+    if(!v){ // the request has been made from the running job
+        long i = m_vList->GetFirstSelected();
+        while(i != -1){
+            char letter = (char)m_vList->GetItemText(i)[0];
+            if((char)index == letter) break;
+            i = m_vList->GetNextSelected(i);
+        }
+
+        if(i != -1){
+            v = new volume_info;
+            int result = udefrag_get_volume_information((char)index,v);
+            if(result < 0){ delete v; return; }
+            index = i;
+        }
+    }
 
     if(v->is_dirty){
         if(v->is_removable) m_vList->SetItemImage(index,g_removableDirtyIcon);

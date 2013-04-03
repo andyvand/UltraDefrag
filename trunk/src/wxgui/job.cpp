@@ -92,6 +92,22 @@ void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
             g_mainFrame->SetTaskbarProgressState(TBPF_NOPROGRESS);
         }
     }
+
+    // update status bar
+    udefrag_progress_info *piCopy = new udefrag_progress_info;
+    memcpy(piCopy,pi,sizeof(udefrag_progress_info));
+    event.SetId(ID_UpdateStatusBar);
+    event.SetClientData((void *)piCopy);
+    wxPostEvent(g_mainFrame,event);
+
+    // save progress information to the jobs cache
+    int index = (int)(g_mainFrame->m_jobThread->m_letter);
+    JobsCacheEntry *cacheEntry = g_mainFrame->m_jobsCache[index];
+    if(!cacheEntry){
+        cacheEntry = new JobsCacheEntry;
+        g_mainFrame->m_jobsCache[index] = cacheEntry;
+    }
+    memcpy(&cacheEntry->pi,pi,sizeof(udefrag_progress_info));
 }
 
 int JobThread::Terminator(void *p)
@@ -102,6 +118,11 @@ int JobThread::Terminator(void *p)
 
 void JobThread::ProcessVolume(int index)
 {
+    // update volume capacity information
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_UpdateVolumeInformation);
+    event.SetInt((int)m_letter); wxPostEvent(g_mainFrame,event);
+
+    // process volume
     int result = udefrag_validate_volume(m_letter,FALSE);
     if(result == 0){
         result = udefrag_start_job(m_letter,m_jobType,
@@ -112,9 +133,12 @@ void JobThread::ProcessVolume(int index)
     }
 
     if(result < 0 && !g_mainFrame->m_stopped){
-        wxCommandEvent e(wxEVT_COMMAND_MENU_SELECTED,ID_DiskProcessingFailure);
-        e.SetInt(result); e.SetString((*m_volumes)[index]); wxPostEvent(g_mainFrame,e);
+        wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_DiskProcessingFailure);
+        event.SetInt(result); event.SetString((*m_volumes)[index]); wxPostEvent(g_mainFrame,event);
     }
+
+    // update volume dirty status
+    wxPostEvent(g_mainFrame,event);
 }
 
 void *JobThread::Entry()
@@ -128,8 +152,8 @@ void *JobThread::Entry()
             for(int i = 0; i < g_mainFrame->m_selected; i++){
                 if(g_mainFrame->m_stopped) break;
 
-                char *label = _strdup((*m_volumes)[i].char_str());
-                m_letter = label[0]; free(label); ProcessVolume(i);
+                m_letter = (char)((*m_volumes)[i][0]);
+                ProcessVolume(i);
 
                 /* advance overall progress to processed/selected */
                 g_mainFrame->m_processed ++;
@@ -294,8 +318,8 @@ void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
     wxString args;
     long i = m_vList->GetFirstSelected();
     while(i != -1){
-        char *label = _strdup(m_vList->GetItemText(i).char_str());
-        args << wxString::Format(wxT(" %c:"),label[0]); free(label);
+        char letter = (char)m_vList->GetItemText(i)[0];
+        args << wxString::Format(wxT(" %c:"),letter);
         i = m_vList->GetNextSelected(i);
     }
 
@@ -323,6 +347,22 @@ void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
 
     itrace("Command Line: %ls", cmd.wc_str());
     if(!wxExecute(cmd)) Utils::ShowError(wxT("Cannot execute cmd.exe program!"));
+}
+
+void MainFrame::OnDefaultAction(wxCommandEvent& WXUNUSED(event))
+{
+    long i = m_vList->GetFirstSelected();
+    if(i != -1){
+        volume_info v;
+        char letter = (char)m_vList->GetItemText(i)[0];
+        if(udefrag_get_volume_information(letter,&v) >= 0){
+            if(v.is_dirty){
+                ProcessCommandEvent(ID_Repair);
+                return;
+            }
+        }
+        ProcessCommandEvent(ID_Analyze);
+    }
 }
 
 void MainFrame::OnDiskProcessingFailure(wxCommandEvent& event)

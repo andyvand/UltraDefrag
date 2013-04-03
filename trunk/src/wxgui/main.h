@@ -215,6 +215,27 @@ public:
     DECLARE_EVENT_TABLE()
 };
 
+class DrivesList: public wxListView {
+public:
+    DrivesList(wxWindow* parent, long style)
+      : wxListView(parent,wxID_ANY,
+        wxDefaultPosition,wxDefaultSize,style) {}
+    ~DrivesList() {}
+
+    void OnKeyDown(wxKeyEvent& event);
+    void OnMouse(wxMouseEvent& event);
+
+    DECLARE_EVENT_TABLE()
+};
+
+class JobsCacheEntry {
+public:
+    udefrag_progress_info pi;
+};
+
+WX_DECLARE_HASH_MAP(int, JobsCacheEntry*, \
+    wxIntegerHash, wxIntegerEqual, JobsCache);
+
 class MainFrame: public wxFrame {
 public:
     MainFrame();
@@ -268,37 +289,30 @@ public:
     void OnHelpAbout(wxCommandEvent& event);
 
     // event handlers
-    void ReadUserPreferences(wxCommandEvent& event);
-    void SetWindowTitle(wxCommandEvent& event);
-    void AdjustSystemTrayIcon(wxCommandEvent& event);
-    void AdjustTaskbarIconOverlay(wxCommandEvent& event);
-
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
-    void OnSplitChanged(wxSplitterEvent& event);
-
-    void OnListSize(wxSizeEvent& event);
     void AdjustListColumns(wxCommandEvent& event);
     void AdjustListHeight(wxCommandEvent& event);
+    void AdjustSystemTrayIcon(wxCommandEvent& event);
+    void AdjustTaskbarIconOverlay(wxCommandEvent& event);
+    void OnBootChange(wxCommandEvent& event);
+    void OnDefaultAction(wxCommandEvent& event);
+    void OnDiskProcessingFailure(wxCommandEvent& event);
+    void OnJobCompletion(wxCommandEvent& event);
+    void OnListSize(wxSizeEvent& event);
+    void OnLocaleChange(wxCommandEvent& event);
+    void OnSplitChanged(wxSplitterEvent& event);
     void PopulateList(wxCommandEvent& event);
+    void ReadUserPreferences(wxCommandEvent& event);
+    void SetWindowTitle(wxCommandEvent& event);
+    void ShowUpgradeDialog(wxCommandEvent& event);
+    void Shutdown(wxCommandEvent& event);
+    void UpdateStatusBar(wxCommandEvent& event);
     void UpdateVolumeInformation(wxCommandEvent& event);
 
-    void UpdateStatusBar(wxCommandEvent& event);
-
-    void OnBootChange(wxCommandEvent& event);
-    void OnLocaleChange(wxCommandEvent& event);
-
-    void ShowUpgradeDialog(wxCommandEvent& event);
-
-    void Shutdown(wxCommandEvent& event);
-
-    void OnDiskProcessingFailure(wxCommandEvent& event);
-
-    void OnJobCompletion(wxCommandEvent& event);
-
     // common routines
-    int CheckOption(const wxString& name);
+    int  CheckOption(const wxString& name);
     void SetSystemTrayIcon(const wxString& icon, const wxString& tooltip);
     void SetTaskbarProgressState(TBPFLAG flag);
     void SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total);
@@ -314,30 +328,28 @@ public:
     int m_processed;
 
     SystemTrayIcon *m_systemTrayIcon;
-    JobThread      *m_jobThread;
+
+    JobThread *m_jobThread;
+    JobsCache m_jobsCache;
 
 private:
-    void ReadAppConfiguration();
-    void SaveAppConfiguration();
-    void ReadUserPreferences();
-
-    void SetTaskbarIconOverlay(const wxString& icon, const wxString& text);
-    void RemoveTaskbarIconOverlay();
-
-    void InitLocale();
-    void SetLocale(int id);
     bool GetLocaleFolder(wxString& CurrentLocaleDir);
-
+    void InitLocale();
+    void InitMap();
     void InitMenu();
     void InitToolbar();
     void InitStatusBar();
-
-    void InitMap();
     void InitVolList();
-
-    void SetPause();
+    void ReadAppConfiguration();
+    void ReadUserPreferences();
     void ReleasePause();
-
+    void RemoveTaskbarIconOverlay();
+    void SaveAppConfiguration();
+    void SetLocale(int id);
+    void SetPause();
+    void SetTaskbarIconOverlay(
+        const wxString& icon,
+        const wxString& text);
     int ShowShutdownDialog(int action);
 
     int  m_x;
@@ -374,7 +386,7 @@ private:
     wxMenu     *m_menuLanguage;
 
     wxSplitterWindow *m_splitter;
-    wxListView       *m_vList;
+    DrivesList       *m_vList;
     wxStaticText     *m_cMap;
 
     bool m_btdEnabled;
@@ -500,6 +512,7 @@ enum {
     ID_AdjustSystemTrayIcon,
     ID_AdjustTaskbarIconOverlay,
     ID_BootChange,
+    ID_DefaultAction,
     ID_DiskProcessingFailure,
     ID_JobCompletion,
     ID_PopulateList,
