@@ -164,8 +164,16 @@ public:
 
     virtual void *Entry();
 
+    void ProcessVolume(int index);
+    static void ProgressCallback(udefrag_progress_info *pi, void *p);
+    static int Terminator(void *p);
+
     bool m_launch;
-    long m_counter;
+    wxArrayString *m_volumes;
+    udefrag_job_type m_jobType;
+    int m_mapSize;
+
+    char m_letter;
 };
 
 class ListThread: public wxThread {
@@ -285,26 +293,36 @@ public:
 
     void Shutdown(wxCommandEvent& event);
 
+    void OnDiskProcessingFailure(wxCommandEvent& event);
+
     void OnJobCompletion(wxCommandEvent& event);
+
+    // common routines
+    int CheckOption(const wxString& name);
+    void SetSystemTrayIcon(const wxString& icon, const wxString& tooltip);
+    void SetTaskbarProgressState(TBPFLAG flag);
+    void SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total);
 
     bool m_repeat;
     bool m_skipRem;
     bool m_busy;
     bool m_paused;
+    bool m_stopped;
+
+    // overall progress counters
+    int m_selected;
+    int m_processed;
 
     SystemTrayIcon *m_systemTrayIcon;
+    JobThread      *m_jobThread;
 
 private:
     void ReadAppConfiguration();
     void SaveAppConfiguration();
     void ReadUserPreferences();
-    bool CheckOption(const wxString& name);
 
-    void SetSystemTrayIcon(const wxString& icon);
     void SetTaskbarIconOverlay(const wxString& icon, const wxString& text);
     void RemoveTaskbarIconOverlay();
-    void SetTaskbarProgressState(TBPFLAG flag);
-    void SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total);
 
     void InitLocale();
     void SetLocale(int id);
@@ -320,7 +338,7 @@ private:
     void SetPause();
     void ReleasePause();
 
-    int  ShowShutdownDialog(int action);
+    int ShowShutdownDialog(int action);
 
     int  m_x;
     int  m_y;
@@ -341,7 +359,7 @@ private:
     // list height
     int m_vListHeight;
 
-    wxFont     *m_vListFont;
+    wxFont *m_vListFont;
 
     wxString   *m_title;
     wxToolBar  *m_toolBar;
@@ -366,7 +384,6 @@ private:
     CrashInfoThread *m_crashInfoThread;
     ListThread      *m_listThread;
     UpgradeThread   *m_upgradeThread;
-    JobThread       *m_jobThread;
 
     DECLARE_EVENT_TABLE()
 };
@@ -483,6 +500,7 @@ enum {
     ID_AdjustSystemTrayIcon,
     ID_AdjustTaskbarIconOverlay,
     ID_BootChange,
+    ID_DiskProcessingFailure,
     ID_JobCompletion,
     ID_PopulateList,
     ID_ReadUserPreferences,

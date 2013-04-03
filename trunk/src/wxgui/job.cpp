@@ -54,16 +54,98 @@
 //                          Job startup thread
 // =======================================================================
 
+void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
+{
+    // update window title and tray icon tooltip
+    char op = 'O';
+    if(pi->current_operation == VOLUME_ANALYSIS) op = 'A';
+    if(pi->current_operation == VOLUME_DEFRAGMENTATION) op = 'D';
+
+    wxString title = wxString::Format(wxT("%c:  %c %6.2lf %%"),
+        winx_toupper(g_mainFrame->m_jobThread->m_letter),op,pi->percentage
+    );
+    if(g_mainFrame->CheckOption(wxT("UD_DRY_RUN"))) title += wxT(" (dry run)");
+
+    wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_SetWindowTitle);
+    event.SetString(title); wxPostEvent(g_mainFrame,event);
+
+    g_mainFrame->SetSystemTrayIcon(g_mainFrame->m_paused ? \
+        wxT("tray_paused") : wxT("tray_running"),title);
+
+    // set overall progress
+    if(g_mainFrame->m_jobThread->m_jobType == ANALYSIS_JOB \
+      || pi->current_operation != VOLUME_ANALYSIS)
+    {
+        if(g_mainFrame->CheckOption(wxT("UD_SHOW_PROGRESS_IN_TASKBAR"))){
+            g_mainFrame->SetTaskbarProgressState(TBPF_NORMAL);
+            if(pi->clusters_to_process){
+                g_mainFrame->SetTaskbarProgressValue(
+                    (pi->clusters_to_process / g_mainFrame->m_selected) * \
+                    g_mainFrame->m_processed + \
+                    pi->processed_clusters / g_mainFrame->m_selected,
+                    pi->clusters_to_process
+                );
+            } else {
+                g_mainFrame->SetTaskbarProgressValue(0,1);
+            }
+        } else {
+            g_mainFrame->SetTaskbarProgressState(TBPF_NOPROGRESS);
+        }
+    }
+}
+
+int JobThread::Terminator(void *p)
+{
+    while(g_mainFrame->m_paused) ::Sleep(300);
+    return g_mainFrame->m_stopped;
+}
+
+void JobThread::ProcessVolume(int index)
+{
+    int result = udefrag_validate_volume(m_letter,FALSE);
+    if(result == 0){
+        result = udefrag_start_job(m_letter,m_jobType,
+            g_mainFrame->m_repeat ? UD_JOB_REPEAT : 0,m_mapSize,
+            reinterpret_cast<udefrag_progress_callback>(ProgressCallback),
+            reinterpret_cast<udefrag_terminator>(Terminator),NULL
+        );
+    }
+
+    if(result < 0 && !g_mainFrame->m_stopped){
+        wxCommandEvent e(wxEVT_COMMAND_MENU_SELECTED,ID_DiskProcessingFailure);
+        e.SetInt(result); e.SetString((*m_volumes)[index]); wxPostEvent(g_mainFrame,e);
+    }
+}
+
 void *JobThread::Entry()
 {
     while(!g_mainFrame->CheckForTermination(200)){
         if(m_launch){
             // do the job
-            Sleep(5000);
+            g_mainFrame->m_selected = m_volumes->Count();
+            g_mainFrame->m_processed = 0;
+
+            for(int i = 0; i < g_mainFrame->m_selected; i++){
+                if(g_mainFrame->m_stopped) break;
+
+                char *label = _strdup((*m_volumes)[i].char_str());
+                m_letter = label[0]; free(label); ProcessVolume(i);
+
+                /* advance overall progress to processed/selected */
+                g_mainFrame->m_processed ++;
+                if(g_mainFrame->CheckOption(wxT("UD_SHOW_PROGRESS_IN_TASKBAR"))){
+                    g_mainFrame->SetTaskbarProgressState(TBPF_NORMAL);
+                    g_mainFrame->SetTaskbarProgressValue(
+                        g_mainFrame->m_processed, g_mainFrame->m_selected
+                    );
+                } else {
+                    g_mainFrame->SetTaskbarProgressState(TBPF_NOPROGRESS);
+                }
+            }
 
             // complete the job
             PostCommandEvent(g_mainFrame,ID_JobCompletion);
-            m_launch = false;
+            delete m_volumes; m_launch = false;
         }
     }
 
@@ -79,16 +161,16 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
     if(m_busy) return;
 
     // if nothing is selected in the list return
-    m_jobThread->m_counter = 0;
+    m_jobThread->m_volumes = new wxArrayString;
     long i = m_vList->GetFirstSelected();
     while(i != -1){
-        m_jobThread->m_counter ++;
+        m_jobThread->m_volumes->Add(m_vList->GetItemText(i));
         i = m_vList->GetNextSelected(i);
     }
-    if(!m_jobThread->m_counter) return;
+    if(!m_jobThread->m_volumes->Count()) return;
 
     // lock everything till the job completion
-    m_busy = true; m_paused = false;
+    m_busy = true; m_paused = false; m_stopped = false;
     UD_DisableTool(ID_Analyze);
     UD_DisableTool(ID_Defrag);
     UD_DisableTool(ID_QuickOpt);
@@ -103,7 +185,7 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
 
     ReleasePause();
 
-    SetSystemTrayIcon(wxT("tray_running"));
+    SetSystemTrayIcon(wxT("tray_running"),wxT("UltraDefrag"));
     ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
     /* set overall progress: normal 0% */
     if(CheckOption(wxT("UD_SHOW_PROGRESS_IN_TASKBAR"))){
@@ -112,6 +194,25 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
     }
 
     // launch the job
+    switch(event.GetId()){
+    case ID_Analyze:
+        m_jobThread->m_jobType = ANALYSIS_JOB;
+        break;
+    case ID_Defrag:
+        m_jobThread->m_jobType = DEFRAGMENTATION_JOB;
+        break;
+    case ID_QuickOpt:
+        m_jobThread->m_jobType = QUICK_OPTIMIZATION_JOB;
+        break;
+    case ID_FullOpt:
+        m_jobThread->m_jobType = FULL_OPTIMIZATION_JOB;
+        break;
+    default:
+        m_jobThread->m_jobType = MFT_OPTIMIZATION_JOB;
+        break;
+    }
+    // TODO: set m_mapSize
+    m_jobThread->m_mapSize = 0;
     m_jobThread->m_launch = true;
 }
 
@@ -133,12 +234,13 @@ void MainFrame::OnJobCompletion(wxCommandEvent& WXUNUSED(event))
 
     ReleasePause();
 
-    SetSystemTrayIcon(wxT("tray"));
+    SetSystemTrayIcon(wxT("tray"),wxT("UltraDefrag"));
+    ProcessCommandEvent(ID_SetWindowTitle);
     ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
     SetTaskbarProgressState(TBPF_NOPROGRESS);
 
     // shutdown when requested
-    ProcessCommandEvent(ID_Shutdown);
+    if(!m_stopped) ProcessCommandEvent(ID_Shutdown);
 }
 
 void MainFrame::SetPause()
@@ -148,7 +250,8 @@ void MainFrame::SetPause()
 
     Utils::SetProcessPriority(IDLE_PRIORITY_CLASS);
 
-    SetSystemTrayIcon(m_busy ? wxT("tray_paused") : wxT("tray"));
+    SetSystemTrayIcon(m_busy ? wxT("tray_paused") \
+        : wxT("tray"),wxT("UltraDefrag"));
     ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
 }
 
@@ -159,7 +262,8 @@ void MainFrame::ReleasePause()
 
     Utils::SetProcessPriority(NORMAL_PRIORITY_CLASS);
 
-    SetSystemTrayIcon(m_busy ? wxT("tray_running") : wxT("tray"));
+    SetSystemTrayIcon(m_busy ? wxT("tray_running") \
+        : wxT("tray"),wxT("UltraDefrag"));
     ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
 }
 
@@ -171,6 +275,7 @@ void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
+    m_stopped = true;
 }
 
 void MainFrame::OnRepeat(wxCommandEvent& WXUNUSED(event))
@@ -218,6 +323,38 @@ void MainFrame::OnRepair(wxCommandEvent& WXUNUSED(event))
 
     itrace("Command Line: %ls", cmd.wc_str());
     if(!wxExecute(cmd)) Utils::ShowError(wxT("Cannot execute cmd.exe program!"));
+}
+
+void MainFrame::OnDiskProcessingFailure(wxCommandEvent& event)
+{
+    wxString caption;
+    switch(m_jobThread->m_jobType){
+    case ANALYSIS_JOB:
+        caption = wxString::Format(
+            wxT("Analysis of %ls failed."),
+            event.GetString().wc_str()
+        );
+        break;
+    case DEFRAGMENTATION_JOB:
+        caption = wxString::Format(
+            wxT("Defragmentation of %ls failed."),
+            event.GetString().wc_str()
+        );
+        break;
+    default:
+        caption = wxString::Format(
+            wxT("Optimization of %ls failed."),
+            event.GetString().wc_str()
+        );
+        break;
+    }
+
+    int error = event.GetInt();
+    wxString msg = caption + wxT("\n") \
+        + wxString::Format(wxT("%hs"),
+        udefrag_get_error_description(error));
+
+    Utils::ShowError(wxT("%ls"),msg.wc_str());
 }
 
 #undef UD_EnableTool

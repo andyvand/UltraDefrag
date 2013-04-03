@@ -246,16 +246,15 @@ done:
     ::udefrag_set_log_file_path();
 }
 
-// checks whether an option has non-zero value or not
-bool MainFrame::CheckOption(const wxString& name)
+int MainFrame::CheckOption(const wxString& name)
 {
     wxString value;
     if(wxGetEnv(name,&value)){
         unsigned long v;
         if(value.ToULong(&v))
-            return (v != 0 ? true : false);
+            return (int)v;
     }
-    return false;
+    return 0;
 }
 
 #undef UD_AdjustOption
