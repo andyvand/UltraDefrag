@@ -284,6 +284,78 @@ void MainFrame::UpdateVolumeInformation(wxCommandEvent& event)
     delete v;
 }
 
+void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
+{
+    char letter = (char)event.GetInt();
+    JobsCacheEntry *cacheEntry = m_jobsCache[(int)letter];
+    if(!cacheEntry) return;
+
+    long index = m_vList->GetFirstSelected();
+    while(index != -1){
+        if(letter == (char)m_vList->GetItemText(index)[0]) break;
+        index = m_vList->GetNextSelected(index);
+    }
+    if(index == -1) return;
+
+    // each job starts with a volume analysis
+    wxString caption = _("Analyzed");
+    if(cacheEntry->pi.current_operation != VOLUME_ANALYSIS){
+        switch(cacheEntry->jobType){
+            case DEFRAGMENTATION_JOB:
+                caption = _("Defragmented");
+                break;
+            case FULL_OPTIMIZATION_JOB:
+            case QUICK_OPTIMIZATION_JOB:
+            case MFT_OPTIMIZATION_JOB:
+                caption = _("Optimized");
+                break;
+            default:
+                break;
+        }
+    }
+
+    wxString status;
+    if(cacheEntry->pi.completion_status == 0 || m_stopped){
+        if(cacheEntry->pi.pass_number > 1){
+            if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
+                status.Printf(wxT("%5.2lf %% %ls, Pass %d, %I64u moves total"),
+                    cacheEntry->pi.percentage,caption.wc_str(),
+                    cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
+                );
+            } else {
+                status.Printf(wxT("%5.2lf %% %ls, Pass %d"),
+                    cacheEntry->pi.percentage,caption.wc_str(),
+                    cacheEntry->pi.pass_number
+                );
+            }
+        } else {
+            if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
+                status.Printf(wxT("%5.2lf %% %ls, %I64u moves total"),
+                    cacheEntry->pi.percentage,caption.wc_str(),
+                    cacheEntry->pi.total_moves
+                );
+            } else {
+                status.Printf(wxT("%5.2lf %% %ls"),
+                    cacheEntry->pi.percentage,caption.wc_str()
+                );
+            }
+        }
+    } else {
+        if(cacheEntry->pi.pass_number > 1){
+            status.Printf(wxT("%ls, %d passes needed"),
+                caption.wc_str(),cacheEntry->pi.pass_number
+            );
+        } else {
+            status.Printf(wxT("%ls"),caption.wc_str());
+        }
+    }
+    m_vList->SetItem(index,1,status);
+
+    wxString fragmentation = wxString::Format(wxT("%5.2lf %%"),
+        cacheEntry->pi.fragmentation);
+    m_vList->SetItem(index,2,fragmentation);
+}
+
 void MainFrame::PopulateList(wxCommandEvent& event)
 {
     volume_info *v = (volume_info *)event.GetClientData();
@@ -301,10 +373,16 @@ void MainFrame::PopulateList(wxCommandEvent& event)
             v[i].letter,v[i].fsname).wc_str(),
             v[i].label);
         m_vList->InsertItem(i,label);
+
         wxCommandEvent e(wxEVT_COMMAND_MENU_SELECTED,ID_UpdateVolumeInformation);
         volume_info *v_copy = new volume_info;
         memcpy(v_copy,&v[i],sizeof(volume_info));
-        e.SetInt(i); e.SetClientData((void *)v_copy); ProcessEvent(e);
+        e.SetInt(i); e.SetClientData((void *)v_copy);
+        ProcessEvent(e);
+
+        e.SetId(ID_UpdateVolumeStatus);
+        e.SetInt((int)v[i].letter);
+        ProcessEvent(e);
     }
 
     // adjust list columns once again to reflect the actual layout
