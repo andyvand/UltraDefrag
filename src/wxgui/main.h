@@ -228,10 +228,10 @@ public:
     DECLARE_EVENT_TABLE()
 };
 
-class JobsCacheEntry {
-public:
+typedef struct _JobsCacheEntry {
+    udefrag_job_type jobType;
     udefrag_progress_info pi;
-};
+} JobsCacheEntry;
 
 WX_DECLARE_HASH_MAP(int, JobsCacheEntry*, \
     wxIntegerHash, wxIntegerEqual, JobsCache);
@@ -296,6 +296,7 @@ public:
     void AdjustListHeight(wxCommandEvent& event);
     void AdjustSystemTrayIcon(wxCommandEvent& event);
     void AdjustTaskbarIconOverlay(wxCommandEvent& event);
+    void CacheJob(wxCommandEvent& event);
     void OnBootChange(wxCommandEvent& event);
     void OnDefaultAction(wxCommandEvent& event);
     void OnDiskProcessingFailure(wxCommandEvent& event);
@@ -310,6 +311,7 @@ public:
     void Shutdown(wxCommandEvent& event);
     void UpdateStatusBar(wxCommandEvent& event);
     void UpdateVolumeInformation(wxCommandEvent& event);
+    void UpdateVolumeStatus(wxCommandEvent& event);
 
     // common routines
     int  CheckOption(const wxString& name);
@@ -512,6 +514,7 @@ enum {
     ID_AdjustSystemTrayIcon,
     ID_AdjustTaskbarIconOverlay,
     ID_BootChange,
+    ID_CacheJob,
     ID_DefaultAction,
     ID_DiskProcessingFailure,
     ID_JobCompletion,
@@ -522,6 +525,7 @@ enum {
     ID_Shutdown,
     ID_UpdateStatusBar,
     ID_UpdateVolumeInformation,
+    ID_UpdateVolumeStatus,
 
     // tray icon menu identifiers
     ID_ShowHideMenu,

@@ -51,6 +51,24 @@
 }
 
 // =======================================================================
+//                              Jobs cache
+// =======================================================================
+
+void MainFrame::CacheJob(wxCommandEvent& event)
+{
+    int index = event.GetInt();
+    JobsCacheEntry *cacheEntry = m_jobsCache[index];
+    JobsCacheEntry *newEntry = (JobsCacheEntry *)event.GetClientData();
+
+    if(!cacheEntry){
+        m_jobsCache[index] = newEntry;
+    } else {
+        memcpy(cacheEntry,newEntry,sizeof(JobsCacheEntry));
+        delete newEntry;
+    }
+}
+
+// =======================================================================
 //                          Job startup thread
 // =======================================================================
 
@@ -101,13 +119,19 @@ void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
     wxPostEvent(g_mainFrame,event);
 
     // save progress information to the jobs cache
-    int index = (int)(g_mainFrame->m_jobThread->m_letter);
-    JobsCacheEntry *cacheEntry = g_mainFrame->m_jobsCache[index];
-    if(!cacheEntry){
-        cacheEntry = new JobsCacheEntry;
-        g_mainFrame->m_jobsCache[index] = cacheEntry;
-    }
+    int letter = (int)(g_mainFrame->m_jobThread->m_letter);
+    JobsCacheEntry *cacheEntry = new JobsCacheEntry;
+    cacheEntry->jobType = g_mainFrame->m_jobThread->m_jobType;
     memcpy(&cacheEntry->pi,pi,sizeof(udefrag_progress_info));
+    event.SetId(ID_CacheJob);
+    event.SetInt(letter);
+    event.SetClientData((void *)cacheEntry);
+    wxPostEvent(g_mainFrame,event);
+
+    // update volume status
+    event.SetId(ID_UpdateVolumeStatus);
+    event.SetInt(letter);
+    wxPostEvent(g_mainFrame,event);
 }
 
 int JobThread::Terminator(void *p)
