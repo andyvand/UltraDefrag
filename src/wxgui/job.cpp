@@ -146,7 +146,7 @@ void *JobThread::Entry()
     while(!g_mainFrame->CheckForTermination(200)){
         if(m_launch){
             // do the job
-            g_mainFrame->m_selected = m_volumes->Count();
+            g_mainFrame->m_selected = (int)m_volumes->Count();
             g_mainFrame->m_processed = 0;
 
             for(int i = 0; i < g_mainFrame->m_selected; i++){
