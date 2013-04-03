@@ -48,10 +48,10 @@ void MainFrame::OnShowReport(wxCommandEvent& WXUNUSED(event))
 
     long i = m_vList->GetFirstSelected();
     while(i != -1){
-        char *label = _strdup(m_vList->GetItemText(i).char_str());
+        char letter = (char)m_vList->GetItemText(i)[0];
         wxString path = wxString::Format(
             wxT(".\\reports\\fraglist_%c.luar"),
-            winx_tolower(label[0])); free(label);
+            winx_tolower(letter));
         wxFileName report(path); report.Normalize();
         if(report.FileExists()){
             wxString args = wxString::Format(
