@@ -335,7 +335,7 @@ MainFrame::MainFrame()
         etrace("system tray icon initialization failed");
         wxSetEnv(wxT("UD_MINIMIZE_TO_SYSTEM_TRAY"),wxT("0"));
     }
-    SetSystemTrayIcon(wxT("tray"));
+    SetSystemTrayIcon(wxT("tray"),wxT("UltraDefrag"));
 
     // set localized text
     ProcessCommandEvent(ID_LocaleChange \
@@ -351,6 +351,7 @@ MainFrame::MainFrame()
 MainFrame::~MainFrame()
 {
     // terminate threads
+    ProcessCommandEvent(ID_Stop);
     ::SetEvent(g_synchEvent);
     delete m_btdThread;
     delete m_configThread;
@@ -470,6 +471,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
 
     EVT_MENU(ID_Shutdown,          MainFrame::Shutdown)
+
+    EVT_MENU(ID_DiskProcessingFailure, MainFrame::OnDiskProcessingFailure)
 
     EVT_MENU(ID_JobCompletion,     MainFrame::OnJobCompletion)
 END_EVENT_TABLE()

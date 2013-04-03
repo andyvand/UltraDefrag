@@ -40,11 +40,11 @@
 //                           System tray icon
 // =======================================================================
 
-void MainFrame::SetSystemTrayIcon(const wxString& icon)
+void MainFrame::SetSystemTrayIcon(const wxString& icon, const wxString& tooltip)
 {
     if(CheckOption(wxT("UD_MINIMIZE_TO_SYSTEM_TRAY"))){
         wxIcon i = wxIcon(icon,wxBITMAP_TYPE_ICO_RESOURCE,g_iconSize,g_iconSize);
-        if(!m_systemTrayIcon->SetIcon(i,wxT("UltraDefrag"))){
+        if(!m_systemTrayIcon->SetIcon(i,tooltip)){
             etrace("system tray icon setup failed");
             wxSetEnv(wxT("UD_MINIMIZE_TO_SYSTEM_TRAY"),wxT("0"));
         }
@@ -130,7 +130,7 @@ void MainFrame::AdjustSystemTrayIcon(wxCommandEvent& WXUNUSED(event))
                 if(m_paused) icon = wxT("tray_paused");
                 else icon = wxT("tray_running");
             }
-            SetSystemTrayIcon(icon);
+            SetSystemTrayIcon(icon,wxT("UltraDefrag"));
             if(m_systemTrayIcon->IsIconInstalled()){
                 if(IsIconized()) Hide();
             }
