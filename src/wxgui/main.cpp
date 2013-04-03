@@ -275,8 +275,8 @@ MainFrame::MainFrame()
         wxSP_3D/* | wxSP_LIVE_UPDATE*/ | wxCLIP_CHILDREN);
     m_splitter->SetMinimumPaneSize(DPI(MIN_PANEL_HEIGHT));
 
-    m_vList = new wxListView(m_splitter,wxID_ANY,wxDefaultPosition,wxDefaultSize,
-        wxLC_REPORT | wxLC_NO_SORT_HEADER | wxLC_HRULES | wxLC_VRULES | wxBORDER_NONE);
+    m_vList = new DrivesList(m_splitter,wxLC_REPORT | \
+        wxLC_NO_SORT_HEADER | wxLC_HRULES | wxLC_VRULES | wxBORDER_NONE);
     //LONG_PTR style = ::GetWindowLongPtr((HWND)m_vList->GetHandle(),GWL_STYLE);
     //style |= LVS_SHOWSELALWAYS; ::SetWindowLongPtr((HWND)m_vList->GetHandle(),GWL_STYLE,style);
 
@@ -452,29 +452,23 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
 
     // event handlers
-    EVT_MENU(ID_ReadUserPreferences,  MainFrame::ReadUserPreferences)
-    EVT_MENU(ID_SetWindowTitle,       MainFrame::SetWindowTitle)
-    EVT_MENU(ID_AdjustSystemTrayIcon, MainFrame::AdjustSystemTrayIcon)
-
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
 
     EVT_MENU(ID_AdjustListColumns, MainFrame::AdjustListColumns)
     EVT_MENU(ID_AdjustListHeight,  MainFrame::AdjustListHeight)
-    EVT_MENU(ID_PopulateList,      MainFrame::PopulateList)
-    EVT_MENU(ID_UpdateVolumeInformation, MainFrame::UpdateVolumeInformation)
-
-    EVT_MENU(ID_UpdateStatusBar,   MainFrame::UpdateStatusBar)
-
+    EVT_MENU(ID_AdjustSystemTrayIcon,  MainFrame::AdjustSystemTrayIcon)
     EVT_MENU(ID_BootChange,        MainFrame::OnBootChange)
-
-    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
-
-    EVT_MENU(ID_Shutdown,          MainFrame::Shutdown)
-
+    EVT_MENU(ID_DefaultAction,     MainFrame::OnDefaultAction)
     EVT_MENU(ID_DiskProcessingFailure, MainFrame::OnDiskProcessingFailure)
-
     EVT_MENU(ID_JobCompletion,     MainFrame::OnJobCompletion)
+    EVT_MENU(ID_PopulateList,      MainFrame::PopulateList)
+    EVT_MENU(ID_ReadUserPreferences,  MainFrame::ReadUserPreferences)
+    EVT_MENU(ID_SetWindowTitle,       MainFrame::SetWindowTitle)
+    EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
+    EVT_MENU(ID_Shutdown,          MainFrame::Shutdown)
+    EVT_MENU(ID_UpdateStatusBar,   MainFrame::UpdateStatusBar)
+    EVT_MENU(ID_UpdateVolumeInformation, MainFrame::UpdateVolumeInformation)
 END_EVENT_TABLE()
 
 // =======================================================================
