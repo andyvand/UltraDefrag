@@ -55,6 +55,7 @@
 void MainFrame::InitStatusBar()
 {
     CreateStatusBar(SB_PARTS);
+    SetStatusBarPane(-1);
 
     int w[SB_PARTS] = {-1,-1,-1,-1,-1};
     SetStatusWidths(SB_PARTS,w);

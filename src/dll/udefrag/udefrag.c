@@ -243,11 +243,11 @@ static DWORD WINAPI start_job(LPVOID p)
         itrace("repeat action until nothing left to move");
     
     /* do the job */
-    if(jp->job_type == DEFRAGMENTATION_JOB) action = "defragmenting";
-    else if(jp->job_type == FULL_OPTIMIZATION_JOB) action = "optimizing";
-    else if(jp->job_type == QUICK_OPTIMIZATION_JOB) action = "quick optimizing";
-    else if(jp->job_type == MFT_OPTIMIZATION_JOB) action = "optimizing $mft on";
-    winx_dbg_print_header(0,0,I"Start %s disk %c:",action,jp->volume_letter);
+    if(jp->job_type == DEFRAGMENTATION_JOB) action = "Defragmentation";
+    else if(jp->job_type == FULL_OPTIMIZATION_JOB) action = "Full optimization";
+    else if(jp->job_type == QUICK_OPTIMIZATION_JOB) action = "Quick optimization";
+    else if(jp->job_type == MFT_OPTIMIZATION_JOB) action = "MFT optimization";
+    winx_dbg_print_header(0,0,I"%s of disk %c: started",action,jp->volume_letter);
     remove_fragmentation_report(jp);
     (void)winx_vflush(jp->volume_letter); /* flush all file buffers */
     
@@ -507,8 +507,7 @@ char *udefrag_get_error_description(int error_code)
 {
     switch(error_code){
     case UDEFRAG_UNKNOWN_ERROR:
-        return "Some unknown internal bug or some\n"
-               "rarely arising error has been encountered.";
+        return "Disk is missing or some error has been encountered.";
     case UDEFRAG_NO_MEM:
         return "Not enough memory.";
     case UDEFRAG_CDROM:
