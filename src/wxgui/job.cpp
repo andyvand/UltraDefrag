@@ -123,6 +123,7 @@ void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
     JobsCacheEntry *cacheEntry = new JobsCacheEntry;
     cacheEntry->jobType = g_mainFrame->m_jobThread->m_jobType;
     memcpy(&cacheEntry->pi,pi,sizeof(udefrag_progress_info));
+    cacheEntry->stopped = g_mainFrame->m_stopped;
     event.SetId(ID_CacheJob);
     event.SetInt(letter);
     event.SetClientData((void *)cacheEntry);
