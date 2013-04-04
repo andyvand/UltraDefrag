@@ -231,6 +231,7 @@ public:
 typedef struct _JobsCacheEntry {
     udefrag_job_type jobType;
     udefrag_progress_info pi;
+    bool stopped;
 } JobsCacheEntry;
 
 WX_DECLARE_HASH_MAP(int, JobsCacheEntry*, \

@@ -225,12 +225,7 @@ void *ListThread::Entry()
 {
     while(!g_mainFrame->CheckForTermination(200)){
         if(m_rescan){
-            volume_info *v = ::udefrag_get_vollist(g_mainFrame->m_skipRem);
-            if(v){
-                wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_PopulateList);
-                event.SetClientData((void *)v);
-                wxPostEvent(g_mainFrame,event);
-            }
+            PostCommandEvent(g_mainFrame,ID_PopulateList);
             m_rescan = false;
         }
     }
@@ -244,14 +239,13 @@ void MainFrame::UpdateVolumeInformation(wxCommandEvent& event)
     volume_info *v = (volume_info *)event.GetClientData();
 
     if(!v){ // the request has been made from the running job
-        long i = m_vList->GetFirstSelected();
-        while(i != -1){
+        int i;
+        for(i = 0; i < m_vList->GetItemCount(); i++){
             char letter = (char)m_vList->GetItemText(i)[0];
             if((char)index == letter) break;
-            i = m_vList->GetNextSelected(i);
         }
 
-        if(i != -1){
+        if(i < m_vList->GetItemCount()){
             v = new volume_info;
             int result = udefrag_get_volume_information((char)index,v);
             if(result < 0){ delete v; return; }
@@ -290,12 +284,11 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
     JobsCacheEntry *cacheEntry = m_jobsCache[(int)letter];
     if(!cacheEntry) return;
 
-    long index = m_vList->GetFirstSelected();
-    while(index != -1){
+    int index;
+    for(index = 0; index < m_vList->GetItemCount(); index++){
         if(letter == (char)m_vList->GetItemText(index)[0]) break;
-        index = m_vList->GetNextSelected(index);
     }
-    if(index == -1) return;
+    if(index >= m_vList->GetItemCount()) return;
 
     // each job starts with a volume analysis
     wxString caption = _("Analyzed");
@@ -315,7 +308,7 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
     }
 
     wxString status;
-    if(cacheEntry->pi.completion_status == 0 || m_stopped){
+    if(cacheEntry->pi.completion_status == 0 || cacheEntry->stopped){
         if(cacheEntry->pi.pass_number > 1){
             if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
                 status.Printf(wxT("%5.2lf %% %ls, Pass %d, %I64u moves total"),
@@ -358,7 +351,8 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
 
 void MainFrame::PopulateList(wxCommandEvent& event)
 {
-    volume_info *v = (volume_info *)event.GetClientData();
+    volume_info *v = ::udefrag_get_vollist(m_skipRem);
+    if(!v) return;
 
     m_vList->DeleteAllItems();
 
