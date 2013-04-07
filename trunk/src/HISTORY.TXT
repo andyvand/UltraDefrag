@@ -21,7 +21,7 @@
   ------------------------------------------------------------------------------
     - the following translations were updated:
 
-      Indonesian (Bahasa Indonesia), Javanese, Portuguese (BR)
+      Indonesian (Bahasa Indonesia), Javanese, Polish, Portuguese (BR)
 
 
   Version 6.0.1 2013-04-01
