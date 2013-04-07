@@ -27,34 +27,13 @@ if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAM
 if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 echo.
 
+pushd "%~dp0\wxgui"
+
 if not exist "%GNUWIN32_DIR%" goto gnuwin32_missing
 
 :: configure PATH
 set OLD_PATH=%PATH%
 set PATH=%GNUWIN32_DIR%;%PATH%
-
-pushd "%~dp0\wxgui"
-
-if "%~1" == "--no-extract" goto skip_extract
-:: extract translations
-copy /v /y locale\UltraDefrag.header locale\UltraDefrag.pot
-set PO_INFO=--copyright-holder="UltraDefrag Development Team" --msgid-bugs-address="http://sourceforge.net/p/ultradefrag/bugs/"
-xgettext -C -j --add-comments=: %PO_INFO% -k_ -kwxPLURAL:1,2 -kUD_UpdateMenuItemLabel:2 -o locale\UltraDefrag.pot *.cpp || goto fail
-echo.
-
-:: update languages not yet avaiable at Transifex
-for %%T in ( pam war ) do (
-    echo %%T
-    msgmerge --update --backup=none --no-fuzzy-matching --verbose "%~dp0\tools\transifex\translations\ultradefrag.main\%%T.po" locale\UltraDefrag.pot
-    echo.
-)
-
-:: download all translations from transifex
-pushd "%~dp0\tools\transifex"
-if exist tx.exe tx.exe pull -a || popd && goto fail
-echo.
-popd
-:skip_extract
 
 :: update translations
 for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do call :check_translation "%%~F" || goto fail

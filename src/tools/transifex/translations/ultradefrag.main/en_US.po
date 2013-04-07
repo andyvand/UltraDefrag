@@ -1,0 +1,409 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR UltraDefrag Development Team
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
+"POT-Creation-Date: 2013-04-07 21:58+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: about.cpp:76
+msgid "About UltraDefrag"
+msgstr ""
+
+#: about.cpp:89
+msgid "An open source defragmentation utility."
+msgstr ""
+
+#: about.cpp:91
+msgid "Credits and licenses are listed in the handbook."
+msgstr ""
+
+#: about.cpp:94
+msgid "UltraDefrag website"
+msgstr ""
+
+#: i18n.cpp:121
+msgid "&Action"
+msgstr ""
+
+#: i18n.cpp:122
+msgid "&Report"
+msgstr ""
+
+#: i18n.cpp:123
+msgid "&Settings"
+msgstr ""
+
+#: i18n.cpp:124 i18n.cpp:206
+msgid "&Help"
+msgstr ""
+
+#: i18n.cpp:127
+msgid "&Analyze"
+msgstr ""
+
+#: i18n.cpp:128
+msgid "&Defragment"
+msgstr ""
+
+#: i18n.cpp:129
+msgid "&Quick optimization"
+msgstr ""
+
+#: i18n.cpp:130
+msgid "&Full optimization"
+msgstr ""
+
+#: i18n.cpp:131
+msgid "&Optimize MFT"
+msgstr ""
+
+#: i18n.cpp:132 tray.cpp:80
+msgid "Pa&use"
+msgstr ""
+
+#: i18n.cpp:133
+msgid "&Stop"
+msgstr ""
+
+#: i18n.cpp:134
+msgid "Re&peat action"
+msgstr ""
+
+#: i18n.cpp:135
+msgid "Skip removable &media"
+msgstr ""
+
+#: i18n.cpp:136
+msgid "&Rescan drives"
+msgstr ""
+
+#: i18n.cpp:137
+msgid "Repair dri&ves"
+msgstr ""
+
+#: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
+msgid "E&xit"
+msgstr ""
+
+#: i18n.cpp:141
+msgid "&When done"
+msgstr ""
+
+#: i18n.cpp:142
+msgid "&None"
+msgstr ""
+
+#: i18n.cpp:144
+msgid "Stan&dby"
+msgstr ""
+
+#: i18n.cpp:145
+msgid "&Hibernate"
+msgstr ""
+
+#: i18n.cpp:146
+msgid "&Logoff"
+msgstr ""
+
+#: i18n.cpp:147
+msgid "&Reboot"
+msgstr ""
+
+#: i18n.cpp:148
+msgid "&Shutdown"
+msgstr ""
+
+#: i18n.cpp:151
+msgid "&Show report"
+msgstr ""
+
+#: i18n.cpp:154
+msgid "&Language"
+msgstr ""
+
+#: i18n.cpp:155
+msgid "&Graphical interface"
+msgstr ""
+
+#: i18n.cpp:156 i18n.cpp:202
+msgid "&Boot time scan"
+msgstr ""
+
+#: i18n.cpp:157
+msgid "&Sorting"
+msgstr ""
+
+#: i18n.cpp:158
+msgid "&Reports"
+msgstr ""
+
+#: i18n.cpp:161
+msgid "&View change log"
+msgstr ""
+
+#: i18n.cpp:162
+msgid "View translation &report"
+msgstr ""
+
+#: i18n.cpp:163
+msgid "&Translations folder"
+msgstr ""
+
+#: i18n.cpp:164
+msgid "&Submit current translation"
+msgstr ""
+
+#: i18n.cpp:167
+msgid "&Options"
+msgstr ""
+
+#: i18n.cpp:170
+msgid "&Enable"
+msgstr ""
+
+#: i18n.cpp:171
+msgid "&Script"
+msgstr ""
+
+#: i18n.cpp:174
+msgid "By &path"
+msgstr ""
+
+#: i18n.cpp:175
+msgid "By &size"
+msgstr ""
+
+#: i18n.cpp:176
+msgid "By &creation time"
+msgstr ""
+
+#: i18n.cpp:177
+msgid "By last &modification time"
+msgstr ""
+
+#: i18n.cpp:178
+msgid "By &last access time"
+msgstr ""
+
+#: i18n.cpp:179
+msgid "In &ascending order"
+msgstr ""
+
+#: i18n.cpp:180
+msgid "In &descending order"
+msgstr ""
+
+#: i18n.cpp:183
+msgid "&Contents"
+msgstr ""
+
+#: i18n.cpp:184
+msgid "Best &practice"
+msgstr ""
+
+#: i18n.cpp:185
+msgid "&Frequently asked questions"
+msgstr ""
+
+#: i18n.cpp:186
+msgid "Cluster map &legend"
+msgstr ""
+
+#: i18n.cpp:189 upgrade.cpp:161
+msgid "&Upgrade"
+msgstr ""
+
+#: i18n.cpp:190
+msgid "&Never check"
+msgstr ""
+
+#: i18n.cpp:191
+msgid "Check &stable releases only"
+msgstr ""
+
+#: i18n.cpp:192
+msgid "Check &all releases"
+msgstr ""
+
+#: i18n.cpp:193
+msgid "&Check now"
+msgstr ""
+
+#: i18n.cpp:194
+msgid "&About"
+msgstr ""
+
+#: i18n.cpp:197
+msgid "&Debug"
+msgstr ""
+
+#: i18n.cpp:198 utils.cpp:421
+msgid "Open &log"
+msgstr ""
+
+#: i18n.cpp:199
+msgid "Send bug &report"
+msgstr ""
+
+#: i18n.cpp:204
+msgid "Boot time script"
+msgstr ""
+
+#: i18n.cpp:211
+msgid "Drive"
+msgstr ""
+
+#: i18n.cpp:212
+msgid "Status"
+msgstr ""
+
+#: i18n.cpp:213
+msgid "Fragmentation"
+msgstr ""
+
+#: i18n.cpp:214
+msgid "Total space"
+msgstr ""
+
+#: i18n.cpp:215
+msgid "Free space"
+msgstr ""
+
+#: i18n.cpp:216
+#, c-format
+msgid "% free"
+msgstr ""
+
+#: shutdown.cpp:100
+msgid "Please confirm"
+msgstr ""
+
+#: shutdown.cpp:107
+msgid "Do you really want to hibernate when done?"
+msgstr ""
+
+#. : This expands to "60 seconds until hibernation"
+#. : Make sure that "%lu" is included in the translated string at the correct position
+#: shutdown.cpp:110
+#, c-format
+msgid "%lu seconds until hibernation"
+msgstr ""
+
+#: shutdown.cpp:113
+msgid "Do you really want to log off when done?"
+msgstr ""
+
+#. : This expands to "60 seconds until logoff"
+#. : Make sure that "%lu" is included in the translated string at the correct position
+#: shutdown.cpp:116
+#, c-format
+msgid "%lu seconds until logoff"
+msgstr ""
+
+#: shutdown.cpp:119
+msgid "Do you really want to reboot when done?"
+msgstr ""
+
+#. : This expands to "60 seconds until reboot"
+#. : Make sure that "%lu" is included in the translated string at the correct position
+#: shutdown.cpp:122
+#, c-format
+msgid "%lu seconds until reboot"
+msgstr ""
+
+#: shutdown.cpp:125
+msgid "Do you really want to shutdown when done?"
+msgstr ""
+
+#. : This expands to "60 seconds until shutdown"
+#. : Make sure that "%lu" is included in the translated string at the correct position
+#: shutdown.cpp:128
+#, c-format
+msgid "%lu seconds until shutdown"
+msgstr ""
+
+#: shutdown.cpp:140
+msgid "&Yes"
+msgstr ""
+
+#: shutdown.cpp:141
+msgid "&No"
+msgstr ""
+
+#: statbar.cpp:87
+msgid "folders"
+msgstr ""
+
+#: statbar.cpp:88
+msgid "files"
+msgstr ""
+
+#: statbar.cpp:89
+msgid "fragmented"
+msgstr ""
+
+#: statbar.cpp:90
+msgid "compressed"
+msgstr ""
+
+#: taskbar.cpp:201
+msgid "The job is paused"
+msgstr ""
+
+#: taskbar.cpp:206
+msgid "The job is running"
+msgstr ""
+
+#: tray.cpp:70
+msgid "Show"
+msgstr ""
+
+#: tray.cpp:72
+msgid "Hide"
+msgstr ""
+
+#. : This expands to "Release 7.0.0 is available for download!"
+#. : Make sure that "%ls" is included in the translated string at the correct position
+#: upgrade.cpp:158
+#, c-format
+msgid "Release %ls is available for download!"
+msgstr ""
+
+#: upgrade.cpp:160
+msgid "You can upgrade me ^-^"
+msgstr ""
+
+#: upgrade.cpp:161 utils.cpp:425
+msgid "&Cancel"
+msgstr ""
+
+#: utils.cpp:424
+msgid "Error!"
+msgstr ""
+
+#: vollist.cpp:259
+msgid "Disk needs to be repaired"
+msgstr ""
+
+#: vollist.cpp:294
+msgid "Analyzed"
+msgstr ""
+
+#: vollist.cpp:298
+msgid "Defragmented"
+msgstr ""
+
+#: vollist.cpp:303
+msgid "Optimized"
+msgstr ""
