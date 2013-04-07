@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-30 23:52+0100\n"
-"PO-Revision-Date: 2013-03-31 09:14+0000\n"
+"POT-Creation-Date: 2013-04-07 21:58+0200\n"
+"PO-Revision-Date: 2013-04-07 20:02+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "Pogosta vprašanja"
 msgid "Cluster map &legend"
 msgstr "Grozd zemljevida legenda"
 
-#: i18n.cpp:189 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr ""
 
@@ -287,14 +287,6 @@ msgstr "Nezasedeni prostor"
 msgid "% free"
 msgstr "Odstotek"
 
-#: i18n.cpp:235 job.cpp:155
-msgid "The job is paused"
-msgstr ""
-
-#: i18n.cpp:240 job.cpp:109 job.cpp:166
-msgid "The job is running"
-msgstr ""
-
 #: shutdown.cpp:100
 msgid "Please confirm"
 msgstr "Prosimo, da potrdite"
@@ -355,27 +347,51 @@ msgstr "Da"
 msgid "&No"
 msgstr "Ne"
 
+#: statbar.cpp:87
+msgid "folders"
+msgstr "map"
+
+#: statbar.cpp:88
+msgid "files"
+msgstr "datotek"
+
+#: statbar.cpp:89
+msgid "fragmented"
+msgstr "fragmentirano"
+
+#: statbar.cpp:90
+msgid "compressed"
+msgstr "stisnjeno"
+
+#: taskbar.cpp:201
+msgid "The job is paused"
+msgstr ""
+
+#: taskbar.cpp:206
+msgid "The job is running"
+msgstr ""
+
 #: tray.cpp:70
 msgid "Show"
-msgstr ""
+msgstr "Prikaži"
 
 #: tray.cpp:72
 msgid "Hide"
-msgstr ""
+msgstr "Skrij"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
 #. position
-#: upgrade.cpp:159
+#: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:161
+#: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
 msgstr "Na voljo so posodobitve ^-^"
 
-#: upgrade.cpp:162 utils.cpp:425
+#: upgrade.cpp:161 utils.cpp:425
 msgid "&Cancel"
 msgstr ""
 
@@ -383,6 +399,18 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:232
+#: vollist.cpp:259
 msgid "Disk needs to be repaired"
 msgstr "Disk je potrebno popraviti"
+
+#: vollist.cpp:294
+msgid "Analyzed"
+msgstr "Analizirano"
+
+#: vollist.cpp:298
+msgid "Defragmented"
+msgstr "Defragmentirano"
+
+#: vollist.cpp:303
+msgid "Optimized"
+msgstr "Optimirano"

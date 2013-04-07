@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-30 23:52+0100\n"
-"PO-Revision-Date: 2013-03-31 12:18+0000\n"
-"Last-Translator: Bernard_Ladenthin <bernard@ladenthin.net>\n"
+"POT-Creation-Date: 2013-04-07 21:58+0200\n"
+"PO-Revision-Date: 2013-04-07 20:01+0000\n"
+"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -224,7 +224,7 @@ msgstr "Häufig gestellte &Fragen"
 msgid "Cluster map &legend"
 msgstr "&Zuordnungstabellenerklärung"
 
-#: i18n.cpp:189 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr "&Aktualisieren"
 
@@ -289,14 +289,6 @@ msgstr "Frei"
 msgid "% free"
 msgstr "% frei"
 
-#: i18n.cpp:235 job.cpp:155
-msgid "The job is paused"
-msgstr "Die Aufgabe ist pausiert"
-
-#: i18n.cpp:240 job.cpp:109 job.cpp:166
-msgid "The job is running"
-msgstr "Die Aufgabe wird ausgeführt"
-
 #: shutdown.cpp:100
 msgid "Please confirm"
 msgstr "Bitte bestätigen"
@@ -357,9 +349,33 @@ msgstr "&Ja"
 msgid "&No"
 msgstr "&Nein"
 
+#: statbar.cpp:87
+msgid "folders"
+msgstr "Verzeichnisse"
+
+#: statbar.cpp:88
+msgid "files"
+msgstr "Dateien"
+
+#: statbar.cpp:89
+msgid "fragmented"
+msgstr "fragmentiert"
+
+#: statbar.cpp:90
+msgid "compressed"
+msgstr "komprimiert"
+
+#: taskbar.cpp:201
+msgid "The job is paused"
+msgstr "Die Aufgabe ist pausiert"
+
+#: taskbar.cpp:206
+msgid "The job is running"
+msgstr "Die Aufgabe wird ausgeführt"
+
 #: tray.cpp:70
 msgid "Show"
-msgstr "Zeigen"
+msgstr "Anzeigen"
 
 #: tray.cpp:72
 msgid "Hide"
@@ -368,16 +384,16 @@ msgstr "Verbergen"
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
 #. position
-#: upgrade.cpp:159
+#: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr "Version %ls ist zum Herunterladen verfügbar!"
 
-#: upgrade.cpp:161
+#: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
 msgstr "Du kannst mich aktualisieren ^-^"
 
-#: upgrade.cpp:162 utils.cpp:425
+#: upgrade.cpp:161 utils.cpp:425
 msgid "&Cancel"
 msgstr "&Abbrechen"
 
@@ -385,6 +401,18 @@ msgstr "&Abbrechen"
 msgid "Error!"
 msgstr "Fehler!"
 
-#: vollist.cpp:232
+#: vollist.cpp:259
 msgid "Disk needs to be repaired"
 msgstr "Laufwerk muss repariert werden"
+
+#: vollist.cpp:294
+msgid "Analyzed"
+msgstr "Analysiert"
+
+#: vollist.cpp:298
+msgid "Defragmented"
+msgstr "Defragmentiert"
+
+#: vollist.cpp:303
+msgid "Optimized"
+msgstr "Optimiert"

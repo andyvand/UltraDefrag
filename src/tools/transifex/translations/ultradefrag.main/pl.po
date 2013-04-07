@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-02 19:18+0200\n"
-"PO-Revision-Date: 2013-04-07 18:47+0000\n"
+"POT-Creation-Date: 2013-04-07 21:58+0200\n"
+"PO-Revision-Date: 2013-04-07 20:00+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,15 +41,15 @@ msgstr "Działania"
 
 #: i18n.cpp:122
 msgid "&Report"
-msgstr "Raport"
+msgstr "&Raport"
 
 #: i18n.cpp:123
 msgid "&Settings"
-msgstr "Ustawienia"
+msgstr "U&stawienia"
 
 #: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
-msgstr "Pomoc"
+msgstr "&Pomoc"
 
 #: i18n.cpp:127
 msgid "&Analyze"
@@ -89,11 +89,11 @@ msgstr "Po&minięcie dysków przenośnych"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
-msgstr "Ponowne skanowanie listy dysków"
+msgstr "Ponowny skan listy dysków"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
-msgstr "Naprawienie dysków"
+msgstr "Naprawa dysków"
 
 #: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
@@ -129,7 +129,7 @@ msgstr "Wyłącz komputer"
 
 #: i18n.cpp:151
 msgid "&Show report"
-msgstr "Pokaż raport"
+msgstr "Pokaż &raport"
 
 #: i18n.cpp:154
 msgid "&Language"
@@ -145,7 +145,7 @@ msgstr "Skanowanie przy uruchomieniu"
 
 #: i18n.cpp:157
 msgid "&Sorting"
-msgstr "sortowanie"
+msgstr "&Sortowanie"
 
 #: i18n.cpp:158
 msgid "&Reports"
@@ -165,7 +165,7 @@ msgstr "Katalog z &tłumaczeniami"
 
 #: i18n.cpp:164
 msgid "&Submit current translation"
-msgstr "Wy&ślij aktualne tłumaczenie"
+msgstr "Wyślij aktualne tłumaczenie"
 
 #: i18n.cpp:167
 msgid "&Options"
@@ -181,31 +181,31 @@ msgstr "&Skrypt"
 
 #: i18n.cpp:174
 msgid "By &path"
-msgstr "według ścieżki"
+msgstr "Sortuj wg ścieżki"
 
 #: i18n.cpp:175
 msgid "By &size"
-msgstr "według rozmiaru"
+msgstr "Sortuj wg rozmiaru"
 
 #: i18n.cpp:176
 msgid "By &creation time"
-msgstr "Przez czas tworzenia"
+msgstr "Sortuj wg daty utworzenia"
 
 #: i18n.cpp:177
 msgid "By last &modification time"
-msgstr "Przez czas ostatniej modyfikacji"
+msgstr "Sortuj wg daty modyfikacji"
 
 #: i18n.cpp:178
 msgid "By &last access time"
-msgstr "Przez ostatni czas dostępu"
+msgstr "Sortuj wg daty otwarcia"
 
 #: i18n.cpp:179
 msgid "In &ascending order"
-msgstr "W porządku rosnącym"
+msgstr "Sortuj rosnąco"
 
 #: i18n.cpp:180
 msgid "In &descending order"
-msgstr "W porządku malejącym"
+msgstr "Sortuj malejąco"
 
 #: i18n.cpp:183
 msgid "&Contents"
@@ -253,7 +253,7 @@ msgstr "De&bugowanie"
 
 #: i18n.cpp:198 utils.cpp:421
 msgid "Open &log"
-msgstr "Otwórz raport"
+msgstr "&Otwórz raport"
 
 #: i18n.cpp:199
 msgid "Send bug &report"
@@ -348,19 +348,19 @@ msgstr "Tak"
 msgid "&No"
 msgstr "Nie"
 
-#: statbar.cpp:86
+#: statbar.cpp:87
 msgid "folders"
 msgstr "katalogów"
 
-#: statbar.cpp:87
+#: statbar.cpp:88
 msgid "files"
 msgstr "plików"
 
-#: statbar.cpp:88
+#: statbar.cpp:89
 msgid "fragmented"
 msgstr "pofragmentowanych"
 
-#: statbar.cpp:89
+#: statbar.cpp:90
 msgid "compressed"
 msgstr "skompresowanych"
 
@@ -400,6 +400,18 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:229
+#: vollist.cpp:259
 msgid "Disk needs to be repaired"
 msgstr "Dysk musi zostać naprawiony"
+
+#: vollist.cpp:294
+msgid "Analyzed"
+msgstr "Przeanalizowano"
+
+#: vollist.cpp:298
+msgid "Defragmented"
+msgstr "Zdefragmentowano"
+
+#: vollist.cpp:303
+msgid "Optimized"
+msgstr "Zoptymalizowano"
