@@ -44,7 +44,7 @@ call build-targets.cmd %* || goto fail
 call build-docs.cmd %* || goto fail
 
 :: update translations
-call update-translations.cmd --no-extract || goto fail
+call update-translations.cmd || goto fail
 
 :: build installers and portable packages
 echo Build installers and/or portable packages...
