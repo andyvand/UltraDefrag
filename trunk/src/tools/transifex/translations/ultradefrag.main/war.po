@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-02 19:18+0200\n"
+"POT-Creation-Date: 2013-04-07 21:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,19 +341,19 @@ msgstr "&Oo"
 msgid "&No"
 msgstr "&Diri"
 
-#: statbar.cpp:86
+#: statbar.cpp:87
 msgid "folders"
 msgstr "folder"
 
-#: statbar.cpp:87
+#: statbar.cpp:88
 msgid "files"
 msgstr "fayl"
 
-#: statbar.cpp:88
+#: statbar.cpp:89
 msgid "fragmented"
 msgstr "ginpinitpinit"
 
-#: statbar.cpp:89
+#: statbar.cpp:90
 msgid "compressed"
 msgstr "gindasok"
 
@@ -392,21 +392,24 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:229
+#: vollist.cpp:259
 msgid "Disk needs to be repaired"
 msgstr ""
 
+#: vollist.cpp:294
+msgid "Analyzed"
+msgstr "Ginhimay"
+
+#: vollist.cpp:298
+msgid "Defragmented"
+msgstr "Ginbug-os"
+
+#: vollist.cpp:303
+msgid "Optimized"
+msgstr "Ginpaurupay"
+
 #~ msgid "Executing"
 #~ msgstr "Ginpapadalagan"
-
-#~ msgid "Analyzed"
-#~ msgstr "Ginhimay"
-
-#~ msgid "Defragmented"
-#~ msgstr "Ginbug-os"
-
-#~ msgid "Optimized"
-#~ msgstr "Ginpaurupay"
 
 #~ msgid "&Credits"
 #~ msgstr "&Pagkilala"

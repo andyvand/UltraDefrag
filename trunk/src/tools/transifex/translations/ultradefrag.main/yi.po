@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-03-30 23:52+0100\n"
-"PO-Revision-Date: 2013-03-31 09:14+0000\n"
+"POT-Creation-Date: 2013-04-07 21:58+0200\n"
+"PO-Revision-Date: 2013-04-07 20:01+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -223,7 +223,7 @@ msgstr "שאלות נפוצות"
 msgid "Cluster map &legend"
 msgstr "האגדה פון דער קאַרטע"
 
-#: i18n.cpp:189 upgrade.cpp:162
+#: i18n.cpp:189 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr ""
 
@@ -288,14 +288,6 @@ msgstr "פֿרייַ אָרט"
 msgid "% free"
 msgstr "% פֿרייַ"
 
-#: i18n.cpp:235 job.cpp:155
-msgid "The job is paused"
-msgstr ""
-
-#: i18n.cpp:240 job.cpp:109 job.cpp:166
-msgid "The job is running"
-msgstr ""
-
 #: shutdown.cpp:100
 msgid "Please confirm"
 msgstr "ביטע באַשטעטיקן"
@@ -356,27 +348,51 @@ msgstr "יאָ"
 msgid "&No"
 msgstr "ניט"
 
+#: statbar.cpp:87
+msgid "folders"
+msgstr "טעקע"
+
+#: statbar.cpp:88
+msgid "files"
+msgstr "פייַל"
+
+#: statbar.cpp:89
+msgid "fragmented"
+msgstr "מקוטעת"
+
+#: statbar.cpp:90
+msgid "compressed"
+msgstr "דחוס"
+
+#: taskbar.cpp:201
+msgid "The job is paused"
+msgstr ""
+
+#: taskbar.cpp:206
+msgid "The job is running"
+msgstr ""
+
 #: tray.cpp:70
 msgid "Show"
-msgstr ""
+msgstr "ווייַז"
 
 #: tray.cpp:72
 msgid "Hide"
-msgstr ""
+msgstr "באַהאַלט"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
 #. position
-#: upgrade.cpp:159
+#: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
 msgstr ""
 
-#: upgrade.cpp:161
+#: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
 msgstr "דו קאן לשדרג מיר ^-^"
 
-#: upgrade.cpp:162 utils.cpp:425
+#: upgrade.cpp:161 utils.cpp:425
 msgid "&Cancel"
 msgstr ""
 
@@ -384,6 +400,18 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:232
+#: vollist.cpp:259
 msgid "Disk needs to be repaired"
 msgstr "דיסק דארף צו זיין פאַרריכט"
+
+#: vollist.cpp:294
+msgid "Analyzed"
+msgstr "אבאליזירט"
+
+#: vollist.cpp:298
+msgid "Defragmented"
+msgstr "דעפראגםענטירט"
+
+#: vollist.cpp:303
+msgid "Optimized"
+msgstr "אָפּטימיזירט"
