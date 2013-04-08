@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-07 21:58+0200\n"
-"PO-Revision-Date: 2013-04-07 20:01+0000\n"
+"POT-Creation-Date: 2013-04-08 18:24+0200\n"
+"PO-Revision-Date: 2013-04-08 16:27+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,11 +53,11 @@ msgstr "Hjælp"
 
 #: i18n.cpp:127
 msgid "&Analyze"
-msgstr "Analyser"
+msgstr "Analysér"
 
 #: i18n.cpp:128
 msgid "&Defragment"
-msgstr "Defragmenter"
+msgstr "Defragmentér"
 
 #: i18n.cpp:129
 msgid "&Quick optimization"
@@ -69,7 +69,7 @@ msgstr "Fuld optimering"
 
 #: i18n.cpp:131
 msgid "&Optimize MFT"
-msgstr "Optimer MFT"
+msgstr "Optimér MFT"
 
 #: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
@@ -77,31 +77,31 @@ msgstr ""
 
 #: i18n.cpp:133
 msgid "&Stop"
-msgstr "Stands"
+msgstr "Afbryd"
 
 #: i18n.cpp:134
 msgid "Re&peat action"
-msgstr "Gentag handling"
+msgstr "Gentagne kørsler"
 
 #: i18n.cpp:135
 msgid "Skip removable &media"
-msgstr "Kun faste drev"
+msgstr "Skjul flytbare drev"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
-msgstr "Opdater drevlisten"
+msgstr "Opdatér drevlisten"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
-msgstr "Reparation drev"
+msgstr "Reparér drev (CHKDSK)"
 
 #: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
-msgstr "Luk programmet"
+msgstr "Afslut UltraDefrag"
 
 #: i18n.cpp:141
 msgid "&When done"
-msgstr "Efter udførsel"
+msgstr "Når opgaven er fuldført"
 
 #: i18n.cpp:142
 msgid "&None"
@@ -121,11 +121,11 @@ msgstr "Log af"
 
 #: i18n.cpp:147
 msgid "&Reboot"
-msgstr "Genstart"
+msgstr "Genstart Windows"
 
 #: i18n.cpp:148
 msgid "&Shutdown"
-msgstr "Luk ned"
+msgstr "Nedluk Windows"
 
 #: i18n.cpp:151
 msgid "&Show report"
@@ -141,7 +141,7 @@ msgstr "Brugergrænseflade"
 
 #: i18n.cpp:156 i18n.cpp:202
 msgid "&Boot time scan"
-msgstr "Skan ved opstart af Windows"
+msgstr "Boot-time defrag"
 
 #: i18n.cpp:157
 msgid "&Sorting"
@@ -149,23 +149,23 @@ msgstr "sortering"
 
 #: i18n.cpp:158
 msgid "&Reports"
-msgstr "Rapporter"
+msgstr "Rapport-udseende"
 
 #: i18n.cpp:161
 msgid "&View change log"
-msgstr "Se ændre log"
+msgstr "Se ændrings-log"
 
 #: i18n.cpp:162
 msgid "View translation &report"
-msgstr "Vis oversættelse &rapport"
+msgstr "Vis oversættelses-rapport"
 
 #: i18n.cpp:163
 msgid "&Translations folder"
-msgstr "Oversættelsesmappe"
+msgstr "Oversættelses-mappen"
 
 #: i18n.cpp:164
 msgid "&Submit current translation"
-msgstr "Indsend nuværende oversættelse"
+msgstr "Redigér/indsend denne oversættelse"
 
 #: i18n.cpp:167
 msgid "&Options"
@@ -173,7 +173,7 @@ msgstr "Indstillinger"
 
 #: i18n.cpp:170
 msgid "&Enable"
-msgstr "Aktiver"
+msgstr "Aktivér"
 
 #: i18n.cpp:171
 msgid "&Script"
@@ -181,31 +181,31 @@ msgstr ""
 
 #: i18n.cpp:174
 msgid "By &path"
-msgstr ""
+msgstr "Sortér efter sti"
 
 #: i18n.cpp:175
 msgid "By &size"
-msgstr ""
+msgstr "Sortér efter størrelse"
 
 #: i18n.cpp:176
 msgid "By &creation time"
-msgstr ""
+msgstr "Sortér efter oprettelse"
 
 #: i18n.cpp:177
 msgid "By last &modification time"
-msgstr ""
+msgstr "Sortér efter seneste ændring"
 
 #: i18n.cpp:178
 msgid "By &last access time"
-msgstr ""
+msgstr "Sortér efter seneste åbning"
 
 #: i18n.cpp:179
 msgid "In &ascending order"
-msgstr ""
+msgstr "Sortér i stigende orden"
 
 #: i18n.cpp:180
 msgid "In &descending order"
-msgstr ""
+msgstr "Sortér i faldende orden"
 
 #: i18n.cpp:183
 msgid "&Contents"
@@ -221,7 +221,7 @@ msgstr "Ofte stillede spørgsmål"
 
 #: i18n.cpp:186
 msgid "Cluster map &legend"
-msgstr "Cluster kort legende"
+msgstr "Klynge-signaturer mv."
 
 #: i18n.cpp:189 upgrade.cpp:161
 msgid "&Upgrade"
@@ -261,11 +261,11 @@ msgstr "Send fejl&rapport"
 
 #: i18n.cpp:204
 msgid "Boot time script"
-msgstr "Boot tid script"
+msgstr "Boot-time script"
 
 #: i18n.cpp:211
 msgid "Drive"
-msgstr "Logisk drev"
+msgstr "Drev"
 
 #: i18n.cpp:212
 msgid "Status"
@@ -281,7 +281,7 @@ msgstr "Kapacitet"
 
 #: i18n.cpp:215
 msgid "Free space"
-msgstr "Ledig plads"
+msgstr "Ubenyttet"
 
 #: i18n.cpp:216
 #, c-format
@@ -290,11 +290,11 @@ msgstr "% Ledig"
 
 #: shutdown.cpp:100
 msgid "Please confirm"
-msgstr "Acceptér"
+msgstr "Bekræft"
 
 #: shutdown.cpp:107
 msgid "Do you really want to hibernate when done?"
-msgstr "Acceptér dvaletilstand når opgaven er udført?"
+msgstr "Bekræft dvaletilstand, når opgaven er fuldført ?"
 
 #. : This expands to "60 seconds until hibernation"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -306,7 +306,7 @@ msgstr "%lu sekunder til dvaletilstand"
 
 #: shutdown.cpp:113
 msgid "Do you really want to log off when done?"
-msgstr "Acceptér log af når opgaven er udført?"
+msgstr "Bekræft log af, når opgaven er fuldført ?"
 
 #. : This expands to "60 seconds until logoff"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -318,7 +318,7 @@ msgstr "%lu sekunder til log af"
 
 #: shutdown.cpp:119
 msgid "Do you really want to reboot when done?"
-msgstr "Acceptér genstart når opgaven er udført?"
+msgstr "Bekræft genstart, når opgaven er fuldført ?"
 
 #. : This expands to "60 seconds until reboot"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -330,7 +330,7 @@ msgstr "%lu sekunder til genstart"
 
 #: shutdown.cpp:125
 msgid "Do you really want to shutdown when done?"
-msgstr "Acceptér nedlukning når opgaven er udført?"
+msgstr "Bekræft nedlukning, når opgaven er fuldført ?"
 
 #. : This expands to "60 seconds until shutdown"
 #. : Make sure that "%lu" is included in the translated string at the correct
