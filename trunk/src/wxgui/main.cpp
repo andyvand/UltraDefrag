@@ -219,6 +219,7 @@ MainFrame::MainFrame()
 {
     g_mainFrame = this;
     m_cMap = NULL;
+    m_currentJob = NULL;
     m_busy = false;
     m_paused = false;
 
@@ -466,7 +467,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_JobCompletion,     MainFrame::OnJobCompletion)
     EVT_MENU(ID_PopulateList,      MainFrame::PopulateList)
     EVT_MENU(ID_ReadUserPreferences,  MainFrame::ReadUserPreferences)
-    EVT_MENU(ID_SetWindowTitle,       MainFrame::SetWindowTitle)
+    EVT_MENU(ID_RedrawMap,         MainFrame::RedrawMap)
+    EVT_MENU(ID_SetWindowTitle,    MainFrame::SetWindowTitle)
     EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
     EVT_MENU(ID_Shutdown,          MainFrame::Shutdown)
     EVT_MENU(ID_UpdateStatusBar,   MainFrame::UpdateStatusBar)
