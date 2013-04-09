@@ -218,6 +218,7 @@ MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
     g_mainFrame = this;
+    m_cMap = NULL;
     m_busy = false;
     m_paused = false;
 
@@ -280,7 +281,7 @@ MainFrame::MainFrame()
     //LONG_PTR style = ::GetWindowLongPtr((HWND)m_vList->GetHandle(),GWL_STYLE);
     //style |= LVS_SHOWSELALWAYS; ::SetWindowLongPtr((HWND)m_vList->GetHandle(),GWL_STYLE,style);
 
-    m_cMap = new wxStaticText(m_splitter,wxID_ANY,wxT("The cluster map will be here"));
+    m_cMap = new ClusterMap(m_splitter);
 
     m_splitter->SplitHorizontally(m_vList,m_cMap);
 
@@ -296,7 +297,7 @@ MainFrame::MainFrame()
     wxSizeEvent evt(wxSize(m_width,m_height));
     ProcessEvent(evt); m_splitter->UpdateSize();
 
-    InitVolList(); InitMap();
+    InitVolList();
 
     // populate list of volumes
     m_listThread = new ListThread();
@@ -507,6 +508,7 @@ void MainFrame::OnSize(wxSizeEvent& event)
 {
     if(!IsMaximized() && !IsIconized())
         GetSize(&m_width,&m_height);
+    if(m_cMap) m_cMap->Refresh();
     event.Skip();
 }
 

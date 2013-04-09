@@ -123,6 +123,7 @@ void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
     JobsCacheEntry *cacheEntry = new JobsCacheEntry;
     cacheEntry->jobType = g_mainFrame->m_jobThread->m_jobType;
     memcpy(&cacheEntry->pi,pi,sizeof(udefrag_progress_info));
+    // TODO: save cluster map
     cacheEntry->stopped = g_mainFrame->m_stopped;
     event.SetId(ID_CacheJob);
     event.SetInt(letter);
@@ -324,6 +325,8 @@ void MainFrame::OnPause(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
+    m_paused = false;
+    ReleasePause();
     m_stopped = true;
 }
 
