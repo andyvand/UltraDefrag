@@ -228,6 +228,22 @@ public:
     DECLARE_EVENT_TABLE()
 };
 
+class ClusterMap: public wxWindow {
+public:
+    ClusterMap(wxWindow* parent);
+    ~ClusterMap();
+
+    void OnEraseBackground(wxEraseEvent& event);
+    void OnPaint(wxPaintEvent& event);
+
+    int m_width;
+    int m_height;
+    HDC m_cacheDC;
+    HBITMAP m_cacheBmp;
+
+    DECLARE_EVENT_TABLE()
+};
+
 typedef struct _JobsCacheEntry {
     udefrag_job_type jobType;
     udefrag_progress_info pi;
@@ -338,7 +354,6 @@ public:
 private:
     bool GetLocaleFolder(wxString& CurrentLocaleDir);
     void InitLocale();
-    void InitMap();
     void InitMenu();
     void InitToolbar();
     void InitStatusBar();
@@ -390,7 +405,7 @@ private:
 
     wxSplitterWindow *m_splitter;
     DrivesList       *m_vList;
-    wxStaticText     *m_cMap;
+    ClusterMap       *m_cMap;
 
     bool m_btdEnabled;
     BtdThread *m_btdThread;
