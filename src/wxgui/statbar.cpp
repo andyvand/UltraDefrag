@@ -75,24 +75,27 @@ void MainFrame::InitStatusBar()
 
 void MainFrame::UpdateStatusBar(wxCommandEvent& event)
 {
-    udefrag_progress_info *pi = \
-        (udefrag_progress_info *) \
-        event.GetClientData();
+    unsigned long directories = 0;
+    unsigned long files = 0;
+    unsigned long fragmented = 0;
+    unsigned long compressed = 0;
+    ULONGLONG mft_size = 0;
 
-    if(!pi){
-        pi = new udefrag_progress_info;
-        memset(pi,0,sizeof(*pi));
+    if(m_currentJob){
+        directories = m_currentJob->pi.directories;
+        files = m_currentJob->pi.files;
+        fragmented = m_currentJob->pi.fragmented;
+        compressed = m_currentJob->pi.compressed;
+        mft_size = m_currentJob->pi.mft_size;
     }
 
-    UD_SetStatusText(0, _("folders"),    pi->directories);
-    UD_SetStatusText(1, _("files"),      pi->files);
-    UD_SetStatusText(2, _("fragmented"), pi->fragmented);
-    UD_SetStatusText(3, _("compressed"), pi->compressed);
+    UD_SetStatusText(0, _("folders"),    directories);
+    UD_SetStatusText(1, _("files"),      files);
+    UD_SetStatusText(2, _("fragmented"), fragmented);
+    UD_SetStatusText(3, _("compressed"), compressed);
 
-    char s[32]; winx_bytes_to_hr(pi->mft_size,2,s,sizeof(s));
+    char s[32]; winx_bytes_to_hr(mft_size,2,s,sizeof(s));
     SetStatusText(wxString::Format(wxT("%hs MFT"),s), 4);
-
-    delete pi;
 }
 
 #undef UD_SetStatusIcon

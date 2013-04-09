@@ -48,10 +48,12 @@ ClusterMap::ClusterMap(wxWindow* parent) : wxWindow(parent,wxID_ANY)
 {
     HDC hdc = GetDC((HWND)GetHandle());
     m_cacheDC = ::CreateCompatibleDC(hdc);
+    if(!m_cacheDC) letrace("cannot create cache dc");
     m_cacheBmp = ::CreateCompatibleBitmap(m_cacheDC,
         wxGetDisplaySize().GetWidth(),
         wxGetDisplaySize().GetHeight()
     );
+    if(!m_cacheBmp) letrace("cannot create cache bitmap");
     ::SelectObject(m_cacheDC,m_cacheBmp);
     ::SetBkMode(m_cacheDC,TRANSPARENT);
     ::ReleaseDC((HWND)GetHandle(),hdc);
@@ -119,31 +121,46 @@ void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
     HBRUSH brush = ::CreateSolidBrush(RGB(free_r,free_g,free_b));
     RECT rc; rc.left = rc.top = 0; rc.right = width; rc.bottom = height;
     ::FillRect(m_cacheDC,&rc,brush); ::DeleteObject(brush);
+    if(!blocks_per_line || !lines) return;
 
     // draw grid
-    char grid_r = (char)g_mainFrame->CheckOption(wxT("UD_GRID_COLOR_R"));
-    char grid_g = (char)g_mainFrame->CheckOption(wxT("UD_GRID_COLOR_G"));
-    char grid_b = (char)g_mainFrame->CheckOption(wxT("UD_GRID_COLOR_B"));
-    brush = ::CreateSolidBrush(RGB(grid_r,grid_g,grid_b));
-    for(int i = 0; i < blocks_per_line + 1; i++){
-        RECT rc; rc.left = cell_size * i; rc.top = 0;
-        rc.right = rc.left + line_width;
-        rc.bottom = cell_size * lines + line_width;
-        ::FillRect(m_cacheDC,&rc,brush);
+    if(line_width){
+        char grid_r = (char)g_mainFrame->CheckOption(wxT("UD_GRID_COLOR_R"));
+        char grid_g = (char)g_mainFrame->CheckOption(wxT("UD_GRID_COLOR_G"));
+        char grid_b = (char)g_mainFrame->CheckOption(wxT("UD_GRID_COLOR_B"));
+        brush = ::CreateSolidBrush(RGB(grid_r,grid_g,grid_b));
+        for(int i = 0; i < blocks_per_line + 1; i++){
+            RECT rc; rc.left = cell_size * i; rc.top = 0;
+            rc.right = rc.left + line_width;
+            rc.bottom = cell_size * lines + line_width;
+            ::FillRect(m_cacheDC,&rc,brush);
+        }
+        for(int i = 0; i < lines + 1; i++){
+            RECT rc; rc.left = 0; rc.top = cell_size * i;
+            rc.right = cell_size * blocks_per_line + line_width;
+            rc.bottom = rc.top + line_width;
+            ::FillRect(m_cacheDC,&rc,brush);
+        }
+        ::DeleteObject(brush);
     }
-    for(int i = 0; i < lines + 1; i++){
-        RECT rc; rc.left = 0; rc.top = cell_size * i;
-        rc.right = cell_size * blocks_per_line + line_width;
-        rc.bottom = rc.top + line_width;
-        ::FillRect(m_cacheDC,&rc,brush);
+
+    // draw squares
+    JobsCacheEntry *currentJob = g_mainFrame->m_currentJob;
+    if(currentJob){
+        if(currentJob->pi.cluster_map_size){
+        }
     }
-    ::DeleteObject(brush);
 
     // draw map on the screen
     PAINTSTRUCT ps;
     HDC hdc = ::BeginPaint((HWND)GetHandle(),&ps);
     ::BitBlt(hdc,0,0,width,height,m_cacheDC,0,0,SRCCOPY);
     ::EndPaint((HWND)GetHandle(),&ps);
+}
+
+void MainFrame::RedrawMap(wxCommandEvent& WXUNUSED(event))
+{
+    m_cMap->Refresh();
 }
 
 /** @} */

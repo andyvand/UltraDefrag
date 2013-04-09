@@ -63,9 +63,14 @@ void MainFrame::CacheJob(wxCommandEvent& event)
     if(!cacheEntry){
         m_jobsCache[index] = newEntry;
     } else {
-        memcpy(cacheEntry,newEntry,sizeof(JobsCacheEntry));
-        delete newEntry;
+        cacheEntry->jobType = newEntry->jobType;
+        memcpy(&cacheEntry->pi,&newEntry->pi,sizeof(udefrag_progress_info));
+        memcpy(cacheEntry->clusterMap,newEntry->clusterMap,cacheEntry->pi.cluster_map_size);
+        cacheEntry->stopped = newEntry->stopped;
+        delete newEntry->clusterMap; delete newEntry;
     }
+
+    m_currentJob = m_jobsCache[index];
 }
 
 // =======================================================================
@@ -111,29 +116,24 @@ void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
         }
     }
 
-    // update status bar
-    udefrag_progress_info *piCopy = new udefrag_progress_info;
-    memcpy(piCopy,pi,sizeof(udefrag_progress_info));
-    event.SetId(ID_UpdateStatusBar);
-    event.SetClientData((void *)piCopy);
-    wxPostEvent(g_mainFrame,event);
-
     // save progress information to the jobs cache
     int letter = (int)(g_mainFrame->m_jobThread->m_letter);
     JobsCacheEntry *cacheEntry = new JobsCacheEntry;
     cacheEntry->jobType = g_mainFrame->m_jobThread->m_jobType;
     memcpy(&cacheEntry->pi,pi,sizeof(udefrag_progress_info));
-    // TODO: save cluster map
+    cacheEntry->clusterMap = new char[pi->cluster_map_size];
+    memcpy(cacheEntry->clusterMap,pi->cluster_map,pi->cluster_map_size);
     cacheEntry->stopped = g_mainFrame->m_stopped;
     event.SetId(ID_CacheJob);
     event.SetInt(letter);
     event.SetClientData((void *)cacheEntry);
     wxPostEvent(g_mainFrame,event);
 
-    // update volume status
+    // update progress indicators
     event.SetId(ID_UpdateVolumeStatus);
-    event.SetInt(letter);
-    wxPostEvent(g_mainFrame,event);
+    event.SetInt(letter); wxPostEvent(g_mainFrame,event);
+    PostCommandEvent(g_mainFrame,ID_RedrawMap);
+    PostCommandEvent(g_mainFrame,ID_UpdateStatusBar);
 }
 
 int JobThread::Terminator(void *p)
@@ -261,8 +261,13 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
         m_jobThread->m_jobType = MFT_OPTIMIZATION_JOB;
         break;
     }
-    // TODO: set m_mapSize
-    m_jobThread->m_mapSize = 0;
+    int width, height; m_cMap->GetClientSize(&width,&height);
+    int block_size = CheckOption(wxT("UD_MAP_BLOCK_SIZE"));
+    int line_width = CheckOption(wxT("UD_GRID_LINE_WIDTH"));
+    int cell_size = block_size + line_width;
+    int blocks_per_line = (width - line_width) / cell_size;
+    int lines = (height - line_width) / cell_size;
+    m_jobThread->m_mapSize = blocks_per_line * lines;
     m_jobThread->m_launch = true;
 }
 

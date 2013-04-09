@@ -228,6 +228,9 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
 
     // update taskbar icon overlay
     ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
+
+    // update progress counters
+    ProcessCommandEvent(ID_UpdateStatusBar);
 }
 
 bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)

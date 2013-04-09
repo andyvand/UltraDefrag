@@ -247,6 +247,7 @@ public:
 typedef struct _JobsCacheEntry {
     udefrag_job_type jobType;
     udefrag_progress_info pi;
+    char *clusterMap;
     bool stopped;
 } JobsCacheEntry;
 
@@ -323,6 +324,7 @@ public:
     void OnSplitChanged(wxSplitterEvent& event);
     void PopulateList(wxCommandEvent& event);
     void ReadUserPreferences(wxCommandEvent& event);
+    void RedrawMap(wxCommandEvent& event);
     void SetWindowTitle(wxCommandEvent& event);
     void ShowUpgradeDialog(wxCommandEvent& event);
     void Shutdown(wxCommandEvent& event);
@@ -350,6 +352,7 @@ public:
 
     JobThread *m_jobThread;
     JobsCache m_jobsCache;
+    JobsCacheEntry *m_currentJob;
 
 private:
     bool GetLocaleFolder(wxString& CurrentLocaleDir);
@@ -536,6 +539,7 @@ enum {
     ID_JobCompletion,
     ID_PopulateList,
     ID_ReadUserPreferences,
+    ID_RedrawMap,
     ID_SetWindowTitle,
     ID_ShowUpgradeDialog,
     ID_Shutdown,

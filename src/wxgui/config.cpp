@@ -301,6 +301,7 @@ void *ConfigThread::Entry()
                 PostCommandEvent(g_mainFrame,ID_SetWindowTitle);
                 PostCommandEvent(g_mainFrame,ID_AdjustSystemTrayIcon);
                 PostCommandEvent(g_mainFrame,ID_AdjustTaskbarIconOverlay);
+                PostCommandEvent(g_mainFrame,ID_RedrawMap);
             }
             counter ++;
             /* wait for the next notification */
