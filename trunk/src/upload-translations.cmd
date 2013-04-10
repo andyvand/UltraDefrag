@@ -19,6 +19,10 @@
 :: Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ::
 
+:: parameters:
+::
+::      --no-lng2po ... do not extract translations from LNG files
+
 title Upload started
 
 :: set environment
@@ -42,6 +46,8 @@ copy /v /y "locale\UltraDefrag.pot" "%~dp0\tools\transifex\translations\ultradef
 popd
 echo.
 
+if "%~1" equ "--no-lng2po" goto :skiplng2po
+
 :: convert LNG to PO
 pushd "%~dp0\tools"
 if exist lng2po.lua lua lng2po.lua || popd && goto fail
@@ -58,6 +64,8 @@ for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do (
 popd
 echo.
 
+:skiplng2po
+
 :: update source language
 pushd "%~dp0\tools\transifex"
 if exist tx.exe tx.exe push -s --skip || popd && goto fail
@@ -68,7 +76,9 @@ if exist tx.exe tx.exe push -t --skip || popd && goto fail
 echo.
 
 :: download all translations from transifex
-if exist tx.exe tx.exe pull -a -f || popd && goto fail
+set force=-f
+if "%~1" equ "--no-lng2po" set force=
+if exist tx.exe tx.exe pull -a %force% || popd && goto fail
 echo.
 popd
 

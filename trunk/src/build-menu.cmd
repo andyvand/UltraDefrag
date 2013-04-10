@@ -53,16 +53,17 @@ echo     14 ... Build wxWidgets ........ using WinSDK
 echo.
 echo     15 ... Update translation
 echo     16 ... Upload translations
+echo     17 ... Upload translations without LNG to PO conversion
 echo.
-echo     17 ... Build Test Release for Stefan
-echo     18 ... Build Test Installation for Stefan
-echo     19 ... Build Test AMD64 for Stefan
-echo     20 ... Build Test x86 for Stefan
+echo     18 ... Build Test Release for Stefan
+echo     19 ... Build Test Installation for Stefan
+echo     20 ... Build Test AMD64 for Stefan
+echo     21 ... Build Test x86 for Stefan
 echo.
 echo      0 ... EXIT
 
 :: this value holds the number of the last menu entry
-set UD_BLD_MENU_MAX_ENTRIES=20
+set UD_BLD_MENU_MAX_ENTRIES=21
 
 :AskSelection
 echo.
@@ -181,6 +182,11 @@ call upload-translations.cmd
 goto finished
 
 :17
+title Upload translations without LNG to PO conversion
+call upload-translations.cmd --no-lng2po
+goto finished
+
+:18
 title Build Test Release for Stefan
 echo.
 call build.cmd --use-winsdk --no-ia64 --no-pdf --no-dev
@@ -188,7 +194,7 @@ echo.
 call :CopyInstallers -zip
 goto finished
 
-:18
+:19
 title Build Test Installation for Stefan
 echo.
 if %PROCESSOR_ARCHITECTURE% == AMD64 call build.cmd --use-winsdk --no-ia64 --no-x86 --install --no-pdf --no-dev
@@ -196,7 +202,7 @@ if %PROCESSOR_ARCHITECTURE% == x86 call build.cmd --use-winsdk --no-ia64 --no-am
 echo.
 goto finished
 
-:19
+:20
 title Build Test AMD64 for Stefan
 echo.
 call build.cmd --use-winsdk --no-ia64 --no-x86 --no-pdf --no-dev
@@ -204,7 +210,7 @@ echo.
 call :CopyInstallers
 goto finished
 
-:20
+:21
 title Build Test x86 for Stefan
 echo.
 call build.cmd --use-winsdk --no-ia64 --no-amd64 --no-pdf --no-dev
