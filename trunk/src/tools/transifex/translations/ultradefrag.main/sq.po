@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-07 20:02+0000\n"
+"PO-Revision-Date: 2013-04-10 09:21+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,19 +22,19 @@ msgstr ""
 
 #: about.cpp:76
 msgid "About UltraDefrag"
-msgstr "Për UltraDefrag-in"
+msgstr "Rreth UltraDefrag-in"
 
 #: about.cpp:89
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Vegël për ç'fragmentim me kod të hapur ."
 
 #: about.cpp:91
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Mirënjohjet dhe liçensat janë radhitur në manual."
 
 #: about.cpp:94
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Uebfaqja e UltraDefrag"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -54,15 +54,15 @@ msgstr "N&dihmë"
 
 #: i18n.cpp:127
 msgid "&Analyze"
-msgstr "&Analizimi"
+msgstr "&Analizo"
 
 #: i18n.cpp:128
 msgid "&Defragment"
-msgstr "&Defragmentimi"
+msgstr "&Ç'fragmento"
 
 #: i18n.cpp:129
 msgid "&Quick optimization"
-msgstr "&Shpejtësia e optimizimit"
+msgstr "Optimizimi i &shpejtë"
 
 #: i18n.cpp:130
 msgid "&Full optimization"
@@ -74,23 +74,23 @@ msgstr "&Optimizimi MFT"
 
 #: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
-msgstr ""
+msgstr "Pa&uzë"
 
 #: i18n.cpp:133
 msgid "&Stop"
-msgstr "&Ndalimi"
+msgstr "&Ndalo"
 
 #: i18n.cpp:134
 msgid "Re&peat action"
-msgstr "Për&sërit aksionin"
+msgstr "Për&sërit veprimin"
 
 #: i18n.cpp:135
 msgid "Skip removable &media"
-msgstr "Tejkalo &mediumin e lëvizshëm"
+msgstr "Tejkalo &mediat e lëvizshme"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
-msgstr "Rifresko &diskun"
+msgstr "&Riskeno diskun"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
@@ -110,11 +110,11 @@ msgstr "&Asgjë"
 
 #: i18n.cpp:144
 msgid "Stan&dby"
-msgstr "Koha e pritjes"
+msgstr "Pri&t"
 
 #: i18n.cpp:145
 msgid "&Hibernate"
-msgstr "&Hibernimi"
+msgstr "&Pusho"
 
 #: i18n.cpp:146
 msgid "&Logoff"
@@ -146,7 +146,7 @@ msgstr "&Skenimi para kyçjes së kompjuterit"
 
 #: i18n.cpp:157
 msgid "&Sorting"
-msgstr "klasifikim"
+msgstr "&Klasifikim"
 
 #: i18n.cpp:158
 msgid "&Reports"
@@ -182,7 +182,7 @@ msgstr "&Skripta"
 
 #: i18n.cpp:174
 msgid "By &path"
-msgstr ""
+msgstr "Sipas &rrugës"
 
 #: i18n.cpp:175
 msgid "By &size"
@@ -190,23 +190,23 @@ msgstr "Sipas &madhësisë"
 
 #: i18n.cpp:176
 msgid "By &creation time"
-msgstr ""
+msgstr "Sipas kohës së &krijimit"
 
 #: i18n.cpp:177
 msgid "By last &modification time"
-msgstr ""
+msgstr "Sipas kohës së &ndryshimit të fundit"
 
 #: i18n.cpp:178
 msgid "By &last access time"
-msgstr ""
+msgstr "Sipas kohës së &qasjes së fundit"
 
 #: i18n.cpp:179
 msgid "In &ascending order"
-msgstr ""
+msgstr "Sipas rendit në &ngjitje"
 
 #: i18n.cpp:180
 msgid "In &descending order"
-msgstr ""
+msgstr "Sipas rendit në zbritje"
 
 #: i18n.cpp:183
 msgid "&Contents"
@@ -230,19 +230,19 @@ msgstr "&Ngrite në version"
 
 #: i18n.cpp:190
 msgid "&Never check"
-msgstr ""
+msgstr "&Mos kohtrollo asnjëherë"
 
 #: i18n.cpp:191
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Kontrollo vetëm versionet &stabile"
 
 #: i18n.cpp:192
 msgid "Check &all releases"
-msgstr ""
+msgstr "Kotrollo të gjith&a versionet"
 
 #: i18n.cpp:193
 msgid "&Check now"
-msgstr ""
+msgstr "&Kontrollo tani"
 
 #: i18n.cpp:194
 msgid "&About"
@@ -367,11 +367,11 @@ msgstr "i kompresuar"
 
 #: taskbar.cpp:201
 msgid "The job is paused"
-msgstr ""
+msgstr "Puna është ndaluar"
 
 #: taskbar.cpp:206
 msgid "The job is running"
-msgstr ""
+msgstr "Puna është në rrjedhë"
 
 #: tray.cpp:70
 msgid "Show"
@@ -387,7 +387,7 @@ msgstr "Fshehe"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Versioni %ls është në dispozicion për shkarkim!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
