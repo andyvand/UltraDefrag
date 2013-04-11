@@ -21,8 +21,8 @@
   ------------------------------------------------------------------------------
     - the following translations were updated:
 
-      Albanian, Danish, Indonesian (Bahasa Indonesia), Javanese, Polish,
-      Portuguese (BR)
+      Albanian, Danish, Filipino (Tagalog), Indonesian (Bahasa Indonesia),
+      Javanese, Polish, Portuguese (BR)
 
 
   Version 6.0.1 2013-04-01
