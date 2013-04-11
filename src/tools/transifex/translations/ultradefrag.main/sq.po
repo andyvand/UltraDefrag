@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-10 09:21+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"POT-Creation-Date: 2013-04-10 11:44+0200\n"
+"PO-Revision-Date: 2013-04-11 04:21+0000\n"
+"Last-Translator: Skender Mustafi <1mail2me@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: about.cpp:76
 msgid "About UltraDefrag"
-msgstr "Rreth UltraDefrag-in"
+msgstr "Rreth UltraDefrag"
 
 #: about.cpp:89
 msgid "An open source defragmentation utility."
@@ -38,11 +38,11 @@ msgstr "Uebfaqja e UltraDefrag"
 
 #: i18n.cpp:121
 msgid "&Action"
-msgstr "&Aksioni"
+msgstr "&Veprim"
 
 #: i18n.cpp:122
 msgid "&Report"
-msgstr "&Raporti"
+msgstr "&Raport"
 
 #: i18n.cpp:123
 msgid "&Settings"
@@ -50,7 +50,7 @@ msgstr "&Konfigurimet"
 
 #: i18n.cpp:124 i18n.cpp:206
 msgid "&Help"
-msgstr "N&dihmë"
+msgstr "Ndi&hmë"
 
 #: i18n.cpp:127
 msgid "&Analyze"
@@ -90,11 +90,11 @@ msgstr "Tejkalo &mediat e lëvizshme"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
-msgstr "&Riskeno diskun"
+msgstr "&Riskeno disqet"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
-msgstr "Riparo &diskun"
+msgstr "Riparo &disqet"
 
 #: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
@@ -118,15 +118,15 @@ msgstr "&Pusho"
 
 #: i18n.cpp:146
 msgid "&Logoff"
-msgstr "&Shkyçje"
+msgstr "&Dalja"
 
 #: i18n.cpp:147
 msgid "&Reboot"
-msgstr "&Restartimi i kompjuterit"
+msgstr "&Ristarto kompjuterin"
 
 #: i18n.cpp:148
 msgid "&Shutdown"
-msgstr "&Fikja"
+msgstr "&Fike kompjuterin"
 
 #: i18n.cpp:151
 msgid "&Show report"
@@ -138,11 +138,11 @@ msgstr "&Gjuha"
 
 #: i18n.cpp:155
 msgid "&Graphical interface"
-msgstr "&Interfejsi grafik"
+msgstr "&Pamja grafike"
 
 #: i18n.cpp:156 i18n.cpp:202
 msgid "&Boot time scan"
-msgstr "&Skenimi para kyçjes së kompjuterit"
+msgstr "&Skenimi në kohën e kyçjes"
 
 #: i18n.cpp:157
 msgid "&Sorting"
@@ -154,27 +154,27 @@ msgstr "&Raportet"
 
 #: i18n.cpp:161
 msgid "&View change log"
-msgstr "&Paraqite ndryshimin"
+msgstr "&Shih lisën e ndryshimeve"
 
 #: i18n.cpp:162
 msgid "View translation &report"
-msgstr "Shiko përkthimin &raportin"
+msgstr "Shih &raportin e përkthimeve"
 
 #: i18n.cpp:163
 msgid "&Translations folder"
-msgstr "&Përkthimi"
+msgstr "Dosja e &përkthimeve"
 
 #: i18n.cpp:164
 msgid "&Submit current translation"
-msgstr "&Paraqite përkthimin e tanishëm"
+msgstr "&Shto përkthimin e tanishëm"
 
 #: i18n.cpp:167
 msgid "&Options"
-msgstr "&Opcioni"
+msgstr "&Opsionet"
 
 #: i18n.cpp:170
 msgid "&Enable"
-msgstr "&Ndërlidhur"
+msgstr "&Lejo"
 
 #: i18n.cpp:171
 msgid "&Script"
@@ -218,19 +218,19 @@ msgstr "&Praktika më e mirë"
 
 #: i18n.cpp:185
 msgid "&Frequently asked questions"
-msgstr "&Pyetjet dhe përgjigjet më të shpeshta"
+msgstr "&Pyetjet më të shpeshta"
 
 #: i18n.cpp:186
 msgid "Cluster map &legend"
-msgstr "Harta e klasterit &legjenda"
+msgstr "&Legjenda e hartës së grumbulluar"
 
 #: i18n.cpp:189 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr "&Ngrite në version"
+msgstr "&Përditëso"
 
 #: i18n.cpp:190
 msgid "&Never check"
-msgstr "&Mos kohtrollo asnjëherë"
+msgstr "&Mos kontrollo asnjëherë"
 
 #: i18n.cpp:191
 msgid "Check &stable releases only"
@@ -238,7 +238,7 @@ msgstr "Kontrollo vetëm versionet &stabile"
 
 #: i18n.cpp:192
 msgid "Check &all releases"
-msgstr "Kotrollo të gjith&a versionet"
+msgstr "Kontrollo të gjith&a versionet"
 
 #: i18n.cpp:193
 msgid "&Check now"
@@ -246,23 +246,23 @@ msgstr "&Kontrollo tani"
 
 #: i18n.cpp:194
 msgid "&About"
-msgstr "&Për programin"
+msgstr "&Rreth"
 
 #: i18n.cpp:197
 msgid "&Debug"
-msgstr "Korrigjo"
+msgstr "&Korrigjo"
 
 #: i18n.cpp:198 utils.cpp:421
 msgid "Open &log"
-msgstr "&Regjistrohu"
+msgstr "Ditari i &hapjes"
 
 #: i18n.cpp:199
 msgid "Send bug &report"
-msgstr "Dërgo defektin &raportin"
+msgstr "Dërgo &raport gabimesh"
 
 #: i18n.cpp:204
 msgid "Boot time script"
-msgstr "Skriptimi para kyçjes së kompjuterit"
+msgstr "Skripta e kohës së kyçjes"
 
 #: i18n.cpp:211
 msgid "Drive"
@@ -270,15 +270,15 @@ msgstr "Disku"
 
 #: i18n.cpp:212
 msgid "Status"
-msgstr "Statusi"
+msgstr "Statutsi"
 
 #: i18n.cpp:213
 msgid "Fragmentation"
-msgstr "Copëzim"
+msgstr "Copëzimi"
 
 #: i18n.cpp:214
 msgid "Total space"
-msgstr "Hapësira totale"
+msgstr "Madhësia e përgjithshme"
 
 #: i18n.cpp:215
 msgid "Free space"
@@ -291,11 +291,11 @@ msgstr "% e lirë"
 
 #: shutdown.cpp:100
 msgid "Please confirm"
-msgstr "Ju lutemi konfirmoni..."
+msgstr "Ju lutemi konfirmoni"
 
 #: shutdown.cpp:107
 msgid "Do you really want to hibernate when done?"
-msgstr "A dëshironi të pushoni kompjuterin pas përfundimit të defragmentimit?"
+msgstr "Vërtetë dëshironi të pushoni kompjuterin pas ç'fragmentimit?"
 
 #. : This expands to "60 seconds until hibernation"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -303,11 +303,11 @@ msgstr "A dëshironi të pushoni kompjuterin pas përfundimit të defragmentimit
 #: shutdown.cpp:110
 #, c-format
 msgid "%lu seconds until hibernation"
-msgstr "%lu sekondat deri te hibernimi"
+msgstr "%lu sekonda deri pushim të kompjuterit"
 
 #: shutdown.cpp:113
 msgid "Do you really want to log off when done?"
-msgstr "A dëshironi të çlajmëroni shfrytëzuesin pas përfundimit të defragmentimit?"
+msgstr "Vërtetë dëshironi të shkyçeni pasi të kryeni?"
 
 #. : This expands to "60 seconds until logoff"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -315,11 +315,11 @@ msgstr "A dëshironi të çlajmëroni shfrytëzuesin pas përfundimit të defrag
 #: shutdown.cpp:116
 #, c-format
 msgid "%lu seconds until logoff"
-msgstr "%lu sekondat deri te paraqitja e shfrytëzuesit"
+msgstr "%lu sekonda deri në shkyçje"
 
 #: shutdown.cpp:119
 msgid "Do you really want to reboot when done?"
-msgstr "A dëshironi ta restartoni kompjuterin pas përfundimit të defragmentimit?"
+msgstr "Vërtetë dëshironi të rinisni kompjuterin pasi të kryeni?"
 
 #. : This expands to "60 seconds until reboot"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -327,11 +327,11 @@ msgstr "A dëshironi ta restartoni kompjuterin pas përfundimit të defragmentim
 #: shutdown.cpp:122
 #, c-format
 msgid "%lu seconds until reboot"
-msgstr "%lu sekondat deri te restartimi"
+msgstr "%lu sekonda deri në rinisje"
 
 #: shutdown.cpp:125
 msgid "Do you really want to shutdown when done?"
-msgstr "A dëshironi ta shkyçni kompjuterin pas përfundimit të defragmentimit?"
+msgstr "Vërtetë dëshironi të fikni kompjuterin pasi të kryeni?"
 
 #. : This expands to "60 seconds until shutdown"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -339,7 +339,7 @@ msgstr "A dëshironi ta shkyçni kompjuterin pas përfundimit të defragmentimit
 #: shutdown.cpp:128
 #, c-format
 msgid "%lu seconds until shutdown"
-msgstr "%lu sekondat deri në fikje"
+msgstr "%lu sekonda deri në fikje"
 
 #: shutdown.cpp:140
 msgid "&Yes"
@@ -349,21 +349,21 @@ msgstr "&Po"
 msgid "&No"
 msgstr "&Jo"
 
-#: statbar.cpp:87
+#: statbar.cpp:92
 msgid "folders"
-msgstr "folderi/direktoriumi"
+msgstr "dosjet"
 
-#: statbar.cpp:88
+#: statbar.cpp:93
 msgid "files"
-msgstr "fajllat/skedarët"
+msgstr "skedat"
 
-#: statbar.cpp:89
+#: statbar.cpp:94
 msgid "fragmented"
-msgstr "i fragmentuar"
+msgstr "fragmentuar"
 
-#: statbar.cpp:90
+#: statbar.cpp:95
 msgid "compressed"
-msgstr "i kompresuar"
+msgstr "kompresuar"
 
 #: taskbar.cpp:201
 msgid "The job is paused"
@@ -375,11 +375,11 @@ msgstr "Puna është në rrjedhë"
 
 #: tray.cpp:70
 msgid "Show"
-msgstr "Trego"
+msgstr "Shfaq"
 
 #: tray.cpp:72
 msgid "Hide"
-msgstr "Fshehe"
+msgstr "Fshih"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
@@ -391,7 +391,7 @@ msgstr "Versioni %ls është në dispozicion për shkarkim!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
-msgstr "Ju mund të bëni upgrade/përditësim ^-^"
+msgstr "Mun të më përditësoni ^-^"
 
 #: upgrade.cpp:161 utils.cpp:425
 msgid "&Cancel"
@@ -403,16 +403,16 @@ msgstr "Gadim!"
 
 #: vollist.cpp:259
 msgid "Disk needs to be repaired"
-msgstr "Diskut i nevojitet riparimi"
+msgstr "Diskut duhet riparuar"
 
 #: vollist.cpp:294
 msgid "Analyzed"
-msgstr "Analizimi"
+msgstr "Analizuar"
 
 #: vollist.cpp:298
 msgid "Defragmented"
-msgstr "Defragmentimi"
+msgstr "Ç'fragmentuar"
 
 #: vollist.cpp:303
 msgid "Optimized"
-msgstr "Optimizimi"
+msgstr "Optimizuar"

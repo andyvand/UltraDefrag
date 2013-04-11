@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-07 20:00+0000\n"
+"POT-Creation-Date: 2013-04-10 11:44+0200\n"
+"PO-Revision-Date: 2013-04-11 21:06+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "Mag&suri"
 
 #: i18n.cpp:128
 msgid "&Defragment"
-msgstr "&Muling Ibuo"
+msgstr "&Magbuo"
 
 #: i18n.cpp:129
 msgid "&Quick optimization"
@@ -85,7 +85,7 @@ msgstr "&Ulitin"
 
 #: i18n.cpp:135
 msgid "Skip removable &media"
-msgstr "Laktawan ang Matatanggal na &Media"
+msgstr "Laktawan ang Natatanggal na &Media"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
@@ -93,7 +93,7 @@ msgstr "Tignan ang mga &Drive para sa sira"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
-msgstr "Pag&kumpuni Drive"
+msgstr "&Kumpunihin ang Drive"
 
 #: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
@@ -101,7 +101,7 @@ msgstr "&Lumabas"
 
 #: i18n.cpp:141
 msgid "&When done"
-msgstr "&Pagkatapos..."
+msgstr "&Pagnatapos..."
 
 #: i18n.cpp:142
 msgid "&None"
@@ -145,7 +145,7 @@ msgstr "&Pagiiskan sa Simula"
 
 #: i18n.cpp:157
 msgid "&Sorting"
-msgstr "&Pagka-ayos ayos"
+msgstr "&Pagka-Sunod sunod"
 
 #: i18n.cpp:158
 msgid "&Reports"
@@ -153,11 +153,11 @@ msgstr "&Ulat"
 
 #: i18n.cpp:161
 msgid "&View change log"
-msgstr "&Tignan ang pagbabago sa log"
+msgstr "&Tignan ang log ng pagbabago sa pagsasalin"
 
 #: i18n.cpp:162
 msgid "View translation &report"
-msgstr "Tignan ang  &ulat ng pagsasalin"
+msgstr "Tignan ang &ulat ng pagsasalin"
 
 #: i18n.cpp:163
 msgid "&Translations folder"
@@ -185,27 +185,27 @@ msgstr "&I-Ayos base sa kung saan nakalagay"
 
 #: i18n.cpp:175
 msgid "By &size"
-msgstr "&I-ayos base sa kalakihan"
+msgstr "&I-Ayos base sa kalakihan"
 
 #: i18n.cpp:176
 msgid "By &creation time"
-msgstr "&I-ayos base sa kung kylan ginawa"
+msgstr "&I-Ayos base sa kung kylan ginawa"
 
 #: i18n.cpp:177
 msgid "By last &modification time"
-msgstr "&I-ayos base sa kung kylan pinalitan"
+msgstr "&I-Ayos base sa kung kylan pinalitan"
 
 #: i18n.cpp:178
 msgid "By &last access time"
-msgstr "&I-ayos base sa kung kylan tiningnan"
+msgstr "&I-Ayos base sa kung kylan tiningnan"
 
 #: i18n.cpp:179
 msgid "In &ascending order"
-msgstr "&I-ayos base sa una hanggang huli"
+msgstr "&I-Ayos base sa una hanggang huli"
 
 #: i18n.cpp:180
 msgid "In &descending order"
-msgstr "&I-ayos base sa huli hanggang una"
+msgstr "&I-Ayos base sa huli hanggang una"
 
 #: i18n.cpp:183
 msgid "&Contents"
@@ -261,11 +261,11 @@ msgstr "Ipadala ang &Ulat ng Bug"
 
 #: i18n.cpp:204
 msgid "Boot time script"
-msgstr "Iskrip sa Pagsisimula"
+msgstr "Iskrip para sa oras ng Pagsisimula"
 
 #: i18n.cpp:211
 msgid "Drive"
-msgstr "Mga Drives"
+msgstr "Drives"
 
 #: i18n.cpp:212
 msgid "Status"
@@ -273,7 +273,7 @@ msgstr "Katayuan"
 
 #: i18n.cpp:213
 msgid "Fragmentation"
-msgstr "Mga Kapiraso"
+msgstr "Pagkapirapiraso"
 
 #: i18n.cpp:214
 msgid "Total space"
@@ -348,19 +348,19 @@ msgstr "&Oo"
 msgid "&No"
 msgstr "&Hindi"
 
-#: statbar.cpp:87
+#: statbar.cpp:92
 msgid "folders"
 msgstr "Lalagyan"
 
-#: statbar.cpp:88
+#: statbar.cpp:93
 msgid "files"
 msgstr "Mga Laman"
 
-#: statbar.cpp:89
+#: statbar.cpp:94
 msgid "fragmented"
 msgstr "Kapiraso"
 
-#: statbar.cpp:90
+#: statbar.cpp:95
 msgid "compressed"
 msgstr "Nakasiksik na laman"
 
@@ -390,7 +390,7 @@ msgstr ""
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
-msgstr "Maipaasenso ang bersiyong ito ^-^"
+msgstr "Pwede mo akong paasensuhin ^-^"
 
 #: upgrade.cpp:161 utils.cpp:425
 msgid "&Cancel"
@@ -410,7 +410,7 @@ msgstr "Nasuri"
 
 #: vollist.cpp:298
 msgid "Defragmented"
-msgstr "Muling Binuo"
+msgstr "Muling Nabuo"
 
 #: vollist.cpp:303
 msgid "Optimized"
