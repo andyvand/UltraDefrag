@@ -132,6 +132,24 @@ void MainFrame::SaveAppConfiguration()
     cfg->Write(wxT("/Algorithm/RepeatAction"),m_repeat);
     cfg->Write(wxT("/Algorithm/SkipRemovableMedia"),m_skipRem);
 
+    // save sorting parameters
+    if(m_menuBar->FindItem(ID_SortByPath)->IsChecked()){
+        cfg->Write(wxT("/Algorithm/Sorting"),wxT("path"));
+    } else if(m_menuBar->FindItem(ID_SortBySize)->IsChecked()){
+        cfg->Write(wxT("/Algorithm/Sorting"),wxT("size"));
+    } else if(m_menuBar->FindItem(ID_SortByCreationDate)->IsChecked()){
+        cfg->Write(wxT("/Algorithm/Sorting"),wxT("c_time"));
+    } else if(m_menuBar->FindItem(ID_SortByModificationDate)->IsChecked()){
+        cfg->Write(wxT("/Algorithm/Sorting"),wxT("m_time"));
+    } else if(m_menuBar->FindItem(ID_SortByLastAccessDate)->IsChecked()){
+        cfg->Write(wxT("/Algorithm/Sorting"),wxT("a_time"));
+    }
+    if(m_menuBar->FindItem(ID_SortAscending)->IsChecked()){
+        cfg->Write(wxT("/Algorithm/SortingOrder"),wxT("asc"));
+    } else {
+        cfg->Write(wxT("/Algorithm/SortingOrder"),wxT("desc"));
+    }
+
     cfg->Write(wxT("/Upgrade/Level"),
         (long)m_upgradeThread->m_level);
 }
@@ -343,16 +361,6 @@ void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
         Utils::ShellExec(wxT("notepad"),wxT("open"),wxT(".\\options\\udreportopts.lua"));
     else
         Utils::ShellExec(wxT(".\\options\\udreportopts.lua"),wxT("edit"));
-}
-
-void MainFrame::OnSortCriteriaChange(wxCommandEvent& WXUNUSED(event))
-{
-    if(!m_busy) {}
-}
-
-void MainFrame::OnSortOrderChange(wxCommandEvent& WXUNUSED(event))
-{
-    if(!m_busy) {}
 }
 
 /** @} */

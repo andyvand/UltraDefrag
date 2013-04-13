@@ -167,10 +167,6 @@ void MainFrame::InitMenu()
         }
     }
 
-    // create GUI configuration menu
-    wxMenu *menuGUIconfig = new wxMenu;
-    menuGUIconfig->Append(ID_GuiOptions);
-
     // create boot configuration menu
     wxMenu *menuBootConfig = new wxMenu;
     menuBootConfig->AppendCheckItem( \
@@ -198,7 +194,7 @@ void MainFrame::InitMenu()
     // create settings menu
     wxMenu *menuSettings = new wxMenu;
     m_subMenuLanguage = menuSettings->AppendSubMenu(m_menuLanguage  , wxEmptyString);
-    m_subMenuGUIconfig = menuSettings->AppendSubMenu(menuGUIconfig  , wxEmptyString);
+    menuSettings->Append(ID_GuiOptions);
     m_subMenuBootConfig = menuSettings->AppendSubMenu(menuBootConfig, wxEmptyString);
     m_subMenuSortingConfig = menuSettings->AppendSubMenu(menuSortingConfig, wxEmptyString);
     menuSettings->Append(ID_ReportOptions);
@@ -265,8 +261,8 @@ void MainFrame::InitMenu()
         wxMenuItemList list; size_t count, index;
         UD_SetMarginWidth(m_menuBar->GetMenu(0))
         UD_SetMarginWidth(m_menuBar->GetMenu(1))
+        UD_SetMarginWidth(m_menuBar->GetMenu(2))
         UD_SetMarginWidth(m_menuBar->GetMenu(3))
-        UD_SetMarginWidth(menuGUIconfig)
         UD_SetMarginWidth(menuBootConfig)
     }
 
@@ -277,6 +273,26 @@ void MainFrame::InitMenu()
     int id = g_locale->GetLanguage();
     wxMenuItem *item = m_menuBar->FindItem(ID_LocaleChange + id);
     if(item) item->Check(true);
+
+    wxConfigBase *cfg = wxConfigBase::Get();
+    wxString sorting = cfg->Read(wxT("/Algorithm/Sorting"),wxT("path"));
+    if(sorting == wxT("path")){
+        m_menuBar->FindItem(ID_SortByPath)->Check();
+    } else if(sorting == wxT("size")){
+        m_menuBar->FindItem(ID_SortBySize)->Check();
+    } else if(sorting == wxT("c_time")){
+        m_menuBar->FindItem(ID_SortByCreationDate)->Check();
+    } else if(sorting == wxT("m_time")){
+        m_menuBar->FindItem(ID_SortByModificationDate)->Check();
+    } else if(sorting == wxT("a_time")){
+        m_menuBar->FindItem(ID_SortByLastAccessDate)->Check();
+    }
+    wxString order = cfg->Read(wxT("/Algorithm/SortingOrder"),wxT("asc"));
+    if(order == wxT("asc")){
+        m_menuBar->FindItem(ID_SortAscending)->Check();
+    } else {
+        m_menuBar->FindItem(ID_SortDescending)->Check();
+    }
 }
 
 #undef UD_SetMarginWidth

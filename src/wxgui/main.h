@@ -223,7 +223,9 @@ public:
     ~DrivesList() {}
 
     void OnKeyDown(wxKeyEvent& event);
+    void OnKeyUp(wxKeyEvent& event);
     void OnMouse(wxMouseEvent& event);
+    void OnSelectionChange(wxListEvent& event);
 
     DECLARE_EVENT_TABLE()
 };
@@ -263,6 +265,8 @@ public:
     MainFrame();
     ~MainFrame();
 
+    WXLRESULT MSWWindowProc(WXUINT msg,WXWPARAM wParam,WXLPARAM lParam);
+
     bool CheckForTermination(int time);
 
     // file menu handlers
@@ -276,8 +280,6 @@ public:
     void OnRescan(wxCommandEvent& event);
 
     void OnRepair(wxCommandEvent& event);
-
-    void OnWhenDoneChange(wxCommandEvent& event);
 
     void OnExit(wxCommandEvent& event);
 
@@ -295,9 +297,6 @@ public:
 
     void OnReportOptions(wxCommandEvent& event);
 
-    void OnSortCriteriaChange(wxCommandEvent& event);
-    void OnSortOrderChange(wxCommandEvent& event);
-
     // help menu handlers
     void OnHelpContents(wxCommandEvent& event);
     void OnHelpBestPractice(wxCommandEvent& event);
@@ -311,6 +310,7 @@ public:
     void OnHelpAbout(wxCommandEvent& event);
 
     // event handlers
+    void OnActivate(wxActivateEvent& event);
     void OnMove(wxMoveEvent& event);
     void OnSize(wxSizeEvent& event);
 
@@ -329,6 +329,7 @@ public:
     void PopulateList(wxCommandEvent& event);
     void ReadUserPreferences(wxCommandEvent& event);
     void RedrawMap(wxCommandEvent& event);
+    void SelectAll(wxCommandEvent& event);
     void SetWindowTitle(wxCommandEvent& event);
     void ShowUpgradeDialog(wxCommandEvent& event);
     void Shutdown(wxCommandEvent& event);
@@ -403,7 +404,6 @@ private:
     wxMenuBar  *m_menuBar;
     wxMenuItem *m_subMenuWhenDone;
     wxMenuItem *m_subMenuLanguage;
-    wxMenuItem *m_subMenuGUIconfig;
     wxMenuItem *m_subMenuBootConfig;
     wxMenuItem *m_subMenuSortingConfig;
     wxMenuItem *m_subMenuDebug;
@@ -473,7 +473,6 @@ enum {
 
     ID_Repair,
 
-    // NOTE: they share a single event handler
     ID_WhenDoneNone,
     ID_WhenDoneExit,
     ID_WhenDoneStandby,
@@ -503,14 +502,12 @@ enum {
 
     ID_ReportOptions,
 
-    // NOTE: they share a single event handler
     ID_SortByPath,
     ID_SortBySize,
     ID_SortByCreationDate,
     ID_SortByModificationDate,
     ID_SortByLastAccessDate,
 
-    // NOTE: they share a single event handler
     ID_SortAscending,
     ID_SortDescending,
 
@@ -544,6 +541,7 @@ enum {
     ID_PopulateList,
     ID_ReadUserPreferences,
     ID_RedrawMap,
+    ID_SelectAll,
     ID_SetWindowTitle,
     ID_ShowUpgradeDialog,
     ID_Shutdown,

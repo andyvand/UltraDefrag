@@ -80,6 +80,10 @@ public:
 
 static ITaskbarList3 *GetTaskbarInstance()
 {
+    if(winx_get_os_version() < WINDOWS_7){
+        return NULL; // interface introduced in Win7
+    }
+
     ::CoInitialize(NULL);
 
     const GUID clsid = CLSID_TaskbarList;
@@ -100,9 +104,10 @@ static ITaskbarList3 *GetTaskbarInstance()
 
 static void ReleaseTaskbarInstance(ITaskbarList3 *taskBar)
 {
-    if(taskBar) taskBar->Release();
-
-    ::CoUninitialize();
+    if(winx_get_os_version() >= WINDOWS_7){
+        if(taskBar) taskBar->Release();
+        ::CoUninitialize();
+    }
 }
 
 // =======================================================================
@@ -112,7 +117,6 @@ static void ReleaseTaskbarInstance(ITaskbarList3 *taskBar)
 void MainFrame::SetTaskbarIconOverlay(const wxString& icon, const wxString& text)
 {
     if(!CheckOption(wxT("UD_SHOW_TASKBAR_ICON_OVERLAY"))) return;
-    if(winx_get_os_version() < WINDOWS_7) return;
 
     ITaskbarList3 *taskBar = GetTaskbarInstance();
 
@@ -131,8 +135,6 @@ void MainFrame::SetTaskbarIconOverlay(const wxString& icon, const wxString& text
 
 void MainFrame::RemoveTaskbarIconOverlay()
 {
-    if(winx_get_os_version() < WINDOWS_7) return;
-
     ITaskbarList3 *taskBar = GetTaskbarInstance();
 
     if(taskBar){
@@ -152,8 +154,6 @@ void MainFrame::RemoveTaskbarIconOverlay()
 
 void MainFrame::SetTaskbarProgressState(TBPFLAG flag)
 {
-    if(winx_get_os_version() < WINDOWS_7) return;
-
     ITaskbarList3 *taskBar = GetTaskbarInstance();
 
     if(taskBar){
@@ -169,8 +169,6 @@ void MainFrame::SetTaskbarProgressState(TBPFLAG flag)
 
 void MainFrame::SetTaskbarProgressValue(ULONGLONG completed, ULONGLONG total)
 {
-    if(winx_get_os_version() < WINDOWS_7) return;
-
     ITaskbarList3 *taskBar = GetTaskbarInstance();
 
     if(taskBar){

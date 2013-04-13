@@ -246,6 +246,24 @@ void MainFrame::OnStartJob(wxCommandEvent& event)
         SetTaskbarProgressState(TBPF_NORMAL);
     }
 
+    // set sorting parameters
+    if(m_menuBar->FindItem(ID_SortByPath)->IsChecked()){
+        wxSetEnv(wxT("UD_SORTING"),wxT("path"));
+    } else if(m_menuBar->FindItem(ID_SortBySize)->IsChecked()){
+        wxSetEnv(wxT("UD_SORTING"),wxT("size"));
+    } else if(m_menuBar->FindItem(ID_SortByCreationDate)->IsChecked()){
+        wxSetEnv(wxT("UD_SORTING"),wxT("c_time"));
+    } else if(m_menuBar->FindItem(ID_SortByModificationDate)->IsChecked()){
+        wxSetEnv(wxT("UD_SORTING"),wxT("m_time"));
+    } else if(m_menuBar->FindItem(ID_SortByLastAccessDate)->IsChecked()){
+        wxSetEnv(wxT("UD_SORTING"),wxT("a_time"));
+    }
+    if(m_menuBar->FindItem(ID_SortAscending)->IsChecked()){
+        wxSetEnv(wxT("UD_SORTING_ORDER"),wxT("asc"));
+    } else {
+        wxSetEnv(wxT("UD_SORTING_ORDER"),wxT("desc"));
+    }
+
     // launch the job
     switch(event.GetId()){
     case ID_Analyze:

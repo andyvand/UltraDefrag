@@ -152,7 +152,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
 
     // settings menu
     m_subMenuLanguage->SetItemLabel(_("&Language"));
-    m_subMenuGUIconfig->SetItemLabel(_("&Graphical interface"));
     m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
     m_subMenuSortingConfig->SetItemLabel(_("&Sorting"));
     UD_UpdateMenuItemLabel(ID_ReportOptions , "&Reports" , "Ctrl+R");
@@ -164,7 +163,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_LangSubmit     , "&Submit current translation" , "");
 
     // graphical interface sub-menu
-    UD_UpdateMenuItemLabel(ID_GuiOptions , "&Options" , "F10");
+    UD_UpdateMenuItemLabel(ID_GuiOptions , "&Graphical interface" , "F10");
 
     // boot time scan sub-menu
     UD_UpdateMenuItemLabel(ID_BootEnable , "&Enable" , "F11");
@@ -224,6 +223,13 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
         }
     } else {
         m_vList->SetFont(*m_vListFont);
+    }
+
+    // update list status fields
+    for(int i = 0; i < m_vList->GetItemCount(); i++){
+        int letter = (int)m_vList->GetItemText(i)[0];
+        wxCommandEvent event(wxEVT_COMMAND_MENU_SELECTED,ID_UpdateVolumeStatus);
+        event.SetInt(letter); ProcessEvent(event);
     }
 
     // update taskbar icon overlay
