@@ -217,10 +217,8 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     // set monospace font for the list unless Burmese translation is selected
     if(g_locale->GetCanonicalName().Left(2) != wxT("my")){
         wxFont font = m_vList->GetFont();
-        if(font.SetFaceName(wxT("Courier New"))){
-            font.SetPointSize(DPI(9));
+        if(font.SetFaceName(wxT("Courier New")))
             m_vList->SetFont(font);
-        }
     } else {
         m_vList->SetFont(*m_vListFont);
     }
