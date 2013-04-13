@@ -193,7 +193,8 @@
     ; we only support Windows XP and above
     ${IfNot} ${AtLeastWinXP}
         ${LogAndDisplayAbort} \
-            "This program is not supported on Windows versions below XP!"
+            "This program is not supported on Windows versions below XP!$\n \
+            Download UltraDefrag v6 for Windows NT 4.0 and Windows 2000."
         Abort
     ${EndIf}
 

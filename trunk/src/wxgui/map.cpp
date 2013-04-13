@@ -136,7 +136,7 @@ char *ClusterMap::ScaleMap(int scaled_size)
     JobsCacheEntry *currentJob = g_mainFrame->m_currentJob;
     int map_size = currentJob->pi.cluster_map_size;
 
-    dtrace("map size = %u, scaled size = %u",map_size,scaled_size);
+    //dtrace("map size = %u, scaled size = %u",map_size,scaled_size);
 
     if(scaled_size == map_size){
         return NULL; // no need to scale
