@@ -59,7 +59,7 @@ int   g_map_symbols_per_line = BLOCKS_PER_HLINE;
 
 int   g_extra_lines = 0;
 
-short g_colors[NUM_OF_SPACE_STATES] = {
+short g_colors[SPACE_STATES] = {
     0,
     FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
     FOREGROUND_GREEN | FOREGROUND_INTENSITY,
@@ -165,7 +165,7 @@ void redraw_map(udefrag_progress_info *pi)
 
 void destroy_map(void)
 {
-    delete g_map;
+    delete [] g_map;
 }
 
 /** @} */
