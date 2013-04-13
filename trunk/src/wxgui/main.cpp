@@ -48,6 +48,7 @@ MainFrame *g_mainFrame = NULL;
 double g_scaleFactor = 1.0f;   // DPI-aware scaling factor
 int g_iconSize;                // small icon size
 HANDLE g_synchEvent = NULL;    // synchronization for threads
+UINT g_TaskbarIconMsg;         // taskbar icon overlay setup on shell restart
 
 // =======================================================================
 //                             Web statistics
@@ -172,6 +173,10 @@ bool App::OnInit()
     else if(g_iconSize < 24) g_iconSize = 20;
     else if(g_iconSize < 32) g_iconSize = 24;
     else g_iconSize = 32;
+
+    // support taskbar icon overlay setup on shell restart
+    g_TaskbarIconMsg = ::RegisterWindowMessage(wxT("TaskbarButtonCreated"));
+    if(!g_TaskbarIconMsg) letrace("cannot register TaskbarButtonCreated message");
 
     // create main window
     g_mainFrame = new MainFrame();
@@ -299,6 +304,7 @@ MainFrame::MainFrame()
     ProcessEvent(evt); m_splitter->UpdateSize();
 
     InitVolList();
+    m_vList->SetFocus();
 
     // populate list of volumes
     m_listThread = new ListThread();
@@ -407,10 +413,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_Repair,  MainFrame::OnRepair)
 
-    EVT_MENU_RANGE(ID_WhenDoneNone,
-                   ID_WhenDoneShutdown,
-                   MainFrame::OnWhenDoneChange)
-
     EVT_MENU(ID_Exit, MainFrame::OnExit)
 
     // report menu
@@ -431,14 +433,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
 
-    EVT_MENU_RANGE(ID_SortByPath,
-                   ID_SortByLastAccessDate,
-                   MainFrame::OnSortCriteriaChange)
-
-    EVT_MENU_RANGE(ID_SortAscending,
-                   ID_SortDescending,
-                   MainFrame::OnSortOrderChange)
-
     // help menu
     EVT_MENU(ID_HelpContents,     MainFrame::OnHelpContents)
     EVT_MENU(ID_HelpBestPractice, MainFrame::OnHelpBestPractice)
@@ -454,6 +448,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_HelpAbout, MainFrame::OnHelpAbout)
 
     // event handlers
+    EVT_ACTIVATE(MainFrame::OnActivate)
     EVT_MOVE(MainFrame::OnMove)
     EVT_SIZE(MainFrame::OnSize)
 
@@ -468,6 +463,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_PopulateList,      MainFrame::PopulateList)
     EVT_MENU(ID_ReadUserPreferences,  MainFrame::ReadUserPreferences)
     EVT_MENU(ID_RedrawMap,         MainFrame::RedrawMap)
+    EVT_MENU(ID_SelectAll,         MainFrame::SelectAll)
     EVT_MENU(ID_SetWindowTitle,    MainFrame::SetWindowTitle)
     EVT_MENU(ID_ShowUpgradeDialog, MainFrame::ShowUpgradeDialog)
     EVT_MENU(ID_Shutdown,          MainFrame::Shutdown)
@@ -480,6 +476,16 @@ END_EVENT_TABLE()
 //                            Event handlers
 // =======================================================================
 
+WXLRESULT MainFrame::MSWWindowProc(WXUINT msg,WXWPARAM wParam,WXLPARAM lParam)
+{
+    if(msg == g_TaskbarIconMsg){
+        // handle shell restart
+        PostCommandEvent(this,ID_AdjustTaskbarIconOverlay);
+        return 0;
+    }
+    return wxFrame::MSWWindowProc(msg,wParam,lParam);
+}
+
 void MainFrame::SetWindowTitle(wxCommandEvent& event)
 {
     if(event.GetString().IsEmpty()){
@@ -491,6 +497,14 @@ void MainFrame::SetWindowTitle(wxCommandEvent& event)
     } else {
         SetTitle(event.GetString());
     }
+}
+
+void MainFrame::OnActivate(wxActivateEvent& event)
+{
+    /* suggested by Brian Gaff */
+    if(event.GetActive())
+        m_vList->SetFocus();
+    event.Skip();
 }
 
 void MainFrame::OnMove(wxMoveEvent& event)

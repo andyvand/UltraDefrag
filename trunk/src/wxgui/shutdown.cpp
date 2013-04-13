@@ -293,9 +293,4 @@ void MainFrame::Shutdown(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnWhenDoneChange(wxCommandEvent& WXUNUSED(event))
-{
-    // nothing to do
-}
-
 /** @} */
