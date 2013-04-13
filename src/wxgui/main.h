@@ -236,10 +236,14 @@ public:
     void OnEraseBackground(wxEraseEvent& event);
     void OnPaint(wxPaintEvent& event);
 
+    char *ScaleMap(int scaled_size);
+
     int m_width;
     int m_height;
     HDC m_cacheDC;
     HBITMAP m_cacheBmp;
+
+    HBRUSH m_brushes[SPACE_STATES];
 
     DECLARE_EVENT_TABLE()
 };
