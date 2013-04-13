@@ -63,11 +63,9 @@ void MainFrame::CacheJob(wxCommandEvent& event)
     if(!cacheEntry){
         m_jobsCache[index] = newEntry;
     } else {
-        cacheEntry->jobType = newEntry->jobType;
-        memcpy(&cacheEntry->pi,&newEntry->pi,sizeof(udefrag_progress_info));
-        memcpy(cacheEntry->clusterMap,newEntry->clusterMap,cacheEntry->pi.cluster_map_size);
-        cacheEntry->stopped = newEntry->stopped;
-        delete newEntry->clusterMap; delete newEntry;
+        delete [] cacheEntry->clusterMap;
+        memcpy(cacheEntry,newEntry,sizeof(JobsCacheEntry));
+        delete newEntry;
     }
 
     m_currentJob = m_jobsCache[index];
@@ -122,7 +120,12 @@ void JobThread::ProgressCallback(udefrag_progress_info *pi, void *p)
     cacheEntry->jobType = g_mainFrame->m_jobThread->m_jobType;
     memcpy(&cacheEntry->pi,pi,sizeof(udefrag_progress_info));
     cacheEntry->clusterMap = new char[pi->cluster_map_size];
-    memcpy(cacheEntry->clusterMap,pi->cluster_map,pi->cluster_map_size);
+    if(pi->cluster_map_size){
+        memcpy(cacheEntry->clusterMap,
+            pi->cluster_map,
+            pi->cluster_map_size
+        );
+    }
     cacheEntry->stopped = g_mainFrame->m_stopped;
     event.SetId(ID_CacheJob);
     event.SetInt(letter);

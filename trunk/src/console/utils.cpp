@@ -116,7 +116,7 @@ void clear_line(void)
     memset(line,0x20,n);
     line[n] = 0;
     fprintf(stdout,"\r%s",line);
-    delete line;
+    delete [] line;
 
     /* move cursor back to the previous line */
     if(GetConsoleScreenBufferInfo(g_out,&csbi)){

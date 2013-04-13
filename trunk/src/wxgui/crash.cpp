@@ -77,7 +77,7 @@ void *CrashInfoThread::Entry()
                 itrace("%u bytes of memory is needed "
                     "for the event log reading",bytes_needed);
                 bytes_to_read = bytes_needed;
-                delete buffer; buffer = new char[bytes_to_read];
+                delete [] buffer; buffer = new char[bytes_to_read];
                 break;
             case ERROR_HANDLE_EOF:
                 goto save_info;
@@ -105,7 +105,7 @@ void *CrashInfoThread::Entry()
                         if(rec->TimeGenerated > new_time_stamp)
                             new_time_stamp = rec->TimeGenerated;
                     }
-                    delete data;
+                    delete [] data;
                 }
                 rec = (PEVENTLOGRECORD)((char *)rec + rec->Length);
             }
@@ -146,7 +146,7 @@ save_info:
 
 done:
     if(hLog) ::CloseEventLog(hLog);
-    delete buffer; delete cfg;
+    delete [] buffer; delete cfg;
     return NULL;
 }
 

@@ -84,7 +84,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
         etrace("cannot allocate %u bytes of memory",map_size);
         return UDEFRAG_NO_MEM;
     }
-    array_size = map_size * NUM_OF_SPACE_STATES * sizeof(ULONGLONG);
+    array_size = map_size * SPACE_STATES * sizeof(ULONGLONG);
     jp->cluster_map.array = winx_tmalloc(array_size);
     if(jp->cluster_map.array == NULL){
         etrace("cannot allocate %u bytes of memory",
@@ -97,7 +97,7 @@ int allocate_map(int map_size,udefrag_job_parameters *jp)
     /* set internal data */
     jp->pi.cluster_map_size = map_size;
     jp->cluster_map.map_size = map_size;
-    jp->cluster_map.n_colors = NUM_OF_SPACE_STATES;
+    jp->cluster_map.n_colors = SPACE_STATES;
     jp->cluster_map.field_size = jp->v_info.total_clusters;
     
     jp->cluster_map.clusters_per_cell = jp->cluster_map.field_size / jp->cluster_map.map_size;

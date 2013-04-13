@@ -186,7 +186,7 @@ typedef enum {
 * ('Dynamically-allocated Multi-dimensional Arrays - C').
 */
 typedef struct _cmap {
-    ULONGLONG (*array)[NUM_OF_SPACE_STATES];
+    ULONGLONG (*array)[SPACE_STATES];
     ULONGLONG field_size;
     int map_size;
     int n_colors;

@@ -107,7 +107,7 @@ enum {
     COMPRESSED_OVER_LIMIT_SPACE,
     MFT_ZONE_SPACE,
     MFT_SPACE,                   /* has highest precedence */
-    NUM_OF_SPACE_STATES          /* this must always be the last */
+    SPACE_STATES                 /* this must always be the last */
 };
 
 #define UNKNOWN_SPACE FRAGM_SPACE
