@@ -34,11 +34,27 @@
 // Ideas by Stefan Pendl <stefanpe@users.sourceforge.net>
 // and Dmitri Arkhangelski <dmitriar@gmail.com>.
 
+// The 'Flicker Free Drawing' article of James Brown
+// helped us to reduce GUI flicker on window resize:
+// http://www.catch22.net/tuts/flicker
+
 // =======================================================================
 //                            Declarations
 // =======================================================================
 
 #include "main.h"
+
+COLORREF g_colors[SPACE_STATES] =
+{
+    RGB(178,175,168),               /* unused map block */
+    RGB(255,255,255),               /* free */
+    RGB(0,215,32),RGB(4,164,0),     /* system */
+    RGB(255,0,0),RGB(128,0,0),      /* fragmented */
+    RGB(0,0,255),RGB(0,0,128),      /* unfragmented */
+    RGB(255,255,0),RGB(238,221,0),  /* directories */
+    RGB(185,185,0),RGB(93,93,0),    /* compressed */
+    RGB(211,0,255),RGB(128,0,128),  /* mft zone; mft itself */
+};
 
 // =======================================================================
 //                            Cluster map
@@ -49,7 +65,7 @@ ClusterMap::ClusterMap(wxWindow* parent) : wxWindow(parent,wxID_ANY)
     HDC hdc = GetDC((HWND)GetHandle());
     m_cacheDC = ::CreateCompatibleDC(hdc);
     if(!m_cacheDC) letrace("cannot create cache dc");
-    m_cacheBmp = ::CreateCompatibleBitmap(m_cacheDC,
+    m_cacheBmp = ::CreateCompatibleBitmap(hdc,
         wxGetDisplaySize().GetWidth(),
         wxGetDisplaySize().GetHeight()
     );
@@ -58,6 +74,10 @@ ClusterMap::ClusterMap(wxWindow* parent) : wxWindow(parent,wxID_ANY)
     ::SetBkMode(m_cacheDC,TRANSPARENT);
     ::ReleaseDC((HWND)GetHandle(),hdc);
 
+    for(int i = 0; i < SPACE_STATES; i++){
+        m_brushes[i] = ::CreateSolidBrush(g_colors[i]);
+    }
+
     m_width = m_height = 0;
 }
 
@@ -65,6 +85,9 @@ ClusterMap::~ClusterMap()
 {
     ::DeleteDC(m_cacheDC);
     ::DeleteObject(m_cacheBmp);
+    for(int i = 0; i < SPACE_STATES; i++){
+        ::DeleteObject(m_brushes[i]);
+    }
 }
 
 // =======================================================================
@@ -101,6 +124,79 @@ void ClusterMap::OnEraseBackground(wxEraseEvent& event)
         ::ReleaseDC((HWND)GetHandle(),hdc);
     }
     m_width = width; m_height = height;
+}
+
+/**
+ * @brief Scales cluster map
+ * of the current job to fit
+ * inside of the map control.
+ */
+char *ClusterMap::ScaleMap(int scaled_size)
+{
+    JobsCacheEntry *currentJob = g_mainFrame->m_currentJob;
+    int map_size = currentJob->pi.cluster_map_size;
+
+    dtrace("map size = %u, scaled size = %u",map_size,scaled_size);
+
+    if(scaled_size == map_size){
+        return NULL; // no need to scale
+    }
+
+    char *scaledMap = new char[scaled_size];
+
+    int ratio = scaled_size / map_size;
+    int used_cells = 0;
+    if(ratio){
+        // scale up
+        for(int i = 0; i < map_size; i++){
+            for(int j = 0; j < ratio; j++){
+                scaledMap[used_cells] = currentJob->clusterMap[i];
+                used_cells ++;
+            }
+        }
+    } else {
+        // scale down
+        ratio = map_size / scaled_size;
+        if(ratio * scaled_size != map_size)
+            ratio ++; /* round up */
+
+        used_cells = map_size / ratio;
+        for(int i = 0; i < used_cells; i++){
+            int states[SPACE_STATES];
+            memset(states,0,sizeof(states));
+            bool mft_detected = false;
+
+            int sequence_length = ratio;
+            if(i == used_cells - 1){
+                sequence_length = map_size - i * ratio;
+            }
+
+            for(int j = 0; j < sequence_length; j++){
+                int index = (int)currentJob->clusterMap[i * ratio + j];
+                if(index >= 0 && index < SPACE_STATES) states[index] ++;
+                if(index == MFT_SPACE) mft_detected = true;
+            }
+
+            if(mft_detected){
+                scaledMap[i] = MFT_SPACE;
+            } else {
+                // draw cell in dominating color
+                int maximum = states[0]; scaledMap[i] = 0;
+                for(int j = 1; j < SPACE_STATES; j++){
+                    if(states[j] >= maximum){
+                        maximum = states[j];
+                        scaledMap[i] = (char)j;
+                    }
+                }
+            }
+        }
+    }
+    // mark unused cells
+    for(int i = used_cells; i < scaled_size; i++){
+        scaledMap[i] = UNUSED_MAP_SPACE;
+    }
+
+    return scaledMap;
 }
 
 void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
@@ -148,6 +244,26 @@ void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
     JobsCacheEntry *currentJob = g_mainFrame->m_currentJob;
     if(currentJob){
         if(currentJob->pi.cluster_map_size){
+            int scaled_size = blocks_per_line * lines;
+            char *scaledMap = ScaleMap(scaled_size);
+
+            // draw either normal or scaled map
+            char *map = scaledMap ? scaledMap : currentJob->clusterMap;
+            for(int i = 0; i < lines; i++){
+                for(int j = 0; j < blocks_per_line; j++){
+                    RECT rc;
+                    rc.top = cell_size * i + line_width;
+                    rc.left = cell_size * j + line_width;
+                    rc.right = rc.left + block_size;
+                    rc.bottom = rc.top + block_size;
+                    int index = (int)map[i * blocks_per_line + j];
+                    if(index != FREE_SPACE){
+                        ::FillRect(m_cacheDC,&rc,m_brushes[index]);
+                    }
+                }
+            }
+
+            delete [] scaledMap;
         }
     }
 
