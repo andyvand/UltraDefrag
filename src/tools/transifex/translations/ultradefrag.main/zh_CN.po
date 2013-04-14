@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-07 20:02+0000\n"
+"POT-Creation-Date: 2013-04-14 21:03+0200\n"
+"PO-Revision-Date: 2013-04-14 19:07+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "报告(&R)"
 msgid "&Settings"
 msgstr "设置(&S)"
 
-#: i18n.cpp:124 i18n.cpp:206
+#: i18n.cpp:124 i18n.cpp:205
 msgid "&Help"
 msgstr "帮助(&H)"
 
@@ -134,158 +134,200 @@ msgstr "显示报告(&S)"
 msgid "&Language"
 msgstr "语言(&L)"
 
-#: i18n.cpp:155
-msgid "&Graphical interface"
-msgstr "图形界面(&G)"
-
-#: i18n.cpp:156 i18n.cpp:202
+#: i18n.cpp:155 i18n.cpp:201
 msgid "&Boot time scan"
 msgstr "启动时扫描(&B)"
 
-#: i18n.cpp:157
+#: i18n.cpp:156
 msgid "&Sorting"
 msgstr "排序(&S)"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&Reports"
 msgstr "报告(&R)"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&View change log"
 msgstr "查看变更日志(&V)"
 
-#: i18n.cpp:162
+#: i18n.cpp:161
 msgid "View translation &report"
 msgstr "查看翻译报告(&R)"
 
-#: i18n.cpp:163
+#: i18n.cpp:162
 msgid "&Translations folder"
 msgstr "语言包文件夹(&T)"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Submit current translation"
 msgstr "提交当前翻译(&S)"
 
-#: i18n.cpp:167
-msgid "&Options"
-msgstr "选项(&O)"
+#: i18n.cpp:166
+msgid "&Graphical interface"
+msgstr "图形界面(&G)"
 
-#: i18n.cpp:170
+#: i18n.cpp:169
 msgid "&Enable"
 msgstr "启用(&E)"
 
-#: i18n.cpp:171
+#: i18n.cpp:170
 msgid "&Script"
 msgstr "脚本(&S)"
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &path"
 msgstr "按路径排序(&P)"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By &size"
 msgstr "按大小排序(&S)"
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &creation time"
 msgstr "按创建时间排序(&C)"
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "By last &modification time"
 msgstr "按修改时间排序(&M)"
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "By &last access time"
 msgstr "按访问时间排序(&L)"
 
-#: i18n.cpp:179
+#: i18n.cpp:178
 msgid "In &ascending order"
 msgstr "升序排序(&A)"
 
-#: i18n.cpp:180
+#: i18n.cpp:179
 msgid "In &descending order"
 msgstr "降序排序(&D)"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Contents"
 msgstr "目录(&C)"
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Best &practice"
 msgstr "最佳方法(&P)"
 
-#: i18n.cpp:185
+#: i18n.cpp:184
 msgid "&Frequently asked questions"
 msgstr "常见问题(&F)"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "Cluster map &legend"
 msgstr "簇地图说明(&L)"
 
-#: i18n.cpp:189 upgrade.cpp:161
+#: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:190
+#: i18n.cpp:189
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:193
 msgid "&About"
 msgstr "关于(&A)"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "&Debug"
 msgstr "调试(&B)"
 
-#: i18n.cpp:198 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:421
 msgid "Open &log"
 msgstr "打开日志(&L)"
 
-#: i18n.cpp:199
+#: i18n.cpp:198
 msgid "Send bug &report"
 msgstr "发送错误报告(&R)"
 
-#: i18n.cpp:204
+#: i18n.cpp:203
 msgid "Boot time script"
 msgstr "启动时扫描脚本"
 
-#: i18n.cpp:211
+#: i18n.cpp:210
 msgid "Drive"
 msgstr "卷"
 
-#: i18n.cpp:212
+#: i18n.cpp:211 i18n.cpp:269
 msgid "Status"
 msgstr "状态"
 
-#: i18n.cpp:213
+#: i18n.cpp:212
 msgid "Fragmentation"
 msgstr "碎片"
 
-#: i18n.cpp:214
+#: i18n.cpp:213
 msgid "Total space"
 msgstr "容量"
 
-#: i18n.cpp:215
+#: i18n.cpp:214
 msgid "Free space"
 msgstr "可用空间"
 
-#: i18n.cpp:216
+#. : The double %-sign is needed to pass validation at transifex,
+#. : it will be replaced by a single %-sign before display.
+#: i18n.cpp:217
 #, c-format
-msgid "% free"
-msgstr "% 可用"
+msgid "%% free"
+msgstr "%% 可用"
+
+#: i18n.cpp:261
+msgid "Fragmented files on"
+msgstr "碎片文件"
+
+#: i18n.cpp:262
+msgid "Visit our Homepage"
+msgstr "访问我们的主页"
+
+#: i18n.cpp:263
+msgid "View report options"
+msgstr "查看报告选项"
+
+#: i18n.cpp:264
+msgid "Powered by Lua"
+msgstr "由 Lua 技术支持"
+
+#: i18n.cpp:265
+msgid "Fragments"
+msgstr "碎片"
+
+#: i18n.cpp:266
+msgid "Size"
+msgstr "大小"
+
+#: i18n.cpp:267
+msgid "Filename"
+msgstr "文件名"
+
+#: i18n.cpp:268
+msgid "Comment"
+msgstr "注释"
+
+#: i18n.cpp:270
+msgid "locked"
+msgstr "已锁定"
+
+#: i18n.cpp:271
+msgid "move failed"
+msgstr "移动失败"
+
+#: i18n.cpp:272
+msgid "invalid"
+msgstr "无效的"
 
 #: shutdown.cpp:100
 msgid "Please confirm"
@@ -347,29 +389,29 @@ msgstr "是(&Y)"
 msgid "&No"
 msgstr "否(&N)"
 
-#: statbar.cpp:87
+#: statbar.cpp:92
 msgid "folders"
 msgstr "文件夹"
 
-#: statbar.cpp:88
+#: statbar.cpp:93
 msgid "files"
 msgstr "文件"
 
-#: statbar.cpp:89
+#: statbar.cpp:94
 msgid "fragmented"
 msgstr "碎片"
 
-#: statbar.cpp:90
+#: statbar.cpp:95
 msgid "compressed"
 msgstr "已压缩"
 
-#: taskbar.cpp:201
+#: taskbar.cpp:199
 msgid "The job is paused"
 msgstr ""
 
-#: taskbar.cpp:206
+#: taskbar.cpp:204
 msgid "The job is running"
-msgstr ""
+msgstr "正在执行一个操作，请稍等"
 
 #: tray.cpp:70
 msgid "Show"
@@ -399,18 +441,18 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:259
+#: vollist.cpp:299
 msgid "Disk needs to be repaired"
 msgstr "磁盘需要修复"
 
-#: vollist.cpp:294
+#: vollist.cpp:334
 msgid "Analyzed"
 msgstr "分析完成"
 
-#: vollist.cpp:298
+#: vollist.cpp:338
 msgid "Defragmented"
 msgstr "碎片整理完成"
 
-#: vollist.cpp:303
+#: vollist.cpp:343
 msgid "Optimized"
 msgstr "优化完成"

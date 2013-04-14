@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-07 19:59+0000\n"
+"POT-Creation-Date: 2013-04-14 21:03+0200\n"
+"PO-Revision-Date: 2013-04-14 19:03+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Αναφορά"
 msgid "&Settings"
 msgstr "Ρυθμίσεις"
 
-#: i18n.cpp:124 i18n.cpp:206
+#: i18n.cpp:124 i18n.cpp:205
 msgid "&Help"
 msgstr "Βοήθεια"
 
@@ -134,158 +134,200 @@ msgstr "Προβολή αναφοράς"
 msgid "&Language"
 msgstr "Γλώσσα"
 
-#: i18n.cpp:155
-msgid "&Graphical interface"
-msgstr "Γραφικό περιβάλλον"
-
-#: i18n.cpp:156 i18n.cpp:202
+#: i18n.cpp:155 i18n.cpp:201
 msgid "&Boot time scan"
 msgstr "Έλεγχος κατά την εκκίνηση"
 
-#: i18n.cpp:157
+#: i18n.cpp:156
 msgid "&Sorting"
 msgstr "Ταξινόμηση"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&Reports"
 msgstr "Αναφορές"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&View change log"
 msgstr "&Επισκόπηση αρχείου καταγραφής"
 
-#: i18n.cpp:162
+#: i18n.cpp:161
 msgid "View translation &report"
 msgstr "Επισκόπηση αναφοράς &μετραφράσεων"
 
-#: i18n.cpp:163
+#: i18n.cpp:162
 msgid "&Translations folder"
 msgstr "Φάκελος μεταφράσεων"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Submit current translation"
 msgstr "&Υποβολή ενημερωμένης μετάφρασης"
 
-#: i18n.cpp:167
-msgid "&Options"
-msgstr "Επιλογές"
+#: i18n.cpp:166
+msgid "&Graphical interface"
+msgstr "Γραφικό περιβάλλον"
 
-#: i18n.cpp:170
+#: i18n.cpp:169
 msgid "&Enable"
 msgstr "Ενεργοποίηση"
 
-#: i18n.cpp:171
+#: i18n.cpp:170
 msgid "&Script"
 msgstr "Σενάριο"
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &path"
 msgstr "Ταξινόμηση βάσει διαδρομής"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By &size"
 msgstr "Ταξινόμηση βάσει μεγέθους"
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &creation time"
 msgstr "Ταξινόμηση βάσει χρόνου δημιουργίας"
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "By last &modification time"
 msgstr "Ταξινόμηση βάσει χρόνου τελευταίας τροποποίησης"
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "By &last access time"
 msgstr "Ταξινόμηση βάσει χρόνου τελευταίας πρόσβασης"
 
-#: i18n.cpp:179
+#: i18n.cpp:178
 msgid "In &ascending order"
 msgstr "Αύξουσα ταξινόμηση"
 
-#: i18n.cpp:180
+#: i18n.cpp:179
 msgid "In &descending order"
 msgstr "Φθίνουσα ταξινόμηση"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Contents"
 msgstr "Περιεχόμενα"
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Best &practice"
 msgstr "Καλύτερη πρακτική"
 
-#: i18n.cpp:185
+#: i18n.cpp:184
 msgid "&Frequently asked questions"
 msgstr "ΣΕΑ"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "Cluster map &legend"
 msgstr "Χάρτης συστοιχιών και υπόμνημα"
 
-#: i18n.cpp:189 upgrade.cpp:161
+#: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:190
+#: i18n.cpp:189
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:193
 msgid "&About"
 msgstr "Σχετικά"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "&Debug"
 msgstr "&Αποσφαλμάτωση"
 
-#: i18n.cpp:198 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:421
 msgid "Open &log"
 msgstr "Άνοιγμα αρχείου &καταγραφής"
 
-#: i18n.cpp:199
+#: i18n.cpp:198
 msgid "Send bug &report"
 msgstr "Αποστολή αναφοράς &σφαλμάτων"
 
-#: i18n.cpp:204
+#: i18n.cpp:203
 msgid "Boot time script"
 msgstr "Σενάριο κατά την εκκίνηση"
 
-#: i18n.cpp:211
+#: i18n.cpp:210
 msgid "Drive"
 msgstr "Μονάδα"
 
-#: i18n.cpp:212
+#: i18n.cpp:211 i18n.cpp:269
 msgid "Status"
 msgstr "Κατάσταση"
 
-#: i18n.cpp:213
+#: i18n.cpp:212
 msgid "Fragmentation"
 msgstr "Κατακερματισμός"
 
-#: i18n.cpp:214
+#: i18n.cpp:213
 msgid "Total space"
 msgstr "Σύνολο χώρου"
 
-#: i18n.cpp:215
+#: i18n.cpp:214
 msgid "Free space"
 msgstr "Ελεύθερος χώρος"
 
-#: i18n.cpp:216
+#. : The double %-sign is needed to pass validation at transifex,
+#. : it will be replaced by a single %-sign before display.
+#: i18n.cpp:217
 #, c-format
-msgid "% free"
-msgstr "Ποσοστό"
+msgid "%% free"
+msgstr "%% Ποσοστό"
+
+#: i18n.cpp:261
+msgid "Fragmented files on"
+msgstr "Κατακερματισμένα αρχεία στον"
+
+#: i18n.cpp:262
+msgid "Visit our Homepage"
+msgstr "Επίσκεψη του ιστοτόπου μας"
+
+#: i18n.cpp:263
+msgid "View report options"
+msgstr "Επισκόπηση επιλογών αναφοράς"
+
+#: i18n.cpp:264
+msgid "Powered by Lua"
+msgstr "Βασισμένο στην Lua"
+
+#: i18n.cpp:265
+msgid "Fragments"
+msgstr "κατακερματισμένα στοιχεία"
+
+#: i18n.cpp:266
+msgid "Size"
+msgstr "μέγεθος"
+
+#: i18n.cpp:267
+msgid "Filename"
+msgstr "όνομα αρχείου"
+
+#: i18n.cpp:268
+msgid "Comment"
+msgstr "σχόλιο"
+
+#: i18n.cpp:270
+msgid "locked"
+msgstr "κλειδωμένο"
+
+#: i18n.cpp:271
+msgid "move failed"
+msgstr "αποτυχία μετακίνησης"
+
+#: i18n.cpp:272
+msgid "invalid"
+msgstr "άκυρο"
 
 #: shutdown.cpp:100
 msgid "Please confirm"
@@ -347,29 +389,29 @@ msgstr "Ναι"
 msgid "&No"
 msgstr "Οχι"
 
-#: statbar.cpp:87
+#: statbar.cpp:92
 msgid "folders"
 msgstr "κατάλογοι"
 
-#: statbar.cpp:88
+#: statbar.cpp:93
 msgid "files"
 msgstr "αρχεία"
 
-#: statbar.cpp:89
+#: statbar.cpp:94
 msgid "fragmented"
 msgstr "κατακερματισμένα"
 
-#: statbar.cpp:90
+#: statbar.cpp:95
 msgid "compressed"
 msgstr "συμπιεσμένα"
 
-#: taskbar.cpp:201
+#: taskbar.cpp:199
 msgid "The job is paused"
 msgstr ""
 
-#: taskbar.cpp:206
+#: taskbar.cpp:204
 msgid "The job is running"
-msgstr ""
+msgstr "Εκτελείται διεργασία"
 
 #: tray.cpp:70
 msgid "Show"
@@ -399,18 +441,18 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:259
+#: vollist.cpp:299
 msgid "Disk needs to be repaired"
 msgstr "Απαιτείται επιδιόρθωση δίσκου"
 
-#: vollist.cpp:294
+#: vollist.cpp:334
 msgid "Analyzed"
 msgstr "Αναλύθηκε"
 
-#: vollist.cpp:298
+#: vollist.cpp:338
 msgid "Defragmented"
 msgstr "Ανασυγκροτήθηκε"
 
-#: vollist.cpp:303
+#: vollist.cpp:343
 msgid "Optimized"
 msgstr "Βελτιστοποιήθηκε"
