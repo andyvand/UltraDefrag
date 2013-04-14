@@ -53,7 +53,7 @@ echo     14 ... Build wxWidgets ........ using WinSDK
 echo.
 echo     15 ... Update translation
 echo     16 ... Upload translations
-echo     17 ... Upload translations without LNG to PO conversion
+echo     17 ... Upload translations with LNG to PO conversion
 echo.
 echo     18 ... Build Test Release for Stefan
 echo     19 ... Build Test Installation for Stefan
@@ -183,7 +183,7 @@ goto finished
 
 :17
 title Upload translations without LNG to PO conversion
-call upload-translations.cmd --no-lng2po
+call upload-translations.cmd --lng2po
 goto finished
 
 :18

@@ -212,7 +212,11 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     item.SetText(_("Fragmentation")); m_vList->SetColumn(2,item);
     item.SetText(_("Total space"));   m_vList->SetColumn(3,item);
     item.SetText(_("Free space"));    m_vList->SetColumn(4,item);
-    item.SetText(_("% free"));        m_vList->SetColumn(5,item);
+    //: The double %-sign is needed to pass validation at transifex,
+    //: it will be replaced by a single %-sign before display.
+    ItemLabel = _("%% free");
+    ItemLabel.Replace(wxT("%%"),wxT("%"));
+    item.SetText(ItemLabel);          m_vList->SetColumn(5,item);
 
     // set monospace font for the list unless Burmese translation is selected
     if(g_locale->GetCanonicalName().Left(2) != wxT("my")){

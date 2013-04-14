@@ -145,6 +145,8 @@ f = assert(io.open(lng_template_file, "r"))
       value = string.gsub(value, "^Please Confirm", "Please confirm")
       value = string.gsub(value, "Space", "space")
       value = string.gsub(value, "^seconds until", "%%lu seconds until")
+      value = string.gsub(value, "^A job", "The job")
+      value = string.gsub(value, "^%% free", "%%%% free")
 
       table.insert(translation_pairs, option .. "=" .. value)
 
@@ -158,7 +160,7 @@ print("Converting translations from LNG to PO ...\n")
 
 for i, v in ipairs(language_pairs) do
   lng_file = lng_folder .. v[1] .. ".lng"
-  po_file  = po_folder  .. v[2] .. ".po"
+  po_file  = po_folder  .. v[2] .. ".pot"
 
   if debugging > 1 then print( string.format("%s ... %s", lng_file, po_file)) end
 
@@ -177,6 +179,7 @@ for i, v in ipairs(language_pairs) do
             value = string.gsub(value, "\"", "")
             value = string.gsub(value, "Ultra Defragmenter", "UltraDefrag")
             value = string.gsub(value, "Ultra Defrag", "UltraDefrag")
+            value = string.gsub(value, "^A job", "The job")
 
             template_str = string.match(translation_pairs[index], "^.+=(.+)$")
 
@@ -192,6 +195,13 @@ for i, v in ipairs(language_pairs) do
                 string.match(value, "FAQ") == nil then
 
               if string.match(option, "^SECONDS_TILL_") ~= nil then value = "%lu " .. value end
+              if option == "PERCENT" then
+                if string.match(value, "%%") == nil then
+                  value = "%% " .. value
+                else
+                  value = string.gsub(value, "%%", "%%%%")
+                end
+              end
 
               fo:write("msgstr \"" .. value .. "\"\n")
             else
