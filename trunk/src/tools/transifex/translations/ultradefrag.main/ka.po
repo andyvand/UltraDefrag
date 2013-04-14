@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-07 20:02+0000\n"
+"POT-Creation-Date: 2013-04-14 21:03+0200\n"
+"PO-Revision-Date: 2013-04-14 19:07+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "&ანგარიში"
 msgid "&Settings"
 msgstr "&პარამეტრები"
 
-#: i18n.cpp:124 i18n.cpp:206
+#: i18n.cpp:124 i18n.cpp:205
 msgid "&Help"
 msgstr "&დახმარება"
 
@@ -134,158 +134,200 @@ msgstr "&ანგარიშის ნახვა"
 msgid "&Language"
 msgstr "&ენა"
 
-#: i18n.cpp:155
-msgid "&Graphical interface"
-msgstr "&იერსახე"
-
-#: i18n.cpp:156 i18n.cpp:202
+#: i18n.cpp:155 i18n.cpp:201
 msgid "&Boot time scan"
 msgstr "&ჩატვირთვის დროს სკანირება"
 
-#: i18n.cpp:157
+#: i18n.cpp:156
 msgid "&Sorting"
 msgstr "&ხარისხდება"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&Reports"
 msgstr "&ანგარიშები"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&View change log"
 msgstr "&ცვლილებების ნახვა"
 
-#: i18n.cpp:162
+#: i18n.cpp:161
 msgid "View translation &report"
 msgstr "თარგმანის ანგარიშის ნახვა"
 
-#: i18n.cpp:163
+#: i18n.cpp:162
 msgid "&Translations folder"
 msgstr "&თარგმანების საქაღალდე"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Submit current translation"
 msgstr "&მიმდინარე თარგმანის გაგზავნა"
 
-#: i18n.cpp:167
-msgid "&Options"
-msgstr "&პარამეტრები"
+#: i18n.cpp:166
+msgid "&Graphical interface"
+msgstr "&იერსახე"
 
-#: i18n.cpp:170
+#: i18n.cpp:169
 msgid "&Enable"
 msgstr "&ჩართვა"
 
-#: i18n.cpp:171
+#: i18n.cpp:170
 msgid "&Script"
 msgstr "&სცენარი"
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &path"
 msgstr "დახარისხება &მისამართით"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By &size"
 msgstr "დახარისხება &ზომით"
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &creation time"
 msgstr "დახარისხება &შექმნის დროით"
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "By last &modification time"
 msgstr "დახარისხება &შ&ეცვლის დროით"
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "By &last access time"
 msgstr "დახარისხება &ბოლო წვდომის დროით"
 
-#: i18n.cpp:179
+#: i18n.cpp:178
 msgid "In &ascending order"
 msgstr "დახარისხება ზრდადობით"
 
-#: i18n.cpp:180
+#: i18n.cpp:179
 msgid "In &descending order"
 msgstr "დახარისხება კლებადობით"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Contents"
 msgstr "&დახმარების ფაილი"
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Best &practice"
 msgstr "&სასარგებლო რჩევები"
 
-#: i18n.cpp:185
+#: i18n.cpp:184
 msgid "&Frequently asked questions"
 msgstr "&ხშირად დასმული კითხვები"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "Cluster map &legend"
 msgstr "კლასტერების რუკის ლეგენდა"
 
-#: i18n.cpp:189 upgrade.cpp:161
+#: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:190
+#: i18n.cpp:189
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:194
+#: i18n.cpp:193
 msgid "&About"
 msgstr "&პროგრამის შესახებ"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "&Debug"
 msgstr "გას&წორება"
 
-#: i18n.cpp:198 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:421
 msgid "Open &log"
 msgstr "ჟურნალის &გახსნა"
 
-#: i18n.cpp:199
+#: i18n.cpp:198
 msgid "Send bug &report"
 msgstr "შეცდომის &შეტყობინება"
 
-#: i18n.cpp:204
+#: i18n.cpp:203
 msgid "Boot time script"
 msgstr "ჩატვირთვის დროს სკანირების სცენარი"
 
-#: i18n.cpp:211
+#: i18n.cpp:210
 msgid "Drive"
 msgstr "დისკი"
 
-#: i18n.cpp:212
+#: i18n.cpp:211 i18n.cpp:269
 msgid "Status"
 msgstr "მდგომარეობა"
 
-#: i18n.cpp:213
+#: i18n.cpp:212
 msgid "Fragmentation"
 msgstr "ფრაგმენტაცია"
 
-#: i18n.cpp:214
+#: i18n.cpp:213
 msgid "Total space"
 msgstr "სივრცე"
 
-#: i18n.cpp:215
+#: i18n.cpp:214
 msgid "Free space"
 msgstr "ცარიელი სივრცე"
 
-#: i18n.cpp:216
+#. : The double %-sign is needed to pass validation at transifex,
+#. : it will be replaced by a single %-sign before display.
+#: i18n.cpp:217
 #, c-format
-msgid "% free"
-msgstr "ცარიელია %"
+msgid "%% free"
+msgstr "ცარიელია %%"
+
+#: i18n.cpp:261
+msgid "Fragmented files on"
+msgstr "დაფრაგმენტებული ფაილები"
+
+#: i18n.cpp:262
+msgid "Visit our Homepage"
+msgstr "ეწვიეთ ვებ-გვერდს"
+
+#: i18n.cpp:263
+msgid "View report options"
+msgstr "ანგარიშის პარამეტრების ნახვა"
+
+#: i18n.cpp:264
+msgid "Powered by Lua"
+msgstr "შემქმნელია Lua"
+
+#: i18n.cpp:265
+msgid "Fragments"
+msgstr "ფრაგმენტი"
+
+#: i18n.cpp:266
+msgid "Size"
+msgstr "ზომა"
+
+#: i18n.cpp:267
+msgid "Filename"
+msgstr "ფაილის სახელი"
+
+#: i18n.cpp:268
+msgid "Comment"
+msgstr "კომენტარი"
+
+#: i18n.cpp:270
+msgid "locked"
+msgstr "ჩაკეტილია"
+
+#: i18n.cpp:271
+msgid "move failed"
+msgstr "გადატანა შეუძლებელია"
+
+#: i18n.cpp:272
+msgid "invalid"
+msgstr "დაზიანებულია"
 
 #: shutdown.cpp:100
 msgid "Please confirm"
@@ -347,29 +389,29 @@ msgstr "&დიახ"
 msgid "&No"
 msgstr "&არა"
 
-#: statbar.cpp:87
+#: statbar.cpp:92
 msgid "folders"
 msgstr "საქაღალდე"
 
-#: statbar.cpp:88
+#: statbar.cpp:93
 msgid "files"
 msgstr "ფაილი"
 
-#: statbar.cpp:89
+#: statbar.cpp:94
 msgid "fragmented"
 msgstr "დაფრაგმენტებულია"
 
-#: statbar.cpp:90
+#: statbar.cpp:95
 msgid "compressed"
 msgstr "შეკუმშულია"
 
-#: taskbar.cpp:201
+#: taskbar.cpp:199
 msgid "The job is paused"
 msgstr ""
 
-#: taskbar.cpp:206
+#: taskbar.cpp:204
 msgid "The job is running"
-msgstr ""
+msgstr "მიმდინარეობს სამუშაო"
 
 #: tray.cpp:70
 msgid "Show"
@@ -399,18 +441,18 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:259
+#: vollist.cpp:299
 msgid "Disk needs to be repaired"
 msgstr "დისკი საჭიროებს აღდგენას"
 
-#: vollist.cpp:294
+#: vollist.cpp:334
 msgid "Analyzed"
 msgstr "გაანალიზებულია"
 
-#: vollist.cpp:298
+#: vollist.cpp:338
 msgid "Defragmented"
 msgstr "დეფრაგმენტებულია"
 
-#: vollist.cpp:303
+#: vollist.cpp:343
 msgid "Optimized"
 msgstr "ოპტიმიზებულია"

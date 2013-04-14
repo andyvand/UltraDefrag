@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-08 18:24+0200\n"
-"PO-Revision-Date: 2013-04-07 20:02+0000\n"
+"POT-Creation-Date: 2013-04-14 21:03+0200\n"
+"PO-Revision-Date: 2013-04-14 19:08+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "အကြောင်းကြား"
 msgid "&Settings"
 msgstr "ချိန်ညှိရာများ"
 
-#: i18n.cpp:124 i18n.cpp:206
+#: i18n.cpp:124 i18n.cpp:205
 msgid "&Help"
 msgstr "အကူအညီ"
 
@@ -136,158 +136,200 @@ msgstr "သတင်းပြပါ"
 msgid "&Language"
 msgstr "စကား"
 
-#: i18n.cpp:155
-msgid "&Graphical interface"
-msgstr "သုံးသူမျက်နှာပြင်ဇယား"
-
-#: i18n.cpp:156 i18n.cpp:202
+#: i18n.cpp:155 i18n.cpp:201
 msgid "&Boot time scan"
 msgstr "ဝင်ဒိုး အစတွင် စလုပ်"
 
-#: i18n.cpp:157
+#: i18n.cpp:156
 msgid "&Sorting"
 msgstr "ရှင်းလင်းခြင်း"
 
-#: i18n.cpp:158
+#: i18n.cpp:157
 msgid "&Reports"
 msgstr "သတင်းသွင်း"
 
-#: i18n.cpp:161
+#: i18n.cpp:160
 msgid "&View change log"
 msgstr "မှတ်တမ်းပြောင်းလဲမှု ကြည့်ရန်"
 
-#: i18n.cpp:162
+#: i18n.cpp:161
 msgid "View translation &report"
 msgstr "စာသားပြန်ရာကို ကြည့်ရန်နှင့် အကြောင်းကြား"
 
-#: i18n.cpp:163
+#: i18n.cpp:162
 msgid "&Translations folder"
 msgstr "စာသားပြန်ရာ ဖိုင်တွဲ"
 
-#: i18n.cpp:164
+#: i18n.cpp:163
 msgid "&Submit current translation"
 msgstr "စာသားပြန်ရာ တင်ပြ"
 
-#: i18n.cpp:167
-msgid "&Options"
-msgstr "နှစ်ကြိုက်ရာရွေး"
+#: i18n.cpp:166
+msgid "&Graphical interface"
+msgstr "သုံးသူမျက်နှာပြင်ဇယား"
 
-#: i18n.cpp:170
+#: i18n.cpp:169
 msgid "&Enable"
 msgstr "စွမ်းဆောင်နိုင်စေ"
 
-#: i18n.cpp:171
+#: i18n.cpp:170
 msgid "&Script"
 msgstr "ညွှန်စာ"
 
-#: i18n.cpp:174
+#: i18n.cpp:173
 msgid "By &path"
 msgstr "လမ်း‌ကြောင်း နှင့်ရှင်း"
 
-#: i18n.cpp:175
+#: i18n.cpp:174
 msgid "By &size"
 msgstr "အရွယ် ပမာဏ နှင့်ရှင်း"
 
-#: i18n.cpp:176
+#: i18n.cpp:175
 msgid "By &creation time"
 msgstr "ဖန်တိးချိန် နှင့်ရှင်း"
 
-#: i18n.cpp:177
+#: i18n.cpp:176
 msgid "By last &modification time"
 msgstr "နောက်ဆုံး ပြုပြင်ချိန် နှင့်ရှင်း"
 
-#: i18n.cpp:178
+#: i18n.cpp:177
 msgid "By &last access time"
 msgstr "နောက်ဆုံး အသုံးပြုချိန် နှင့်ရှင်း"
 
-#: i18n.cpp:179
+#: i18n.cpp:178
 msgid "In &ascending order"
 msgstr "အောက်မှအထက်သို့ အတိုင်းနှင့်ရှင်း"
 
-#: i18n.cpp:180
+#: i18n.cpp:179
 msgid "In &descending order"
 msgstr "အထက်မှအောက်သို့ အတိုင်းနှင့်ရှင်း"
 
-#: i18n.cpp:183
+#: i18n.cpp:182
 msgid "&Contents"
 msgstr "ပါဝင်ရာများ"
 
-#: i18n.cpp:184
+#: i18n.cpp:183
 msgid "Best &practice"
 msgstr "အကောင်းဆုံး လုပ်စဉ်"
 
-#: i18n.cpp:185
+#: i18n.cpp:184
 msgid "&Frequently asked questions"
 msgstr "မေးပါများ စကားရ"
 
-#: i18n.cpp:186
+#: i18n.cpp:185
 msgid "Cluster map &legend"
 msgstr "စုပြုံလိုက် ပုံနှင့် ဖြစ်စဉ်"
 
-#: i18n.cpp:189 upgrade.cpp:161
+#: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr "&U အဆင့်မြင့်တင်မည်"
 
-#: i18n.cpp:190
+#: i18n.cpp:189
 msgid "&Never check"
 msgstr "&N ဘယ်တော့မှမစစ်ဆေးပါ"
 
-#: i18n.cpp:191
+#: i18n.cpp:190
 msgid "Check &stable releases only"
 msgstr "&s အကောင်းဆုံးထုတ်ထားသည်များကိုသာစစ်ဆေးမည်"
 
-#: i18n.cpp:192
+#: i18n.cpp:191
 msgid "Check &all releases"
 msgstr "&a ထွက်ရှိသမျှအားလုံးစစ်ဆေးမည်"
 
-#: i18n.cpp:193
+#: i18n.cpp:192
 msgid "&Check now"
 msgstr "&C ယခုစစ်ဆေးမည်"
 
-#: i18n.cpp:194
+#: i18n.cpp:193
 msgid "&About"
 msgstr "အကြောင်းအရာ"
 
-#: i18n.cpp:197
+#: i18n.cpp:196
 msgid "&Debug"
 msgstr "ပြသာနာရှင်း"
 
-#: i18n.cpp:198 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:421
 msgid "Open &log"
 msgstr "ဖွင့်ပြီး မှတ်တမ်းတင်ရန်"
 
-#: i18n.cpp:199
+#: i18n.cpp:198
 msgid "Send bug &report"
 msgstr "ပြသာနာ အကြောင်းကြားရန်"
 
-#: i18n.cpp:204
+#: i18n.cpp:203
 msgid "Boot time script"
 msgstr "စက်အစ အညွှန်းစာတို"
 
-#: i18n.cpp:211
+#: i18n.cpp:210
 msgid "Drive"
 msgstr "ဋ္ဌာနေများထုထည်"
 
-#: i18n.cpp:212
+#: i18n.cpp:211 i18n.cpp:269
 msgid "Status"
 msgstr "အနေအထား"
 
-#: i18n.cpp:213
+#: i18n.cpp:212
 msgid "Fragmentation"
 msgstr "အပိုင်းအစများ"
 
-#: i18n.cpp:214
+#: i18n.cpp:213
 msgid "Total space"
 msgstr "နေရာ အကုန်"
 
-#: i18n.cpp:215
+#: i18n.cpp:214
 msgid "Free space"
 msgstr "လွတ်လပ် နေရာ"
 
-#: i18n.cpp:216
+#. : The double %-sign is needed to pass validation at transifex,
+#. : it will be replaced by a single %-sign before display.
+#: i18n.cpp:217
 #, c-format
-msgid "% free"
-msgstr "% လွတ်လပ်"
+msgid "%% free"
+msgstr "%% လွတ်လပ်"
+
+#: i18n.cpp:261
+msgid "Fragmented files on"
+msgstr "ကွဲပျက်နေသော ဖိုင်ပေါ်တွင်"
+
+#: i18n.cpp:262
+msgid "Visit our Homepage"
+msgstr "အိမ်စာမျက်နှာသို့ သွားရန်"
+
+#: i18n.cpp:263
+msgid "View report options"
+msgstr "ဖြစ်ကြောင်းကြည့်ရန်  ရွေးချယ်ရာ"
+
+#: i18n.cpp:264
+msgid "Powered by Lua"
+msgstr "LUA နှင့် အားအင်ဖြည့်"
+
+#: i18n.cpp:265
+msgid "Fragments"
+msgstr "အစအနများ"
+
+#: i18n.cpp:266
+msgid "Size"
+msgstr "အရွယ်"
+
+#: i18n.cpp:267
+msgid "Filename"
+msgstr "ဖိုင်အမည်"
+
+#: i18n.cpp:268
+msgid "Comment"
+msgstr "ဝေဖန်ချက်"
+
+#: i18n.cpp:270
+msgid "locked"
+msgstr "ဖြည်မရပါ"
+
+#: i18n.cpp:271
+msgid "move failed"
+msgstr "ရွှေ့မရပါ"
+
+#: i18n.cpp:272
+msgid "invalid"
+msgstr "သေနေသော"
 
 #: shutdown.cpp:100
 msgid "Please confirm"
@@ -349,29 +391,29 @@ msgstr "ဟုတ်ပြီ"
 msgid "&No"
 msgstr "မဟုတ်ဘူး"
 
-#: statbar.cpp:87
+#: statbar.cpp:92
 msgid "folders"
 msgstr "ဖိုင်တွဲများ"
 
-#: statbar.cpp:88
+#: statbar.cpp:93
 msgid "files"
 msgstr "ဖိုင်များ"
 
-#: statbar.cpp:89
+#: statbar.cpp:94
 msgid "fragmented"
 msgstr "ဖိုင်ပြန့်ကြဲမှု"
 
-#: statbar.cpp:90
+#: statbar.cpp:95
 msgid "compressed"
 msgstr "ဖိနှိပ်သည်"
 
-#: taskbar.cpp:201
+#: taskbar.cpp:199
 msgid "The job is paused"
 msgstr ""
 
-#: taskbar.cpp:206
+#: taskbar.cpp:204
 msgid "The job is running"
-msgstr ""
+msgstr "အလုပ် လုပ်နေသည်"
 
 #: tray.cpp:70
 msgid "Show"
@@ -401,18 +443,18 @@ msgstr "&C ပယ်ဖျက်မည်"
 msgid "Error!"
 msgstr "အမှားအယွင်း"
 
-#: vollist.cpp:259
+#: vollist.cpp:299
 msgid "Disk needs to be repaired"
 msgstr "ချပ်ပြား ပြင်ရန်လိုအပ်သည်"
 
-#: vollist.cpp:294
+#: vollist.cpp:334
 msgid "Analyzed"
 msgstr "သုံးသပ်ပြီး"
 
-#: vollist.cpp:298
+#: vollist.cpp:338
 msgid "Defragmented"
 msgstr "ဖိုင်များပြန်စီပြီး"
 
-#: vollist.cpp:303
+#: vollist.cpp:343
 msgid "Optimized"
 msgstr "အဆင့်မြင့် လုပ်ပြီး"
