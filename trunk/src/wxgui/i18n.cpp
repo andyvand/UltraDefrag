@@ -71,7 +71,7 @@ wxLocale *g_locale = NULL;
             m_toolBar->SetToolShortHelp(id,_(label)); \
     }
 
-void MainFrame::InitLocale()
+void App::InitLocale()
 {
     g_locale = new wxLocale();
 
@@ -97,7 +97,7 @@ void MainFrame::InitLocale()
     SetLocale(id);
 }
 
-void MainFrame::SetLocale(int id)
+void App::SetLocale(int id)
 {
     // apply language selection
     g_locale->Init(id,wxLOCALE_CONV_ENCODING);
@@ -112,7 +112,7 @@ void MainFrame::SetLocale(int id)
 
 void MainFrame::OnLocaleChange(wxCommandEvent& event)
 {
-    SetLocale(event.GetId() - ID_LocaleChange);
+    App::SetLocale(event.GetId() - ID_LocaleChange);
 
     // update menu labels and tool bar tool-tips
     wxString ItemLabel;
@@ -235,6 +235,58 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
 
     // update progress counters
     ProcessCommandEvent(ID_UpdateStatusBar);
+
+    // update report translation
+    App::SaveReportTranslation();
+}
+
+// =======================================================================
+//                       reports.lng file handling
+// =======================================================================
+
+#define UD_AddTranslationString(key, value) { \
+    wxString v = value; \
+    file.AddLine(wxString::Format( \
+        wxT("%hs%ls"), key, v.wc_str()) \
+    ); \
+}
+
+void App::SaveReportTranslation()
+{
+    wxTextFile file;
+    file.Create(wxT("reports.lng"));
+    UD_AddTranslationString("FRAGMENTED_FILES_ON = ", _("Fragmented files on"));
+    UD_AddTranslationString("VISIT_HOMEPAGE      = ", _("Visit our Homepage") );
+    UD_AddTranslationString("VIEW_REPORT_OPTIONS = ", _("View report options"));
+    UD_AddTranslationString("POWERED_BY_LUA      = ", _("Powered by Lua")     );
+    UD_AddTranslationString("FRAGMENTS           = ", _("Fragments")          );
+    UD_AddTranslationString("SIZE                = ", _("Size")               );
+    UD_AddTranslationString("FILENAME            = ", _("Filename")           );
+    UD_AddTranslationString("COMMENT             = ", _("Comment")            );
+    UD_AddTranslationString("STATUS              = ", _("Status")             );
+    UD_AddTranslationString("LOCKED              = ", _("locked")             );
+    UD_AddTranslationString("MOVE_FAILED         = ", _("move failed")        );
+    UD_AddTranslationString("INVALID             = ", _("invalid")            );
+    file.Write();
+    file.Close();
+}
+
+#undef UD_AddTranslationString
+
+// =======================================================================
+//                            Event handlers
+// =======================================================================
+
+void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
+{
+    wxString AppPoDir(wxGetCwd() + wxT("/po"));
+
+    if(!wxDirExists(AppPoDir)){
+        etrace("po dir not found: %ls",AppPoDir.wc_str());
+    } else {
+        if(!wxLaunchDefaultBrowser(AppPoDir))
+            Utils::ShowError(wxT("Cannot open %ls!"),AppPoDir.wc_str());
+    }
 }
 
 bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
@@ -264,22 +316,6 @@ bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
         }
     }
     return false;
-}
-
-// =======================================================================
-//                            Event handlers
-// =======================================================================
-
-void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
-{
-    wxString AppPoDir(wxGetCwd() + wxT("/po"));
-
-    if(!wxDirExists(AppPoDir)){
-        etrace("po dir not found: %ls",AppPoDir.wc_str());
-    } else {
-        if(!wxLaunchDefaultBrowser(AppPoDir))
-            Utils::ShowError(wxT("Cannot open %ls!"),AppPoDir.wc_str());
-    }
 }
 
 void MainFrame::OnLangOpenTransifex(wxCommandEvent& event)

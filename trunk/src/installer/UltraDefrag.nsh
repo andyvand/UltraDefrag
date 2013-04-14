@@ -560,6 +560,9 @@ SkipMove:
         Delete "$INSTDIR\ultradefrag.exe"
         File "ultradefrag.exe"
 
+    DetailPrint "Update report translation..."
+    ExecWait '"$INSTDIR\ultradefrag.exe" --setup'
+
     Push $R0
     Push $0
 
