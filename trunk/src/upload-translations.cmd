@@ -21,7 +21,7 @@
 
 :: parameters:
 ::
-::      --no-lng2po ... do not extract translations from LNG files
+::      --lng2po ... extract translations from LNG files
 
 title Upload started
 
@@ -46,7 +46,7 @@ copy /v /y "locale\UltraDefrag.pot" "%~dp0\tools\transifex\translations\ultradef
 popd
 echo.
 
-if "%~1" equ "--no-lng2po" goto :skiplng2po
+if "%~1" neq "--lng2po" goto :skiplng2po
 
 :: convert LNG to PO
 pushd "%~dp0\tools"
@@ -54,9 +54,11 @@ if exist lng2po.lua lua lng2po.lua || popd && goto fail
 
 :: update transifex PO with converted LNG
 for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do (
-    if exist "%~dp0\tools\transifex\translations\%%~nxF" (
+    if exist "%~dp0\tools\transifex\translations\%%~nF.pot" (
+        msgcat --use-first "%%~F" "%~dp0\tools\transifex\translations\%%~nF.pot" -o "%~dp0\tools\transifex\translations\%%~nxF"
         msgmerge --update --backup=none --no-fuzzy-matching --verbose "%~dp0\tools\transifex\translations\%%~nxF" "%~dp0\wxgui\locale\UltraDefrag.pot"
-        move /y "%~dp0\tools\transifex\translations\%%~nxF" "%%~F"
+        copy /v /y "%~dp0\tools\transifex\translations\%%~nxF" "%%~F"
+        del /f /q "%~dp0\tools\transifex\translations\%%~nF.po*"
         echo %%~nF ... DONE
         echo.
     )
