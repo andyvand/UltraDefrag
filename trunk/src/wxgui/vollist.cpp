@@ -115,8 +115,9 @@ void DrivesList::OnKeyDown(wxKeyEvent& event)
 void DrivesList::OnKeyUp(wxKeyEvent& event)
 {
     if(!g_mainFrame->m_busy){
+        // dtrace("Modifier: %d ... KeyCode: %d", event.GetModifiers(), event.GetKeyCode());
         if(event.GetModifiers() == wxMOD_NONE && \
-          event.GetKeyCode() == WXK_RETURN){
+          event.GetKeyCode() == WXK_NUMPAD_ENTER){
             PostCommandEvent(g_mainFrame,ID_DefaultAction);
         } else if(event.GetModifiers() == wxMOD_CONTROL && \
           event.GetKeyCode() == 'A'){
