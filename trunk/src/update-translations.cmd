@@ -27,16 +27,22 @@ if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAM
 if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 echo.
 
-pushd "%~dp0\wxgui"
-
 if not exist "%GNUWIN32_DIR%" goto gnuwin32_missing
+
+:: download all translations from transifex
+pushd "%~dp0\tools\transifex"
+if exist tx.exe tx.exe pull -a || popd && goto fail
+echo.
+popd
 
 :: configure PATH
 set OLD_PATH=%PATH%
 set PATH=%GNUWIN32_DIR%;%PATH%
 
 :: update translations
-for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do call :check_translation "%%~F" || goto fail
+pushd "%~dp0\wxgui"
+for %%F in ( "%~dp0\tools\transifex\translations\ultradefrag.main\*.po" ) do call :check_translation "%%~F" || popd && goto fail
+popd
 
 :success
 if "%OLD_PATH%" neq "" set path=%OLD_PATH%
@@ -44,7 +50,6 @@ set OLD_PATH=
 echo.
 echo Translations updated sucessfully!
 title Translations updated sucessfully!
-popd
 exit /B 0
 
 :gnuwin32_missing
@@ -56,7 +61,6 @@ if "%OLD_PATH%" neq "" set path=%OLD_PATH%
 set OLD_PATH=
 echo Build error (code %ERRORLEVEL%)!
 title Build error (code %ERRORLEVEL%)!
-popd
 exit /B 1
 
 :: syntax: call :check_translation {.PO file}
