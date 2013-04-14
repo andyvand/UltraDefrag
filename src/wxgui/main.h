@@ -34,6 +34,7 @@
 #endif
 
 #include <wx/artprov.h>
+#include <wx/cmdline.h>
 #include <wx/confbase.h>
 #include <wx/dir.h>
 #include <wx/display.h>
@@ -123,7 +124,14 @@ public:
 class App: public wxApp {
 public:
     virtual bool OnInit();
-    virtual int OnExit();
+    virtual int  OnExit();
+    virtual void OnInitCmdLine(wxCmdLineParser& parser) {
+        parser.AddSwitch(wxT("s"),wxT("setup"),wxT("setup"));
+    }
+
+    static void InitLocale();
+    static void SetLocale(int id);
+    static void SaveReportTranslation();
 
 private:
     void Cleanup();
@@ -361,7 +369,6 @@ public:
 
 private:
     bool GetLocaleFolder(wxString& CurrentLocaleDir);
-    void InitLocale();
     void InitMenu();
     void InitToolbar();
     void InitStatusBar();
@@ -371,7 +378,6 @@ private:
     void ReleasePause();
     void RemoveTaskbarIconOverlay();
     void SaveAppConfiguration();
-    void SetLocale(int id);
     void SetPause();
     void SetTaskbarIconOverlay(
         const wxString& icon,

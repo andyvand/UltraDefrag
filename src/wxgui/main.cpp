@@ -132,6 +132,22 @@ bool App::OnInit()
     // initialize logging
     m_log = new Log();
 
+    // use global config object for internal settings
+    wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
+        wxT("gui.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
+    wxConfigBase::Set(cfg);
+
+    // enable i18n support
+    InitLocale();
+
+    // save report translation on setup
+    wxString cmdLine(GetCommandLine());
+    if(cmdLine.Find(wxT("--setup")) != wxNOT_FOUND){
+        SaveReportTranslation();
+        ::winx_flush_dbg_log(0);
+        delete m_log; return false;
+    }
+
     // start web statistics
     m_statThread = new StatThread();
 
@@ -156,11 +172,6 @@ bool App::OnInit()
         dlg.ShowModal(); Cleanup();
         return false;
     }
-
-    // use global config object for internal settings
-    wxFileConfig *cfg = new wxFileConfig(wxT(""),wxT(""),
-        wxT("gui.ini"),wxT(""),wxCONFIG_USE_RELATIVE_PATH);
-    wxConfigBase::Set(cfg);
 
     // keep things DPI-aware
     HDC hdc = ::GetDC(NULL);
@@ -268,9 +279,6 @@ MainFrame::MainFrame()
     if(m_maximized) Maximize(true);
 
     SetMinSize(wxSize(DPI(MAIN_WINDOW_MIN_WIDTH),DPI(MAIN_WINDOW_MIN_HEIGHT)));
-
-    // enable i18n support
-    InitLocale();
 
     // create menu, tool and status bars
     InitMenu(); InitToolbar(); InitStatusBar();

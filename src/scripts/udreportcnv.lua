@@ -31,11 +31,11 @@ FRAGMENTED_FILES_ON = "Fragmented files on"
 VISIT_HOMEPAGE      = "Visit our Homepage"
 VIEW_REPORT_OPTIONS = "View report options"
 POWERED_BY_LUA      = "Powered by Lua"
-FRAGMENTS           = "fragments"
-SIZE                = "size"
-FILENAME            = "filename"
-COMMENT             = "comment"
-STATUS              = "status"
+FRAGMENTS           = "Fragments"
+SIZE                = "Size"
+FILENAME            = "Filename"
+COMMENT             = "Comment"
+STATUS              = "Status"
 LOCKED              = "locked"
 MOVE_FAILED         = "move failed"
 INVALID             = "invalid"
@@ -147,21 +147,9 @@ end
 -------------------------------------------------------------------------------
 
 function get_localization_strings()
-    local lang = nil
     local BOM = string.char(0xEF,0xBB,0xBF)
     
-    -- get selected language name
-    local f = io.open(instdir .. "\\lang.ini","r")
-    if not f then return end
-    for line in f:lines() do
-        i, j, lang = string.find(line,"^%s*Selected%s*=%s*(.-)%s*$")
-        if lang then break end
-    end
-    f:close()
-    if not lang then return end
-    
-    -- read .lng file
-    f = io.open(instdir .. "\\i18n\\" .. lang .. ".lng","r")
+    f = io.open(instdir .. "\\reports.lng","r")
     if not f then return end
     for line in f:lines() do
         local pair, key, value
