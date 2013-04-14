@@ -153,8 +153,9 @@ void DrivesList::OnSelectionChange(wxListEvent& event)
 
 void MainFrame::SelectAll(wxCommandEvent& WXUNUSED(event))
 {
-    for(int i = 0; i < m_vList->GetItemCount(); i++)
-        m_vList->Select(i);
+    for(int i = 0; i < m_vList->GetItemCount(); i++){
+        m_vList->Select(i); m_vList->Focus(0);
+    }
 }
 
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
@@ -421,6 +422,7 @@ void MainFrame::PopulateList(wxCommandEvent& event)
     ProcessCommandEvent(ID_AdjustListColumns);
 
     m_vList->Select(0);
+    m_vList->Focus(0);
 
     m_currentJob = m_jobsCache[(int)v[0].letter];
     ProcessCommandEvent(ID_RedrawMap);
