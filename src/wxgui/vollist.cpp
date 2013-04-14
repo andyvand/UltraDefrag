@@ -116,12 +116,18 @@ void DrivesList::OnKeyUp(wxKeyEvent& event)
 {
     if(!g_mainFrame->m_busy){
         // dtrace("Modifier: %d ... KeyCode: %d", event.GetModifiers(), event.GetKeyCode());
-        if(event.GetModifiers() == wxMOD_NONE && \
-          event.GetKeyCode() == WXK_NUMPAD_ENTER){
-            PostCommandEvent(g_mainFrame,ID_DefaultAction);
-        } else if(event.GetModifiers() == wxMOD_CONTROL && \
-          event.GetKeyCode() == 'A'){
-            PostCommandEvent(g_mainFrame,ID_SelectAll);
+        switch(event.GetKeyCode()){
+        case WXK_RETURN:
+        case WXK_NUMPAD_ENTER:
+            if(event.GetModifiers() == wxMOD_NONE)
+                PostCommandEvent(g_mainFrame,ID_DefaultAction);
+            break;
+        case 'A':
+            if(event.GetModifiers() == wxMOD_CONTROL)
+                PostCommandEvent(g_mainFrame,ID_SelectAll);
+            break;
+        default:
+            break;
         }
         event.Skip();
     }
@@ -346,30 +352,31 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
                 break;
         }
     }
+    wxString lcaption = caption.MakeLower();
 
     wxString status;
     if(cacheEntry->pi.completion_status == 0 || cacheEntry->stopped){
         if(cacheEntry->pi.pass_number > 1){
             if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
-                status.Printf(wxT("%5.2lf %% %ls, Pass %d, %I64u moves total"),
-                    cacheEntry->pi.percentage,caption.wc_str(),
+                status.Printf(wxT("%5.2lf %% %ls, pass %d, %I64u moves total"),
+                    cacheEntry->pi.percentage,lcaption.wc_str(),
                     cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
                 );
             } else {
-                status.Printf(wxT("%5.2lf %% %ls, Pass %d"),
-                    cacheEntry->pi.percentage,caption.wc_str(),
+                status.Printf(wxT("%5.2lf %% %ls, pass %d"),
+                    cacheEntry->pi.percentage,lcaption.wc_str(),
                     cacheEntry->pi.pass_number
                 );
             }
         } else {
             if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
                 status.Printf(wxT("%5.2lf %% %ls, %I64u moves total"),
-                    cacheEntry->pi.percentage,caption.wc_str(),
+                    cacheEntry->pi.percentage,lcaption.wc_str(),
                     cacheEntry->pi.total_moves
                 );
             } else {
                 status.Printf(wxT("%5.2lf %% %ls"),
-                    cacheEntry->pi.percentage,caption.wc_str()
+                    cacheEntry->pi.percentage,lcaption.wc_str()
                 );
             }
         }

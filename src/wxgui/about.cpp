@@ -65,6 +65,7 @@ void HomePageLink::OnKeyUp(wxKeyEvent& event)
         GetParent()->Destroy();
         return;
     case WXK_RETURN:
+    case WXK_NUMPAD_ENTER:
         wxLaunchDefaultBrowser(HOMEPAGE);
         return;
     }
