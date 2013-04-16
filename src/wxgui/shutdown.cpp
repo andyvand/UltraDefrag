@@ -147,7 +147,6 @@ int MainFrame::ShowShutdownDialog(int action)
             etrace("Padauk font needed for correct Burmese text display not found");
         } else {
             textFont.SetPointSize(textFont.GetPointSize() + 2);
-
             question->SetFont(textFont);
             dlg.counter->SetFont(textFont);
             yes->SetFont(textFont);
