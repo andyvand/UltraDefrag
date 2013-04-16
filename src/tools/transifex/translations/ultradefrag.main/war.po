@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-14 21:03+0200\n"
+"POT-Creation-Date: 2013-04-16 19:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: about.cpp:76
+#: about.cpp:77
 msgid "About UltraDefrag"
 msgstr "Bahin han UltraDefrag"
 
-#: about.cpp:89
+#: about.cpp:90
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:91
+#: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:94
+#: about.cpp:95
 msgid "UltraDefrag website"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr "&Bahin han"
 msgid "&Debug"
 msgstr ""
 
-#: i18n.cpp:197 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:410
 msgid "Open &log"
 msgstr "Buklará &an talaan"
 
@@ -260,7 +260,7 @@ msgstr "Iskrip ha pagtikang"
 msgid "Drive"
 msgstr "Drayb"
 
-#: i18n.cpp:211 i18n.cpp:269
+#: i18n.cpp:211 i18n.cpp:267
 msgid "Status"
 msgstr "Kahímtang"
 
@@ -276,54 +276,52 @@ msgstr "Kabug-osan"
 msgid "Free space"
 msgstr "Libre"
 
-#. : The double %-sign is needed to pass validation at transifex,
-#. : it will be replaced by a single %-sign before display.
-#: i18n.cpp:217
-#, c-format
-msgid "%% free"
-msgstr "%% nga libre"
+#: i18n.cpp:216
+#, no-c-format
+msgid "% free"
+msgstr "% nga libre"
 
-#: i18n.cpp:261
+#: i18n.cpp:259
 msgid "Fragmented files on"
 msgstr "Mga ginpinitpinit nga mga fayl ha"
 
-#: i18n.cpp:262
+#: i18n.cpp:260
 msgid "Visit our Homepage"
 msgstr "Bisitaha an amon baláyan"
 
-#: i18n.cpp:263
+#: i18n.cpp:261
 msgid "View report options"
 msgstr "Kitaa an pagpipili-an hin mga súmat"
 
-#: i18n.cpp:264
+#: i18n.cpp:262
 msgid "Powered by Lua"
 msgstr "Ginpapadalágan han Lua"
 
-#: i18n.cpp:265
+#: i18n.cpp:263
 msgid "Fragments"
 msgstr "nga mga pinitpinit"
 
-#: i18n.cpp:266
+#: i18n.cpp:264
 msgid "Size"
 msgstr "kadako"
 
-#: i18n.cpp:267
+#: i18n.cpp:265
 msgid "Filename"
 msgstr "ngaran han fayl"
 
-#: i18n.cpp:268
+#: i18n.cpp:266
 msgid "Comment"
 msgstr "panhinabi"
 
-#: i18n.cpp:270
+#: i18n.cpp:268
 msgid "locked"
 msgstr "ginkandadohan"
 
-#: i18n.cpp:271
+#: i18n.cpp:269
 msgid "move failed"
 msgstr "waray mabalhin"
 
-#: i18n.cpp:272
+#: i18n.cpp:270
 msgid "invalid"
 msgstr "diri mahihimo"
 
@@ -426,32 +424,32 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "Puyde mo ako ig-upgrade ^-^"
 
-#: upgrade.cpp:161 utils.cpp:425
+#: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:424
+#: utils.cpp:413
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:299
+#: vollist.cpp:305
 msgid "Disk needs to be repaired"
 msgstr ""
 
-#: vollist.cpp:334
+#: vollist.cpp:340
 msgid "Analyzed"
 msgstr "Ginhimay"
 
-#: vollist.cpp:338
+#: vollist.cpp:344
 msgid "Defragmented"
 msgstr "Ginbug-os"
 
-#: vollist.cpp:343
+#: vollist.cpp:349
 msgid "Optimized"
 msgstr "Ginpaurupay"
 
-#~ msgid "% free"
-#~ msgstr "% nga libre"
+#~ msgid "%% free"
+#~ msgstr "%% nga libre"
 
 #~ msgid "&Options"
 #~ msgstr "&Pagpipilian"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-14 21:03+0200\n"
-"PO-Revision-Date: 2013-04-14 19:06+0000\n"
+"POT-Creation-Date: 2013-04-16 19:43+0200\n"
+"PO-Revision-Date: 2013-04-16 17:47+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,19 +20,19 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: about.cpp:76
+#: about.cpp:77
 msgid "About UltraDefrag"
 msgstr "Über UltraDefrag"
 
-#: about.cpp:89
+#: about.cpp:90
 msgid "An open source defragmentation utility."
 msgstr "Ein Open-Source Defragmentierungswerkzeug."
 
-#: about.cpp:91
+#: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
 msgstr "Danksagungen und Lizenzen sind im Handbuch aufgeführt."
 
-#: about.cpp:94
+#: about.cpp:95
 msgid "UltraDefrag website"
 msgstr "UltraDefrag Internetseite"
 
@@ -248,7 +248,7 @@ msgstr "&Über"
 msgid "&Debug"
 msgstr "&Problem berichten"
 
-#: i18n.cpp:197 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:410
 msgid "Open &log"
 msgstr "&Protokoll öffnen"
 
@@ -264,7 +264,7 @@ msgstr "Windows-Start-Skript"
 msgid "Drive"
 msgstr "Laufwerk"
 
-#: i18n.cpp:211 i18n.cpp:269
+#: i18n.cpp:211 i18n.cpp:267
 msgid "Status"
 msgstr "Status"
 
@@ -280,54 +280,52 @@ msgstr "Gesamtgröße"
 msgid "Free space"
 msgstr "Frei"
 
-#. : The double %-sign is needed to pass validation at transifex,
-#. : it will be replaced by a single %-sign before display.
-#: i18n.cpp:217
-#, c-format
-msgid "%% free"
-msgstr "%% frei"
+#: i18n.cpp:216
+#, no-c-format
+msgid "% free"
+msgstr "% frei"
 
-#: i18n.cpp:261
+#: i18n.cpp:259
 msgid "Fragmented files on"
 msgstr "Fragmentierte Dateien auf"
 
-#: i18n.cpp:262
+#: i18n.cpp:260
 msgid "Visit our Homepage"
 msgstr "Besuche unsere Homepage"
 
-#: i18n.cpp:263
+#: i18n.cpp:261
 msgid "View report options"
 msgstr "Berichtsoptionen anzeigen"
 
-#: i18n.cpp:264
+#: i18n.cpp:262
 msgid "Powered by Lua"
 msgstr "Ermöglicht durch Lua"
 
-#: i18n.cpp:265
+#: i18n.cpp:263
 msgid "Fragments"
 msgstr "Fragmente"
 
-#: i18n.cpp:266
+#: i18n.cpp:264
 msgid "Size"
 msgstr "Größe"
 
-#: i18n.cpp:267
+#: i18n.cpp:265
 msgid "Filename"
 msgstr "Dateiname"
 
-#: i18n.cpp:268
+#: i18n.cpp:266
 msgid "Comment"
 msgstr "Kommentar"
 
-#: i18n.cpp:270
+#: i18n.cpp:268
 msgid "locked"
 msgstr "gesperrt"
 
-#: i18n.cpp:271
+#: i18n.cpp:269
 msgid "move failed"
 msgstr "verschieben gescheitert"
 
-#: i18n.cpp:272
+#: i18n.cpp:270
 msgid "invalid"
 msgstr "ungültig"
 
@@ -435,26 +433,26 @@ msgstr "Version %ls ist zum Herunterladen verfügbar!"
 msgid "You can upgrade me ^-^"
 msgstr "Du kannst mich aktualisieren ^-^"
 
-#: upgrade.cpp:161 utils.cpp:425
+#: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
 msgstr "&Abbrechen"
 
-#: utils.cpp:424
+#: utils.cpp:413
 msgid "Error!"
 msgstr "Fehler!"
 
-#: vollist.cpp:299
+#: vollist.cpp:305
 msgid "Disk needs to be repaired"
 msgstr "Laufwerk muss repariert werden"
 
-#: vollist.cpp:334
+#: vollist.cpp:340
 msgid "Analyzed"
 msgstr "Analysiert"
 
-#: vollist.cpp:338
+#: vollist.cpp:344
 msgid "Defragmented"
 msgstr "Defragmentiert"
 
-#: vollist.cpp:343
+#: vollist.cpp:349
 msgid "Optimized"
 msgstr "Optimiert"
