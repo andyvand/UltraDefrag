@@ -74,9 +74,8 @@ ClusterMap::ClusterMap(wxWindow* parent) : wxWindow(parent,wxID_ANY)
     ::SetBkMode(m_cacheDC,TRANSPARENT);
     ::ReleaseDC((HWND)GetHandle(),hdc);
 
-    for(int i = 0; i < SPACE_STATES; i++){
+    for(int i = 0; i < SPACE_STATES; i++)
         m_brushes[i] = ::CreateSolidBrush(g_colors[i]);
-    }
 
     m_width = m_height = 0;
 }
@@ -85,9 +84,8 @@ ClusterMap::~ClusterMap()
 {
     ::DeleteDC(m_cacheDC);
     ::DeleteObject(m_cacheBmp);
-    for(int i = 0; i < SPACE_STATES; i++){
+    for(int i = 0; i < SPACE_STATES; i++)
         ::DeleteObject(m_brushes[i]);
-    }
 }
 
 // =======================================================================
@@ -136,11 +134,10 @@ char *ClusterMap::ScaleMap(int scaled_size)
     JobsCacheEntry *currentJob = g_mainFrame->m_currentJob;
     int map_size = currentJob->pi.cluster_map_size;
 
-    //dtrace("map size = %u, scaled size = %u",map_size,scaled_size);
+    // dtrace("map size = %u, scaled size = %u",map_size,scaled_size);
 
-    if(scaled_size == map_size){
+    if(scaled_size == map_size)
         return NULL; // no need to scale
-    }
 
     char *scaledMap = new char[scaled_size];
 
@@ -166,10 +163,8 @@ char *ClusterMap::ScaleMap(int scaled_size)
             memset(states,0,sizeof(states));
             bool mft_detected = false;
 
-            int sequence_length = ratio;
-            if(i == used_cells - 1){
-                sequence_length = map_size - i * ratio;
-            }
+            int sequence_length = (i < used_cells - 1) ? \
+                ratio : map_size - i * ratio;
 
             for(int j = 0; j < sequence_length; j++){
                 int index = (int)currentJob->clusterMap[i * ratio + j];
@@ -191,10 +186,10 @@ char *ClusterMap::ScaleMap(int scaled_size)
             }
         }
     }
+
     // mark unused cells
-    for(int i = used_cells; i < scaled_size; i++){
+    for(int i = used_cells; i < scaled_size; i++)
         scaledMap[i] = UNUSED_MAP_SPACE;
-    }
 
     return scaledMap;
 }

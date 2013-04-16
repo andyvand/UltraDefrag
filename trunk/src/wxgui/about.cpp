@@ -41,7 +41,7 @@
 class HomePageLink: public wxHyperlinkCtrl {
 public:
     HomePageLink(wxWindow* parent,const wxString& title,const wxString& url)
-      : wxHyperlinkCtrl(parent,wxID_ANY,title,url){}
+      : wxHyperlinkCtrl(parent,wxID_ANY,title,url) {}
     ~HomePageLink() {}
 
     void OnKeyUp(wxKeyEvent& event);
@@ -101,7 +101,6 @@ void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
             etrace("Padauk font needed for correct Burmese text display not found");
         } else {
             textFont.SetPointSize(textFont.GetPointSize() + 2);
-
             description->SetFont(textFont);
             credits->SetFont(textFont);
             homepage->SetFont(textFont);

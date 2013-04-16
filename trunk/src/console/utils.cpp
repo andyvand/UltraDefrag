@@ -66,40 +66,28 @@ typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
 /**
  * @brief Defines whether the user
  * has administrative rights or not.
- * @details Based on the UserInfo
- * NSIS plug-in.
  */
 bool check_admin_rights(void)
 {
-    HANDLE hToken;
-    if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
-        letrace("cannot open access token of the thread");
-        if(!OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&hToken)){
-            letrace("cannot open access token of the process");
-            return false;
-        }
-    }
-
     PSID psid = NULL;
     SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
     if(!AllocateAndInitializeSid(&SystemSidAuthority,2,
       SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
       0,0,0,0,0,0,&psid)){
         letrace("cannot create the security identifier");
-        CloseHandle(hToken);
         return false;
     }
 
     BOOL is_member = false;
     if(!CheckTokenMembership(NULL,psid,&is_member)){
         letrace("cannot check token membership");
-        if(psid) FreeSid(psid); CloseHandle(hToken);
+        if(psid) FreeSid(psid);
         return false;
     }
 
     if(!is_member) itrace("the user is not a member of administrators group");
-    if(psid) FreeSid(psid); CloseHandle(hToken);
-    return (is_member == 0 ? false : true);
+    if(psid) FreeSid(psid);
+    return (bool)is_member;
 }
 
 /**

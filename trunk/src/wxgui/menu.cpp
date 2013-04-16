@@ -36,6 +36,9 @@
 
 #include "main.h"
 
+#define UD_AppendCheckItem(id) AppendCheckItem(id, wxEmptyString)
+#define UD_AppendRadioItem(id) AppendRadioItem(id, wxEmptyString)
+
 #define UD_SetMenuIcon(id, icon) \
     string.Printf(wxT("%hs%u"),#icon,g_iconSize); \
     pic = Utils::LoadPngResource(string.wc_str()); \
@@ -59,13 +62,13 @@ void MainFrame::InitMenu()
 {
     // create when done menu
     wxMenu *menuWhenDone = new wxMenu;
-    menuWhenDone->AppendRadioItem(ID_WhenDoneNone     , wxEmptyString);
-    menuWhenDone->AppendRadioItem(ID_WhenDoneExit     , wxEmptyString);
-    menuWhenDone->AppendRadioItem(ID_WhenDoneStandby  , wxEmptyString);
-    menuWhenDone->AppendRadioItem(ID_WhenDoneHibernate, wxEmptyString);
-    menuWhenDone->AppendRadioItem(ID_WhenDoneLogoff   , wxEmptyString);
-    menuWhenDone->AppendRadioItem(ID_WhenDoneReboot   , wxEmptyString);
-    menuWhenDone->AppendRadioItem(ID_WhenDoneShutdown , wxEmptyString);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneNone);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneExit);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneStandby);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneHibernate);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneLogoff);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneReboot);
+    menuWhenDone->UD_AppendRadioItem(ID_WhenDoneShutdown);
 
     // create action menu
     wxMenu *m_menuAction = new wxMenu;
@@ -74,22 +77,20 @@ void MainFrame::InitMenu()
     m_menuAction->Append(ID_QuickOpt);
     m_menuAction->Append(ID_FullOpt);
     m_menuAction->Append(ID_MftOpt);
-    m_menuAction->AppendCheckItem( \
-        ID_Pause, wxEmptyString);
+    m_menuAction->UD_AppendCheckItem(ID_Pause);
     m_menuAction->Append(ID_Stop);
     m_menuAction->AppendSeparator();
-    m_menuAction->AppendCheckItem( \
-        ID_Repeat, wxEmptyString);
+    m_menuAction->UD_AppendCheckItem(ID_Repeat);
     m_menuAction->AppendSeparator();
-    m_menuAction->AppendCheckItem( \
-        ID_SkipRem, wxEmptyString);
+    m_menuAction->UD_AppendCheckItem(ID_SkipRem);
     m_menuAction->Append(ID_Rescan);
     m_menuAction->AppendSeparator();
     m_menuAction->Append(ID_Repair);
     m_menuAction->AppendSeparator();
     m_subMenuWhenDone = \
-        m_menuAction->AppendSubMenu( \
-        menuWhenDone, wxEmptyString);
+        m_menuAction->AppendSubMenu(
+            menuWhenDone, wxEmptyString
+        );
     m_menuAction->AppendSeparator();
     m_menuAction->Append(ID_Exit);
 
@@ -169,34 +170,35 @@ void MainFrame::InitMenu()
 
     // create boot configuration menu
     wxMenu *menuBootConfig = new wxMenu;
-    menuBootConfig->AppendCheckItem( \
-        ID_BootEnable, wxEmptyString);
+    menuBootConfig->UD_AppendCheckItem(ID_BootEnable);
     menuBootConfig->Append(ID_BootScript);
 
     // create sorting configuration menu
     wxMenu *menuSortingConfig = new wxMenu;
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortByPath, wxEmptyString);
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortBySize, wxEmptyString);
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortByCreationDate, wxEmptyString);
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortByModificationDate, wxEmptyString);
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortByLastAccessDate, wxEmptyString);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortByPath);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortBySize);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortByCreationDate);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortByModificationDate);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortByLastAccessDate);
     menuSortingConfig->AppendSeparator();
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortAscending, wxEmptyString);
-    menuSortingConfig->AppendRadioItem( \
-        ID_SortDescending, wxEmptyString);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortAscending);
+    menuSortingConfig->UD_AppendRadioItem(ID_SortDescending);
 
     // create settings menu
     wxMenu *menuSettings = new wxMenu;
-    m_subMenuLanguage = menuSettings->AppendSubMenu(m_menuLanguage  , wxEmptyString);
+    m_subMenuLanguage = \
+        menuSettings->AppendSubMenu(
+            m_menuLanguage, wxEmptyString
+        );
     menuSettings->Append(ID_GuiOptions);
-    m_subMenuBootConfig = menuSettings->AppendSubMenu(menuBootConfig, wxEmptyString);
-    m_subMenuSortingConfig = menuSettings->AppendSubMenu(menuSortingConfig, wxEmptyString);
+    m_subMenuBootConfig = \
+        menuSettings->AppendSubMenu(
+            menuBootConfig, wxEmptyString
+        );
+    m_subMenuSortingConfig = \
+        menuSettings->AppendSubMenu(
+            menuSortingConfig, wxEmptyString
+        );
     menuSettings->Append(ID_ReportOptions);
 
     // create debug menu
@@ -206,12 +208,9 @@ void MainFrame::InitMenu()
 
     // create upgrade menu
     wxMenu *menuUpgrade = new wxMenu;
-    menuUpgrade->AppendRadioItem( \
-        ID_HelpUpgradeNone, wxEmptyString);
-    menuUpgrade->AppendRadioItem( \
-        ID_HelpUpgradeStable, wxEmptyString);
-    menuUpgrade->AppendRadioItem( \
-        ID_HelpUpgradeAll, wxEmptyString);
+    menuUpgrade->UD_AppendRadioItem(ID_HelpUpgradeNone);
+    menuUpgrade->UD_AppendRadioItem(ID_HelpUpgradeStable);
+    menuUpgrade->UD_AppendRadioItem(ID_HelpUpgradeAll);
     menuUpgrade->AppendSeparator();
     menuUpgrade->Append(ID_HelpUpgradeCheck);
 
@@ -224,12 +223,14 @@ void MainFrame::InitMenu()
     menuHelp->Append(ID_HelpLegend);
     menuHelp->AppendSeparator();
     m_subMenuDebug = \
-        menuHelp->AppendSubMenu( \
-        menuDebug, wxEmptyString);
+        menuHelp->AppendSubMenu(
+            menuDebug, wxEmptyString
+        );
     menuHelp->AppendSeparator();
     m_subMenuUpgrade = \
-        menuHelp->AppendSubMenu( \
-        menuUpgrade, wxEmptyString);
+        menuHelp->AppendSubMenu(
+            menuUpgrade, wxEmptyString
+        );
     menuHelp->AppendSeparator();
     menuHelp->Append(ID_HelpAbout);
 
@@ -295,7 +296,9 @@ void MainFrame::InitMenu()
     }
 }
 
-#undef UD_SetMarginWidth
+#undef UD_AppendCheckItem
+#undef UD_AppendRadioItem
 #undef UD_SetMenuIcon
+#undef UD_SetMarginWidth
 
 /** @} */
