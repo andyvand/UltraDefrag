@@ -146,7 +146,6 @@ f = assert(io.open(lng_template_file, "r"))
       value = string.gsub(value, "Space", "space")
       value = string.gsub(value, "^seconds until", "%%lu seconds until")
       value = string.gsub(value, "^A job", "The job")
-      value = string.gsub(value, "^%% free", "%%%% free")
 
       table.insert(translation_pairs, option .. "=" .. value)
 
@@ -195,13 +194,6 @@ for i, v in ipairs(language_pairs) do
                 string.match(value, "FAQ") == nil then
 
               if string.match(option, "^SECONDS_TILL_") ~= nil then value = "%lu " .. value end
-              if option == "PERCENT" then
-                if string.match(value, "%%") == nil then
-                  value = "%% " .. value
-                else
-                  value = string.gsub(value, "%%", "%%%%")
-                end
-              end
 
               fo:write("msgstr \"" .. value .. "\"\n")
             else
