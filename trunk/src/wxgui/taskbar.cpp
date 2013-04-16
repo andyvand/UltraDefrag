@@ -80,9 +80,8 @@ public:
 
 static ITaskbarList3 *GetTaskbarInstance()
 {
-    if(winx_get_os_version() < WINDOWS_7){
+    if(winx_get_os_version() < WINDOWS_7)
         return NULL; // interface introduced in Win7
-    }
 
     ::CoInitialize(NULL);
 

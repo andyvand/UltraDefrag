@@ -145,7 +145,8 @@ bool App::OnInit()
     if(cmdLine.Find(wxT("--setup")) != wxNOT_FOUND){
         SaveReportTranslation();
         ::winx_flush_dbg_log(0);
-        delete m_log; return false;
+        delete m_log;
+        return false;
     }
 
     // start web statistics

@@ -115,7 +115,8 @@ void DrivesList::OnKeyDown(wxKeyEvent& event)
 void DrivesList::OnKeyUp(wxKeyEvent& event)
 {
     if(!g_mainFrame->m_busy){
-        // dtrace("Modifier: %d ... KeyCode: %d", event.GetModifiers(), event.GetKeyCode());
+        // dtrace("Modifier: %d ... KeyCode: %d", \
+        //    event.GetModifiers(), event.GetKeyCode());
         switch(event.GetKeyCode()){
         case WXK_RETURN:
         case WXK_NUMPAD_ENTER:
@@ -160,9 +161,8 @@ void DrivesList::OnSelectionChange(wxListEvent& event)
 
 void MainFrame::SelectAll(wxCommandEvent& WXUNUSED(event))
 {
-    for(int i = 0; i < m_vList->GetItemCount(); i++){
+    for(int i = 0; i < m_vList->GetItemCount(); i++)
         m_vList->Select(i); m_vList->Focus(0);
-    }
 }
 
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
@@ -254,11 +254,10 @@ void MainFrame::OnListSize(wxSizeEvent& event)
     // scale list columns; avoid horizontal scrollbar appearance
     wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED,ID_AdjustListColumns);
     evt.SetInt(new_width);
-    if(new_width <= old_width){
+    if(new_width <= old_width)
         ProcessEvent(evt);
-    } else {
+    else
         wxPostEvent(this,evt);
-    }
 
     event.Skip();
 }
