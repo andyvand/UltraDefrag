@@ -52,40 +52,28 @@ typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
 /**
  * @brief Defines whether the user
  * has administrative rights or not.
- * @details Based on the UserInfo
- * NSIS plug-in.
  */
 bool Utils::CheckAdminRights(void)
 {
-    HANDLE hToken;
-    if(!::OpenThreadToken(::GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
-        letrace("cannot open access token of the thread");
-        if(!::OpenProcessToken(::GetCurrentProcess(),TOKEN_QUERY,&hToken)){
-            letrace("cannot open access token of the process");
-            return false;
-        }
-    }
-
     PSID psid = NULL;
     SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
     if(!::AllocateAndInitializeSid(&SystemSidAuthority,2,
       SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
       0,0,0,0,0,0,&psid)){
         letrace("cannot create the security identifier");
-        ::CloseHandle(hToken);
         return false;
     }
 
     BOOL is_member = false;
     if(!::CheckTokenMembership(NULL,psid,&is_member)){
         letrace("cannot check token membership");
-        if(psid) ::FreeSid(psid); ::CloseHandle(hToken);
+        if(psid) ::FreeSid(psid);
         return false;
     }
 
     if(!is_member) itrace("the user is not a member of administrators group");
-    if(psid) ::FreeSid(psid); ::CloseHandle(hToken);
-    return (is_member == 0) ? false : true;
+    if(psid) ::FreeSid(psid);
+    return (bool)is_member;
 }
 
 /**
@@ -106,9 +94,11 @@ wxString Utils::DownloadFile(const wxString& url)
         return wxEmptyString;
 
     wchar_t buffer[MAX_PATH + 1];
-    HRESULT result = pfnURLDownloadToCacheFileW(NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
+    HRESULT result = pfnURLDownloadToCacheFileW(
+        NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
     if(result != S_OK){
-        etrace("URLDownloadToCacheFile failed with code 0x%x",(UINT)result);
+        etrace("URLDownloadToCacheFile failed "
+            "with code 0x%x",(UINT)result);
         return wxEmptyString;
     }
 
@@ -356,11 +346,11 @@ int Utils::MessageDialog(wxFrame *parent,
     wxGridBagSizer* contents = new wxGridBagSizer(0, 0);
 
     contents->Add(pic, wxGBPosition(0, 0), wxDefaultSpan,
-        (wxBOTTOM) | wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL,
+        wxBOTTOM | wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL,
         LARGE_SPACING);
     contents->Add(msg, wxGBPosition(0, 1), wxDefaultSpan,
-        (wxALL & ~wxTOP) | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL,
-        LARGE_SPACING);
+        (wxALL & ~wxTOP) | wxALIGN_CENTER_HORIZONTAL | \
+        wxALIGN_CENTER_VERTICAL,LARGE_SPACING);
 
     wxButton *ok = new wxButton(&dlg,wxID_OK,text1);
     wxButton *cancel = new wxButton(&dlg,wxID_CANCEL,text2);
@@ -372,7 +362,6 @@ int Utils::MessageDialog(wxFrame *parent,
             etrace("Padauk font needed for correct Burmese text display not found");
         } else {
             textFont.SetPointSize(textFont.GetPointSize() + 2);
-
             msg->SetFont(textFont);
             ok->SetFont(textFont);
             cancel->SetFont(textFont);
@@ -385,7 +374,7 @@ int Utils::MessageDialog(wxFrame *parent,
     buttons->Add(cancel,wxSizerFlags(1));
 
     contents->Add(buttons, wxGBPosition(1, 0), wxGBSpan(1, 2),
-        wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL);
+        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL);
 
     wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
     hbox->AddSpacer(LARGE_SPACING);

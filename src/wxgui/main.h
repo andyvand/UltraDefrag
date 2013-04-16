@@ -135,6 +135,7 @@ public:
 
 private:
     void Cleanup();
+
     Log *m_log;
     StatThread *m_statThread;
 };
@@ -172,14 +173,15 @@ public:
 
     virtual void *Entry();
 
-    void ProcessVolume(int index);
-    static void ProgressCallback(udefrag_progress_info *pi, void *p);
-    static int Terminator(void *p);
-
     bool m_launch;
     wxArrayString *m_volumes;
     udefrag_job_type m_jobType;
     int m_mapSize;
+
+private:
+    void ProcessVolume(int index);
+    static void ProgressCallback(udefrag_progress_info *pi, void *p);
+    static int Terminator(void *p);
 
     char m_letter;
 };
@@ -204,10 +206,12 @@ public:
     ~UpgradeThread() { Wait(); }
 
     virtual void *Entry();
-    int ParseVersionString(const char *version);
 
     bool m_check;
     int m_level;
+
+private:
+    int ParseVersionString(const char *version);
 };
 
 class SystemTrayIcon: public wxTaskBarIcon {
@@ -246,6 +250,7 @@ public:
     void OnEraseBackground(wxEraseEvent& event);
     void OnPaint(wxPaintEvent& event);
 
+private:
     char *ScaleMap(int scaled_size);
 
     int m_width;

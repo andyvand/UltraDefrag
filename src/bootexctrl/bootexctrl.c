@@ -55,35 +55,25 @@ int silent = 0;
  */
 static int check_admin_rights(void)
 {
-    HANDLE hToken;
     SID_IDENTIFIER_AUTHORITY SystemSidAuthority = {SECURITY_NT_AUTHORITY};
     PSID psid = NULL;
     BOOL IsMember = FALSE;
-    
-    if(!OpenThreadToken(GetCurrentThread(),TOKEN_QUERY,FALSE,&hToken)){
-        letrace("cannot open access token of the thread");
-        if(!OpenProcessToken(GetCurrentProcess(),TOKEN_QUERY,&hToken)){
-            letrace("cannot open access token of the process");
-            return 0;
-        }
-    }
     
     if(!AllocateAndInitializeSid(&SystemSidAuthority,2,
       SECURITY_BUILTIN_DOMAIN_RID,DOMAIN_ALIAS_RID_ADMINS,
       0,0,0,0,0,0,&psid)){
         letrace("cannot create the security identifier");
-        CloseHandle(hToken);
         return 0;
     }
       
     if(!CheckTokenMembership(NULL,psid,&IsMember)){
         letrace("cannot check token membership");
-        if(psid) FreeSid(psid); CloseHandle(hToken);
+        if(psid) FreeSid(psid);
         return 0;
     }
 
     if(!IsMember) itrace("the user is not a member of administrators group");
-    if(psid) FreeSid(psid); CloseHandle(hToken);
+    if(psid) FreeSid(psid);
     return IsMember;
 }
 
