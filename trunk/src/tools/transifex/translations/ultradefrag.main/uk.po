@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-14 21:03+0200\n"
-"PO-Revision-Date: 2013-04-14 19:06+0000\n"
+"POT-Creation-Date: 2013-04-16 19:43+0200\n"
+"PO-Revision-Date: 2013-04-16 17:46+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,19 +19,19 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: about.cpp:76
+#: about.cpp:77
 msgid "About UltraDefrag"
 msgstr "Про UltraDefrag"
 
-#: about.cpp:89
+#: about.cpp:90
 msgid "An open source defragmentation utility."
 msgstr ""
 
-#: about.cpp:91
+#: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
 msgstr ""
 
-#: about.cpp:94
+#: about.cpp:95
 msgid "UltraDefrag website"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgstr "&Про програму"
 msgid "&Debug"
 msgstr "&Налагоджувати"
 
-#: i18n.cpp:197 utils.cpp:421
+#: i18n.cpp:197 utils.cpp:410
 msgid "Open &log"
 msgstr "&Відкрийте журнал"
 
@@ -263,7 +263,7 @@ msgstr "Сценарій запуску при завантаженні Windows"
 msgid "Drive"
 msgstr "Диск"
 
-#: i18n.cpp:211 i18n.cpp:269
+#: i18n.cpp:211 i18n.cpp:267
 msgid "Status"
 msgstr "Статус"
 
@@ -279,54 +279,52 @@ msgstr "Загальна простір"
 msgid "Free space"
 msgstr "Вільний простір"
 
-#. : The double %-sign is needed to pass validation at transifex,
-#. : it will be replaced by a single %-sign before display.
-#: i18n.cpp:217
-#, c-format
-msgid "%% free"
-msgstr "%% Процент"
+#: i18n.cpp:216
+#, no-c-format
+msgid "% free"
+msgstr "Процент"
 
-#: i18n.cpp:261
+#: i18n.cpp:259
 msgid "Fragmented files on"
 msgstr "Фрагментовані файли на"
 
-#: i18n.cpp:262
+#: i18n.cpp:260
 msgid "Visit our Homepage"
 msgstr "Відвідайте наш вебсайт"
 
-#: i18n.cpp:263
+#: i18n.cpp:261
 msgid "View report options"
 msgstr "Параметри звітів"
 
-#: i18n.cpp:264
+#: i18n.cpp:262
 msgid "Powered by Lua"
 msgstr "Працює на Lua"
 
-#: i18n.cpp:265
+#: i18n.cpp:263
 msgid "Fragments"
 msgstr "число фрагментів"
 
-#: i18n.cpp:266
+#: i18n.cpp:264
 msgid "Size"
 msgstr "розмір"
 
-#: i18n.cpp:267
+#: i18n.cpp:265
 msgid "Filename"
 msgstr "ім'я файлу"
 
-#: i18n.cpp:268
+#: i18n.cpp:266
 msgid "Comment"
 msgstr "коментар"
 
-#: i18n.cpp:270
+#: i18n.cpp:268
 msgid "locked"
 msgstr "заблокований"
 
-#: i18n.cpp:271
+#: i18n.cpp:269
 msgid "move failed"
 msgstr "не вдалося перемістити"
 
-#: i18n.cpp:272
+#: i18n.cpp:270
 msgid "invalid"
 msgstr "помилка в алгоритмі або файлової системи"
 
@@ -434,26 +432,26 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "Ви можете мене оновити ^-^"
 
-#: upgrade.cpp:161 utils.cpp:425
+#: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:424
+#: utils.cpp:413
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:299
+#: vollist.cpp:305
 msgid "Disk needs to be repaired"
 msgstr "Диск потребує виправлення"
 
-#: vollist.cpp:334
+#: vollist.cpp:340
 msgid "Analyzed"
 msgstr "Проаналізовано"
 
-#: vollist.cpp:338
+#: vollist.cpp:344
 msgid "Defragmented"
 msgstr "Дефрагментовано"
 
-#: vollist.cpp:343
+#: vollist.cpp:349
 msgid "Optimized"
 msgstr "Оптимізовано"
