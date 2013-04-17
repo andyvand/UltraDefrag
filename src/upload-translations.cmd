@@ -48,6 +48,11 @@ echo.
 
 if "%~1" neq "--lng2po" goto :skiplng2po
 
+:: fetch latest translations
+pushd "%~dp0\tools\transifex"
+if exist tx.exe tx.exe pull -a || popd && goto fail
+popd
+
 :: convert LNG to PO
 pushd "%~dp0\tools"
 if exist lng2po.lua lua lng2po.lua || popd && goto fail
