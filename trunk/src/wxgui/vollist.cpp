@@ -351,7 +351,8 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
                 break;
         }
     }
-    wxString lcaption = caption.MakeLower();
+    wxString lcaption = caption;
+    lcaption.MakeLower();
 
     wxString status;
     if(cacheEntry->pi.completion_status == 0 || cacheEntry->stopped){
