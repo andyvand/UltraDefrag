@@ -183,11 +183,11 @@ wxBitmap * Utils::LoadPngResource(const wchar_t *name)
  */
 void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
 {
-    wxString path; wxURI url;
+    wxString path;
     path = wxT("./handbook/") + page;
 
     if(wxFileExists(path)){
-        path = wxT("file:////") + wxGetCwd();
+        path = wxGetCwd();
         path.Replace(wxT("\\"),wxT("/"));
         if(!anchor.IsEmpty()){
             /*
@@ -223,12 +223,13 @@ void Utils::OpenHandbook(const wxString& page, const wxString& anchor)
             path << wxT("#") << anchor;
     }
 
-    url.Create(path);
-    path = url.BuildURI();
-
     itrace("%ls",path.wc_str());
-    if(!wxLaunchDefaultBrowser(path))
-        ShowError(wxT("Cannot open %ls!"),path.wc_str());
+    if(path.Left(4) == wxT("http")) {
+        if(!wxLaunchDefaultBrowser(path))
+            ShowError(wxT("Cannot open %ls!"),path.wc_str());
+    } else {
+        ShellExec(path,wxT("open"));
+    }
 }
 
 /**
