@@ -110,6 +110,12 @@ void App::SetLocale(int id)
     g_locale->AddCatalog(wxT("UltraDefrag"));
 }
 
+/**
+ * @brief Manages translation changes.
+ * @todo Find a way to prevent the "Graphical Interface"
+ * translation from getting unreadable when changing from
+ * en_US to de.
+ */
 void MainFrame::OnLocaleChange(wxCommandEvent& event)
 {
     App::SetLocale(event.GetId() - ID_LocaleChange);
@@ -215,7 +221,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     //xgettext:no-c-format
     item.SetText(_("% free"));        m_vList->SetColumn(5,item);
 
-    // set monospace font for the list unless Burmese translation is selected
+    // set mono-space font for the list unless Burmese translation is selected
     if(g_locale->GetCanonicalName().Left(2) != wxT("my")){
         wxFont font = m_vList->GetFont();
         if(font.SetFaceName(wxT("Courier New")))
@@ -231,7 +237,7 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
         event.SetInt(letter); ProcessEvent(event);
     }
 
-    // update taskbar icon overlay
+    // update task-bar icon overlay
     ProcessCommandEvent(ID_AdjustTaskbarIconOverlay);
 
     // update progress counters
@@ -321,17 +327,17 @@ bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
 
 void MainFrame::OnLangOpenTransifex(wxCommandEvent& event)
 {
-    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/resource/main/"));
+    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/"));
     wxString localeDir(wxT(""));
 
     switch(event.GetId()){
         case ID_LangShowLog:
             if(GetLocaleFolder(localeDir))
-                url << wxT("l/") << localeDir << wxT("/view/");
+                url << wxT("resource/main/l/") << localeDir << wxT("/view/");
             break;
         case ID_LangSubmit:
             if(GetLocaleFolder(localeDir))
-                url << wxT("l/") << localeDir << wxT("/");
+                url << wxT("translate/#") << localeDir << wxT("/main/");
     }
 
     if(!wxLaunchDefaultBrowser(url))
