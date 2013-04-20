@@ -87,7 +87,7 @@ bool check_admin_rights(void)
 
     if(!is_member) itrace("the user is not a member of administrators group");
     if(psid) FreeSid(psid);
-    return (bool)is_member;
+    return (is_member == 0 ? false : true);
 }
 
 /**
