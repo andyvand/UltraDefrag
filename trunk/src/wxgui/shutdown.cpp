@@ -280,7 +280,7 @@ void MainFrame::Shutdown(wxCommandEvent& WXUNUSED(event))
         }
     } else if(action == WHEN_DONE_SHUTDOWN){
         if(shutdown.FileExists()){
-            Utils::ShellExec(shell.GetFullPath(),wxT("open"),wxT("/K /K shutdown -s -t 0"));
+            Utils::ShellExec(shell.GetFullPath(),wxT("open"),wxT("/K shutdown -s -t 0"));
         } else {
             if(!ExitWindowsEx(EWX_POWEROFF | EWX_FORCEIFHUNG,
               SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | \
