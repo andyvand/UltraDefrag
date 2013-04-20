@@ -670,7 +670,7 @@
  * @htmlonly
  * </td><td> Locked (System) </td><td></td><td>
  * @endhtmlonly
- * @image html "MFT.png"
+ * @image html "MFTzone.png"
  * @htmlonly
  * </td><td> MFT </td></tr><tr><td>
  * @endhtmlonly
@@ -693,7 +693,7 @@
  * \raisebox{-0.3\height}{\includegraphics{Blank.png}} &
  * \includegraphics{System.png} & Locked (System) &
  * \raisebox{-0.3\height}{\includegraphics{Blank.png}} &
- * \includegraphics{MFT.png} & MFT \\
+ * \includegraphics{MFTzone.png} & MFT \\
  * \includegraphics{FreeSpace.png} & Free Space & &
  * & & &
  * \includegraphics{UnusedBlock.png} & Unused Map Block \\
