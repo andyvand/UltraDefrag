@@ -50,7 +50,7 @@ void MainFrame::InitVolList()
     // save default font used for the list
     m_vListFont = new wxFont(m_vList->GetFont());
 
-    // set monospace font for the list unless Burmese translation is selected
+    // set mono-space font for the list unless Burmese translation is selected
     if(g_locale->GetCanonicalName().Left(2) != wxT("my")){
         wxFont font = m_vList->GetFont();
         if(font.SetFaceName(wxT("Courier New"))){
@@ -61,20 +61,31 @@ void MainFrame::InitVolList()
 
     // adjust widths so all the columns will fit to the window
     int width = m_vList->GetClientSize().GetWidth();
-    double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
-    m_w1 *= scale; m_w2 *= scale; m_w3 *= scale; m_w4 *= scale; m_w5 *= scale;
-    m_w6 *= scale;
+    int cwidth = 0, i, count = sizeof(m_w)/sizeof(m_w[0]);
+    for(i = 0; i < count; i++)
+        cwidth += m_w[i];
 
-    int w1 = (int)floor(m_w1); int w2 = (int)floor(m_w2);
-    int w3 = (int)floor(m_w3); int w4 = (int)floor(m_w4);
-    int w5 = (int)floor(m_w5); int w6 = width - w1 - w2 - w3 - w4 - w5;
+    /* m_w[count - 1] = width;
 
-    m_vList->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT,  w1);
-    m_vList->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT,  w2);
-    m_vList->InsertColumn(2, wxEmptyString, wxLIST_FORMAT_RIGHT, w3);
-    m_vList->InsertColumn(3, wxEmptyString, wxLIST_FORMAT_RIGHT, w4);
-    m_vList->InsertColumn(4, wxEmptyString, wxLIST_FORMAT_RIGHT, w5);
-    m_vList->InsertColumn(5, wxEmptyString, wxLIST_FORMAT_RIGHT, w6);
+    double scale = (double)width / (double)cwidth;
+    for(i = 0; i < count; i++) {
+        m_w[i] = (int)floor(scale * (double)m_w[i]);
+        m_w[count - 1] -= m_w[i];
+    } */
+
+    dtrace("client width ......... %d", width);
+    dtrace("total column width ... %d", cwidth);
+
+    int format[] = {
+        wxLIST_FORMAT_LEFT, wxLIST_FORMAT_LEFT,
+        wxLIST_FORMAT_RIGHT, wxLIST_FORMAT_RIGHT,
+        wxLIST_FORMAT_RIGHT, wxLIST_FORMAT_RIGHT
+        };
+
+    for(i = 0; i < count; i++) {
+        m_vList->InsertColumn(i, wxEmptyString, format[i], m_w[i]);
+        dtrace("column %d width ....... %d", i, m_w[i]);
+    }
 
     // attach drive icons
     int size = g_iconSize;
@@ -168,27 +179,32 @@ void MainFrame::SelectAll(wxCommandEvent& WXUNUSED(event))
 void MainFrame::AdjustListColumns(wxCommandEvent& event)
 {
     int width = event.GetInt();
-    if(!width) width = m_vList->GetClientSize().GetWidth();
+    if(width == 0) width = m_vList->GetClientSize().GetWidth();
 
     // get current column widths, since user could have changed them
-    m_w1 = m_vList->GetColumnWidth(0); m_w2 = m_vList->GetColumnWidth(1);
-    m_w3 = m_vList->GetColumnWidth(2); m_w4 = m_vList->GetColumnWidth(3);
-    m_w5 = m_vList->GetColumnWidth(4); m_w6 = m_vList->GetColumnWidth(5);
+    int cwidth = 0, i, count = m_vList->GetColumnCount();
+    for(int i = 0; i < count; i++) {
+        m_w[i] = m_vList->GetColumnWidth(i);
+        cwidth += m_w[i];
+    }
+    m_w[count - 1] = width;
 
-    double scale = (double)width / (m_w1 + m_w2 + m_w3 + m_w4 + m_w5 + m_w6);
-    m_w1 *= scale; m_w2 *= scale; m_w3 *= scale; m_w4 *= scale; m_w5 *= scale;
-    m_w6 *= scale;
+    int border = wxSystemSettings::GetMetric(wxSYS_BORDER_X);
 
-    int w1 = (int)floor(m_w1); int w2 = (int)floor(m_w2);
-    int w3 = (int)floor(m_w3); int w4 = (int)floor(m_w4);
-    int w5 = (int)floor(m_w5); int w6 = width - w1 - w2 - w3 - w4 - w5;
+    dtrace("border width ......... %d", border);
+    dtrace("client width ......... %d", width);
+    dtrace("total column width ... %d", cwidth);
 
-    m_vList->SetColumnWidth(0,w1);
-    m_vList->SetColumnWidth(1,w2);
-    m_vList->SetColumnWidth(2,w3);
-    m_vList->SetColumnWidth(3,w4);
-    m_vList->SetColumnWidth(4,w5);
-    m_vList->SetColumnWidth(5,w6);
+    double scale = (double)width / (double)cwidth;
+    for(i = 0; i < (count - 1); i++) {
+        m_w[i] = (int)floor(scale * (double)m_w[i]);
+        m_vList->SetColumnWidth(i,m_w[i]);
+        m_w[count - 1] -= m_w[i];
+        dtrace("column %d width ....... %d", i, m_w[i]);
+    }
+    m_w[count - 1] -= border * 2;
+    m_vList->SetColumnWidth(count - 1,m_w[count - 1]);
+    dtrace("column %d width ....... %d", count - 1, m_w[count - 1]);
 }
 
 void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
