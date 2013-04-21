@@ -88,15 +88,17 @@ void MainFrame::ReadAppConfiguration()
         (long)DPI(DEFAULT_LIST_HEIGHT)
     );
 
-    cfg->Read(wxT("/DrivesList/width1"), &m_w1, 0.0);
-    cfg->Read(wxT("/DrivesList/width2"), &m_w2, 0.0);
-    cfg->Read(wxT("/DrivesList/width3"), &m_w3, 0.0);
-    cfg->Read(wxT("/DrivesList/width4"), &m_w4, 0.0);
-    cfg->Read(wxT("/DrivesList/width5"), &m_w5, 0.0);
-    cfg->Read(wxT("/DrivesList/width6"), &m_w6, 0.0);
+    int count = 0;
+    int d_w[] = {140, 130, 110, 100, 90, 60};
 
-    if(!m_w1) m_w1 = 110; if(!m_w2) m_w2 = 110; if(!m_w3) m_w3 = 110;
-    if(!m_w4) m_w4 = 110; if(!m_w5) m_w5 = 110; if(!m_w6) m_w6 = 65;
+    cfg->Read(wxT("/DrivesList/count"), &count, 0);
+    if(count == 0) count = sizeof(m_w)/sizeof(m_w[0]);
+
+    for(int i = 0; i < count; i++) {
+        cfg->Read(wxString::Format(wxT("%hs%d"),"/DrivesList/width",i),
+                   &m_w[i],d_w[i]);
+        dtrace("%d column width ... %d", i, m_w[i]);
+    }
 
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
     cfg->Read(wxT("/Algorithm/SkipRemovableMedia"),&m_skipRem,true);
@@ -119,12 +121,10 @@ void MainFrame::SaveAppConfiguration()
     cfg->Write(wxT("/MainFrame/SeparatorPosition"),
         (long)m_splitter->GetSashPosition());
 
-    cfg->Write(wxT("/DrivesList/width1"),m_vList->GetColumnWidth(0));
-    cfg->Write(wxT("/DrivesList/width2"),m_vList->GetColumnWidth(1));
-    cfg->Write(wxT("/DrivesList/width3"),m_vList->GetColumnWidth(2));
-    cfg->Write(wxT("/DrivesList/width4"),m_vList->GetColumnWidth(3));
-    cfg->Write(wxT("/DrivesList/width5"),m_vList->GetColumnWidth(4));
-    cfg->Write(wxT("/DrivesList/width6"),m_vList->GetColumnWidth(5));
+    cfg->Write(wxT("/DrivesList/count"),m_vList->GetColumnCount());
+    for(int i = 0; i < m_vList->GetColumnCount(); i++)
+        cfg->Write(wxString::Format(wxT("%hs%d"),"/DrivesList/width",i),
+                   m_vList->GetColumnWidth(i));
 
     cfg->Write(wxT("/Language/Selected"),
         (long)g_locale->GetLanguage());

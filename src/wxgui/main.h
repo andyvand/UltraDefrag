@@ -397,13 +397,8 @@ private:
     bool m_maximized;
     int  m_separatorPosition;
 
-    // precise list column widths
-    double m_w1;
-    double m_w2;
-    double m_w3;
-    double m_w4;
-    double m_w5;
-    double m_w6;
+    // list column widths
+    int m_w[6];
 
     // list height
     int m_vListHeight;
