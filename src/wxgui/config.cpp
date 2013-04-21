@@ -88,11 +88,10 @@ void MainFrame::ReadAppConfiguration()
         (long)DPI(DEFAULT_LIST_HEIGHT)
     );
 
-    int count = 0;
+    int count = sizeof(m_w)/sizeof(m_w[0]);
     int d_w[] = {140, 130, 110, 100, 90, 60};
 
-    cfg->Read(wxT("/DrivesList/count"), &count, 0);
-    if(count == 0) count = sizeof(m_w)/sizeof(m_w[0]);
+    cfg->Read(wxT("/DrivesList/count"), &count, count);
 
     for(int i = 0; i < count; i++) {
         cfg->Read(wxString::Format(wxT("%hs%d"),"/DrivesList/width",i),

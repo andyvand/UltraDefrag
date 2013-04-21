@@ -202,7 +202,6 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
         m_w[count - 1] -= m_w[i];
         dtrace("column %d width ....... %d", i, m_w[i]);
     }
-    m_w[count - 1] -= border * 2;
     m_vList->SetColumnWidth(count - 1,m_w[count - 1]);
     dtrace("column %d width ....... %d", count - 1, m_w[count - 1]);
 }
