@@ -61,17 +61,19 @@ void MainFrame::InitVolList()
 
     // adjust widths so all the columns will fit to the window
     int width = m_vList->GetClientSize().GetWidth();
-    int cwidth = 0, i, count = sizeof(m_w)/sizeof(m_w[0]);
-    for(i = 0; i < count; i++)
-        cwidth += m_w[i];
+    int cwidth = 0;
+    for(int i = 0; i < LIST_COLUMNS; i++) cwidth += m_w[i];
 
-    /* m_w[count - 1] = width;
+    int lastColumnWidth = width;
 
     double scale = (double)width / (double)cwidth;
-    for(i = 0; i < count; i++) {
+    for(int i = 0; i < (LIST_COLUMNS - 1); i++) {
         m_w[i] = (int)floor(scale * (double)m_w[i]);
-        m_w[count - 1] -= m_w[i];
-    } */
+        lastColumnWidth -= m_w[i];
+    }
+
+    if(m_w[LIST_COLUMNS - 1]) // otherwise nothing to scale
+        m_w[LIST_COLUMNS - 1] = lastColumnWidth;
 
     dtrace("client width ......... %d", width);
     dtrace("total column width ... %d", cwidth);
@@ -80,9 +82,9 @@ void MainFrame::InitVolList()
         wxLIST_FORMAT_LEFT, wxLIST_FORMAT_LEFT,
         wxLIST_FORMAT_RIGHT, wxLIST_FORMAT_RIGHT,
         wxLIST_FORMAT_RIGHT, wxLIST_FORMAT_RIGHT
-        };
+    };
 
-    for(i = 0; i < count; i++) {
+    for(int i = 0; i < LIST_COLUMNS; i++) {
         m_vList->InsertColumn(i, wxEmptyString, format[i], m_w[i]);
         dtrace("column %d width ....... %d", i, m_w[i]);
     }
@@ -182,12 +184,13 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
     if(width == 0) width = m_vList->GetClientSize().GetWidth();
 
     // get current column widths, since user could have changed them
-    int cwidth = 0, i, count = m_vList->GetColumnCount();
-    for(int i = 0; i < count; i++) {
+    int cwidth = 0;
+    for(int i = 0; i < LIST_COLUMNS; i++) {
         m_w[i] = m_vList->GetColumnWidth(i);
         cwidth += m_w[i];
     }
-    m_w[count - 1] = width;
+
+    int lastColumnWidth = width;
 
     int border = wxSystemSettings::GetMetric(wxSYS_BORDER_X);
 
@@ -196,14 +199,18 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
     dtrace("total column width ... %d", cwidth);
 
     double scale = (double)width / (double)cwidth;
-    for(i = 0; i < (count - 1); i++) {
+    for(int i = 0; i < (LIST_COLUMNS - 1); i++) {
         m_w[i] = (int)floor(scale * (double)m_w[i]);
         m_vList->SetColumnWidth(i,m_w[i]);
-        m_w[count - 1] -= m_w[i];
+        lastColumnWidth -= m_w[i];
         dtrace("column %d width ....... %d", i, m_w[i]);
     }
-    m_vList->SetColumnWidth(count - 1,m_w[count - 1]);
-    dtrace("column %d width ....... %d", count - 1, m_w[count - 1]);
+
+    if(m_w[LIST_COLUMNS - 1]) // otherwise nothing to scale
+        m_w[LIST_COLUMNS - 1] = lastColumnWidth;
+
+    m_vList->SetColumnWidth(LIST_COLUMNS - 1,m_w[LIST_COLUMNS - 1]);
+    dtrace("column %d width ....... %d", LIST_COLUMNS - 1, m_w[LIST_COLUMNS - 1]);
 }
 
 void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
@@ -249,6 +256,11 @@ void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnSplitChanged(wxSplitterEvent& event)
 {
+    // shrink the last list column so the vertical
+    // scrollbar will not pull horizontal one out
+    //if(m_vList->GetCountPerPage() >= m_vList->GetItemCount())
+    //    m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
+
     // ensure that the list control will cover integral number of items
     PostCommandEvent(this,ID_AdjustListHeight);
 
@@ -417,6 +429,10 @@ void MainFrame::PopulateList(wxCommandEvent& event)
     if(!v) return;
 
     m_vList->DeleteAllItems();
+
+    // shrink the last list column so the vertical
+    // scrollbar will not pull horizontal one out
+    //m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
 
     for(int i = 0; v[i].letter; i++){
         wxString label;

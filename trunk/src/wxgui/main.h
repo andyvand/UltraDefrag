@@ -84,6 +84,155 @@ typedef enum {
 #include "../dll/udefrag/udefrag.h"
 
 // =======================================================================
+//                              Constants
+// =======================================================================
+
+#define LIST_COLUMNS 6 // number of columns in the list of volumes
+
+enum {
+    // file menu identifiers
+
+    // NOTE: they share a single event handler
+    ID_Analyze = 1,
+    ID_Defrag,
+    ID_QuickOpt,
+    ID_FullOpt,
+    ID_MftOpt,
+
+    ID_Pause,
+    ID_Stop,
+
+    ID_Repeat,
+
+    ID_SkipRem,
+    ID_Rescan,
+
+    ID_Repair,
+
+    ID_WhenDoneNone,
+    ID_WhenDoneExit,
+    ID_WhenDoneStandby,
+    ID_WhenDoneHibernate,
+    ID_WhenDoneLogoff,
+    ID_WhenDoneReboot,
+    ID_WhenDoneShutdown,
+
+    ID_Exit,
+
+    // report menu identifiers
+    ID_ShowReport,
+
+    // settings menu identifiers
+
+    // NOTE: they share a single event handler
+    ID_LangShowLog,
+    ID_LangShowReport,
+    ID_LangSubmit,
+
+    ID_LangOpenFolder,
+
+    ID_GuiOptions,
+
+    ID_BootEnable,
+    ID_BootScript,
+
+    ID_ReportOptions,
+
+    ID_SortByPath,
+    ID_SortBySize,
+    ID_SortByCreationDate,
+    ID_SortByModificationDate,
+    ID_SortByLastAccessDate,
+
+    ID_SortAscending,
+    ID_SortDescending,
+
+    // help menu identifiers
+    ID_HelpContents,
+    ID_HelpBestPractice,
+    ID_HelpFaq,
+    ID_HelpLegend,
+
+    ID_DebugLog,
+    ID_DebugSend,
+
+    // NOTE: they share a single event handler
+    ID_HelpUpgradeNone,
+    ID_HelpUpgradeStable,
+    ID_HelpUpgradeAll,
+    ID_HelpUpgradeCheck,
+
+    ID_HelpAbout,
+
+    // event identifiers
+    ID_AdjustListColumns,
+    ID_AdjustListHeight,
+    ID_AdjustSystemTrayIcon,
+    ID_AdjustTaskbarIconOverlay,
+    ID_BootChange,
+    ID_CacheJob,
+    ID_DefaultAction,
+    ID_DiskProcessingFailure,
+    ID_JobCompletion,
+    ID_PopulateList,
+    ID_ReadUserPreferences,
+    ID_RedrawMap,
+    ID_SelectAll,
+    ID_SetWindowTitle,
+    ID_ShowUpgradeDialog,
+    ID_Shutdown,
+    ID_UpdateStatusBar,
+    ID_UpdateVolumeInformation,
+    ID_UpdateVolumeStatus,
+
+    // tray icon menu identifiers
+    ID_ShowHideMenu,
+    ID_PauseMenu,
+    ID_ExitMenu,
+
+    // language selection menu item, must always be last in the list
+    ID_LocaleChange
+};
+
+#define MAIN_WINDOW_DEFAULT_WIDTH  640
+#define MAIN_WINDOW_DEFAULT_HEIGHT 480
+#define MAIN_WINDOW_MIN_WIDTH      500
+#define MAIN_WINDOW_MIN_HEIGHT     375
+#define DEFAULT_LIST_HEIGHT        130
+#define MIN_PANEL_HEIGHT            40
+
+// dialog layout constants
+#define SMALL_SPACING  DPI(5)
+#define LARGE_SPACING  DPI(11)
+
+#define DEFAULT_DRY_RUN          0
+#define DEFAULT_FREE_COLOR_R   255
+#define DEFAULT_FREE_COLOR_G   255
+#define DEFAULT_FREE_COLOR_B   255
+#define DEFAULT_GRID_COLOR_R     0
+#define DEFAULT_GRID_COLOR_G     0
+#define DEFAULT_GRID_COLOR_B     0
+#define DEFAULT_GRID_LINE_WIDTH  1
+#define DEFAULT_MAP_BLOCK_SIZE   4
+#define DEFAULT_MINIMIZE_TO_SYSTEM_TRAY          0
+#define DEFAULT_SECONDS_FOR_SHUTDOWN_REJECTION  60
+#define DEFAULT_SHOW_MENU_ICONS                  1
+#define DEFAULT_SHOW_PROGRESS_IN_TASKBAR         1
+#define DEFAULT_SHOW_TASKBAR_ICON_OVERLAY        1
+
+/* user defined language IDs
+   Important: never change their order when adding new translations
+   or the selection of the user will be broken */
+enum {
+    wxUD_LANGUAGE_BOSNIAN = wxLANGUAGE_USER_DEFINED+1,
+    wxUD_LANGUAGE_ILOKO,
+    wxUD_LANGUAGE_KAPAMPANGAN,
+    wxUD_LANGUAGE_NORWEGIAN,
+    wxUD_LANGUAGE_WARAY_WARAY,
+    wxUD_LANGUAGE_LAST          // must always be last in the list
+};
+
+// =======================================================================
 //                          Macro definitions
 // =======================================================================
 
@@ -398,7 +547,7 @@ private:
     int  m_separatorPosition;
 
     // list column widths
-    int m_w[6];
+    int m_w[LIST_COLUMNS];
 
     // list height
     int m_vListHeight;
@@ -454,153 +603,6 @@ public:
 /* flags for Utils::ShellExec */
 #define SHELLEX_SILENT  0x1
 #define SHELLEX_NOASYNC 0x2
-
-// =======================================================================
-//                              Constants
-// =======================================================================
-
-enum {
-    // file menu identifiers
-
-    // NOTE: they share a single event handler
-    ID_Analyze = 1,
-    ID_Defrag,
-    ID_QuickOpt,
-    ID_FullOpt,
-    ID_MftOpt,
-
-    ID_Pause,
-    ID_Stop,
-
-    ID_Repeat,
-
-    ID_SkipRem,
-    ID_Rescan,
-
-    ID_Repair,
-
-    ID_WhenDoneNone,
-    ID_WhenDoneExit,
-    ID_WhenDoneStandby,
-    ID_WhenDoneHibernate,
-    ID_WhenDoneLogoff,
-    ID_WhenDoneReboot,
-    ID_WhenDoneShutdown,
-
-    ID_Exit,
-
-    // report menu identifiers
-    ID_ShowReport,
-
-    // settings menu identifiers
-
-    // NOTE: they share a single event handler
-    ID_LangShowLog,
-    ID_LangShowReport,
-    ID_LangSubmit,
-
-    ID_LangOpenFolder,
-
-    ID_GuiOptions,
-
-    ID_BootEnable,
-    ID_BootScript,
-
-    ID_ReportOptions,
-
-    ID_SortByPath,
-    ID_SortBySize,
-    ID_SortByCreationDate,
-    ID_SortByModificationDate,
-    ID_SortByLastAccessDate,
-
-    ID_SortAscending,
-    ID_SortDescending,
-
-    // help menu identifiers
-    ID_HelpContents,
-    ID_HelpBestPractice,
-    ID_HelpFaq,
-    ID_HelpLegend,
-
-    ID_DebugLog,
-    ID_DebugSend,
-
-    // NOTE: they share a single event handler
-    ID_HelpUpgradeNone,
-    ID_HelpUpgradeStable,
-    ID_HelpUpgradeAll,
-    ID_HelpUpgradeCheck,
-
-    ID_HelpAbout,
-
-    // event identifiers
-    ID_AdjustListColumns,
-    ID_AdjustListHeight,
-    ID_AdjustSystemTrayIcon,
-    ID_AdjustTaskbarIconOverlay,
-    ID_BootChange,
-    ID_CacheJob,
-    ID_DefaultAction,
-    ID_DiskProcessingFailure,
-    ID_JobCompletion,
-    ID_PopulateList,
-    ID_ReadUserPreferences,
-    ID_RedrawMap,
-    ID_SelectAll,
-    ID_SetWindowTitle,
-    ID_ShowUpgradeDialog,
-    ID_Shutdown,
-    ID_UpdateStatusBar,
-    ID_UpdateVolumeInformation,
-    ID_UpdateVolumeStatus,
-
-    // tray icon menu identifiers
-    ID_ShowHideMenu,
-    ID_PauseMenu,
-    ID_ExitMenu,
-
-    // language selection menu item, must always be last in the list
-    ID_LocaleChange
-};
-
-#define MAIN_WINDOW_DEFAULT_WIDTH  640
-#define MAIN_WINDOW_DEFAULT_HEIGHT 480
-#define MAIN_WINDOW_MIN_WIDTH      500
-#define MAIN_WINDOW_MIN_HEIGHT     375
-#define DEFAULT_LIST_HEIGHT        130
-#define MIN_PANEL_HEIGHT            40
-
-// dialog layout constants
-#define SMALL_SPACING  DPI(5)
-#define LARGE_SPACING  DPI(11)
-
-#define DEFAULT_DRY_RUN          0
-#define DEFAULT_FREE_COLOR_R   255
-#define DEFAULT_FREE_COLOR_G   255
-#define DEFAULT_FREE_COLOR_B   255
-#define DEFAULT_GRID_COLOR_R     0
-#define DEFAULT_GRID_COLOR_G     0
-#define DEFAULT_GRID_COLOR_B     0
-#define DEFAULT_GRID_LINE_WIDTH  1
-#define DEFAULT_MAP_BLOCK_SIZE   4
-#define DEFAULT_MINIMIZE_TO_SYSTEM_TRAY          0
-#define DEFAULT_SECONDS_FOR_SHUTDOWN_REJECTION  60
-#define DEFAULT_SHOW_MENU_ICONS                  1
-#define DEFAULT_SHOW_PROGRESS_IN_TASKBAR         1
-#define DEFAULT_SHOW_TASKBAR_ICON_OVERLAY        1
-
-/* user defined language IDs
-   Important: never change their order when adding new translations
-   or the selection of the user will be broken */
-enum {
-    wxUD_LANGUAGE_BOSNIAN = wxLANGUAGE_USER_DEFINED+1,
-    wxUD_LANGUAGE_ILOKO,
-    wxUD_LANGUAGE_KAPAMPANGAN,
-    wxUD_LANGUAGE_NORWEGIAN,
-    wxUD_LANGUAGE_WARAY_WARAY,
-    wxUD_LANGUAGE_LAST          // must always be last in the list
-};
 
 // =======================================================================
 //                           Global variables
