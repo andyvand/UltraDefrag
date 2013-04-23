@@ -260,15 +260,7 @@ void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnSplitChanged(wxSplitterEvent& event)
 {
-    // shrink the last list column so the vertical
-    // scrollbar will not pull horizontal one out
-    //if(m_vList->GetCountPerPage() >= m_vList->GetItemCount())
-    //    m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
-
-    // ensure that the list control will cover integral number of items
     PostCommandEvent(this,ID_AdjustListHeight);
-
-    // adjust list columns once again to reflect the actual layout
     PostCommandEvent(this,ID_AdjustListColumns);
 
     event.Skip();
@@ -434,10 +426,6 @@ void MainFrame::PopulateList(wxCommandEvent& event)
 
     m_vList->DeleteAllItems();
 
-    // shrink the last list column so the vertical
-    // scrollbar will not pull horizontal one out
-    //m_vList->SetColumnWidth(m_vList->GetColumnCount() - 1,0);
-
     for(int i = 0; v[i].letter; i++){
         wxString label;
         label.Printf(wxT("%-10ls %ls"),
@@ -457,7 +445,6 @@ void MainFrame::PopulateList(wxCommandEvent& event)
         ProcessEvent(e);
     }
 
-    // adjust list columns once again to reflect the actual layout
     ProcessCommandEvent(ID_AdjustListColumns);
 
     m_vList->Select(0);
