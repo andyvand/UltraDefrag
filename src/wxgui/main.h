@@ -546,7 +546,14 @@ private:
     bool m_maximized;
     int  m_separatorPosition;
 
-    // list column widths
+    // list column widths ratios:
+    // 0.5 means that a column acquires
+    // a half of the entire list width
+    double m_r[LIST_COLUMNS];
+
+    // list column widths:
+    // used to check whether the user
+    // has changed them or not
     int m_w[LIST_COLUMNS];
 
     // list height

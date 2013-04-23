@@ -61,22 +61,9 @@ void MainFrame::InitVolList()
 
     // adjust widths so all the columns will fit to the window
     int width = m_vList->GetClientSize().GetWidth();
-    int cwidth = 0;
-    for(int i = 0; i < LIST_COLUMNS; i++) cwidth += m_w[i];
-
     int lastColumnWidth = width;
 
-    double scale = (double)width / (double)cwidth;
-    for(int i = 0; i < (LIST_COLUMNS - 1); i++) {
-        m_w[i] = (int)floor(scale * (double)m_w[i]);
-        lastColumnWidth -= m_w[i];
-    }
-
-    if(m_w[LIST_COLUMNS - 1]) // otherwise nothing to scale
-        m_w[LIST_COLUMNS - 1] = lastColumnWidth;
-
     dtrace("client width ......... %d", width);
-    dtrace("total column width ... %d", cwidth);
 
     int format[] = {
         wxLIST_FORMAT_LEFT, wxLIST_FORMAT_LEFT,
@@ -84,10 +71,20 @@ void MainFrame::InitVolList()
         wxLIST_FORMAT_RIGHT, wxLIST_FORMAT_RIGHT
     };
 
-    for(int i = 0; i < LIST_COLUMNS; i++) {
-        m_vList->InsertColumn(i, wxEmptyString, format[i], m_w[i]);
-        dtrace("column %d width ....... %d", i, m_w[i]);
+    for(int i = 0; i < LIST_COLUMNS - 1; i++) {
+        int w = m_w[i] = (int)floor(m_r[i] * width);
+        m_vList->InsertColumn(i, wxEmptyString, format[i], w);
+        dtrace("column %d width ....... %d", i, w);
+        lastColumnWidth -= w;
     }
+
+    int w = (int)floor(m_r[LIST_COLUMNS - 1] * width);
+    if(w > 0) w = lastColumnWidth;
+    m_w[LIST_COLUMNS - 1] = w;
+    m_vList->InsertColumn(LIST_COLUMNS - 1,
+        wxEmptyString, format[LIST_COLUMNS - 1], w
+    );
+    dtrace("column %d width ....... %d", LIST_COLUMNS - 1, w);
 
     // attach drive icons
     int size = g_iconSize;
@@ -184,10 +181,17 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
     if(width == 0) width = m_vList->GetClientSize().GetWidth();
 
     // get current column widths, since user could have changed them
-    int cwidth = 0;
-    for(int i = 0; i < LIST_COLUMNS; i++) {
-        m_w[i] = m_vList->GetColumnWidth(i);
-        cwidth += m_w[i];
+    int cwidth = 0; bool changed = false;
+    for(int i = 0; i < LIST_COLUMNS; i++){
+        int w = m_vList->GetColumnWidth(i);
+        cwidth += w;
+        if(w != m_w[i])
+            changed = true;
+    }
+
+    if(changed){
+        for(int i = 0; i < LIST_COLUMNS; i++)
+            m_r[i] = (double)m_vList->GetColumnWidth(i) / (double)cwidth;
     }
 
     int lastColumnWidth = width;
@@ -198,19 +202,19 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
     dtrace("client width ......... %d", width);
     dtrace("total column width ... %d", cwidth);
 
-    double scale = (double)width / (double)cwidth;
     for(int i = 0; i < (LIST_COLUMNS - 1); i++) {
-        m_w[i] = (int)floor(scale * (double)m_w[i]);
-        m_vList->SetColumnWidth(i,m_w[i]);
-        lastColumnWidth -= m_w[i];
-        dtrace("column %d width ....... %d", i, m_w[i]);
+        int w = m_w[i] = (int)floor(m_r[i] * width);
+        m_vList->SetColumnWidth(i, w);
+        dtrace("column %d width ....... %d", i, w);
+        lastColumnWidth -= w;
     }
 
-    if(m_w[LIST_COLUMNS - 1]) // otherwise nothing to scale
-        m_w[LIST_COLUMNS - 1] = lastColumnWidth;
+    int w = (int)floor(m_r[LIST_COLUMNS - 1] * width);
+    if(w > 0) w = lastColumnWidth;
+    m_w[LIST_COLUMNS - 1] = w;
 
-    m_vList->SetColumnWidth(LIST_COLUMNS - 1,m_w[LIST_COLUMNS - 1]);
-    dtrace("column %d width ....... %d", LIST_COLUMNS - 1, m_w[LIST_COLUMNS - 1]);
+    m_vList->SetColumnWidth(LIST_COLUMNS - 1, w);
+    dtrace("column %d width ....... %d", LIST_COLUMNS - 1, w);
 }
 
 void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
