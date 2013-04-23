@@ -262,6 +262,7 @@ void MainFrame::OnSplitChanged(wxSplitterEvent& event)
 {
     PostCommandEvent(this,ID_AdjustListHeight);
     PostCommandEvent(this,ID_AdjustListColumns);
+    PostCommandEvent(this,ID_RedrawMap);
 
     event.Skip();
 }
