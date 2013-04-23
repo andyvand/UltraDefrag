@@ -88,10 +88,14 @@ void MainFrame::ReadAppConfiguration()
         (long)DPI(DEFAULT_LIST_HEIGHT)
     );
 
-    int w[LIST_COLUMNS] = {110, 110, 110, 110, 110, 65};
+    double r[LIST_COLUMNS] = {
+        110.0/615, 110.0/615, 110.0/615,
+        110.0/615, 110.0/615, 65.0/615
+    };
     for(int i = 0; i < LIST_COLUMNS; i++){
-        cfg->Read(wxString::Format(wxT("/DrivesList/width%d"),i),&m_w[i],w[i]);
-        dtrace("%d column width ... %d", i, m_w[i]);
+        cfg->Read(wxString::Format(wxT("/DrivesList/width%d"),i),
+            &m_r[i], r[i]
+        );
     }
 
     cfg->Read(wxT("/Algorithm/RepeatAction"),&m_repeat,false);
@@ -115,9 +119,13 @@ void MainFrame::SaveAppConfiguration()
     cfg->Write(wxT("/MainFrame/SeparatorPosition"),
         (long)m_splitter->GetSashPosition());
 
+    int cwidth = 0;
+    for(int i = 0; i < LIST_COLUMNS; i++)
+        cwidth += m_vList->GetColumnWidth(i);
+
     for(int i = 0; i < LIST_COLUMNS; i++){
         cfg->Write(wxString::Format(wxT("/DrivesList/width%d"),i),
-            m_vList->GetColumnWidth(i)
+            (double)m_vList->GetColumnWidth(i) / (double)cwidth
         );
     }
 
