@@ -22,8 +22,8 @@
 
   Version 6.0.2 2013-05-04
   ------------------------------------------------------------------------------
-    - the FAQ section of the handbook now contains information about how to set
-      up v6 to optimize similar to v5
+    - the FAQ section of the handbook now contains information about how to
+      set up v6 to optimize similarly to v5
     - the Explorer context menu is now reduced to a single entry with sub-menu
       on Windows 7 and above
     - the following translations were updated:
