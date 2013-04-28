@@ -728,7 +728,7 @@ SkipMove:
         WriteRegStr HKCR "Drive\udefragW7menu\shell\udefrag-folder"                  "Icon" $1
         WriteRegStr HKCR "Drive\udefragW7menu\shell\udefrag-folder\command"          ""     $R1
 
-        StrCpy $R0 "&Fully Optimize"
+        StrCpy $R0 "&Fully optimize"
         StrCpy $R1 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -o -v $\"%1$\""
         WriteRegStr HKCR "Drive\udefragW7menu\shell\udefrag-drive-optimize"          ""     $R0
         WriteRegStr HKCR "Drive\udefragW7menu\shell\udefrag-drive-optimize\command"  ""     $R1
@@ -778,7 +778,7 @@ SkipMove:
             WriteRegStr HKCR "Drive\shell\udefrag-folder"                  ""     $R0
             WriteRegStr HKCR "Drive\shell\udefrag-folder\command"          ""     $R1
 
-            StrCpy $R0 "&Fully Optimize with UltraDefrag"
+            StrCpy $R0 "&Fully optimize with UltraDefrag"
             StrCpy $R1 "$\"$SYSDIR\udefrag.exe$\" --shellex --folder -o -v $\"%1$\""
             WriteRegStr HKCR "Drive\shell\udefrag-drive-optimize"          ""     $R0
             WriteRegStr HKCR "Drive\shell\udefrag-drive-optimize\command"  ""     $R1
