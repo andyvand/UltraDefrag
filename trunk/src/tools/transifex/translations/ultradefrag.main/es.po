@@ -4,12 +4,13 @@
 # 
 # Translators:
 # inye <j.contrerasferrada@gmail.com>, 2013
+# msoko <sokolovitch@yahoo.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-27 10:14+0000\n"
+"PO-Revision-Date: 2013-04-28 10:08+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,11 +25,11 @@ msgstr "Acerca de UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Una utilidad de desfragmentación de código abierto."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Créditos y licencias se encuentran en el manual."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
@@ -224,19 +225,19 @@ msgstr "Actualizar"
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "&No Comprobar"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Revisar &sólo versiones estables"
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "Revisar &todas las versiones"
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "&Comprobar ahora"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -425,7 +426,7 @@ msgstr "Ocultar"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Version %ls está disponible para descarga!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
