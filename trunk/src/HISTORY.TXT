@@ -22,6 +22,8 @@
 
   Version 6.0.2 2013-05-
   ------------------------------------------------------------------------------
+    - the FAQ section of the handbook now contains information about how to set
+      up v6 to optimize similar to v5
     - the following translations were updated:
 
       Albanian, Danish, Filipino (Tagalog), Indonesian (Bahasa Indonesia),
