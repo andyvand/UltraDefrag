@@ -4,6 +4,7 @@
 # 
 # Translators:
 # mascatur <satyafree@gmail.com>, 2013
+# operamaniac <rizkiaulia.r@gmail.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
@@ -11,8 +12,8 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-28 10:08+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-05-15 12:52+0000\n"
+"Last-Translator: operamaniac <rizkiaulia.r@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,11 +27,11 @@ msgstr "Tentang UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr "Alat defrag yang bebas"
+msgstr "Sebuah alat defrag dengan sumber kode terbuka"
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Kredit dan lisensi tercantum dalam buku panduan"
 
 #: about.cpp:95
 msgid "UltraDefrag website"
@@ -74,7 +75,7 @@ msgstr "Pengoptimalan &MFT"
 
 #: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
-msgstr ""
+msgstr "Je&da"
 
 #: i18n.cpp:133
 msgid "&Stop"
@@ -222,23 +223,23 @@ msgstr "Keterangan &Peta Cluster"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Upgrade"
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "&Jangan pernah cek"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Cek rilis stabil saja"
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "Cek &senua rilis"
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "&Cek sekarang"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -246,7 +247,7 @@ msgstr "&Tentang"
 
 #: i18n.cpp:196
 msgid "&Debug"
-msgstr ""
+msgstr "&Debug"
 
 #: i18n.cpp:197 utils.cpp:410
 msgid "Open &log"
@@ -407,7 +408,7 @@ msgstr "termampatkan"
 
 #: taskbar.cpp:199
 msgid "The job is paused"
-msgstr ""
+msgstr "Tugas di jeda"
 
 #: taskbar.cpp:204
 msgid "The job is running"
@@ -427,7 +428,7 @@ msgstr "Sembunyikan"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Rilis %ls sudah tersedia untuk di unduh!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -435,11 +436,11 @@ msgstr "Anda dapat meng-upgrade saya ^-^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
-msgstr ""
+msgstr "&Batalkan"
 
 #: utils.cpp:413
 msgid "Error!"
-msgstr ""
+msgstr "Terjadi Kesalahan!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
