@@ -4,13 +4,14 @@
 # 
 # Translators:
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Wasilis <m.wasilis@yahoo.de>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-28 10:08+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-05-06 01:45+0000\n"
+"Last-Translator: Wasilis <m.wasilis@yahoo.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +25,15 @@ msgstr "Σχετικά με το UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "An open source defragmentation utility."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Οι πιστώσεις και τα πιστοποιητικά που αναφέρονται στο εγχειρίδιο. "
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag ιστοσελιδα"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -220,23 +221,23 @@ msgstr "Χάρτης συστοιχιών και υπόμνημα"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "Αναβάθμιση "
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "Κανενας ελεγχος"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Ελέγξτε σταθερές εκδόσεις μόνο "
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "Ελέγξτε και όλα τα δελτία "
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "Ελεγχος τωρα"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -405,7 +406,7 @@ msgstr "συμπιεσμένα"
 
 #: taskbar.cpp:199
 msgid "The job is paused"
-msgstr ""
+msgstr "Η διεργασία διακοπηκε"
 
 #: taskbar.cpp:204
 msgid "The job is running"
@@ -425,7 +426,7 @@ msgstr "Απόκρυψη"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Η εκδοση %ls ειναι διαθεσιμη για λυψη!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -433,11 +434,11 @@ msgstr "Δυνατότητα αναβάθμισης ^-^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
-msgstr ""
+msgstr "Διακοπη"
 
 #: utils.cpp:413
 msgid "Error!"
-msgstr ""
+msgstr "Σφαλμα!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
