@@ -20,7 +20,7 @@
 
                                     ***
 
-  Version 6.0.2 2013-05-04
+  Version 6.0.2 2013-05-17
   ------------------------------------------------------------------------------
     - the FAQ section of the handbook now contains information about how to
       set up v6 to optimize similarly to v5
