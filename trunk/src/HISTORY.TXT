@@ -4,10 +4,12 @@
   ------------------------------------------------------------------------------
     beta1:
     - GUI and command line tool reimplemented on top of wxWidgets library
-    - online translaton migrated from http://ultradefrag.wikispaces.com/
+    - online translation migrated from http://ultradefrag.wikispaces.com/
       to http://www.transifex.com/projects/p/ultradefrag/
     - initial language selection is now done by the GUI instead of the installer
     - ability to hide drives list columns through their resizing added
+    - ability to apply for all or only stable update notifications added
+    - multicolumn language selection menu implemented
     - internal GUI settings moved from guiopts-internals.lua to gui.ini file
     - Windows NT 4.0 and Windows 2000 support dropped due to poor API support
     - useless font selection dialog removed from GUI (adjust Windows theme instead)
