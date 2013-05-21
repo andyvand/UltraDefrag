@@ -85,7 +85,7 @@ echo.
 :: download all translations from transifex
 set force=-f
 if "%~1" neq "--lng2po" set force=
-if exist tx.exe tx.exe pull -a %force% || popd && goto fail
+if exist tx.exe tx.exe pull -a -s %force% || popd && goto fail
 echo.
 popd
 

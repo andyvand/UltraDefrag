@@ -31,7 +31,7 @@ if not exist "%GNUWIN32_DIR%" goto gnuwin32_missing
 
 :: download all translations from transifex
 pushd "%~dp0\tools\transifex"
-if exist tx.exe tx.exe pull -a || popd && goto fail
+if exist tx.exe tx.exe pull -a -s || popd && goto fail
 echo.
 popd
 
