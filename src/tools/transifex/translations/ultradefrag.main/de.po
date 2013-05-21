@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
+"PO-Revision-Date: 2013-05-21 10:24+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/ultradefrag/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -335,7 +335,7 @@ msgstr "Bitte bestätigen"
 
 #: shutdown.cpp:107
 msgid "Do you really want to hibernate when done?"
-msgstr "Wollen Sie nach Abschluss den Computer wirklich in den Ruhezustand versetzen?"
+msgstr "Wollen Sie den Computer wirklich in den Ruhezustand versetzen?"
 
 #. : This expands to "60 seconds until hibernation"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -347,7 +347,7 @@ msgstr "%lu Sekunden bis zum Ruhezustand"
 
 #: shutdown.cpp:113
 msgid "Do you really want to log off when done?"
-msgstr "Wollen Sie sich nach Abschluss wirklich abmelden?"
+msgstr "Wollen Sie sich wirklich abmelden?"
 
 #. : This expands to "60 seconds until logoff"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -359,7 +359,7 @@ msgstr "%lu Sekunden bis zur Abmeldung"
 
 #: shutdown.cpp:119
 msgid "Do you really want to reboot when done?"
-msgstr "Wollen Sie nach Abschluss den Computer wirklich neu starten?"
+msgstr "Wollen Sie den Computer wirklich neu starten?"
 
 #. : This expands to "60 seconds until reboot"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -371,7 +371,7 @@ msgstr "%lu Sekunden bis zum Neustart"
 
 #: shutdown.cpp:125
 msgid "Do you really want to shutdown when done?"
-msgstr "Wollen Sie nach Abschluss den Computer wirklich herunterfahren?"
+msgstr "Wollen Sie den Computer wirklich herunterfahren?"
 
 #. : This expands to "60 seconds until shutdown"
 #. : Make sure that "%lu" is included in the translated string at the correct
