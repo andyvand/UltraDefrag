@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Blankie <eblankestijn@hotmail.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-05-21 18:03+0000\n"
+"Last-Translator: Blankie <eblankestijn@hotmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/ultradefrag/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +25,15 @@ msgstr "Over UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Een \"open source\" defragmentieprogramma"
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Tegoeden en licenties staan genoteerd in het handboek"
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag website"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -220,23 +221,23 @@ msgstr "&legenda Clusterkaart"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Opwaardering"
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "&Controleer nooit"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Controleer &alleen stabiele versies"
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "Controleer &alle versies"
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "&Controleer nu"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -405,7 +406,7 @@ msgstr "gecomprimeerd"
 
 #: taskbar.cpp:199
 msgid "The job is paused"
-msgstr ""
+msgstr "De opdracht is gepauzeerd"
 
 #: taskbar.cpp:204
 msgid "The job is running"
@@ -425,7 +426,7 @@ msgstr "Verbergen"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Versie %Is beschikbaar om te downloaden"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -433,11 +434,11 @@ msgstr "U kunt mij upgraden ^-^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
-msgstr ""
+msgstr "&Annuleer"
 
 #: utils.cpp:413
 msgid "Error!"
-msgstr ""
+msgstr "Fout!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
