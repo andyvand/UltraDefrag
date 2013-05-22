@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# UGLT <info@uglt.org>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-05-22 06:33+0000\n"
+"Last-Translator: UGLT <info@uglt.org>\n"
 "Language-Team: Georgian (http://www.transifex.com/projects/p/ultradefrag/language/ka/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +25,15 @@ msgstr "UltraDefrag-ის შესახებ"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "ღია კოდის პროგრამა დეფრაგმენტაციისთვის."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "მონაწილეები და ლიცენზიები წარმოდგენილია სახელმძღვანელოში."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag-ის ვებ-გვერდი"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -140,7 +141,7 @@ msgstr "&ჩატვირთვის დროს სკანირება
 
 #: i18n.cpp:156
 msgid "&Sorting"
-msgstr "&ხარისხდება"
+msgstr "&დახარისხება"
 
 #: i18n.cpp:157
 msgid "&Reports"
@@ -220,23 +221,23 @@ msgstr "კლასტერების რუკის ლეგენდა"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&გაახლება"
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "&არ მოძებნო"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "&მხოლოდ სტაბილური ვერსიების ძებნა"
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "&ყველა ვერსიის ძებნა"
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "&შემოწმება"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -405,7 +406,7 @@ msgstr "შეკუმშულია"
 
 #: taskbar.cpp:199
 msgid "The job is paused"
-msgstr ""
+msgstr "შეჩერებულია"
 
 #: taskbar.cpp:204
 msgid "The job is running"
@@ -425,7 +426,7 @@ msgstr "დამალვა"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "გადმოსაწერად ხელმისაწვდომია %ls ვერსია!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -433,11 +434,11 @@ msgstr "შეგიძლია გამაუმჯობესო ^_^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
-msgstr ""
+msgstr "&გაუქმება"
 
 #: utils.cpp:413
 msgid "Error!"
-msgstr ""
+msgstr "შეცდომა!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
