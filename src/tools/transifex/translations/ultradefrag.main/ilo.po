@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# joemaza <joseph.maza@gmail.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
@@ -10,8 +11,8 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-05-22 19:20+0000\n"
+"Last-Translator: joemaza <joseph.maza@gmail.com>\n"
 "Language-Team: Iloko (http://www.transifex.com/projects/p/ultradefrag/language/ilo/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -261,7 +262,7 @@ msgstr "Pamayaan iti Panagrugi"
 
 #: i18n.cpp:210
 msgid "Drive"
-msgstr "Tomo"
+msgstr "Drive"
 
 #: i18n.cpp:211 i18n.cpp:267
 msgid "Status"
@@ -294,15 +295,15 @@ msgstr "Basaen ti Kangrunaan a Panid"
 
 #: i18n.cpp:261
 msgid "View report options"
-msgstr "Imatangan ti opsion ti padamag"
+msgstr "Ipadlaw dagiti opsion ti padamag"
 
 #: i18n.cpp:262
 msgid "Powered by Lua"
-msgstr "Umandar babaen ti Lua"
+msgstr "Kabaelan ti Lua"
 
 #: i18n.cpp:263
 msgid "Fragments"
-msgstr "pisi"
+msgstr "Pisi"
 
 #: i18n.cpp:264
 msgid "Size"
@@ -310,11 +311,11 @@ msgstr "kadakkel"
 
 #: i18n.cpp:265
 msgid "Filename"
-msgstr "nagan ti intar"
+msgstr "Nagan ti intar"
 
 #: i18n.cpp:266
 msgid "Comment"
-msgstr "ballaag"
+msgstr "Ballaag"
 
 #: i18n.cpp:268
 msgid "locked"
@@ -390,19 +391,19 @@ msgstr "&Saan"
 
 #: statbar.cpp:92
 msgid "folders"
-msgstr "Karpeta"
+msgstr "karpeta"
 
 #: statbar.cpp:93
 msgid "files"
-msgstr "Intar"
+msgstr "intar"
 
 #: statbar.cpp:94
 msgid "fragmented"
-msgstr "Napisi"
+msgstr "napisi"
 
 #: statbar.cpp:95
 msgid "compressed"
-msgstr "Sinensen"
+msgstr "sinensen"
 
 #: taskbar.cpp:199
 msgid "The job is paused"
@@ -426,7 +427,7 @@ msgstr "Ilemmeng"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Maiyulogen ti %ls!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
