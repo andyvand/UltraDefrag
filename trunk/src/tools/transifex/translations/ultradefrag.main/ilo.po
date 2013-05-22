@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-05-22 19:20+0000\n"
+"PO-Revision-Date: 2013-05-22 20:02+0000\n"
 "Last-Translator: joemaza <joseph.maza@gmail.com>\n"
 "Language-Team: Iloko (http://www.transifex.com/projects/p/ultradefrag/language/ilo/)\n"
 "MIME-Version: 1.0\n"
@@ -30,11 +30,11 @@ msgstr ""
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Nakalista dagiti pammigbig ken lisensia iti manual."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Website ti UltraDefrag"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -74,7 +74,7 @@ msgstr "Ikanatad ti M&FT"
 
 #: i18n.cpp:132 tray.cpp:80
 msgid "Pa&use"
-msgstr ""
+msgstr "Iga&wid"
 
 #: i18n.cpp:133
 msgid "&Stop"
@@ -130,15 +130,15 @@ msgstr "I&ddepen"
 
 #: i18n.cpp:151
 msgid "&Show report"
-msgstr "Ipadla&w"
+msgstr "Ipadla&w ti padamag"
 
 #: i18n.cpp:154
 msgid "&Language"
-msgstr "Pagsa&sao"
+msgstr "Pagsas&sao"
 
 #: i18n.cpp:155 i18n.cpp:201
 msgid "&Boot time scan"
-msgstr "&Usigen iti Apagrugi"
+msgstr "&Usigen iti Apagrugina"
 
 #: i18n.cpp:156
 msgid "&Sorting"
@@ -150,11 +150,11 @@ msgstr "Pa&damag"
 
 #: i18n.cpp:160
 msgid "&View change log"
-msgstr "Ipadlaw ti &Rehistro ti Pakabaliwan"
+msgstr "Ipadlaw ti &rehistro ti Pakabaliwan"
 
 #: i18n.cpp:161
 msgid "View translation &report"
-msgstr "Ipadlaw ti &Padamag ti Kaulog"
+msgstr "Ipadlaw ti &padamag ti kaulog"
 
 #: i18n.cpp:162
 msgid "&Translations folder"
@@ -170,7 +170,7 @@ msgstr "&Bista"
 
 #: i18n.cpp:169
 msgid "&Enable"
-msgstr "&Paandaren"
+msgstr "&Pagandaren"
 
 #: i18n.cpp:170
 msgid "&Script"
@@ -222,23 +222,23 @@ msgstr "&Simbolo ti Mapa ti Raay"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "Ip&alaing"
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "&Nungka amaden"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Amaden laeng ti na&simpa a bersion"
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "Amaden &amin a bersion"
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "&Amaden itan"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -246,7 +246,7 @@ msgstr "&Maipapan iti"
 
 #: i18n.cpp:196
 msgid "&Debug"
-msgstr "&Depura"
+msgstr "&Depuraen"
 
 #: i18n.cpp:197 utils.cpp:410
 msgid "Open &log"
@@ -435,11 +435,11 @@ msgstr "Mapalaingennak ^-^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
-msgstr ""
+msgstr "I&babawi"
 
 #: utils.cpp:413
 msgid "Error!"
-msgstr ""
+msgstr "Kammali!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
