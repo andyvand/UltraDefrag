@@ -23,13 +23,7 @@
  * @par Online translation
  *      This way is useful if you like to work on the latest translation source.
  *
- * <h1>Currently not all languages are supported by Transifex for online translation</h1>
- * @par Kapampangan and Wáray-Wáray
- *      Use the offline translation and request the current translation file from the translation maintainer
- *      <span class="simple">(stefanpe@users.sourceforge.net)</span>\n
- *      The folder <b>"%UD_INSTALL_DIR%\po"</b> contains the translation resources at the release date.\n
- *      The files are saved as <b>{language code}.po</b>, where the language codes are based on the
- *      <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 Language Code List</a>.
+ * <h1>Some translations have changed their name</h1>
  * @par Chinese (Simplified)
  *      Use <b>Chinese (China)</b> instead.
  * @par Chinese (Traditional)
