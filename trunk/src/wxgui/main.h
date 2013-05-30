@@ -229,6 +229,8 @@ enum {
     wxUD_LANGUAGE_KAPAMPANGAN,
     wxUD_LANGUAGE_NORWEGIAN,
     wxUD_LANGUAGE_WARAY_WARAY,
+    wxUD_LANGUAGE_ACOLI,
+    wxUD_LANGUAGE_SINHALA_SRI_LANKA,
     wxUD_LANGUAGE_LAST          // must always be last in the list
 };
 
