@@ -77,11 +77,13 @@ void App::InitLocale()
 
     // add translations missing from wxWidgets
     wxLanguageInfo info;
-    UD_LNG(wxUD_LANGUAGE_BOSNIAN,     "bs" , LANG_BOSNIAN  , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
-    UD_LNG(wxUD_LANGUAGE_ILOKO,       "ilo", 0             , 0              , wxLayout_LeftToRight, "Iloko")
-    UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN, "pam", 0             , 0              , wxLayout_LeftToRight, "Kapampangan")
-    UD_LNG(wxUD_LANGUAGE_NORWEGIAN,   "no" , LANG_NORWEGIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Norwegian")
-    UD_LNG(wxUD_LANGUAGE_WARAY_WARAY, "war", 0             , 0              , wxLayout_LeftToRight, "Waray-Waray")
+    UD_LNG(wxUD_LANGUAGE_BOSNIAN,           "bs"   , LANG_BOSNIAN  , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
+    UD_LNG(wxUD_LANGUAGE_ILOKO,             "ilo"  , 0             , 0              , wxLayout_LeftToRight, "Iloko")
+    UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pam"  , 0             , 0              , wxLayout_LeftToRight, "Kapampangan")
+    UD_LNG(wxUD_LANGUAGE_NORWEGIAN,         "no"   , LANG_NORWEGIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Norwegian")
+    UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "war"  , 0             , 0              , wxLayout_LeftToRight, "Waray-Waray")
+    UD_LNG(wxUD_LANGUAGE_ACOLI,             "ach"  , 0             , 0              , wxLayout_LeftToRight, "Acoli")
+    UD_LNG(wxUD_LANGUAGE_SINHALA_SRI_LANKA, "si_LK", 0             , 0              , wxLayout_LeftToRight, "Sinhala (Sri Lanka)")
 
     // get initial language selection
     int id = wxLANGUAGE_ENGLISH_US;
