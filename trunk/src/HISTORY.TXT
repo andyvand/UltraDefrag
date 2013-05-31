@@ -24,6 +24,8 @@
 
   Version 6.0.3 2013-06-
   ------------------------------------------------------------------------------
+    - Corrected a problem where the Windows folder was not detected properly
+      if the terminal services were activated
     - the following translations were updated:
 
       Thai
