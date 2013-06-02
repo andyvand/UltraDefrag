@@ -1009,8 +1009,6 @@ done:
 int optimize(udefrag_job_parameters *jp)
 {
     int result, overall_result = -1;
-    ULONGLONG extra_clusters = 0;
-    int opt_dirs, opt_mft;
     
     /* reset filters */
     release_options(jp);
@@ -1027,16 +1025,13 @@ int optimize(udefrag_job_parameters *jp)
     
     /* reset counters */
     jp->pi.processed_clusters = 0;
-    opt_dirs = (jp->is_fat && jp->win_version > WINDOWS_2K) ? 1 : 0;
-    opt_mft = (jp->fs_type == FS_NTFS && jp->win_version > WINDOWS_2K) ? 1 : 0;
-    if(opt_dirs) extra_clusters += opt_dirs_cc_routine(jp);
-    if(opt_mft) extra_clusters += opt_mft_cc_routine(jp);
     /* we have a chance to move everything to the end and then back */
     /* more precise calculation is difficult */
-    jp->pi.clusters_to_process = count_clusters(jp,0) * 2 + extra_clusters;
+    jp->pi.clusters_to_process = count_clusters(jp,0) * 2;
 
     /* FAT specific: optimize directories */
-    if(opt_dirs){
+    if(jp->is_fat){
+        jp->pi.clusters_to_process += opt_dirs_cc_routine(jp);
         result = optimize_directories(jp);
         if(result == 0){
             /* at least something succeeded */
@@ -1045,7 +1040,8 @@ int optimize(udefrag_job_parameters *jp)
     }
     
     /* NTFS specific: optimize MFT */
-    if(opt_mft){
+    if(jp->fs_type == FS_NTFS){
+        jp->pi.clusters_to_process += opt_mft_cc_routine(jp);
         result = optimize_mft_routine(jp);
         if(result == 0){
             /* at least something succeeded */
