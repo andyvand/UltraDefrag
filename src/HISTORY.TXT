@@ -28,7 +28,7 @@
       if the terminal services were activated
     - the following translations were updated:
 
-      Filipino (Tagalog), Thai
+      Filipino (Tagalog), German, Thai
 
 
   Version 6.0.2 2013-05-17
