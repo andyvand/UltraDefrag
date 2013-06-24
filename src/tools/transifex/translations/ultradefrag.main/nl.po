@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-05-21 18:03+0000\n"
+"PO-Revision-Date: 2013-06-23 20:21+0000\n"
 "Last-Translator: Blankie <eblankestijn@hotmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/ultradefrag/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -93,11 +93,11 @@ msgstr "&Her-scannen harde schijven/media"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
-msgstr "Reparatie drives"
+msgstr "Herstellen drives"
 
 #: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
-msgstr "&Programma afsluiten"
+msgstr "&Afsluiten"
 
 #: i18n.cpp:141
 msgid "&When done"
@@ -141,7 +141,7 @@ msgstr "&Defragmenteren tijdens opstarten Windows"
 
 #: i18n.cpp:156
 msgid "&Sorting"
-msgstr "&Sortering"
+msgstr "&Sorteren"
 
 #: i18n.cpp:157
 msgid "&Reports"
@@ -185,7 +185,7 @@ msgstr "&Sorteren op grootte"
 
 #: i18n.cpp:175
 msgid "By &creation time"
-msgstr "&Sorteren op aanmmaakdatum"
+msgstr "&Sorteren op aanmaakdatum"
 
 #: i18n.cpp:176
 msgid "By last &modification time"
@@ -221,7 +221,7 @@ msgstr "&legenda Clusterkaart"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr "&Opwaardering"
+msgstr "&Opwaarderen"
 
 #: i18n.cpp:189
 msgid "&Never check"
