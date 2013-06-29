@@ -110,9 +110,9 @@ rem Example:  call :compile_pdf ..\doc\handbook letter UltraDefrag_Handbook
     
     doxygen Doxyfile_%2 || goto compilation_failed
 
-    copy /Y .\rsc\*.png                     .\doxy-doc\latex_%2
-    copy /Y ..\..\src\wxgui\res\16x16\*.png .\doxy-doc\latex_%2
-    copy /Y .\rsc\*.sty                     .\doxy-doc\latex_%2
+    rem copy /Y .\rsc\*.png                     .\doxy-doc\latex_%2
+    rem copy /Y ..\..\src\wxgui\res\16x16\*.png .\doxy-doc\latex_%2
+    rem copy /Y .\rsc\*.sty                     .\doxy-doc\latex_%2
 
     :compilation_succeeded
     pushd doxy-doc\latex_%2
