@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-06-23 20:21+0000\n"
+"PO-Revision-Date: 2013-06-27 11:30+0000\n"
 "Last-Translator: Blankie <eblankestijn@hotmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/ultradefrag/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -89,11 +89,11 @@ msgstr "&Verwijderbare media overslaan"
 
 #: i18n.cpp:136
 msgid "&Rescan drives"
-msgstr "&Her-scannen harde schijven/media"
+msgstr "&Opnieuw scannen harde schijven/media"
 
 #: i18n.cpp:137
 msgid "Repair dri&ves"
-msgstr "Herstellen drives"
+msgstr "Herstellen schijven"
 
 #: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
 msgid "E&xit"
@@ -149,7 +149,7 @@ msgstr "&Logboeken"
 
 #: i18n.cpp:160
 msgid "&View change log"
-msgstr "&Rapport met veranderingen"
+msgstr "&Bekijk rapport met veranderingen"
 
 #: i18n.cpp:161
 msgid "View translation &report"
@@ -249,7 +249,7 @@ msgstr "&Fout"
 
 #: i18n.cpp:197 utils.cpp:410
 msgid "Open &log"
-msgstr "&Open rapport"
+msgstr "&Open logboek"
 
 #: i18n.cpp:198
 msgid "Send bug &report"
@@ -273,7 +273,7 @@ msgstr "Fragmentatie"
 
 #: i18n.cpp:213
 msgid "Total space"
-msgstr "Capaciteit"
+msgstr "Totale Capaciteit"
 
 #: i18n.cpp:214
 msgid "Free space"
@@ -318,7 +318,7 @@ msgstr "commentaar"
 
 #: i18n.cpp:268
 msgid "locked"
-msgstr "op slot"
+msgstr "Geblokkeerd"
 
 #: i18n.cpp:269
 msgid "move failed"
@@ -430,7 +430,7 @@ msgstr "Versie %Is beschikbaar om te downloaden"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
-msgstr "U kunt mij upgraden ^-^"
+msgstr "U kunt mij opwaarderen ^-^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
@@ -442,7 +442,7 @@ msgstr "Fout!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
-msgstr "Disk moet worden gerepareerd"
+msgstr "Schijf moet worden hersteld worden"
 
 #: vollist.cpp:340
 msgid "Analyzed"
