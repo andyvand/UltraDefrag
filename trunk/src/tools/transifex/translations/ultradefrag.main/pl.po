@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# cwk <cwk@europe.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
@@ -10,8 +11,8 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-07-03 22:20+0000\n"
+"Last-Translator: cwk <cwk@europe.com>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/ultradefrag/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,15 +26,15 @@ msgstr "O UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Narzędzie do defragmentacji na licencji open source."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Twórcy i licencje są wymienione w podręczniku."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Strona UltraDefrag"
 
 #: i18n.cpp:121
 msgid "&Action"
@@ -221,23 +222,23 @@ msgstr "Objaśnienie mapy dysku"
 
 #: i18n.cpp:188 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Uaktualnienie"
 
 #: i18n.cpp:189
 msgid "&Never check"
-msgstr ""
+msgstr "&Nigdy nie sprawdzaj"
 
 #: i18n.cpp:190
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Sprawdź &tylko stabilne wydania"
 
 #: i18n.cpp:191
 msgid "Check &all releases"
-msgstr ""
+msgstr "Sprawdź &wszystkie wydania"
 
 #: i18n.cpp:192
 msgid "&Check now"
-msgstr ""
+msgstr "&Sprawdź teraz"
 
 #: i18n.cpp:193
 msgid "&About"
@@ -406,7 +407,7 @@ msgstr "skompresowanych"
 
 #: taskbar.cpp:199
 msgid "The job is paused"
-msgstr ""
+msgstr "Zadanie zostanie wstrzymane"
 
 #: taskbar.cpp:204
 msgid "The job is running"
@@ -426,7 +427,7 @@ msgstr "Ukryj"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Wydanie %ls jest dostępne do pobrania!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -434,11 +435,11 @@ msgstr "Możesz mnie uaktualnić ^-^"
 
 #: upgrade.cpp:161 utils.cpp:414
 msgid "&Cancel"
-msgstr ""
+msgstr "&Anuluj"
 
 #: utils.cpp:413
 msgid "Error!"
-msgstr ""
+msgstr "Błąd!"
 
 #: vollist.cpp:305
 msgid "Disk needs to be repaired"
