@@ -359,58 +359,51 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
     }
     if(index >= m_vList->GetItemCount()) return;
 
-    // each job starts with a volume analysis
-    wxString caption = _("Analyzed");
-    if(cacheEntry->pi.current_operation != VOLUME_ANALYSIS){
-        switch(cacheEntry->jobType){
-            case DEFRAGMENTATION_JOB:
-                caption = _("Defragmented");
-                break;
-            case FULL_OPTIMIZATION_JOB:
-            case QUICK_OPTIMIZATION_JOB:
-            case MFT_OPTIMIZATION_JOB:
-                caption = _("Optimized");
-                break;
-            default:
-                break;
-        }
-    }
-    wxString lcaption = caption;
-    lcaption.MakeLower();
-
     wxString status;
     if(cacheEntry->pi.completion_status == 0 || cacheEntry->stopped){
-        if(cacheEntry->pi.pass_number > 1){
-            if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
-                status.Printf(wxT("%5.2lf %% %ls, pass %d, %I64u moves total"),
-                    cacheEntry->pi.percentage,lcaption.wc_str(),
-                    cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
-                );
-            } else {
-                status.Printf(wxT("%5.2lf %% %ls, pass %d"),
-                    cacheEntry->pi.percentage,lcaption.wc_str(),
-                    cacheEntry->pi.pass_number
-                );
-            }
-        } else {
-            if(cacheEntry->pi.current_operation == VOLUME_OPTIMIZATION){
-                status.Printf(wxT("%5.2lf %% %ls, %I64u moves total"),
-                    cacheEntry->pi.percentage,lcaption.wc_str(),
-                    cacheEntry->pi.total_moves
-                );
-            } else {
-                status.Printf(wxT("%5.2lf %% %ls"),
-                    cacheEntry->pi.percentage,lcaption.wc_str()
-                );
-            }
-        }
-    } else {
-        if(cacheEntry->pi.pass_number > 1){
-            status.Printf(wxT("%ls, %d passes needed"),
-                caption.wc_str(),cacheEntry->pi.pass_number
+        if(cacheEntry->pi.current_operation == VOLUME_ANALYSIS){
+            //: Status of the running disk analysis,
+            //: expands to "10 % analyzed".
+            //: Make sure that "%5.2lf" is included in the
+            //: translated string at the correct position.
+            status.Printf(_("%5.2lf %% analyzed"),cacheEntry->pi.percentage);
+        } else if(cacheEntry->jobType == DEFRAGMENTATION_JOB){
+            //: Status of the running disk defragmentation,
+            //: expands to "10 % defragmented, pass 5".
+            //: Make sure that "%5.2lf" and "%d" are included
+            //: in the translated string at the correct positions.
+            status.Printf(_("%5.2lf %% defragmented, pass %d"),
+                cacheEntry->pi.percentage,cacheEntry->pi.pass_number
             );
         } else {
-            status.Printf(wxT("%ls"),caption.wc_str());
+            //: Status of the running disk optimization, expands to
+            //: "10 % optimized, pass 5, 1024 moves total".
+            //: Make sure that "%5.2lf", "%d" and "%I64u" are included
+            //: in the translated string at the correct positions.
+            status.Printf(wxT("%5.2lf %% optimized, pass %d, %I64u moves total"),
+                cacheEntry->pi.percentage,cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
+            );
+        }
+    } else {
+        if(cacheEntry->jobType == ANALYSIS_JOB){
+            //: Status of the completed disk analysis.
+            status = _("Analyzed");
+        } else if(cacheEntry->jobType == DEFRAGMENTATION_JOB){
+            //: Status of the completed disk defragmentation,
+            //: expands to "Defragmented, in 5 passes".
+            //: Make sure that "%d" is included in the
+            //: translated string at the correct position.
+            status.Printf(_("Defragmented, in %d passes"),
+                cacheEntry->pi.pass_number
+            );
+        } else {
+            //: Status of the completed disk optimization, expands to
+            //: "Optimized, in 5 passes, 1024 moves total".
+            //: Make sure that "%d" and "%I64u" are included
+            //: in the translated string at the correct positions.
+            status.Printf(wxT("Optimized, in %d passes, %I64u moves total"),
+                cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
+            );
         }
     }
     m_vList->SetItem(index,1,status);
