@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-08 19:16+0200\n"
-"PO-Revision-Date: 2013-07-08 17:16+0000\n"
+"PO-Revision-Date: 2013-07-08 17:30+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/ultradefrag/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -166,7 +166,7 @@ msgstr "&Aktuelle Übersetzung einreichen"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "&Optionen"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -452,7 +452,7 @@ msgstr "Laufwerk muss repariert werden"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% analysiert"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -461,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% defragmentiert, %d Durchlauf"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -475,4 +475,4 @@ msgstr "Analysiert"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Defragmentiert in %d Durchläufen"
