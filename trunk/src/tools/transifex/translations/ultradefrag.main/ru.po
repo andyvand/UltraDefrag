@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
+"POT-Creation-Date: 2013-07-08 19:16+0200\n"
+"PO-Revision-Date: 2013-07-08 17:16+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/ultradefrag/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -36,296 +36,296 @@ msgstr "Участники и лицензии перечислены в спр�
 msgid "UltraDefrag website"
 msgstr "Сайт UltraDefrag"
 
-#: i18n.cpp:121
+#: i18n.cpp:129
 msgid "&Action"
 msgstr "&Действия"
 
-#: i18n.cpp:122
+#: i18n.cpp:130
 msgid "&Report"
 msgstr "&Отчёт"
 
-#: i18n.cpp:123
+#: i18n.cpp:131
 msgid "&Settings"
 msgstr "&Настройки"
 
-#: i18n.cpp:124 i18n.cpp:205
+#: i18n.cpp:132 i18n.cpp:213
 msgid "&Help"
 msgstr "&Справка"
 
-#: i18n.cpp:127
+#: i18n.cpp:135
 msgid "&Analyze"
 msgstr "&Анализ"
 
-#: i18n.cpp:128
+#: i18n.cpp:136
 msgid "&Defragment"
 msgstr "&Дефрагментация"
 
-#: i18n.cpp:129
+#: i18n.cpp:137
 msgid "&Quick optimization"
 msgstr "&Быстрая оптимизация"
 
-#: i18n.cpp:130
+#: i18n.cpp:138
 msgid "&Full optimization"
 msgstr "По&лная оптимизация"
 
-#: i18n.cpp:131
+#: i18n.cpp:139
 msgid "&Optimize MFT"
 msgstr "Оптимизация &МFT"
 
-#: i18n.cpp:132 tray.cpp:80
+#: i18n.cpp:140 tray.cpp:80
 msgid "Pa&use"
 msgstr "&Пауза"
 
-#: i18n.cpp:133
+#: i18n.cpp:141
 msgid "&Stop"
 msgstr "&Стоп"
 
-#: i18n.cpp:134
+#: i18n.cpp:142
 msgid "Re&peat action"
 msgstr "&Разрешить повтор"
 
-#: i18n.cpp:135
+#: i18n.cpp:143
 msgid "Skip removable &media"
 msgstr "Пропустить &сменные носители"
 
-#: i18n.cpp:136
+#: i18n.cpp:144
 msgid "&Rescan drives"
 msgstr "П&ересканировать диски"
 
-#: i18n.cpp:137
+#: i18n.cpp:145
 msgid "Repair dri&ves"
 msgstr "&Исправить диски"
 
-#: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
+#: i18n.cpp:146 i18n.cpp:151 tray.cpp:85
 msgid "E&xit"
 msgstr "&Выйти"
 
-#: i18n.cpp:141
+#: i18n.cpp:149
 msgid "&When done"
 msgstr "После &завершения"
 
-#: i18n.cpp:142
+#: i18n.cpp:150
 msgid "&None"
 msgstr "&Ничего не делать"
 
-#: i18n.cpp:144
+#: i18n.cpp:152
 msgid "Stan&dby"
 msgstr "Перейти в режим &ожидания"
 
-#: i18n.cpp:145
+#: i18n.cpp:153
 msgid "&Hibernate"
 msgstr "Перейти в &спящий режим"
 
-#: i18n.cpp:146
+#: i18n.cpp:154
 msgid "&Logoff"
 msgstr "Вы&йти из системы"
 
-#: i18n.cpp:147
+#: i18n.cpp:155
 msgid "&Reboot"
 msgstr "&Перезагрузить компьютер"
 
-#: i18n.cpp:148
+#: i18n.cpp:156
 msgid "&Shutdown"
 msgstr "&Выключить компьютер"
 
-#: i18n.cpp:151
+#: i18n.cpp:159
 msgid "&Show report"
 msgstr "&Показать отчёт"
 
-#: i18n.cpp:154
+#: i18n.cpp:162
 msgid "&Language"
 msgstr "&Язык"
 
-#: i18n.cpp:155 i18n.cpp:201
+#: i18n.cpp:163 i18n.cpp:209
 msgid "&Boot time scan"
 msgstr "&Запуск перед загрузкой Windows"
 
-#: i18n.cpp:156
+#: i18n.cpp:164
 msgid "&Sorting"
 msgstr "&Сортировка"
 
-#: i18n.cpp:157
+#: i18n.cpp:165
 msgid "&Reports"
 msgstr "&Отчёты"
 
-#: i18n.cpp:160
+#: i18n.cpp:168
 msgid "&View change log"
 msgstr "&Смотреть журнал изменений"
 
-#: i18n.cpp:161
+#: i18n.cpp:169
 msgid "View translation &report"
 msgstr "Смотреть &отчёт перевода"
 
-#: i18n.cpp:162
+#: i18n.cpp:170
 msgid "&Translations folder"
 msgstr "&Папка переводов"
 
-#: i18n.cpp:163
+#: i18n.cpp:171
 msgid "&Submit current translation"
 msgstr "&Отправить текущий перевод"
 
-#: i18n.cpp:166
-msgid "&Graphical interface"
-msgstr "&Графический интерфейс"
+#: i18n.cpp:174
+msgid "&Options"
+msgstr ""
 
-#: i18n.cpp:169
+#: i18n.cpp:177
 msgid "&Enable"
 msgstr "&Включить"
 
-#: i18n.cpp:170
+#: i18n.cpp:178
 msgid "&Script"
 msgstr "&Сценарий"
 
-#: i18n.cpp:173
+#: i18n.cpp:181
 msgid "By &path"
 msgstr "Сортировать по &пути (path)"
 
-#: i18n.cpp:174
+#: i18n.cpp:182
 msgid "By &size"
 msgstr "Сортировать по &размеру (size)"
 
-#: i18n.cpp:175
+#: i18n.cpp:183
 msgid "By &creation time"
 msgstr "Сортировать по дате &создания"
 
-#: i18n.cpp:176
+#: i18n.cpp:184
 msgid "By last &modification time"
 msgstr "Сортировать по дате &изменения"
 
-#: i18n.cpp:177
+#: i18n.cpp:185
 msgid "By &last access time"
 msgstr "Сортировать по дате &доступа"
 
-#: i18n.cpp:178
+#: i18n.cpp:186
 msgid "In &ascending order"
 msgstr "Сортировать по &возрастанию"
 
-#: i18n.cpp:179
+#: i18n.cpp:187
 msgid "In &descending order"
 msgstr "Сортировать по &убыванию"
 
-#: i18n.cpp:182
+#: i18n.cpp:190
 msgid "&Contents"
 msgstr "&Содержание"
 
-#: i18n.cpp:183
+#: i18n.cpp:191
 msgid "Best &practice"
 msgstr "&Полезные советы"
 
-#: i18n.cpp:184
+#: i18n.cpp:192
 msgid "&Frequently asked questions"
 msgstr "&Часто задаваемые вопросы"
 
-#: i18n.cpp:185
+#: i18n.cpp:193
 msgid "Cluster map &legend"
 msgstr "&Легенда карты кластеров"
 
-#: i18n.cpp:188 upgrade.cpp:161
+#: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr "Обновить"
+msgstr "Обновление"
 
-#: i18n.cpp:189
+#: i18n.cpp:197
 msgid "&Never check"
 msgstr "Никогда не проверять"
 
-#: i18n.cpp:190
+#: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr "Проверять только стабильные версии"
+msgstr "Проверять наличие новой стабильной версии"
 
-#: i18n.cpp:191
+#: i18n.cpp:199
 msgid "Check &all releases"
-msgstr "Проверять все версии"
+msgstr "Проверять наличие любой новой версии"
 
-#: i18n.cpp:192
+#: i18n.cpp:200
 msgid "&Check now"
 msgstr "Проверить сейчас"
 
-#: i18n.cpp:193
+#: i18n.cpp:201
 msgid "&About"
 msgstr "&О программе"
 
-#: i18n.cpp:196
+#: i18n.cpp:204
 msgid "&Debug"
 msgstr "От&ладка"
 
-#: i18n.cpp:197 utils.cpp:410
+#: i18n.cpp:205 utils.cpp:411
 msgid "Open &log"
 msgstr "Открыть &журнал"
 
-#: i18n.cpp:198
+#: i18n.cpp:206
 msgid "Send bug &report"
 msgstr "Отправить &сообщение об ошибке"
 
-#: i18n.cpp:203
+#: i18n.cpp:211
 msgid "Boot time script"
 msgstr "Сценарий работы перед загрузкой Windows"
 
-#: i18n.cpp:210
+#: i18n.cpp:218
 msgid "Drive"
 msgstr "Раздел"
 
-#: i18n.cpp:211 i18n.cpp:267
+#: i18n.cpp:219 i18n.cpp:275
 msgid "Status"
 msgstr "Состояние"
 
-#: i18n.cpp:212
+#: i18n.cpp:220
 msgid "Fragmentation"
 msgstr "Фрагментация"
 
-#: i18n.cpp:213
+#: i18n.cpp:221
 msgid "Total space"
 msgstr "Всего"
 
-#: i18n.cpp:214
+#: i18n.cpp:222
 msgid "Free space"
 msgstr "Свободно"
 
-#: i18n.cpp:216
+#: i18n.cpp:224
 #, no-c-format
 msgid "% free"
 msgstr "В процентах"
 
-#: i18n.cpp:259
+#: i18n.cpp:267
 msgid "Fragmented files on"
 msgstr "Фрагментированные файлы на"
 
-#: i18n.cpp:260
+#: i18n.cpp:268
 msgid "Visit our Homepage"
 msgstr "Посетите наш вебсайт"
 
-#: i18n.cpp:261
+#: i18n.cpp:269
 msgid "View report options"
 msgstr "Параметры отчётов"
 
-#: i18n.cpp:262
+#: i18n.cpp:270
 msgid "Powered by Lua"
 msgstr "Работает на Lua"
 
-#: i18n.cpp:263
+#: i18n.cpp:271
 msgid "Fragments"
 msgstr "фрагментов"
 
-#: i18n.cpp:264
+#: i18n.cpp:272
 msgid "Size"
 msgstr "размер"
 
-#: i18n.cpp:265
+#: i18n.cpp:273
 msgid "Filename"
 msgstr "имя файла"
 
-#: i18n.cpp:266
+#: i18n.cpp:274
 msgid "Comment"
 msgstr "комментарий"
 
-#: i18n.cpp:268
+#: i18n.cpp:276
 msgid "locked"
 msgstr "заблокирован"
 
-#: i18n.cpp:269
+#: i18n.cpp:277
 msgid "move failed"
 msgstr "не удалось переместить"
 
-#: i18n.cpp:270
+#: i18n.cpp:278
 msgid "invalid"
 msgstr "ошибка в алгоритме или файловой системе"
 
@@ -405,11 +405,11 @@ msgstr "фрагментированных"
 msgid "compressed"
 msgstr "сжатых"
 
-#: taskbar.cpp:199
+#: taskbar.cpp:198
 msgid "The job is paused"
 msgstr "Задание приостановлено"
 
-#: taskbar.cpp:204
+#: taskbar.cpp:203
 msgid "The job is running"
 msgstr "Задание выполняется"
 
@@ -433,26 +433,46 @@ msgstr "Для загрузки доступна версия %ls"
 msgid "You can upgrade me ^-^"
 msgstr "Вы можете меня обновить ^-^"
 
-#: upgrade.cpp:161 utils.cpp:414
+#: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
 msgstr "Отмена"
 
-#: utils.cpp:413
+#: utils.cpp:414
 msgid "Error!"
 msgstr "Ошибка!"
 
-#: vollist.cpp:305
+#: vollist.cpp:328
 msgid "Disk needs to be repaired"
 msgstr "Диск нуждается в исправлении"
 
-#: vollist.cpp:340
+#. : Status of the running disk analysis,
+#. : expands to "10 % analyzed".
+#. : Make sure that "%5.2lf" is included in the
+#. : translated string at the correct position.
+#: vollist.cpp:369
+#, c-format
+msgid "%5.2lf %% analyzed"
+msgstr ""
+
+#. : Status of the running disk defragmentation,
+#. : expands to "10 % defragmented, pass 5".
+#. : Make sure that "%5.2lf" and "%d" are included
+#. : in the translated string at the correct positions.
+#: vollist.cpp:375
+#, c-format
+msgid "%5.2lf %% defragmented, pass %d"
+msgstr ""
+
+#. : Status of the completed disk analysis.
+#: vollist.cpp:390
 msgid "Analyzed"
 msgstr "Проанализирован"
 
-#: vollist.cpp:344
-msgid "Defragmented"
-msgstr "Дефрагментирован"
-
-#: vollist.cpp:349
-msgid "Optimized"
-msgstr "Оптимизирован"
+#. : Status of the completed disk defragmentation,
+#. : expands to "Defragmented, in 5 passes".
+#. : Make sure that "%d" is included in the
+#. : translated string at the correct position.
+#: vollist.cpp:396
+#, c-format
+msgid "Defragmented, in %d passes"
+msgstr ""

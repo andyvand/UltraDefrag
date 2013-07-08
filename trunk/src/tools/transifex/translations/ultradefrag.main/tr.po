@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-04-16 19:43+0200\n"
-"PO-Revision-Date: 2013-04-29 10:11+0000\n"
+"POT-Creation-Date: 2013-07-08 19:16+0200\n"
+"PO-Revision-Date: 2013-07-08 17:16+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/ultradefrag/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -33,296 +33,296 @@ msgstr ""
 msgid "UltraDefrag website"
 msgstr ""
 
-#: i18n.cpp:121
+#: i18n.cpp:129
 msgid "&Action"
 msgstr "&Eylemler"
 
-#: i18n.cpp:122
+#: i18n.cpp:130
 msgid "&Report"
 msgstr "&Rapor"
 
-#: i18n.cpp:123
+#: i18n.cpp:131
 msgid "&Settings"
 msgstr "&Ayarlar"
 
-#: i18n.cpp:124 i18n.cpp:205
+#: i18n.cpp:132 i18n.cpp:213
 msgid "&Help"
 msgstr "&Yardım"
 
-#: i18n.cpp:127
+#: i18n.cpp:135
 msgid "&Analyze"
 msgstr "&İncele"
 
-#: i18n.cpp:128
+#: i18n.cpp:136
 msgid "&Defragment"
 msgstr "&Birleştir"
 
-#: i18n.cpp:129
+#: i18n.cpp:137
 msgid "&Quick optimization"
 msgstr "&Hızlı eniyileme"
 
-#: i18n.cpp:130
+#: i18n.cpp:138
 msgid "&Full optimization"
 msgstr "&Tam eniyileme"
 
-#: i18n.cpp:131
+#: i18n.cpp:139
 msgid "&Optimize MFT"
 msgstr "&MFT eniyileme"
 
-#: i18n.cpp:132 tray.cpp:80
+#: i18n.cpp:140 tray.cpp:80
 msgid "Pa&use"
 msgstr "&Durakla"
 
-#: i18n.cpp:133
+#: i18n.cpp:141
 msgid "&Stop"
 msgstr "Du&r"
 
-#: i18n.cpp:134
+#: i18n.cpp:142
 msgid "Re&peat action"
 msgstr "&İşlemi tekrarla"
 
-#: i18n.cpp:135
+#: i18n.cpp:143
 msgid "Skip removable &media"
 msgstr "Çıkarılabilir sürücüleri &gizle"
 
-#: i18n.cpp:136
+#: i18n.cpp:144
 msgid "&Rescan drives"
 msgstr "Sürücü listesini &yenile"
 
-#: i18n.cpp:137
+#: i18n.cpp:145
 msgid "Repair dri&ves"
 msgstr "Sürücüyü &onar"
 
-#: i18n.cpp:138 i18n.cpp:143 tray.cpp:85
+#: i18n.cpp:146 i18n.cpp:151 tray.cpp:85
 msgid "E&xit"
 msgstr "Çı&kış"
 
-#: i18n.cpp:141
+#: i18n.cpp:149
 msgid "&When done"
 msgstr "İşlem &bittiğinde..."
 
-#: i18n.cpp:142
+#: i18n.cpp:150
 msgid "&None"
 msgstr "&Bekle"
 
-#: i18n.cpp:144
+#: i18n.cpp:152
 msgid "Stan&dby"
 msgstr "&Uyku moduna gir"
 
-#: i18n.cpp:145
+#: i18n.cpp:153
 msgid "&Hibernate"
 msgstr "&Hazırda beklet"
 
-#: i18n.cpp:146
+#: i18n.cpp:154
 msgid "&Logoff"
 msgstr "O&turumu kapat"
 
-#: i18n.cpp:147
+#: i18n.cpp:155
 msgid "&Reboot"
 msgstr "Ye&niden başlat"
 
-#: i18n.cpp:148
+#: i18n.cpp:156
 msgid "&Shutdown"
 msgstr "Bilgisayarı &kapat"
 
-#: i18n.cpp:151
+#: i18n.cpp:159
 msgid "&Show report"
 msgstr "&Raporu göster"
 
-#: i18n.cpp:154
+#: i18n.cpp:162
 msgid "&Language"
 msgstr "&Dil"
 
-#: i18n.cpp:155 i18n.cpp:201
+#: i18n.cpp:163 i18n.cpp:209
 msgid "&Boot time scan"
 msgstr "&Açılışta çalış"
 
-#: i18n.cpp:156
+#: i18n.cpp:164
 msgid "&Sorting"
 msgstr "&Sıralama"
 
-#: i18n.cpp:157
+#: i18n.cpp:165
 msgid "&Reports"
 msgstr "&Raporlar"
 
-#: i18n.cpp:160
+#: i18n.cpp:168
 msgid "&View change log"
 msgstr "Çeviri &değişikliklerini görüntüle"
 
-#: i18n.cpp:161
+#: i18n.cpp:169
 msgid "View translation &report"
 msgstr "Çeviri &raporunu görüntle"
 
-#: i18n.cpp:162
+#: i18n.cpp:170
 msgid "&Translations folder"
 msgstr "&Çeviri klasörü"
 
-#: i18n.cpp:163
+#: i18n.cpp:171
 msgid "&Submit current translation"
 msgstr "&Şimdiki çeviriyi gönder"
 
-#: i18n.cpp:166
-msgid "&Graphical interface"
-msgstr "&Grafiksel arabirim"
+#: i18n.cpp:174
+msgid "&Options"
+msgstr ""
 
-#: i18n.cpp:169
+#: i18n.cpp:177
 msgid "&Enable"
 msgstr "&Etkinleştir"
 
-#: i18n.cpp:170
+#: i18n.cpp:178
 msgid "&Script"
 msgstr "&Betiği düzenle"
 
-#: i18n.cpp:173
+#: i18n.cpp:181
 msgid "By &path"
 msgstr "&Adrese göre sırala"
 
-#: i18n.cpp:174
+#: i18n.cpp:182
 msgid "By &size"
 msgstr "&Boyuta göre sırala"
 
-#: i18n.cpp:175
+#: i18n.cpp:183
 msgid "By &creation time"
 msgstr "&Oluşturma zamanına göre sırala"
 
-#: i18n.cpp:176
+#: i18n.cpp:184
 msgid "By last &modification time"
 msgstr "Son &değiştirme zamanına göre sırala"
 
-#: i18n.cpp:177
+#: i18n.cpp:185
 msgid "By &last access time"
 msgstr "Son &erişim zamanına göre sırala"
 
-#: i18n.cpp:178
+#: i18n.cpp:186
 msgid "In &ascending order"
 msgstr "A&rtan sıralama"
 
-#: i18n.cpp:179
+#: i18n.cpp:187
 msgid "In &descending order"
 msgstr "A&zalan sıralama"
 
-#: i18n.cpp:182
+#: i18n.cpp:190
 msgid "&Contents"
 msgstr "&Yardım konuları"
 
-#: i18n.cpp:183
+#: i18n.cpp:191
 msgid "Best &practice"
 msgstr "&En doğru kullanım şekli"
 
-#: i18n.cpp:184
+#: i18n.cpp:192
 msgid "&Frequently asked questions"
 msgstr "&Sıkça sorulan sorular"
 
-#: i18n.cpp:185
+#: i18n.cpp:193
 msgid "Cluster map &legend"
 msgstr "&Küme haritası işaretleri"
 
-#: i18n.cpp:188 upgrade.cpp:161
+#: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
 msgstr ""
 
-#: i18n.cpp:189
+#: i18n.cpp:197
 msgid "&Never check"
 msgstr ""
 
-#: i18n.cpp:190
+#: i18n.cpp:198
 msgid "Check &stable releases only"
 msgstr ""
 
-#: i18n.cpp:191
+#: i18n.cpp:199
 msgid "Check &all releases"
 msgstr ""
 
-#: i18n.cpp:192
+#: i18n.cpp:200
 msgid "&Check now"
 msgstr ""
 
-#: i18n.cpp:193
+#: i18n.cpp:201
 msgid "&About"
 msgstr "&Hakkında"
 
-#: i18n.cpp:196
+#: i18n.cpp:204
 msgid "&Debug"
 msgstr "&Hata ayıklama"
 
-#: i18n.cpp:197 utils.cpp:410
+#: i18n.cpp:205 utils.cpp:411
 msgid "Open &log"
 msgstr "&Günlüğü görüntüle"
 
-#: i18n.cpp:198
+#: i18n.cpp:206
 msgid "Send bug &report"
 msgstr "Hata raporu &gönder"
 
-#: i18n.cpp:203
+#: i18n.cpp:211
 msgid "Boot time script"
 msgstr "Çalıştırma Betiğini Düze&nle"
 
-#: i18n.cpp:210
+#: i18n.cpp:218
 msgid "Drive"
 msgstr "Birim"
 
-#: i18n.cpp:211 i18n.cpp:267
+#: i18n.cpp:219 i18n.cpp:275
 msgid "Status"
 msgstr "Durum"
 
-#: i18n.cpp:212
+#: i18n.cpp:220
 msgid "Fragmentation"
 msgstr "Parçalanma"
 
-#: i18n.cpp:213
+#: i18n.cpp:221
 msgid "Total space"
 msgstr "Toplam Alan"
 
-#: i18n.cpp:214
+#: i18n.cpp:222
 msgid "Free space"
 msgstr "Boş Alan"
 
-#: i18n.cpp:216
+#: i18n.cpp:224
 #, no-c-format
 msgid "% free"
 msgstr "% Boş"
 
-#: i18n.cpp:259
+#: i18n.cpp:267
 msgid "Fragmented files on"
 msgstr "Dosyaları parçalanmış sürücü:"
 
-#: i18n.cpp:260
+#: i18n.cpp:268
 msgid "Visit our Homepage"
 msgstr "Web sayfamızı ziyaret edin"
 
-#: i18n.cpp:261
+#: i18n.cpp:269
 msgid "View report options"
 msgstr "Raporlama ayarları"
 
-#: i18n.cpp:262
+#: i18n.cpp:270
 msgid "Powered by Lua"
 msgstr "Lua ile oluşturulmuştur"
 
-#: i18n.cpp:263
+#: i18n.cpp:271
 msgid "Fragments"
 msgstr "parçalar"
 
-#: i18n.cpp:264
+#: i18n.cpp:272
 msgid "Size"
 msgstr "boyut"
 
-#: i18n.cpp:265
+#: i18n.cpp:273
 msgid "Filename"
 msgstr "dosya adı"
 
-#: i18n.cpp:266
+#: i18n.cpp:274
 msgid "Comment"
 msgstr "yorum"
 
-#: i18n.cpp:268
+#: i18n.cpp:276
 msgid "locked"
 msgstr "kilitli"
 
-#: i18n.cpp:269
+#: i18n.cpp:277
 msgid "move failed"
 msgstr "taşınamadı"
 
-#: i18n.cpp:270
+#: i18n.cpp:278
 msgid "invalid"
 msgstr "bulunamadı"
 
@@ -402,11 +402,11 @@ msgstr "parçalanmış"
 msgid "compressed"
 msgstr "sıkıştırılmış"
 
-#: taskbar.cpp:199
+#: taskbar.cpp:198
 msgid "The job is paused"
 msgstr ""
 
-#: taskbar.cpp:204
+#: taskbar.cpp:203
 msgid "The job is running"
 msgstr "Bir işlem çalıştırılıyor"
 
@@ -430,26 +430,46 @@ msgstr ""
 msgid "You can upgrade me ^-^"
 msgstr "Beni güncelleyebilirsin ^-^"
 
-#: upgrade.cpp:161 utils.cpp:414
+#: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
 msgstr ""
 
-#: utils.cpp:413
+#: utils.cpp:414
 msgid "Error!"
 msgstr ""
 
-#: vollist.cpp:305
+#: vollist.cpp:328
 msgid "Disk needs to be repaired"
 msgstr "Sürücü onarılmalı"
 
-#: vollist.cpp:340
+#. : Status of the running disk analysis,
+#. : expands to "10 % analyzed".
+#. : Make sure that "%5.2lf" is included in the
+#. : translated string at the correct position.
+#: vollist.cpp:369
+#, c-format
+msgid "%5.2lf %% analyzed"
+msgstr ""
+
+#. : Status of the running disk defragmentation,
+#. : expands to "10 % defragmented, pass 5".
+#. : Make sure that "%5.2lf" and "%d" are included
+#. : in the translated string at the correct positions.
+#: vollist.cpp:375
+#, c-format
+msgid "%5.2lf %% defragmented, pass %d"
+msgstr ""
+
+#. : Status of the completed disk analysis.
+#: vollist.cpp:390
 msgid "Analyzed"
 msgstr "İncelendi"
 
-#: vollist.cpp:344
-msgid "Defragmented"
-msgstr "Birleştirildi"
-
-#: vollist.cpp:349
-msgid "Optimized"
-msgstr "Eniyileme tamamlandı"
+#. : Status of the completed disk defragmentation,
+#. : expands to "Defragmented, in 5 passes".
+#. : Make sure that "%d" is included in the
+#. : translated string at the correct position.
+#: vollist.cpp:396
+#, c-format
+msgid "Defragmented, in %d passes"
+msgstr ""
