@@ -191,13 +191,13 @@ void MainFrame::InitMenu()
             m_menuLanguage, wxEmptyString
         );
     menuSettings->Append(ID_GuiOptions);
-    m_subMenuBootConfig = \
-        menuSettings->AppendSubMenu(
-            menuBootConfig, wxEmptyString
-        );
     m_subMenuSortingConfig = \
         menuSettings->AppendSubMenu(
             menuSortingConfig, wxEmptyString
+        );
+    m_subMenuBootConfig = \
+        menuSettings->AppendSubMenu(
+            menuBootConfig, wxEmptyString
         );
     menuSettings->Append(ID_ReportOptions);
 
