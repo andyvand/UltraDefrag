@@ -380,7 +380,7 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
             //: "10 % optimized, pass 5, 1024 moves total".
             //: Make sure that "%5.2lf", "%d" and "%I64u" are included
             //: in the translated string at the correct positions.
-            status.Printf(wxT("%5.2lf %% optimized, pass %d, %I64u moves total"),
+            status.Printf(_("%5.2lf %% optimized, pass %d, %I64u moves total"),
                 cacheEntry->pi.percentage,cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
             );
         }
@@ -401,7 +401,7 @@ void MainFrame::UpdateVolumeStatus(wxCommandEvent& event)
             //: "Optimized, in 5 passes, 1024 moves total".
             //: Make sure that "%d" and "%I64u" are included
             //: in the translated string at the correct positions.
-            status.Printf(wxT("Optimized, in %d passes, %I64u moves total"),
+            status.Printf(_("Optimized, in %d passes, %I64u moves total"),
                 cacheEntry->pi.pass_number,cacheEntry->pi.total_moves
             );
         }
