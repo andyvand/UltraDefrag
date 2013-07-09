@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# ppanhh <ppanhh@gmail.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
@@ -10,8 +11,8 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-08 19:16+0200\n"
-"PO-Revision-Date: 2013-07-08 17:16+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2013-07-09 12:10+0000\n"
+"Last-Translator: ppanhh <ppanhh@gmail.com>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/projects/p/ultradefrag/language/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,19 +22,19 @@ msgstr ""
 
 #: about.cpp:77
 msgid "About UltraDefrag"
-msgstr "Giới thiệu về UltraDefrag"
+msgstr "Dịch bởi Phan Anh"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Là tiện ích mã nguồn mở trong giúp chống phân mảnh ổ đĩa."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Các tác giả và bản quyền được liệt kê trong dánh sách."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Website chương trình"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -165,7 +166,7 @@ msgstr "&Gửi bản dịch hiện tại"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "Tù&y chọn"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -221,27 +222,27 @@ msgstr "Chú &giải các nhóm tập tin"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Cập nhật"
 
 #: i18n.cpp:197
 msgid "&Never check"
-msgstr ""
+msgstr "Khô&ng bao giờ kiểm tra"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Chỉ kiểm tra cá&c phiên bản ổn định"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "Kiểm tra tất c&ả phiên bản phát hành"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr ""
+msgstr "K&iểm tra ngay bây giờ"
 
 #: i18n.cpp:201
 msgid "&About"
-msgstr "G&iới thiệu"
+msgstr "D&ịch bởi Phan Anh"
 
 #: i18n.cpp:204
 msgid "&Debug"
@@ -406,7 +407,7 @@ msgstr "tệp hệ thống đã nén"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "Công việc đang bị tạm dừng"
 
 #: taskbar.cpp:203
 msgid "The job is running"
@@ -426,7 +427,7 @@ msgstr "Ẩn đi"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Phiên bản phát hành %ls hiện đã có thể được tải về!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -434,11 +435,11 @@ msgstr "Bạn có thể nâng cấp tôi ^-^"
 
 #: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
-msgstr ""
+msgstr "H&ủy bỏ"
 
 #: utils.cpp:414
 msgid "Error!"
-msgstr ""
+msgstr "Lỗi!"
 
 #: vollist.cpp:328
 msgid "Disk needs to be repaired"
@@ -451,7 +452,7 @@ msgstr "Đĩa cần phải được sửa chữa"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% đã được phân tích"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -460,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% bị phân mảnh, bỏ qua %d"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -474,4 +475,4 @@ msgstr "Đã phân tích"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Bị phân mảnh, đã bỏ qua %d"
