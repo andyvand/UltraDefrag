@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
-"POT-Creation-Date: 2013-07-08 19:16+0200\n"
-"PO-Revision-Date: 2013-07-08 17:16+0000\n"
+"POT-Creation-Date: 2013-07-10 21:44+0200\n"
+"PO-Revision-Date: 2013-07-10 19:44+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/ultradefrag/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -463,6 +463,14 @@ msgstr ""
 msgid "%5.2lf %% defragmented, pass %d"
 msgstr ""
 
+#. : Status of the running disk optimization, expands to
+#. : "10 % optimized, pass 5, 1024 moves total".
+#. : Make sure that "%5.2lf", "%d" and "%I64u" are included
+#. : in the translated string at the correct positions.
+#: vollist.cpp:383
+msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
+msgstr ""
+
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
 msgid "Analyzed"
@@ -475,4 +483,12 @@ msgstr "Elemzett"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
+msgstr ""
+
+#. : Status of the completed disk optimization, expands to
+#. : "Optimized, in 5 passes, 1024 moves total".
+#. : Make sure that "%d" and "%I64u" are included
+#. : in the translated string at the correct positions.
+#: vollist.cpp:404
+msgid "Optimized, in %d passes, %I64u moves total"
 msgstr ""
