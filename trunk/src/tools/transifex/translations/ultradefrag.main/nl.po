@@ -5,12 +5,13 @@
 # Translators:
 # Blankie <eblankestijn@hotmail.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-07-10 19:44+0000\n"
+"PO-Revision-Date: 2013-07-14 19:50+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/ultradefrag/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +90,7 @@ msgstr "&Verwijderbare media overslaan"
 
 #: i18n.cpp:144
 msgid "&Rescan drives"
-msgstr "&Opnieuw scannen harde schijven/media"
+msgstr "&Opnieuw scannen schijven"
 
 #: i18n.cpp:145
 msgid "Repair dri&ves"
@@ -137,7 +138,7 @@ msgstr "&Taal"
 
 #: i18n.cpp:163 i18n.cpp:209
 msgid "&Boot time scan"
-msgstr "&Defragmenteren tijdens opstarten Windows"
+msgstr "&Defragmenteren tijdens opstarten"
 
 #: i18n.cpp:164
 msgid "&Sorting"
@@ -165,7 +166,7 @@ msgstr "&Huidige vertaling opsturen"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "Opties"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -257,7 +258,7 @@ msgstr "&Verstuur foutrapport"
 
 #: i18n.cpp:211
 msgid "Boot time script"
-msgstr "Opstarttijd script"
+msgstr "Opstartscript"
 
 #: i18n.cpp:218
 msgid "Drive"
@@ -334,7 +335,7 @@ msgstr "Bevestig alstublieft"
 
 #: shutdown.cpp:107
 msgid "Do you really want to hibernate when done?"
-msgstr "Weet u zeker dat u de slaapstand wilt activeren als alle taken voltooid zijn?"
+msgstr "Weet u zeker de slaapstand te activeren als alle taken voltooid zijn?"
 
 #. : This expands to "60 seconds until hibernation"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -451,7 +452,7 @@ msgstr "Schijf moet worden hersteld worden"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf van de %% geanalyseerd"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -460,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf van de %% gedefragmenteerd, uitgevoerd %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -468,7 +469,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf van de %% geoptimaliseerd, %d keer, %I64u verplaatsingen totaal"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -482,7 +483,7 @@ msgstr "Geanalyseerd"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Gedefragmenteerd, in %d keer"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -490,4 +491,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Geoptimaliseerd, in %d keer, %I64u verplaatsingen totaal"
