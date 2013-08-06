@@ -3,12 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Firebrand <firebrand_2001@yahoo.com.mx>, 2013
+# StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-07-10 19:44+0000\n"
+"PO-Revision-Date: 2013-08-06 17:57+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: Spanish (Mexico) (http://www.transifex.com/projects/p/ultradefrag/language/es_MX/)\n"
 "MIME-Version: 1.0\n"
@@ -23,15 +25,15 @@ msgstr "Acerca de UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Una utilería de desfragmentación de código abierto."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Los créditos y licencias se encuentran listados en el libro de mano."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "Sitio web de UltraDefrag"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -163,7 +165,7 @@ msgstr "&Enviar traducción actual"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "&Opciones"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -219,23 +221,23 @@ msgstr "&Leyenda del mapa"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "Actuali&zar"
 
 #: i18n.cpp:197
 msgid "&Never check"
-msgstr ""
+msgstr "&Nunca Revisar"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Revisar versiones &estables solamente"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "Revisar &Todas las versiones"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr ""
+msgstr "&Revisar ahora"
 
 #: i18n.cpp:201
 msgid "&About"
@@ -384,7 +386,7 @@ msgstr "&Si"
 
 #: shutdown.cpp:141
 msgid "&No"
-msgstr ""
+msgstr "&No"
 
 #: statbar.cpp:92
 msgid "folders"
@@ -404,7 +406,7 @@ msgstr "comprimidos"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "La tarea está pausada"
 
 #: taskbar.cpp:203
 msgid "The job is running"
@@ -424,7 +426,7 @@ msgstr "Ocultar"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "¡La versión %ls esta disponible para ser descargada!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -432,11 +434,11 @@ msgstr "Una actualización está disponible ^-^"
 
 #: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
-msgstr ""
+msgstr "&Cancelar"
 
 #: utils.cpp:414
 msgid "Error!"
-msgstr ""
+msgstr "¡Error!"
 
 #: vollist.cpp:328
 msgid "Disk needs to be repaired"
@@ -449,7 +451,7 @@ msgstr "Disco que necesita ser reparado"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% analizado"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -458,7 +460,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% desfragmentado, pase %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -466,7 +468,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% optimizado, pase %d, %l64u movimientos totales"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -480,7 +482,7 @@ msgstr "Analizado"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Desfragmentado en %d pases"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -488,4 +490,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Optimizado en %d pases, %l64u movimientos totales"
