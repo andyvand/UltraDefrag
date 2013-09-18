@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# SBL7JNFJUDV <SBL7JNFJUDV@mailinator.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-07-10 19:44+0000\n"
+"PO-Revision-Date: 2013-09-18 21:06+0000\n"
 "Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
 "Language-Team: Persian (http://www.transifex.com/projects/p/ultradefrag/language/fa/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +26,7 @@ msgstr "درباره اين برنامه"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "یک ابزار تکه تکه زدایی با کد آزاد."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
@@ -33,7 +34,7 @@ msgstr ""
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "وبسایت اولترادفراگ"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -165,7 +166,7 @@ msgstr "ارسال ترجمه فعلی"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "انتخاب ها"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -177,31 +178,31 @@ msgstr "حروف"
 
 #: i18n.cpp:181
 msgid "By &path"
-msgstr ""
+msgstr "براساس مسیر"
 
 #: i18n.cpp:182
 msgid "By &size"
-msgstr ""
+msgstr "براساس اندازه"
 
 #: i18n.cpp:183
 msgid "By &creation time"
-msgstr ""
+msgstr "براساس زمان شاخته شدن"
 
 #: i18n.cpp:184
 msgid "By last &modification time"
-msgstr ""
+msgstr "براساس زمانِ آخرین تغییر"
 
 #: i18n.cpp:185
 msgid "By &last access time"
-msgstr ""
+msgstr "براساس زمانِ آخرین دسترسی"
 
 #: i18n.cpp:186
 msgid "In &ascending order"
-msgstr ""
+msgstr "به ترتیتِ زیاد شونده"
 
 #: i18n.cpp:187
 msgid "In &descending order"
-msgstr ""
+msgstr "به ترتیبِ کم شونده"
 
 #: i18n.cpp:190
 msgid "&Contents"
@@ -221,23 +222,23 @@ msgstr "خوشه نقشه افسانه ای"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "ارتقاء"
 
 #: i18n.cpp:197
 msgid "&Never check"
-msgstr ""
+msgstr "هرگز چِک نکن"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "فقط نسخه هایِ باثبات را چِک کن"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "همۀ نسخه ها را چک کن"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr ""
+msgstr "الان چِک کن"
 
 #: i18n.cpp:201
 msgid "&About"
@@ -282,7 +283,7 @@ msgstr "فضاي آزاد"
 #: i18n.cpp:224
 #, no-c-format
 msgid "% free"
-msgstr "درصد"
+msgstr "%f درصد خالی"
 
 #: i18n.cpp:267
 msgid "Fragmented files on"
@@ -290,7 +291,7 @@ msgstr "فایل های تکه تکه بر"
 
 #: i18n.cpp:268
 msgid "Visit our Homepage"
-msgstr "ارسال یک پیام خصوصی به ما"
+msgstr "مشاهدۀ صفحۀ ما بر روی اینترنت"
 
 #: i18n.cpp:269
 msgid "View report options"
@@ -406,19 +407,19 @@ msgstr "فشرده شده"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "کار معوق شده است"
 
 #: taskbar.cpp:203
 msgid "The job is running"
-msgstr "یک کار در حال اجرا است"
+msgstr "کار در حال اجرا است"
 
 #: tray.cpp:70
 msgid "Show"
-msgstr "نشان دادن"
+msgstr "نشان بده"
 
 #: tray.cpp:72
 msgid "Hide"
-msgstr "مخفی کردن"
+msgstr "مخفی کن"
 
 #. : This expands to "Release 7.0.0 is available for download!"
 #. : Make sure that "%ls" is included in the translated string at the correct
@@ -426,7 +427,7 @@ msgstr "مخفی کردن"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "نسخۀ %ls برای دانلود آماده است"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -434,15 +435,15 @@ msgstr "شما می توانید به من ارتقاء ^-^"
 
 #: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
-msgstr ""
+msgstr "کنسل"
 
 #: utils.cpp:414
 msgid "Error!"
-msgstr ""
+msgstr "خطا!"
 
 #: vollist.cpp:328
 msgid "Disk needs to be repaired"
-msgstr "دیسک نیاز به تعمیر"
+msgstr "دیسک نیاز به تعمیر دارد"
 
 #. : Status of the running disk analysis,
 #. : expands to "10 % analyzed".
@@ -451,7 +452,7 @@ msgstr "دیسک نیاز به تعمیر"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr " %5.2lf %% آنالیز شد"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -460,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% تکه تکه شده، چرخۀ %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -482,7 +483,7 @@ msgstr "آنالیز شد"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "تکه تکه زدایی در %d چرخه"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -490,4 +491,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "در %d چرخه و %l64u جابه جایی بهینه شد"
