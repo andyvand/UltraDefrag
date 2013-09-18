@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-09-08 20:00+0000\n"
+"PO-Revision-Date: 2013-09-17 13:04+0000\n"
 "Last-Translator: zubr139 <zubr139@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/projects/p/ultradefrag/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "&Легенда карти"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Оновлення"
 
 #: i18n.cpp:197
 msgid "&Never check"
@@ -234,7 +234,7 @@ msgstr ""
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "Перевірити &всі релізи"
 
 #: i18n.cpp:200
 msgid "&Check now"
@@ -452,7 +452,7 @@ msgstr "Диск потребує виправлення"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% аналіз"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -461,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% триває дефрагментація %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -483,7 +483,7 @@ msgstr "Проаналізовано"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Дефрагментацію завершено %d"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
