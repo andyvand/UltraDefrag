@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-10-15 18:11+0000\n"
+"PO-Revision-Date: 2013-10-17 11:10+0000\n"
 "Last-Translator: Jens Hyllegaard <jens.hyllegaard@gmail.com>\n"
 "Language-Team: Danish (http://www.transifex.com/projects/p/ultradefrag/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Et open source defragmenteringsværktøj."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Krediteringer og licenser er i håndbogen."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
@@ -110,7 +110,7 @@ msgstr "Gør ingenting"
 
 #: i18n.cpp:152
 msgid "Stan&dby"
-msgstr ""
+msgstr "Stan&dby"
 
 #: i18n.cpp:153
 msgid "&Hibernate"
@@ -174,7 +174,7 @@ msgstr "Aktivér"
 
 #: i18n.cpp:178
 msgid "&Script"
-msgstr ""
+msgstr "&Script"
 
 #: i18n.cpp:181
 msgid "By &path"
@@ -407,7 +407,7 @@ msgstr "komprimerede"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "Jobbet er sat på pause"
 
 #: taskbar.cpp:203
 msgid "The job is running"
@@ -427,7 +427,7 @@ msgstr "Skjul"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Udgivelsen %ls kan downloades!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -452,7 +452,7 @@ msgstr "Disk skal repareres"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% analyseret"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -461,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% defragmenteret, trin %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -469,7 +469,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% optimeret, trin %d, %I64u flytninger i alt"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -483,7 +483,7 @@ msgstr "Analyseret"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Defragmenteret, i %d trin"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -491,4 +491,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Optimeret, i %d trin, %I64u flytninger i alt"
