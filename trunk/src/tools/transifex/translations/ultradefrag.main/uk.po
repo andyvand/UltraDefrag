@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-09-17 13:04+0000\n"
+"PO-Revision-Date: 2013-10-27 17:10+0000\n"
 "Last-Translator: zubr139 <zubr139@ukr.net>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/projects/p/ultradefrag/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Відкрити утиліту дефрагментації джере�
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Учасники та ліцензії, перераховані в довіднику."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
@@ -230,7 +230,7 @@ msgstr "&Ніколи не перевіряти"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Перевірити наявність &стабільної версії"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
@@ -427,7 +427,7 @@ msgstr "Приховати"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Реліз %ls доступний для завантаження!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -469,7 +469,7 @@ msgstr "%5.2lf %% триває дефрагментація %d"
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% оптимізовано, проходів %d, %I64u кількість переміщень"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -491,4 +491,4 @@ msgstr "Дефрагментацію завершено %d"
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Оптисізований за %d проходів, %I64u загальна кількість переміщень"
