@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-09-11 15:10+0000\n"
+"PO-Revision-Date: 2013-11-10 19:00+0000\n"
 "Last-Translator: Alain-Olivier  Breysse <yahoe.001@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/ultradefrag/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr "Un utilitaire de défragmentation à code source libre."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr "Les remerciements et licences sont listés dans le manuel."
+msgstr "Les remerciements et licences se trouvent dans le manuel."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
@@ -114,15 +114,15 @@ msgstr "&Ne rien faire"
 
 #: i18n.cpp:152
 msgid "Stan&dby"
-msgstr "Mettre l'ordinateur en &veille"
+msgstr "Mise en &veille"
 
 #: i18n.cpp:153
 msgid "&Hibernate"
-msgstr "Mettre l'ordinateur en veille &prolongée"
+msgstr "Mise en veille &prolongée"
 
 #: i18n.cpp:154
 msgid "&Logoff"
-msgstr "Se &déconnecter de la session"
+msgstr "&Fermer la session"
 
 #: i18n.cpp:155
 msgid "&Reboot"
@@ -146,7 +146,7 @@ msgstr "&Analyse au démarrage"
 
 #: i18n.cpp:164
 msgid "&Sorting"
-msgstr "&Triage"
+msgstr "&Tri"
 
 #: i18n.cpp:165
 msgid "&Reports"
@@ -254,7 +254,7 @@ msgstr "Dé&boguage"
 
 #: i18n.cpp:205 utils.cpp:411
 msgid "Open &log"
-msgstr "Afficher le journa&l des événements"
+msgstr "Ouvrir le journa&l"
 
 #: i18n.cpp:206
 msgid "Send bug &report"
