@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-09-09 00:40+0000\n"
+"PO-Revision-Date: 2013-12-03 01:00+0000\n"
 "Last-Translator: passerby <f1064895@rmqkr.net>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/ultradefrag/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: about.cpp:77
 msgid "About UltraDefrag"
-msgstr "關於UltraDefrag"
+msgstr "關於 UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
@@ -29,11 +29,11 @@ msgstr "一款開放原始碼的磁碟重組工具。"
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr "貢獻者及授權資訊都記載於手冊中。"
+msgstr "貢獻者以及授權資訊都記載於手冊中。"
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr "UltraDefrag網站"
+msgstr "UltraDefrag 官方網站"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -129,7 +129,7 @@ msgstr "關機(&S)"
 
 #: i18n.cpp:159
 msgid "&Show report"
-msgstr "顯示報告(&S)"
+msgstr "檢視報告(&S)"
 
 #: i18n.cpp:162
 msgid "&Language"
@@ -153,7 +153,7 @@ msgstr "查看更新日誌(&V)"
 
 #: i18n.cpp:169
 msgid "View translation &report"
-msgstr "查看翻譯報告(&r)"
+msgstr "查看翻譯進度(&r)"
 
 #: i18n.cpp:170
 msgid "&Translations folder"
@@ -161,7 +161,7 @@ msgstr "語系檔資料夾(&T)"
 
 #: i18n.cpp:171
 msgid "&Submit current translation"
-msgstr "送出目前的翻譯(&S)"
+msgstr "發送目前所翻譯的語系檔(&S)"
 
 #: i18n.cpp:174
 msgid "&Options"
@@ -237,7 +237,7 @@ msgstr "檢查所有的更新(&a)"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr "現在檢查(&C)"
+msgstr "執行檢查(&C)"
 
 #: i18n.cpp:201
 msgid "&About"
@@ -286,19 +286,19 @@ msgstr "％可用"
 
 #: i18n.cpp:267
 msgid "Fragmented files on"
-msgstr "分散的檔案於"
+msgstr "分散的檔案位於"
 
 #: i18n.cpp:268
 msgid "Visit our Homepage"
-msgstr "拜訪我們的首頁"
+msgstr "拜訪我們的網站"
 
 #: i18n.cpp:269
 msgid "View report options"
-msgstr "查看報告設定"
+msgstr "檢視報告的設定"
 
 #: i18n.cpp:270
 msgid "Powered by Lua"
-msgstr "基於Lua建構"
+msgstr "基於 Lua 建構"
 
 #: i18n.cpp:271
 msgid "Fragments"
@@ -342,7 +342,7 @@ msgstr "確定要在作業完成後進入休眠嗎？"
 #: shutdown.cpp:110
 #, c-format
 msgid "%lu seconds until hibernation"
-msgstr "%lu秒後進入休眠"
+msgstr "%lu 秒後進入休眠"
 
 #: shutdown.cpp:113
 msgid "Do you really want to log off when done?"
@@ -354,7 +354,7 @@ msgstr "確定要在作業完成後登出嗎？"
 #: shutdown.cpp:116
 #, c-format
 msgid "%lu seconds until logoff"
-msgstr "%lu秒後登出"
+msgstr "%lu 秒後登出"
 
 #: shutdown.cpp:119
 msgid "Do you really want to reboot when done?"
@@ -366,7 +366,7 @@ msgstr "確定要在作業完成後重新開機嗎？"
 #: shutdown.cpp:122
 #, c-format
 msgid "%lu seconds until reboot"
-msgstr "%lu秒後重新開機"
+msgstr "%lu 秒後重新開機"
 
 #: shutdown.cpp:125
 msgid "Do you really want to shutdown when done?"
@@ -378,7 +378,7 @@ msgstr "確定要在作業完成後關機嗎？"
 #: shutdown.cpp:128
 #, c-format
 msgid "%lu seconds until shutdown"
-msgstr "%lu秒後關機"
+msgstr "%lu 秒後關機"
 
 #: shutdown.cpp:140
 msgid "&Yes"
