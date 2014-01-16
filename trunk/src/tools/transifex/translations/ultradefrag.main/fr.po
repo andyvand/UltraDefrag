@@ -10,12 +10,13 @@
 # msoko <sokolovitch@yahoo.com>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
 # StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Alain-Olivier  Breysse, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
+"PO-Revision-Date: 2014-01-16 13:30+0000\n"
 "Last-Translator: Alain-Olivier  Breysse\n"
 "Language-Team: French (http://www.transifex.com/projects/p/ultradefrag/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -34,11 +35,11 @@ msgstr "Un utilitaire de défragmentation à code source libre."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr "Les remerciements et licences se trouvent dans le manuel."
+msgstr "Les crédits et licences sont listés dans le manuel."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr "Site d'UltraDefrag"
+msgstr "Site Web d'UltraDefrag"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -154,7 +155,7 @@ msgstr "&Rapports"
 
 #: i18n.cpp:168
 msgid "&View change log"
-msgstr "Afficher le &journal des modifications"
+msgstr "Afficher le &journal des changements"
 
 #: i18n.cpp:169
 msgid "View translation &report"
@@ -166,7 +167,7 @@ msgstr "Dossier des &traductions"
 
 #: i18n.cpp:171
 msgid "&Submit current translation"
-msgstr "&Soumettre la traduction actuelle"
+msgstr "&Proposer la traduction actuelle"
 
 #: i18n.cpp:174
 msgid "&Options"
@@ -210,7 +211,7 @@ msgstr "Par ordre &décroissant"
 
 #: i18n.cpp:190
 msgid "&Contents"
-msgstr "&Contenu"
+msgstr "&Contenus"
 
 #: i18n.cpp:191
 msgid "Best &practice"
@@ -218,7 +219,7 @@ msgstr "A&stuces"
 
 #: i18n.cpp:192
 msgid "&Frequently asked questions"
-msgstr "&Foire aux questions"
+msgstr "&FAQ"
 
 #: i18n.cpp:193
 msgid "Cluster map &legend"
@@ -226,7 +227,7 @@ msgstr "&Légende de la carte des blocs"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr "&Mise à jour"
+msgstr "&Mise à niveau"
 
 #: i18n.cpp:197
 msgid "&Never check"
@@ -246,11 +247,11 @@ msgstr "&Vérifier maintenant"
 
 #: i18n.cpp:201
 msgid "&About"
-msgstr "À &propos"
+msgstr "À &propos de"
 
 #: i18n.cpp:204
 msgid "&Debug"
-msgstr "Dé&boguage"
+msgstr "Dé&bogage"
 
 #: i18n.cpp:205 utils.cpp:411
 msgid "Open &log"
@@ -315,7 +316,7 @@ msgstr "Taille"
 
 #: i18n.cpp:273
 msgid "Filename"
-msgstr "Fichiers"
+msgstr "Nom de fichier"
 
 #: i18n.cpp:274
 msgid "Comment"
