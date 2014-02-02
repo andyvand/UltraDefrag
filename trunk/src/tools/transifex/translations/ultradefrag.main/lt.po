@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# ejs <ejs@ar.vgtu.lt>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2014-02-02 11:40+0000\n"
+"Last-Translator: ejs <ejs@ar.vgtu.lt>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/projects/p/ultradefrag/language/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,15 +24,15 @@ msgstr "Apie UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Atviro kodo defragmentavimo programa"
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Padėką ir naudojimo sąlygas rasite naudotojo vadove."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag WWW puslapis"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -163,7 +164,7 @@ msgstr "&Siųsti vertimą"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "Tinkinti"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -219,23 +220,23 @@ msgstr "Klasterių išdėstymo &legenda"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "Atna&ujinti"
 
 #: i18n.cpp:197
 msgid "&Never check"
-msgstr ""
+msgstr "&Niekada netikrinti"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Tikrinti tik &stabilias laidas"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "Tikrinti visas l&aidas"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr ""
+msgstr "Patikrinti"
 
 #: i18n.cpp:201
 msgid "&About"
@@ -404,7 +405,7 @@ msgstr "suspausta"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "Užduotis sustabdyta"
 
 #: taskbar.cpp:203
 msgid "The job is running"
@@ -424,7 +425,7 @@ msgstr "Slėpti"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Galima parsisiųsti %ls laidą!"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -432,11 +433,11 @@ msgstr "O mane galima atnaujnti ^-^"
 
 #: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
-msgstr ""
+msgstr "&Nutraukti"
 
 #: utils.cpp:414
 msgid "Error!"
-msgstr ""
+msgstr "Klaida!"
 
 #: vollist.cpp:328
 msgid "Disk needs to be repaired"
@@ -449,7 +450,7 @@ msgstr "diską reikia tvarkyti"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "Išanalizuota %5.2lf %%"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -458,7 +459,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "Defragmentuota %5.2lf %%, %d etapas"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -466,7 +467,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "Opitimizuota %5.2lf %%, %d etapas, perkelta %I64u kartų"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -480,7 +481,7 @@ msgstr "išanalizuota"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Defragmentuota per %d etapą(-us)"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -488,4 +489,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Optimizuota per %d etapų (-us), perkelta %I64u kartų"
