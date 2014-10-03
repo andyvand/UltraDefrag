@@ -1,14 +1,14 @@
 ﻿HISTORY
 
-  Version 7.0.0 2013-06-
+  Version 7.0.0 2015-01-
   ------------------------------------------------------------------------------
     beta1:
-    - GUI and command line tool reimplemented on top of wxWidgets library
+    - GUI and command line tools reimplemented on top of wxWidgets library
     - online translation migrated from http://ultradefrag.wikispaces.com/
       to http://www.transifex.com/projects/p/ultradefrag/
     - initial language selection is now done by the GUI instead of the installer
     - ability to hide drives list columns through their resizing added
-    - ability to apply for all or only stable update notifications added
+    - ability to check for all or stable updates added
     - multicolumn language selection menu implemented
     - internal GUI settings moved from guiopts-internals.lua to gui.ini file
     - Windows NT 4.0 and Windows 2000 support dropped due to poor API support
@@ -22,13 +22,14 @@
 
                                     ***
 
-  Version 6.0.3 2013-06-
+  Version 6.0.3 2015-01-
   ------------------------------------------------------------------------------
-    - Corrected a problem where the Windows folder was not detected properly
+    - corrected a problem where the Windows folder was not detected properly
       if the terminal services were activated
+    - online translation support discontinued due to migration to transifex
     - the following translations were updated:
 
-      Filipino (Tagalog), German, Thai
+      Filipino (Tagalog), Galician, German, Thai, Ukrainian
 
 
   Version 6.0.2 2013-05-17
