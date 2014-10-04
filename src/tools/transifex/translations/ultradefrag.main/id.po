@@ -3,17 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# mascatur <satyafree@gmail.com>, 2013
-# operamaniac <rizkiaulia.r@gmail.com>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Catur Susetyo <satyafree@gmail.com>, 2013
+# Joshua C <jrandiny2@gmail.com>, 2014
+# Rizki Aulia Rachman <rizkiaulia.r@gmail.com>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2014-10-01 18:02+0000\n"
+"Last-Translator: Joshua C <jrandiny2@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/projects/p/ultradefrag/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -167,7 +168,7 @@ msgstr "&Kirim terjemahan saat ini"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "%Opsi"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -453,7 +454,7 @@ msgstr "Disk perlu diperbaiki"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% dianalisa"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -462,7 +463,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% terdefrag, tahap %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -470,7 +471,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% teroptimisasi, tahap %d, %I64u perpindahan"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -484,7 +485,7 @@ msgstr "Teranalisa"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Terdefrag, dalam %d tahap"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -492,4 +493,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Teroptimisasi, dalam %d tahap, %I64u perpindahan"
