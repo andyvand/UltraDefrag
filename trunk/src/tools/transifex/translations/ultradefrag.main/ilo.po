@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# joemaza <joseph.maza@gmail.com>, 2013-2014
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Joseph Maza <joseph.maza@gmail.com>, 2013-2014
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
 "PO-Revision-Date: 2014-01-21 20:10+0000\n"
-"Last-Translator: joemaza <joseph.maza@gmail.com>\n"
+"Last-Translator: Joseph Maza <joseph.maza@gmail.com>\n"
 "Language-Team: Iloko (http://www.transifex.com/projects/p/ultradefrag/language/ilo/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

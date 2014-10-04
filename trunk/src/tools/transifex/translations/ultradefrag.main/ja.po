@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# necrose99 <mike@michaellawrenceit.com>, 2014
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: StefanPendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2014-09-22 21:32+0000\n"
+"Last-Translator: necrose99 <mike@michaellawrenceit.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/ultradefrag/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,15 +26,15 @@ msgstr "UltraDefrag について"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "オープンソースの最適化ユーティリティ。"
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "クレジットとライセンスはハンドブックに記載されています。"
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefragのウェブサイト"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -165,7 +166,7 @@ msgstr "現在の翻訳文を提出する"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "&オプション"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -221,23 +222,23 @@ msgstr "クラスタマップの凡例"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&アップグレード"
 
 #: i18n.cpp:197
 msgid "&Never check"
-msgstr ""
+msgstr "&決して確認"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "チェック &安定したリリースのみ"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "チェック  &すべてのリリース"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr ""
+msgstr "&今すぐ確認"
 
 #: i18n.cpp:201
 msgid "&About"
@@ -406,7 +407,7 @@ msgstr "圧縮"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "ジョブが一時停止されている"
 
 #: taskbar.cpp:203
 msgid "The job is running"
@@ -426,7 +427,7 @@ msgstr "隠す"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "リリース %ls をダウンロードできます！"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -434,11 +435,11 @@ msgstr "あなたは私をアップグレードすることができます ^-^"
 
 #: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
-msgstr ""
+msgstr "&取消"
 
 #: utils.cpp:414
 msgid "Error!"
-msgstr ""
+msgstr "エラー！"
 
 #: vollist.cpp:328
 msgid "Disk needs to be repaired"
@@ -451,7 +452,7 @@ msgstr "ディスクを修復する必要があります"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% で分析"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -460,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %%、デフラグ、パス %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -468,7 +469,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% に最適化され、%d,、%I64uファイルは、総移動し合格"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -482,7 +483,7 @@ msgstr "分析済み"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "%d のパスで、デフラグ"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -490,4 +491,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "で、最適化された%d を通過、%I64u は、総移動する"

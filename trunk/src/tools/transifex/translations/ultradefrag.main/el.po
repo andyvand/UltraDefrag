@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# MadMaxx <zealot_gr@yahoo.com>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# Wasilis <inactive+Wasilis@transifex.com>, 2013
+# Dionisios Klonaris <zealot_gr@yahoo.com>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Wasilis Mandratzis <inactive+Wasilis@transifex.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
 "PO-Revision-Date: 2013-12-26 23:00+0000\n"
-"Last-Translator: MadMaxx <zealot_gr@yahoo.com>\n"
+"Last-Translator: Dionisios Klonaris <zealot_gr@yahoo.com>\n"
 "Language-Team: Greek (http://www.transifex.com/projects/p/ultradefrag/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

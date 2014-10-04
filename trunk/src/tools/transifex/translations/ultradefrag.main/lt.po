@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# ejs <ejs@ar.vgtu.lt>, 2014
+# Eugenijus Januškevičius <ejs@ar.vgtu.lt>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
 "PO-Revision-Date: 2014-02-02 11:40+0000\n"
-"Last-Translator: ejs <ejs@ar.vgtu.lt>\n"
+"Last-Translator: Eugenijus Januškevičius <ejs@ar.vgtu.lt>\n"
 "Language-Team: Lithuanian (http://www.transifex.com/projects/p/ultradefrag/language/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

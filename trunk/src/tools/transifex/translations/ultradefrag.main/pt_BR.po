@@ -4,8 +4,8 @@
 # 
 # Translators:
 # Rafael Ferreira <rafael.f.f1@gmail.com>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"

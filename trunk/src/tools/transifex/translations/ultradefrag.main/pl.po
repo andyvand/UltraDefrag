@@ -3,11 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# cwk <cwk@europe.com>, 2013
+# CWK <cwk@europe.com>, 2013
 # Piotr Halama <halamix2@o2.pl>, 2013
-# matrix0123456789 <matrix0123456789@o2.pl>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Mateusz Krawczyk <matrix0123456789@o2.pl>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"

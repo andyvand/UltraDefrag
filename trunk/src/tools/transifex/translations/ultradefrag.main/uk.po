@@ -3,8 +3,8 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
-# StefanPendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 # zubr139 <zubr139@ukr.net>, 2013
 msgid ""
 msgstr ""
