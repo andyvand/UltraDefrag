@@ -1,7 +1,15 @@
 ﻿HISTORY
 
-  Version 7.0.0 2015-01-
+  Version 7.0.0 2014-10-xx
   ------------------------------------------------------------------------------
+    - the following translations were updated:
+
+      Catalan, Chinese (China), Chinese (Taiwan), Czech, Danish, Dutch, 
+      English (United Kingdom), French, Georgian, German, Greek, Hungarian, 
+      Iloko, Indonesian, Italian, Japanese, Korean, Lithuanian, Persian, 
+      Polish, Portuguese, Portuguese (Brazil), Russian, Spanish, Spanish (Mexico), 
+      Swedish, Thai, Turkish, Ukrainian, Vietnamese
+
     beta1:
     - GUI and command line tools reimplemented on top of wxWidgets library
     - online translation migrated from http://ultradefrag.wikispaces.com/
@@ -22,7 +30,7 @@
 
                                     ***
 
-  Version 6.0.3 2015-01-
+  Version 6.0.3 2014-10-xx
   ------------------------------------------------------------------------------
     - corrected a problem where the Windows folder was not detected properly
       if the terminal services were activated
