@@ -124,6 +124,12 @@ save_info:
         log.AddLine(wxT("           by submitting this information to the bug tracker:                   "));
         log.AddLine(wxT("        http://sourceforge.net/tracker/?group_id=199532&atid=969870             "));
         log.AddLine(wxT("                                                                                "));
+        log.AddLine(wxT("         However, ensure that your computer is virus free: malware              "));
+        log.AddLine(wxT("        might easily break something inside of your operating system            "));
+        log.AddLine(wxT("        and cause application crashes thereafter. Send us your report           "));
+        log.AddLine(wxT("        if you suspect the crash is caused by UltraDefrag itself and            "));
+        log.AddLine(wxT("                   not by a broken operating system.                            "));
+        log.AddLine(wxT("                                                                                "));
         log.AddLine(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         log.AddLine(wxT("                                                                                "));
         for(int i = 0; i < (int)info.Count(); i++) log.AddLine(info[i]);
