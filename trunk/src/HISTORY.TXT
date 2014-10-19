@@ -1,7 +1,8 @@
 ﻿HISTORY
 
-  Version 7.0.0 2014-10-xx
+  Version 7.0.0 2014-11-xx
   ------------------------------------------------------------------------------
+    beta2:
     - the following translations were updated:
 
       Catalan, Chinese (China), Chinese (Taiwan), Czech, Danish, Dutch, 
@@ -30,7 +31,7 @@
 
                                     ***
 
-  Version 6.0.3 2014-10-xx
+  Version 6.0.3 2014-10-19
   ------------------------------------------------------------------------------
     - corrected a problem where the Windows folder was not detected properly
       if the terminal services were activated
