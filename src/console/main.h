@@ -60,6 +60,9 @@
 /* sets text color regardless of -b option */
 #define force_color(c) { (void)SetConsoleTextAttribute(g_out,c); }
 
+/* reliable version of _putch */
+#define rputch(c) { char s[2]; s[0] = c; s[1] = 0; printf("%s",s); }
+
 // =======================================================================
 //                            Declarations
 // =======================================================================
