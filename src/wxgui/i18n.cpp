@@ -114,9 +114,6 @@ void App::SetLocale(int id)
 
 /**
  * @brief Manages translation changes.
- * @todo Find a way to prevent the "Graphical Interface"
- * translation from getting unreadable when changing from
- * en_US to de.
  */
 void MainFrame::OnLocaleChange(wxCommandEvent& event)
 {
@@ -160,8 +157,9 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
 
     // settings menu
     m_subMenuLanguage->SetItemLabel(_("&Language"));
-    m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
+    UD_UpdateMenuItemLabel(ID_GuiOptions , "&Options" , "F10");
     m_subMenuSortingConfig->SetItemLabel(_("&Sorting"));
+    m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
     UD_UpdateMenuItemLabel(ID_ReportOptions , "&Reports" , "Ctrl+R");
 
     // language sub-menu
@@ -169,9 +167,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_LangShowReport , "View translation &report"    , "");
     UD_UpdateMenuItemLabel(ID_LangOpenFolder , "&Translations folder"        , "");
     UD_UpdateMenuItemLabel(ID_LangSubmit     , "&Submit current translation" , "");
-
-    // graphical interface sub-menu
-    UD_UpdateMenuItemLabel(ID_GuiOptions , "&Options" , "F10");
 
     // boot time scan sub-menu
     UD_UpdateMenuItemLabel(ID_BootEnable , "&Enable" , "F11");
