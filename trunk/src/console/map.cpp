@@ -126,15 +126,15 @@ void redraw_map(udefrag_progress_info *pi)
     force_color(g_map_border_color);
     short prev_color = g_map_border_color;
 
-    _putch(0xC9);
+    rputch(0xC9);
 
-    for(int j = 0; j < g_map_symbols_per_line; j++) _putch(0xCD);
+    for(int j = 0; j < g_map_symbols_per_line; j++) rputch(0xCD);
 
-    _putch(0xBB); printf("\n");
+    rputch(0xBB); printf("\n");
 
     // print the map
     for(int i = 0; i < g_map_rows; i++){
-        _putch(0xBA);
+        rputch(0xBA);
 
         for(int j = 0; j < g_map_symbols_per_line; j++){
             short color = g_colors[(int)g_map[i * g_map_symbols_per_line + j]];
@@ -142,22 +142,22 @@ void redraw_map(udefrag_progress_info *pi)
             if(color != prev_color) force_color(color);
             prev_color = color;
 
-            _putch(g_map_symbol);
+            rputch(g_map_symbol);
         }
 
         if(g_map_border_color != prev_color)
             force_color(g_map_border_color);
         prev_color = g_map_border_color;
 
-        _putch(0xBA); printf("\n");
+        rputch(0xBA); printf("\n");
     }
 
     // print bottom line of the map
-    _putch(0xC8);
+    rputch(0xC8);
 
-    for(int j = 0; j < g_map_symbols_per_line; j++) _putch(0xCD);
+    for(int j = 0; j < g_map_symbols_per_line; j++) rputch(0xCD);
 
-    _putch(0xBC); printf("\n\n");
+    rputch(0xBC); printf("\n\n");
 
     force_color(g_use_default_colors ? g_default_color :
         FOREGROUND_GREEN | FOREGROUND_INTENSITY);
