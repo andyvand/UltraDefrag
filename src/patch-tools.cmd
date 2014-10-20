@@ -30,6 +30,7 @@ if "%WXWIDGETSDIR%" neq "" (
     echo ------------------
     echo.
     copy /Y tools\patch\wx\intl.cpp "%WXWIDGETSDIR%\src\common\" || goto fail
+    copy /Y tools\patch\wx\menuitem.cpp "%WXWIDGETSDIR%\src\msw\" || goto fail
 )
 
 if "%WINSDKBASE%" neq "" (

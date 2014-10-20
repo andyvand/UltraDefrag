@@ -2,6 +2,9 @@
 
   Version 7.0.0 2014-11-xx
   ------------------------------------------------------------------------------
+    beta3:
+    - few minor bugs fixed
+
     beta2:
     - the following translations were updated:
 
