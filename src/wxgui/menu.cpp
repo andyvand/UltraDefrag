@@ -248,24 +248,24 @@ void MainFrame::InitMenu()
 
     // set menu icons
     if(CheckOption(wxT("UD_SHOW_MENU_ICONS"))){
-        UD_SetMenuIcon(ID_Analyze         , glass )
-        UD_SetMenuIcon(ID_Defrag          , defrag)
-        UD_SetMenuIcon(ID_QuickOpt        , quick )
-        UD_SetMenuIcon(ID_FullOpt         , full  )
-        UD_SetMenuIcon(ID_MftOpt          , mft   )
-        UD_SetMenuIcon(ID_Stop            , stop  )
-        UD_SetMenuIcon(ID_ShowReport      , report)
-        UD_SetMenuIcon(ID_GuiOptions      , gear  )
-        UD_SetMenuIcon(ID_BootScript      , script)
-        UD_SetMenuIcon(ID_HelpContents    , help  )
-        UD_SetMenuIcon(ID_HelpBestPractice, light )
-        UD_SetMenuIcon(ID_HelpAbout       , star  )
+        UD_SetMenuIcon(ID_Analyze         , glass );
+        UD_SetMenuIcon(ID_Defrag          , defrag);
+        UD_SetMenuIcon(ID_QuickOpt        , quick );
+        UD_SetMenuIcon(ID_FullOpt         , full  );
+        UD_SetMenuIcon(ID_MftOpt          , mft   );
+        UD_SetMenuIcon(ID_Stop            , stop  );
+        UD_SetMenuIcon(ID_ShowReport      , report);
+        UD_SetMenuIcon(ID_GuiOptions      , gear  );
+        UD_SetMenuIcon(ID_BootScript      , script);
+        UD_SetMenuIcon(ID_HelpContents    , help  );
+        UD_SetMenuIcon(ID_HelpBestPractice, light );
+        UD_SetMenuIcon(ID_HelpAbout       , star  );
 
-        UD_SetMarginWidth(m_menuBar->GetMenu(0))
-        UD_SetMarginWidth(m_menuBar->GetMenu(1))
-        UD_SetMarginWidth(m_menuBar->GetMenu(2))
-        UD_SetMarginWidth(m_menuBar->GetMenu(3))
-        UD_SetMarginWidth(menuBootConfig)
+        UD_SetMarginWidth(m_menuBar->GetMenu(0));
+        UD_SetMarginWidth(m_menuBar->GetMenu(1));
+        UD_SetMarginWidth(m_menuBar->GetMenu(2));
+        UD_SetMarginWidth(m_menuBar->GetMenu(3));
+        UD_SetMarginWidth(menuBootConfig);
     }
 
     // initial settings
