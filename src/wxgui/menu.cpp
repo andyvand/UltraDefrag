@@ -39,17 +39,20 @@
 #define UD_AppendCheckItem(id) AppendCheckItem(id, wxEmptyString)
 #define UD_AppendRadioItem(id) AppendRadioItem(id, wxEmptyString)
 
-#define UD_SetMenuIcon(id, icon) \
+#define UD_SetMenuIcon(id, icon) { \
+    wxBitmap *pic; wxString string; \
     string.Printf(wxT("%hs%u"),#icon,g_iconSize); \
     pic = Utils::LoadPngResource(string.wc_str()); \
     if(pic) m_menuBar->FindItem(id)->SetBitmap(*pic); \
-    delete pic;
+    delete pic; \
+}
 
-#define UD_SetMarginWidth(menu) \
-    list = menu->GetMenuItems(); \
-    count = list.GetCount(); \
-    for(index = 0; index < count; index++) \
-        list.Item(index)->GetData()->SetMarginWidth(g_iconSize);
+#define UD_SetMarginWidth(menu) { \
+    wxMenuItemList list = menu->GetMenuItems(); \
+    size_t count = list.GetCount(); \
+    for(size_t i = 0; i < count; i++) \
+        list.Item(i)->GetData()->SetMarginWidth(g_iconSize); \
+}
 
 // =======================================================================
 //                        Menu for main window
@@ -245,7 +248,6 @@ void MainFrame::InitMenu()
 
     // set menu icons
     if(CheckOption(wxT("UD_SHOW_MENU_ICONS"))){
-        wxBitmap *pic; wxString string;
         UD_SetMenuIcon(ID_Analyze         , glass )
         UD_SetMenuIcon(ID_Defrag          , defrag)
         UD_SetMenuIcon(ID_QuickOpt        , quick )
@@ -259,7 +261,6 @@ void MainFrame::InitMenu()
         UD_SetMenuIcon(ID_HelpBestPractice, light )
         UD_SetMenuIcon(ID_HelpAbout       , star  )
 
-        wxMenuItemList list; size_t count, index;
         UD_SetMarginWidth(m_menuBar->GetMenu(0))
         UD_SetMarginWidth(m_menuBar->GetMenu(1))
         UD_SetMarginWidth(m_menuBar->GetMenu(2))

@@ -47,17 +47,19 @@ wxLocale *g_locale = NULL;
 // =======================================================================
 
 // macro to add missing languages copied from wxWidgets sources
-#define UD_LNG(wxlang, canonical, winlang, winsublang, layout, desc) \
+#define UD_LNG(wxlang, canonical, winlang, winsublang, layout, desc) { \
+    wxLanguageInfo info;                                  \
     info.Language = wxlang;                               \
     info.CanonicalName = wxT(canonical);                  \
     info.LayoutDirection = layout;                        \
     info.Description = wxT(desc);                         \
     info.WinLang = winlang, info.WinSublang = winsublang; \
-    g_locale->AddLanguage(info);
+    g_locale->AddLanguage(info);                          \
+}
 
-#define UD_UpdateMenuItemLabel(id,label,accel) \
+#define UD_UpdateMenuItemLabel(id,label,accel) { \
     if(::strlen(accel)){ \
-        ItemLabel = _(label); \
+        wxString ItemLabel = _(label); \
         ItemLabel << wxT("\t") << wxT(accel); \
         m_menuBar->FindItem(id)->SetItemLabel(ItemLabel); \
         if(m_toolBar->FindById(id)){ \
@@ -69,21 +71,21 @@ wxLocale *g_locale = NULL;
         m_menuBar->FindItem(id)->SetItemLabel(_(label)); \
         if(m_toolBar->FindById(id)) \
             m_toolBar->SetToolShortHelp(id,_(label)); \
-    }
+    } \
+}
 
 void App::InitLocale()
 {
     g_locale = new wxLocale();
 
     // add translations missing from wxWidgets
-    wxLanguageInfo info;
-    UD_LNG(wxUD_LANGUAGE_BOSNIAN,           "bs"   , LANG_BOSNIAN  , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian")
-    UD_LNG(wxUD_LANGUAGE_ILOKO,             "ilo"  , 0             , 0              , wxLayout_LeftToRight, "Iloko")
-    UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pam"  , 0             , 0              , wxLayout_LeftToRight, "Kapampangan")
-    UD_LNG(wxUD_LANGUAGE_NORWEGIAN,         "no"   , LANG_NORWEGIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Norwegian")
-    UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "war"  , 0             , 0              , wxLayout_LeftToRight, "Waray-Waray")
-    UD_LNG(wxUD_LANGUAGE_ACOLI,             "ach"  , 0             , 0              , wxLayout_LeftToRight, "Acoli")
-    UD_LNG(wxUD_LANGUAGE_SINHALA_SRI_LANKA, "si_LK", 0             , 0              , wxLayout_LeftToRight, "Sinhala (Sri Lanka)")
+    UD_LNG(wxUD_LANGUAGE_BOSNIAN,           "bs"   , LANG_BOSNIAN  , SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN, wxLayout_LeftToRight, "Bosnian");
+    UD_LNG(wxUD_LANGUAGE_ILOKO,             "ilo"  , 0             , 0              , wxLayout_LeftToRight, "Iloko");
+    UD_LNG(wxUD_LANGUAGE_KAPAMPANGAN,       "pam"  , 0             , 0              , wxLayout_LeftToRight, "Kapampangan");
+    UD_LNG(wxUD_LANGUAGE_NORWEGIAN,         "no"   , LANG_NORWEGIAN, SUBLANG_DEFAULT, wxLayout_LeftToRight, "Norwegian");
+    UD_LNG(wxUD_LANGUAGE_WARAY_WARAY,       "war"  , 0             , 0              , wxLayout_LeftToRight, "Waray-Waray");
+    UD_LNG(wxUD_LANGUAGE_ACOLI,             "ach"  , 0             , 0              , wxLayout_LeftToRight, "Acoli");
+    UD_LNG(wxUD_LANGUAGE_SINHALA_SRI_LANKA, "si_LK", 0             , 0              , wxLayout_LeftToRight, "Sinhala (Sri Lanka)");
 
     // get initial language selection
     int id = wxLANGUAGE_ENGLISH_US;
@@ -120,7 +122,6 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     App::SetLocale(event.GetId() - ID_LocaleChange);
 
     // update menu labels and tool bar tool-tips
-    wxString ItemLabel;
 
     // main menu
     m_menuBar->SetMenuLabel(0, _("&Action"));
@@ -201,12 +202,12 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_DebugSend , "Send bug &report" , "");
 
     // update tool-tips that differ from menu labels
-    ItemLabel = _("&Boot time scan"); ItemLabel << wxT(" (F11)");
-    m_toolBar->SetToolShortHelp(ID_BootEnable,ItemLabel);
-    ItemLabel = _("Boot time script"); ItemLabel << wxT(" (F12)");
-    m_toolBar->SetToolShortHelp(ID_BootScript,ItemLabel);
-    ItemLabel = _("&Help"); ItemLabel << wxT(" (F1)");
-    m_toolBar->SetToolShortHelp(ID_HelpContents,ItemLabel);
+    wxString label = _("&Boot time scan"); label << wxT(" (F11)");
+    m_toolBar->SetToolShortHelp(ID_BootEnable,label);
+    label = _("Boot time script"); label << wxT(" (F12)");
+    m_toolBar->SetToolShortHelp(ID_BootScript,label);
+    label = _("&Help"); label << wxT(" (F1)");
+    m_toolBar->SetToolShortHelp(ID_HelpContents,label);
 
     // update list column labels
     wxListItem item; item.SetMask(wxLIST_MASK_TEXT);

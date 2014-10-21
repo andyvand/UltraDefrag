@@ -63,7 +63,7 @@ void MainFrame::InitVolList()
     int width = m_vList->GetClientSize().GetWidth();
     int lastColumnWidth = width;
 
-    dtrace("client width ......... %d", width);
+    // dtrace("client width ......... %d", width);
 
     int format[] = {
         wxLIST_FORMAT_LEFT, wxLIST_FORMAT_LEFT,
@@ -74,7 +74,7 @@ void MainFrame::InitVolList()
     for(int i = 0; i < LIST_COLUMNS - 1; i++) {
         int w = m_w[i] = (int)floor(m_r[i] * width);
         m_vList->InsertColumn(i, wxEmptyString, format[i], w);
-        dtrace("column %d width ....... %d", i, w);
+        // dtrace("column %d width ....... %d", i, w);
         lastColumnWidth -= w;
     }
 
@@ -84,7 +84,7 @@ void MainFrame::InitVolList()
     m_vList->InsertColumn(LIST_COLUMNS - 1,
         wxEmptyString, format[LIST_COLUMNS - 1], w
     );
-    dtrace("column %d width ....... %d", LIST_COLUMNS - 1, w);
+    // dtrace("column %d width ....... %d", LIST_COLUMNS - 1, w);
 
     // attach drive icons
     int size = g_iconSize;
@@ -198,14 +198,14 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
 
     int border = wxSystemSettings::GetMetric(wxSYS_BORDER_X);
 
-    dtrace("border width ......... %d", border);
-    dtrace("client width ......... %d", width);
-    dtrace("total column width ... %d", cwidth);
+    // dtrace("border width ......... %d", border);
+    // dtrace("client width ......... %d", width);
+    // dtrace("total column width ... %d", cwidth);
 
     for(int i = 0; i < (LIST_COLUMNS - 1); i++) {
         int w = m_w[i] = (int)floor(m_r[i] * width);
         m_vList->SetColumnWidth(i, w);
-        dtrace("column %d width ....... %d", i, w);
+        // dtrace("column %d width ....... %d", i, w);
         lastColumnWidth -= w;
     }
 
@@ -214,7 +214,7 @@ void MainFrame::AdjustListColumns(wxCommandEvent& event)
     m_w[LIST_COLUMNS - 1] = w;
 
     m_vList->SetColumnWidth(LIST_COLUMNS - 1, w);
-    dtrace("column %d width ....... %d", LIST_COLUMNS - 1, w);
+    // dtrace("column %d width ....... %d", LIST_COLUMNS - 1, w);
 }
 
 void MainFrame::AdjustListHeight(wxCommandEvent& WXUNUSED(event))
