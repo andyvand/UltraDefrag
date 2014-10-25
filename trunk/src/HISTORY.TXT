@@ -2,7 +2,7 @@
 
   Version 7.0.0 2014-11-xx
   ------------------------------------------------------------------------------
-    beta3:
+    RC1:
     - few minor bugs fixed
 
     beta2:
@@ -33,6 +33,11 @@
     - wgx library replaced by wxWidgets library
 
                                     ***
+
+  Version 6.0.4 2014-10-25
+  ------------------------------------------------------------------------------
+    - fixed a bug preventing configuration files creation on Windows 7
+
 
   Version 6.0.3 2014-10-19
   ------------------------------------------------------------------------------
