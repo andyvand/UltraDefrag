@@ -712,6 +712,7 @@ void winx_flush_dbg_log(int flags)
                     /* add a proper newline characters */
                     (void)winx_fwrite(crlf,sizeof(char),2,f);
                 }
+                winx_free(log_entry->buffer);
             }
             if(log_entry->next == old_dbg_log) break;
         }

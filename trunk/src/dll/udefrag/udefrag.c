@@ -235,7 +235,7 @@ static int killer(void *p)
 static DWORD WINAPI start_job(LPVOID p)
 {
     udefrag_job_parameters *jp = (udefrag_job_parameters *)p;
-    char *action = "analyzing";
+    char *action = "Analysis";
     int result = 0;
 
     /* check job flags */
@@ -325,7 +325,7 @@ int udefrag_start_job(char volume_letter,udefrag_job_type job_type,int flags,
     udefrag_job_parameters jp;
     ULONGLONG time = 0;
     int use_limit = 0;
-    int result = -1;
+    int result;
     int win_version = winx_get_os_version();
     
     /* initialize the job */
@@ -429,11 +429,13 @@ done:
     jp.p_counters.overall_time = winx_xtime() - jp.p_counters.overall_time;
     dbg_print_performance_counters(&jp);
     dbg_print_footer(&jp);
-    if(jp.pi.completion_status > 0)
-        result = 0;
-    else if(jp.pi.completion_status < 0)
-        result = jp.pi.completion_status;
-    return result;
+
+    /* cleanup */
+    winx_flush_dbg_log(0);
+    
+    result = jp.pi.completion_status;
+    if(result < 0) return result;
+    return (result > 0) ? 0 : (-1);
 }
 
 /**
