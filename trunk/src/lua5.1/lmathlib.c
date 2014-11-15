@@ -22,10 +22,8 @@
 #define RADIANS_PER_DEGREE (PI/180.0)
 
 /*
-* The following bitwise operations were added especially for UltraDefrag.
+* The following bitwise operations have been added for UltraDefrag.
 * Copyright (c) 2010-2013 by Dmitri Arkhangelski (dmitriar@gmail.com).
-*
-* All functions are designed to be used with integer 32-bit numbers.
 */
 
 static int math_band (lua_State *L) {
