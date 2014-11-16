@@ -1,0 +1,1 @@
+This directory contains manual pages for UltraDefrag native shell commands.
