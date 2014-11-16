@@ -1,1 +1,0 @@
-This directory contains manual pages for ultradefrag native shell commands.

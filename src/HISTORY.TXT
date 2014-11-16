@@ -1,9 +1,10 @@
 ﻿HISTORY
 
-  Version 7.0.0 2014-11-xx
+  Version 7.0.0 2014-12-xx
   ------------------------------------------------------------------------------
     RC1:
-    - few minor bugs fixed
+    - documentation was cleaned up
+    - few minor bugs were fixed
 
     beta2:
     - the following translations were updated:

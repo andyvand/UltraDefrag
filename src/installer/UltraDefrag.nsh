@@ -457,7 +457,7 @@ SkipMove:
 
     DetailPrint "Installing boot interface..."
     SetOutPath "$INSTDIR\man"
-    File "${ROOTDIR}\src\man\*.*"
+    File "${ROOTDIR}\doc\man\*.*"
 
     SetOutPath "$SYSDIR"
     File "${ROOTDIR}\src\installer\boot-config.cmd"
