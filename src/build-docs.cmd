@@ -1,5 +1,4 @@
 @echo off
-
 ::
 :: Build script for UltraDefrag documentation.
 :: Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).

@@ -1,5 +1,4 @@
 \.svn
-\CVS
 \bin
 \lib
 \obj
@@ -11,6 +10,5 @@
 \thumbs.db
 .exe
 .com
-\internal-doc
 .layout
 .depend
