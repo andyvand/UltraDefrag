@@ -10,36 +10,37 @@
  */
 
 /*
- * An initial version of this document has been contributed
- * by Justin Dearing <zippy1981@users.sourceforge.net> (2007).
+ * The initial version of this document was contributed in
+ * 2007 by Justin Dearing <zippy1981@users.sourceforge.net>.
  */
 
 /**
- * @mainpage The UltraDefrag Handbook
+ * @mainpage UltraDefrag Handbook
  *
- * @par Authors:
- * Stefan Pendl (stefanpe@users.sourceforge.net),\n
- * Dmitri Arkhangelski (dmitriar@users.sourceforge.net).
+ * <h2>Authors</h2>
+ * @par
+ * Stefan Pendl \<stefanpe@users.sourceforge.net\>\n
+ * Dmitri Arkhangelski \<dmitriar@users.sourceforge.net\>
  *
  * <h2>Table of Contents</h2>
- * -# @subpage Introduction
- * -# @subpage Installation
- * -# @subpage Console
- * -# @subpage Schedule
- * -# @subpage GUI
- * -# @subpage Boot
- * -# @subpage Reports
- * -# @subpage Tips
- * -# @subpage FAQ
- * -# @subpage ReportingBugs
- * -# @subpage Translation
- * -# @subpage Credits
+ * -# @ref Introduction
+ * -# @ref Installation
+ * -# @ref Console
+ * -# @ref Schedule
+ * -# @ref GUI
+ * -# @ref Boot
+ * -# @ref Reports
+ * -# @ref Tips
+ * -# @ref FAQ
+ * -# @ref ReportingBugs
+ * -# @ref Translation
+ * -# @ref Credits
  * -# <a href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html" class="simple"><b>Development</b></a>
  *
  * <h2>License</h2>
- * UltraDefrag is licensed under the terms of the @ref GPL .
+ * UltraDefrag is licensed under the terms of the @ref GPL.
  *
- * This document is licensed under the terms of the @ref FDL .
+ * This document is licensed under the terms of the @ref FDL.
  *
  * Feel free to redistribute them under certain conditions.
  *
