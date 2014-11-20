@@ -18,16 +18,10 @@
  */
 
 /**
- * @mainpage udefrag.dll
- * @author Dmitri Arkhangelski (dmitriar@users.sourceforge.net).
+ * @mainpage UltraDefrag Library
  *
- * <h2>Introduction</h2>
- * udefrag.dll contains base ultradefrag algorithms.
- *
- * <h2>License</h2>
- * UltraDefrag is a <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a>-
- * licensed product. Feel free to redistribute it under certain
- * conditions.
+ * The UltraDefrag Library contains all the disk defragmentation algorithms.
+ * This document provides comprehensive information about it.
  */
 
 /**

@@ -9,20 +9,17 @@
  */
 
 /**
- * @page Devnotes Development Notes
+ * @page Devnotes Development notes
  *
  * - UltraDefrag contains few modules running during 
- * the Windows boot process. For this purpose the program utilizes a lot 
- * of undocumented Windows functions, primary exported by ntdll.dll 
+ * the Windows boot process. Due to this reason the program
+ * utilizes a lot of undocumented Windows interfaces from ntdll 
  * library. Please read carefully comments in the beginning of 
- * /src/dll/zenwinx/ntndk.h file before use of such functions.
- * They often require something unexpected, so without a careful use
- * they may simply crash your application.
+ * /src/dll/zenwinx/ntndk.h file before any use of those functions.
+ * They often require something unexpected, and if you ignore rules
+ * they might simply crash your application.
  *
- * - When some program uses MessageBox() call it must call also
- * InitCommonControls() in the beginning of its main() function.
- * Otherwise it will be not compatible with manifest defining comctl32.dll
- * dependency for Windows visual styles support. Message boxes will never 
- * appear on the screen in this case. This undocumented behavior
- * was discovered on 32-bit XP system.
+ * - InitCommonControls() call is mandatory to show messages
+ * using the MessageBox() API. The reason is the comctl32.dll
+ * dependency defined by the application manifest.
  */
