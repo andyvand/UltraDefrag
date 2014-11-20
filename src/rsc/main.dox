@@ -10,28 +10,20 @@
 
 /**
  * @mainpage Ultra Defragmenter
- * <dl class="author">
- * <dt>Authors:</dt>
- * <dd>Dmitri Arkhangelski (dmitriar@users.sourceforge.net),\n
- *     Stefan Pendl (stefanpe@users.sourceforge.net).</dd>
- * </dl>
+ *
+ * <h2>Authors</h2>
+ * @par
+ * Dmitri Arkhangelski \<dmitriar@users.sourceforge.net\>\n
+ * Stefan Pendl \<stefanpe@users.sourceforge.net\>
  *
  * <h2>Introduction</h2>
- * This document contains technical information about the Ultra
- * Defragmenter. Compilation instructions, internal interfaces 
- * and other aspects of the development.
- *
- * The main target of UltraDefrag development is reaching the highest
- * level of reliability. Another target, good set of functions, is reached yet.
- *
- * <h2>Related pages</h2>
  * - @ref Compilation
  * - @ref Design
  * - @ref Devnotes
  *
  * <h2>Technical reference</h2>
- * - <a href="../udefrag.dll/html/index.html">Udefrag.dll Library</a>
- * - <a href="http://zenwinx.sourceforge.net/">ZenWINX Library</a>
+ * - <a href="../udefrag.dll/html/index.html">udefrag library</a>
+ * - <a href="http://zenwinx.sourceforge.net/">zenwinx library</a>
  *
  * <h2>Links</h2>
  * - <a href="https://svn.code.sf.net/p/ultradefrag/code/">SVN repository base address</a>
@@ -39,9 +31,9 @@
  * - <a href="http://www.openhub.net/p/ultradefrag">UltraDefrag development statistics on Open Hub</a>
  *
  * <h2>License</h2>
- * UltraDefrag is a <a href="GPL.html">GPL</a>-
- * licensed product. Feel free to redistribute it under certain
- * conditions.
+ * UltraDefrag is licensed under the terms of the <a href="http://ultradefrag.sourceforge.net/handbook/GPL.html">GNU General Public License</a>.
+ * This document is licensed under the terms of the <a href="http://ultradefrag.sourceforge.net/handbook/FDL.html">GNU Free Documentation License</a>.
+ * Feel free to redistribute them under certain conditions.
  *
  * UltraDefrag includes portions of a few open source libraries 
  * (<a href="http://www.wxwidgets.org/">wxWidgets</a>, 
@@ -54,7 +46,4 @@
  * read the `Credits and License' chapter of the UltraDefrag Handbook. You 
  * should have received a copy of it along with this program; if not, go to
  * <a href="http://ultradefrag.sourceforge.net/handbook/Credits.html">the online version</a>.
- *
- * This document is licensed under the terms of the 
- * <a href="FDL.html">GNU Free Documentation License</a>.
  */
