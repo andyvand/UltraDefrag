@@ -250,8 +250,6 @@ rem by removing all intermediate files.
     rd /s /q ..\doc\handbook\doxy-defaults
     rd /s /q ..\doc\handbook\doxy-defaults_a4
     rd /s /q ..\doc\handbook\doxy-defaults_letter
-    rd /s /q src_package
-    rd /s /q ..\src_package
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 rd /s /q release
 
     del /f /q ..\..\web\doxy-doc\html\*.*
