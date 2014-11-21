@@ -1,8 +1,6 @@
 @echo off
-
-:: This script was made for myself (Dmitri Arkhangelski)
-:: to simplify binary packages uploading.
 ::
+:: This script builds everything for UltraDefrag releases.
 :: Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
 :: Copyright (c) 2011-2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
@@ -28,7 +26,6 @@ mkdir release
 
 :: build source code package
 call build-src-package.cmd || goto build_failed
-copy .\src_package\ultradefrag-%UDVERSION_SUFFIX%.src.7z .\release\
 
 :: build all binaries
 call build.cmd --all --use-winsdk || goto build_failed
