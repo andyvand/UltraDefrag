@@ -5,7 +5,7 @@ echo Set Stefans' environment variables...
 if not defined ORIG_USERNAME set ORIG_USERNAME=%USERNAME%
 
 set WINSDKBASE=C:\Program Files\Microsoft SDKs\Windows\v7.1
-set MINGWBASE=C:\MinGW32
+set MINGWBASE=C:\TDM-GCC-32
 set MINGWx64BASE=
 set WXWIDGETSDIR=C:\wxWidgets-2.8.12
 set NSISDIR=C:\Program Files (x86)\NSIS
