@@ -412,13 +412,6 @@ static int filter(winx_file_info *f,void *user_defined_data)
     if(f->path[0] == 0) goto skip_file_and_children;
     
     /*
-    * Skip resident streams, but not in context menu
-    * handler, where they're needed for statistics.
-    */
-    if(f->disp.fragments == 0 && !(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER))
-        return 0;
-    
-    /*
     * Remove trailing dot from the root
     * directory path, otherwise we'll not
     * be able to defragment it.
@@ -431,12 +424,9 @@ static int filter(winx_file_info *f,void *user_defined_data)
         }
     }
     
-    /* skip resident streams in context menu handler, but count them */
-    if(f->disp.fragments == 0){
-        if(!exclude_by_path(f,jp))
-            update_progress_counters(f,jp);
-        return 0;
-    }
+    /* skip resident streams */
+    if(f->disp.fragments == 0)
+        goto skip_file;
     
     /* show debugging information about interesting cases */
     if(is_sparse(f))
@@ -474,14 +464,28 @@ static int filter(winx_file_info *f,void *user_defined_data)
     
     /* filter files by their paths */
     if(exclude_by_path(f,jp)){
-        f->user_defined_flags |= UD_FILE_EXCLUDED;
-        f->user_defined_flags |= UD_FILE_EXCLUDED_BY_PATH;
+        /*
+        * Don't skip children however since 
+        * their paths may match patterns.
+        */
+        goto skip_file;
     }
-    /* don't skip children since their paths may match patterns */
-    return 0;
+    
+    goto accept_file;
 
 skip_file:
     f->user_defined_flags |= UD_FILE_EXCLUDED;
+    
+accept_file:
+    /* count everything in context menu handler to avoid ambiguity */
+    if(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER){
+        if(jp->udo.cut_filter.count){
+            if(winx_patcmp(f->path + 0x4,&jp->udo.cut_filter))
+                update_progress_counters(f,jp);
+        } else {
+            update_progress_counters(f,jp);
+        }
+    }
     return 0;
 
 skip_file_and_children:
@@ -617,15 +621,8 @@ static int find_files(udefrag_job_parameters *jp)
             jp->pi.fragments += f->disp.fragments;
         }
 
-        /* count nonresident files included by context menu handler */
-        if(jp->udo.job_flags & UD_JOB_CONTEXT_MENU_HANDLER){
-            if(!is_excluded_by_path(f))
-                update_progress_counters(f,jp);
-        }
-    
         /* redraw cluster map */
         colorize_file(jp,f,SYSTEM_SPACE);
-        //trace(D"%ws",f->path);
         
         /* add file blocks to the binary search tree - after winx_scan_disk! */
         for(block = f->disp.blockmap; block; block = block->next){
