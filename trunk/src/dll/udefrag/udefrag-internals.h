@@ -97,8 +97,6 @@
 */
 #define UD_FILE_FRAGMENTED_BY_FILE_OPT 0x200
 
-#define UD_FILE_EXCLUDED_BY_PATH       0x400
-
 /*
 * Some essential DOS/boot files need to
 * be at fixed locations on disk, so we're
@@ -126,7 +124,6 @@
 #define is_currently_excluded(f)     ((f)->user_defined_flags & UD_FILE_CURRENTLY_EXCLUDED)
 #define is_moved_to_front(f)         ((f)->user_defined_flags & UD_FILE_MOVED_TO_FRONT)
 #define is_fragmented_by_file_opt(f) ((f)->user_defined_flags & UD_FILE_FRAGMENTED_BY_FILE_OPT)
-#define is_excluded_by_path(f)       ((f)->user_defined_flags & UD_FILE_EXCLUDED_BY_PATH)
 #define is_essential_boot_file(f)    ((f)->user_defined_flags & UD_FILE_ESSENTIAL_BOOT_FILE)
 #define is_not_essential_file(f)     ((f)->user_defined_flags & UD_FILE_NOT_ESSENTIAL_FILE)
 #define is_mft_file(f)               ((f)->user_defined_flags & UD_FILE_MFT_FILE)
