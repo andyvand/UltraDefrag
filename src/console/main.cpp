@@ -527,15 +527,12 @@ bool init(int argc, char **argv)
     if(!check_admin_rights()){
         fprintf(stderr,"Administrative rights "
             "are needed to run the program!\n");
-        cleanup();
         return false;
     }
 
     // parse command line
-    if(!parse_cmdline(argc,argv)){
-        cleanup();
+    if(!parse_cmdline(argc,argv))
         return false;
-    }
 
     // set text color
     CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -586,6 +583,8 @@ static int out_of_memory_handler(size_t n)
 
 int __cdecl main(int argc, char **argv)
 {
+    int result = 1;
+
     // initialize udefrag library
     if(udefrag_init_library() < 0){
         fprintf(stderr,"Initialization failed!\n");
@@ -600,7 +599,7 @@ int __cdecl main(int argc, char **argv)
 #endif
 
     if(!init(argc,argv))
-        return 1;
+        goto done;
 
     if(g_help){
         show_help();
@@ -617,8 +616,6 @@ int __cdecl main(int argc, char **argv)
     /*for(int i = 0; i < 1000000000; i++)
         char *p = new char[1024];*/
 
-    int result;
-
     if(g_list_volumes){
         result = list_volumes();
         cleanup();
@@ -627,6 +624,7 @@ int __cdecl main(int argc, char **argv)
 
     result = process_volumes();
 
+done:
     /* display prompt to hit any key in case of context menu handler */
     if(g_shellex){
         color(g_default_color);
