@@ -29,9 +29,9 @@ EXAMPLES
         set u
                 list all environment variables starting with 'u'
 
-        set UD_SIZELIMIT=50Mb
+        set UD_SIZELIMIT=50MB
                 create or change the variable 'UD_SIZELIMIT'
-                and assign the value of '50Mb' to it
+                and assign the value of '50MB' to it
 
         set UD_EX_FILTER=
                 delete the variable 'UD_EX_FILTER'

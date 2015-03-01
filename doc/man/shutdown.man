@@ -7,22 +7,15 @@ SYNOPSIS
         shutdown
 
 DESCRIPTION
-        'shutdown' immediately shuts your system down.
-
-OPTIONS
-        none
-
-EXAMPLES
-        shutdown
-                shut the system down
+        'shutdown' immediately shuts the computer down.
 
 AUTHOR
         Written by UltraDefrag Development Team
 
 COPYRIGHT
-        Copyright (C) 2010-2014 UltraDefrag Development Team
+        Copyright (C) 2010-2015 UltraDefrag Development Team
         This is free software; see the source for copying conditions.
         There is NO warranty; not even for MERCHANTABILITY
         or FITNESS FOR A PARTICULAR PURPOSE.
 
-shutdown                    September 2010                          1
+shutdown                      March 2015                            1
