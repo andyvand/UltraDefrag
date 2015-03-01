@@ -1,6 +1,6 @@
 @echo off
 ::
-:: Script to start the Code::Blocks IDE with our custom build environment.
+:: This script starts Code::Blocks IDE with our custom build environment.
 :: Copyright (c) 2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
 :: This program is free software; you can redistribute it and/or modify
@@ -20,14 +20,13 @@
 
 :: set environment
 call setvars.cmd
-if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"
-if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
+if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"^
+    call "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"
+if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd"^
+    call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 
 if not exist "%CODEBLOCKS_EXE%" goto cb_missing
-
 start "" "%CODEBLOCKS_EXE%" "UltraDefrag.workspace"
-
-:success
 exit /B 0
 
 :cb_missing

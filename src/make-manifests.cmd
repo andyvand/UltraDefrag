@@ -1,5 +1,4 @@
 @echo off
-
 ::
 :: This script generates manifests for Vista UAC for UltraDefrag project.
 :: Copyright (c) 2009-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
@@ -34,7 +33,6 @@ call :make_manifest %1 %ULTRADFGVER%.0  bootexctrl     "BootExecute Control Prog
 call :make_manifest %1 5.1.2.0          Lua            "Lua Console"                   >.\obj\lua\lua.manifest
 call :make_manifest %1 5.1.2.0          Lua            "Lua GUI"                       >.\obj\lua-gui\lua.manifest
 
-rem update manifests in working copy of sources
 if /i "%1" equ "X86" (
     copy /Y .\obj\hibernate\hibernate.manifest   .\hibernate\hibernate.manifest
     copy /Y .\obj\console\console.manifest        .\console\console.manifest

@@ -1,4 +1,4 @@
--- this is the "Hibernate for Windows" program build options
+-- Hibernate for Windows build options
 name        = "hibernate"
 target_type = "console"
 

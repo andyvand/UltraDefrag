@@ -1,4 +1,4 @@
--- this is the udefrag library build options
+-- UltraDefrag library build options
 name        = "udefrag"
 target_type = "dll"
 nativedll   = 1
