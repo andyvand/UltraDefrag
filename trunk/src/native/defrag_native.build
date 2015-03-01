@@ -1,4 +1,4 @@
--- this is the UltraDefrag boot time (native) interface build options
+-- UltraDefrag boot time interface build options
 name        = "defrag_native"
 target_type = "native"
 

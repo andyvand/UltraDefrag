@@ -1,4 +1,4 @@
--- this is the zenwinx library build options
+-- zenwinx library build options
 name        = "zenwinx"
 target_type = "dll"
 nativedll   = 1

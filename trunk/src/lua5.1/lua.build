@@ -1,4 +1,4 @@
--- Lua 5.1 DLL build options
+-- Lua 5.1 library build options
 name        = "lua5.1a"
 target_type = "dll"
 nativedll   = 0

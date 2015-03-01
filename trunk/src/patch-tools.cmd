@@ -1,8 +1,6 @@
 @echo off
-
 ::
-:: This script patches all the development tools
-:: to make 'em suitable for UltraDefrag.
+:: This script patches all UltraDefrag development tools.
 :: Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
 ::
 :: This program is free software; you can redistribute it and/or modify
@@ -21,8 +19,10 @@
 ::
 
 call setvars.cmd
-if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"
-if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd" call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
+if exist "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"^
+    call "setvars_%COMPUTERNAME%_%ORIG_USERNAME%.cmd"
+if exist "setvars_%COMPUTERNAME%_%USERNAME%.cmd"^
+    call "setvars_%COMPUTERNAME%_%USERNAME%.cmd"
 
 if "%WXWIDGETSDIR%" neq "" (
     echo.

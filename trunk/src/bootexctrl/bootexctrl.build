@@ -1,4 +1,4 @@
--- this is the ultradefag BootExecute Control program build options
+-- BootExecute Control build options
 name        = "bootexctrl"
 target_type = "gui"
 
