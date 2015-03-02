@@ -343,8 +343,6 @@ SkipMove:
         File "${ROOTDIR}\src\installer\ud-help.cmd"
 
     SetOutPath "$INSTDIR"
-        File "${ROOTDIR}\src\LICENSE.TXT"
-        File "${ROOTDIR}\src\CREDITS.TXT"
         File "${ROOTDIR}\src\HISTORY.TXT"
         File "README.TXT"
 
@@ -399,8 +397,6 @@ SkipMove:
     ${DisableX64FSRedirection}
 
     DetailPrint "Removing core files..."
-    Delete "$INSTDIR\LICENSE.TXT"
-    Delete "$INSTDIR\CREDITS.TXT"
     Delete "$INSTDIR\HISTORY.TXT"
     Delete "$INSTDIR\README.TXT"
     Delete "$INSTDIR\lua5.1a.exe"
@@ -1042,6 +1038,8 @@ SkipMove:
     Delete "$INSTDIR\options\udreportopts.lua.old"
 
     Delete "$INSTDIR\dfrg.exe"
+    Delete "$INSTDIR\CREDITS.TXT"
+    Delete "$INSTDIR\LICENSE.TXT"
     Delete "$INSTDIR\INSTALL.TXT"
     Delete "$INSTDIR\FAQ.TXT"
     Delete "$INSTDIR\UltraDefragScheduler.NET.exe"

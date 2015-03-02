@@ -123,6 +123,22 @@ rem Sets environment for the build process.
     del /q .\include\version.new
 goto :EOF
 
+rem Synopsis: call :build_readme_file {path to the file}
+rem Example:  call :build_readme_file .
+:build_readme_file
+    echo ------------------------------------------------------------------------------- > %1
+    echo UltraDefrag %ULTRADFGVER% - an open source disk defragmenter for Windows. >> %1
+    echo ------------------------------------------------------------------------------- >> %1
+    echo. >> %1
+    echo The complete information about the program can be found in UltraDefrag >> %1
+    echo Handbook. You should have received it along with this program; if not, >> %1
+    echo go to: >> %1
+    echo. >> %1
+    echo   http://ultradefrag.sourceforge.net/handbook/ >> %1
+    echo. >> %1
+    echo ------------------------------------------------------------------------------- >> %1
+exit /B 0
+
 rem Synopsis: call :build_installer {path to binaries} {arch}
 rem Example:  call :build_installer .\bin\ia64 ia64
 :build_installer
@@ -132,8 +148,7 @@ rem Example:  call :build_installer .\bin\ia64 ia64
     copy /Y "%~dp0\installer\UltraDefrag.nsi" .\
     copy /Y "%~dp0\installer\lang.ini" .\
 
-    echo The Ultra Defragmenter Version %ULTRADFGVER% >.\README.TXT
-    type "%~dp0\README.TXT" >>.\README.TXT
+    call :build_readme_file .\README.TXT
 
     if "%RELEASE_STAGE%" neq "" (
         set NSIS_COMPILER_FLAGS=/DULTRADFGVER=%ULTRADFGVER% /DULTRADFGARCH=%2 /DRELEASE_STAGE=%RELEASE_STAGE% /DUDVERSION_SUFFIX=%UDVERSION_SUFFIX%
@@ -158,12 +173,9 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     pushd %1
     set PORTABLE_DIR=ultradefrag-portable-%UDVERSION_SUFFIX%.%2
     mkdir %PORTABLE_DIR%
-    copy /Y "%~dp0\CREDITS.TXT" %PORTABLE_DIR%\
     copy /Y "%~dp0\HISTORY.TXT" %PORTABLE_DIR%\
-    copy /Y "%~dp0\LICENSE.TXT" %PORTABLE_DIR%\
     
-    echo The Ultra Defragmenter Version %ULTRADFGVER% >%PORTABLE_DIR%\README.TXT
-    type "%~dp0\README.TXT" >>%PORTABLE_DIR%\README.TXT
+    call :build_readme_file     %PORTABLE_DIR%\README.TXT
     
     copy /Y hibernate.exe       %PORTABLE_DIR%\hibernate4win.exe
     copy /Y udefrag.dll         %PORTABLE_DIR%\
