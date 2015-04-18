@@ -1,6 +1,6 @@
 @echo off
 ::
-:: This script builds everything for UltraDefrag releases.
+:: This script builds UltraDefrag releases.
 :: Copyright (c) 2007-2013 Dmitri Arkhangelski (dmitriar@gmail.com).
 :: Copyright (c) 2011-2013 Stefan Pendl (stefanpe@users.sourceforge.net).
 ::
@@ -36,15 +36,7 @@ copy .\bin\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.i386.zip .\release\
 copy .\bin\amd64\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.amd64.zip .\release\
 copy .\bin\ia64\ultradefrag-portable-%UDVERSION_SUFFIX%.bin.ia64.zip .\release\
 
-cd release
-..\tools\md5sum ultradefrag-%UDVERSION_SUFFIX%.bin.*           > ultradefrag-%UDVERSION_SUFFIX%.MD5SUMS
-..\tools\md5sum ultradefrag-portable-%UDVERSION_SUFFIX%.bin.* >> ultradefrag-%UDVERSION_SUFFIX%.MD5SUMS
-..\tools\md5sum ultradefrag-%UDVERSION_SUFFIX%.src.*          >> ultradefrag-%UDVERSION_SUFFIX%.MD5SUMS
-..\tools\md5sum UltraDefrag_Handbook_%ULTRADFGVER%_*.pdf      >> ultradefrag-%UDVERSION_SUFFIX%.MD5SUMS
-cd ..
-
 :: update history file
-copy .\HISTORY.TXT .\release\
 copy /Y .\HISTORY.TXT ..\..\web\
 
 :: update version notification
