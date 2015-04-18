@@ -191,11 +191,8 @@ rem Example:  call :build_portable_package .\bin\ia64 ia64
     copy /Y "%~dp0\scripts\udreportcnv.lua"      %PORTABLE_DIR%\scripts\
     copy /Y "%~dp0\scripts\udsorting.js"         %PORTABLE_DIR%\scripts\
     copy /Y "%~dp0\scripts\udreport.css"         %PORTABLE_DIR%\scripts\
-    copy /Y "%~dp0\scripts\upgrade-guiopts.lua"  %PORTABLE_DIR%\scripts\
-    copy /Y "%~dp0\scripts\upgrade-rptopts.lua"  %PORTABLE_DIR%\scripts\
-    mkdir %PORTABLE_DIR%\options
-    lua "%~dp0\scripts\upgrade-guiopts.lua"  %PORTABLE_DIR%
-    lua "%~dp0\scripts\upgrade-rptopts.lua"  %PORTABLE_DIR%
+    copy /Y "%~dp0\scripts\upgrade-options.lua"  %PORTABLE_DIR%\scripts\
+    lua "%~dp0\scripts\upgrade-options.lua"      %PORTABLE_DIR%
     xcopy "%~dp0\wxgui\locale" %PORTABLE_DIR%\locale /I /Y /Q /S
     del /Q %PORTABLE_DIR%\locale\*.header
     del /Q %PORTABLE_DIR%\locale\*.pot

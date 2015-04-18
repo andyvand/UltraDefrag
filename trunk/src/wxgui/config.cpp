@@ -170,7 +170,7 @@ void MainFrame::ReadUserPreferences(wxCommandEvent& WXUNUSED(event))
 {
     /*
     * The program should be configurable
-    * through guiopts.lua file only.
+    * through the options.lua file only.
     */
     wxUnsetEnv(wxT("UD_DBGPRINT_LEVEL"));
     wxUnsetEnv(wxT("UD_DISABLE_REPORTS"));
@@ -203,7 +203,7 @@ void MainFrame::ReadUserPreferences(wxCommandEvent& WXUNUSED(event))
 
     /* interprete guiopts.lua file */
     lua_State *L; int status;
-    wxFileName path(wxT(".\\options\\guiopts.lua"));
+    wxFileName path(wxT(".\\options.lua"));
     path.Normalize();
     if(!path.FileExists()){
         etrace("%ls file not found",
@@ -289,7 +289,7 @@ void *ConfigThread::Entry()
 
     itrace("configuration tracking started");
 
-    HANDLE h = FindFirstChangeNotification(wxT(".\\options"),
+    HANDLE h = FindFirstChangeNotification(wxT("."),
         FALSE,FILE_NOTIFY_CHANGE_LAST_WRITE);
     if(h == INVALID_HANDLE_VALUE){
         letrace("FindFirstChangeNotification failed");
@@ -346,9 +346,9 @@ done:
 void MainFrame::OnGuiOptions(wxCommandEvent& WXUNUSED(event))
 {
     if(m_title->Find(wxT("Portable")) != wxNOT_FOUND)
-        Utils::ShellExec(wxT("notepad"),wxT("open"),wxT(".\\options\\guiopts.lua"));
+        Utils::ShellExec(wxT("notepad"),wxT("open"),wxT(".\\options.lua"));
     else
-        Utils::ShellExec(wxT(".\\options\\guiopts.lua"),wxT("edit"));
+        Utils::ShellExec(wxT(".\\options.lua"),wxT("edit"));
 }
 
 void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))

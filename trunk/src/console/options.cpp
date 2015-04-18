@@ -348,7 +348,7 @@ bool set_shellex_options(void)
 {
     /*
     * Explorer's context menu handler should be
-    * configurable through guiopts.lua file only.
+    * configurable through the options.lua file only.
     */
     wxUnsetEnv(wxT("UD_IN_FILTER"));
     wxUnsetEnv(wxT("UD_EX_FILTER"));
@@ -366,8 +366,8 @@ bool set_shellex_options(void)
     wxUnsetEnv(wxT("UD_SORTING"));
     wxUnsetEnv(wxT("UD_SORTING_ORDER"));
 
-    /* interprete guiopts.lua file */
-    wxFileName path(wxT("%UD_INSTALL_DIR%\\options\\guiopts.lua"));
+    /* interprete options.lua file */
+    wxFileName path(wxT("%UD_INSTALL_DIR%\\options.lua"));
     path.Normalize();
     if(!path.FileExists()){
         etrace("%ls file not found",
