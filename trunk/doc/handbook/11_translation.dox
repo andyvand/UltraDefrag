@@ -12,74 +12,37 @@
 /**
  * @page Translation Translation
  *
- * UltraDefrag is now using the wxWidgets GUI library, which utilizes the GNU gettext utility
- * for internationalization support.\n
- * The translations are hosted by Transifex, which offers its service for free to open source projects.
+ * UltraDefrag uses <a href="https://www.transifex.com/projects/p/ultradefrag/resource/main/">Transifex</a>
+ * to manage translations online. Register there for free to be part of our team. You are welcome!
  *
- * <h1>There are two ways of translating UltraDefrag</h1>
- * @par Offline translation
- *      This way is useful if you don't have access to the Internet, you don't want to translate online
- *      or the translation is not available for selection at the online service.
- * @par Online translation
- *      This way is useful if you like to work on the latest translation source.
+ * If you'd like to translate the program offline use the <a href="http://www.poedit.net/">PoEdit</a> software.
+ * 
+ * To configure PoEdit enter your name and email under <b>File > Preferences > Personalise > Identity</b>.
  *
- * <h1>Some translations have changed their name</h1>
- * @par Chinese (Simplified)
- *      Use <b>Chinese (China)</b> instead.
- * @par Chinese (Traditional)
- *      Use <b>Chinese (Taiwan)</b> instead.
+ * To edit an existing translation find your language in the 
+ * <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2</a> list
+ * and edit then the appropriate <b>{installation folder}\\po\\{language code}.po</b> file.
  *
- * <h1>Offline translation</h1>
- * @par Prerequisites
- *      - Download and install <a href="http://www.poedit.net/">PoEdit</a>
- *      - Run PoEdit
- *      - Enter your name and e-mail address under <b>File => Preferences => Personalise => Identity</b>
- *      - Open the translations folder <b>"%UD_INSTALL_DIR%\po"</b> using <b>Settings => Language => Translations folder</b>
- *        from the UltraDefrag GUI menu.
+ * To create a new translation click <b>File > New catalogue from POT file</b> and select
+ * <b>{installation folder}\\po\\UltraDefrag.pot</b> as the translation template.
  *
- * @par Editing an existing translation
- * -# Open the file <b>"%UD_INSTALL_DIR%\po\{language code}.po"</b>.\n
- *    The language codes are based on the
- *    <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 Language Code List</a>.
- * -# During translation pay attention to the <b>Notes for translators</b>.
- * -# Now send the translation file to the translation maintainer <span class="simple">(stefanpe@users.sourceforge.net)</span>
- * -# Your changes will be applied to the next release of UltraDefrag.
+ * Enter the following information into the catalog properties dialog:
+ *    - Project name and version: <b>ultradefrag</b>
+ *    - Language: the language code mentioned above
+ *    - Charset: <b>UTF-8</b>
+ *    - Plural forms: fill it if you know how
  *
- * @par Creating a new translation
- * -# Use <b>File => New catalogue from POT file</b> and select <b>"%UD_INSTALL_DIR%\po\UltraDefrag.pot"</b>
- *    as the translation template.
- * -# Enter the following information in the catalog properties dialog:
- *      - Project name and version: <b>ultradefrag</b>
- *      - Language: The language code based on the
- *        <a href="http://www.loc.gov/standards/iso639-2/php/code_list.php">ISO 639-2 Language Code List</a>.
- *      - Charset: <b>UTF-8</b>
- *      - Optionally you can fill in the plural forms.
- * -# As the file name use the <b>language code</b> you entered in the language field.
- * -# During translation pay attention to the <b>Notes for translators</b>.
- * -# Now send the translation file to the translation maintainer <span class="simple">(stefanpe@users.sourceforge.net)</span>
- * -# Your changes will be applied to the next release of UltraDefrag.
+ * Translate strings paying attention to the <b>Notes for translators</b>
+ * and then send the updated stuff to us.
  *
- * <h1>Online translation</h1>
- * -# Visit the <a href="https://www.transifex.com/projects/p/ultradefrag/resource/main/">UltraDefrag project at Transifex</a>.
- *      - If you are not yet a member of Transifex, <a href="https://www.transifex.com/signup/">register for free as a translator</a>.
- * -# Edit an existing translation or submit a new one
- *    @par Edit an existing translation
- *        - select the name of the language from the list
- *        - hit the <b>Translate now</b> button
- *    @par Submit a new translation
- *        - select <b>Add new translation</b>
- *        - select the language from the drop down menu
- *        - select the option of how you like to translate
- *            - <b>Upload file</b> allows you to upload an offline translation
- *            - <b>Translate online</b> allows you to use the online editor
- * -# Your changes will be applied to the next release of UltraDefrag.
+ * Your changes will be applied to the next release of UltraDefrag.
  *
  * @htmlonly
  * <HR>
  *  <TABLE STYLE="border: none; width: 97%; margin:auto;">
  *    <TR>
- *      <TD STYLE="text-align: left; width: 50%;">Previous: <a href="ReportingBugs.html">Reporting Bugs</a></TD>
- *      <TD STYLE="text-align: right; width: 50%;">Next: <a href="Credits.html">Credits and License</a></TD>
+ *      <TD STYLE="text-align: left; width: 50%;">Previous: <a href="Troubleshooting.html">Troubleshooting</a></TD>
+ *      <TD STYLE="text-align: right; width: 50%;">Next: <a href="Development.html">Development</a></TD>
  *    </TR>
  *  </TABLE>
  * @endhtmlonly

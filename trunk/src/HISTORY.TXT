@@ -1,10 +1,12 @@
 ﻿HISTORY
 
-  Version 7.0.0 2014-12-xx
+  Version 7.0.0 2015-06-xx
   ------------------------------------------------------------------------------
-    RC1:
-    - documentation was cleaned up
+    beta3:
     - few minor bugs were fixed
+    - the following translations were updated:
+
+      xxx
 
     beta2:
     - the following translations were updated:
@@ -34,6 +36,13 @@
     - wgx library replaced by wxWidgets library
 
                                     ***
+
+  Version 6.1.0 2015-02-xx
+  ------------------------------------------------------------------------------
+    - documentation was cleaned up
+    - configuration files were superseded by a single options.lua file
+    - few minor bugs were fixed
+
 
   Version 6.0.4 2014-10-25
   ------------------------------------------------------------------------------
