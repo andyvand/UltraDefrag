@@ -48,6 +48,11 @@ echo %version_string%> ..\..\web\version_xp.ini
 
 if "%RELEASE_STAGE%" equ "" echo %version_string%> ..\..\web\stable-version.ini
 
+:: update documentation
+copy /Y ..\doc\handbook\doxy-doc\html\*.* ..\..\web\handbook        || goto build_failed
+copy /Y .\dll\udefrag\doxy-doc\html\*.*   ..\..\web\doc\lib\udefrag || goto build_failed
+copy /Y .\dll\zenwinx\doxy-doc\html\*.*   ..\..\web\doc\lib\zenwinx || goto build_failed
+
 echo.
 echo Release made successfully!
 title Release made successfully!

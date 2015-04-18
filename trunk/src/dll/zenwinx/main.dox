@@ -22,6 +22,10 @@
  *
  * ZenWINX library is a development framework for Windows native applications:
  * those intended for use inside of the Windows boot process.
+ *
+ * @note
+ * Undocumented native API, being used improperly, can easily crash your
+ * application. Inspect the <b>ntndk.h</b> file for some hints.
  */
 
 /**
