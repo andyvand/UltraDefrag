@@ -357,12 +357,4 @@ void MainFrame::OnBootScript(wxCommandEvent& WXUNUSED(event))
     script.Normalize(); Utils::ShellExec(script.GetFullPath(),wxT("edit"));
 }
 
-void MainFrame::OnReportOptions(wxCommandEvent& WXUNUSED(event))
-{
-    if(m_title->Find(wxT("Portable")) != wxNOT_FOUND)
-        Utils::ShellExec(wxT("notepad"),wxT("open"),wxT(".\\options\\udreportopts.lua"));
-    else
-        Utils::ShellExec(wxT(".\\options\\udreportopts.lua"),wxT("edit"));
-}
-
 /** @} */
