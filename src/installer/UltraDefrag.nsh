@@ -352,18 +352,15 @@ SkipMove:
     SetOutPath "$INSTDIR\scripts"
         File "${ROOTDIR}\src\scripts\udreportcnv.lua"
         File "${ROOTDIR}\src\scripts\udsorting.js"
-        File "${ROOTDIR}\src\scripts\upgrade-rptopts.lua"
-        File "${ROOTDIR}\src\scripts\upgrade-guiopts.lua"
+        File "${ROOTDIR}\src\scripts\upgrade-options.lua"
 
-    DetailPrint "Upgrade report options and GUI preferences..."
+    DetailPrint "Upgrade configuration files..."
     ; ensure that target directory exists
     CreateDirectory "$INSTDIR\options"
     ${If} ${Silent}
-        ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-rptopts.lua" "$INSTDIR"'
-        ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-guiopts.lua" "$INSTDIR"'
+        ExecWait '"$INSTDIR\lua5.1a_gui.exe" -s "$INSTDIR\scripts\upgrade-options.lua" "$INSTDIR"'
     ${Else}
-        ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-rptopts.lua" "$INSTDIR"'
-        ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-guiopts.lua" "$INSTDIR"'
+        ExecWait '"$INSTDIR\lua5.1a_gui.exe" "$INSTDIR\scripts\upgrade-options.lua" "$INSTDIR"'
     ${EndIf}
 
     ; install default CSS for file fragmentation reports
@@ -1024,18 +1021,15 @@ SkipMove:
     Delete "$SYSDIR\wgx.dll"
 
     RMDir /r "$INSTDIR\doc"
-    RMDir /r "$INSTDIR\presets"
-    RMDir /r "$INSTDIR\logs"
-    RMDir /r "$INSTDIR\portable_${ULTRADFGARCH}_package"
     RMDir /r "$INSTDIR\i18n"
+    RMDir /r "$INSTDIR\logs"
+    RMDir /r "$INSTDIR\options"
+    RMDir /r "$INSTDIR\portable_${ULTRADFGARCH}_package"
+    RMDir /r "$INSTDIR\presets"
 
     Delete "$INSTDIR\scripts\udctxhandler.lua"
-
-    Delete "$INSTDIR\options\font.lua"
-    Delete "$INSTDIR\options\guiopts-internals.lua"
-    Delete "$INSTDIR\options\guiopts.lua.old"
-    Delete "$INSTDIR\options\udreportopts-custom.lua"
-    Delete "$INSTDIR\options\udreportopts.lua.old"
+    Delete "$INSTDIR\scripts\upgrade-guiopts.lua"
+    Delete "$INSTDIR\scripts\upgrade-rptopts.lua"
 
     Delete "$INSTDIR\dfrg.exe"
     Delete "$INSTDIR\CREDITS.TXT"
