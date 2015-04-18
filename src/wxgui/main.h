@@ -102,6 +102,8 @@ enum {
     ID_Pause,
     ID_Stop,
 
+    ID_ShowReport,
+
     ID_Repeat,
 
     ID_SkipRem,
@@ -119,24 +121,15 @@ enum {
 
     ID_Exit,
 
-    // report menu identifiers
-    ID_ShowReport,
-
     // settings menu identifiers
-
-    // NOTE: they share a single event handler
-    ID_LangShowLog,
-    ID_LangShowReport,
-    ID_LangSubmit,
-
+    ID_LangTranslateOnline,
+    ID_LangTranslateOffline,
     ID_LangOpenFolder,
 
     ID_GuiOptions,
 
     ID_BootEnable,
     ID_BootScript,
-
-    ID_ReportOptions,
 
     ID_SortByPath,
     ID_SortBySize,
@@ -433,10 +426,12 @@ public:
 
     bool CheckForTermination(int time);
 
-    // file menu handlers
+    // action menu handlers
     void OnStartJob(wxCommandEvent& event);
     void OnPause(wxCommandEvent& event);
     void OnStop(wxCommandEvent& event);
+
+    void OnShowReport(wxCommandEvent& event);
 
     void OnRepeat(wxCommandEvent& event);
 
@@ -447,19 +442,15 @@ public:
 
     void OnExit(wxCommandEvent& event);
 
-    // report menu handlers
-    void OnShowReport(wxCommandEvent& event);
-
     // settings menu handlers
-    void OnLangOpenTransifex(wxCommandEvent& event);
+    void OnLangTranslateOnline(wxCommandEvent& event);
+    void OnLangTranslateOffline(wxCommandEvent& event);
     void OnLangOpenFolder(wxCommandEvent& event);
 
     void OnGuiOptions(wxCommandEvent& event);
 
     void OnBootEnable(wxCommandEvent& event);
     void OnBootScript(wxCommandEvent& event);
-
-    void OnReportOptions(wxCommandEvent& event);
 
     // help menu handlers
     void OnHelpContents(wxCommandEvent& event);
@@ -524,7 +515,6 @@ public:
     JobsCacheEntry *m_currentJob;
 
 private:
-    bool GetLocaleFolder(wxString& CurrentLocaleDir);
     void InitMenu();
     void InitToolbar();
     void InitStatusBar();

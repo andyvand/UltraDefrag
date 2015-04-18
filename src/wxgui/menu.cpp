@@ -85,6 +85,8 @@ void MainFrame::InitMenu()
     m_menuAction->AppendSeparator();
     m_menuAction->UD_AppendCheckItem(ID_Repeat);
     m_menuAction->AppendSeparator();
+    m_menuAction->Append(ID_ShowReport);
+    m_menuAction->AppendSeparator();
     m_menuAction->UD_AppendCheckItem(ID_SkipRem);
     m_menuAction->Append(ID_Rescan);
     m_menuAction->AppendSeparator();
@@ -97,16 +99,11 @@ void MainFrame::InitMenu()
     m_menuAction->AppendSeparator();
     m_menuAction->Append(ID_Exit);
 
-    // create report menu
-    wxMenu *menuReport = new wxMenu;
-    menuReport->Append(ID_ShowReport);
-
     // create language menu
     m_menuLanguage = new wxMenu;
-    m_menuLanguage->Append(ID_LangShowLog);
-    m_menuLanguage->Append(ID_LangShowReport);
+    m_menuLanguage->Append(ID_LangTranslateOnline);
+    m_menuLanguage->Append(ID_LangTranslateOffline);
     m_menuLanguage->Append(ID_LangOpenFolder);
-    m_menuLanguage->Append(ID_LangSubmit);
     m_menuLanguage->AppendSeparator();
 
     wxString AppLocaleDir(wxGetCwd());
@@ -202,7 +199,6 @@ void MainFrame::InitMenu()
         menuSettings->AppendSubMenu(
             menuBootConfig, wxEmptyString
         );
-    menuSettings->Append(ID_ReportOptions);
 
     // create debug menu
     wxMenu *menuDebug = new wxMenu;
@@ -240,7 +236,6 @@ void MainFrame::InitMenu()
     // create main menu
     m_menuBar = new wxMenuBar;
     m_menuBar->Append(m_menuAction, wxEmptyString);
-    m_menuBar->Append(menuReport  , wxEmptyString);
     m_menuBar->Append(menuSettings, wxEmptyString);
     m_menuBar->Append(menuHelp    , wxEmptyString);
 
@@ -264,7 +259,6 @@ void MainFrame::InitMenu()
         UD_SetMarginWidth(m_menuBar->GetMenu(0));
         UD_SetMarginWidth(m_menuBar->GetMenu(1));
         UD_SetMarginWidth(m_menuBar->GetMenu(2));
-        UD_SetMarginWidth(m_menuBar->GetMenu(3));
         UD_SetMarginWidth(menuBootConfig);
     }
 

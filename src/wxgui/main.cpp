@@ -409,11 +409,13 @@ bool MainFrame::CheckForTermination(int time)
 // =======================================================================
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-    // file menu
+    // action menu
     EVT_MENU_RANGE(ID_Analyze, ID_MftOpt,
                    MainFrame::OnStartJob)
     EVT_MENU(ID_Pause, MainFrame::OnPause)
     EVT_MENU(ID_Stop,  MainFrame::OnStop)
+
+    EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
 
     EVT_MENU(ID_Repeat,  MainFrame::OnRepeat)
 
@@ -424,12 +426,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_Exit, MainFrame::OnExit)
 
-    // report menu
-    EVT_MENU(ID_ShowReport, MainFrame::OnShowReport)
-
     // settings menu
-    EVT_MENU_RANGE(ID_LangShowLog, ID_LangSubmit,
-                   MainFrame::OnLangOpenTransifex)
+    EVT_MENU(ID_LangTranslateOnline, MainFrame::OnLangTranslateOnline)
+    EVT_MENU(ID_LangTranslateOffline, MainFrame::OnLangTranslateOffline)
     EVT_MENU(ID_LangOpenFolder, MainFrame::OnLangOpenFolder)
 
     EVT_MENU_RANGE(ID_LocaleChange, ID_LocaleChange \
@@ -439,8 +438,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(ID_BootEnable, MainFrame::OnBootEnable)
     EVT_MENU(ID_BootScript, MainFrame::OnBootScript)
-
-    EVT_MENU(ID_ReportOptions, MainFrame::OnReportOptions)
 
     // help menu
     EVT_MENU(ID_HelpContents,     MainFrame::OnHelpContents)

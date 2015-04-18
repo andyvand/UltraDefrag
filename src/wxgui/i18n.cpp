@@ -125,23 +125,23 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
 
     // main menu
     m_menuBar->SetMenuLabel(0, _("&Action"));
-    m_menuBar->SetMenuLabel(1, _("&Report"));
-    m_menuBar->SetMenuLabel(2, _("&Settings"));
-    m_menuBar->SetMenuLabel(3, _("&Help"));
+    m_menuBar->SetMenuLabel(1, _("&Settings"));
+    m_menuBar->SetMenuLabel(2, _("&Help"));
 
     // action menu
-    UD_UpdateMenuItemLabel(ID_Analyze  , "&Analyze"              , "F5");
-    UD_UpdateMenuItemLabel(ID_Defrag   , "&Defragment"           , "F6");
-    UD_UpdateMenuItemLabel(ID_QuickOpt , "&Quick optimization"   , "F7");
-    UD_UpdateMenuItemLabel(ID_FullOpt  , "&Full optimization"    , "Ctrl+F7");
-    UD_UpdateMenuItemLabel(ID_MftOpt   , "&Optimize MFT"         , "Shift+F7");
-    UD_UpdateMenuItemLabel(ID_Pause    , "Pa&use"                , "Space");
-    UD_UpdateMenuItemLabel(ID_Stop     , "&Stop"                 , "Ctrl+C");
-    UD_UpdateMenuItemLabel(ID_Repeat   , "Re&peat action"        , "Shift+R");
-    UD_UpdateMenuItemLabel(ID_SkipRem  , "Skip removable &media" , "Ctrl+M");
-    UD_UpdateMenuItemLabel(ID_Rescan   , "&Rescan drives"        , "Ctrl+D");
-    UD_UpdateMenuItemLabel(ID_Repair   , "Repair dri&ves"        , "");
-    UD_UpdateMenuItemLabel(ID_Exit     , "E&xit"                 , "Alt+F4");
+    UD_UpdateMenuItemLabel(ID_Analyze    , "&Analyze"              , "F5");
+    UD_UpdateMenuItemLabel(ID_Defrag     , "&Defragment"           , "F6");
+    UD_UpdateMenuItemLabel(ID_QuickOpt   , "&Quick optimization"   , "F7");
+    UD_UpdateMenuItemLabel(ID_FullOpt    , "&Full optimization"    , "Ctrl+F7");
+    UD_UpdateMenuItemLabel(ID_MftOpt     , "&Optimize MFT"         , "Shift+F7");
+    UD_UpdateMenuItemLabel(ID_Pause      , "Pa&use"                , "Space");
+    UD_UpdateMenuItemLabel(ID_Stop       , "&Stop"                 , "Ctrl+C");
+    UD_UpdateMenuItemLabel(ID_ShowReport , "&Show report"          , "F8");
+    UD_UpdateMenuItemLabel(ID_Repeat     , "Re&peat action"        , "Shift+R");
+    UD_UpdateMenuItemLabel(ID_SkipRem    , "Skip removable &media" , "Ctrl+M");
+    UD_UpdateMenuItemLabel(ID_Rescan     , "&Rescan drives"        , "Ctrl+D");
+    UD_UpdateMenuItemLabel(ID_Repair     , "Repair dri&ves"        , "");
+    UD_UpdateMenuItemLabel(ID_Exit       , "E&xit"                 , "Alt+F4");
 
     // when done sub-menu
     m_subMenuWhenDone->SetItemLabel(_("&When done"));
@@ -153,21 +153,16 @@ void MainFrame::OnLocaleChange(wxCommandEvent& event)
     UD_UpdateMenuItemLabel(ID_WhenDoneReboot    , "&Reboot"    , "");
     UD_UpdateMenuItemLabel(ID_WhenDoneShutdown  , "&Shutdown"  , "");
 
-    // report menu
-    UD_UpdateMenuItemLabel(ID_ShowReport , "&Show report" , "F8");
-
     // settings menu
     m_subMenuLanguage->SetItemLabel(_("&Language"));
     UD_UpdateMenuItemLabel(ID_GuiOptions , "&Options" , "F10");
     m_subMenuSortingConfig->SetItemLabel(_("&Sorting"));
     m_subMenuBootConfig->SetItemLabel(_("&Boot time scan"));
-    UD_UpdateMenuItemLabel(ID_ReportOptions , "&Reports" , "Ctrl+R");
 
     // language sub-menu
-    UD_UpdateMenuItemLabel(ID_LangShowLog    , "&View change log"            , "");
-    UD_UpdateMenuItemLabel(ID_LangShowReport , "View translation &report"    , "");
-    UD_UpdateMenuItemLabel(ID_LangOpenFolder , "&Translations folder"        , "");
-    UD_UpdateMenuItemLabel(ID_LangSubmit     , "&Submit current translation" , "");
+    UD_UpdateMenuItemLabel(ID_LangTranslateOnline  , "Translate &online"    , "");
+    UD_UpdateMenuItemLabel(ID_LangTranslateOffline , "Translate o&ffline"   , "");
+    UD_UpdateMenuItemLabel(ID_LangOpenFolder       , "&Translations folder" , "");
 
     // boot time scan sub-menu
     UD_UpdateMenuItemLabel(ID_BootEnable , "&Enable" , "F11");
@@ -282,6 +277,18 @@ void App::SaveReportTranslation()
 //                            Event handlers
 // =======================================================================
 
+void MainFrame::OnLangTranslateOnline(wxCommandEvent& WXUNUSED(event))
+{
+    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/resource/main/"));
+    if(!wxLaunchDefaultBrowser(url))
+        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
+}
+
+void MainFrame::OnLangTranslateOffline(wxCommandEvent& WXUNUSED(event))
+{
+    Utils::OpenHandbook(wxT("Translation.html"));
+}
+
 void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
 {
     wxString AppPoDir(wxGetCwd() + wxT("/po"));
@@ -292,54 +299,6 @@ void MainFrame::OnLangOpenFolder(wxCommandEvent& WXUNUSED(event))
         if(!wxLaunchDefaultBrowser(AppPoDir))
             Utils::ShowError(wxT("Cannot open %ls!"),AppPoDir.wc_str());
     }
-}
-
-bool MainFrame::GetLocaleFolder(wxString& CurrentLocaleDir)
-{
-    wxString AppLocaleDir(wxGetCwd() + wxT("/locale"));
-    if(!wxDirExists(AppLocaleDir)){
-        itrace("lang dir not found: %ls",AppLocaleDir.wc_str());
-        AppLocaleDir = wxGetCwd() + wxT("/../wxgui/locale");
-    }
-    if(!wxDirExists(AppLocaleDir)){
-        itrace("lang dir not found: %ls",AppLocaleDir.wc_str());
-        AppLocaleDir = wxGetCwd() + wxT("/../../wxgui/locale");
-    }
-
-    if(wxDirExists(AppLocaleDir)){
-        CurrentLocaleDir = g_locale->GetCanonicalName();
-
-        if(!wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
-            itrace("locale dir not found: %ls",CurrentLocaleDir.wc_str());
-            CurrentLocaleDir = CurrentLocaleDir.Left(2);
-        }
-
-        if(wxDirExists(AppLocaleDir + wxT("/") + CurrentLocaleDir)){
-            return true;
-        } else {
-            etrace("locale dir not found: %ls",CurrentLocaleDir.wc_str());
-        }
-    }
-    return false;
-}
-
-void MainFrame::OnLangOpenTransifex(wxCommandEvent& event)
-{
-    wxString url(wxT("https://www.transifex.com/projects/p/ultradefrag/"));
-    wxString localeDir(wxT(""));
-
-    switch(event.GetId()){
-        case ID_LangShowLog:
-            if(GetLocaleFolder(localeDir))
-                url << wxT("resource/main/l/") << localeDir << wxT("/view/");
-            break;
-        case ID_LangSubmit:
-            if(GetLocaleFolder(localeDir))
-                url << wxT("translate/#") << localeDir << wxT("/main/");
-    }
-
-    if(!wxLaunchDefaultBrowser(url))
-        Utils::ShowError(wxT("Cannot open %ls!"),url.wc_str());
 }
 
 #undef UD_UpdateMenuItemLabel
