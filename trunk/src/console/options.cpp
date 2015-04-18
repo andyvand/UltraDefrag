@@ -276,7 +276,9 @@ bool parse_cmdline(int argc, char **argv)
             g_volumes->Add(opts[i]);
         } else {
             wxFileName path(opts[i]);
-            path.Normalize();
+            // normalize path but keep wildcards untouched
+            path.Normalize(wxPATH_NORM_ENV_VARS | wxPATH_NORM_DOTS | \
+                wxPATH_NORM_ABSOLUTE | wxPATH_NORM_TILDE);
             g_paths->Add(path.GetFullPath().MakeLower());
         }
     }
