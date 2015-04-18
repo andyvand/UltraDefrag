@@ -1,5 +1,4 @@
--- this is the UltraDefrag GUI build options
-
+-- UltraDefrag GUI build options
 name        = "ultradefrag"
 target_type = "gui"
 

@@ -246,6 +246,7 @@ void release_options(udefrag_job_parameters *jp)
 {
     winx_patfree(&jp->udo.in_filter);
     winx_patfree(&jp->udo.ex_filter);
+    winx_patfree(&jp->udo.cut_filter);
 }
 
 /** @} */

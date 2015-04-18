@@ -177,8 +177,6 @@ static int save_lua_report(udefrag_job_parameters *jp)
             comment = "[DIR]";
         else if(is_compressed(file))
             comment = "[CMP]";
-        else if(is_over_limit(file))
-            comment = "[OVR]";
         else
             comment = " - ";
         
