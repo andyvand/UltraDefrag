@@ -40,7 +40,7 @@
  *
  * @note
  * If logging to the specified file fails the program
- * tries to log into the <b>\%SystemRoot\%\\Temp</b> folder.
+ * tries to log into the <b>\%SystemDrive\%\\UltraDefrag_Logs</b> folder.
  *
  * For graphical interface issues please attach also
  * a <a href="http://en.wikipedia.org/wiki/Screenshot">screenshot</a>.
