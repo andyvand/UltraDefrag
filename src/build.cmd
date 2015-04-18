@@ -252,7 +252,6 @@ rem by removing all intermediate files.
     rd /s /q bin
     rd /s /q lib
     rd /s /q obj
-    rd /s /q doxy-doc
     rd /s /q dll\udefrag\doxy-doc
     rd /s /q dll\zenwinx\doxy-doc
     rd /s /q ..\doc\handbook\doxy-doc
@@ -264,7 +263,6 @@ rem by removing all intermediate files.
     rd /s /q ..\doc\handbook\doxy-defaults_letter
     if %UD_BLD_FLG_ONLY_CLEANUP% equ 1 rd /s /q release
 
-    del /f /q ..\..\web\doxy-doc\html\*.*
     del /f /q ..\..\web\doxy-doc\udefrag.dll\html\*.*
 
     for %%F in ( "..\..\web\handbook\*.*" ) do if not "%%~nxF" == ".htaccess" del /f /q "%%~F"

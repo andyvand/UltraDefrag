@@ -36,13 +36,10 @@ if "%ULTRADFGVER%" equ "" (
 doxygen --version >nul 2>&1 || goto fail
 
 if "%UD_BLD_FLG_BUILD_DEV%" == "1" (
-    call :compile_docs .             .            || goto fail
-    call :compile_docs .\dll\udefrag udefrag.dll  || goto fail
-    call :compile_docs .\dll\zenwinx              || goto fail
+    call :compile_docs .\dll\udefrag || goto fail
+    call :compile_docs .\dll\zenwinx || goto fail
 )
-
 call :compile_docs ..\doc\handbook || goto fail
-copy /Y ..\doc\handbook\doxy-doc\html\*.* "%~dp0\..\..\web\handbook" || goto fail
 
 :: compile PDF documentation if MiKTeX is installed
 if "%UD_BLD_FLG_BUILD_PDF%" == "1" (
@@ -63,8 +60,8 @@ echo.
 echo Docs compilation failed!
 exit /B 1
 
-rem Synopsis: call :compile_docs {path} {target web folder}
-rem Example:  call :compile_docs .\dll\udefrag udefrag.dll
+rem Synopsis: call :compile_docs {path}
+rem Example:  call :compile_docs .\dll\udefrag
 :compile_docs
     pushd %1
     rd /s /q doxy-doc
@@ -73,12 +70,6 @@ rem Example:  call :compile_docs .\dll\udefrag udefrag.dll
     doxygen || goto compilation_failed
 
     del /Q .\doxy-doc\html\doxygen.png
-
-    if "%2" neq "" (
-        copy /Y .\doxy-doc\html\*.*^
-            "%~dp0\..\..\web\doxy-doc\%2\html"^
-            || goto compilation_failed
-    )
 
     popd
     exit /B 0
