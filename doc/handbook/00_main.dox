@@ -10,6 +10,11 @@
  */
 
 /*
+ * This handbook requires doxygen to be compiled. However, it's always
+ * available online at http://ultradefrag.sourceforge.net/handbook/
+ */
+
+/*
  * The initial version of this document was contributed in
  * 2007 by Justin Dearing <zippy1981@users.sourceforge.net>.
  */
@@ -25,17 +30,17 @@
  * <h2>Table of Contents</h2>
  * -# @ref Introduction
  * -# @ref Installation
+ * -# @ref GUI
  * -# @ref Console
  * -# @ref Schedule
- * -# @ref GUI
  * -# @ref Boot
  * -# @ref Reports
  * -# @ref Tips
  * -# @ref FAQ
- * -# @ref ReportingBugs
+ * -# @ref Troubleshooting
  * -# @ref Translation
+ * -# @ref Development
  * -# @ref Credits
- * -# <a href="http://ultradefrag.sourceforge.net/doxy-doc/html/index.html" class="simple"><b>Development</b></a>
  *
  * <h2>License</h2>
  * UltraDefrag is licensed under the terms of the @ref GPL.

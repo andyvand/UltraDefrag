@@ -1,4 +1,4 @@
-# Doxyfile 1.8.4
+﻿# Doxyfile 1.8.4
 
 # This file describes the settings to be used by the documentation system
 # doxygen (www.doxygen.org) for a project.
@@ -941,7 +941,8 @@ HTML_EXTRA_STYLESHEET  = ./rsc/custom_doxygen.css
 # files. In the HTML_STYLESHEET file, use the file name only. Also note that
 # the files will be copied as-is; there are no commands or markers available.
 
-HTML_EXTRA_FILES       = ./rsc/sflogo.gif
+HTML_EXTRA_FILES       = ./rsc/sflogo.gif \
+                         ./rsc/languages.png
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output.
 # Doxygen will adjust the colors in the style sheet and background images
@@ -1363,31 +1364,30 @@ LATEX_EXTRA_FILES      = ./rsc/Blank.png \
                          ./rsc/Compressed.png \
                          ./rsc/Directory.png \
                          ./rsc/fixed.png \
-                         ./rsc/fixed-dirty.png \
                          ./rsc/Fragmented.png \
                          ./rsc/FreeSpace.png \
+                         ./rsc/languages.png \
                          ./rsc/MFTzone.png \
                          ./rsc/NotFragmented.png \
                          ./rsc/removable.png \
-                         ./rsc/removable-dirty.png \
                          ./rsc/System.png \
                          ./rsc/UnusedBlock.png \
                          ./rsc/custom_doxygen.sty \
-                         ../../src/wxgui/res/16x16/defrag.png \
-                         ../../src/wxgui/res/16x16/full.png \
-                         ../../src/wxgui/res/16x16/gear.png \
-                         ../../src/wxgui/res/16x16/glass.png \
-                         ../../src/wxgui/res/16x16/help.png \
-                         ../../src/wxgui/res/16x16/light.png \
-                         ../../src/wxgui/res/16x16/mft.png \
-                         ../../src/wxgui/res/16x16/pause.png \
-                         ../../src/wxgui/res/16x16/quick.png \
-                         ../../src/wxgui/res/16x16/repeat.png \
-                         ../../src/wxgui/res/16x16/report.png \
-                         ../../src/wxgui/res/16x16/script.png \
-                         ../../src/wxgui/res/16x16/star.png \
-                         ../../src/wxgui/res/16x16/stop.png \
-                         ../../src/wxgui/res/16x16/terminal.png
+                         ../../src/wxgui/res/24x24/defrag.png \
+                         ../../src/wxgui/res/24x24/full.png \
+                         ../../src/wxgui/res/24x24/gear.png \
+                         ../../src/wxgui/res/24x24/glass.png \
+                         ../../src/wxgui/res/24x24/help.png \
+                         ../../src/wxgui/res/24x24/light.png \
+                         ../../src/wxgui/res/24x24/mft.png \
+                         ../../src/wxgui/res/24x24/pause.png \
+                         ../../src/wxgui/res/24x24/quick.png \
+                         ../../src/wxgui/res/24x24/repeat.png \
+                         ../../src/wxgui/res/24x24/report.png \
+                         ../../src/wxgui/res/24x24/script.png \
+                         ../../src/wxgui/res/24x24/star.png \
+                         ../../src/wxgui/res/24x24/stop.png \
+                         ../../src/wxgui/res/24x24/terminal.png
 
 # If the PDF_HYPERLINKS tag is set to YES, the LaTeX that is generated
 # is prepared for conversion to pdf (using ps2pdf). The pdf file will
