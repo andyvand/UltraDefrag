@@ -37,7 +37,7 @@
 
                                     ***
 
-  Version 6.1.0 2015-02-xx
+  Version 6.1.0 2015-04-19
   ------------------------------------------------------------------------------
     - documentation was cleaned up
     - configuration files were superseded by a single options.lua file
