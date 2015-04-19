@@ -24,6 +24,12 @@
  * <h3>Can I up- or downgrade over an existing installation?</h3>
  * Yes. Neither removal of old files nor reboot is necessary.
  *
+ * <h3>My anti-virus software says UltraDefrag is infected by a virus. Is it true?</h3>
+ * UltraDefrag is open source software, so its code base cannot contain malicious stuff
+ * by definition. For extra safety, to ensure that the compiled binaries haven't been
+ * infected, we test them all carefully on <a href="http://www.virustotal.com/">virustotal.com</a>.
+ * Only when all files pass most of the virus scanners we make an official release.
+ *
  * <h1>General usage</h1>
  * <h3>I need to defragment a large file but have no sufficient free space gap on the disk, what should I do?</h3>
  * To consolidate free space you can try the full optimization. If it fails to achieve the desired result
