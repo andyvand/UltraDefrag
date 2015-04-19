@@ -50,7 +50,7 @@
  * Windows Vista, Windows Server 2008, Windows 7 and Windows 8.
  * Elder versions of the program (prior to v7) can be used on
  * Windows NT 4.0 and Windows 2000 as well, with some limitations.
- * Additionally <a href="http://b.andre.pagesperso-orange.fr/advanced-ntfs-3g.html">UltraDefrag for Linux</a>
+ * Additionally <a href="http://jp-andre.pagesperso-orange.fr/advanced-ntfs-3g.html">UltraDefrag for Linux</a>
  * exists which is an independent port of the program based on NTFS-3G capabilities.
  *
  * <h1>Algorithms</h1>
