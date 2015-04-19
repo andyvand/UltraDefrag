@@ -84,8 +84,9 @@ int __cdecl main(int argc,char **argv)
     wchar_t *ucmd;
 
     /*
-    * Strongly required to be 
-    * compatible with manifest.
+    * This call is mandatory for all applications
+    * depending on comctl32 library, even through
+    * the application manifest.
     */
     InitCommonControls();
 
