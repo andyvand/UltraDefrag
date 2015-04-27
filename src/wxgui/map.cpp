@@ -196,14 +196,15 @@ char *ClusterMap::ScaleMap(int scaled_size)
 
 void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
 {
+    JobsCacheEntry *currentJob;
     int width, height; GetClientSize(&width,&height);
 
     int block_size = g_mainFrame->CheckOption(wxT("UD_MAP_BLOCK_SIZE"));
     int line_width = g_mainFrame->CheckOption(wxT("UD_GRID_LINE_WIDTH"));
 
     int cell_size = block_size + line_width;
-    int blocks_per_line = (width - line_width) / cell_size;
-    int lines = (height - line_width) / cell_size;
+    int blocks_per_line = cell_size ? (width - line_width) / cell_size : 0;
+    int lines = cell_size ? (height - line_width) / cell_size : 0;
 
     // fill map by the free color
     char free_r = (char)g_mainFrame->CheckOption(wxT("UD_FREE_COLOR_R"));
@@ -212,7 +213,7 @@ void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
     HBRUSH brush = ::CreateSolidBrush(RGB(free_r,free_g,free_b));
     RECT rc; rc.left = rc.top = 0; rc.right = width; rc.bottom = height;
     ::FillRect(m_cacheDC,&rc,brush); ::DeleteObject(brush);
-    if(!blocks_per_line || !lines) return;
+    if(!blocks_per_line || !lines) goto draw;
 
     // draw grid
     if(line_width){
@@ -236,7 +237,7 @@ void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
     }
 
     // draw squares
-    JobsCacheEntry *currentJob = g_mainFrame->m_currentJob;
+    currentJob = g_mainFrame->m_currentJob;
     if(currentJob){
         if(currentJob->pi.cluster_map_size){
             int scaled_size = blocks_per_line * lines;
@@ -262,6 +263,7 @@ void ClusterMap::OnPaint(wxPaintEvent& WXUNUSED(event))
         }
     }
 
+draw:
     // draw map on the screen
     PAINTSTRUCT ps;
     HDC hdc = ::BeginPaint((HWND)GetHandle(),&ps);
