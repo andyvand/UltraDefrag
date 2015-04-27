@@ -235,6 +235,7 @@ MainFrame::MainFrame()
     :wxFrame(NULL,wxID_ANY,wxT("UltraDefrag"))
 {
     g_mainFrame = this;
+    m_vList = NULL;
     m_cMap = NULL;
     m_currentJob = NULL;
     m_busy = false;
@@ -509,7 +510,7 @@ void MainFrame::SetWindowTitle(wxCommandEvent& event)
 void MainFrame::OnActivate(wxActivateEvent& event)
 {
     /* suggested by Brian Gaff */
-    if(event.GetActive())
+    if(event.GetActive() && m_vList)
         m_vList->SetFocus();
     event.Skip();
 }

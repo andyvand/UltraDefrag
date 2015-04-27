@@ -202,7 +202,7 @@ void MainFrame::ReadUserPreferences(wxCommandEvent& WXUNUSED(event))
     wxUnsetEnv(wxT("UD_TIME_LIMIT"));
 
     /* interprete guiopts.lua file */
-    lua_State *L; int status;
+    lua_State *L; int status; wxString error = wxT("");
     wxFileName path(wxT(".\\options.lua"));
     path.Normalize();
     if(!path.FileExists()){
@@ -224,7 +224,7 @@ void MainFrame::ReadUserPreferences(wxCommandEvent& WXUNUSED(event))
 
     status = luaL_dofile(L,path.GetFullPath().char_str());
     if(status != 0){
-        wxString error = wxT("cannot interprete ") + path.GetFullPath();
+        error += wxT("cannot interprete ") + path.GetFullPath();
         etrace("%ls",error.wc_str());
         if(!lua_isnil(L,-1)){
             const char *msg = lua_tostring(L,-1);
@@ -233,9 +233,6 @@ void MainFrame::ReadUserPreferences(wxCommandEvent& WXUNUSED(event))
             error += wxString::Format(wxT("\n%hs"),msg);
             lua_pop(L, 1);
         }
-        wxMessageDialog dlg(NULL,error,
-            wxT("UltraDefrag"),wxOK | wxICON_ERROR);
-        dlg.ShowModal();
     }
 
     lua_close(L);
@@ -264,6 +261,12 @@ done:
         wxSetEnv(wxT("UD_LOG_FILE_PATH"),logpath.GetFullPath());
     }
     ::udefrag_set_log_file_path();
+
+    if(!error.IsEmpty()){
+        wxMessageDialog dlg(this,error,wxT("UltraDefrag"),
+            wxOK | wxICON_ERROR/* | wxSTAY_ON_TOP*/);
+        dlg.ShowModal();
+    }
 }
 
 int MainFrame::CheckOption(const wxString& name)
