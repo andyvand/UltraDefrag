@@ -582,7 +582,7 @@ private:
 class Utils {
 public:
     static bool CheckAdminRights(void);
-    static wxString DownloadFile(const wxString& url);
+    static bool DownloadFile(const wxString& url, const wxString& path);
     static void GaRequest(const wxString& path);
     static wxBitmap *LoadPngResource(const wchar_t *name);
     static int MessageDialog(wxFrame *parent,
