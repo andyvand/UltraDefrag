@@ -39,8 +39,7 @@
 typedef HRESULT (__stdcall *URLMON_PROCEDURE)(
     /* LPUNKNOWN */ void *lpUnkcaller,
     LPCWSTR szURL,
-    LPWSTR szFileName,
-    DWORD cchFileName,
+    LPCWSTR szFileName,
     DWORD dwReserved,
     /*IBindStatusCallback*/ void *pBSC
 );
@@ -82,29 +81,31 @@ bool Utils::CheckAdminRights(void)
  * @note If the program terminates before
  * the file download completion it crashes.
  */
-wxString Utils::DownloadFile(const wxString& url)
+bool Utils::DownloadFile(const wxString& url, const wxString& path)
 {
     itrace("downloading %ls",url.wc_str());
 
+    /*
+    * URLDownloadToCacheFileW cannot be used
+    * here because it may immediately delete
+    * the file after its creation.
+    */
     wxDynamicLibrary lib(wxT("urlmon"));
     wxDYNLIB_FUNCTION(URLMON_PROCEDURE,
-        URLDownloadToCacheFileW, lib);
+        URLDownloadToFileW, lib);
 
-    if(!pfnURLDownloadToCacheFileW)
-        return wxEmptyString;
+    if(!pfnURLDownloadToFileW)
+        return false;
 
-    wchar_t buffer[MAX_PATH + 1];
-    HRESULT result = pfnURLDownloadToCacheFileW(
-        NULL,url.wc_str(),buffer,MAX_PATH,0,NULL);
+    HRESULT result = pfnURLDownloadToFileW(
+        NULL,url.wc_str(),path.wc_str(),0,NULL);
     if(result != S_OK){
-        etrace("URLDownloadToCacheFile failed "
+        etrace("URLDownloadToFile failed "
             "with code 0x%x",(UINT)result);
-        return wxEmptyString;
+        return false;
     }
 
-    buffer[MAX_PATH] = 0;
-    wxString path(buffer);
-    return path;
+    return true;
 }
 
 /**
@@ -123,23 +124,35 @@ void Utils::GaRequest(const wxString& path)
     int random = (rand() << 16) + rand();
     __int64 today = (__int64)time(NULL);
 
-    wxString request;
+    wxString url;
 
-    request << wxT("http://www.google-analytics.com/__utm.gif?utmwv=4.6.5");
-    request << wxString::Format(wxT("&utmn=%u"),utmn);
-    request << wxT("&utmhn=ultradefrag.sourceforge.net");
-    request << wxString::Format(wxT("&utmhid=%u&utmr=-"),utmhid);
-    request << wxT("&utmp=") << path;
-    request << wxT("&utmac=");
-    request << wxT("UA-15890458-1");
-    request << wxString::Format(wxT("&utmcc=__utma%%3D%u.%u.%I64u.%I64u.%I64u.") \
+    url << wxT("http://www.google-analytics.com/__utm.gif?utmwv=4.6.5");
+    url << wxString::Format(wxT("&utmn=%u"),utmn);
+    url << wxT("&utmhn=ultradefrag.sourceforge.net");
+    url << wxString::Format(wxT("&utmhid=%u&utmr=-"),utmhid);
+    url << wxT("&utmp=") << path;
+    url << wxT("&utmac=");
+    url << wxT("UA-15890458-1");
+    url << wxString::Format(wxT("&utmcc=__utma%%3D%u.%u.%I64u.%I64u.%I64u.") \
         wxT("50%%3B%%2B__utmz%%3D%u.%I64u.27.2.utmcsr%%3Dgoogle.com%%7Cutmccn%%3D") \
         wxT("(referral)%%7Cutmcmd%%3Dreferral%%7Cutmcct%%3D%%2F%%3B"),
         cookie,random,today,today,today,cookie,today);
 
-    wxString url(request);
-    wxString file = DownloadFile(url);
-    if(!file.IsEmpty())
+    wxFileName target(wxT(".\\tmp"));
+    target.Normalize();
+    wxString dir(target.GetFullPath());
+    if(!wxDirExists(dir)) wxMkdir(dir);
+
+    /*
+    * Use a subfolder to prevent configuration files
+    * reload (see ConfigThread::Entry() for details).
+    */
+    dir << wxT("\\data");
+    if(!wxDirExists(dir)) wxMkdir(dir);
+
+    wxString file(dir);
+    file << wxT("\\__utm.gif");
+    if(DownloadFile(url,file))
         wxRemoveFile(file);
 }
 

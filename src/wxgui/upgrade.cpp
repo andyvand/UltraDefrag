@@ -53,11 +53,30 @@ void *UpgradeThread::Entry()
 {
     while(!g_mainFrame->CheckForTermination(200)){
         if(m_check && m_level){
-            wxString path = Utils::DownloadFile(
-                m_level == UPGRADE_ALL ? wxT(VERSION_URL) :
-                wxT(STABLE_VERSION_URL)
-            );
-            if(!path.IsEmpty()){
+            wxFileName target(wxT(".\\tmp"));
+            target.Normalize();
+            wxString dir(target.GetFullPath());
+            if(!wxDirExists(dir)) wxMkdir(dir);
+
+            /*
+            * Use a subfolder to prevent configuration files
+            * reload (see ConfigThread::Entry() for details).
+            */
+            dir << wxT("\\data");
+            if(!wxDirExists(dir)) wxMkdir(dir);
+
+            wxString url(wxT(""));
+            wxString path(dir);
+
+            if(m_level == UPGRADE_ALL){
+                url << wxT(VERSION_URL);
+                path << wxT("\\version.ini");
+            } else {
+                url << wxT(STABLE_VERSION_URL);
+                path << wxT("\\stable-version.ini");
+            }
+
+            if(Utils::DownloadFile(url,path)){
                 wxTextFile file; file.Open(path);
                 wxString lv = file.GetFirstLine();
                 lv.Trim(true); lv.Trim(false);
@@ -75,7 +94,6 @@ void *UpgradeThread::Entry()
                     wxPostEvent(g_mainFrame,event);
                 }
 
-                // remove file from cache
                 file.Close(); wxRemoveFile(path);
             }
             m_check = false;

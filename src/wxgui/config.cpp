@@ -286,6 +286,12 @@ int MainFrame::CheckOption(const wxString& name)
 //                      User preferences tracking
 // =======================================================================
 
+/**
+ * @note This thread reloads the main configuration file
+ * whenever something gets changed in the installation
+ * directory, even when the last modification time
+ * gets changed for its subdirectories.
+ */
 void *ConfigThread::Entry()
 {
     ULONGLONG counter = 0;
