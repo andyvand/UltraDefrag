@@ -43,7 +43,7 @@ cpp_files = 0
 -- included as dependencies to MinGW makefiles
 rsrc_patterns = { "%.ico$", "%.bmp$", "%.manifest$" }
 
-mingw_cmd = "mingw32-make -f Makefile.mingw"
+mingw_cmd = "mingw32-make --no-builtin-rules -f Makefile.mingw"
 sdk_cmd = "nmake.exe /NOLOGO /S /f Makefile.winsdk"
 
 -- common subroutines
