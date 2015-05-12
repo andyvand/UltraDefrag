@@ -6,13 +6,14 @@
 # Attila Kalmár <attila.kalmar81@gmail.com>, 2013
 # gmlucas <gellert.lukacs@gmail.com>, 2013
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# Zsolt Brechler <zsolt.brechler@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: Stefan Pendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2014-10-25 19:00+0000\n"
+"Last-Translator: Zsolt Brechler <zsolt.brechler@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/projects/p/ultradefrag/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -166,7 +167,7 @@ msgstr "Aktuális fordítás beküldé&se"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "&Beállítások"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -452,7 +453,7 @@ msgstr "A lemeznek javításra van szüksége"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% analizálva"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -461,7 +462,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% töredezettségmentesítve, %d. menet"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -469,7 +470,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% optimalizálva, %d. menet, összesen %I64u áthelyezés"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -483,7 +484,7 @@ msgstr "Elemzett"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "%d. menetben töredezettségmentesítve"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -491,4 +492,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "%d. menetben optimalizálva, összesen %I64u áthelyezés"
