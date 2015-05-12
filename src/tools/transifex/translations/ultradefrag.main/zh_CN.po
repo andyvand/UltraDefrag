@@ -6,13 +6,14 @@
 # Aivier <iaivier@126.com>, 2013
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 # wwj402 <wwj402@gmail.com>, 2013
+# YF <yfdyh000@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: Aivier <iaivier@126.com>\n"
+"PO-Revision-Date: 2014-11-22 01:20+0000\n"
+"Last-Translator: YF <yfdyh000@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/ultradefrag/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -166,7 +167,7 @@ msgstr "提交当前翻译(&S)"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr "&设置"
+msgstr "选项(&O)"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -218,7 +219,7 @@ msgstr "常见问题(&F)"
 
 #: i18n.cpp:193
 msgid "Cluster map &legend"
-msgstr "簇地图说明(&L)"
+msgstr "簇图说明(&L)"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
@@ -335,7 +336,7 @@ msgstr "请确认"
 
 #: shutdown.cpp:107
 msgid "Do you really want to hibernate when done?"
-msgstr "确认完成后休眠吗？"
+msgstr "您确定要在完成后休眠吗？"
 
 #. : This expands to "60 seconds until hibernation"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -347,7 +348,7 @@ msgstr "%lu 秒后休眠"
 
 #: shutdown.cpp:113
 msgid "Do you really want to log off when done?"
-msgstr "确认完成后注销吗？"
+msgstr "您确定要在完成后注销吗？"
 
 #. : This expands to "60 seconds until logoff"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -359,7 +360,7 @@ msgstr "%lu 秒后注销"
 
 #: shutdown.cpp:119
 msgid "Do you really want to reboot when done?"
-msgstr "确认完成后重启吗？"
+msgstr "您确定要在完成后重启吗？"
 
 #. : This expands to "60 seconds until reboot"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -371,7 +372,7 @@ msgstr "%lu 秒后重新启动"
 
 #: shutdown.cpp:125
 msgid "Do you really want to shutdown when done?"
-msgstr "确认完成后关机吗？"
+msgstr "您确定要在完成后关机吗？"
 
 #. : This expands to "60 seconds until shutdown"
 #. : Make sure that "%lu" is included in the translated string at the correct
@@ -469,7 +470,7 @@ msgstr "%5.2lf %% 已整理，%d 通过"
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr "%5.2lf %% 已优化 , %d 通过 , %I64u 总移动"
+msgstr "%5.2lf %% 已优化，%d 通过，%I64u 总移动"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -483,7 +484,7 @@ msgstr "分析完成"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr "已整理，%d通过"
+msgstr "已整理，%d 通过"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -491,4 +492,4 @@ msgstr "已整理，%d通过"
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr "已优化,  %d 通过, %I64u 总移动"
+msgstr "已优化，%d 通过，%I64u 总移动"

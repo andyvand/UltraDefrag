@@ -6,13 +6,14 @@
 # Jiří Vírava <appukonrad@gmail.com>, 2013
 # Pavel Kinkor <kinki@post.cz>, 2013
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# udef-jardic <udef-jardic@seznam.cz>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: Pavel Kinkor <kinki@post.cz>\n"
+"PO-Revision-Date: 2014-10-20 10:41+0000\n"
+"Last-Translator: udef-jardic <udef-jardic@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/ultradefrag/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -299,7 +300,7 @@ msgstr "Zobraz nastavení zprávy"
 
 #: i18n.cpp:270
 msgid "Powered by Lua"
-msgstr ""
+msgstr "Poháněno LUA"
 
 #: i18n.cpp:271
 msgid "Fragments"

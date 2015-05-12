@@ -5,7 +5,7 @@
 # Translators:
 # Catur Susetyo <satyafree@gmail.com>, 2013
 # Dmitri Arkhangelski <dmitriar@gmail.com>, 2014
-# Joshua C <jrandiny2@gmail.com>, 2014
+# Joshua Christo Randiny <jrandiny2@gmail.com>, 2014
 # Rizki Aulia Rachman <rizkiaulia.r@gmail.com>, 2013
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013

@@ -5,13 +5,14 @@
 # Translators:
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
 # Stefan Pendl <stefanpe@users.sourceforge.net>, 2013
+# streger <stjepan.treger@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: ultradefrag\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/p/ultradefrag/bugs/\n"
 "POT-Creation-Date: 2013-07-10 21:44+0200\n"
-"PO-Revision-Date: 2013-11-20 09:52+0000\n"
-"Last-Translator: Stefan Pendl <stefanpe@users.sourceforge.net>\n"
+"PO-Revision-Date: 2014-10-27 10:11+0000\n"
+"Last-Translator: streger <stjepan.treger@gmail.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/projects/p/ultradefrag/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,15 +26,15 @@ msgstr "O UltraDefrag"
 
 #: about.cpp:90
 msgid "An open source defragmentation utility."
-msgstr ""
+msgstr "Program otvorenog koda za defragmentiranje."
 
 #: about.cpp:92
 msgid "Credits and licenses are listed in the handbook."
-msgstr ""
+msgstr "Zasluge i icence su  zapisane u priručniku."
 
 #: about.cpp:95
 msgid "UltraDefrag website"
-msgstr ""
+msgstr "UltraDefrag web stranica"
 
 #: i18n.cpp:129
 msgid "&Action"
@@ -73,7 +74,7 @@ msgstr "Optimiziraj MFT"
 
 #: i18n.cpp:140 tray.cpp:80
 msgid "Pa&use"
-msgstr ""
+msgstr "Pa&uziraj"
 
 #: i18n.cpp:141
 msgid "&Stop"
@@ -109,7 +110,7 @@ msgstr "Ništa"
 
 #: i18n.cpp:152
 msgid "Stan&dby"
-msgstr ""
+msgstr "Pripravnos&t"
 
 #: i18n.cpp:153
 msgid "&Hibernate"
@@ -165,7 +166,7 @@ msgstr "Slanje trenutni prijevod"
 
 #: i18n.cpp:174
 msgid "&Options"
-msgstr ""
+msgstr "&Opcije"
 
 #: i18n.cpp:177
 msgid "&Enable"
@@ -177,31 +178,31 @@ msgstr "Skripta"
 
 #: i18n.cpp:181
 msgid "By &path"
-msgstr ""
+msgstr "Po &putanji"
 
 #: i18n.cpp:182
 msgid "By &size"
-msgstr ""
+msgstr "Po &veličini"
 
 #: i18n.cpp:183
 msgid "By &creation time"
-msgstr ""
+msgstr "Po vremenu &stvaranja"
 
 #: i18n.cpp:184
 msgid "By last &modification time"
-msgstr ""
+msgstr "Po zadnjem vre&menu promjene"
 
 #: i18n.cpp:185
 msgid "By &last access time"
-msgstr ""
+msgstr "Po zadnjem vremenu p&ristupa"
 
 #: i18n.cpp:186
 msgid "In &ascending order"
-msgstr ""
+msgstr "Uzl&aznim redoslijedom"
 
 #: i18n.cpp:187
 msgid "In &descending order"
-msgstr ""
+msgstr "Silaznim re&doslijedom"
 
 #: i18n.cpp:190
 msgid "&Contents"
@@ -221,23 +222,23 @@ msgstr "Klaster karta legenda"
 
 #: i18n.cpp:196 upgrade.cpp:161
 msgid "&Upgrade"
-msgstr ""
+msgstr "&Nadogradnja"
 
 #: i18n.cpp:197
 msgid "&Never check"
-msgstr ""
+msgstr "&Nikad ne provjeravaj"
 
 #: i18n.cpp:198
 msgid "Check &stable releases only"
-msgstr ""
+msgstr "Provjeri samo &stabilna izdanja"
 
 #: i18n.cpp:199
 msgid "Check &all releases"
-msgstr ""
+msgstr "Provjeri sv&a izdanja"
 
 #: i18n.cpp:200
 msgid "&Check now"
-msgstr ""
+msgstr "&Provjeri sad"
 
 #: i18n.cpp:201
 msgid "&About"
@@ -245,7 +246,7 @@ msgstr "O programu"
 
 #: i18n.cpp:204
 msgid "&Debug"
-msgstr ""
+msgstr "&Debugiraj"
 
 #: i18n.cpp:205 utils.cpp:411
 msgid "Open &log"
@@ -265,7 +266,7 @@ msgstr "Disk"
 
 #: i18n.cpp:219 i18n.cpp:275
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: i18n.cpp:220
 msgid "Fragmentation"
@@ -298,7 +299,7 @@ msgstr "Pregled izvješća opcije"
 
 #: i18n.cpp:270
 msgid "Powered by Lua"
-msgstr ""
+msgstr "Pokreće ga Lua"
 
 #: i18n.cpp:271
 msgid "Fragments"
@@ -406,7 +407,7 @@ msgstr "komprimirano"
 
 #: taskbar.cpp:198
 msgid "The job is paused"
-msgstr ""
+msgstr "Posao je pauziran"
 
 #: taskbar.cpp:203
 msgid "The job is running"
@@ -426,7 +427,7 @@ msgstr "Sakriti"
 #: upgrade.cpp:158
 #, c-format
 msgid "Release %ls is available for download!"
-msgstr ""
+msgstr "Izdanje %ls je dostupno za preuzimanje"
 
 #: upgrade.cpp:160
 msgid "You can upgrade me ^-^"
@@ -434,11 +435,11 @@ msgstr "Možete me nadogradnju ^-^"
 
 #: upgrade.cpp:161 utils.cpp:415
 msgid "&Cancel"
-msgstr ""
+msgstr "&Odustani"
 
 #: utils.cpp:414
 msgid "Error!"
-msgstr ""
+msgstr "Greška!"
 
 #: vollist.cpp:328
 msgid "Disk needs to be repaired"
@@ -451,7 +452,7 @@ msgstr "Disk treba popraviti"
 #: vollist.cpp:369
 #, c-format
 msgid "%5.2lf %% analyzed"
-msgstr ""
+msgstr "%5.2lf %% analizirano"
 
 #. : Status of the running disk defragmentation,
 #. : expands to "10 % defragmented, pass 5".
@@ -460,7 +461,7 @@ msgstr ""
 #: vollist.cpp:375
 #, c-format
 msgid "%5.2lf %% defragmented, pass %d"
-msgstr ""
+msgstr "%5.2lf %% defragmentirano, prošlo %d"
 
 #. : Status of the running disk optimization, expands to
 #. : "10 % optimized, pass 5, 1024 moves total".
@@ -468,7 +469,7 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:383
 msgid "%5.2lf %% optimized, pass %d, %I64u moves total"
-msgstr ""
+msgstr "%5.2lf %% optimizirano, prošlo %d, %I64u pomaka ukupno"
 
 #. : Status of the completed disk analysis.
 #: vollist.cpp:390
@@ -482,7 +483,7 @@ msgstr "Analizirano"
 #: vollist.cpp:396
 #, c-format
 msgid "Defragmented, in %d passes"
-msgstr ""
+msgstr "Defragmentirano, u %d prolaza"
 
 #. : Status of the completed disk optimization, expands to
 #. : "Optimized, in 5 passes, 1024 moves total".
@@ -490,4 +491,4 @@ msgstr ""
 #. : in the translated string at the correct positions.
 #: vollist.cpp:404
 msgid "Optimized, in %d passes, %I64u moves total"
-msgstr ""
+msgstr "Optimizirano, u %d prolaza, %I64u pomaka ukupno"
